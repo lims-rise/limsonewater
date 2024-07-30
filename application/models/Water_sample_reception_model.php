@@ -47,9 +47,10 @@ class Water_sample_reception_model extends CI_Model
         // $this->datatables->join('ref_testing b', 'a.testing_type_id = b.testing_type_id', 'right');
         // $this->datatables->where('a.flag', '0');
         // $this->datatables->where('a.project_id', $id);
-        $this->datatables->select('a.sample_id, a.project_id, a.client_sample_id,  a.testing_type_id, GROUP_CONCAT(b.testing_type) AS testing_type, a.flag');
+        $this->datatables->select('a.sample_id, a.project_id, a.client_sample_id,  a.testing_type_id, b.testing_type AS testing_type, a.flag');
         $this->datatables->from('sample_reception_sample a');
         $this->datatables->join('ref_testing b', 'FIND_IN_SET(b.testing_type_id, a.testing_type_id)', 'left');
+        // $this->datatables->join('ref_barcode c', 'a.sample_id = c.testing_type_id', 'left');
         $this->datatables->where('a.flag', '0');
         $this->datatables->where('a.client_sample_id', $id);
         $this->datatables->group_by('a.sample_id');
@@ -269,20 +270,51 @@ class Water_sample_reception_model extends CI_Model
         $this->db->update('sample_reception', $data);
     }
 
-    function insert_det($data)
-    {
+    // function insert_det($data)
+    // {
+    //     $this->db->insert('sample_reception_sample', $data);
+    // }
+
+    // function insert_barcode($data) {
+    //     $this->db->insert('ref_barcode', $data);
+    // }
+    
+    // function update_det($id, $data)
+    // {
+    //     $this->db->where('sample_id', $id);
+    //     $this->db->update('sample_reception_sample', $data);
+    // }
+
+    // function update_barcode($id, $data)
+    // {
+    //     $this->db->where('barcode_id', $id);
+    //     $this->db->update('ref_barcode', $data);
+    // }
+
+    function insert_det($data) {
         $this->db->insert('sample_reception_sample', $data);
+        return $this->db->insert_id(); // Return the ID of the newly inserted row
     }
 
-    function insert_test($data) {
-        $this->db->insert('sample_reception_testing', $data);
-    }
-    
-    function update_det($id, $data)
-    {
+    function update_det($id, $data) {
         $this->db->where('sample_id', $id);
         $this->db->update('sample_reception_sample', $data);
     }
+
+    function insert_barcode($data) {
+        $this->db->insert('ref_barcode', $data);
+    }
+
+    function update_barcode($sample_id, $testing_type_id, $data) {
+        $this->db->where('sample_id', $sample_id);
+        $this->db->where('testing_type_id', $testing_type_id);
+        $this->db->update('ref_barcode', $data);
+    }
+
+    function delete_barcode($sample_id) {
+        $this->db->delete('ref_barcode', array('sample_id' => $sample_id));
+    }
+
 
     // delete data
     function delete($id)
@@ -357,6 +389,15 @@ class Water_sample_reception_model extends CI_Model
         // return $response;
       }
 
+    //   function getBarcode() {
+    //     $response = array();
+    //     $this->db->select('*');
+    //     $this->db->where('flag', '0');
+    //     $labTech = $this->db->get('ref_barcode');
+    //     $response = $labTech->result_array();
+    //     return $response;
+    //   }
+
     // public function get_last_barcode($testing_type) {
         
     //     $prefix = '';
@@ -418,9 +459,9 @@ class Water_sample_reception_model extends CI_Model
         // Get the current year
         $year = date('y');
 
-        $this->db->select_max('CAST(SUBSTR(sample_barcode, ' . (strlen($prefix . $year) + 1) . ') AS UNSIGNED)', 'max_barcode');
-        $this->db->like('sample_barcode', $prefix . $year, 'after');
-        $query = $this->db->get('sample_reception_sample');
+        $this->db->select_max('CAST(SUBSTR(barcode, ' . (strlen($prefix . $year) + 1) . ') AS UNSIGNED)', 'max_barcode');
+        $this->db->like('barcode', $prefix . $year, 'after');
+        $query = $this->db->get('ref_barcode');
         $result = $query->row();
     
         $next_number = $result->max_barcode + 1;

@@ -397,6 +397,7 @@
 		$('#example2').on('click', '.btn_edit_det', function() {
 			let tr = $(this).closest('tr');
 			let data = table.row(tr).data();
+			console.log(data);
 
 			$('#cancelButton').click(function() {
 				location.reload();
@@ -416,7 +417,7 @@
 					// $('#' + inputId).prop('required', isChecked);
 					
 					// Mengubah tampilan label
-					updateCheckboxLabelStyling();
+					// updateCheckboxLabelStyling();
 
 					// Menghapus gaya strikethrough dari label jika tidak ada yang tercentang
 					if ($('.testing-type-checkbox:checked').length === 0) {
