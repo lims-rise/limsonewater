@@ -57,6 +57,7 @@ class Water_sample_reception extends CI_Controller
     public function read($id)
     {
         $data['testing_type'] = $this->Water_sample_reception_model->getTest();
+        // $data['barcode'] = $this->Water_sample_reception_model->getBarcode();
         $row = $this->Water_sample_reception_model->get_detail($id);
         if ($row) {
             $data = array(
@@ -72,6 +73,7 @@ class Water_sample_reception extends CI_Controller
                 'classification_name' => $row->classification_name,
                 'comments' => $row->comments,
                 'testing_type' => $this->Water_sample_reception_model->getTest(),
+                // 'barcode' => $this->Water_sample_reception_model->getBarcode(),
             );
                 
             $this->template->load('template','water_sample_reception/index_det', $data);
@@ -277,6 +279,68 @@ class Water_sample_reception extends CI_Controller
         //     redirect(site_url("Water_sample_reception/read/" . $project_id2));
         // }
         
+        // public function savedetail() {
+        //     $mode = $this->input->post('mode_det', TRUE);
+        //     $sample_id = $this->input->post('sample_id', TRUE);
+        //     $client_sample_id = $this->input->post('client_sample_idx', TRUE);
+        //     $project_id2 = $this->input->post('project_id2', TRUE);
+        //     $testing_types = $this->input->post('testing_type_id', TRUE);
+        //     $dt = new DateTime();
+            
+        //     if ($mode == "insert") {
+        //         if (is_array($testing_types)) {
+        //             foreach ($testing_types as $testing_type_id) {
+        //                 // Get the testing type name from the database or a predefined list
+        //                 $testing_type_name = $this->Water_sample_reception_model->get_name_by_id($testing_type_id);
+                        
+        //                 // Generate barcode
+        //                 $barcode = $this->Water_sample_reception_model->get_last_barcode($testing_type_name);
+                        
+        //                 $data_sample = array(
+        //                     'client_sample_id' => $client_sample_id,
+        //                     'project_id' => $project_id2,
+        //                     'testing_type_id' => $testing_type_id,
+        //                     'sample_barcode' => $barcode,
+        //                     'uuid' => $this->uuid->v4(),
+        //                     'user_created' => $this->session->userdata('id_users'),
+        //                     'date_created' => $dt->format('Y-m-d H:i:s'),
+        //                 );
+
+
+        //                 $this->Water_sample_reception_model->insert_det($data_sample);
+        //             }
+        //             $this->session->set_flashdata('message', 'Create Records Success');    
+        //         } else {
+        //             $this->session->set_flashdata('message', 'No Testing Types Selected');    
+        //         }
+        //     } else if ($mode == "edit") {
+        //         if (is_array($testing_types)) {
+        //             foreach ($testing_types as $testing_type_id) {
+        //                 $testing_type_name = $this->Water_sample_reception_model->get_name_by_id($testing_type_id);
+        //                 $barcode = $this->Water_sample_reception_model->get_last_barcode($testing_type_name);
+                        
+        //                 $data_sample = array(
+        //                     'client_sample_id' => $client_sample_id,
+        //                     'project_id' => $project_id2,
+        //                     'testing_type_id' => $testing_type_id,
+        //                     'sample_barcode' => $barcode,
+        //                     'uuid' => $this->uuid->v4(),
+        //                     'user_created' => $this->session->userdata('id_users'),
+        //                     'date_created' => $dt->format('Y-m-d H:i:s'),
+        //                 );
+                        
+        //                 $this->Water_sample_reception_model->update_det($sample_id, $data_sample);
+        //             }
+        //             $this->session->set_flashdata('message', 'Update Records Success');    
+        //         } else {
+        //             $this->session->set_flashdata('message', 'No Testing Types Selected');    
+        //         }
+        //     }
+            
+        //     redirect(site_url("Water_sample_reception/read/" . $project_id2));
+        // }
+
+
         public function savedetail() {
             $mode = $this->input->post('mode_det', TRUE);
             $sample_id = $this->input->post('sample_id', TRUE);
@@ -284,58 +348,76 @@ class Water_sample_reception extends CI_Controller
             $project_id2 = $this->input->post('project_id2', TRUE);
             $testing_types = $this->input->post('testing_type_id', TRUE);
             $dt = new DateTime();
-            
+        
             if ($mode == "insert") {
                 if (is_array($testing_types)) {
+
+                    
                     foreach ($testing_types as $testing_type_id) {
-                        // Get the testing type name from the database or a predefined list
                         $testing_type_name = $this->Water_sample_reception_model->get_name_by_id($testing_type_id);
-                        
-                        // Generate barcode
                         $barcode = $this->Water_sample_reception_model->get_last_barcode($testing_type_name);
-                        
-                        $data_sample = array(
+
+                        $sample_id = $this->Water_sample_reception_model->insert_det(array(
                             'client_sample_id' => $client_sample_id,
                             'project_id' => $project_id2,
                             'testing_type_id' => $testing_type_id,
-                            'sample_barcode' => $barcode,
                             'uuid' => $this->uuid->v4(),
                             'user_created' => $this->session->userdata('id_users'),
                             'date_created' => $dt->format('Y-m-d H:i:s'),
+                        ));
+        
+                        $data_barcode = array(
+                            'sample_id' => $sample_id,
+                            'testing_type_id' => $testing_type_id,
+                            'barcode' => $barcode,
                         );
-                        
-                        $this->Water_sample_reception_model->insert_det($data_sample);
+
+                        // var_dump($data_barcode);
+                        // die();
+        
+                        $this->Water_sample_reception_model->insert_barcode($data_barcode);
                     }
-                    $this->session->set_flashdata('message', 'Create Records Success');    
+                    $this->session->set_flashdata('message', 'Create Records Success');
                 } else {
-                    $this->session->set_flashdata('message', 'No Testing Types Selected');    
+                    $this->session->set_flashdata('message', 'No Testing Types Selected');
                 }
             } else if ($mode == "edit") {
                 if (is_array($testing_types)) {
+ 
+                    
+                    // Remove old barcodes related to this sample_id
+                    $this->Water_sample_reception_model->delete_barcode($sample_id);
+                    
                     foreach ($testing_types as $testing_type_id) {
                         $testing_type_name = $this->Water_sample_reception_model->get_name_by_id($testing_type_id);
                         $barcode = $this->Water_sample_reception_model->get_last_barcode($testing_type_name);
-                        
-                        $data_sample = array(
+
+                        // Update the sample_reception_sample with new data
+                        $this->Water_sample_reception_model->update_det($sample_id, array(
                             'client_sample_id' => $client_sample_id,
                             'project_id' => $project_id2,
                             'testing_type_id' => $testing_type_id,
-                            'sample_barcode' => $barcode,
                             'uuid' => $this->uuid->v4(),
                             'user_created' => $this->session->userdata('id_users'),
                             'date_created' => $dt->format('Y-m-d H:i:s'),
+                        ));
+        
+                        $data_barcode = array(
+                            'sample_id' => $sample_id,
+                            'testing_type_id' => $testing_type_id,
+                            'barcode' => $barcode,
                         );
-                        
-                        $this->Water_sample_reception_model->update_det($sample_id, $data_sample);
+        
+                        $this->Water_sample_reception_model->insert_barcode($data_barcode);
                     }
-                    $this->session->set_flashdata('message', 'Update Records Success');    
+                    $this->session->set_flashdata('message', 'Update Records Success');
                 } else {
-                    $this->session->set_flashdata('message', 'No Testing Types Selected');    
+                    $this->session->set_flashdata('message', 'No Testing Types Selected');
                 }
             }
-            
             redirect(site_url("Water_sample_reception/read/" . $project_id2));
         }
+        
                
 
     public function savedetail2() 
