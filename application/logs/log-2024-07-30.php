@@ -773,3 +773,191 @@ INFO - 2024-07-30 23:29:01 --> Model Class Initialized
 INFO - 2024-07-30 23:29:01 --> Form Validation Class Initialized
 INFO - 2024-07-30 23:29:01 --> Final output sent to browser
 DEBUG - 2024-07-30 23:29:01 --> Total execution time: 0.1166
+INFO - 2024-07-30 23:34:16 --> Config Class Initialized
+INFO - 2024-07-30 23:34:16 --> Hooks Class Initialized
+DEBUG - 2024-07-30 23:34:16 --> UTF-8 Support Enabled
+INFO - 2024-07-30 23:34:16 --> Utf8 Class Initialized
+INFO - 2024-07-30 23:34:16 --> URI Class Initialized
+INFO - 2024-07-30 23:34:16 --> Router Class Initialized
+INFO - 2024-07-30 23:34:16 --> Output Class Initialized
+INFO - 2024-07-30 23:34:16 --> Security Class Initialized
+DEBUG - 2024-07-30 23:34:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-07-30 23:34:16 --> Input Class Initialized
+INFO - 2024-07-30 23:34:16 --> Language Class Initialized
+INFO - 2024-07-30 23:34:16 --> Loader Class Initialized
+INFO - 2024-07-30 23:34:16 --> Helper loaded: url_helper
+INFO - 2024-07-30 23:34:16 --> Helper loaded: form_helper
+INFO - 2024-07-30 23:34:16 --> Helper loaded: racode_helper
+INFO - 2024-07-30 23:34:16 --> Database Driver Class Initialized
+DEBUG - 2024-07-30 23:34:16 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-07-30 23:34:16 --> Session: Class initialized using 'files' driver.
+INFO - 2024-07-30 23:34:16 --> Controller Class Initialized
+INFO - 2024-07-30 23:34:16 --> Model Class Initialized
+INFO - 2024-07-30 23:34:16 --> Form Validation Class Initialized
+ERROR - 2024-07-30 23:34:16 --> Severity: Notice --> Undefined variable: simple_barcode C:\laragon\www\limsonewater\application\views\water_sample_reception\index_det.php 89
+INFO - 2024-07-30 23:34:16 --> File loaded: C:\laragon\www\limsonewater\application\views\water_sample_reception/index_det.php
+INFO - 2024-07-30 23:34:16 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-07-30 23:34:16 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-07-30 23:34:16 --> Final output sent to browser
+DEBUG - 2024-07-30 23:34:16 --> Total execution time: 0.1509
+INFO - 2024-07-30 23:34:16 --> Config Class Initialized
+INFO - 2024-07-30 23:34:16 --> Hooks Class Initialized
+DEBUG - 2024-07-30 23:34:16 --> UTF-8 Support Enabled
+INFO - 2024-07-30 23:34:16 --> Utf8 Class Initialized
+INFO - 2024-07-30 23:34:16 --> URI Class Initialized
+INFO - 2024-07-30 23:34:16 --> Router Class Initialized
+INFO - 2024-07-30 23:34:16 --> Output Class Initialized
+INFO - 2024-07-30 23:34:16 --> Security Class Initialized
+DEBUG - 2024-07-30 23:34:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-07-30 23:34:16 --> Input Class Initialized
+INFO - 2024-07-30 23:34:16 --> Language Class Initialized
+ERROR - 2024-07-30 23:34:16 --> 404 Page Not Found: Water_sample_reception/img
+INFO - 2024-07-30 23:34:16 --> Config Class Initialized
+INFO - 2024-07-30 23:34:16 --> Hooks Class Initialized
+DEBUG - 2024-07-30 23:34:16 --> UTF-8 Support Enabled
+INFO - 2024-07-30 23:34:16 --> Utf8 Class Initialized
+INFO - 2024-07-30 23:34:16 --> URI Class Initialized
+INFO - 2024-07-30 23:34:17 --> Router Class Initialized
+INFO - 2024-07-30 23:34:17 --> Output Class Initialized
+INFO - 2024-07-30 23:34:17 --> Security Class Initialized
+DEBUG - 2024-07-30 23:34:17 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-07-30 23:34:17 --> Input Class Initialized
+INFO - 2024-07-30 23:34:17 --> Language Class Initialized
+INFO - 2024-07-30 23:34:17 --> Loader Class Initialized
+INFO - 2024-07-30 23:34:17 --> Helper loaded: url_helper
+INFO - 2024-07-30 23:34:17 --> Helper loaded: form_helper
+INFO - 2024-07-30 23:34:17 --> Helper loaded: racode_helper
+INFO - 2024-07-30 23:34:17 --> Database Driver Class Initialized
+DEBUG - 2024-07-30 23:34:17 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-07-30 23:34:17 --> Session: Class initialized using 'files' driver.
+INFO - 2024-07-30 23:34:17 --> Controller Class Initialized
+INFO - 2024-07-30 23:34:17 --> Model Class Initialized
+INFO - 2024-07-30 23:34:17 --> Form Validation Class Initialized
+INFO - 2024-07-30 23:34:17 --> Final output sent to browser
+DEBUG - 2024-07-30 23:34:17 --> Total execution time: 0.1104
+INFO - 2024-07-30 23:34:21 --> Config Class Initialized
+INFO - 2024-07-30 23:34:21 --> Hooks Class Initialized
+DEBUG - 2024-07-30 23:34:21 --> UTF-8 Support Enabled
+INFO - 2024-07-30 23:34:21 --> Utf8 Class Initialized
+INFO - 2024-07-30 23:34:21 --> URI Class Initialized
+INFO - 2024-07-30 23:34:21 --> Router Class Initialized
+INFO - 2024-07-30 23:34:21 --> Output Class Initialized
+INFO - 2024-07-30 23:34:21 --> Security Class Initialized
+DEBUG - 2024-07-30 23:34:21 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-07-30 23:34:21 --> Input Class Initialized
+INFO - 2024-07-30 23:34:21 --> Language Class Initialized
+INFO - 2024-07-30 23:34:21 --> Loader Class Initialized
+INFO - 2024-07-30 23:34:21 --> Helper loaded: url_helper
+INFO - 2024-07-30 23:34:21 --> Helper loaded: form_helper
+INFO - 2024-07-30 23:34:21 --> Helper loaded: racode_helper
+INFO - 2024-07-30 23:34:21 --> Database Driver Class Initialized
+DEBUG - 2024-07-30 23:34:21 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-07-30 23:34:21 --> Session: Class initialized using 'files' driver.
+INFO - 2024-07-30 23:34:21 --> Controller Class Initialized
+INFO - 2024-07-30 23:34:21 --> Model Class Initialized
+INFO - 2024-07-30 23:34:21 --> Form Validation Class Initialized
+ERROR - 2024-07-30 23:34:21 --> Severity: Notice --> Undefined variable: classification_id C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 118
+ERROR - 2024-07-30 23:34:21 --> Severity: Notice --> Undefined variable: classification_id C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 118
+ERROR - 2024-07-30 23:34:21 --> Severity: Notice --> Undefined variable: classification_id C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 118
+ERROR - 2024-07-30 23:34:21 --> Severity: Notice --> Undefined variable: classification_id C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 118
+ERROR - 2024-07-30 23:34:21 --> Severity: Notice --> Undefined variable: classification_id C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 118
+ERROR - 2024-07-30 23:34:21 --> Severity: Notice --> Undefined variable: classification_id C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 118
+ERROR - 2024-07-30 23:34:21 --> Severity: Notice --> Undefined variable: classification_id C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 118
+ERROR - 2024-07-30 23:34:21 --> Severity: Notice --> Undefined variable: classification_id C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 118
+ERROR - 2024-07-30 23:34:21 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 137
+ERROR - 2024-07-30 23:34:21 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 137
+ERROR - 2024-07-30 23:34:21 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 137
+ERROR - 2024-07-30 23:34:21 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 137
+ERROR - 2024-07-30 23:34:21 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 137
+ERROR - 2024-07-30 23:34:21 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 137
+INFO - 2024-07-30 23:34:21 --> File loaded: C:\laragon\www\limsonewater\application\views\Water_sample_reception/index.php
+INFO - 2024-07-30 23:34:21 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-07-30 23:34:21 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-07-30 23:34:21 --> Final output sent to browser
+DEBUG - 2024-07-30 23:34:21 --> Total execution time: 0.1877
+INFO - 2024-07-30 23:34:21 --> Config Class Initialized
+INFO - 2024-07-30 23:34:21 --> Hooks Class Initialized
+DEBUG - 2024-07-30 23:34:21 --> UTF-8 Support Enabled
+INFO - 2024-07-30 23:34:21 --> Utf8 Class Initialized
+INFO - 2024-07-30 23:34:21 --> URI Class Initialized
+INFO - 2024-07-30 23:34:21 --> Router Class Initialized
+INFO - 2024-07-30 23:34:21 --> Output Class Initialized
+INFO - 2024-07-30 23:34:21 --> Security Class Initialized
+DEBUG - 2024-07-30 23:34:21 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-07-30 23:34:21 --> Input Class Initialized
+INFO - 2024-07-30 23:34:21 --> Language Class Initialized
+INFO - 2024-07-30 23:34:21 --> Loader Class Initialized
+INFO - 2024-07-30 23:34:21 --> Helper loaded: url_helper
+INFO - 2024-07-30 23:34:21 --> Helper loaded: form_helper
+INFO - 2024-07-30 23:34:21 --> Helper loaded: racode_helper
+INFO - 2024-07-30 23:34:21 --> Database Driver Class Initialized
+DEBUG - 2024-07-30 23:34:21 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-07-30 23:34:21 --> Session: Class initialized using 'files' driver.
+INFO - 2024-07-30 23:34:21 --> Controller Class Initialized
+INFO - 2024-07-30 23:34:21 --> Model Class Initialized
+INFO - 2024-07-30 23:34:21 --> Form Validation Class Initialized
+INFO - 2024-07-30 23:34:21 --> Final output sent to browser
+DEBUG - 2024-07-30 23:34:21 --> Total execution time: 0.1058
+INFO - 2024-07-30 23:42:08 --> Config Class Initialized
+INFO - 2024-07-30 23:42:08 --> Hooks Class Initialized
+DEBUG - 2024-07-30 23:42:08 --> UTF-8 Support Enabled
+INFO - 2024-07-30 23:42:08 --> Utf8 Class Initialized
+INFO - 2024-07-30 23:42:08 --> URI Class Initialized
+INFO - 2024-07-30 23:42:08 --> Router Class Initialized
+INFO - 2024-07-30 23:42:08 --> Output Class Initialized
+INFO - 2024-07-30 23:42:08 --> Security Class Initialized
+DEBUG - 2024-07-30 23:42:08 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-07-30 23:42:08 --> Input Class Initialized
+INFO - 2024-07-30 23:42:08 --> Language Class Initialized
+INFO - 2024-07-30 23:42:08 --> Loader Class Initialized
+INFO - 2024-07-30 23:42:08 --> Helper loaded: url_helper
+INFO - 2024-07-30 23:42:08 --> Helper loaded: form_helper
+INFO - 2024-07-30 23:42:08 --> Helper loaded: racode_helper
+INFO - 2024-07-30 23:42:08 --> Database Driver Class Initialized
+DEBUG - 2024-07-30 23:42:08 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-07-30 23:42:08 --> Session: Class initialized using 'files' driver.
+INFO - 2024-07-30 23:42:08 --> Controller Class Initialized
+INFO - 2024-07-30 23:42:08 --> Model Class Initialized
+INFO - 2024-07-30 23:42:08 --> Form Validation Class Initialized
+ERROR - 2024-07-30 23:42:08 --> Severity: Notice --> Undefined variable: classification_id C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 118
+ERROR - 2024-07-30 23:42:08 --> Severity: Notice --> Undefined variable: classification_id C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 118
+ERROR - 2024-07-30 23:42:08 --> Severity: Notice --> Undefined variable: classification_id C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 118
+ERROR - 2024-07-30 23:42:08 --> Severity: Notice --> Undefined variable: classification_id C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 118
+ERROR - 2024-07-30 23:42:08 --> Severity: Notice --> Undefined variable: classification_id C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 118
+ERROR - 2024-07-30 23:42:08 --> Severity: Notice --> Undefined variable: classification_id C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 118
+ERROR - 2024-07-30 23:42:08 --> Severity: Notice --> Undefined variable: classification_id C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 118
+ERROR - 2024-07-30 23:42:08 --> Severity: Notice --> Undefined variable: classification_id C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 118
+ERROR - 2024-07-30 23:42:08 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 137
+ERROR - 2024-07-30 23:42:08 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 137
+ERROR - 2024-07-30 23:42:08 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 137
+ERROR - 2024-07-30 23:42:08 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 137
+ERROR - 2024-07-30 23:42:08 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 137
+ERROR - 2024-07-30 23:42:08 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\water_sample_reception\index.php 137
+INFO - 2024-07-30 23:42:08 --> File loaded: C:\laragon\www\limsonewater\application\views\Water_sample_reception/index.php
+INFO - 2024-07-30 23:42:08 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-07-30 23:42:08 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-07-30 23:42:08 --> Final output sent to browser
+DEBUG - 2024-07-30 23:42:08 --> Total execution time: 0.1644
+INFO - 2024-07-30 23:42:08 --> Config Class Initialized
+INFO - 2024-07-30 23:42:08 --> Hooks Class Initialized
+DEBUG - 2024-07-30 23:42:08 --> UTF-8 Support Enabled
+INFO - 2024-07-30 23:42:08 --> Utf8 Class Initialized
+INFO - 2024-07-30 23:42:08 --> URI Class Initialized
+INFO - 2024-07-30 23:42:08 --> Router Class Initialized
+INFO - 2024-07-30 23:42:08 --> Output Class Initialized
+INFO - 2024-07-30 23:42:08 --> Security Class Initialized
+DEBUG - 2024-07-30 23:42:08 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-07-30 23:42:08 --> Input Class Initialized
+INFO - 2024-07-30 23:42:08 --> Language Class Initialized
+INFO - 2024-07-30 23:42:08 --> Loader Class Initialized
+INFO - 2024-07-30 23:42:08 --> Helper loaded: url_helper
+INFO - 2024-07-30 23:42:08 --> Helper loaded: form_helper
+INFO - 2024-07-30 23:42:08 --> Helper loaded: racode_helper
+INFO - 2024-07-30 23:42:08 --> Database Driver Class Initialized
+DEBUG - 2024-07-30 23:42:08 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-07-30 23:42:08 --> Session: Class initialized using 'files' driver.
+INFO - 2024-07-30 23:42:08 --> Controller Class Initialized
+INFO - 2024-07-30 23:42:08 --> Model Class Initialized
+INFO - 2024-07-30 23:42:08 --> Form Validation Class Initialized
+INFO - 2024-07-30 23:42:08 --> Final output sent to browser
+DEBUG - 2024-07-30 23:42:08 --> Total execution time: 0.1422

@@ -44,9 +44,6 @@
                         <th>Received Lab</th>
                         <th>Date Of Sample Arrival</th>
                         <th>Time Of Sample Arrival</th>
-                        <th>Date Of Sample Collected</th>
-                        <th>Time Of Sample Collected</th>
-                        <th>Comments</th>
                         <th width="120px">Action</th>
                     </tr>
                 </thead>
@@ -303,9 +300,6 @@
                 {"data": "initial"},
                 {"data": "date_arrival"},
                 {"data": "time_arrival"},
-                {"data": "date_collected"},
-                {"data": "time_collected"},
-                {"data": "comments"},
                 {
                     "data" : "action",
                     "orderable": false,
