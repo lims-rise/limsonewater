@@ -3,12 +3,11 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="box box-black box-solid">
-    
                     <div class="box-header">
                         <h3 class="box-title">Water | Sample reception </h3>
                     </div>
                     <form role="form"  id="formKeg" method="post" class="form-horizontal">
-        `				<div class="box-body">
+                        <div class="box-body">
                             <div class="form-group">
                                 <div class="col-sm-4">
                                     <input class="form-control " id="project_id" type="hidden"  value="<?php echo $project_id ?>"  disabled>
@@ -21,196 +20,194 @@
                                 </div>
                             </div>
                         </div>
-				    </form>
-        
-        <div class="box-body">
-        <div style="padding-bottom: 10px;">
-<?php
-        $lvl = $this->session->userdata('id_user_level');
-        if ($lvl != 7){
-            echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Sample Reception</button>";
-        }
-?>        
-		<?php echo anchor(site_url('Water_sample_reception/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?></div>
-        <div class="table-responsive">
-            <table class="table ho table-bordered table-striped tbody" id="mytable" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Coc</th>
-                        <th>Client as on Coc</th>
-                        <th>Client Sample</th>
-                        <th>One Water Sample ID</th>
-                        <th>Type of Sample</th>
-                        <th>Received Lab</th>
-                        <th>Date Of Sample Arrival</th>
-                        <th>Time Of Sample Arrival</th>
-                        <th width="120px">Action</th>
-                    </tr>
-                </thead>
-            
-            </table>
-        </div>
-        </div>
+                    </form>
+                    <div class="box-body">
+                        <div style="padding-bottom: 10px;">
+                            <?php
+                                    $lvl = $this->session->userdata('id_user_level');
+                                    if ($lvl != 7){
+                                        echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Sample Reception</button>";
+                                    }
+                            ?>        
+                            <?php echo anchor(site_url('Water_sample_reception/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?></div>
+                            <div class="table-responsive">
+                                <table class="table ho table-bordered table-striped tbody" id="mytable" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Coc</th>
+                                            <th>Client as on Coc</th>
+                                            <th>Client Sample</th>
+                                            <th>One Water Sample ID</th>
+                                            <th>Type of Sample</th>
+                                            <th>Received Lab</th>
+                                            <th>Date Of Sample Arrival</th>
+                                            <th>Time Of Sample Arrival</th>
+                                            <th width="120px">Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
                     </div>
+                </div>
             </div>
-            </div>
+        </div>
     </section>
+</div>
+
 <style>
-
-.table tbody tr.selected {
-    color: white !important;
-    background-color: #9CDCFE !important;
-}
-
+    .table tbody tr.selected {
+        color: white !important;
+        background-color: #9CDCFE !important;
+    }
 </style>
 
-    <!-- MODAL FORM -->
+<!-- MODAL FORM -->
     <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header box">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="modal-title">Water sample reception | New</h4>
-                </div>
-                <form id="formSample"  action= <?php echo site_url('Water_sample_reception/save') ?> method="post" class="form-horizontal">
-                    <div class="modal-body">
-                        <input id="mode" name="mode" type="hidden" class="form-control input-sm">
-                        <!-- <input id="id_req" name="id_req" type="hidden" class="form-control input-sm"> -->
+                    <div class="modal-header box">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="modal-title">Water sample reception | New</h4>
+                    </div>
+                    <form id="formSample"  action= <?php echo site_url('Water_sample_reception/save') ?> method="post" class="form-horizontal">
+                        <div class="modal-body">
+                            <input id="mode" name="mode" type="hidden" class="form-control input-sm">
+                            <!-- <input id="id_req" name="id_req" type="hidden" class="form-control input-sm"> -->
 
-                        <div class="form-group">
-                            <label for="project_idx" class="col-sm-4 control-label">COC</label>
-                            <div class="col-sm-8">
-                                <input id="project_idx" name="project_idx" placeholder="Client (as on CoC)" type="text" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="clientx" class="col-sm-4 control-label">Client</label>
-                            <div class="col-sm-8">
-                                <input id="clientx" name="clientx" placeholder="Client (as on CoC)" type="text" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="client_sample_id" class="col-sm-4 control-label">Client Sample</label>
-                            <div class="col-sm-8">
-                                <input id="client_sample_id" name="client_sample_id" placeholder="Client Sample" type="text" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="one_water_sample_idx" class="col-sm-4 control-label">One Water Sample ID</label>
-                            <div class="col-sm-8">
-                                <input id="one_water_sample_idx" name="one_water_sample_id" placeholder="One Water Sample ID" type="text" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="classification_id" class="col-sm-4 control-label">Type of Sample</label>
-                            <div class="col-sm-8" >
-                            <select id='classification_id' name="classification_id" class="form-control">
-                                <option>-- Select Type of Sample --</option>
-                                <?php
-                                foreach($classification as $row){
-									if ($classification_id == $row['classification_id']) {
-										echo "<option value='".$row['classification_id']."' selected='selected'>".$row['classification_name']."</option>";
-									}
-									else {
-                                        echo "<option value='".$row['classification_id']."'>".$row['classification_name']."</option>";
-                                    }
-                                }
-                                    ?>
-                            </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="id_person" class="col-sm-4 control-label">Received Lab</label>
-                            <div class="col-sm-8">
-                                <select id="id_person" name="id_person" class="form-control">
-                                    <option>-- Select Received Lab --</option>
-                                    <?php
-                                        foreach($labtech as $row) {
-                                            if ($id_person == $row['id_person']) {
-                                                echo "<option value='".$row['id_person']."' selected='selected'>".$row['realname']."</option>";
-                                            } else {
-                                                echo "<option value='".$row['id_person']."'>".$row['realname']."</option>";
-                                            }
-                                        }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="date_arrival" class="col-sm-4 control-label">Date of arrival</label>
-                            <div class="col-sm-8">
-                                <input id="date_arrival" name="date_arrival" type="date" class="form-control" placeholder="Date arrival" value="<?php echo date("Y-m-d"); ?>">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="time_arrival" class="col-sm-4 control-label">Time of arrival</label>
-                            <div class="col-sm-8">
-                                <div class="input-group clockpicker">
-                                <input id="time_arrival" name="time_arrival" class="form-control" placeholder="Time arrival" value="<?php 
-                                $datetime = new DateTime();
-                                echo $datetime->format( 'H:i' );
-                                ?>">
-                                <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-time"></span>
-                                </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="date_collected" class="col-sm-4 control-label">Date of collected</label>
-                            <div class="col-sm-8">
-                                <input id="date_collected" name="date_collected" type="date" class="form-control" placeholder="Date collected" value="<?php echo date("Y-m-d"); ?>">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="time_collected" class="col-sm-4 control-label">Time of collected</label>
-                            <div class="col-sm-8">
-                                <div class="input-group clockpicker">
-                                <input id="time_collected" name="time_collected" class="form-control" placeholder="Time collected" value="<?php 
-                                $datetime = new DateTime();
-                                echo $datetime->format( 'H:i' );
-                                ?>">
-                                <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-time"></span>
-                                </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                                <label for="comments" class="col-sm-4 control-label">Comments</label>
+                            <div class="form-group">
+                                <label for="project_idx" class="col-sm-4 control-label">COC</label>
                                 <div class="col-sm-8">
-                                    <textarea id="comments" name="comments" class="form-control" placeholder="Comments"> </textarea>
+                                    <input id="project_idx" name="project_idx" placeholder="Client (as on CoC)" type="text" class="form-control">
                                 </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="clientx" class="col-sm-4 control-label">Client</label>
+                                <div class="col-sm-8">
+                                    <input id="clientx" name="clientx" placeholder="Client (as on CoC)" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="client_sample_id" class="col-sm-4 control-label">Client Sample</label>
+                                <div class="col-sm-8">
+                                    <input id="client_sample_id" name="client_sample_id" placeholder="Client Sample" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="one_water_sample_idx" class="col-sm-4 control-label">One Water Sample ID</label>
+                                <div class="col-sm-8">
+                                    <input id="one_water_sample_idx" name="one_water_sample_id" placeholder="One Water Sample ID" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="classification_id" class="col-sm-4 control-label">Type of Sample</label>
+                                <div class="col-sm-8" >
+                                <select id='classification_id' name="classification_id" class="form-control">
+                                    <option>-- Select Type of Sample --</option>
+                                    <?php
+                                    foreach($classification as $row){
+                                        if ($classification_id == $row['classification_id']) {
+                                            echo "<option value='".$row['classification_id']."' selected='selected'>".$row['classification_name']."</option>";
+                                        }
+                                        else {
+                                            echo "<option value='".$row['classification_id']."'>".$row['classification_name']."</option>";
+                                        }
+                                    }
+                                        ?>
+                                </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="id_person" class="col-sm-4 control-label">Received Lab</label>
+                                <div class="col-sm-8">
+                                    <select id="id_person" name="id_person" class="form-control">
+                                        <option>-- Select Received Lab --</option>
+                                        <?php
+                                            foreach($labtech as $row) {
+                                                if ($id_person == $row['id_person']) {
+                                                    echo "<option value='".$row['id_person']."' selected='selected'>".$row['realname']."</option>";
+                                                } else {
+                                                    echo "<option value='".$row['id_person']."'>".$row['realname']."</option>";
+                                                }
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="date_arrival" class="col-sm-4 control-label">Date of arrival</label>
+                                <div class="col-sm-8">
+                                    <input id="date_arrival" name="date_arrival" type="date" class="form-control" placeholder="Date arrival" value="<?php echo date("Y-m-d"); ?>">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="time_arrival" class="col-sm-4 control-label">Time of arrival</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group clockpicker">
+                                    <input id="time_arrival" name="time_arrival" class="form-control" placeholder="Time arrival" value="<?php 
+                                    $datetime = new DateTime();
+                                    echo $datetime->format( 'H:i' );
+                                    ?>">
+                                    <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                    </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="date_collected" class="col-sm-4 control-label">Date of collected</label>
+                                <div class="col-sm-8">
+                                    <input id="date_collected" name="date_collected" type="date" class="form-control" placeholder="Date collected" value="<?php echo date("Y-m-d"); ?>">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="time_collected" class="col-sm-4 control-label">Time of collected</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group clockpicker">
+                                    <input id="time_collected" name="time_collected" class="form-control" placeholder="Time collected" value="<?php 
+                                    $datetime = new DateTime();
+                                    echo $datetime->format( 'H:i' );
+                                    ?>">
+                                    <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                    </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                    <label for="comments" class="col-sm-4 control-label">Comments</label>
+                                    <div class="col-sm-8">
+                                        <textarea id="comments" name="comments" class="form-control" placeholder="Comments"> </textarea>
+                                    </div>
+                            </div>
+
                         </div>
-
-                    </div>
-                    <div class="modal-footer clearfix">
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
-                        <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-                    </div>
-                </form>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->        
-
-</div>
+                        <div class="modal-footer clearfix">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+                            <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                        </div>
+                    </form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->        
+    </div>
 
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
 <script type="text/javascript">
 
-    var table;
+    let table;
     let project_id = $('#project_id').val();
 	let client = $('#client').val();
     let one_water_sample_id = $('#one_water_sample_id').val();
@@ -312,8 +309,7 @@
 					className: 'text-right' // Apply right alignment to this column
 				}
 			],
-            order: [[1, 'desc']],
-            order: [[0, 'desc']],
+            order: [[0, 'asc']],
             rowCallback: function(row, data, iDisplayIndex) {
                 var info = this.fnPagingInfo();
                 var page = info.iPage;

@@ -1,126 +1,105 @@
-
 <div class="content-wrapper">
 	<section class="content">
 		<div class="box box-black box-solid">
 			<div class="box-header with-border">
 				<h3 class="box-title">Water sample reception | New samples</h3>
 			</div>
-			<form role="form"  id="formKeg" method="post" class="form-horizontal">
-				<div class="box-body">
-					<!-- <input type="hidden" class="form-control " id="id_req" name="id_req" value="<?php// echo $id_req ?>"> -->
-					<!-- <input id="id_req" name="id_req" type="hidden" class="form-control input-sm"> -->
+				<form role="form"  id="formKeg" method="post" class="form-horizontal">
+					<div class="box-body">
+						<!-- <input type="hidden" class="form-control " id="id_req" name="id_req" value="<?php// echo $id_req ?>"> -->
+						<!-- <input id="id_req" name="id_req" type="hidden" class="form-control input-sm"> -->
+						<div class="form-group">
+							<label for="project_id" class="col-sm-2 control-label">COC</label>
+							<div class="col-sm-4">
+								<input class="form-control " id="project_id" name="project_id" value="<?php echo $project_id ?>"  disabled>
+							</div>
 
-					<div class="form-group">
-						<label for="project_id" class="col-sm-2 control-label">COC</label>
-						<div class="col-sm-4">
-							<input class="form-control " id="project_id" name="project_id" value="<?php echo $project_id ?>"  disabled>
+							<label for="client_sample_id" class="col-sm-2 control-label">Client Sample ID</label>
+							<div class="col-sm-4">
+								<input class="form-control " id="client_sample_id" name="client_sample_id" value="<?php echo $client_sample_id ?>"  disabled>
+							</div>
 						</div>
 
-						<label for="client_sample_id" class="col-sm-2 control-label">Client Sample ID</label>
-						<div class="col-sm-4">
-							<input class="form-control " id="client_sample_id" name="client_sample_id" value="<?php echo $client_sample_id ?>"  disabled>
-						</div>
-					</div>
+						<div class="form-group">
+							<label for="client" class="col-sm-2 control-label">Client</label>
+							<div class="col-sm-4">
+								<input class="form-control " id="client" name="client" value="<?php echo $client ?>"  disabled>
+							</div>
 
-					<div class="form-group">
-						<label for="client" class="col-sm-2 control-label">Client</label>
-						<div class="col-sm-4">
-							<input class="form-control " id="client" name="client" value="<?php echo $client ?>"  disabled>
-						</div>
-
-						<label for="one_water_sample_id" class="col-sm-2 control-label">One Water Sample ID</label>
-						<div class="col-sm-4">
-							<input class="form-control " id="one_water_sample_id" name="one_water_sample_id" value="<?php echo $one_water_sample_id ?>"  disabled>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label for="initial" class="col-sm-2 control-label">Received Lab</label>
-						<div class="col-sm-4">
-							<input class="form-control " id="initial" name="initial" value="<?php echo $initial ?>"  disabled>
+							<label for="one_water_sample_id" class="col-sm-2 control-label">One Water Sample ID</label>
+							<div class="col-sm-4">
+								<input class="form-control " id="one_water_sample_id" name="one_water_sample_id" value="<?php echo $one_water_sample_id ?>"  disabled>
+							</div>
 						</div>
 
-						<label for="classification_name" class="col-sm-2 control-label">Type Of Sample</label>
-						<div class="col-sm-4">
-							<input class="form-control " id="classification_name" name="classification_name" value="<?php echo $classification_name ?>"  disabled>
-						</div>
-					</div>
+						<div class="form-group">
+							<label for="initial" class="col-sm-2 control-label">Received Lab</label>
+							<div class="col-sm-4">
+								<input class="form-control " id="initial" name="initial" value="<?php echo $initial ?>"  disabled>
+							</div>
 
-					<div class="form-group">
-						<label for="date_arrival" class="col-sm-2 control-label">Date arrival</label>
-						<div class="col-sm-4">
-							<input class="form-control " id="date_arrival" name="date_arrival" value="<?php echo $date_arrival ?>" disabled>
-						</div>
-
-						<label for="time_arrival" class="col-sm-2 control-label">Time arrival</label>
-						<div class="col-sm-4">
-							<input class="form-control " id="time_arrival" name="time_arrival" value="<?php echo $time_arrival ?>"  disabled>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label for="date_collected" class="col-sm-2 control-label">Date Collected</label>
-						<div class="col-sm-4">
-							<input class="form-control " id="date_collected" name="date_collected" value="<?php echo $date_collected ?>" disabled>
+							<label for="classification_name" class="col-sm-2 control-label">Type Of Sample</label>
+							<div class="col-sm-4">
+								<input class="form-control " id="classification_name" name="classification_name" value="<?php echo $classification_name ?>"  disabled>
+							</div>
 						</div>
 
-						<label for="time_collected" class="col-sm-2 control-label">Time Collected</label>
-						<div class="col-sm-4">
-							<input class="form-control " id="time_collected" name="time_collected" value="<?php echo $time_collected ?>"  disabled>
-						</div>
-					</div>
+						<div class="form-group">
+							<label for="date_arrival" class="col-sm-2 control-label">Date arrival</label>
+							<div class="col-sm-4">
+								<input class="form-control " id="date_arrival" name="date_arrival" value="<?php echo $date_arrival ?>" disabled>
+							</div>
 
-					<div class="form-group">
-						<label for="comments" class="col-sm-2 control-label">Comments</label>
-						<div class="col-sm-4">
-							<input class="form-control " id="comments" name="comments" value="<?php echo $comments ?>"  disabled>
-						</div>
-
-
-					</div>
-
-					<!-- <div class="form-group">
-						<label for="classification_name" class="col-sm-2 control-label">Type Of Classification</label>
-						<div class="col-sm-4">
-							<input class="form-control " id="classification_name" name="classification_name" value="<?php echo $classification_name ?>"  disabled>
+							<label for="time_arrival" class="col-sm-2 control-label">Time arrival</label>
+							<div class="col-sm-4">
+								<input class="form-control " id="time_arrival" name="time_arrival" value="<?php echo $time_arrival ?>"  disabled>
+							</div>
 						</div>
 
-						<div class="col-sm-4">
-							<input class="form-control " id="simple_barcode" type="hidden"  value="<?php echo $simple_barcode ?>"  disabled>
-						</div>
-					</div> -->
+						<div class="form-group">
+							<label for="date_collected" class="col-sm-2 control-label">Date Collected</label>
+							<div class="col-sm-4">
+								<input class="form-control " id="date_collected" name="date_collected" value="<?php echo $date_collected ?>" disabled>
+							</div>
 
-				</div><!-- /.box-body -->
+							<label for="time_collected" class="col-sm-2 control-label">Time Collected</label>
+							<div class="col-sm-4">
+								<input class="form-control " id="time_collected" name="time_collected" value="<?php echo $time_collected ?>"  disabled>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="comments" class="col-sm-2 control-label">Comments</label>
+							<div class="col-sm-4">
+								<input class="form-control " id="comments" name="comments" value="<?php echo $comments ?>"  disabled>
+							</div>
+						</div>
+
+					</div><!-- /.box-body -->
 				</form>
-
-				<div class="box-footer">
-
+			<div class="box-footer">
                 <!-- <div class="row"> -->
                     <div class="col-xs-12"> 
                         <div class="box box-primary box-solid">
-            
                             <div class="box-header">
                                 <h3 class="box-title">Detail Samples</h3>
                             </div>
 							<div class="box-body pad table-responsive">
-							<?php
-								$lvl = $this->session->userdata('id_user_level');
-								if ($lvl != 7){
-									echo "<button class='btn btn-primary' id='addtombol_det'><i class='fa fa-wpforms' aria-hidden='true'></i> New Data</button>";
-								}
-							?>
-							
-							<!-- <button class='btn btn-warning' id='addtombol'><i class="fa fa-wpforms" aria-hidden="true"></i> New Data</button> -->
-							<table id="example2" class="table display table-bordered table-striped" width="100%">
-								<thead>
-									<tr>
-										<th>Testing Type</th>
-										<th>Action</th>
-									</tr>
-								</thead>
-							</table>
+								<?php
+									$lvl = $this->session->userdata('id_user_level');
+									if ($lvl != 7){
+										echo "<button class='btn btn-primary' id='addtombol_det'><i class='fa fa-wpforms' aria-hidden='true'></i> New Data</button>";
+									}
+								?>
+								<table id="example2" class="table display table-bordered table-striped" width="100%">
+									<thead>
+										<tr>
+											<th>Testing Type</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+								</table>
 							</div> <!--/.box-body  -->
-
                         </div><!-- box box-warning -->
                     </div>  <!--col-xs-12 -->
                 <!--</div> row -->    
@@ -132,9 +111,7 @@
 						</button>
 					</div>
 				</div>
-				
-				</div> <!--footer -->
-
+			</div> <!--footer -->
 		</div>
 	</section>
 </div>
@@ -206,8 +183,8 @@
 					</div>
 				</div>
 				<div class="modal-footer clearfix">
-					<button type="button" id="confirm-save" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
-					<button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+					<button type="button" id="confirm-save" class="btn btn-primary"><i class="fa fa-save"></i> Ok</button>
+					<button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> No</button>
 				</div>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
@@ -408,18 +385,18 @@
 					var isChecked = $checkbox.prop('checked');
 					// var inputId = 'input_testing_type_' + $checkbox.val();
 					
-					// Menonaktifkan kotak centang lainnya
+					// disable other checkboxes
 					if (isChecked) {
 						$('.testing-type-checkbox').not($checkbox).prop('checked', false);
 					}
 
-					// Mengubah atribut required pada input terkait
+					// Change atribute related to checkbox
 					// $('#' + inputId).prop('required', isChecked);
 					
-					// Mengubah tampilan label
+					// Change label
 					// updateCheckboxLabelStyling();
 
-					// Menghapus gaya strikethrough dari label jika tidak ada yang tercentang
+					// delete strikethrough style if checkbox is unchecked
 					if ($('.testing-type-checkbox:checked').length === 0) {
 						$('.testing-type-checkbox').each(function() {
 							var $label = $(this).closest('label');

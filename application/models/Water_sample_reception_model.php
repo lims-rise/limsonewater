@@ -328,26 +328,6 @@ class Water_sample_reception_model extends CI_Model
         $this->db->where($this->id, $id);
         $this->db->delete($this->table);
     }
-
-    // Function insert detail 2
-    function insert_det2($data)
-    {
-        $this->db->insert('sample_reception_testing', $data);
-    }
-    
-    // Function update detail 2
-    function update_det2($id, $data)
-    {
-        $this->db->where('testing_id', $id);
-        $this->db->update('sample_reception_testing', $data);
-    }
-
-    // Function delete detail 2
-    function delete_detail2($id)
-    {
-        $this->db->where('testing_id', $id);
-        $this->db->delete('sample_reception_testing');
-    }
     
 
     function getClassification(){
@@ -389,61 +369,6 @@ class Water_sample_reception_model extends CI_Model
         // return $response;
       }
 
-    //   function getBarcode() {
-    //     $response = array();
-    //     $this->db->select('*');
-    //     $this->db->where('flag', '0');
-    //     $labTech = $this->db->get('ref_barcode');
-    //     $response = $labTech->result_array();
-    //     return $response;
-    //   }
-
-    // public function get_last_barcode($testing_type) {
-        
-    //     $prefix = '';
-    //     $year = date('y');
-    //     switch ($testing_type) {
-    //         case 'Extraction':
-    //             $prefix = 'X';
-    //             break;
-    //         case 'Campylobacter-MPN':
-    //             $prefix = 'N';
-    //             break;
-    //         case 'Campylobacter-PCR':
-    //             $prefix = 'R';
-    //             break;
-    //         case 'Salmonella':
-    //             $prefix = 'S';
-    //             break;
-    //         case 'Colilert':
-    //             $prefix = 'C';
-    //             break;
-    //         case 'Enterolert':
-    //             $prefix = 'E';
-    //             break;
-    //         case 'Moisture_content':
-    //             $prefix = 'W';
-    //             break;
-    //         case 'qPCR':
-    //             $prefix = 'Q';
-    //             break;
-    //         case 'TAC_Array':
-    //             $prefix = 'T';
-    //             break;
-    //         default:
-    //             return null;
-    //     }
-    
-    //     $this->db->select_max('CAST(SUBSTR(sample_barcode, ' . (strlen($prefix . $year) + 1) . ') AS UNSIGNED)', 'max_barcode');
-    //     $this->db->like('sample_barcode', $prefix . $year, 'after');
-    //     $query = $this->db->get('sample_reception_sample');
-    //     $result = $query->row();
-    
-    //     $next_number = $result->max_barcode + 1;
-    //     $padded_number = str_pad($next_number, 5, '0', STR_PAD_LEFT);
-    //     return $prefix . $year . $padded_number;
-    // }
-
     public function get_last_barcode($testing_type) {
         // Get prefix and format from database
         $this->db->select('prefix');
@@ -477,6 +402,16 @@ class Water_sample_reception_model extends CI_Model
         $query = $this->db->get('ref_testing');
         $result = $query->row();
         return $result ? $result->testing_type : null;
+    }
+
+
+    public function get_sample_testing($id) {
+        $response = array();
+        $this->db->select('*');
+        $this->db->where('sample_id', $id);
+        $query = $this->db->get('sample_reception_sample');
+        $response = $query->result_array();
+        return $response; 
     }
 
       
