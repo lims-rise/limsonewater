@@ -10,21 +10,21 @@
         
         <div class="box-body">
         <div style="padding-bottom: 10px;">
-<?php
-        $lvl = $this->session->userdata('id_user_level');
-        if ($lvl != 7){
-            echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Sample Type </button>";
-        }
-?>
+            <?php
+                    $lvl = $this->session->userdata('id_user_level');
+                    if ($lvl != 7){
+                        echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Sample Type </button>";
+                    }
+            ?>
         
-		<?php echo anchor(site_url('Ref_sampletype/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to CSV', 'class="btn btn-success"'); ?></div>
+		    <!-- <?php echo anchor(site_url('Ref_sampletype/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to CSV', 'class="btn btn-success"'); ?> -->
+        </div>
         <table class="table table-bordered table-striped tbody" id="mytable" style="width:100%">
             <thead>
                 <tr>
                     <!-- <th width="30px">No</th> -->
 		    <th>ID</th>
 		    <th>Sample type</th>
-		    <th>Objective</th>
 		    <th>Action</th>
                 </tr>
             </thead>
@@ -56,13 +56,6 @@
                     <div class="modal-body">
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
                         <input id="id_sampletype" name="id_sampletype" type="hidden" class="form-control input-sm">
-                        <!-- <div class="form-group">
-                            <label for="barcode_sample" class="col-sm-4 control-label">ID</label>
-                            <div class="col-sm-8">
-                                <input id="barcode_sample" name="barcode_sample" type="hidden" class="form-control" placeholder="Barcode Sample" required>
-                                <div class="val1tip"></div>
-                            </div>
-                        </div> -->
 
                         <div class="form-group">
                             <label for="sampletype" class="col-sm-4 control-label">Sample type</label>
@@ -70,26 +63,6 @@
                                 <input id="sampletype" name="sampletype" type="text" class="form-control" placeholder="Sample type" value="<?php echo date("Y-m-d"); ?>">
                             </div>
                             </div>
-
-                        <div class="form-group">
-                            <label for="obj" class="col-sm-4 control-label">Objective</label>
-                            <div class="col-sm-8">
-                            <select id='obj' name="obj" class="form-control">
-                                <option select disabled>-- Select answer --</option>
-								<option value='O3'>O3</option>
-								<option value='O2B'>O2B</option>
-								<option value='O2BW'>O2BW</option>
-								<option value='O2A'>O2A</option>
-                            </select>
-                            </div>
-                        </div>
-
-                        <!-- <div class="form-group">
-                            <label for="notes" class="col-sm-4 control-label">Notes</label>
-                            <div class="col-sm-8">
-                                <textarea id="notes" name="notes" class="form-control input-sm" placeholder="Notes"> </textarea>
-                            </div>
-                        </div> -->
                     </div>
                     <div class="modal-footer clearfix">
                         <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
@@ -262,7 +235,6 @@
                 // },
                 {"data": "id_sampletype"},
                 {"data": "sampletype"},
-                {"data": "obj"},
                 {
                     "data" : "action",
                     "orderable": false,
@@ -287,7 +259,6 @@
             $('#id_sampletype').val('');
             // $("#date_ended").datepicker("setDate",'now');
             $('#sampletype').val('');
-            $('#obj').val('');
             $('#compose-modal').modal('show');
         });
 
@@ -301,7 +272,6 @@
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Master Data - Update sample type<span id="my-another-cool-loader"></span>');
             $('#id_sampletype').val(data.id_sampletype);
             $('#sampletype').val(data.sampletype);
-            $('#obj').val(data.obj);
             $('#compose-modal').modal('show');
         });  
 

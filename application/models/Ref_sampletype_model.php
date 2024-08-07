@@ -17,7 +17,7 @@ class Ref_sampletype_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('id_sampletype, sampletype, obj');
+        $this->datatables->select('id_sampletype, sampletype');
         $this->datatables->from('ref_sampletype');
         // $this->datatables->where('lab', $this->session->userdata('lab'));
         $this->datatables->where('flag', '0');

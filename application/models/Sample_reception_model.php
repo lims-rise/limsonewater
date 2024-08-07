@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Water_sample_reception_model extends CI_Model
+class Sample_reception_model extends CI_Model
 {
 
     public $table = 'sample_reception';
@@ -18,25 +18,25 @@ class Water_sample_reception_model extends CI_Model
     // datatables
     function json() {
         $this->datatables->select('sample_reception.project_id, sample_reception.client, sample_reception.one_water_sample_id, sample_reception.id_person, ref_person.initial,
-        sample_reception.date_arrival, sample_reception.time_arrival,sample_reception.date_collected, sample_reception.time_collected, sample_reception.client_sample_id, ref_classification.classification_name, sample_reception.classification_id, 
+        sample_reception.date_arrival, sample_reception.time_arrival,sample_reception.date_collected, sample_reception.time_collected, sample_reception.client_sample_id, ref_sampletype.sampletype, sample_reception.id_sampletype, 
         sample_reception.comments, sample_reception.flag');
         $this->datatables->from('sample_reception');
-        $this->datatables->join('ref_classification', 'sample_reception.classification_id = ref_classification.classification_id', 'left');
+        $this->datatables->join('ref_sampletype', 'sample_reception.id_sampletype = ref_sampletype.id_sampletype', 'left');
         $this->datatables->join('ref_person', 'sample_reception.id_person = ref_person.id_person', 'left');
         // $this->datatables->where('Water_sample_reception.id_country', $this->session->userdata('lab'));
         $this->datatables->where('sample_reception.flag', '0');
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
-            $this->datatables->add_column('action', anchor(site_url('Water_sample_reception/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'project_id');
+            $this->datatables->add_column('action', anchor(site_url('Sample_reception/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'project_id');
         }
         else if (($lvl == 2) | ($lvl == 3)){
-            $this->datatables->add_column('action', anchor(site_url('Water_sample_reception/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
+            $this->datatables->add_column('action', anchor(site_url('Sample_reception/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
                 ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'project_id');
         }
         else {
-            $this->datatables->add_column('action', anchor(site_url('Water_sample_reception/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
+            $this->datatables->add_column('action', anchor(site_url('Sample_reception/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
                 ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                ".anchor(site_url('Water_sample_reception/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting project ID : $1 ?\')"'), 'project_id');
+                ".anchor(site_url('Sample_reception/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting project ID : $1 ?\')"'), 'project_id');
         }
         return $this->datatables->generate();
     }
@@ -56,15 +56,15 @@ class Water_sample_reception_model extends CI_Model
         $this->datatables->group_by('a.sample_id');
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
-            $this->datatables->add_column('action', anchor(site_url('Water_sample_reception/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'sample_id');
+            $this->datatables->add_column('action', anchor(site_url('Sample_reception/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'sample_id');
         }
         else if (($lvl == 2) | ($lvl == 3)){
-            $this->datatables->add_column('action', anchor(site_url('Water_sample_reception/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
+            $this->datatables->add_column('action', anchor(site_url('Sample_reception/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
                 ".'<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'sample_id');
         }
         else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                ".anchor(site_url('Water_sample_reception/delete_detail/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample ID : $1 ?\')"'), 'sample_id');
+                ".anchor(site_url('Sample_reception/delete_detail/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample ID : $1 ?\')"'), 'sample_id');
         }
         return $this->datatables->generate();
     }
@@ -85,7 +85,7 @@ class Water_sample_reception_model extends CI_Model
         }
         else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                ".anchor(site_url('Water_sample_reception/delete_detail2/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting this sample testing ID : $1?\')"'), 'testing_id');
+                ".anchor(site_url('Sample_reception/delete_detail2/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting this sample testing ID : $1?\')"'), 'testing_id');
             }
         return $this->datatables->generate();
     }
@@ -118,7 +118,7 @@ class Water_sample_reception_model extends CI_Model
     {
       $response = array();
       $this->db->select('*');
-      $this->db->join('ref_classification', 'sample_reception.classification_id=ref_classification.classification_id', 'left');
+      $this->db->join('ref_sampletype', 'sample_reception.id_sampletype=ref_sampletype.id_sampletype', 'left');
       $this->db->join('ref_person', 'sample_reception.id_person=ref_person.id_person', 'left');
       $this->db->where('sample_reception.project_id', $id);
       $this->db->where('sample_reception.flag', '0');
@@ -330,12 +330,12 @@ class Water_sample_reception_model extends CI_Model
     }
     
 
-    function getClassification(){
+    function getSampleType(){
         $response = array();
         $this->db->select('*');
         $this->db->where('flag', '0');
-        $this->db->order_by('classification_name');
-        $q = $this->db->get('ref_classification');
+        $this->db->order_by('sampletype', 'DESC');
+        $q = $this->db->get('ref_sampletype');
         $response = $q->result_array();
         return $response;
       }

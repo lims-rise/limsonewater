@@ -4,7 +4,7 @@
             <div class="col-xs-12">
                 <div class="box box-black box-solid">
                     <div class="box-header">
-                        <h3 class="box-title">Water | Sample reception </h3>
+                        <h3 class="box-title">Sample reception </h3>
                     </div>
                     <form role="form"  id="formKeg" method="post" class="form-horizontal">
                         <div class="box-body">
@@ -29,7 +29,8 @@
                                         echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Sample Reception</button>";
                                     }
                             ?>        
-                            <?php echo anchor(site_url('Water_sample_reception/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?></div>
+                            <!-- <?php echo anchor(site_url('Sample_reception/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?> -->
+                        </div>
                             <div class="table-responsive">
                                 <table class="table ho table-bordered table-striped tbody" id="mytable" style="width:100%">
                                     <thead>
@@ -68,9 +69,9 @@
             <div class="modal-content">
                     <div class="modal-header box">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="modal-title">Water sample reception | New</h4>
+                        <h4 class="modal-title" id="modal-title">Sample reception | New</h4>
                     </div>
-                    <form id="formSample"  action= <?php echo site_url('Water_sample_reception/save') ?> method="post" class="form-horizontal">
+                    <form id="formSample"  action= <?php echo site_url('Sample_reception/save') ?> method="post" class="form-horizontal">
                         <div class="modal-body">
                             <input id="mode" name="mode" type="hidden" class="form-control input-sm">
                             <!-- <input id="id_req" name="id_req" type="hidden" class="form-control input-sm"> -->
@@ -104,17 +105,17 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="classification_id" class="col-sm-4 control-label">Type of Sample</label>
+                                <label for="id_sampletype" class="col-sm-4 control-label">Type of Sample</label>
                                 <div class="col-sm-8" >
-                                <select id='classification_id' name="classification_id" class="form-control">
+                                <select id='id_sampletype' name="id_sampletype" class="form-control">
                                     <option>-- Select Type of Sample --</option>
                                     <?php
-                                    foreach($classification as $row){
-                                        if ($classification_id == $row['classification_id']) {
-                                            echo "<option value='".$row['classification_id']."' selected='selected'>".$row['classification_name']."</option>";
+                                    foreach($sampletype as $row){
+                                        if ($id_sampletype == $row['id_sampletype']) {
+                                            echo "<option value='".$row['id_sampletype']."' selected='selected'>".$row['sampletype']."</option>";
                                         }
                                         else {
-                                            echo "<option value='".$row['classification_id']."'>".$row['classification_name']."</option>";
+                                            echo "<option value='".$row['id_sampletype']."'>".$row['sampletype']."</option>";
                                         }
                                     }
                                         ?>
@@ -283,7 +284,7 @@
             // select: true;
             processing: true,
             serverSide: true,
-            ajax: {"url": "Water_sample_reception/json", "type": "POST"},
+            ajax: {"url": "Sample_reception/json", "type": "POST"},
             columns: [
                 // {
                 //     "data": "barcode_sample",
@@ -293,7 +294,7 @@
                 {"data": "client"},
                 {"data": "client_sample_id"},
                 {"data": "one_water_sample_id"},
-                {"data": "classification_name"},
+                {"data": "sampletype"},
                 {"data": "initial"},
                 {"data": "date_arrival"},
                 {"data": "time_arrival"},
@@ -321,7 +322,7 @@
 
         $('#addtombol').click(function() {
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> Water sample reception | New<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Sample reception | New<span id="my-another-cool-loader"></span>');
             $('#project_idx').val(project_id);
             $('#project_idx').attr('readonly', true);
             $('#clientx').val(client);
@@ -331,7 +332,7 @@
             $('#initial').val('');
             $('#id_person').val('');
             $('#client_sample_id').val('');
-            $('#classification_id').val('');
+            $('#id_sampletype').val('');
             $('#comments').val('');
             $('#compose-modal').modal('show');
         });
@@ -341,7 +342,7 @@
             let data = table.row(tr).data();
             console.log(data);
             $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Water sample reception | Update<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Sample reception | Update<span id="my-another-cool-loader"></span>');
             $('#project_idx').attr('readonly', true);
             $('#project_idx').val(data.project_id);
             $('#clientx').val(data.client);
@@ -352,7 +353,7 @@
             $('#date_arrival').val(data.date_arrival).trigger('change');
             $('#time_arrival').val(data.time_arrival).trigger('change');
             $('#client_sample_id').val(data.client_sample_id);
-            $('#classification_id').val(data.classification_id);
+            $('#id_sampletype').val(data.id_sampletype);
             $('#comments').val(data.comments);
             $('#compose-modal').modal('show');
         });  
