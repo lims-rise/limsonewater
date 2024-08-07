@@ -14,13 +14,13 @@ if (!defined('BASEPATH'))
 // use PhpOffice\PhpSpreadsheet\Spreadsheet;
 // use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
     
-class Water_sample_reception extends CI_Controller
+class Sample_reception extends CI_Controller
 {
     function __construct()
     {
         parent::__construct();
         is_login();
-        $this->load->model('Water_sample_reception_model');
+        $this->load->model('Sample_reception_model');
         $this->load->library('form_validation');        
 	    $this->load->library('datatables');
 	    $this->load->library('uuid');
@@ -28,37 +28,37 @@ class Water_sample_reception extends CI_Controller
 
     public function index()
     {
-        $data['classification'] = $this->Water_sample_reception_model->getClassification();
-        $data['labtech'] = $this->Water_sample_reception_model->getLabTech();
-        $data['project_id'] = $this->Water_sample_reception_model->generate_project_id();
-        $data['client'] = $this->Water_sample_reception_model->generate_client();
-        $data['one_water_sample_id'] = $this->Water_sample_reception_model->generate_one_water_sample_id();
-        $this->template->load('template','Water_sample_reception/index', $data);
+        $data['sampletype'] = $this->Sample_reception_model->getSampleType();
+        $data['labtech'] = $this->Sample_reception_model->getLabTech();
+        $data['project_id'] = $this->Sample_reception_model->generate_project_id();
+        $data['client'] = $this->Sample_reception_model->generate_client();
+        $data['one_water_sample_id'] = $this->Sample_reception_model->generate_one_water_sample_id();
+        $this->template->load('template','Sample_reception/index', $data);
     } 
     
     public function json() {
         header('Content-Type: application/json');
-        echo $this->Water_sample_reception_model->json();
+        echo $this->Sample_reception_model->json();
     }
 
     public function subjson() {
         $id = $this->input->get('id',TRUE);
         header('Content-Type: application/json');
-        echo $this->Water_sample_reception_model->subjson($id);
+        echo $this->Sample_reception_model->subjson($id);
     }
 
     public function subjson2() {
         $id2 = $this->input->get('id2',TRUE);
 
         header('Content-Type: application/json');
-        echo $this->Water_sample_reception_model->subjson2($id2);
+        echo $this->Sample_reception_model->subjson2($id2);
     }
 
     public function read($id)
     {
-        $data['testing_type'] = $this->Water_sample_reception_model->getTest();
+        $data['testing_type'] = $this->Sample_reception_model->getTest();
         // $data['barcode'] = $this->Water_sample_reception_model->getBarcode();
-        $row = $this->Water_sample_reception_model->get_detail($id);
+        $row = $this->Sample_reception_model->get_detail($id);
         if ($row) {
             $data = array(
                 'project_id' => $row->project_id,
@@ -70,13 +70,13 @@ class Water_sample_reception extends CI_Controller
                 'date_collected' => $row->date_collected,
                 'time_collected' => $row->time_collected,
                 'client_sample_id' => $row->client_sample_id,
-                'classification_name' => $row->classification_name,
+                'sampletype' => $row->sampletype,
                 'comments' => $row->comments,
-                'testing_type' => $this->Water_sample_reception_model->getTest(),
+                'testing_type' => $this->Sample_reception_model->getTest(),
                 // 'barcode' => $this->Water_sample_reception_model->getBarcode(),
             );
                 
-            $this->template->load('template','water_sample_reception/index_det', $data);
+            $this->template->load('template','Sample_reception/index_det', $data);
 
         }
         else {
@@ -87,16 +87,16 @@ class Water_sample_reception extends CI_Controller
 
     public function read2($id)
     {
-        $data['test'] = $this->Water_sample_reception_model->getTest();
-        $row = $this->Water_sample_reception_model->get_detail2($id);
+        $data['test'] = $this->Sample_reception_model->getTest();
+        $row = $this->Sample_reception_model->get_detail2($id);
         if ($row) {
             $data = array(
                 'project_id' => $row->project_id,
                 'sample_id' => $row->sample_id,
                 'sample_description' => $row->sample_description,
-                'test' => $this->Water_sample_reception_model->getTest(),
+                'test' => $this->Sample_reception_model->getTest(),
                 );
-                $this->template->load('template','water_sample_reception/index_det2', $data);
+                $this->template->load('template','Sample_reception/index_det2', $data);
         }
         else {
             // $this->template->load('template','Water_sample_reception/index_det');
@@ -112,7 +112,7 @@ class Water_sample_reception extends CI_Controller
         $date_arrival = $this->input->post('date_arrival', TRUE);
         $time_arrival = $this->input->post('time_arrival', TRUE);
         $client_sample_id = $this->input->post('client_sample_id', TRUE);
-        $classification_id = $this->input->post('classification_id', TRUE);
+        $id_sampletype = $this->input->post('id_sampletype', TRUE);
         $comments = $this->input->post('comments', TRUE);
         $date_collected = $this->input->post('date_collected',TRUE);
         $time_collected = $this->input->post('time_collected',TRUE);
@@ -124,7 +124,7 @@ class Water_sample_reception extends CI_Controller
                 'date_arrival' => $date_arrival,
                 'time_arrival' => $time_arrival,
                 'client_sample_id' => $client_sample_id,
-                'classification_id' => $classification_id,
+                'id_sampletype' => $id_sampletype,
                 'comments' => $comments,
                 'date_collected' => $date_collected,
                 'time_collected' => $time_collected,
@@ -134,7 +134,7 @@ class Water_sample_reception extends CI_Controller
                 'date_created' => $dt->format('Y-m-d H:i:s'),
             );
     
-            $this->Water_sample_reception_model->insert($data);
+            $this->Sample_reception_model->insert($data);
             $this->session->set_flashdata('message', 'Create Record Success');
 
         } else if ($mode == "edit") {
@@ -143,7 +143,7 @@ class Water_sample_reception extends CI_Controller
                 'date_arrival' => $date_arrival,
                 'time_arrival' => $time_arrival,
                 'client_sample_id' => $client_sample_id,
-                'classification_id' => $classification_id,
+                'id_sampletype' => $id_sampletype,
                 'comments' => $comments,
                 'date_collected' => $date_collected,
                 'time_collected' => $time_collected,
@@ -153,11 +153,11 @@ class Water_sample_reception extends CI_Controller
                 'date_created' => $dt->format('Y-m-d H:i:s'),
             );
 
-            $this->Water_sample_reception_model->update($project_id, $data);
+            $this->Sample_reception_model->update($project_id, $data);
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
-        redirect(site_url("Water_sample_reception"));
+        redirect(site_url("Sample_reception"));
     }
 
         public function savedetail() {
@@ -173,10 +173,10 @@ class Water_sample_reception extends CI_Controller
 
                     
                     foreach ($testing_types as $testing_type_id) {
-                        $testing_type_name = $this->Water_sample_reception_model->get_name_by_id($testing_type_id);
-                        $barcode = $this->Water_sample_reception_model->get_last_barcode($testing_type_name);
+                        $testing_type_name = $this->Sample_reception_model->get_name_by_id($testing_type_id);
+                        $barcode = $this->Sample_reception_model->get_last_barcode($testing_type_name);
 
-                        $sample_id = $this->Water_sample_reception_model->insert_det(array(
+                        $sample_id = $this->Sample_reception_model->insert_det(array(
                             'client_sample_id' => $client_sample_id,
                             'project_id' => $project_id2,
                             'testing_type_id' => $testing_type_id,
@@ -194,7 +194,7 @@ class Water_sample_reception extends CI_Controller
                         // var_dump($data_barcode);
                         // die();
         
-                        $this->Water_sample_reception_model->insert_barcode($data_barcode);
+                        $this->Sample_reception_model->insert_barcode($data_barcode);
                     }
                     $this->session->set_flashdata('message', 'Create Records Success');
                 } else {
@@ -204,13 +204,13 @@ class Water_sample_reception extends CI_Controller
                 if (is_array($testing_types)) {
             
                     // Get the old data
-                    $old_data = $this->Water_sample_reception_model->get_sample_testing($sample_id);
+                    $old_data = $this->Sample_reception_model->get_sample_testing($sample_id);
             
                     // Check if there are any changes
                     $changed = false;
                     foreach ($testing_types as $testing_type_id) {
-                        $testing_type_name = $this->Water_sample_reception_model->get_name_by_id($testing_type_id);
-                        $barcode = $this->Water_sample_reception_model->get_last_barcode($testing_type_name);
+                        $testing_type_name = $this->Sample_reception_model->get_name_by_id($testing_type_id);
+                        $barcode = $this->Sample_reception_model->get_last_barcode($testing_type_name);
             
                         // Check if the testing type is already in the old data
                         $old_testing_type_id = array_search($testing_type_name, array_column($old_data, 'testing_type_name'));
@@ -229,14 +229,14 @@ class Water_sample_reception extends CI_Controller
             
                     if ($changed) {
                         // Remove old barcodes related to this sample_id
-                        $this->Water_sample_reception_model->delete_barcode($sample_id);
+                        $this->Sample_reception_model->delete_barcode($sample_id);
             
                         foreach ($testing_types as $testing_type_id) {
-                            $testing_type_name = $this->Water_sample_reception_model->get_name_by_id($testing_type_id);
-                            $barcode = $this->Water_sample_reception_model->get_last_barcode($testing_type_name);
+                            $testing_type_name = $this->Sample_reception_model->get_name_by_id($testing_type_id);
+                            $barcode = $this->Sample_reception_model->get_last_barcode($testing_type_name);
             
                             // Update the sample_reception_sample with new data
-                            $this->Water_sample_reception_model->update_det($sample_id, array(
+                            $this->Sample_reception_model->update_det($sample_id, array(
                                 'client_sample_id' => $client_sample_id,
                                 'project_id' => $project_id2,
                                 'testing_type_id' => $testing_type_id,
@@ -251,7 +251,7 @@ class Water_sample_reception extends CI_Controller
                                 'barcode' => $barcode,
                             );
             
-                            $this->Water_sample_reception_model->insert_barcode($data_barcode);
+                            $this->Sample_reception_model->insert_barcode($data_barcode);
                         }
                         $this->session->set_flashdata('message', 'Update Records Success');
                     } else {
@@ -261,30 +261,30 @@ class Water_sample_reception extends CI_Controller
                     $this->session->set_flashdata('message', 'No Testing Types Selected');
                 }
             }
-            redirect(site_url("Water_sample_reception/read/" . $project_id2));
+            redirect(site_url("Sample_reception/read/" . $project_id2));
         }
   
 
     public function delete($id) 
     {
-        $row = $this->Water_sample_reception_model->get_by_id($id);
+        $row = $this->Sample_reception_model->get_by_id($id);
         $data = array(
             'flag' => 1,
             );
 
         if ($row) {
-            $this->Water_sample_reception_model->update($id, $data);
+            $this->Sample_reception_model->update($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
-            redirect(site_url('Water_sample_reception'));
+            redirect(site_url('Sample_reception'));
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
-            redirect(site_url('Water_sample_reception'));
+            redirect(site_url('Sample_reception'));
         }
     }
 
     public function delete_detail($id) 
     {
-        $row = $this->Water_sample_reception_model->get_by_id_detail($id);
+        $row = $this->Sample_reception_model->get_by_id_detail($id);
 
         if ($row) {
             $id_parent = $row->project_id; // Retrieve project_id before updating the record
@@ -292,13 +292,13 @@ class Water_sample_reception extends CI_Controller
                 'flag' => 1,
             );
     
-            $this->Water_sample_reception_model->update_det($id, $data);
+            $this->Sample_reception_model->update_det($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
     
-        redirect(site_url('Water_sample_reception/read/'.$id_parent));
+        redirect(site_url('Sample_reception/read/'.$id_parent));
     }
 
 
@@ -308,8 +308,8 @@ class Water_sample_reception extends CI_Controller
         $data = array();
         if (is_array($testing_types)) {
             foreach ($testing_types as $testing_type_id) {
-                $testing_type_name = $this->Water_sample_reception_model->get_name_by_id($testing_type_id);
-                $barcode = $this->Water_sample_reception_model->get_last_barcode($testing_type_name);
+                $testing_type_name = $this->Sample_reception_model->get_name_by_id($testing_type_id);
+                $barcode = $this->Sample_reception_model->get_last_barcode($testing_type_name);
     
                 $data[] = array(
                     'testing_type_name' => $testing_type_name,

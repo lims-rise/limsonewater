@@ -2,7 +2,7 @@
 	<section class="content">
 		<div class="box box-black box-solid">
 			<div class="box-header with-border">
-				<h3 class="box-title">Water sample reception | New samples</h3>
+				<h3 class="box-title">Sample reception | New samples</h3>
 			</div>
 				<form role="form"  id="formKeg" method="post" class="form-horizontal">
 					<div class="box-body">
@@ -38,9 +38,9 @@
 								<input class="form-control " id="initial" name="initial" value="<?php echo $initial ?>"  disabled>
 							</div>
 
-							<label for="classification_name" class="col-sm-2 control-label">Type Of Sample</label>
+							<label for="sampletype" class="col-sm-2 control-label">Type Of Sample</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="classification_name" name="classification_name" value="<?php echo $classification_name ?>"  disabled>
+								<input class="form-control " id="sampletype" name="sampletype" value="<?php echo $sampletype ?>"  disabled>
 							</div>
 						</div>
 
@@ -106,7 +106,7 @@
 
 				<div class="form-group">
 					<div class="modal-footer clearfix">
-						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('Water_sample_reception'); ?>';">
+						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('Sample_reception'); ?>';">
 							<i class="fa fa-times"></i> Close
 						</button>
 					</div>
@@ -125,7 +125,7 @@
                         <h4 class="modal-title" id="modal-title-detail">
 							<span id="my-another-cool-loader"></span></h4>
                     </div>
-                    <form id="formDetail" action=<?php echo site_url('Water_sample_reception/savedetail') ?> method="post" class="form-horizontal">
+                    <form id="formDetail" action=<?php echo site_url('Sample_reception/savedetail') ?> method="post" class="form-horizontal">
                         <div class="modal-body">
 						<div class="form-group">
                                 <div class="col-sm-9">
@@ -217,7 +217,7 @@
 			}
 
 			$.ajax({
-				url: '<?php echo site_url('Water_sample_reception/get_confirmation_data'); ?>',
+				url: '<?php echo site_url('Sample_reception/get_confirmation_data'); ?>',
 				type: 'POST',
 				data: { testing_type_id: selectedTestingTypes },
 				dataType: 'json',
@@ -325,7 +325,7 @@
 			// ordering: false,
 			info: false,
 			bFilter: false,
-			ajax: {"url": "../../Water_sample_reception/subjson?id="+client_sample_id, "type": "POST"},
+			ajax: {"url": "../../Sample_reception/subjson?id="+client_sample_id, "type": "POST"},
 			columns: [
 				{"data": "testing_type"}, 
 				{
