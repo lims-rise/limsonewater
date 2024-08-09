@@ -77,46 +77,32 @@ class Sample_extraction extends CI_Controller
         else {
             // $this->template->load('template','Sample_extraction/index_det');
         }
-    } 
-
-    public function read2($id)
-    {
-        $data['test'] = $this->Sample_extraction_model->getTest();
-        $row = $this->Sample_extraction_model->get_detail2($id);
-        if ($row) {
-            $data = array(
-                'project_id' => $row->project_id,
-                'sample_id' => $row->sample_id,
-                'sample_description' => $row->sample_description,
-                'test' => $this->Sample_extraction_model->getTest(),
-                );
-                $this->template->load('template','Sample_extraction/index_det2', $data);
-        }
-        else {
-            // $this->template->load('template','Sample_extraction/index_det');
-        }
-    }     
+    }  
 
     public function save() {
         $mode = $this->input->post('mode', TRUE);
-        $project_id = $this->input->post('project_id', TRUE);
+        $barcode_sample = $this->input->post('barcode_sample', TRUE);
         $dt = new DateTime();
     
         if ($mode == "insert") {
             $data = array(
-                'one_water_sample_id' => $this->input->post('one_water_sample_id', TRUE),
-                'id_person' => $this->input->post('id_person', TRUE),
                 'barcode_sample' => $this->input->post('barcode_sample', TRUE),
-                'time_arrival' => $this->input->post('time_arrival', TRUE),
-                'client_sample_id' => $this->input->post('client_sample_id', TRUE),
-                'classification_id' => $this->input->post('classification_id', TRUE),
-                'comments' => trim($this->input->post('comments', TRUE)),
-                'date_collected' => $this->input->post('date_collected',TRUE),
-                'time_collected' => $this->input->post('time_collected',TRUE),
-                'flag' => '0',
+                'id_one_water_sample' => $this->input->post('id_one_water_sample', TRUE),
+                'id_person' => $this->input->post('id_person', TRUE),
+                'date_extraction' => $this->input->post('date_extraction', TRUE),
+                'weight' => $this->input->post('weight', TRUE),
+                'volume' => $this->input->post('volume', TRUE),
+                'id_kit' => $this->input->post('id_kit', TRUE),
+                'kit_lot' => $this->input->post('kit_lot', TRUE),
+                'barcode_tube' => $this->input->post('barcode_tube', TRUE),
+                'dna_concentration' => $this->input->post('dna_concentration', TRUE),
+                'cryobox' => $this->input->post('cryobox', TRUE),
+                'id_location' => $this->input->post('id_loc', TRUE),
+                'comments' => $this->input->post('comments', TRUE),
                 'uuid' => $this->uuid->v4(),
                 'user_created' => $this->session->userdata('id_users'),
                 'date_created' => $dt->format('Y-m-d H:i:s'),
+                'flag' => '0',
             );
     
             $this->Sample_extraction_model->insert($data);
@@ -125,21 +111,23 @@ class Sample_extraction extends CI_Controller
         } else if ($mode == "edit") {
             $data = array(
                 // 'client_id' => $this->input->post('client_id', TRUE),
+                'id_one_water_sample' => $this->input->post('id_one_water_sample', TRUE),
                 'id_person' => $this->input->post('id_person', TRUE),
-                'date_arrival' => $this->input->post('date_arrival', TRUE),
-                'time_arrival' => $this->input->post('time_arrival', TRUE),
-                'client_sample_id' => $this->input->post('client_sample_id', TRUE),
-                'classification_id' => $this->input->post('classification_id', TRUE),
-                'comments' => trim($this->input->post('comments', TRUE)),
-                'date_collected' => $this->input->post('date_collected',TRUE),
-                'time_collected' => $this->input->post('time_collected',TRUE),
-                'flag' => '0',
-                'uuid' => $this->uuid->v4(),
-                'user_created' => $this->session->userdata('id_users'),
-                'date_created' => $dt->format('Y-m-d H:i:s'),
+                'date_extraction' => $this->input->post('date_extraction', TRUE),
+                'weight' => $this->input->post('weight', TRUE),
+                'volume' => $this->input->post('volume', TRUE),
+                'id_kit' => $this->input->post('id_kit', TRUE),
+                'kit_lot' => $this->input->post('kit_lot', TRUE),
+                'barcode_tube' => $this->input->post('barcode_tube', TRUE),
+                'dna_concentration' => $this->input->post('dna_concentration', TRUE),
+                'cryobox' => $this->input->post('cryobox', TRUE),
+                'id_location' => $this->input->post('id_loc', TRUE),
+                'comments' => $this->input->post('comments', TRUE),
+                'user_updated' => $this->session->userdata('id_users'),
+                'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
 
-            $this->Sample_extraction_model->update($project_id, $data);
+            $this->Sample_extraction_model->update($barcode_sample, $data);
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     

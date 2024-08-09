@@ -2179,7 +2179,7 @@ INFO - 2024-08-07 10:02:59 --> Session: Class initialized using 'files' driver.
 INFO - 2024-08-07 10:02:59 --> Controller Class Initialized
 INFO - 2024-08-07 10:02:59 --> Model Class Initialized
 INFO - 2024-08-07 10:02:59 --> Form Validation Class Initialized
-ERROR - 2024-08-07 10:02:59 --> Query error: Unknown column 'ref_classification.classification_name' in 'field list' - Invalid query: SELECT `sample_reception`.`project_id`, `sample_reception`.`client`, `sample_reception`.`one_water_sample_id`, `sample_reception`.`id_person`, `ref_person`.`initial`, `sample_reception`.`date_arrival`, `sample_reception`.`time_arrival`, `sample_reception`.`date_collected`, `sample_reception`.`time_collected`, `sample_reception`.`client_sample_id`, `ref_classification`.`classification_name`, `sample_reception`.`classification_id`, `sample_reception`.`comments`, `sample_reception`.`flag`
+ERROR - 2024-08-07 10:02:59 --> Query error: Unknown column 'ref_classification.classification_name' in 'field list' - Invalid query: SELECT `sample_reception`.`project_id`, `sample_reception`.`client`, `sample_reception`.`id_one_water_sample`, `sample_reception`.`id_person`, `ref_person`.`initial`, `sample_reception`.`date_arrival`, `sample_reception`.`time_arrival`, `sample_reception`.`date_collected`, `sample_reception`.`time_collected`, `sample_reception`.`client_sample_id`, `ref_classification`.`classification_name`, `sample_reception`.`classification_id`, `sample_reception`.`comments`, `sample_reception`.`flag`
 FROM `sample_reception`
 LEFT JOIN `ref_sampletype` ON `sample_reception`.`classification_id` = `ref_classification`.`classification_id`
 LEFT JOIN `ref_person` ON `sample_reception`.`id_person` = `ref_person`.`id_person`
@@ -2248,7 +2248,7 @@ INFO - 2024-08-07 10:05:57 --> Session: Class initialized using 'files' driver.
 INFO - 2024-08-07 10:05:57 --> Controller Class Initialized
 INFO - 2024-08-07 10:05:57 --> Model Class Initialized
 INFO - 2024-08-07 10:05:57 --> Form Validation Class Initialized
-ERROR - 2024-08-07 10:05:57 --> Query error: Unknown column 'ref_classification.classification_name' in 'field list' - Invalid query: SELECT `sample_reception`.`project_id`, `sample_reception`.`client`, `sample_reception`.`one_water_sample_id`, `sample_reception`.`id_person`, `ref_person`.`initial`, `sample_reception`.`date_arrival`, `sample_reception`.`time_arrival`, `sample_reception`.`date_collected`, `sample_reception`.`time_collected`, `sample_reception`.`client_sample_id`, `ref_classification`.`classification_name`, `sample_reception`.`classification_id`, `sample_reception`.`comments`, `sample_reception`.`flag`
+ERROR - 2024-08-07 10:05:57 --> Query error: Unknown column 'ref_classification.classification_name' in 'field list' - Invalid query: SELECT `sample_reception`.`project_id`, `sample_reception`.`client`, `sample_reception`.`id_one_water_sample`, `sample_reception`.`id_person`, `ref_person`.`initial`, `sample_reception`.`date_arrival`, `sample_reception`.`time_arrival`, `sample_reception`.`date_collected`, `sample_reception`.`time_collected`, `sample_reception`.`client_sample_id`, `ref_classification`.`classification_name`, `sample_reception`.`classification_id`, `sample_reception`.`comments`, `sample_reception`.`flag`
 FROM `sample_reception`
 LEFT JOIN `ref_sampletype` ON `sample_reception`.`classification_id` = `ref_classification`.`classification_id`
 LEFT JOIN `ref_person` ON `sample_reception`.`id_person` = `ref_person`.`id_person`
@@ -8692,7 +8692,7 @@ INFO - 2024-08-07 10:22:38 --> Session: Class initialized using 'files' driver.
 INFO - 2024-08-07 10:22:38 --> Controller Class Initialized
 INFO - 2024-08-07 10:22:38 --> Model Class Initialized
 INFO - 2024-08-07 10:22:38 --> Form Validation Class Initialized
-ERROR - 2024-08-07 10:22:38 --> Query error: Unknown column 'sample_extraction.sampletype' in 'field list' - Invalid query: SELECT `sample_extraction`.`barcode_sample`, `sample_extraction`.`one_water_sample_id`, `ref_person`.`initial`, `sample_extraction`.`sampletype`, `sample_extraction`.`date_extraction`, `sample_extraction`.`weight`, `sample_extraction`.`kit_id`, `sample_extraction`.`kit_lot`, `sample_extraction`.`barcode_tube`, `sample_extraction`.`dna_concentration`, `sample_extraction`.`cryobox`, `sample_extraction`.`location_id`, `sample_extraction`.`flag`
+ERROR - 2024-08-07 10:22:38 --> Query error: Unknown column 'sample_extraction.sampletype' in 'field list' - Invalid query: SELECT `sample_extraction`.`barcode_sample`, `sample_extraction`.`id_one_water_sample`, `ref_person`.`initial`, `sample_extraction`.`sampletype`, `sample_extraction`.`date_extraction`, `sample_extraction`.`weight`, `sample_extraction`.`kit_id`, `sample_extraction`.`kit_lot`, `sample_extraction`.`barcode_tube`, `sample_extraction`.`dna_concentration`, `sample_extraction`.`cryobox`, `sample_extraction`.`location_id`, `sample_extraction`.`flag`
 FROM `sample_extraction`
 LEFT JOIN `ref_person` ON `sample_extraction`.`id_person` = `ref_person`.`id_person`
 LEFT JOIN `ref_sampletype` ON `sample_extraction`.`id_sampletype` = `ref_sampletype`.`id_sampletype`

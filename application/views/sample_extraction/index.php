@@ -61,9 +61,9 @@
                         <!-- <input id="id_req" name="id_req" type="hidden" class="form-control input-sm"> -->
 
                         <div class="form-group">
-                            <label for="one_water_sample_id" class="col-sm-4 control-label">One Water Sample ID</label>
+                            <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
                             <div class="col-sm-8">
-                                <input id="one_water_sample_id" name="one_water_sample_id" placeholder="One Water Sample ID" type="text" class="form-control">
+                                <input id="id_one_water_sample" name="id_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control">
                             </div>
                         </div>
 
@@ -261,7 +261,7 @@
         });        
 
         $('#compose-modal').on('shown.bs.modal', function () {
-			$('#one_water_sample_id').focus();
+			$('#id_one_water_sample').focus();
             // $('#budget_req').on('input', function() {
             //     formatNumber(this);
             //     });
@@ -379,7 +379,7 @@
                 //     "orderable": false
                 // },
                 {"data": "barcode_sample"},
-                {"data": "one_water_sample_id"},
+                {"data": "id_one_water_sample"},
                 {"data": "initial"},
                 {"data": "sampletype"},
                 {"data": "date_extraction"},
@@ -413,7 +413,7 @@
             $('#mode').val('insert');
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Water sample reception | New<span id="my-another-cool-loader"></span>');
             // $('#project_idx').hide();
-            $('#one_water_sample_id').val('');
+            $('#id_one_water_sample').val('');
             $('#id_person').val('');
             $('#barcode_sample').val('');
             $('#sampletype').val('');
@@ -429,7 +429,7 @@
             $('#id_shelf').val('');
             $('#id_rack').val('');
             $('#id_draw').val('');
-            $('#comments').val('');
+            // $('#comments').val('');
             $('#compose-modal').modal('show');
         });
 
@@ -441,8 +441,8 @@
             $('#mode').val('edit');
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Water sample reception | Update<span id="my-another-cool-loader"></span>');
             // $('#project_idx').show();
-            $('#one_water_sample_id').attr('readonly', true);
-            $('#one_water_sample_id').val(data.one_water_sample_id);
+            $('#id_one_water_sample').attr('readonly', true);
+            $('#id_one_water_sample').val(data.id_one_water_sample);
             $('#id_person').val(data.id_person).trigger('change');
             $('#barcode_sample').val(data.barcode_sample);
             $('#sampletype').val(data.sampletype);

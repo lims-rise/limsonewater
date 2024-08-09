@@ -17,13 +17,16 @@ class Sample_extraction_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('sample_extraction.barcode_sample, sample_extraction.one_water_sample_id, ref_person.initial,
+        $this->datatables->select('sample_extraction.barcode_sample, sample_extraction.id_one_water_sample, ref_person.initial,
         ref_sampletype.sampletype, sample_extraction.date_extraction, sample_extraction.weight, sample_extraction.volume, 
-        ref_kit.kit,, sample_extraction.kit_lot, sample_extraction.barcode_tube, sample_extraction.dna_concentration, 
-        sample_extraction.cryobox, sample_extraction.id_location, sample_extraction.flag');
+        ref_kit.kit, sample_extraction.kit_lot, sample_extraction.barcode_tube, sample_extraction.dna_concentration, 
+        sample_extraction.cryobox, sample_extraction.id_location, sample_extraction.comments, sample_extraction.flag');
         $this->datatables->from('sample_extraction');
         $this->datatables->join('ref_person', 'sample_extraction.id_person = ref_person.id_person', 'left');
-        $this->datatables->join('ref_sampletype', 'sample_extraction.id_sampletype = ref_sampletype.id_sampletype', 'left');
+        $this->datatables->join('ref_barcode', 'ref_barcode.barcode = sample_extraction.barcode_sample', 'left');
+        $this->datatables->join('sample_reception_sample', 'ref_barcode.sample_id = sample_reception_sample.sample_id', 'left');
+        $this->datatables->join('sample_reception', 'sample_reception_sample.project_id = sample_reception.project_id', 'left');
+        $this->datatables->join('ref_sampletype', 'sample_reception.id_sampletype = ref_sampletype.id_sampletype', 'left');
         $this->datatables->join('ref_kit', 'sample_extraction.id_kit = ref_kit.id_kit', 'left');
         // $this->datatables->where('Sample_extraction.id_country', $this->session->userdata('lab'));
         $this->datatables->where('sample_extraction.flag', '0');
@@ -104,145 +107,88 @@ class Sample_extraction_model extends CI_Model
     //         return '24-00001';
     //     }
     // }
-    public function get_latest_project_id() {
-        $this->db->select('project_id');
-        $this->db->order_by('project_id', 'DESC');
-        $this->db->limit(1);
-        $query = $this->db->get('sample_reception');
+    // public function get_latest_project_id() {
+    //     $this->db->select('project_id');
+    //     $this->db->order_by('project_id', 'DESC');
+    //     $this->db->limit(1);
+    //     $query = $this->db->get('sample_reception');
 
-        // Check if there is a previous project_id
-        if ($query->num_rows() > 0) {
-            return $query->row()->project_id;
-        } else {
-            return null;
-        }
-    }
+    //     // Check if there is a previous project_id
+    //     if ($query->num_rows() > 0) {
+    //         return $query->row()->project_id;
+    //     } else {
+    //         return null;
+    //     }
+    // }
 
-    // Function to generate the next project_id
-    public function generate_project_id() {
-        $latest_id = $this->get_latest_project_id();
-        $current_year = date('y'); // Get two last digits of current year
-        $prefix = 'MU' . $current_year; // Prefix consist of MU and two last digits of current year
+    // // Function to generate the next project_id
+    // public function generate_project_id() {
+    //     $latest_id = $this->get_latest_project_id();
+    //     $current_year = date('y'); // Get two last digits of current year
+    //     $prefix = 'MU' . $current_year; // Prefix consist of MU and two last digits of current year
     
-        if ($latest_id) {
-            if (strpos($latest_id, $prefix) === 0) {
-                $number = intval(substr($latest_id, strlen($prefix))) + 1;
-            } else {
-                $number = 1;
-            }
-        } else {
-            $number = 1;
-        }
-        $new_id = sprintf('%s%05d', $prefix, $number);
-        return $new_id;
-    }
+    //     if ($latest_id) {
+    //         if (strpos($latest_id, $prefix) === 0) {
+    //             $number = intval(substr($latest_id, strlen($prefix))) + 1;
+    //         } else {
+    //             $number = 1;
+    //         }
+    //     } else {
+    //         $number = 1;
+    //     }
+    //     $new_id = sprintf('%s%05d', $prefix, $number);
+    //     return $new_id;
+    // }
 
-    // Function to get the latest client
-    public function get_latest_client() {
-        $this->db->select('client');
-        $this->db->order_by('project_id', 'DESC');
-        $this->db->limit(1);
-        $query = $this->db->get('sample_reception');
+    // // Function to get the latest client
+    // public function get_latest_client() {
+    //     $this->db->select('client');
+    //     $this->db->order_by('project_id', 'DESC');
+    //     $this->db->limit(1);
+    //     $query = $this->db->get('sample_reception');
 
-        // Check if there is a previous client
-        if ($query->num_rows() > 0) {
-            return $query->row()->client;
-        } else {
-            return null;
-        }
-    }
+    //     // Check if there is a previous client
+    //     if ($query->num_rows() > 0) {
+    //         return $query->row()->client;
+    //     } else {
+    //         return null;
+    //     }
+    // }
 
-    // Function to generate the next client
-    public function generate_client() {
-        $latest_id = $this->get_latest_client();
-        $prefix = 'CLT'; // Prefix consist of CLT
+    // // Function to generate the next client
+    // public function generate_client() {
+    //     $latest_id = $this->get_latest_client();
+    //     $prefix = 'CLT'; // Prefix consist of CLT
 
-        if ($latest_id) {
-            if (strpos($latest_id, $prefix) === 0) {
-                $number = intval(substr($latest_id, strlen($prefix))) + 1;
-            } else {
-                $number = 1;
-            }
-        } else {
-            $number = 1;
-        }
-        $new_id = sprintf('%s%05d', $prefix, $number);
-        return $new_id;
+    //     if ($latest_id) {
+    //         if (strpos($latest_id, $prefix) === 0) {
+    //             $number = intval(substr($latest_id, strlen($prefix))) + 1;
+    //         } else {
+    //             $number = 1;
+    //         }
+    //     } else {
+    //         $number = 1;
+    //     }
+    //     $new_id = sprintf('%s%05d', $prefix, $number);
+    //     return $new_id;
 
-    }
-
-    // Function to get the latest one_water_sample_id
-    public function get_latest_one_water_sample_id() {
-        $this->db->select('one_water_sample_id');
-        $this->db->order_by('project_id', 'DESC');
-        $this->db->limit(1);
-        $query = $this->db->get('sample_reception');
-
-        // Check if there is a previous client
-        if ($query->num_rows() > 0) {
-            return $query->row()->one_water_sample_id;
-        } else {
-            return null;
-        }
-    }
-
-    // Function to generate the next one_water_sample_id
-    public function generate_one_water_sample_id() {
-        $latest_id = $this->get_latest_one_water_sample_id();
-        $current_year = date('y'); // Get two last digits of current year
-        $prefix = 'P' . $current_year; // Prefix consist of P and two last digits of current year
-
-        if ($latest_id) {
-            if (strpos($latest_id, $prefix) === 0) {
-                $number = intval(substr($latest_id, strlen($prefix))) + 1;
-            } else {
-                $number = 1;
-            }
-        } else {
-            $number = 1;
-        }
-        $new_id = sprintf('%s%05d', $prefix, $number);
-        return $new_id;
-
-    }
-    
+    // }
 
     // Fuction insert data
     public function insert($data) {
-        $data['project_id'] = $this->generate_project_id();
-        $data['client'] = $this->generate_client();
-        $data['one_water_sample_id'] = $this->generate_one_water_sample_id();
-        $this->db->insert('sample_reception',  $data);
+        // $data['project_id'] = $this->generate_project_id();
+        // $data['client'] = $this->generate_client();
+        // $data['id_one_water_sample'] = $this->generate_id_one_water_sample();
+        $this->db->insert('sample_extraction', $data);
     }
     
 
     // Function update data
     function update($id, $data)
     {
-        $this->db->where('project_id', $id);
-        $this->db->update('sample_reception', $data);
+        $this->db->where('barcode_sample', $id);
+        $this->db->update($this->$table, $data);
     }
-
-    // function insert_det($data)
-    // {
-    //     $this->db->insert('sample_reception_sample', $data);
-    // }
-
-    // function insert_barcode($data) {
-    //     $this->db->insert('ref_barcode', $data);
-    // }
-    
-    // function update_det($id, $data)
-    // {
-    //     $this->db->where('sample_id', $id);
-    //     $this->db->update('sample_reception_sample', $data);
-    // }
-
-    // function update_barcode($id, $data)
-    // {
-    //     $this->db->where('barcode_id', $id);
-    //     $this->db->update('ref_barcode', $data);
-    // }
 
     function insert_det($data) {
         $this->db->insert('sample_reception_sample', $data);
