@@ -20,7 +20,8 @@ class Sample_extraction_model extends CI_Model
         $this->datatables->select('sample_extraction.barcode_sample, sample_extraction.id_one_water_sample, ref_person.initial,
         ref_sampletype.sampletype, sample_extraction.date_extraction, sample_extraction.weight, sample_extraction.volume, 
         ref_kit.kit, sample_extraction.kit_lot, sample_extraction.barcode_tube, sample_extraction.dna_concentration, 
-        sample_extraction.cryobox, sample_extraction.id_location, sample_extraction.comments, sample_extraction.flag');
+        sample_extraction.cryobox, sample_extraction.id_location, sample_extraction.comments, sample_extraction.flag, 
+        sample_extraction.id_person, sample_extraction.id_kit, sample_extraction.id_location');
         $this->datatables->from('sample_extraction');
         $this->datatables->join('ref_person', 'sample_extraction.id_person = ref_person.id_person', 'left');
         $this->datatables->join('ref_barcode', 'ref_barcode.barcode = sample_extraction.barcode_sample', 'left');
@@ -32,17 +33,28 @@ class Sample_extraction_model extends CI_Model
         $this->datatables->where('sample_extraction.flag', '0');
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
-            $this->datatables->add_column('action', anchor(site_url('Sample_extraction/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'project_id');
+            $this->datatables->add_column('action', 'barcode_sample');
         }
         else if (($lvl == 2) | ($lvl == 3)){
-            $this->datatables->add_column('action', anchor(site_url('Sample_extraction/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
-                ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'project_id');
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'barcode_sample');
         }
         else {
-            $this->datatables->add_column('action', anchor(site_url('Sample_extraction/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
-                ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                ".anchor(site_url('Sample_extraction/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting project ID : $1 ?\')"'), 'project_id');
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
+                ".anchor(site_url('Sample_extraction/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting project ID : $1 ?\')"'), 'barcode_sample');
         }
+
+        // if ($lvl == 7){
+        //     $this->datatables->add_column('action', anchor(site_url('Sample_extraction/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'barcode_sample');
+        // }
+        // else if (($lvl == 2) | ($lvl == 3)){
+        //     $this->datatables->add_column('action', anchor(site_url('Sample_extraction/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
+        //         ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'barcode_sample');
+        // }
+        // else {
+        //     $this->datatables->add_column('action', anchor(site_url('Sample_extraction/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
+        //         ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
+        //         ".anchor(site_url('Sample_extraction/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting project ID : $1 ?\')"'), 'barcode_sample');
+        // }
         return $this->datatables->generate();
     }
 
@@ -70,18 +82,18 @@ class Sample_extraction_model extends CI_Model
         return $this->db->get('sample_reception_testing')->row();
     }
 
-    function get_detail($id)
-    {
-      $response = array();
-      $this->db->select('*');
-      $this->db->join('ref_classification', 'sample_reception.classification_id=ref_classification.classification_id', 'left');
-      $this->db->join('ref_person', 'sample_reception.id_person=ref_person.id_person', 'left');
-      $this->db->where('sample_reception.project_id', $id);
-      $this->db->where('sample_reception.flag', '0');
-      $q = $this->db->get('sample_reception');
-      $response = $q->row();
-      return $response;
-    }
+    // function get_detail($id)
+    // {
+    //   $response = array();
+    //   $this->db->select('*');
+    //   $this->db->join('ref_classification', 'sample_reception.classification_id=ref_classification.classification_id', 'left');
+    //   $this->db->join('ref_person', 'sample_reception.id_person=ref_person.id_person', 'left');
+    //   $this->db->where('sample_reception.project_id', $id);
+    //   $this->db->where('sample_reception.flag', '0');
+    //   $q = $this->db->get('sample_reception');
+    //   $response = $q->row();
+    //   return $response;
+    // }
 
     function get_detail2($id)
     {
@@ -227,12 +239,24 @@ class Sample_extraction_model extends CI_Model
         $this->db->where($this->id, $id);
         $this->db->delete($this->table);
     }
-    
+
+    function barcode_check($id){
+        $q = $this->db->query('
+        select ref_barcode.barcode, ref_sampletype.sampletype
+        from ref_barcode 
+        left join sample_reception_sample on ref_barcode.sample_id = sample_reception_sample.sample_id
+        left join sample_reception on sample_reception_sample.project_id = sample_reception.project_id
+        left join ref_sampletype on sample_reception.id_sampletype = ref_sampletype.id_sampletype
+        WHERE ref_barcode.barcode = "'.$id.'"
+        ');        
+        $response = $q->result_array();
+        return $response;
+      }    
+
     function load_freez($id){
         $q = $this->db->query('
         SELECT freezer, shelf, rack, rack_level FROM ref_location
         WHERE id_location = "'.$id.'"
-        AND lab = "'.$this->session->userdata('lab').'" 
         ');        
         $response = $q->result_array();
         return $response;

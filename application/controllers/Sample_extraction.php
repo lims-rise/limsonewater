@@ -56,28 +56,28 @@ class Sample_extraction extends CI_Controller
         echo $this->Sample_extraction_model->subjson2($id2);
     }
 
-    public function read($id)
-    {
-        $data['testing_type'] = $this->Sample_extraction_model->getTest();
-        $row = $this->Sample_extraction_model->get_detail($id);
-        if ($row) {
-            $data = array(
-                'project_id' => $row->project_id,
-                // 'client_name' => $row->client_name,
-                'initial' => $row->initial,
-                'date_arrival' => $row->date_arrival,
-                'time_arrival' => $row->time_arrival,
-                'client_sample_id' => $row->client_sample_id,
-                'classification_name' => $row->classification_name,
-                'comments' => $row->comments,
-                'testing_type' => $this->Sample_extraction_model->getTest(),
-                );
-                $this->template->load('template','Sample_extraction/index_det', $data);
-        }
-        else {
-            // $this->template->load('template','Sample_extraction/index_det');
-        }
-    }  
+    // public function read($id)
+    // {
+    //     $data['testing_type'] = $this->Sample_extraction_model->getTest();
+    //     $row = $this->Sample_extraction_model->get_detail($id);
+    //     if ($row) {
+    //         $data = array(
+    //             'project_id' => $row->project_id,
+    //             // 'client_name' => $row->client_name,
+    //             'initial' => $row->initial,
+    //             'date_arrival' => $row->date_arrival,
+    //             'time_arrival' => $row->time_arrival,
+    //             'client_sample_id' => $row->client_sample_id,
+    //             'classification_name' => $row->classification_name,
+    //             'comments' => $row->comments,
+    //             'testing_type' => $this->Sample_extraction_model->getTest(),
+    //             );
+    //             $this->template->load('template','Sample_extraction/index_det', $data);
+    //     }
+    //     else {
+    //         // $this->template->load('template','Sample_extraction/index_det');
+    //     }
+    // }  
 
     public function save() {
         $mode = $this->input->post('mode', TRUE);
@@ -267,6 +267,13 @@ class Sample_extraction extends CI_Controller
     //     redirect(site_url("Sample_extraction/read2/".$sample_id));
     // }
     
+    public function barcode_check() 
+    {
+        $id = $this->input->get('id1');
+        $data = $this->Sample_extraction_model->barcode_check($id);
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
 
     public function load_freez() 
     {
@@ -275,7 +282,7 @@ class Sample_extraction extends CI_Controller
         header('Content-Type: application/json');
         echo json_encode($data);
     }
-
+    
     public function get_freez() 
     {
         $id1 = $this->input->get('id1');

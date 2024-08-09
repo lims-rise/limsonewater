@@ -21,7 +21,7 @@
             <thead>
                 <tr>
 		    <th>Barcode sample</th>
-		    <th>Onewater sample id</th>
+		    <th>ID Onewater Sample</th>
 		    <th>Lab Tech</th>
             <th>Sample type</th>
 		    <th>Date extraction</th>
@@ -287,6 +287,55 @@
             }, 3000);                            
         });
 
+
+        $('#barcode_sample').on("change", function() {
+            data1 = $('#barcode_sample').val();
+            // // ckbar = data1.substring(0,5).toUpperCase();
+            // // ckarray = ["N-S2-", "F-S2-", "N-F0-", "F-F0-"];
+            // // ck = $.inArray(ckbar, ckarray);
+            // if (ck == -1) {
+            $.ajax({
+                type: "GET",
+                url: "Sample_extraction/barcode_check?id1="+data1,
+                // data:data1,
+                dataType: "json",
+                success: function(data) {
+                    // var barcode = '';
+                    if (data.length == 0) {
+                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> is not on reception or is already in the system !</span>');
+                        $('.val1tip').tooltipster('content', tip);
+                        $('.val1tip').tooltipster('show');
+                        $('#barcode_sample').focus();
+                        $('#barcode_sample').val('');     
+                        $('#volume_filtered').val('0');     
+                        $('#barcode_falcon2').attr('readonly', true);
+                        $('#barcode_sample').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#barcode_sample').css({'background-color' : '#FFFFFF'});
+                            setTimeout(function(){
+                                $('#barcode_sample').css({'background-color' : '#FFE6E7'});
+                                setTimeout(function(){
+                                    $('#barcode_sample').css({'background-color' : '#FFFFFF'});
+                                }, 300);                            
+                            }, 300);
+                        }, 300);
+                        // barcode = data[0].barcode_sample;
+                        // console.log(data);
+                    }
+                    else {
+                        $('#sampletype').val(data[0].sampletype);    
+                        // $('#volume_filtered').val(data[0].vol);     
+                        // if (data[0].stype == 'Bootsocks') {
+                        //     $('#barcode_falcon2').attr('readonly', false);
+                        // } else {
+                        //     $('#barcode_falcon2').attr('readonly', true);
+                        // }
+                    }
+                }
+            });
+        // }
+        });
+
         var base_url = location.hostname;
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
         {
@@ -413,11 +462,13 @@
             $('#mode').val('insert');
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Water sample reception | New<span id="my-another-cool-loader"></span>');
             // $('#project_idx').hide();
+            $('#id_one_water_sample').attr('readonly', false);
             $('#id_one_water_sample').val('');
             $('#id_person').val('');
             $('#barcode_sample').val('');
+            $('#sampletype').attr('readonly', true);
             $('#sampletype').val('');
-            $('#date_extraction').val('');
+            // $('#date_extraction').val('');
             $('#weight').val('');
             $('#volume').val('');
             $('#id_kit').val('');
@@ -445,6 +496,7 @@
             $('#id_one_water_sample').val(data.id_one_water_sample);
             $('#id_person').val(data.id_person).trigger('change');
             $('#barcode_sample').val(data.barcode_sample);
+            $('#sampletype').attr('readonly', true);
             $('#sampletype').val(data.sampletype);
             $('#date_extraction').val(data.date_extraction).trigger('change');
             $('#weight').val(data.weight);
