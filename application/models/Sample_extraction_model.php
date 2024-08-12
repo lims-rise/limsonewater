@@ -248,6 +248,7 @@ class Sample_extraction_model extends CI_Model
         left join sample_reception on sample_reception_sample.project_id = sample_reception.project_id
         left join ref_sampletype on sample_reception.id_sampletype = ref_sampletype.id_sampletype
         WHERE ref_barcode.barcode = "'.$id.'"
+        AND ref_barcode.barcode NOT IN (SELECT barcode_sample FROM sample_extraction)
         ');        
         $response = $q->result_array();
         return $response;
@@ -274,6 +275,15 @@ class Sample_extraction_model extends CI_Model
         $response = $q->result_array();
         return $response;
       } 
+
+      function getID_one(){
+        $q = $this->db->query('
+        SELECT id_one_water_sample FROM sample_reception
+        WHERE id_one_water_sample NOT IN (SELECT id_one_water_sample FROM sample_extraction)
+        AND flag = 0');        
+        $response = $q->result_array();
+        return $response;
+      }
 
       function getKit(){
         $response = array();
