@@ -7,7 +7,7 @@ class Sample_reception_model extends CI_Model
 {
 
     public $table = 'sample_reception';
-    public $id = 'project_id';
+    public $id = 'id_project';
     public $order = 'DESC';
 
     function __construct()
@@ -17,8 +17,8 @@ class Sample_reception_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('sample_reception.project_id, sample_reception.client, sample_reception.one_water_sample_id, sample_reception.id_person, ref_person.initial,
-        sample_reception.date_arrival, sample_reception.time_arrival,sample_reception.date_collected, sample_reception.time_collected, sample_reception.client_sample_id, ref_sampletype.sampletype, sample_reception.id_sampletype, 
+        $this->datatables->select('sample_reception.id_project, sample_reception.client, sample_reception.id_one_water_sample, sample_reception.id_person, ref_person.initial,
+        sample_reception.date_arrival, sample_reception.time_arrival,sample_reception.date_collected, sample_reception.time_collected, sample_reception.id_client_sample, ref_sampletype.sampletype, sample_reception.id_sampletype, 
         sample_reception.comments, sample_reception.flag');
         $this->datatables->from('sample_reception');
         $this->datatables->join('ref_sampletype', 'sample_reception.id_sampletype = ref_sampletype.id_sampletype', 'left');
@@ -27,16 +27,16 @@ class Sample_reception_model extends CI_Model
         $this->datatables->where('sample_reception.flag', '0');
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
-            $this->datatables->add_column('action', anchor(site_url('Sample_reception/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'project_id');
+            $this->datatables->add_column('action', anchor(site_url('Sample_reception/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_project');
         }
         else if (($lvl == 2) | ($lvl == 3)){
             $this->datatables->add_column('action', anchor(site_url('Sample_reception/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
-                ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'project_id');
+                ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_project');
         }
         else {
             $this->datatables->add_column('action', anchor(site_url('Sample_reception/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
                 ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                ".anchor(site_url('Sample_reception/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting project ID : $1 ?\')"'), 'project_id');
+                ".anchor(site_url('Sample_reception/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting project ID : $1 ?\')"'), 'id_project');
         }
         return $this->datatables->generate();
     }
@@ -47,48 +47,48 @@ class Sample_reception_model extends CI_Model
         // $this->datatables->join('ref_testing b', 'a.testing_type_id = b.testing_type_id', 'right');
         // $this->datatables->where('a.flag', '0');
         // $this->datatables->where('a.project_id', $id);
-        $this->datatables->select('a.sample_id, a.project_id, a.client_sample_id,  a.testing_type_id, b.testing_type AS testing_type, a.flag');
+        $this->datatables->select('a.id_sample, a.id_project, a.id_client_sample,  a.id_testing_type, b.testing_type AS testing_type, a.flag');
         $this->datatables->from('sample_reception_sample a');
-        $this->datatables->join('ref_testing b', 'FIND_IN_SET(b.testing_type_id, a.testing_type_id)', 'left');
+        $this->datatables->join('ref_testing b', 'FIND_IN_SET(b.id_testing_type, a.id_testing_type)', 'left');
         // $this->datatables->join('ref_barcode c', 'a.sample_id = c.testing_type_id', 'left');
         $this->datatables->where('a.flag', '0');
-        $this->datatables->where('a.client_sample_id', $id);
-        $this->datatables->group_by('a.sample_id');
+        $this->datatables->where('a.id_client_sample', $id);
+        $this->datatables->group_by('a.id_sample');
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
-            $this->datatables->add_column('action', anchor(site_url('Sample_reception/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'sample_id');
+            $this->datatables->add_column('action', anchor(site_url('Sample_reception/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_sample');
         }
         else if (($lvl == 2) | ($lvl == 3)){
             $this->datatables->add_column('action', anchor(site_url('Sample_reception/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
-                ".'<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'sample_id');
+                ".'<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_sample');
         }
         else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                ".anchor(site_url('Sample_reception/delete_detail/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample ID : $1 ?\')"'), 'sample_id');
+                ".anchor(site_url('Sample_reception/delete_detail/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample ID : $1 ?\')"'), 'id_sample');
         }
         return $this->datatables->generate();
     }
 
-    function subjson2($id2) {
-        $this->datatables->select('a.testing_id, b.testing_type, a.date_collected, a.time_collected, a.no_submitted, a.flag');
-        $this->datatables->from('sample_reception_testing a');
-        $this->datatables->join('ref_testing b', 'a.testing_type_id = b.testing_type_id', 'left');
-        $this->datatables->where('a.sample_id', $id2);
-        $this->datatables->where('a.flag', '0');
+    // function subjson2($id2) {
+    //     $this->datatables->select('a.testing_id, b.testing_type, a.date_collected, a.time_collected, a.no_submitted, a.flag');
+    //     $this->datatables->from('sample_reception_testing a');
+    //     $this->datatables->join('ref_testing b', 'a.testing_type_id = b.testing_type_id', 'left');
+    //     $this->datatables->where('a.sample_id', $id2);
+    //     $this->datatables->where('a.flag', '0');
 
-        $lvl = $this->session->userdata('id_user_level');
-        if ($lvl == 7){
-            $this->datatables->add_column('action', '', 'testing_id');
-        }
-        else if (($lvl == 2) | ($lvl == 3)){
-            $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'testing_id');
-        }
-        else {
-            $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                ".anchor(site_url('Sample_reception/delete_detail2/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting this sample testing ID : $1?\')"'), 'testing_id');
-            }
-        return $this->datatables->generate();
-    }
+    //     $lvl = $this->session->userdata('id_user_level');
+    //     if ($lvl == 7){
+    //         $this->datatables->add_column('action', '', 'testing_id');
+    //     }
+    //     else if (($lvl == 2) | ($lvl == 3)){
+    //         $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'testing_id');
+    //     }
+    //     else {
+    //         $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
+    //             ".anchor(site_url('Sample_reception/delete_detail2/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting this sample testing ID : $1?\')"'), 'testing_id');
+    //         }
+    //     return $this->datatables->generate();
+    // }
 
     function get_by_id($id)
     {
@@ -100,19 +100,19 @@ class Sample_reception_model extends CI_Model
 
     function get_by_id_detail($id)
     {
-        $this->db->where('sample_id', $id);
+        $this->db->where('id_sample', $id);
         $this->db->where('flag', '0');
         // $this->db->where('lab', $this->session->userdata('lab'));
         return $this->db->get('sample_reception_sample')->row();
     }
 
     // Function get detail2 by id
-    function get_by_id_detail2($id)
-    {
-        $this->db->where('testing_id', $id);
-        $this->db->where('flag', '0');
-        return $this->db->get('sample_reception_testing')->row();
-    }
+    // function get_by_id_detail2($id)
+    // {
+    //     $this->db->where('testing_id', $id);
+    //     $this->db->where('flag', '0');
+    //     return $this->db->get('sample_reception_testing')->row();
+    // }
 
     function get_detail($id)
     {
@@ -120,7 +120,7 @@ class Sample_reception_model extends CI_Model
       $this->db->select('*');
       $this->db->join('ref_sampletype', 'sample_reception.id_sampletype=ref_sampletype.id_sampletype', 'left');
       $this->db->join('ref_person', 'sample_reception.id_person=ref_person.id_person', 'left');
-      $this->db->where('sample_reception.project_id', $id);
+      $this->db->where('sample_reception.id_project', $id);
       $this->db->where('sample_reception.flag', '0');
       $q = $this->db->get('sample_reception');
       $response = $q->row();
@@ -131,7 +131,7 @@ class Sample_reception_model extends CI_Model
     {
       $response = array();
       $this->db->select('*');
-      $this->db->where('sample_reception_sample.sample_id', $id);
+      $this->db->where('sample_reception_sample.id_sample', $id);
       $this->db->where('sample_reception_sample.flag', '0');
       $q = $this->db->get('sample_reception_sample');
       $response = $q->row();
@@ -152,20 +152,20 @@ class Sample_reception_model extends CI_Model
     //     }
     // }
     public function get_latest_project_id() {
-        $this->db->select('project_id');
-        $this->db->order_by('project_id', 'DESC');
+        $this->db->select('id_project');
+        $this->db->order_by('id_project', 'DESC');
         $this->db->limit(1);
         $query = $this->db->get('sample_reception');
 
-        // Check if there is a previous project_id
+        // Check if there is a previous id_project
         if ($query->num_rows() > 0) {
-            return $query->row()->project_id;
+            return $query->row()->id_project;
         } else {
             return null;
         }
     }
 
-    // Function to generate the next project_id
+    // Function to generate the next id_project
     public function generate_project_id() {
         $latest_id = $this->get_latest_project_id();
         $current_year = date('y'); // Get two last digits of current year
@@ -187,7 +187,7 @@ class Sample_reception_model extends CI_Model
     // Function to get the latest client
     public function get_latest_client() {
         $this->db->select('client');
-        $this->db->order_by('project_id', 'DESC');
+        $this->db->order_by('id_project', 'DESC');
         $this->db->limit(1);
         $query = $this->db->get('sample_reception');
 
@@ -218,16 +218,16 @@ class Sample_reception_model extends CI_Model
 
     }
 
-    // Function to get the latest one_water_sample_id
+    // Function to get the latest id_one_water_sample
     public function get_latest_one_water_sample_id() {
-        $this->db->select('one_water_sample_id');
-        $this->db->order_by('project_id', 'DESC');
+        $this->db->select('id_one_water_sample');
+        $this->db->order_by('id_project', 'DESC');
         $this->db->limit(1);
         $query = $this->db->get('sample_reception');
 
         // Check if there is a previous client
         if ($query->num_rows() > 0) {
-            return $query->row()->one_water_sample_id;
+            return $query->row()->id_one_water_sample;
         } else {
             return null;
         }
@@ -256,9 +256,9 @@ class Sample_reception_model extends CI_Model
 
     // Fuction insert data
     public function insert($data) {
-        $data['project_id'] = $this->generate_project_id();
+        $data['id_project'] = $this->generate_project_id();
         $data['client'] = $this->generate_client();
-        $data['one_water_sample_id'] = $this->generate_one_water_sample_id();
+        $data['id_one_water_sample'] = $this->generate_one_water_sample_id();
         $this->db->insert('sample_reception',  $data);
     }
     
@@ -266,7 +266,7 @@ class Sample_reception_model extends CI_Model
     // Function update data
     function update($id, $data)
     {
-        $this->db->where('project_id', $id);
+        $this->db->where('id_project', $id);
         $this->db->update('sample_reception', $data);
     }
 
@@ -297,7 +297,7 @@ class Sample_reception_model extends CI_Model
     }
 
     function update_det($id, $data) {
-        $this->db->where('sample_id', $id);
+        $this->db->where('id_sample', $id);
         $this->db->update('sample_reception_sample', $data);
     }
 
@@ -305,14 +305,14 @@ class Sample_reception_model extends CI_Model
         $this->db->insert('ref_barcode', $data);
     }
 
-    function update_barcode($sample_id, $testing_type_id, $data) {
-        $this->db->where('sample_id', $sample_id);
-        $this->db->where('testing_type_id', $testing_type_id);
+    function update_barcode($id_sample, $id_testing_type, $data) {
+        $this->db->where('id_sample', $id_sample);
+        $this->db->where('id_testing_type', $id_testing_type);
         $this->db->update('ref_barcode', $data);
     }
 
-    function delete_barcode($sample_id) {
-        $this->db->delete('ref_barcode', array('sample_id' => $sample_id));
+    function delete_barcode($id_sample) {
+        $this->db->delete('ref_barcode', array('id_sample' => $id_sample));
     }
 
 
@@ -398,7 +398,7 @@ class Sample_reception_model extends CI_Model
 
     public function get_name_by_id($id) {
         $this->db->select('testing_type');
-        $this->db->where('testing_type_id', $id);
+        $this->db->where('id_testing_type', $id);
         $query = $this->db->get('ref_testing');
         $result = $query->row();
         return $result ? $result->testing_type : null;
@@ -408,7 +408,7 @@ class Sample_reception_model extends CI_Model
     public function get_sample_testing($id) {
         $response = array();
         $this->db->select('*');
-        $this->db->where('sample_id', $id);
+        $this->db->where('id_sample', $id);
         $query = $this->db->get('sample_reception_sample');
         $response = $query->result_array();
         return $response; 

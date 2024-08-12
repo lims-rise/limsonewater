@@ -1,5 +1,4 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
-
 INFO - 2024-08-12 09:11:57 --> Config Class Initialized
 INFO - 2024-08-12 09:11:57 --> Hooks Class Initialized
 DEBUG - 2024-08-12 09:11:57 --> UTF-8 Support Enabled

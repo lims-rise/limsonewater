@@ -30,9 +30,9 @@ class Sample_reception extends CI_Controller
     {
         $data['sampletype'] = $this->Sample_reception_model->getSampleType();
         $data['labtech'] = $this->Sample_reception_model->getLabTech();
-        $data['project_id'] = $this->Sample_reception_model->generate_project_id();
+        $data['id_project'] = $this->Sample_reception_model->generate_project_id();
         $data['client'] = $this->Sample_reception_model->generate_client();
-        $data['one_water_sample_id'] = $this->Sample_reception_model->generate_one_water_sample_id();
+        $data['id_one_water_sample'] = $this->Sample_reception_model->generate_one_water_sample_id();
         $this->template->load('template','Sample_reception/index', $data);
     } 
     
@@ -61,15 +61,15 @@ class Sample_reception extends CI_Controller
         $row = $this->Sample_reception_model->get_detail($id);
         if ($row) {
             $data = array(
-                'project_id' => $row->project_id,
+                'id_project' => $row->id_project,
                 'client' => $row->client,
-                'one_water_sample_id' => $row->one_water_sample_id,
+                'id_one_water_sample' => $row->id_one_water_sample,
                 'initial' => $row->initial,
                 'date_arrival' => $row->date_arrival,
                 'time_arrival' => $row->time_arrival,
                 'date_collected' => $row->date_collected,
                 'time_collected' => $row->time_collected,
-                'client_sample_id' => $row->client_sample_id,
+                'id_client_sample' => $row->id_client_sample,
                 'sampletype' => $row->sampletype,
                 'comments' => $row->comments,
                 'testing_type' => $this->Sample_reception_model->getTest(),
@@ -91,8 +91,8 @@ class Sample_reception extends CI_Controller
         $row = $this->Sample_reception_model->get_detail2($id);
         if ($row) {
             $data = array(
-                'project_id' => $row->project_id,
-                'sample_id' => $row->sample_id,
+                'id_project' => $row->id_project,
+                'id_sample' => $row->id_sample,
                 'sample_description' => $row->sample_description,
                 'test' => $this->Sample_reception_model->getTest(),
                 );
@@ -105,13 +105,13 @@ class Sample_reception extends CI_Controller
 
     public function save() {
         $mode = $this->input->post('mode', TRUE);
-        $project_id = $this->input->post('project_idx', TRUE);
+        $id_project = $this->input->post('idx_project', TRUE);
         $dt = new DateTime();
 
         $id_person = $this->input->post('id_person', TRUE);
         $date_arrival = $this->input->post('date_arrival', TRUE);
         $time_arrival = $this->input->post('time_arrival', TRUE);
-        $client_sample_id = $this->input->post('client_sample_id', TRUE);
+        $id_client_sample = $this->input->post('id_client_sample', TRUE);
         $id_sampletype = $this->input->post('id_sampletype', TRUE);
         $comments = $this->input->post('comments', TRUE);
         $date_collected = $this->input->post('date_collected',TRUE);
@@ -123,7 +123,7 @@ class Sample_reception extends CI_Controller
                 'id_person' => $id_person,
                 'date_arrival' => $date_arrival,
                 'time_arrival' => $time_arrival,
-                'client_sample_id' => $client_sample_id,
+                'id_client_sample' => $id_client_sample,
                 'id_sampletype' => $id_sampletype,
                 'comments' => $comments,
                 'date_collected' => $date_collected,
@@ -142,7 +142,7 @@ class Sample_reception extends CI_Controller
                 'id_person' => $id_person,
                 'date_arrival' => $date_arrival,
                 'time_arrival' => $time_arrival,
-                'client_sample_id' => $client_sample_id,
+                'id_client_sample' => $id_client_sample,
                 'id_sampletype' => $id_sampletype,
                 'comments' => $comments,
                 'date_collected' => $date_collected,
@@ -153,7 +153,7 @@ class Sample_reception extends CI_Controller
                 'date_created' => $dt->format('Y-m-d H:i:s'),
             );
 
-            $this->Sample_reception_model->update($project_id, $data);
+            $this->Sample_reception_model->update($id_project, $data);
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
@@ -162,32 +162,32 @@ class Sample_reception extends CI_Controller
 
         public function savedetail() {
             $mode = $this->input->post('mode_det', TRUE);
-            $sample_id = $this->input->post('sample_id', TRUE);
-            $client_sample_id = $this->input->post('client_sample_idx', TRUE);
-            $project_id2 = $this->input->post('project_id2', TRUE);
-            $testing_types = $this->input->post('testing_type_id', TRUE);
+            $id_sample = $this->input->post('id_sample', TRUE);
+            $id_client_sample = $this->input->post('idx_client_sample', TRUE);
+            $id2_project = $this->input->post('id2_project', TRUE);
+            $testing_types = $this->input->post('id_testing_type', TRUE);
             $dt = new DateTime();
         
             if ($mode == "insert") {
                 if (is_array($testing_types)) {
 
                     
-                    foreach ($testing_types as $testing_type_id) {
-                        $testing_type_name = $this->Sample_reception_model->get_name_by_id($testing_type_id);
+                    foreach ($testing_types as $id_testing_type) {
+                        $testing_type_name = $this->Sample_reception_model->get_name_by_id($id_testing_type);
                         $barcode = $this->Sample_reception_model->get_last_barcode($testing_type_name);
 
-                        $sample_id = $this->Sample_reception_model->insert_det(array(
-                            'client_sample_id' => $client_sample_id,
-                            'project_id' => $project_id2,
-                            'testing_type_id' => $testing_type_id,
+                        $id_sample = $this->Sample_reception_model->insert_det(array(
+                            'id_client_sample' => $id_client_sample,
+                            'id_project' => $id2_project,
+                            'id_testing_type' => $id_testing_type,
                             'uuid' => $this->uuid->v4(),
                             'user_created' => $this->session->userdata('id_users'),
                             'date_created' => $dt->format('Y-m-d H:i:s'),
                         ));
         
                         $data_barcode = array(
-                            'sample_id' => $sample_id,
-                            'testing_type_id' => $testing_type_id,
+                            'id_sample' => $id_sample,
+                            'id_testing_type' => $id_testing_type,
                             'barcode' => $barcode,
                         );
 
@@ -204,19 +204,19 @@ class Sample_reception extends CI_Controller
                 if (is_array($testing_types)) {
             
                     // Get the old data
-                    $old_data = $this->Sample_reception_model->get_sample_testing($sample_id);
+                    $old_data = $this->Sample_reception_model->get_sample_testing($id_sample);
             
                     // Check if there are any changes
                     $changed = false;
-                    foreach ($testing_types as $testing_type_id) {
-                        $testing_type_name = $this->Sample_reception_model->get_name_by_id($testing_type_id);
+                    foreach ($testing_types as $id_testing_type) {
+                        $testing_type_name = $this->Sample_reception_model->get_name_by_id($id_testing_type);
                         $barcode = $this->Sample_reception_model->get_last_barcode($testing_type_name);
             
                         // Check if the testing type is already in the old data
-                        $old_testing_type_id = array_search($testing_type_name, array_column($old_data, 'testing_type_name'));
-                        if ($old_testing_type_id !== false) {
+                        $old_id_testing_type = array_search($testing_type_name, array_column($old_data, 'testing_type_name'));
+                        if ($old_id_testing_type !== false) {
                             // Check if the barcode is different
-                            if ($old_data[$old_testing_type_id]['barcode'] != $barcode) {
+                            if ($old_data[$old_id_testing_type]['barcode'] != $barcode) {
                                 $changed = true;
                                 break;
                             }
@@ -229,25 +229,25 @@ class Sample_reception extends CI_Controller
             
                     if ($changed) {
                         // Remove old barcodes related to this sample_id
-                        $this->Sample_reception_model->delete_barcode($sample_id);
+                        $this->Sample_reception_model->delete_barcode($id_sample);
             
-                        foreach ($testing_types as $testing_type_id) {
-                            $testing_type_name = $this->Sample_reception_model->get_name_by_id($testing_type_id);
+                        foreach ($testing_types as $id_testing_type) {
+                            $testing_type_name = $this->Sample_reception_model->get_name_by_id($id_testing_type);
                             $barcode = $this->Sample_reception_model->get_last_barcode($testing_type_name);
             
                             // Update the sample_reception_sample with new data
-                            $this->Sample_reception_model->update_det($sample_id, array(
-                                'client_sample_id' => $client_sample_id,
-                                'project_id' => $project_id2,
-                                'testing_type_id' => $testing_type_id,
+                            $this->Sample_reception_model->update_det($id_sample, array(
+                                'id_client_sample' => $id_client_sample,
+                                'id_project' => $id2_project,
+                                'id_testing_type' => $id_testing_type,
                                 'uuid' => $this->uuid->v4(),
                                 'user_created' => $this->session->userdata('id_users'),
                                 'date_created' => $dt->format('Y-m-d H:i:s'),
                             ));
             
                             $data_barcode = array(
-                                'sample_id' => $sample_id,
-                                'testing_type_id' => $testing_type_id,
+                                'id_sample' => $id_sample,
+                                'id_testing_type' => $id_testing_type,
                                 'barcode' => $barcode,
                             );
             
@@ -261,7 +261,7 @@ class Sample_reception extends CI_Controller
                     $this->session->set_flashdata('message', 'No Testing Types Selected');
                 }
             }
-            redirect(site_url("Sample_reception/read/" . $project_id2));
+            redirect(site_url("Sample_reception/read/" . $id2_project));
         }
   
 
@@ -287,7 +287,7 @@ class Sample_reception extends CI_Controller
         $row = $this->Sample_reception_model->get_by_id_detail($id);
 
         if ($row) {
-            $id_parent = $row->project_id; // Retrieve project_id before updating the record
+            $id_parent = $row->id_project; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
@@ -303,12 +303,12 @@ class Sample_reception extends CI_Controller
 
 
     public function get_confirmation_data() {
-        $testing_types = $this->input->post('testing_type_id', TRUE);
+        $testing_types = $this->input->post('id_testing_type', TRUE);
     
         $data = array();
         if (is_array($testing_types)) {
-            foreach ($testing_types as $testing_type_id) {
-                $testing_type_name = $this->Sample_reception_model->get_name_by_id($testing_type_id);
+            foreach ($testing_types as $id_testing_type) {
+                $testing_type_name = $this->Sample_reception_model->get_name_by_id($id_testing_type);
                 $barcode = $this->Sample_reception_model->get_last_barcode($testing_type_name);
     
                 $data[] = array(
