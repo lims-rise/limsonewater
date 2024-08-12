@@ -9,14 +9,14 @@
 						<!-- <input type="hidden" class="form-control " id="id_req" name="id_req" value="<?php// echo $id_req ?>"> -->
 						<!-- <input id="id_req" name="id_req" type="hidden" class="form-control input-sm"> -->
 						<div class="form-group">
-							<label for="project_id" class="col-sm-2 control-label">COC</label>
+							<label for="id_project" class="col-sm-2 control-label">COC</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="project_id" name="project_id" value="<?php echo $project_id ?>"  disabled>
+								<input class="form-control " id="id_project" name="id_project" value="<?php echo $id_project ?>"  disabled>
 							</div>
 
-							<label for="client_sample_id" class="col-sm-2 control-label">Client Sample ID</label>
+							<label for="id_client_sample" class="col-sm-2 control-label">Client Sample ID</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="client_sample_id" name="client_sample_id" value="<?php echo $client_sample_id ?>"  disabled>
+								<input class="form-control " id="id_client_sample" name="id_client_sample" value="<?php echo $id_client_sample ?>"  disabled>
 							</div>
 						</div>
 
@@ -26,9 +26,9 @@
 								<input class="form-control " id="client" name="client" value="<?php echo $client ?>"  disabled>
 							</div>
 
-							<label for="one_water_sample_id" class="col-sm-2 control-label">One Water Sample ID</label>
+							<label for="id_one_water_sample" class="col-sm-2 control-label">One Water Sample ID</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="one_water_sample_id" name="one_water_sample_id" value="<?php echo $one_water_sample_id ?>"  disabled>
+								<input class="form-control " id="id_one_water_sample" name="id_one_water_sample" value="<?php echo $id_one_water_sample ?>"  disabled>
 							</div>
 						</div>
 
@@ -130,25 +130,25 @@
 						<div class="form-group">
                                 <div class="col-sm-9">
                                     <input id="mode_det" name="mode_det" type="hidden" class="form-control input-sm">
-									<input id="project_id2" name="project_id2" type="hidden" class="form-control input-sm">
-									<input id="client_sample_idx" name="client_sample_idx" type="hidden" class="form-control input-sm">
+									<input id="id2_project" name="id2_project" type="hidden" class="form-control input-sm">
+									<input id="idx_client_sample" name="idx_client_sample" type="hidden" class="form-control input-sm">
                                 </div>
                             </div>
 
-							<div class="form-group" id="sample_idx">
-                                <label for="sample_id" class="col-sm-4 control-label">Sample ID</label>
+							<div class="form-group" id="idx_sample">
+                                <label for="id_sample" class="col-sm-4 control-label">Sample ID</label>
                                 <div class="col-sm-8">
-                                    <input id="sample_id" name="sample_id" type="text"  placeholder="Sample ID" class="form-control">
+                                    <input id="id_sample" name="id_sample" type="text"  placeholder="Sample ID" class="form-control">
                                 </div>
                             </div>
 
 							<div class="form-group">
-								<label for="testing_type_id" class="col-sm-4 control-label">Testing Type</label>
+								<label for="id_testing_type" class="col-sm-4 control-label">Testing Type</label>
 								<div class="col-sm-4">
 									<?php foreach ($testing_type as $row): ?>
 										<div class="checkbox">
 											<label>
-												<input type="checkbox" name="testing_type_id[]" class="testing-type-checkbox" data-testing-type="<?php echo $row['testing_type']; ?>" value="<?php echo $row['testing_type_id']; ?>"> <?php echo $row['testing_type']; ?>
+												<input type="checkbox" name="id_testing_type[]" class="testing-type-checkbox" data-testing-type="<?php echo $row['testing_type']; ?>" value="<?php echo $row['id_testing_type']; ?>"> <?php echo $row['testing_type']; ?>
 											</label>
 										</div>
 									<?php endforeach; ?>
@@ -196,8 +196,8 @@
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
 <script type="text/javascript">
     let table;
-	let project_id = $('#project_id').val();
-	let client_sample_id = $('#client_sample_id').val();
+	let id_project = $('#id_project').val();
+	let id_client_sample = $('#id_client_sample').val();
 	let base_url = location.hostname;
 
 	$(document).ready(function() {
@@ -219,7 +219,7 @@
 			$.ajax({
 				url: '<?php echo site_url('Sample_reception/get_confirmation_data'); ?>',
 				type: 'POST',
-				data: { testing_type_id: selectedTestingTypes },
+				data: { id_testing_type: selectedTestingTypes },
 				dataType: 'json',
 				success: function(response) {
 					let confirmationContent = '<ul style="list-style-type:none; font-size: 16px">';
@@ -325,7 +325,7 @@
 			// ordering: false,
 			info: false,
 			bFilter: false,
-			ajax: {"url": "../../Sample_reception/subjson?id="+client_sample_id, "type": "POST"},
+			ajax: {"url": "../../Sample_reception/subjson?id="+id_client_sample, "type": "POST"},
 			columns: [
 				{"data": "testing_type"}, 
 				{
@@ -363,10 +363,10 @@
 		$('#addtombol_det').click(function() {
 			$('#mode_det').val('insert');
 			$('#modal-title-detail').html('<i class="fa fa-wpforms"></i> New samples<span id="my-another-cool-loader"></span>');
-			$('#sample_idx').hide();
-			$('#project_id2').val(project_id);
-			$('#client_sample_idx').val(client_sample_id);
-			$('#testing_type_id').val('');
+			$('#idx_sample').hide();
+			$('#id2_project').val(id_project);
+			$('#idx_client_sample').val(id_client_sample);
+			$('#id_testing_type').val('');
 			$('#compose-modal').modal('show');
 		});
 
@@ -405,15 +405,15 @@
 					}			
 			});
 
-			if (data.testing_type_id !== undefined && data.testing_type_id !== null) {
-				let testingTypeIds = data.testing_type_id.split(',');
+			if (data.id_testing_type !== undefined && data.id_testing_type !== null) {
+				let testingTypeIds = data.id_testing_type.split(',');
 
 				$('#mode_det').val('edit');
 				$('#modal-title-detail').html('<i class="fa fa-pencil-square"></i> Update samples<span id="my-another-cool-loader"></span>');
-				$('#sample_idx').hide();
-				$('#sample_id').val(data.sample_id);
-				$('#project_id2').val(data.project_id);
-				$('#client_sample_idx').val(client_sample_id);
+				$('#idx_sample').hide();
+				$('#id_sample').val(data.id_sample);
+				$('#id2_project').val(data.id_project);
+				$('#idx_client_sample').val(id_client_sample);
 				$('.testing-type-checkbox').prop('checked', false); // Uncheck all checkboxes first
 				testingTypeIds.forEach(function(id) {
 					$(`input[value="${id}"]`).prop('checked', true); // Check the checkboxes based on testingTypeIds
@@ -421,7 +421,7 @@
 
 				$('#compose-modal').modal('show');
 			} else {
-				console.log('Error: testing_type_id is undefined or null');
+				console.log('Error: id_testing_type is undefined or null');
 			}
 		});
 
