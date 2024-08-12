@@ -10,13 +10,13 @@
                         <div class="box-body">
                             <div class="form-group">
                                 <div class="col-sm-4">
-                                    <input class="form-control " id="project_id" type="hidden"  value="<?php echo $project_id ?>"  disabled>
+                                    <input class="form-control " id="id_project" type="hidden"  value="<?php echo $id_project ?>"  disabled>
                                 </div>
                                 <div class="col-sm-4">
                                     <input class="form-control " id="client" type="hidden"  value="<?php echo $client ?>"  disabled>
                                 </div>
                                 <div class="col-sm-4">
-                                    <input class="form-control " id="one_water_sample_id" type="hidden"  value="<?php echo $one_water_sample_id ?>"  disabled>
+                                    <input class="form-control " id="id_one_water_sample" type="hidden"  value="<?php echo $id_one_water_sample ?>"  disabled>
                                 </div>
                             </div>
                         </div>
@@ -77,9 +77,9 @@
                             <!-- <input id="id_req" name="id_req" type="hidden" class="form-control input-sm"> -->
 
                             <div class="form-group">
-                                <label for="project_idx" class="col-sm-4 control-label">COC</label>
+                                <label for="idx_project" class="col-sm-4 control-label">COC</label>
                                 <div class="col-sm-8">
-                                    <input id="project_idx" name="project_idx" placeholder="Client (as on CoC)" type="text" class="form-control">
+                                    <input id="idx_project" name="idx_project" placeholder="Client (as on CoC)" type="text" class="form-control">
                                 </div>
                             </div>
 
@@ -91,16 +91,16 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="client_sample_id" class="col-sm-4 control-label">Client Sample</label>
+                                <label for="id_client_sample" class="col-sm-4 control-label">Client Sample</label>
                                 <div class="col-sm-8">
-                                    <input id="client_sample_id" name="client_sample_id" placeholder="Client Sample" type="text" class="form-control">
+                                    <input id="id_client_sample" name="id_client_sample" placeholder="Client Sample" type="text" class="form-control">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="one_water_sample_idx" class="col-sm-4 control-label">One Water Sample ID</label>
+                                <label for="idx_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
                                 <div class="col-sm-8">
-                                    <input id="one_water_sample_idx" name="one_water_sample_id" placeholder="One Water Sample ID" type="text" class="form-control">
+                                    <input id="idx_one_water_sample" name="id_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control">
                                 </div>
                             </div>
 
@@ -209,9 +209,9 @@
 <script type="text/javascript">
 
     let table;
-    let project_id = $('#project_id').val();
+    let id_project = $('#id_project').val();
 	let client = $('#client').val();
-    let one_water_sample_id = $('#one_water_sample_id').val();
+    let id_one_water_sample = $('#id_one_water_sample').val();
 
     $(document).ready(function() {
 
@@ -236,7 +236,7 @@
         });        
 
         $('#compose-modal').on('shown.bs.modal', function () {
-			$('#client_sample_id').focus();
+			$('#id_client_sample').focus();
             // $('#budget_req').on('input', function() {
             //     formatNumber(this);
             //     });
@@ -290,10 +290,10 @@
                 //     "data": "barcode_sample",
                 //     "orderable": false
                 // },
-                {"data": "project_id"},
+                {"data": "id_project"},
                 {"data": "client"},
-                {"data": "client_sample_id"},
-                {"data": "one_water_sample_id"},
+                {"data": "id_client_sample"},
+                {"data": "id_one_water_sample"},
                 {"data": "sampletype"},
                 {"data": "initial"},
                 {"data": "date_arrival"},
@@ -323,15 +323,15 @@
         $('#addtombol').click(function() {
             $('#mode').val('insert');
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Sample reception | New<span id="my-another-cool-loader"></span>');
-            $('#project_idx').val(project_id);
-            $('#project_idx').attr('readonly', true);
+            $('#idx_project').val(id_project);
+            $('#idx_project').attr('readonly', true);
             $('#clientx').val(client);
             $('#clientx').attr('readonly', true);
-            $('#one_water_sample_idx').val(one_water_sample_id);
-            $('#one_water_sample_idx').attr('readonly', true);
+            $('#idx_one_water_sample').val(id_one_water_sample);
+            $('#idx_one_water_sample').attr('readonly', true);
             $('#initial').val('');
             $('#id_person').val('');
-            $('#client_sample_id').val('');
+            $('#id_client_sample').val('');
             $('#id_sampletype').val('');
             $('#comments').val('');
             $('#compose-modal').modal('show');
@@ -343,16 +343,16 @@
             console.log(data);
             $('#mode').val('edit');
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Sample reception | Update<span id="my-another-cool-loader"></span>');
-            $('#project_idx').attr('readonly', true);
-            $('#project_idx').val(data.project_id);
+            $('#idx_project').attr('readonly', true);
+            $('#idx_project').val(data.id_project);
             $('#clientx').val(data.client);
             $('#clientx').attr('readonly', true);
-            $('#one_water_sample_idx').val(data.one_water_sample_id);
-            $('#one_water_sample_idx').attr('readonly', true);
+            $('#idx_one_water_sample').val(data.id_one_water_sample);
+            $('#idx_one_water_sample').attr('readonly', true);
             $('#id_person').val(data.id_person);
             $('#date_arrival').val(data.date_arrival).trigger('change');
             $('#time_arrival').val(data.time_arrival).trigger('change');
-            $('#client_sample_id').val(data.client_sample_id);
+            $('#id_client_sample').val(data.id_client_sample);
             $('#id_sampletype').val(data.id_sampletype);
             $('#comments').val(data.comments);
             $('#compose-modal').modal('show');
