@@ -25,8 +25,8 @@ class Sample_extraction_model extends CI_Model
         $this->datatables->from('sample_extraction');
         $this->datatables->join('ref_person', 'sample_extraction.id_person = ref_person.id_person', 'left');
         $this->datatables->join('ref_barcode', 'ref_barcode.barcode = sample_extraction.barcode_sample', 'left');
-        $this->datatables->join('sample_reception_sample', 'ref_barcode.sample_id = sample_reception_sample.sample_id', 'left');
-        $this->datatables->join('sample_reception', 'sample_reception_sample.project_id = sample_reception.project_id', 'left');
+        $this->datatables->join('sample_reception_sample', 'ref_barcode.id_sample = sample_reception_sample.id_sample', 'left');
+        $this->datatables->join('sample_reception', 'sample_reception_sample.id_project = sample_reception.id_project', 'left');
         $this->datatables->join('ref_sampletype', 'sample_reception.id_sampletype = ref_sampletype.id_sampletype', 'left');
         $this->datatables->join('ref_kit', 'sample_extraction.id_kit = ref_kit.id_kit', 'left');
         // $this->datatables->where('Sample_extraction.id_country', $this->session->userdata('lab'));
@@ -244,10 +244,11 @@ class Sample_extraction_model extends CI_Model
         $q = $this->db->query('
         select ref_barcode.barcode, ref_sampletype.sampletype
         from ref_barcode 
-        left join sample_reception_sample on ref_barcode.sample_id = sample_reception_sample.sample_id
-        left join sample_reception on sample_reception_sample.project_id = sample_reception.project_id
+        left join sample_reception_sample on ref_barcode.id_sample = sample_reception_sample.id_sample
+        left join sample_reception on sample_reception_sample.id_project = sample_reception.id_project
         left join ref_sampletype on sample_reception.id_sampletype = ref_sampletype.id_sampletype
         WHERE ref_barcode.barcode = "'.$id.'"
+        AND ref_barcode.barcode NOT IN (SELECT barcode_sample FROM sample_extraction)
         ');        
         $response = $q->result_array();
         return $response;
@@ -274,6 +275,15 @@ class Sample_extraction_model extends CI_Model
         $response = $q->result_array();
         return $response;
       } 
+
+      function getID_one(){
+        $q = $this->db->query('
+        SELECT id_one_water_sample FROM sample_reception
+        WHERE id_one_water_sample NOT IN (SELECT id_one_water_sample FROM sample_extraction)
+        AND flag = 0');        
+        $response = $q->result_array();
+        return $response;
+      }
 
       function getKit(){
         $response = array();

@@ -64,6 +64,24 @@
                             <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
                             <div class="col-sm-8">
                                 <input id="id_one_water_sample" name="id_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control">
+                            <!-- </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID list</label>
+                            <div class="col-sm-8"> -->
+                                <select id="id_one_water_sample_list" name="id_one_water_sample_list" class="form-control">
+                                    <option>-- Select Sample ID --</option>
+                                    <?php
+                                        foreach($id_one as $row) {
+                                            if ($id_one_water_sample == $row['id_one_water_sample']) {
+                                                echo "<option value='".$row['id_one_water_sample']."' selected='selected'>".$row['id_one_water_sample']."</option>";
+                                            } else {
+                                                echo "<option value='".$row['id_one_water_sample']."'>".$row['id_one_water_sample']."</option>";
+                                            }
+                                        }
+                                    ?>
+                                </select>
                             </div>
                         </div>
 
@@ -89,6 +107,7 @@
                             <label for="barcode_sample" class="col-sm-4 control-label">Barcode Sample</label>
                             <div class="col-sm-8">
                                 <input id="barcode_sample" name="barcode_sample" placeholder="Barcode Sample" type="text" class="form-control">
+                                <div class="val1tip"></div>
                             </div>
                         </div>
 
@@ -160,7 +179,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="cryobox" class="col-sm-4 control-label">Crypbox</label>
+                            <label for="cryobox" class="col-sm-4 control-label">Cryobox</label>
                             <div class="col-sm-8">
                                 <input id="cryobox" name="cryobox" placeholder="Cryobox" type="text" class="form-control">
                             </div>
@@ -289,6 +308,7 @@
 
 
         $('#barcode_sample').on("change", function() {
+            $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
             data1 = $('#barcode_sample').val();
             // // ckbar = data1.substring(0,5).toUpperCase();
             // // ckarray = ["N-S2-", "F-S2-", "N-F0-", "F-F0-"];
@@ -307,8 +327,7 @@
                         $('.val1tip').tooltipster('show');
                         $('#barcode_sample').focus();
                         $('#barcode_sample').val('');     
-                        $('#volume_filtered').val('0');     
-                        $('#barcode_falcon2').attr('readonly', true);
+                        $('#sampletype').val('');    
                         $('#barcode_sample').css({'background-color' : '#FFE6E7'});
                         setTimeout(function(){
                             $('#barcode_sample').css({'background-color' : '#FFFFFF'});
@@ -460,11 +479,15 @@
 
         $('#addtombol').click(function() {
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> Water sample reception | New<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Water Sample Extraction | New<span id="my-another-cool-loader"></span>');
             // $('#project_idx').hide();
             $('#id_one_water_sample').attr('readonly', false);
             $('#id_one_water_sample').val('');
+            $('#id_one_water_sample_list').val('');
+            $('#id_one_water_sample').hide();
+            $('#id_one_water_sample_list').show();
             $('#id_person').val('');
+            $('#barcode_sample').attr('readonly', false);
             $('#barcode_sample').val('');
             $('#sampletype').attr('readonly', true);
             $('#sampletype').val('');
@@ -490,11 +513,15 @@
             console.log(data);
             // var data = this.parents('tr').data();
             $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Water sample reception | Update<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Water Sample Extraction | Update<span id="my-another-cool-loader"></span>');
             // $('#project_idx').show();
             $('#id_one_water_sample').attr('readonly', true);
+            $('#id_one_water_sample').show();
+            $('#id_one_water_sample_list').hide();
             $('#id_one_water_sample').val(data.id_one_water_sample);
+            $('#id_one_water_sample_list').val(data.id_one_water_sample).trigger('change');
             $('#id_person').val(data.id_person).trigger('change');
+            $('#barcode_sample').attr('readonly', true);
             $('#barcode_sample').val(data.barcode_sample);
             $('#sampletype').attr('readonly', true);
             $('#sampletype').val(data.sampletype);

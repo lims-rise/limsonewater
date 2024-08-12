@@ -28,6 +28,7 @@ class Sample_extraction extends CI_Controller
 
     public function index()
     {
+        $data['id_one'] = $this->Sample_extraction_model->getID_one();
         $data['labtech'] = $this->Sample_extraction_model->getLabTech();
         $data['kit'] = $this->Sample_extraction_model->getKit();
 
@@ -87,7 +88,7 @@ class Sample_extraction extends CI_Controller
         if ($mode == "insert") {
             $data = array(
                 'barcode_sample' => $this->input->post('barcode_sample', TRUE),
-                'id_one_water_sample' => $this->input->post('id_one_water_sample', TRUE),
+                'id_one_water_sample' => $this->input->post('id_one_water_sample_list', TRUE),
                 'id_person' => $this->input->post('id_person', TRUE),
                 'date_extraction' => $this->input->post('date_extraction', TRUE),
                 'weight' => $this->input->post('weight', TRUE),
@@ -133,139 +134,6 @@ class Sample_extraction extends CI_Controller
     
         redirect(site_url("Sample_extraction"));
     }
-
-
-    // public function savedetail() 
-    // {
-    //     $mode = $this->input->post('mode_det',TRUE);
-    //     $sample_id = $this->input->post('sample_id',TRUE);
-    //     $project_id2 = $this->input->post('project_id2',TRUE);
-    //     $dt = new DateTime();
-
-    //     if ($mode=="insert"){
-    //         $data = array(
-    //             'sample_id' => $this->input->post('sample_id',TRUE),
-    //             'project_id' => $this->input->post('project_id2',TRUE),
-    //             'sample_description' => $this->input->post('sample_description',TRUE),
-    //             'uuid' => $this->uuid->v4(),
-    //             // 'lab' => $this->session->userdata('lab'),
-    //             'user_created' => $this->session->userdata('id_users'),
-    //             'date_created' => $dt->format('Y-m-d H:i:s'),
-    //             );
-
-    //         $this->Sample_extraction_model->insert_det($data);
-    //         $this->session->set_flashdata('message', 'Create Record Success');    
-      
-    //     }
-    //     else if ($mode=="edit"){
-    //         $data = array(
-    //             'sample_id' => $this->input->post('sample_id',TRUE),
-    //             'project_id' => $this->input->post('project_id2',TRUE),
-    //             'sample_description' => $this->input->post('sample_description',TRUE),
-    //             // 'uuid' => $this->uuid->v4(),
-    //             // 'lab' => $this->session->userdata('lab'),
-    //             'user_updated' => $this->session->userdata('id_users'),
-    //             'date_updated' => $dt->format('Y-m-d H:i:s'),
-    //             );
-
-    
-    //         $this->Sample_extraction_model->update_det($sample_id, $data);
-    //         $this->session->set_flashdata('message', 'Create Record Success');    
-    //     }
-
-    //     redirect(site_url("Sample_extraction/read/".$project_id2));
-    // }
-
-    //     public function savedetail() 
-    // {
-    //     $mode = $this->input->post('mode_det',TRUE);
-    //     $sample_id = $this->input->post('sample_id',TRUE);
-    //     $project_id2 = $this->input->post('project_id2',TRUE);
-    //     $testing_types = $this->input->post('testing_type_id', TRUE);
-    //     $dt = new DateTime();
-
-    //     if ($mode=="insert"){
-    //                 $data_sample = array(
-    //                     // 'sample_id' => $this->input->post('sample_id', TRUE),
-    //                     'project_id' => $this->input->post('project_id2', TRUE),
-    //                     'testing_type_id' => $this->input->post('testing_type_id', TRUE),
-    //                     // 'sample_description' => $this->input->post('sample_description', TRUE),
-    //                     'date_collected' => $this->input->post('date_collected', TRUE),
-    //                     'time_collected' => $this->input->post('time_collected', TRUE),
-    //                     // 'no_submitted' => $this->input->post('no_submitted', TRUE),
-    //                     'sample_barcode' => $this->input->post('sample_barcode', TRUE),
-    //                     'uuid' => $this->uuid->v4(),
-    //                     'user_created' => $this->session->userdata('id_users'),
-    //                     'date_created' => $dt->format('Y-m-d H:i:s'),
-    //                 );
-
-    //         $this->Sample_extraction_model->insert_det($data_sample);
-    //         $this->session->set_flashdata('message', 'Create Record Success');    
-      
-    //     }
-    //     else if ($mode=="edit"){
-    //         $data_sample = array(
-    //             // 'sample_id' => $this->input->post('sample_id', TRUE),
-    //             'project_id' => $this->input->post('project_id2', TRUE),
-    //             'testing_type_id' => $this->input->post('testing_type_id', TRUE),
-    //             // 'sample_description' => $this->input->post('sample_description', TRUE),
-    //             'date_collected' => $this->input->post('date_collected', TRUE),
-    //             'time_collected' => $this->input->post('time_collected', TRUE),
-    //             // 'no_submitted' => $this->input->post('no_submitted', TRUE),
-    //             'sample_barcode' => $this->input->post('sample_barcode', TRUE),
-    //             'uuid' => $this->uuid->v4(),
-    //             'user_created' => $this->session->userdata('id_users'),
-    //             'date_created' => $dt->format('Y-m-d H:i:s'),
-    //         );
-    //         $this->Sample_extraction_model->update_det($sample_id, $data_sample);
-    //         $this->session->set_flashdata('message', 'Create Record Success');    
-    //     }
-
-    //     redirect(site_url("Sample_extraction/read/".$project_id2));
-    // }
-
-    // public function savedetail2() 
-    // {
-    //     $mode = $this->input->post('mode_det2',TRUE); // appropiate with the name of form
-    //     $sample_id = $this->input->post('sample_id2',TRUE);
-    //     $testing_id = $this->input->post('testing_id',TRUE);
-
-    //     $dt = new DateTime();
-    
-    //     if ($mode == "insert"){
-    //         $data = array(
-    //             'sample_id' => $this->input->post('sample_id2', TRUE),
-    //             'testing_type_id' => $this->input->post('testing_type_id', TRUE),
-    //             'date_collected' => $this->input->post('date_collected', TRUE),
-    //             'time_collected' => $this->input->post('time_collected', TRUE),
-    //             'no_submitted' => $this->input->post('no_submitted', TRUE),
-    //             'sample_barcode' => $this->input->post('sample_barcode', TRUE),
-    //             'uuid' => $this->uuid->v4(),
-    //             'user_created' => $this->session->userdata('id_users'),
-    //             'date_created' => $dt->format('Y-m-d H:i:s'),
-    //         );
-
-    //         $this->Sample_extraction_model->insert_det2($data);
-    //         $this->session->set_flashdata('message', 'Create Record Success');
-                
-    //     } else if ($mode == "edit"){
-    //         $data = array(
-    //             'sample_id' => $this->input->post('sample_id2', TRUE),
-    //             'testing_type_id' => $this->input->post('testing_type_id', TRUE),
-    //             'date_collected' => $this->input->post('date_collected', TRUE),
-    //             'time_collected' => $this->input->post('time_collected', TRUE),
-    //             'no_submitted' => $this->input->post('no_submitted', TRUE),
-    //             'sample_barcode' => $this->input->post('sample_barcode', TRUE),
-    //             'user_updated' => $this->session->userdata('id_users'),
-    //             'date_updated' => $dt->format('Y-m-d H:i:s'),
-    //         );
-    
-    //         $this->Sample_extraction_model->update_det2($testing_id, $data);
-    //         $this->session->set_flashdata('message', 'Update Record Success');    
-    //     }
-    
-    //     redirect(site_url("Sample_extraction/read2/".$sample_id));
-    // }
     
     public function barcode_check() 
     {
@@ -293,43 +161,6 @@ class Sample_extraction extends CI_Controller
         header('Content-Type: application/json');
         echo json_encode($data);
     }
-
-    public function budreq_print($id) 
-    {
-        // $row = $this->Sample_extraction_model->get_rep($id);
-        // if ($row) {
-        //     $data = array(
-        //     'id_req' => $row->id_req,
-        //     'date_req' => $row->date_req,
-        //     'realname' => $row->realname,
-        //     'objective' => $row->objective,
-        //     'title' => $row->title,
-        //     'periode' => $row->periode,
-        //     'budget_req' => $row->budget_req,
-        //     'reviewed' => $row->reviewed,
-        //     'approved' => $row->approved,
-        //     'comments' => $row->comments,
-        //     );
-        // // $data['items'] = $this->Tbl_receive_old_model->getItems();
-        //     $this->template->load('template','Sample_extraction/index_rep', $data);
-        // } else {
-        //     $this->session->set_flashdata('message', 'Record Not Found');
-        //     redirect(site_url("Sample_extraction/read/".$id));
-        // }
-    }
-
-    public function update_bud_req($id, $breq) 
-    {
-        // $row = $this->Sample_extraction_model->get_by_id($id);
-        // $data = array(
-        //     'budget_req' => $breq,
-        //     );
-
-        // if ($row) {
-        //     $this->Sample_extraction_model->update($id, $data);
-        // } else {
-        // }
-    }    
 
     public function delete($id) 
     {
