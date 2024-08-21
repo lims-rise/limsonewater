@@ -527,4 +527,4 @@ $config['rewrite_short_tags'] = FALSE;
 $config['proxy_ips'] = '';
 
 
-$config['log_threshold'] = 4;
+$config['log_threshold'] = 0;
