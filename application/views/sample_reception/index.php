@@ -36,13 +36,13 @@
                                     <thead>
                                         <tr>
                                             <th>Coc</th>
-                                            <th>Client as on Coc</th>
+                                            <th>ID Client</th>
                                             <th>Client Sample</th>
-                                            <th>Sample ID</th>
-                                            <th>Type of Sample</th>
-                                            <th>Received Lab</th>
-                                            <th>Date Of Arrival</th>
-                                            <th>Time Of Arrival</th>
+                                            <th>ID Sample</th>
+                                            <th>Sample Type</th>
+                                            <th>Lab Tech</th>
+                                            <th>Date Arrive</th>
+                                            <th>Time Arrive</th>
                                             <th width="120px">Action</th>
                                         </tr>
                                     </thead>
@@ -92,7 +92,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="clientx" class="col-sm-4 control-label">Client</label>
+                                <label for="clientx" class="col-sm-4 control-label">ID Client</label>
                                 <div class="col-sm-8">
                                     <input id="clientx" name="clientx" placeholder="Client (as on CoC)" type="text" class="form-control">
                                 </div>
@@ -106,17 +106,17 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="idx_one_water_sample" class="col-sm-4 control-label">Sample ID</label>
+                                <label for="idx_one_water_sample" class="col-sm-4 control-label">ID Sample</label>
                                 <div class="col-sm-8">
                                     <input id="idx_one_water_sample" name="id_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="id_sampletype" class="col-sm-4 control-label">Type of Sample</label>
+                                <label for="id_sampletype" class="col-sm-4 control-label">Sample Type</label>
                                 <div class="col-sm-8" >
                                 <select id='id_sampletype' name="id_sampletype" class="form-control">
-                                    <option>-- Select Type of Sample --</option>
+                                    <option>-- Select Sample Type --</option>
                                     <?php
                                     foreach($sampletype as $row){
                                         if ($id_sampletype == $row['id_sampletype']) {
@@ -132,10 +132,10 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="id_person" class="col-sm-4 control-label">Received Lab</label>
+                                <label for="id_person" class="col-sm-4 control-label">Lab Tech</label>
                                 <div class="col-sm-8">
                                     <select id="id_person" name="id_person" class="form-control">
-                                        <option>-- Select Received Lab --</option>
+                                        <option>-- Select Lab Tech --</option>
                                         <?php
                                             foreach($labtech as $row) {
                                                 if ($id_person == $row['id_person']) {
@@ -150,14 +150,14 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="date_arrival" class="col-sm-4 control-label">Date of arrival</label>
+                                <label for="date_arrival" class="col-sm-4 control-label">Date Arrive</label>
                                 <div class="col-sm-8">
                                     <input id="date_arrival" name="date_arrival" type="date" class="form-control" placeholder="Date arrival" value="<?php echo date("Y-m-d"); ?>">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="time_arrival" class="col-sm-4 control-label">Time of arrival</label>
+                                <label for="time_arrival" class="col-sm-4 control-label">Time Arrive</label>
                                 <div class="col-sm-8">
                                     <div class="input-group clockpicker">
                                     <input id="time_arrival" name="time_arrival" class="form-control" placeholder="Time arrival" value="<?php 
@@ -172,14 +172,14 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="date_collected" class="col-sm-4 control-label">Date of collected</label>
+                                <label for="date_collected" class="col-sm-4 control-label">Date collected</label>
                                 <div class="col-sm-8">
                                     <input id="date_collected" name="date_collected" type="date" class="form-control" placeholder="Date collected" value="<?php echo date("Y-m-d"); ?>">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="time_collected" class="col-sm-4 control-label">Time of collected</label>
+                                <label for="time_collected" class="col-sm-4 control-label">Time collected</label>
                                 <div class="col-sm-8">
                                     <div class="input-group clockpicker">
                                     <input id="time_collected" name="time_collected" class="form-control" placeholder="Time collected" value="<?php 

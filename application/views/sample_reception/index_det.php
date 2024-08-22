@@ -14,7 +14,7 @@
 								<input class="form-control " id="id_project" name="id_project" value="<?php echo $id_project ?>"  disabled>
 							</div>
 
-							<label for="id_client_sample" class="col-sm-2 control-label">Client Sample ID</label>
+							<label for="id_client_sample" class="col-sm-2 control-label">ID Client</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="id_client_sample" name="id_client_sample" value="<?php echo $id_client_sample ?>"  disabled>
 							</div>
@@ -26,31 +26,31 @@
 								<input class="form-control " id="client" name="client" value="<?php echo $client ?>"  disabled>
 							</div>
 
-							<label for="id_one_water_sample" class="col-sm-2 control-label">Sample ID</label>
+							<label for="id_one_water_sample" class="col-sm-2 control-label">ID Sample</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="id_one_water_sample" name="id_one_water_sample" value="<?php echo $id_one_water_sample ?>"  disabled>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label for="initial" class="col-sm-2 control-label">Received Lab</label>
+							<label for="initial" class="col-sm-2 control-label">Lab Tech</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="initial" name="initial" value="<?php echo $initial ?>"  disabled>
 							</div>
 
-							<label for="sampletype" class="col-sm-2 control-label">Type of Sample</label>
+							<label for="sampletype" class="col-sm-2 control-label">Sample Type</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="sampletype" name="sampletype" value="<?php echo $sampletype ?>"  disabled>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label for="date_arrival" class="col-sm-2 control-label">Date of arrival</label>
+							<label for="date_arrival" class="col-sm-2 control-label">Date arrive</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="date_arrival" name="date_arrival" value="<?php echo $date_arrival ?>" disabled>
 							</div>
 
-							<label for="time_arrival" class="col-sm-2 control-label">Time of arrival</label>
+							<label for="time_arrival" class="col-sm-2 control-label">Time arrive</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="time_arrival" name="time_arrival" value="<?php echo $time_arrival ?>"  disabled>
 							</div>
