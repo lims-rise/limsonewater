@@ -2,7 +2,7 @@
 	<section class="content">
 		<div class="box box-black box-solid">
 			<div class="box-header with-border">
-				<h3 class="box-title">Sample reception | New samples</h3>
+				<h3 class="box-title">Processing | Sample Reception | Sample Testing</h3>
 			</div>
 				<form role="form"  id="formKeg" method="post" class="form-horizontal">
 					<div class="box-body">
@@ -26,7 +26,7 @@
 								<input class="form-control " id="client" name="client" value="<?php echo $client ?>"  disabled>
 							</div>
 
-							<label for="id_one_water_sample" class="col-sm-2 control-label">One Water Sample ID</label>
+							<label for="id_one_water_sample" class="col-sm-2 control-label">Sample ID</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="id_one_water_sample" name="id_one_water_sample" value="<?php echo $id_one_water_sample ?>"  disabled>
 							</div>
@@ -38,19 +38,19 @@
 								<input class="form-control " id="initial" name="initial" value="<?php echo $initial ?>"  disabled>
 							</div>
 
-							<label for="sampletype" class="col-sm-2 control-label">Type Of Sample</label>
+							<label for="sampletype" class="col-sm-2 control-label">Type of Sample</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="sampletype" name="sampletype" value="<?php echo $sampletype ?>"  disabled>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label for="date_arrival" class="col-sm-2 control-label">Date arrival</label>
+							<label for="date_arrival" class="col-sm-2 control-label">Date of arrival</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="date_arrival" name="date_arrival" value="<?php echo $date_arrival ?>" disabled>
 							</div>
 
-							<label for="time_arrival" class="col-sm-2 control-label">Time arrival</label>
+							<label for="time_arrival" class="col-sm-2 control-label">Time of arrival</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="time_arrival" name="time_arrival" value="<?php echo $time_arrival ?>"  disabled>
 							</div>

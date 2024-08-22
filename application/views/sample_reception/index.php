@@ -4,9 +4,9 @@
             <div class="col-xs-12">
                 <div class="box box-black box-solid">
                     <div class="box-header">
-                        <h3 class="box-title">Sample reception </h3>
+                        <h3 class="box-title">Processing | Sample Reception </h3>
                     </div>
-                    <form role="form"  id="formKeg" method="post" class="form-horizontal">
+                    <form role="form"  id="formKegHidden" method="post" class="form-horizontal">
                         <div class="box-body">
                             <div class="form-group">
                                 <div class="col-sm-4">
@@ -38,11 +38,11 @@
                                             <th>Coc</th>
                                             <th>Client as on Coc</th>
                                             <th>Client Sample</th>
-                                            <th>One Water Sample ID</th>
+                                            <th>Sample ID</th>
                                             <th>Type of Sample</th>
                                             <th>Received Lab</th>
-                                            <th>Date Of Sample Arrival</th>
-                                            <th>Time Of Sample Arrival</th>
+                                            <th>Date Of Arrival</th>
+                                            <th>Time Of Arrival</th>
                                             <th width="120px">Action</th>
                                         </tr>
                                     </thead>
@@ -60,6 +60,14 @@
     .table tbody tr.selected {
         color: white !important;
         background-color: #9CDCFE !important;
+    }
+
+    #formKegHidden {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1;
     }
 </style>
 
@@ -98,7 +106,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="idx_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
+                                <label for="idx_one_water_sample" class="col-sm-4 control-label">Sample ID</label>
                                 <div class="col-sm-8">
                                     <input id="idx_one_water_sample" name="id_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control">
                                 </div>
