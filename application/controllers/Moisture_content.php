@@ -33,7 +33,7 @@ class Moisture_content extends CI_Controller
         $data['labtech'] = $this->Moisture_content_model->getLabTech();
         // $data['id_project'] = $this->Moisture_content_model->generate_project_id();
         // $data['client'] = $this->Moisture_content_model->generate_client();
-        $data['id_one_water_sample'] = $this->Moisture_content_model->generate_one_water_sample_id();
+        // $data['id_one_water_sample'] = $this->Moisture_content_model->generate_one_water_sample_id();
         $this->template->load('template','Moisture_content/index', $data);
     } 
     
@@ -43,16 +43,15 @@ class Moisture_content extends CI_Controller
     }
 
     public function subjson24() {
-        $id = $this->input->get('id',TRUE);
+        $id = $this->input->get('id24',TRUE);
         header('Content-Type: application/json');
         echo $this->Moisture_content_model->subjson24($id);
     }
 
-    public function subjson2() {
-        $id2 = $this->input->get('id2',TRUE);
-
+    public function subjson72() {
+        $id = $this->input->get('id72',TRUE);
         header('Content-Type: application/json');
-        echo $this->Moisture_content_model->subjson2($id2);
+        echo $this->Moisture_content_model->subjson72($id);
     }
 
     public function read($id)
@@ -176,111 +175,133 @@ class Moisture_content extends CI_Controller
         redirect(site_url("Moisture_content"));
     }
 
-        // public function savedetail() {
-        //     $mode = $this->input->post('mode_det', TRUE);
-        //     $id_sample = $this->input->post('id_sample', TRUE);
-        //     $id_client_sample = $this->input->post('idx_client_sample', TRUE);
-        //     $id2_project = $this->input->post('id2_project', TRUE);
-        //     $testing_types = $this->input->post('id_testing_type', TRUE);
-        //     $dt = new DateTime();
-        
-        //     if ($mode == "insert") {
-        //         if (is_array($testing_types)) {
-
-                    
-        //             foreach ($testing_types as $id_testing_type) {
-        //                 $testing_type_name = $this->Moisture_content_model->get_name_by_id($id_testing_type);
-        //                 $barcode = $this->Moisture_content_model->get_last_barcode($testing_type_name);
-
-        //                 $id_sample = $this->Moisture_content_model->insert_det(array(
-        //                     'id_client_sample' => $id_client_sample,
-        //                     'id_project' => $id2_project,
-        //                     'id_testing_type' => $id_testing_type,
-        //                     'uuid' => $this->uuid->v4(),
-        //                     'user_created' => $this->session->userdata('id_users'),
-        //                     'date_created' => $dt->format('Y-m-d H:i:s'),
-        //                 ));
-        
-        //                 $data_barcode = array(
-        //                     'id_sample' => $id_sample,
-        //                     'id_testing_type' => $id_testing_type,
-        //                     'barcode' => $barcode,
-        //                 );
-
-        //                 // var_dump($data_barcode);
-        //                 // die();
-        
-        //                 $this->Moisture_content_model->insert_barcode($data_barcode);
-        //             }
-        //             $this->session->set_flashdata('message', 'Create Records Success');
-        //         } else {
-        //             $this->session->set_flashdata('message', 'No Testing Types Selected');
-        //         }
-        //     }else if ($mode == "edit") {
-        //         if (is_array($testing_types)) {
-            
-        //             // Get the old data
-        //             $old_data = $this->Moisture_content_model->get_sample_testing($id_sample);
-            
-        //             // Check if there are any changes
-        //             $changed = false;
-        //             foreach ($testing_types as $id_testing_type) {
-        //                 $testing_type_name = $this->Moisture_content_model->get_name_by_id($id_testing_type);
-        //                 $barcode = $this->Moisture_content_model->get_last_barcode($testing_type_name);
-            
-        //                 // Check if the testing type is already in the old data
-        //                 $old_id_testing_type = array_search($testing_type_name, array_column($old_data, 'testing_type_name'));
-        //                 if ($old_id_testing_type !== false) {
-        //                     // Check if the barcode is different
-        //                     if ($old_data[$old_id_testing_type]['barcode'] != $barcode) {
-        //                         $changed = true;
-        //                         break;
-        //                     }
-        //                 } else {
-        //                     // New testing type
-        //                     $changed = true;
-        //                     break;
-        //                 }
-        //             }
-            
-        //             if ($changed) {
-        //                 // Remove old barcodes related to this sample_id
-        //                 $this->Moisture_content_model->delete_barcode($id_sample);
-            
-        //                 foreach ($testing_types as $id_testing_type) {
-        //                     $testing_type_name = $this->Moisture_content_model->get_name_by_id($id_testing_type);
-        //                     $barcode = $this->Moisture_content_model->get_last_barcode($testing_type_name);
-            
-        //                     // Update the sample_reception_sample with new data
-        //                     $this->Moisture_content_model->update_det($id_sample, array(
-        //                         'id_client_sample' => $id_client_sample,
-        //                         'id_project' => $id2_project,
-        //                         'id_testing_type' => $id_testing_type,
-        //                         'uuid' => $this->uuid->v4(),
-        //                         'user_created' => $this->session->userdata('id_users'),
-        //                         'date_created' => $dt->format('Y-m-d H:i:s'),
-        //                     ));
-            
-        //                     $data_barcode = array(
-        //                         'id_sample' => $id_sample,
-        //                         'id_testing_type' => $id_testing_type,
-        //                         'barcode' => $barcode,
-        //                     );
-            
-        //                     $this->Moisture_content_model->insert_barcode($data_barcode);
-        //                 }
-        //                 $this->session->set_flashdata('message', 'Update Records Success');
-        //             } else {
-        //                 $this->session->set_flashdata('message', 'No Changes Made');
-        //             }
-        //         } else {
-        //             $this->session->set_flashdata('message', 'No Testing Types Selected');
-        //         }
-        //     }
-        //     redirect(site_url("Sample_reception/read/" . $id2_project));
-        // }
     
     public function savedetail24() {
+            $mode_det24 = $this->input->post('mode_det24', TRUE);
+            $dt = new DateTime();
+            // var_dump($id_moisture);
+            // die();
+        
+            $id_moisture = $this->input->post('idx_moisture24', TRUE);
+            $id_moisture24 = $this->input->post('id_moisture24', TRUE);
+            $date_moisture24 = $this->input->post('date_moisture24', TRUE);
+            $time_moisture24 = $this->input->post('time_moisture24', TRUE);
+            $barcode_tray = $this->input->post('barcode_tray24', TRUE);
+            $dry_weight24 = $this->input->post('dry_weight24', TRUE);
+            $comments24 = $this->input->post('comments24', TRUE);
+        
+            if($mode_det24 == "insert") {
+                $data = array(
+                    'id_moisture' => $id_moisture,
+                    'date_moisture24' => $date_moisture24,
+                    'time_moisture24' => $time_moisture24,
+                    'barcode_tray' => $barcode_tray,
+                    'dry_weight24' => $dry_weight24,
+                    'comments24' => $comments24,
+                    'flag' => '0',
+                    'lab' => $this->session->userdata('lab'),
+                    'uuid' => $this->uuid->v4(),
+                    'user_created' => $this->session->userdata('id_users'),
+                    'date_created' => $dt->format('Y-m-d H:i:s'),
+                );
+                // var_dump($data);
+                // die();
+        
+                $insert_id = $this->Moisture_content_model->insert_det24($data);
+                if ($insert_id) {
+                    $this->session->set_flashdata('message', 'Create Record Success');
+                } else {
+                    $this->session->set_flashdata('error', 'Failed to create record');
+                }
+            } else if($mode_det24 == "edit") {
+                $data = array(
+                    'date_moisture24' => $date_moisture24,
+                    'time_moisture24' => $time_moisture24,
+                    'barcode_tray' => $barcode_tray,
+                    'dry_weight24' => $dry_weight24,
+                    'comments24' => $comments24,
+                    'flag' => '0',
+                    'lab' => $this->session->userdata('lab'),
+                    'uuid' => $this->uuid->v4(),
+                    'user_created' => $this->session->userdata('id_users'),
+                    'date_created' => $dt->format('Y-m-d H:i:s'),
+                );
+                // var_dump($data);
+                // die();
+                $result = $this->Moisture_content_model->update_det24($id_moisture24, $data);
+                if ($result) {
+                    $this->session->set_flashdata('message', 'Update Record Success');
+                } else {
+                    $this->session->set_flashdata('error', 'Failed to update record');
+                }
+            }
+        
+            redirect(site_url("Moisture_content/read/" . $id_moisture));
+    }
+
+
+    public function savedetail72() {
+        $mode_det72 = $this->input->post('mode_det72', TRUE);
+        $dt = new DateTime();
+
+        $id_moisture = $this->input->post('idx_moisture72', TRUE);
+        $id_moisture72 = $this->input->post('id_moisture72', TRUE);
+        $date_moisture72 = $this->input->post('date_moisture72', TRUE);
+        $time_moisture72 = $this->input->post('time_moisture72', TRUE);
+        $barcode_tray = $this->input->post('barcode_tray72', TRUE);
+        $dry_weight72 = $this->input->post('dry_weight72', TRUE);
+        $dry_weight_persen = $this->input->post('dry_weight_persen', TRUE);
+        $comments72 = $this->input->post('comments72', TRUE);
+
+        if($mode_det72 == "insert") {
+            $data = array(
+                'id_moisture' => $id_moisture,
+                'date_moisture72' => $date_moisture72,
+                'time_moisture72' => $time_moisture72,
+                'barcode_tray' => $barcode_tray,
+                'dry_weight72' => $dry_weight72,
+                'dry_weight_persen' => $dry_weight_persen,
+                'comments72' => $comments72,
+                'flag' => '0',
+                'lab' => $this->session->userdata('lab'),
+                'uuid' => $this->uuid->v4(),
+                'user_created' => $this->session->userdata('id_users'),
+                'date_created' => $dt->format('Y-m-d H:i:s'),
+            );
+            // var_dump($data);
+            // die();
+    
+            $insert_id = $this->Moisture_content_model->insert_det72($data);
+            if ($insert_id) {
+                $this->session->set_flashdata('message', 'Create Record Success');
+            } else {
+                $this->session->set_flashdata('error', 'Failed to create record');
+            }
+        } else if($mode_det72 == "edit") {
+            $data = array(
+                'date_moisture72' => $date_moisture72,
+                'time_moisture72' => $time_moisture72,
+                'barcode_tray' => $barcode_tray,
+                'dry_weight72' => $dry_weight72,
+                'dry_weight_persen' => $dry_weight_persen,
+                'comments72' => $comments72,
+                'flag' => '0',
+                'lab' => $this->session->userdata('lab'),
+                'uuid' => $this->uuid->v4(),
+                'user_created' => $this->session->userdata('id_users'),
+                'date_created' => $dt->format('Y-m-d H:i:s'),
+            );
+            // var_dump($data);
+            // die();
+            $result = $this->Moisture_content_model->update_det72($id_moisture72, $data);
+            if ($result) {
+                $this->session->set_flashdata('message', 'Update Record Success');
+            } else {
+                $this->session->set_flashdata('error', 'Failed to update record');
+            }
+        }
+    
+        redirect(site_url("Moisture_content/read/" . $id_moisture));
 
     }
   
@@ -302,46 +323,42 @@ class Moisture_content extends CI_Controller
         }
     }
 
-    public function delete_detail($id) 
+    public function delete_detail24($id) 
     {
-        $row = $this->Moisture_content_model->get_by_id_detail($id);
-
+        $row = $this->Moisture_content_model->get_by_id_detail24($id);
         if ($row) {
-            $id_parent = $row->id_project; // Retrieve project_id before updating the record
+            $id_parent = $row->id_moisture; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
     
-            $this->Moisture_content_model->update_det($id, $data);
+            $this->Moisture_content_model->update_det24($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
     
-        redirect(site_url('Sample_reception/read/'.$id_parent));
+        redirect(site_url('Moisture_content/read/'.$id_parent));
     }
 
-
-    public function get_confirmation_data() {
-        $testing_types = $this->input->post('id_testing_type', TRUE);
+    public function delete_detail72($id) 
+    {
+        $row = $this->Moisture_content_model->get_by_id_detail72($id);
+        if ($row) {
+            $id_parent = $row->id_moisture; // Retrieve project_id before updating the record
+            $data = array(
+                'flag' => 1,
+            );
     
-        $data = array();
-        if (is_array($testing_types)) {
-            foreach ($testing_types as $id_testing_type) {
-                $testing_type_name = $this->Moisture_content_model->get_name_by_id($id_testing_type);
-                $barcode = $this->Moisture_content_model->get_last_barcode($testing_type_name);
-    
-                $data[] = array(
-                    'testing_type_name' => $testing_type_name,
-                    'barcode' => $barcode
-                );
-            }
+            $this->Moisture_content_model->update_det72($id, $data);
+            $this->session->set_flashdata('message', 'Delete Record Success');
+        } else {
+            $this->session->set_flashdata('message', 'Record Not Found');
         }
     
-        echo json_encode($data);
-    
-    
+        redirect(site_url('Moisture_content/read/'.$id_parent));
     }
+
 
     public function getIdOneWaterDetails()
     {
@@ -351,13 +368,165 @@ class Moisture_content extends CI_Controller
     }
 
     public function validate24() {
-        $id = $this->input->get('id1');
+        $id = $this->input->get('id24');
         $data = $this->Moisture_content_model->validate24($id);
         header('Content-Type: application/json');
         echo json_encode($data);
     }
-    
 
+    public function validate72() {
+        $id = $this->input->get('id72');
+        $data = $this->Moisture_content_model->validate72($id);
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
+    
+    public function excel() {
+    
+        $spreadsheet = new Spreadsheet();    
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', "Id One Water Sample"); 
+        $sheet->setCellValue('B1', "Lab Tech"); 
+        $sheet->setCellValue('C1', "Date Assay Start");
+        $sheet->setCellValue('D1', "Sample Type");
+        $sheet->setCellValue('E1', "Barcode Moisture Content");
+        $sheet->setCellValue('F1', "Tray Weight");
+        $sheet->setCellValue('G1', "Tray sample (wet weight)");
+        $sheet->setCellValue('H1', "Time Incubator");
+        $sheet->setCellValue('I1', "Comments");
+        $sheet->setCellValue('J1', "Date Moisture 24");
+        $sheet->setCellValue('K1', "Time Moisture 24");
+        $sheet->setCellValue('L1', "Dry Weight 24");
+        $sheet->setCellValue('M1', "Comments 24");
+        $sheet->setCellValue('N1', "Date Moisture 72");
+        $sheet->setCellValue('O1', "Time Moisture 72");
+        $sheet->setCellValue('P1', "Dry Weight 72");
+        $sheet->setCellValue('Q1', "Dry Weight Percentage");
+        $sheet->setCellValue('R1', "Comments 72");
+
+        $moisture = $this->Moisture_content_model->get_all();
+    
+        $numrow = 2;
+        foreach($moisture as $data){ 
+            if (property_exists($data, 'id_one_water_sample')) {
+                $sheet->setCellValue('A'.$numrow, $data->id_one_water_sample);
+            } else {
+                $sheet->setCellValue('A'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'initial')) {
+                $sheet->setCellValue('B'.$numrow, $data->initial);
+            } else {
+                $sheet->setCellValue('B'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'date_start')) {
+                $sheet->setCellValue('C'.$numrow, $data->date_start);
+            } else {
+                $sheet->setCellValue('C'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'sample_type')) {
+                $sheet->setCellValue('D'.$numrow, $data->sampletype);
+            } else {
+                $sheet->setCellValue('D'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'barcode_moisture_content')) {
+                $sheet->setCellValue('E'.$numrow, $data->barcode_moisture_content);
+            } else {
+                $sheet->setCellValue('E'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'tray_weight')) {
+                $sheet->setCellValue('F'.$numrow, $data->tray_weight);
+            } else {
+                $sheet->setCellValue('F'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'traysample_wetweight')) {
+                $sheet->setCellValue('G'.$numrow, $data->traysample_wetweight);
+            } else {
+                $sheet->setCellValue('G'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'time_incubator')) {
+                $sheet->setCellValue('H'.$numrow, $data->time_incubator);
+            } else {
+                $sheet->setCellValue('H'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'comments')) {
+                $sheet->setCellValue('I'.$numrow, $data->comments);
+            } else {
+                $sheet->setCellValue('I'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'date_moisture24')) {
+                $sheet->setCellValue('J'.$numrow, $data->date_moisture24);
+            } else {
+                $sheet->setCellValue('J'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'time_moisture24')) {
+                $sheet->setCellValue('K'.$numrow, $data->time_moisture24);
+            }
+
+           
+            if (property_exists($data, 'dry_weight24')) {
+                $sheet->setCellValue('L'.$numrow, $data->dry_weight24);
+            } else {
+                $sheet->setCellValue('L'.$numrow, '');
+            }
+
+            if (property_exists($data, 'comments24')) {
+                $sheet->setCellValue('M'.$numrow, $data->comments24);
+            } else {
+                $sheet->setCellValue('M'.$numrow, '');
+            }
+
+            if (property_exists($data, 'date_moisture72')) {
+                $sheet->setCellValue('N'.$numrow, $data->date_moisture72);
+            } else {
+                $sheet->setCellValue('N'.$numrow, '');
+            }
+
+            if (property_exists($data, 'time_moisture72')) {
+                $sheet->setCellValue('O'.$numrow, $data->time_moisture72);
+            } else {
+                $sheet->setCellValue('O'.$numrow, '');
+            }
+
+            if (property_exists($data, 'dry_weight72')) {
+                $sheet->setCellValue('P'.$numrow, $data->dry_weight72);
+            } else {
+                $sheet->setCellValue('P'.$numrow, '');
+            }
+
+            if (property_exists($data, 'dry_weight_persen')) {
+                $sheet->setCellValue('Q'.$numrow, $data->dry_weight_persen);
+            } else {
+                $sheet->setCellValue('Q'.$numrow, '');
+            }
+
+            if (property_exists($data, 'comments72')) {
+                $sheet->setCellValue('R'.$numrow, $data->comments72);
+            } else {
+                $sheet->setCellValue('R'.$numrow, '');
+            }
+
+            $numrow++;
+        }
+
+        // Set header untuk file excel
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="laporan_moisture_content.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        // Tampilkan file excel
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
+    }
 
 }
 
