@@ -7,7 +7,11 @@ class Moisture_content_model extends CI_Model
 {
 
     public $table = 'moisture_content';
+    public $table24 = 'moisture24';
+    public $table72 = 'moisture72';
     public $id = 'id_moisture';
+    public $id24 = 'id_moisture24';
+    public $id72 = 'id_moisture72';
     public $order = 'DESC';
 
     function __construct()
@@ -42,24 +46,47 @@ class Moisture_content_model extends CI_Model
     }
 
     function subjson24($id) {
-        $this->datatables->select('a.id_sample, a.id_project, a.id_client_sample,  a.id_testing_type, b.testing_type AS testing_type, a.flag');
-        $this->datatables->from('sample_reception_sample a');
-        $this->datatables->join('ref_testing b', 'FIND_IN_SET(b.id_testing_type, a.id_testing_type)', 'left');
+        $this->datatables->select('m24.id_moisture24, m24.date_moisture24, m24.time_moisture24, m24.barcode_tray,  m24.dry_weight24, m24.comments24, m24.flag');
+        $this->datatables->from('moisture24 AS m24');
+        // $this->datatables->join('ref_testing b', 'FIND_IN_SET(b.id_testing_type, a.id_testing_type)', 'left');
         // $this->datatables->join('ref_barcode c', 'a.sample_id = c.testing_type_id', 'left');
-        $this->datatables->where('a.flag', '0');
-        $this->datatables->where('a.id_client_sample', $id);
-        $this->datatables->group_by('a.id_sample');
+        $this->datatables->where('m24.flag', '0');
+        $this->datatables->where('m24.id_moisture', $id);
+        $this->datatables->group_by('m24.id_moisture24');
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 7){
-            $this->datatables->add_column('action', anchor(site_url('Sample_reception/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_sample');
+            $this->datatables->add_column('action', anchor(site_url('Moisture_content/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_moisture24');
         }
         else if (($lvl == 2) | ($lvl == 3)){
-            $this->datatables->add_column('action', anchor(site_url('Sample_reception/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
-                ".'<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_sample');
+            $this->datatables->add_column('action', anchor(site_url('Moisture_content/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
+                ".'<button type="button" class="btn_edit_det24 btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_moisture24');
         }
         else {
-            $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                ".anchor(site_url('Sample_reception/delete_detail/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample ID : $1 ?\')"'), 'id_sample');
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit_det24 btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
+                ".anchor(site_url('Moisture_content/delete_detail24/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample ID : $1 ?\')"'), 'id_moisture24');
+        }
+        return $this->datatables->generate();
+    }
+
+    function subjson72($id) {
+        $this->datatables->select('m72.id_moisture72, m72.id_moisture, m72.date_moisture72, m72.time_moisture72, m72.barcode_tray, m72.dry_weight72, m72.dry_weight_persen, m72.comments72, m72.flag');
+        $this->datatables->from('moisture72 AS m72');
+        // $this->datatables->join('ref_testing b', 'FIND_IN_SET(b.id_testing_type, a.id_testing_type)', 'left');
+        // $this->datatables->join('ref_barcode c', 'a.sample_id = c.testing_type_id', 'left');
+        $this->datatables->where('m72.flag', '0');
+        $this->datatables->where('m72.id_moisture', $id);
+        $this->datatables->group_by('m72.id_moisture72');
+        $lvl = $this->session->userdata('id_user_level');
+        if ($lvl == 7){
+            $this->datatables->add_column('action', anchor(site_url('Moisture_content/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_moisture72');
+        }
+        else if (($lvl == 2) | ($lvl == 3)){
+            $this->datatables->add_column('action', anchor(site_url('Moisture_content/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
+                ".'<button type="button" class="btn_edit_det72 btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_moisture72');
+        }
+        else {
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit_det72 btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
+                ".anchor(site_url('Moisture_content/delete_detail72/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample ID : $1 ?\')"'), 'id_moisture72');
         }
         return $this->datatables->generate();
     }
@@ -72,12 +99,20 @@ class Moisture_content_model extends CI_Model
         return $this->db->get($this->table)->row();
     }
 
-    function get_by_id_detail($id)
+    function get_by_id_detail24($id)
     {
-        $this->db->where('id_sample', $id);
+        $this->db->where('id_moisture24', $id);
         $this->db->where('flag', '0');
         // $this->db->where('lab', $this->session->userdata('lab'));
-        return $this->db->get('sample_reception_sample')->row();
+        return $this->db->get('moisture24')->row();
+    }
+
+    function get_by_id_detail72($id)
+    {
+        $this->db->where('id_moisture72', $id);
+        $this->db->where('flag', '0');
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        return $this->db->get('moisture72')->row();
     }
 
     function get_detail($id)
@@ -110,115 +145,11 @@ class Moisture_content_model extends CI_Model
       $response = $q->row();
       return $response;
     }
-   
-    public function get_latest_project_id() {
-        $this->db->select('id_project');
-        $this->db->order_by('id_project', 'DESC');
-        $this->db->limit(1);
-        $query = $this->db->get('sample_reception');
-
-        // Check if there is a previous id_project
-        if ($query->num_rows() > 0) {
-            return $query->row()->id_project;
-        } else {
-            return null;
-        }
-    }
-
-    // Function to generate the next id_project
-    public function generate_project_id() {
-        $latest_id = $this->get_latest_project_id();
-        $current_year = date('y'); // Get two last digits of current year
-        $prefix = 'MU' . $current_year; // Prefix consist of MU and two last digits of current year
-    
-        if ($latest_id) {
-            if (strpos($latest_id, $prefix) === 0) {
-                $number = intval(substr($latest_id, strlen($prefix))) + 1;
-            } else {
-                $number = 1;
-            }
-        } else {
-            $number = 1;
-        }
-        $new_id = sprintf('%s%05d', $prefix, $number);
-        return $new_id;
-    }
-
-    // Function to get the latest client
-    public function get_latest_client() {
-        $this->db->select('client');
-        $this->db->order_by('id_project', 'DESC');
-        $this->db->limit(1);
-        $query = $this->db->get('sample_reception');
-
-        // Check if there is a previous client
-        if ($query->num_rows() > 0) {
-            return $query->row()->client;
-        } else {
-            return null;
-        }
-    }
-
-    // Function to generate the next client
-    public function generate_client() {
-        $latest_id = $this->get_latest_client();
-        $prefix = 'CLT'; // Prefix consist of CLT
-
-        if ($latest_id) {
-            if (strpos($latest_id, $prefix) === 0) {
-                $number = intval(substr($latest_id, strlen($prefix))) + 1;
-            } else {
-                $number = 1;
-            }
-        } else {
-            $number = 1;
-        }
-        $new_id = sprintf('%s%05d', $prefix, $number);
-        return $new_id;
-
-    }
-
-    // Function to get the latest id_one_water_sample
-    public function get_latest_one_water_sample_id() {
-        $this->db->select('id_one_water_sample');
-        $this->db->order_by('id_project', 'DESC');
-        $this->db->limit(1);
-        $query = $this->db->get('sample_reception');
-
-        // Check if there is a previous client
-        if ($query->num_rows() > 0) {
-            return $query->row()->id_one_water_sample;
-        } else {
-            return null;
-        }
-    }
-
-    // Function to generate the next one_water_sample_id
-    public function generate_one_water_sample_id() {
-        $latest_id = $this->get_latest_one_water_sample_id();
-        $current_year = date('y'); // Get two last digits of current year
-        $prefix = 'P' . $current_year; // Prefix consist of P and two last digits of current year
-
-        if ($latest_id) {
-            if (strpos($latest_id, $prefix) === 0) {
-                $number = intval(substr($latest_id, strlen($prefix))) + 1;
-            } else {
-                $number = 1;
-            }
-        } else {
-            $number = 1;
-        }
-        $new_id = sprintf('%s%05d', $prefix, $number);
-        return $new_id;
-
-    }
-    
 
     // Fuction insert data
     public function insert($data) {
         $this->db->insert($this->table,  $data);
     }
-    
 
     // Function update data
     function update($id, $data)
@@ -227,30 +158,25 @@ class Moisture_content_model extends CI_Model
         $this->db->update($this->table, $data);
     }
 
-    function insert_det($data) {
-        $this->db->insert('sample_reception_sample', $data);
+    function insert_det24($data) {
+        $this->db->insert($this->table24, $data);
         return $this->db->insert_id(); // Return the ID of the newly inserted row
     }
 
-    function update_det($id, $data) {
-        $this->db->where('id_sample', $id);
-        $this->db->update('sample_reception_sample', $data);
+    function update_det24($id, $data) {
+        $this->db->where('id_moisture24', $id);
+        $this->db->update('moisture24', $data);
     }
 
-    function insert_barcode($data) {
-        $this->db->insert('ref_barcode', $data);
+    function insert_det72($data) {
+        $this->db->insert($this->table72, $data);
+        return $this->db->insert_id(); // Return the ID of the newly inserted row
     }
 
-    function update_barcode($id_sample, $id_testing_type, $data) {
-        $this->db->where('id_sample', $id_sample);
-        $this->db->where('id_testing_type', $id_testing_type);
-        $this->db->update('ref_barcode', $data);
+    function update_det72($id, $data) {
+        $this->db->where('id_moisture72', $id);
+        $this->db->update('moisture72', $data);
     }
-
-    function delete_barcode($id_sample) {
-        $this->db->delete('ref_barcode', array('id_sample' => $id_sample));
-    }
-
 
     // delete data
     function delete($id)
@@ -286,60 +212,6 @@ class Moisture_content_model extends CI_Model
         return $response;
       }
 
-      function getTest(){
-        $response = array();
-        $this->db->select('*');
-        $this->db->where('flag', '0');
-        $q = $this->db->get('ref_testing');
-        $response = $q->result_array();
-        return $response; 
-      }
-
-    public function get_last_barcode($testing_type) {
-        // Get prefix and format from database
-        $this->db->select('prefix');
-        $this->db->where('testing_type', $testing_type);
-        $query = $this->db->get('ref_testing');
-        $result = $query->row();
-
-        if (!$result || $result->prefix === null) {
-            return null; // Testing type not found or prefix is null
-        }
-        $prefix = $result->prefix;
-        
-        // Get the current year
-        $year = date('y');
-
-        $this->db->select_max('CAST(SUBSTR(barcode, ' . (strlen($prefix . $year) + 1) . ') AS UNSIGNED)', 'max_barcode');
-        $this->db->like('barcode', $prefix . $year, 'after');
-        $query = $this->db->get('ref_barcode');
-        $result = $query->row();
-    
-        $next_number = $result->max_barcode + 1;
-        $padded_number = str_pad($next_number, 5, '0', STR_PAD_LEFT);
-        return $prefix . $year . $padded_number;
-    }
-    
-    
-
-    public function get_name_by_id($id) {
-        $this->db->select('testing_type');
-        $this->db->where('id_testing_type', $id);
-        $query = $this->db->get('ref_testing');
-        $result = $query->row();
-        return $result ? $result->testing_type : null;
-    }
-
-
-    public function get_sample_testing($id) {
-        $response = array();
-        $this->db->select('*');
-        $this->db->where('id_sample', $id);
-        $query = $this->db->get('sample_reception_sample');
-        $response = $query->result_array();
-        return $response; 
-    }
-
     function getID_one(){
         $q = $this->db->query('
         SELECT id_one_water_sample FROM sample_reception
@@ -358,6 +230,43 @@ class Moisture_content_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
+
+    function validate24($id){
+        $q = $this->db->query('
+        SELECT barcode_moisture_content FROM moisture_content
+        WHERE barcode_moisture_content = "'.$id.'"
+        AND barcode_moisture_content NOT IN (SELECT barcode_tray FROM moisture24 WHERE flag IN (0))
+        ');        
+        $response = $q->result_array();
+        return $response;
+    }
+
+    function validate72($id){
+        $q = $this->db->query('
+        SELECT barcode_tray FROM moisture24
+        WHERE barcode_tray = "'.$id.'"
+        AND flag = 0 
+        ');        
+        $response = $q->result_array();
+        return $response;
+    }
+
+    function get_all()
+    {
+        $this->db->select('mc.id_one_water_sample, rp.initial, mc.date_start, rs.sampletype, mc.barcode_moisture_content, mc.tray_weight,
+        mc.traysample_wetweight, mc.time_incubator,mc.comments, m24.date_moisture24, m24.time_moisture24, m24.dry_weight24, m24.comments24,
+        m72.date_moisture72, m72.time_moisture72, m72.dry_weight72, m72.dry_weight_persen, m72.comments72');
+        $this->db->from('moisture_content AS mc');
+        $this->db->join('ref_person AS rp', 'mc.id_person = rp.id_person');
+        $this->db->join('ref_sampletype AS rs', 'mc.id_sampletype = rs.id_sampletype');
+        $this->db->join('moisture24 AS m24', 'mc.id_moisture = m24.id_moisture');
+        $this->db->join('moisture72 AS m72', 'mc.id_moisture = m72.id_moisture');
+        $this->db->where('mc.flag', '0');
+        $this->db->order_by('mc.date_start', 'ASC');
+
+        return $this->db->get()->result();
+    }
+    
 
       
 }

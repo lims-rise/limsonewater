@@ -29,7 +29,7 @@
                                         echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Moisture Content</button>";
                                     }
                             ?>        
-                            <!-- <?php echo anchor(site_url('Sample_reception/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?> -->
+                            <?php echo anchor(site_url('Moisture_content/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
                         </div>
                             <div class="table-responsive">
                                 <table class="table ho table-bordered table-striped tbody" id="mytable" style="width:100%">
@@ -170,7 +170,7 @@
                             <div class="form-group">
                                 <label for="comments" class="col-sm-4 control-label">Comments</label>
                                 <div class="col-sm-8">
-                                    <input id="comments" name="comments" placeholder="Comments" type="text" class="form-control">
+                                    <textarea id="comments" name="comments" class="form-control" placeholder="Comments"></textarea>
                                 </div>
                             </div>
 

@@ -94,6 +94,35 @@
 							</div> <!--/.box-body  -->
                         </div><!-- box box-warning -->
                     </div>  <!--col-xs-12 -->
+
+                    <div class="col-xs-12"> 
+                        <div class="box box-primary box-solid">
+                            <div class="box-header">
+                                <h3 class="box-title">72 Hour Moisture</h3>
+                            </div>
+							<div class="box-body pad table-responsive">
+								<?php
+									$lvl = $this->session->userdata('id_user_level');
+									if ($lvl != 7){
+										echo "<button class='btn btn-primary' id='addtombol_det72'><i class='fa fa-wpforms' aria-hidden='true'></i> New Data</button>";
+									}
+								?>
+								<table id="example3" class="table display table-bordered table-striped" width="100%">
+									<thead>
+										<tr>
+											<th>Date Moisture</th>
+											<th>Time Moisture Tested</th>
+                                            <th>Barcode Tray</th>
+                                            <th>Dry Weight 72h (g)</th>
+                                            <th>Dry Weight %</th>
+                                            <th>Comments</th>
+                                            <th>Action</th>
+										</tr>
+									</thead>
+								</table>
+							</div> <!--/.box-body  -->
+                        </div><!-- box box-warning -->
+                    </div>  <!--col-xs-12 -->
                 <!--</div> row -->    
 
 				<div class="form-group">
@@ -108,7 +137,7 @@
 	</section>
 </div>
 
-<!-- MODAL FORM -->
+<!-- MODAL FORM MOISTURE 24 -->
         <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -117,13 +146,13 @@
                         <h4 class="modal-title" id="modal-title-detail">
 							<span id="my-another-cool-loader"></span></h4>
                     </div>
-                        <form id="formDetail24" action=<?php echo site_url('Mousture_content/savedetail24') ?> method="post" class="form-horizontal">
+                        <form id="formDetail24" action=<?php echo site_url('Moisture_content/savedetail24') ?> method="post" class="form-horizontal">
                             <div class="modal-body">
                                 <div class="form-group">
                                         <div class="col-sm-9">
                                             <input id="mode_det24" name="mode_det24" type="hidden" class="form-control input-sm">
-                                            <!-- <input id="id2_project" name="id2_project" type="hidden" class="form-control input-sm">
-                                            <input id="idx_client_sample" name="idx_client_sample" type="hidden" class="form-control input-sm"> -->
+                                            <input id="idx_moisture24" name="idx_moisture24" type="hidden" class="form-control input-sm">
+                                            <input id="id_moisture24" name="id_moisture24" type="hidden" class="form-control input-sm">
                                         </div>
                                     </div>
 
@@ -150,23 +179,24 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="barcode_tray" class="col-sm-4 control-label">Barcode Tray</label>
+                                        <label for="barcode_tray24" class="col-sm-4 control-label">Barcode Tray</label>
                                         <div class="col-sm-8">
-                                            <input id="barcode_tray" name="barcode_tray" type="text"  placeholder="Barcode Tray" class="form-control">
+                                            <input id="barcode_tray24" name="barcode_tray24" type="text"  placeholder="Barcode Tray" class="form-control">
+                                            <div class="val1tip"></div>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="dry_weight24" class="col-sm-4 control-label">Dry Weight 24h (g)</label>
                                         <div class="col-sm-8">
-                                            <input id="dry_weight24" name="dry_weight24" type="text"  placeholder="Dry Weight 24h (g)" class="form-control">
+                                            <input id="dry_weight24" name="dry_weight24" type="number" step="0.01"  placeholder="Dry Weight 24h (g)" class="form-control">
                                         </div>
                                     </div>
 
                                 <div class="form-group">
-                                        <label for="comments" class="col-sm-4 control-label">Comments</label>
+                                        <label for="comments24" class="col-sm-4 control-label">Comments</label>
                                         <div class="col-sm-8">
-                                            <textarea id="comments" name="comments" class="form-control" placeholder="Comments"></textarea>
+                                            <textarea id="comments24" name="comments24" class="form-control" placeholder="Comments"></textarea>
                                         </div>
                                 </div>
 
@@ -180,22 +210,99 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-<!-- MODAL CONFIRMATION -->
-	<div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog" aria-hidden="true">
+<!-- MODAL FORM MOISTURE 72 -->
+<div class="modal fade" id="compose-modal72" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="modal-title-detail72">
+							<span id="my-another-cool-loader"></span></h4>
+                    </div>
+                        <form id="formDetail72" action=<?php echo site_url('Moisture_content/savedetail72') ?> method="post" class="form-horizontal">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                        <div class="col-sm-9">
+                                            <input id="mode_det72" name="mode_det72" type="hidden" class="form-control input-sm">
+                                            <input id="idx_moisture72" name="idx_moisture72" type="hidden" class="form-control input-sm">
+                                            <input id="id_moisture72" name="id_moisture72" type="hidden" class="form-control input-sm">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="date_moisture72" class="col-sm-4 control-label">Date Moisture</label>
+                                        <div class="col-sm-8">
+                                            <input id="date_moisture72" name="date_moisture72"type="date" class="form-control" placeholder="Date Moisture" value="<?php echo date("Y-m-d"); ?>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="time_moisture72" class="col-sm-4 control-label">Time Moisture Tested</label>
+                                        <div class="col-sm-8">
+                                            <div class="input-group clockpicker">
+                                            <input id="time_moisture72" name="time_moisture72" class="form-control" placeholder="Time Moisture Tested" value="<?php 
+                                            $datetime = new DateTime();
+                                            echo $datetime->format( 'H:i' );
+                                            ?>">
+                                            <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-time"></span>
+                                            </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="barcode_tray72" class="col-sm-4 control-label">Barcode Tray</label>
+                                        <div class="col-sm-8">
+                                            <input id="barcode_tray72" name="barcode_tray72" type="text"  placeholder="Barcode Tray" class="form-control" required>
+                                            <div class="val2tip"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="dry_weight72" class="col-sm-4 control-label">Dry Weight 72h (g)</label>
+                                        <div class="col-sm-8 dryweightcount">
+                                            <input id="dry_weight72" name="dry_weight72" type="number" step="0.01"  placeholder="Dry Weight 72h (g)" class="form-control" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="dry_weight_persen" class="col-sm-4 control-label">Dry Weight %</label>
+                                        <div class="col-sm-8">
+                                            <input id="dry_weight_persen" name="dry_weight_persen" type="number" step="0.01"  placeholder="Dry Weight %" class="form-control" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="comments72" class="col-sm-4 control-label">Comments</label>
+                                        <div class="col-sm-8">
+                                            <textarea id="comments72" name="comments72" class="form-control" placeholder="Comments"></textarea>
+                                        </div>
+                                    </div>
+
+                            </div>
+                            <div class="modal-footer clearfix">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+                                <button type="button" id='cancelButton' class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                            </div>
+                        </form>
+                </div>
+            </div>
+</div>
+
+
+<!-- MODAL INFORMATION -->
+<div class="modal fade" id="confirm-modal" role="dialog" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title">Confirm Your Selection</h4>
+					<h4 class="modal-title">Information</h4>
 				</div>
 				<div class="modal-body">
-					<div id="confirmation-content">
-						<!-- Content will be loaded here dynamically -->
-					</div>
 				</div>
 				<div class="modal-footer clearfix">
-					<button type="button" id="confirm-save" class="btn btn-primary"><i class="fa fa-save"></i> Ok</button>
-					<button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> No</button>
+					<button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Close </button>
 				</div>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
@@ -206,74 +313,26 @@
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
 <script type="text/javascript">
+
     let table;
-	let id_project = $('#id_project').val();
-	let id_moisture = $('#id_moisture').val();
-    // console.log(id_moisture);
-	let base_url = location.hostname;
+    let table1;
+    let id_moisture = $('#id_moisture').val();
+    const BASE_URL = '/limsonewater/index.php';
 
-	$(document).ready(function() {
+    $(document).ready(function() {
+        $('.noEnterSubmit').keypress(function (e) {
+            if (e.which == 13) return false;
+        });
 
-		// The function to show the congfirmation with testing type data 
-		// function showConfirmation() {
-		// 	let selectedTestingTypes = [];
-		// 	$('.testing-type-checkbox:checked').each(function() {
-		// 		let testingTypeId = $(this).val();
-		// 		let testingTypeName = $(this).data('testing-type');
-		// 		selectedTestingTypes.push(testingTypeId);
-		// 	});
-
-		// 	if (selectedTestingTypes.length === 0) {
-		// 		alert('No Testing Types Checked');
-		// 		return;
-		// 	}
-
-		// 	$.ajax({
-		// 		url: '<?php echo site_url('Sample_reception/get_confirmation_data'); ?>',
-		// 		type: 'POST',
-		// 		data: { id_testing_type: selectedTestingTypes },
-		// 		dataType: 'json',
-		// 		success: function(response) {
-		// 			let confirmationContent = '<ul style="list-style-type:none; font-size: 16px">';
-		// 			$.each(response, function(index, item) {
-		// 				let barcode = item.barcode || "No Generate";
-		// 				confirmationContent += '<li style="font-weight: bold;">' + (index + 1) + '. ' + '<span style="font-weight: normal;">Testing Type: </span>' + item.testing_type_name + ' - ' + '<span style="font-weight: normal;">Barcode: </span>' + barcode + '</li>';
-		// 			});
-		// 			confirmationContent += '</ul>';
-
-		// 			$('#confirmation-content').html(confirmationContent);
-		// 			$('#confirm-modal').modal('show');
-		// 		}
-		// 	});
-		// }
-
-		//  When the save button is clicked in modal detail
-		// $('#formDetail').on('submit', function(e) {
-		// 	e.preventDefault(); // Hold on the automaticly submitted
-		// 	showConfirmation();
-		// });
-
-		//  When the save button is clicked in modal confirmation
-		// $('#confirm-save').click(function() {
-		// 	// Sending the data to the controller to be saved
-		// 	$('#formDetail').off('submit').submit(); // Deleting the previous submit handler and sending the form
-		// });
-
-
-
-		$('.noEnterSubmit').keypress(function (e) {
-			if (e.which == 13) return false;
-		});
-
-		$('.clockpicker').clockpicker({
-        placement: 'bottom', // clock popover placement
-        align: 'left',       // popover arrow align
-        donetext: 'Done',     // done button text
-        autoclose: true,    // auto close when minute is selected
-        vibrate: true        // vibrate the device when dragging clock hand
+        $('.clockpicker').clockpicker({
+            placement: 'bottom',
+            align: 'left',
+            donetext: 'Done',
+            autoclose: true,
+            vibrate: true
         });                
 
-        $('.val1tip, .val2tip, .val3tip').tooltipster({
+        $('.val1tip, .val2tip').tooltipster({
             animation: 'swing',
             delay: 1,
             theme: 'tooltipster-default',
@@ -281,39 +340,59 @@
             position: 'bottom',
         });
 
-		$("input").click(function(){
-            setTimeout(function(){
-                $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
-            }, 3000);                            
-        });
-						
-        $('#compose-modal').on('shown.bs.modal', function () {
-			$('#sample_id').focus();
-			// $('#estimate_price').on('input', function() {
-            //     formatNumber(this);
-            //     });
+        $('#barcode_tray24').click(function() {
+            $('.val1tip').tooltipster('hide');   
         });
 
-        $('#barcode_tray').on("change", function() {
-            data24 = $('#barcode_tray').val();
+        $('#barcode_tray72').click(function() {
+            $('.val2tip').tooltipster('hide');   
+        });
+
+        $('#compose-modal').on('shown.bs.modal', function () {
+            $('.val1tip').tooltipster('hide'); 
+        });
+
+        $('#compose-modal72').on('shown.bs.modal', function () {
+            $('.val2tip').tooltipster('hide'); 
+        });
+
+        $("input").keypress(function(){
+            $('.val1tip').tooltipster('hide'); 
+        });
+
+        $("input").keypress(function(){
+            $('.val2tip').tooltipster('hide'); 
+        });
+
+        $('#compose-modal').on('shown.bs.modal', function () {
+            $('#barcode_tray24').focus();
+        });
+
+        $('#compose-modal72').on('shown.bs.modal', function () {
+            $('#dry_weight72').focus();
+        });
+
+        $('#barcode_tray24').on("change", function() {
+            let barcode24 = $('#barcode_tray24').val();
             $.ajax({
                 type: "GET",
-                url: "Moisture_content/validate24?id1="+data24,
+                url: `${BASE_URL}/Moisture_content/validate24`,
+                data: { id24: barcode24 },
                 dataType: "json",
                 success: function(data) {
                     if (data.length == 0) {
-                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data24 +'</strong> is not on moisture sequence or is already in the system !</span>');
+                        let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + barcode24 +'</strong> is not on moisture content or is not already in the system !</span>');
                         $('.val1tip').tooltipster('content', tip);
                         $('.val1tip').tooltipster('show');
-                        $('#barcode_tray').focus();
-                        $('#barcode_tray').val('');        
-                        $('#barcode_tray').css({'background-color' : '#FFE6E7'});
+                        $('#barcode_tray24').focus();
+                        $('#barcode_tray24').val('');       
+                        $('#barcode_tray24').css({'background-color' : '#FFE6E7'});
                         setTimeout(function(){
-                            $('#barcode_tray').css({'background-color' : '#FFFFFF'});
+                            $('#barcode_tray24').css({'background-color' : '#FFFFFF'});
                             setTimeout(function(){
-                                $('#barcode_tray').css({'background-color' : '#FFE6E7'});
+                                $('#barcode_tray24').css({'background-color' : '#FFE6E7'});
                                 setTimeout(function(){
-                                    $('#barcode_tray').css({'background-color' : '#FFFFFF'});
+                                    $('#barcode_tray24').css({'background-color' : '#FFFFFF'});
                                 }, 300);                            
                             }, 300);
                         }, 300);
@@ -321,78 +400,108 @@
                 }
             });
         });
-		
 
-		$.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
-		{
-			return {
-				"iStart": oSettings._iDisplayStart,
-				"iEnd": oSettings.fnDisplayEnd(),
-				"iLength": oSettings._iDisplayLength,
-				"iTotal": oSettings.fnRecordsTotal(),
-				"iFilteredTotal": oSettings.fnRecordsDisplay(),
-				"iPage": Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
-				"iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
-			};
-		};
+        $('#barcode_tray72').on("change", function() {
+            let barcode72 = $('#barcode_tray72').val();
+            $.ajax({
+                type: "GET",
+                url: `${BASE_URL}/Moisture_content/validate72`,
+                data: { id72: barcode72 },
+                dataType: "json",
+                success: function(data) {
+                    if (data.length == 0) {
+                        let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + barcode72 +'</strong> is not on moisture content or is not already in the system !</span>');
+                        $('.val2tip').tooltipster('content', tip);
+                        $('.val2tip').tooltipster('show');
+                        $('#barcode_tray72').focus();
+                        $('#barcode_tray72').val('');       
+                        $('#barcode_tray72').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#barcode_tray72').css({'background-color' : '#FFFFFF'});
+                            setTimeout(function(){
+                                $('#barcode_tray72').css({'background-color' : '#FFE6E7'});
+                                setTimeout(function(){
+                                    $('#barcode_tray72').css({'background-color' : '#FFFFFF'});
+                                }, 300);                            
+                            }, 300);
+                        }, 300);
+                    }
+                }
+            });
+        });
+
+        // Function to calculate the dry_weight_persen
+        function updateDryWeightPersen() {
+            let traysampleWetweight = parseFloat($('#traysample_wetweight').val()) || 0; // Get the traysample wet weight
+            let dryWeight72 = parseFloat($('#dry_weight72').val()) || 0; // Get the dry weight 72h
+
+            if (traysampleWetweight > 0) { // Ensure traysampleWetweight is not zero to avoid division by zero
+                let dryWeightPersen = (1-(((traysampleWetweight - dryWeight72) / dryWeight72) * 100)).toFixed(2); // Calculate percentage
+                $('#dry_weight_persen').val(dryWeightPersen); // Update the percentage field
+            } else {
+                $('#dry_weight_persen').val(''); // Clear the percentage field if traysampleWetweight is zero or invalid
+            }
+        }
+
+        // Attach the function to the input event of dry_weight72
+        $('#dry_weight72').on('input', updateDryWeightPersen);
+
+        $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
+            return {
+                "iStart": oSettings._iDisplayStart,
+                "iEnd": oSettings.fnDisplayEnd(),
+                "iLength": oSettings._iDisplayLength,
+                "iTotal": oSettings.fnRecordsTotal(),
+                "iFilteredTotal": oSettings.fnRecordsDisplay(),
+                "iPage": Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
+                "iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
+            };
+        };
+
+        // $('#example2').on('draw.dt', function() {
+        //     let data = table.data();
+        //     if (data.length > 0) {
+        //         // Tampilkan tombol jika tabel example2 memiliki data
+        //         $('#addtombol_det72').show();
+        //     } else {
+        //         // Sembunyikan tombol jika tabel example2 tidak memiliki data
+        //         $('#addtombol_det72').hide();
+        //     }
+        // });
 
 
-		// function clearFormFields() {
-        //     $('input[type=text], input[type=date], input[type=time]').val('');
-        //     $('input[type=checkbox]').prop('checked', false);
-        //     // Mengubah tampilan label
-		// 	// updateCheckboxLabelStyling1();
-		// }
-
-		// Clear form fields when modal is hidden
-		// $('#compose-modal').on('hidden.bs.modal', function () {
-		// 	clearFormFields();
-		// });
-
-		// $('#check-all').change(function() {
-		// 	let isChecked = $(this).prop('checked');
-		// 	$('.testing-type-checkbox').prop('checked', isChecked);
-		// });
-
-
-		table = $("#example2").DataTable({
-			oLanguage: {
-				sProcessing: "Loading data, please wait..."
-			},
-			processing: true,
-			serverSide: true,
-			paging: false,
-			// ordering: false,
-			info: false,
-			bFilter: false,
-			ajax: {"url": "../../Moisture_content/subjson24?id="+id_moisture, "type": "POST"},
-			columns: [
-				{"data": "date_moisture24"},
+        table = $("#example2").DataTable({
+            oLanguage: {
+                sProcessing: "Loading data, please wait..."
+            },
+            processing: true,
+            serverSide: true,
+            paging: false,
+            info: false,
+            bFilter: false,
+            ajax: {"url": "../../Moisture_content/subjson24?id24="+id_moisture, "type": "POST"},
+            columns: [
+                {"data": "date_moisture24"},
                 {"data": "time_moisture24"}, 
                 {"data": "barcode_tray"}, 
                 {"data": "dry_weight24"}, 
-                {"data": "comments"},
-				{
-					"data" : "action",
-					"orderable": false,
-					"className" : "text-center"
-				}
-			],
-			// columnDefs: [
-			// 	{
-			// 		targets: [0], // Index of the 'estimate_price' column
-			// 		className: 'text-right' // Apply right alignment to this column
-			// 	}
-			// ],
-			order: [[0, 'asc']],
-			rowCallback: function(row, data, iDisplayIndex) {
-				let info = this.fnPagingInfo();
-				let page = info.iPage;
-				let length = info.iLength;
-				// var index = page * length + (iDisplayIndex + 1);
-				// $('td:eq(0)', row).html(index);
-			}
-		});
+                {"data": "comments24"},
+                {
+                    "data" : "action",
+                    "orderable": false,
+                    "className" : "text-center"
+                }
+            ],
+            order: [[0, 'asc']],
+            rowCallback: function(row, data, iDisplayIndex) {
+                let info = this.fnPagingInfo();
+                if (info.iTotal > 0) {
+                    $('#addtombol_det24').hide();
+                } else {
+                    $('#addtombol_det24').show();
+                }
+            }
+        });
 
         $('#example2 tbody').on('click', 'tr', function () {
             if ($(this).hasClass('active')) {
@@ -401,70 +510,133 @@
                 table.$('tr.active').removeClass('active');
                 $(this).addClass('active');
             }
-        })   
+        });
 
+        table1 = $("#example3").DataTable({
+            oLanguage: {
+                sProcessing: "Loading data, please wait..."
+            },
+            processing: true,
+            serverSide: true,
+            paging: false,
+            info: false,
+            bFilter: false,
+            ajax: {"url": "../../Moisture_content/subjson72?id72="+id_moisture, "type": "POST"},
+            columns: [
+                {"data": "date_moisture72"},
+                {"data": "time_moisture72"}, 
+                {"data": "barcode_tray"}, 
+                {"data": "dry_weight72"}, 
+                {"data": "dry_weight_persen"},
+                {"data": "comments72"},
+                {
+                    "data" : "action",
+                    "orderable": false,
+                    "className" : "text-center"
+                }
+            ],
+            order: [[0, 'asc']],
+            rowCallback: function(row, data, iDisplayIndex) {
+                let info = this.fnPagingInfo();
+                if (info.iTotal > 0) {
+                    $('#addtombol_det72').hide();
+                }
+            }
+        });
 
-		$('#addtombol_det24').click(function() {
-			$('#mode_det24').val('insert');
-			$('#modal-title-detail').html('<i class="fa fa-wpforms"></i> Moisture Content | 24 Hour <span id="my-another-cool-loader"></span>');
-			// $('#id_moisture').val(id_moisture);
-			$('#compose-modal').modal('show');
-		});
+        $('#example3 tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('active')) {
+                $(this).removeClass('active');
+            } else {
+                table1.$('tr.active').removeClass('active');
+                $(this).addClass('active');
+            }
+        });
 
+        $('#addtombol_det24').click(function() {
+            $('#mode_det24').val('insert');
+            $('#modal-title-detail').html('<i class="fa fa-wpforms"></i> Moisture Content | 24 Hour <span id="my-another-cool-loader"></span>');
+            $('#barcode_tray24').val('');
+            $('#barcode_tray24').attr('readonly', false);
+            $('#idx_moisture24').val(id_moisture);
+            $('#dry_weight24').val('');
+            $('#comments24').val('');
+            $('#compose-modal').modal('show');
+        });
 
-		$('#example2').on('click', '.btn_edit_det', function() {
-			let tr = $(this).closest('tr');
-			let data = table.row(tr).data();
-			console.log(data);
+        $('#example2').on('click', '.btn_edit_det24', function() {
+            let tr = $(this).closest('tr');
+            let data = table.row(tr).data();
+            $('#mode_det24').val('edit');
+            $('#modal-title-detail').html('<i class="fa fa-pencil-square"></i> Update Moisture | 24 Hour <span id="my-another-cool-loader"></span>');
+            $('#idx_moisture24').val(id_moisture);
+            $('#id_moisture24').val(data.id_moisture24);
+            $('#date_moisture24').val(data.date_moisture24);
+            $('#time_moisture24').val(data.time_moisture24);
+            $('#barcode_tray24').attr('readonly', true);
+            $('#barcode_tray24').val(data.barcode_tray);
+            $('#dry_weight24').val(data.dry_weight24);
+            $('#comments24').val(data.comments24);
+            $('#compose-modal').modal('show');
+        });
 
-			$('#cancelButton').click(function() {
-				location.reload();
-			});
+        // $('#addtombol_det72').click(function() {
+        //     // $('#mode_det72').val('insert');
+        //     // $('#modal-title-detail72').html('<i class="fa fa-wpforms"></i> Moisture Content | 72 Hour <span id="my-another-cool-loader"></span>');
+        //     // $('#barcode_tray72').val('');
+        //     // $('#barcode_tray72').attr('readonly', true);
+        //     // $('#barcode_tray72').attr('required', true);
+        //     // $('#idx_moisture72').val(id_moisture);
+        //     // $('#dry_weight72').val('');
+        //     // $('#dry_weight_persen').val('');
+        //     // $('#comments72').val('');
+        //     // $('#compose-modal72').modal('show');
+        // });
 
-			$('.testing-type-checkbox').change(function() {
-					var $checkbox = $(this);
-					var isChecked = $checkbox.prop('checked');
-					// var inputId = 'input_testing_type_' + $checkbox.val();
-					
-					// disable other checkboxes
-					if (isChecked) {
-						$('.testing-type-checkbox').not($checkbox).prop('checked', false);
-					}
+        $('#addtombol_det72').on('click', function() {
+            $('#mode_det72').val('insert');
+            $('#modal-title-detail72').html('<i class="fa fa-wpforms"></i> Moisture Content | 72 Hour <span id="my-another-cool-loader"></span>');
+            $('#barcode_tray72').val('');
+            $('#barcode_tray72').attr('readonly', true);
+            $('#barcode_tray72').attr('required', true);
+            $('#idx_moisture72').val(id_moisture);
+            $('#dry_weight72').val('');
+            $('#dry_weight_persen').val('');
+            $('#comments72').val('');
 
-					// Change atribute related to checkbox
-					// $('#' + inputId).prop('required', isChecked);
-					
-					// Change label
-					// updateCheckboxLabelStyling();
+            let td = $('#example2 td:first');
+            let data = table.row(td).data();
+            
+            if (data && data.barcode_tray) {
+                let barcode_tray = data.barcode_tray;
+                // Parsing data ke komponen
+                $('#barcode_tray72').val(barcode_tray);
+                $('#compose-modal72').modal('show');
+            } else {
+                // Tampilkan modal konfirmasi
+                $('#confirm-modal').modal('show');
+                // Tambahkan pesan ke modal
+                $('#confirm-modal .modal-body').html('You have not filled in the 24-hour moisture data. Please fill in that data first.');
+            }
+        });
+        
 
-					// delete strikethrough style if checkbox is unchecked
-					if ($('.testing-type-checkbox:checked').length === 0) {
-						$('.testing-type-checkbox').each(function() {
-							var $label = $(this).closest('label');
-							$label.removeClass('disabled-label');
-						});
-					}			
-			});
+        $('#example3').on('click', '.btn_edit_det72', function() {
+            let tr = $(this).closest('tr');
+            let data = table1.row(tr).data();
+            $('#mode_det72').val('edit');
+            $('#modal-title-detail72').html('<i class="fa fa-pencil-square"></i> Update Moisture | 72 Hour <span id="my-another-cool-loader"></span>');
+            $('#idx_moisture72').val(id_moisture);
+            $('#id_moisture72').val(data.id_moisture72);
+            $('#date_moisture72').val(data.date_moisture72);
+            $('#time_moisture72').val(data.time_moisture72);
+            $('#barcode_tray72').attr('readonly', true);
+            $('#barcode_tray72').val(data.barcode_tray);
+            $('#dry_weight72').val(data.dry_weight72);
+            $('#dry_weight_persen').val(data.dry_weight_persen);
+            $('#comments72').val(data.comments72);
+            $('#compose-modal72').modal('show');
+        });
 
-			if (data.id_testing_type !== undefined && data.id_testing_type !== null) {
-				let testingTypeIds = data.id_testing_type.split(',');
-
-				$('#mode_det24').val('edit');
-				$('#modal-title-detail').html('<i class="fa fa-pencil-square"></i> Update samples<span id="my-another-cool-loader"></span>');
-				$('#idx_sample').hide();
-				$('#id_sample').val(data.id_sample);
-				$('#id2_project').val(data.id_project);
-				$('#idx_client_sample').val(id_client_sample);
-				$('.testing-type-checkbox').prop('checked', false); // Uncheck all checkboxes first
-				testingTypeIds.forEach(function(id) {
-					$(`input[value="${id}"]`).prop('checked', true); // Check the checkboxes based on testingTypeIds
-				});
-
-				$('#compose-modal').modal('show');
-			} else {
-				console.log('Error: id_testing_type is undefined or null');
-			}
-		});
-
-	});
+    });
 </script>
