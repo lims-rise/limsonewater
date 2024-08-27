@@ -148,9 +148,9 @@ class Sample_reception extends CI_Controller
                 'date_collected' => $date_collected,
                 'time_collected' => $time_collected,
                 'flag' => '0',
-                'uuid' => $this->uuid->v4(),
-                'user_created' => $this->session->userdata('id_users'),
-                'date_created' => $dt->format('Y-m-d H:i:s'),
+                // 'uuid' => $this->uuid->v4(),
+                'user_updated' => $this->session->userdata('id_users'),
+                'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
 
             $this->Sample_reception_model->update($id_project, $data);
@@ -240,9 +240,9 @@ class Sample_reception extends CI_Controller
                                 'id_client_sample' => $id_client_sample,
                                 'id_project' => $id2_project,
                                 'id_testing_type' => $id_testing_type,
-                                'uuid' => $this->uuid->v4(),
-                                'user_created' => $this->session->userdata('id_users'),
-                                'date_created' => $dt->format('Y-m-d H:i:s'),
+                                // 'uuid' => $this->uuid->v4(),
+                                'user_updated' => $this->session->userdata('id_users'),
+                                'date_updated' => $dt->format('Y-m-d H:i:s'),
                             ));
             
                             $data_barcode = array(
