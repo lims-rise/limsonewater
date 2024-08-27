@@ -102,6 +102,7 @@
                                 <label for="id_client_sample" class="col-sm-4 control-label">Client Sample</label>
                                 <div class="col-sm-8">
                                     <input id="id_client_sample" name="id_client_sample" placeholder="Client Sample" type="text" class="form-control">
+                                    <div class="val1tip"></div>
                                 </div>
                             </div>
 
@@ -245,10 +246,11 @@
 
         $('#compose-modal').on('shown.bs.modal', function () {
 			$('#id_client_sample').focus();
+            $('.val1tip').tooltipster('hide'); 
             // $('#budget_req').on('input', function() {
             //     formatNumber(this);
             //     });
-            });
+        });
     
 
         $("input").keypress(function(){
@@ -261,7 +263,44 @@
             }, 3000);                            
         });
 
-        var base_url = location.hostname;
+        $("input").keypress(function(){
+            $('.val1tip').tooltipster('hide'); 
+        });
+
+        $('#id_client_sample').click(function() {
+            $('.val1tip').tooltipster('hide');   
+        });
+
+        $('#id_client_sample').on("change", function() {
+            let idClientSample = $('#id_client_sample').val();
+            $.ajax({
+                type: "GET",
+                url: "Sample_reception/validateIdClientSample",
+                data: { id: idClientSample },
+                dataType: "json",
+                success: function(data) {
+                    if (data.length == 1) {
+                        let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Client Sample <strong> ' + idClientSample +'</strong> is already in the system !</span>');
+                        $('.val1tip').tooltipster('content', tip);
+                        $('.val1tip').tooltipster('show');
+                        $('#id_client_sample').focus();
+                        $('#id_client_sample').val('');       
+                        $('#id_client_sample').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#id_client_sample').css({'background-color' : '#FFFFFF'});
+                            setTimeout(function(){
+                                $('#id_client_sample').css({'background-color' : '#FFE6E7'});
+                                setTimeout(function(){
+                                    $('#id_client_sample').css({'background-color' : '#FFFFFF'});
+                                }, 300);                            
+                            }, 300);
+                        }, 300);
+                    }
+                }
+            });
+        });
+
+        let base_url = location.hostname;
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
         {
             return {
@@ -320,9 +359,9 @@
 			],
             order: [[0, 'asc']],
             rowCallback: function(row, data, iDisplayIndex) {
-                var info = this.fnPagingInfo();
-                var page = info.iPage;
-                var length = info.iLength;
+                let info = this.fnPagingInfo();
+                let page = info.iPage;
+                let length = info.iLength;
                 // var index = page * length + (iDisplayIndex + 1);
                 // $('td:eq(0)', row).html(index);
             }
@@ -330,7 +369,7 @@
 
         $('#addtombol').click(function() {
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> Sample reception | New<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Sample reception | Insert <span id="my-another-cool-loader"></span>');
             $('#idx_project').val(id_project);
             $('#idx_project').attr('readonly', true);
             $('#clientx').val(client);

@@ -320,6 +320,13 @@ class Sample_reception extends CI_Controller
     
         echo json_encode($data);
     }
+
+    public function validateIdClientSample() {
+        $id = $this->input->get('id');
+        $data = $this->Sample_reception_model->validateIdClientSample($id);
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
     
 
 

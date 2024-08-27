@@ -414,6 +414,17 @@ class Sample_reception_model extends CI_Model
         return $response; 
     }
 
+    function validateIdClientSample($id){
+        $q = $this->db->query('
+        SELECT id_client_sample FROM sample_reception
+        WHERE id_client_sample = "'.$id.'"
+        AND flag = 0 
+        ');        
+        $response = $q->result_array();
+        return $response;
+    }
+
+
       
 }
 
