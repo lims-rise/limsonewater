@@ -362,7 +362,7 @@
 
 		$('#addtombol_det').click(function() {
 			$('#mode_det').val('insert');
-			$('#modal-title-detail').html('<i class="fa fa-wpforms"></i> New samples<span id="my-another-cool-loader"></span>');
+			$('#modal-title-detail').html('<i class="fa fa-wpforms"></i> Detail Sample Reception | New Sample Testing<span id="my-another-cool-loader"></span>');
 			$('#idx_sample').hide();
 			$('#id2_project').val(id_project);
 			$('#idx_client_sample').val(id_client_sample);
@@ -409,7 +409,7 @@
 				let testingTypeIds = data.id_testing_type.split(',');
 
 				$('#mode_det').val('edit');
-				$('#modal-title-detail').html('<i class="fa fa-pencil-square"></i> Update samples<span id="my-another-cool-loader"></span>');
+				$('#modal-title-detail').html('<i class="fa fa-pencil-square"></i> Detail Sample Reception | Update Sample Testing<span id="my-another-cool-loader"></span>');
 				$('#idx_sample').hide();
 				$('#id_sample').val(data.id_sample);
 				$('#id2_project').val(data.id_project);

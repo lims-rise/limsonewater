@@ -424,6 +424,19 @@ class Sample_reception_model extends CI_Model
         return $response;
     }
 
+    function get_all() {
+        $this->db->select('sr.id_project, sr.client, sr.id_client_sample, sr.id_one_water_sample, rp.initial, rs.sampletype,
+        sr.date_arrival, sr.time_arrival, sr.comments, rt.testing_type');
+        $this->db->from('sample_reception AS sr');
+        $this->db->join('ref_person AS rp', 'sr.id_person = rp.id_person');
+        $this->db->join('ref_sampletype AS rs', 'sr.id_sampletype = rs.id_sampletype');
+        $this->db->join('sample_reception_sample AS srs', 'sr.id_project = srs.id_project');
+        $this->db->join('ref_testing AS rt', 'srs.id_testing_type = rt.id_testing_type');
+        $this->db->where('sr.flag', '0');
+        $this->db->order_by('sr.id_project', 'ASC');
+        return $this->db->get()->result();
+    }
+
 
       
 }
