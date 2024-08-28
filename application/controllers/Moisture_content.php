@@ -520,7 +520,7 @@ class Moisture_content extends CI_Controller
 
         // Set header untuk file excel
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="laporan_moisture_content.xlsx"');
+        header('Content-Disposition: attachment;filename="Report_moisture_content.xlsx"');
         header('Cache-Control: max-age=0');
 
         // Tampilkan file excel

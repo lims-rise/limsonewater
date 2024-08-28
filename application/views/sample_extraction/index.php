@@ -479,7 +479,7 @@
 
         $('#addtombol').click(function() {
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> Water Sample Extraction | New<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Sample Extraction | New<span id="my-another-cool-loader"></span>');
             // $('#project_idx').hide();
             $('#id_one_water_sample').attr('readonly', false);
             $('#id_one_water_sample').val('');
@@ -513,7 +513,7 @@
             console.log(data);
             // var data = this.parents('tr').data();
             $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Water Sample Extraction | Update<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Sample Extraction | Update<span id="my-another-cool-loader"></span>');
             // $('#project_idx').show();
             $('#id_one_water_sample').attr('readonly', true);
             $('#id_one_water_sample').show();
