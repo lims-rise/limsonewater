@@ -136,6 +136,7 @@
                                 <label for="barcode_moisture_content" class="col-sm-4 control-label">Barcode Moisture Content</label>
                                 <div class="col-sm-8">
                                     <input id="barcode_moisture_content" name="barcode_moisture_content" placeholder="Barcode Moisture Content" type="text" class="form-control">
+                                    <div class="val1tip"></div>
                                 </div>
                             </div>
 
@@ -301,7 +302,46 @@
             }, 3000);                            
         });
 
-        var base_url = location.hostname;
+        $("input").keypress(function(){
+            $('.val1tip').tooltipster('hide');   
+        });
+
+        $("input").click(function(){
+            setTimeout(function(){
+                $('.val1tip').tooltipster('hide');   
+            }, 3000);                            
+        });
+
+        $('#barcode_moisture_content').on("change", function() {
+            let barcodeMoistureContent = $('#barcode_moisture_content').val();
+            $.ajax({
+                type: "GET",
+                url: "Moisture_content/validateBarcodeMoistureContent",
+                data: { id: barcodeMoistureContent },
+                dataType: "json",
+                success: function(data) {
+                    if (data.length == 1) {
+                        let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode Moisture Content <strong> ' + barcodeMoistureContent +'</strong> is already in the system !</span>');
+                        $('.val1tip').tooltipster('content', tip);
+                        $('.val1tip').tooltipster('show');
+                        $('#barcode_moisture_content').focus();
+                        $('#barcode_moisture_content').val('');       
+                        $('#barcode_moisture_content').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#barcode_moisture_content').css({'background-color' : '#FFFFFF'});
+                            setTimeout(function(){
+                                $('#barcode_moisture_content').css({'background-color' : '#FFE6E7'});
+                                setTimeout(function(){
+                                    $('#barcode_moisture_content').css({'background-color' : '#FFFFFF'});
+                                }, 300);                            
+                            }, 300);
+                        }, 300);
+                    }
+                }
+            });
+        });
+
+        let base_url = location.hostname;
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
         {
             return {

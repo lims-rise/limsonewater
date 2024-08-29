@@ -528,6 +528,13 @@ class Moisture_content extends CI_Controller
         $writer->save('php://output');
     }
 
+    public function validateBarcodeMoistureContent() {
+        $id = $this->input->get('id');
+        $data = $this->Moisture_content_model->validateBarcodeMoistureContent($id);
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
+
 }
 
 /* End of file Water_sample_reception.php */

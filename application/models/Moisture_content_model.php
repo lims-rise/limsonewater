@@ -266,6 +266,16 @@ class Moisture_content_model extends CI_Model
 
         return $this->db->get()->result();
     }
+
+    function validateBarcodeMoistureContent($id){
+        $q = $this->db->query('
+        SELECT barcode_moisture_content FROM moisture_content
+        WHERE barcode_moisture_content = "'.$id.'"
+        AND flag = 0 
+        ');        
+        $response = $q->result_array();
+        return $response;
+    }
     
 
       
