@@ -141,8 +141,8 @@
         <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <div class="modal-header" style="background-color: #3c8dbc; color: white;">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
                         <h4 class="modal-title" id="modal-title-detail">
 							<span id="my-another-cool-loader"></span></h4>
                     </div>
@@ -214,8 +214,8 @@
 <div class="modal fade" id="compose-modal72" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <div class="modal-header" style="background-color: #3c8dbc; color: white;">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
                         <h4 class="modal-title" id="modal-title-detail72">
 							<span id="my-another-cool-loader"></span></h4>
                     </div>
@@ -295,18 +295,44 @@
 <div class="modal fade" id="confirm-modal" role="dialog" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title">Information</h4>
+				<div class="modal-header" style="background-color: #f39c12; color: white;">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
+					<h4 class="modal-title">Moisture Content | Information</h4>
 				</div>
-				<div class="modal-body">
-				</div>
+                <div id="confirmation-content">
+                    <div class="modal-body">
+                    </div>
+                </div>
 				<div class="modal-footer clearfix">
 					<button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Close </button>
 				</div>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
+
+
+<!-- MODAL CONFIRMATION DELETE -->
+<div class="modal fade" id="confirm-modal-delete" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #dd4b39; color: white;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <div id="confirmation-content">
+                    <div class="modal-body">
+                        <p class="text-center" style="font-size: 15px;">Are you sure you want to delete ID <span id="id" style="font-weight: bold;"></span> ?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer clearfix">
+                <button type="button" id="confirm-delete" class="btn btn-danger"><i class="fa fa-trash"></i> Yes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> No</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
@@ -320,6 +346,50 @@
     const BASE_URL = '/limsonewater/index.php';
 
     $(document).ready(function() {
+        function showConfirmationDelete(url) {
+            deleteUrl = url; // Set the URL to the variable
+            $('#confirm-modal-delete').modal('show');
+        }
+
+        // Handle the delete button click
+        $(document).on('click', '.btn_delete24, .btn_delete72', function() {
+            let id = $(this).data('id');
+            let url;
+            if ($(this).hasClass('btn_delete24')) {
+                url = '<?php echo site_url('Moisture_content/delete_detail24'); ?>/' + id;
+                $('.modal-title').html('<i class="fa fa-trash"></i> 24 Hour Moisture | Delete <span id="my-another-cool-loader"></span>');
+                $('#confirm-modal-delete #id').text(id);
+            } else if ($(this).hasClass('btn_delete72')) {
+                url = '<?php echo site_url('Moisture_content/delete_detail72'); ?>/' + id;
+                $('.modal-title').html('<i class="fa fa-trash"></i> 72 Hour Moisture | Delete <span id="my-another-cool-loader"></span>');
+                $('#confirm-modal-delete #id').text(id);
+            }
+
+            showConfirmationDelete(url);
+
+        });
+
+        // When the confirm-delete button is clicked
+        $('#confirm-delete').click(function() {
+            $.ajax({
+                url: deleteUrl,
+                type: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        alert(response.message);
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                complete: function() {
+                    $('#confirm-modal-delete').modal('hide');
+                    location.reload();
+                }
+            });
+        });
+
+
         $('.noEnterSubmit').keypress(function (e) {
             if (e.which == 13) return false;
         });
@@ -616,7 +686,7 @@
                 // Tampilkan modal konfirmasi
                 $('#confirm-modal').modal('show');
                 // Tambahkan pesan ke modal
-                $('#confirm-modal .modal-body').html('You have not filled in the 24-hour moisture data. Please fill in that data first.');
+                $('#confirm-modal .modal-body').html('<p class="text-center" style="font-size: 15px;">You have not filled in the 24-hour moisture data. Please fill in that data first.</p>');
             }
         });
         
