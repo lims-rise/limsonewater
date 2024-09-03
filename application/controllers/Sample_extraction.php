@@ -35,7 +35,7 @@ class Sample_extraction extends CI_Controller
         $data['freez1'] = $this->Sample_extraction_model->getFreezer1();
         $data['shelf1'] = $this->Sample_extraction_model->getFreezer2();
         $data['rack1'] = $this->Sample_extraction_model->getFreezer3();
-        $data['draw1'] = $this->Sample_extraction_model->getFreezer4();
+        $data['tray1'] = $this->Sample_extraction_model->getFreezer4();
         $this->template->load('template','Sample_extraction/index', $data);
     } 
     

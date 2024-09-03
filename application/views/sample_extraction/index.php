@@ -219,11 +219,11 @@
                             </select>
                             </div>
                             <div class="col-sm-2">
-                            <select id='id_draw' name="id_draw" class="form-control" required>
-                                <option>Drawer</option>
+                            <select id='id_tray' name="id_tray" class="form-control" required>
+                                <option>Tray</option>
                                     <?php
-                                    foreach($draw1 as $row){
-                                        echo "<option value='".$row['rack_level']."'>".$row['rack_level']."</option>";
+                                    foreach($tray1 as $row){
+                                        echo "<option value='".$row['tray']."'>".$row['tray']."</option>";
                                     }
                                     ?>
                             </select>
@@ -376,17 +376,17 @@
                 dataType: "json",
                 success: function(data) {
                     if (data.length > 0) {
-                        // console.log();
+                        console.log();
                         $('#id_freez').val(data[0].freezer);    
                         $('#id_shelf').val(data[0].shelf);    
                         $('#id_rack').val(data[0].rack);    
-                        $('#id_draw').val(data[0].rack_level);    
+                        $('#id_tray').val(data[0].tray);    
                     }
                     else {
                         $('#id_freez').val('');    
                         $('#id_shelf').val('');    
                         $('#id_rack').val('');    
-                        $('#id_draw').val('');    
+                        $('#id_tray').val('');    
                     }
                 }
             });
@@ -410,16 +410,16 @@
         }
 
         $('#id_freez').on('change', function (){
-            get_freez($('#id_freez').val(), $('#id_shelf').val(), $('#id_rack').val(), $('#id_draw').val())
+            get_freez($('#id_freez').val(), $('#id_shelf').val(), $('#id_rack').val(), $('#id_tray').val())
         });
         $('#id_shelf').on('change', function (){
-            get_freez($('#id_freez').val(), $('#id_shelf').val(), $('#id_rack').val(), $('#id_draw').val())
+            get_freez($('#id_freez').val(), $('#id_shelf').val(), $('#id_rack').val(), $('#id_tray').val())
         });
         $('#id_rack').on('change', function (){
-            get_freez($('#id_freez').val(), $('#id_shelf').val(), $('#id_rack').val(), $('#id_draw').val())
+            get_freez($('#id_freez').val(), $('#id_shelf').val(), $('#id_rack').val(), $('#id_tray').val())
         });
-        $('#id_draw').on('change', function (){
-            get_freez($('#id_freez').val(), $('#id_shelf').val(), $('#id_rack').val(), $('#id_draw').val())
+        $('#id_tray').on('change', function (){
+            get_freez($('#id_freez').val(), $('#id_shelf').val(), $('#id_rack').val(), $('#id_tray').val())
         });
 
 
@@ -430,7 +430,7 @@
             //             .off('.DT')
             //             .on('keyup.DT', function(e) {
             //                 if (e.keyCode == 13) {
-            //                     api.search(this.value).draw();
+            //                     api.search(this.value).tray();
             //                 }
             //     });
             // },
@@ -502,7 +502,7 @@
             $('#id_freez').val('');
             $('#id_shelf').val('');
             $('#id_rack').val('');
-            $('#id_draw').val('');
+            $('#id_tray').val('');
             // $('#comments').val('');
             $('#compose-modal').modal('show');
         });

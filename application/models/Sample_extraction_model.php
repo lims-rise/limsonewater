@@ -256,20 +256,20 @@ class Sample_extraction_model extends CI_Model
 
     function load_freez($id){
         $q = $this->db->query('
-        SELECT freezer, shelf, rack, rack_level FROM ref_location
+        SELECT freezer, shelf, rack, tray FROM ref_location
         WHERE id_location = "'.$id.'"
         ');        
         $response = $q->result_array();
         return $response;
       }    
 
-      function get_freez($freez, $shelf, $rack, $draw){
+      function get_freez($freez, $shelf, $rack, $tray){
         $q = $this->db->query('
         SELECT id_location FROM ref_location
         WHERE freezer = "'.$freez.'"
         AND shelf = "'.$shelf.'"
         AND rack = "'.$rack.'"
-        AND rack_level = "'.$draw.'"
+        AND tray = "'.$tray.'"
         AND flag = 0 
         ');        
         $response = $q->result_array();
@@ -280,7 +280,8 @@ class Sample_extraction_model extends CI_Model
         $q = $this->db->query('
         SELECT id_one_water_sample FROM sample_reception
         WHERE id_one_water_sample NOT IN (SELECT id_one_water_sample FROM sample_extraction)
-        AND flag = 0');        
+        AND flag = 0
+        ORDER BY id_one_water_sample');        
         $response = $q->result_array();
         return $response;
       }
@@ -357,7 +358,7 @@ class Sample_extraction_model extends CI_Model
       function getFreezer4(){
         $response = array();
         $q = $this->db->query('
-            SELECT DISTINCT rack_level FROM ref_location
+            SELECT DISTINCT tray FROM ref_location
             WHERE flag = 0 
         ');
         $response = $q->result_array();    
