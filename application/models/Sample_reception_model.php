@@ -36,7 +36,7 @@ class Sample_reception_model extends CI_Model
         else {
             $this->datatables->add_column('action', anchor(site_url('Sample_reception/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
                 ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                ".anchor(site_url('Sample_reception/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting project ID : $1 ?\')"'), 'id_project');
+                ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_project');
         }
         return $this->datatables->generate();
     }
@@ -64,7 +64,7 @@ class Sample_reception_model extends CI_Model
         }
         else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                ".anchor(site_url('Sample_reception/delete_detail/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting sample ID : $1 ?\')"'), 'id_sample');
+               ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_sample');
         }
         return $this->datatables->generate();
     }
@@ -413,6 +413,30 @@ class Sample_reception_model extends CI_Model
         $response = $query->result_array();
         return $response; 
     }
+
+    function validateIdClientSample($id){
+        $q = $this->db->query('
+        SELECT id_client_sample FROM sample_reception
+        WHERE id_client_sample = "'.$id.'"
+        AND flag = 0 
+        ');        
+        $response = $q->result_array();
+        return $response;
+    }
+
+    function get_all() {
+        $this->db->select('sr.id_project, sr.client, sr.id_client_sample, sr.id_one_water_sample, rp.initial, rs.sampletype,
+        sr.date_arrival, sr.time_arrival, sr.comments, rt.testing_type');
+        $this->db->from('sample_reception AS sr');
+        $this->db->join('ref_person AS rp', 'sr.id_person = rp.id_person');
+        $this->db->join('ref_sampletype AS rs', 'sr.id_sampletype = rs.id_sampletype');
+        $this->db->join('sample_reception_sample AS srs', 'sr.id_project = srs.id_project');
+        $this->db->join('ref_testing AS rt', 'srs.id_testing_type = rt.id_testing_type');
+        $this->db->where('sr.flag', '0');
+        $this->db->order_by('sr.id_project', 'ASC');
+        return $this->db->get()->result();
+    }
+
 
       
 }

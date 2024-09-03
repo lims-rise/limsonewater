@@ -29,7 +29,7 @@
                                         echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Moisture Content</button>";
                                     }
                             ?>        
-                            <!-- <?php echo anchor(site_url('Sample_reception/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?> -->
+                            <?php echo anchor(site_url('Moisture_content/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
                         </div>
                             <div class="table-responsive">
                                 <table class="table ho table-bordered table-striped tbody" id="mytable" style="width:100%">
@@ -70,8 +70,8 @@
     <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                    <div class="modal-header box">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <div class="modal-header" style="background-color: #3c8dbc; color: white;">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
                         <h4 class="modal-title" id="modal-title">Moisture Content | New</h4>
                     </div>
                     <form id="formSample"  action= <?php echo site_url('Moisture_content/save') ?> method="post" class="form-horizontal">
@@ -136,6 +136,7 @@
                                 <label for="barcode_moisture_content" class="col-sm-4 control-label">Barcode Moisture Content</label>
                                 <div class="col-sm-8">
                                     <input id="barcode_moisture_content" name="barcode_moisture_content" placeholder="Barcode Moisture Content" type="text" class="form-control">
+                                    <div class="val1tip"></div>
                                 </div>
                             </div>
 
@@ -170,7 +171,7 @@
                             <div class="form-group">
                                 <label for="comments" class="col-sm-4 control-label">Comments</label>
                                 <div class="col-sm-8">
-                                    <input id="comments" name="comments" placeholder="Comments" type="text" class="form-control">
+                                    <textarea id="comments" name="comments" class="form-control" placeholder="Comments"></textarea>
                                 </div>
                             </div>
 
@@ -184,6 +185,29 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->        
     </div>
+
+<!-- MODAL CONFIRMATION DELETE -->
+<div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #dd4b39; color: white;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
+                <h4 class="modal-title"><i class="fa fa-trash"></i> Moisture Content | Delete <span id="my-another-cool-loader"></span></h4>
+            </div>
+            <div class="modal-body">
+                <div id="confirmation-content">
+                    <div class="modal-body">
+                        <p class="text-center" style="font-size: 15px;">Are you sure you want to delete ID <span id="id" style="font-weight: bold;"></span> ?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer clearfix">
+                <button type="button" id="confirm-save" class="btn btn-danger"><i class="fa fa-trash"></i> Yes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> No</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <style>
     .hidden {
         visibility: hidden;
@@ -200,6 +224,7 @@
 <script type="text/javascript">
 
     let table;
+    let deleteUrl; // Variable to hold the delete URL
     $(document).ready(function() {
         // Update tray weight visibility based on sample type
         // $('#sampletype').on('input', function() {
@@ -221,6 +246,40 @@
                 }
             });
         }
+
+        function showConfirmation(url) {
+            deleteUrl = url; // Set the URL to the variable
+            $('#confirm-modal').modal('show');
+        }
+
+        // Handle the delete button click
+        $(document).on('click', '.btn_delete', function() {
+            let id = $(this).data('id');
+            let url = '<?php echo site_url('Moisture_content/delete'); ?>/' + id;
+            $('#confirm-modal #id').text(id);
+            console.log(id);
+            showConfirmation(url);
+        });
+
+        // When the confirm-save button is clicked
+        $('#confirm-save').click(function() {
+            $.ajax({
+                url: deleteUrl,
+                type: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        alert(response.message);
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                complete: function() {
+                    $('#confirm-modal').modal('hide');
+                    location.reload();
+                }
+            });
+        });
 
 
         
@@ -301,7 +360,46 @@
             }, 3000);                            
         });
 
-        var base_url = location.hostname;
+        $("input").keypress(function(){
+            $('.val1tip').tooltipster('hide');   
+        });
+
+        $("input").click(function(){
+            setTimeout(function(){
+                $('.val1tip').tooltipster('hide');   
+            }, 3000);                            
+        });
+
+        $('#barcode_moisture_content').on("change", function() {
+            let barcodeMoistureContent = $('#barcode_moisture_content').val();
+            $.ajax({
+                type: "GET",
+                url: "Moisture_content/validateBarcodeMoistureContent",
+                data: { id: barcodeMoistureContent },
+                dataType: "json",
+                success: function(data) {
+                    if (data.length == 1) {
+                        let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode Moisture Content <strong> ' + barcodeMoistureContent +'</strong> is already in the system !</span>');
+                        $('.val1tip').tooltipster('content', tip);
+                        $('.val1tip').tooltipster('show');
+                        $('#barcode_moisture_content').focus();
+                        $('#barcode_moisture_content').val('');       
+                        $('#barcode_moisture_content').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#barcode_moisture_content').css({'background-color' : '#FFFFFF'});
+                            setTimeout(function(){
+                                $('#barcode_moisture_content').css({'background-color' : '#FFE6E7'});
+                                setTimeout(function(){
+                                    $('#barcode_moisture_content').css({'background-color' : '#FFFFFF'});
+                                }, 300);                            
+                            }, 300);
+                        }, 300);
+                    }
+                }
+            });
+        });
+
+        let base_url = location.hostname;
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
         {
             return {

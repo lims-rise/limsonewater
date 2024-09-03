@@ -7299,3 +7299,14954 @@ INFO - 2024-08-22 13:30:19 --> Model Class Initialized
 INFO - 2024-08-22 13:30:19 --> Form Validation Class Initialized
 INFO - 2024-08-22 13:30:19 --> Final output sent to browser
 DEBUG - 2024-08-22 13:30:19 --> Total execution time: 0.0533
+INFO - 2024-08-22 13:40:12 --> Config Class Initialized
+INFO - 2024-08-22 13:40:12 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:40:12 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:40:12 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:40:13 --> URI Class Initialized
+INFO - 2024-08-22 13:40:13 --> Router Class Initialized
+INFO - 2024-08-22 13:40:13 --> Output Class Initialized
+INFO - 2024-08-22 13:40:13 --> Security Class Initialized
+DEBUG - 2024-08-22 13:40:13 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:40:13 --> Input Class Initialized
+INFO - 2024-08-22 13:40:13 --> Language Class Initialized
+INFO - 2024-08-22 13:40:13 --> Loader Class Initialized
+INFO - 2024-08-22 13:40:13 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:40:13 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:40:13 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:40:13 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:40:13 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:40:13 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:40:13 --> Controller Class Initialized
+INFO - 2024-08-22 13:40:13 --> Model Class Initialized
+INFO - 2024-08-22 13:40:13 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:40:13 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:40:13 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:40:13 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:40:13 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:40:13 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:40:13 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:40:13 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:40:13 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:40:13 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:40:13 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:40:13 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:40:13 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:40:13 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:40:13 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+INFO - 2024-08-22 13:40:13 --> File loaded: C:\laragon\www\limsonewater\application\views\Sample_reception/index.php
+INFO - 2024-08-22 13:40:13 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:40:13 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:40:13 --> Final output sent to browser
+DEBUG - 2024-08-22 13:40:13 --> Total execution time: 0.0842
+INFO - 2024-08-22 13:40:13 --> Config Class Initialized
+INFO - 2024-08-22 13:40:13 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:40:13 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:40:13 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:40:13 --> URI Class Initialized
+INFO - 2024-08-22 13:40:13 --> Router Class Initialized
+INFO - 2024-08-22 13:40:13 --> Output Class Initialized
+INFO - 2024-08-22 13:40:13 --> Security Class Initialized
+DEBUG - 2024-08-22 13:40:13 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:40:13 --> Input Class Initialized
+INFO - 2024-08-22 13:40:13 --> Language Class Initialized
+INFO - 2024-08-22 13:40:13 --> Loader Class Initialized
+INFO - 2024-08-22 13:40:13 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:40:13 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:40:13 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:40:13 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:40:13 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:40:13 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:40:13 --> Controller Class Initialized
+INFO - 2024-08-22 13:40:13 --> Model Class Initialized
+INFO - 2024-08-22 13:40:13 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:40:13 --> Final output sent to browser
+DEBUG - 2024-08-22 13:40:13 --> Total execution time: 0.0303
+INFO - 2024-08-22 13:41:39 --> Config Class Initialized
+INFO - 2024-08-22 13:41:39 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:41:39 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:41:39 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:41:39 --> URI Class Initialized
+INFO - 2024-08-22 13:41:39 --> Router Class Initialized
+INFO - 2024-08-22 13:41:39 --> Output Class Initialized
+INFO - 2024-08-22 13:41:39 --> Security Class Initialized
+DEBUG - 2024-08-22 13:41:39 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:41:39 --> Input Class Initialized
+INFO - 2024-08-22 13:41:39 --> Language Class Initialized
+INFO - 2024-08-22 13:41:39 --> Loader Class Initialized
+INFO - 2024-08-22 13:41:39 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:41:39 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:41:39 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:41:39 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:41:39 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:41:39 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:41:39 --> Controller Class Initialized
+INFO - 2024-08-22 13:41:39 --> Model Class Initialized
+INFO - 2024-08-22 13:41:39 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:41:39 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:41:39 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:41:39 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:41:39 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:41:39 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:41:39 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:41:39 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:41:39 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:41:39 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:41:39 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:41:39 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:41:39 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:41:39 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:41:39 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+INFO - 2024-08-22 13:41:39 --> File loaded: C:\laragon\www\limsonewater\application\views\Sample_reception/index.php
+INFO - 2024-08-22 13:41:39 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:41:39 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:41:39 --> Final output sent to browser
+DEBUG - 2024-08-22 13:41:39 --> Total execution time: 0.0482
+INFO - 2024-08-22 13:41:39 --> Config Class Initialized
+INFO - 2024-08-22 13:41:39 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:41:39 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:41:39 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:41:39 --> URI Class Initialized
+INFO - 2024-08-22 13:41:39 --> Router Class Initialized
+INFO - 2024-08-22 13:41:39 --> Output Class Initialized
+INFO - 2024-08-22 13:41:39 --> Security Class Initialized
+DEBUG - 2024-08-22 13:41:39 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:41:39 --> Input Class Initialized
+INFO - 2024-08-22 13:41:39 --> Language Class Initialized
+INFO - 2024-08-22 13:41:39 --> Loader Class Initialized
+INFO - 2024-08-22 13:41:39 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:41:39 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:41:39 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:41:39 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:41:39 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:41:39 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:41:39 --> Controller Class Initialized
+INFO - 2024-08-22 13:41:39 --> Model Class Initialized
+INFO - 2024-08-22 13:41:39 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:41:39 --> Final output sent to browser
+DEBUG - 2024-08-22 13:41:39 --> Total execution time: 0.0292
+INFO - 2024-08-22 13:41:45 --> Config Class Initialized
+INFO - 2024-08-22 13:41:45 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:41:45 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:41:45 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:41:45 --> URI Class Initialized
+INFO - 2024-08-22 13:41:45 --> Router Class Initialized
+INFO - 2024-08-22 13:41:45 --> Output Class Initialized
+INFO - 2024-08-22 13:41:45 --> Security Class Initialized
+DEBUG - 2024-08-22 13:41:45 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:41:45 --> Input Class Initialized
+INFO - 2024-08-22 13:41:45 --> Language Class Initialized
+INFO - 2024-08-22 13:41:45 --> Loader Class Initialized
+INFO - 2024-08-22 13:41:45 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:41:45 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:41:45 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:41:45 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:41:45 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:41:45 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:41:45 --> Controller Class Initialized
+INFO - 2024-08-22 13:41:45 --> Model Class Initialized
+INFO - 2024-08-22 13:41:45 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:41:45 --> File loaded: C:\laragon\www\limsonewater\application\views\Sample_reception/index_det.php
+INFO - 2024-08-22 13:41:45 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:41:45 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:41:45 --> Final output sent to browser
+DEBUG - 2024-08-22 13:41:45 --> Total execution time: 0.0848
+INFO - 2024-08-22 13:41:45 --> Config Class Initialized
+INFO - 2024-08-22 13:41:45 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:41:45 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:41:45 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:41:45 --> URI Class Initialized
+INFO - 2024-08-22 13:41:45 --> Router Class Initialized
+INFO - 2024-08-22 13:41:45 --> Output Class Initialized
+INFO - 2024-08-22 13:41:45 --> Security Class Initialized
+DEBUG - 2024-08-22 13:41:45 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:41:45 --> Input Class Initialized
+INFO - 2024-08-22 13:41:45 --> Language Class Initialized
+ERROR - 2024-08-22 13:41:45 --> 404 Page Not Found: Sample_reception/img
+INFO - 2024-08-22 13:41:45 --> Config Class Initialized
+INFO - 2024-08-22 13:41:45 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:41:45 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:41:45 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:41:45 --> URI Class Initialized
+INFO - 2024-08-22 13:41:45 --> Router Class Initialized
+INFO - 2024-08-22 13:41:45 --> Output Class Initialized
+INFO - 2024-08-22 13:41:45 --> Security Class Initialized
+DEBUG - 2024-08-22 13:41:45 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:41:45 --> Input Class Initialized
+INFO - 2024-08-22 13:41:45 --> Language Class Initialized
+INFO - 2024-08-22 13:41:45 --> Loader Class Initialized
+INFO - 2024-08-22 13:41:45 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:41:45 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:41:45 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:41:45 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:41:45 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:41:45 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:41:45 --> Controller Class Initialized
+INFO - 2024-08-22 13:41:45 --> Model Class Initialized
+INFO - 2024-08-22 13:41:45 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:41:45 --> Final output sent to browser
+DEBUG - 2024-08-22 13:41:45 --> Total execution time: 0.0413
+INFO - 2024-08-22 13:41:51 --> Config Class Initialized
+INFO - 2024-08-22 13:41:51 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:41:51 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:41:51 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:41:51 --> URI Class Initialized
+INFO - 2024-08-22 13:41:51 --> Router Class Initialized
+INFO - 2024-08-22 13:41:51 --> Output Class Initialized
+INFO - 2024-08-22 13:41:51 --> Security Class Initialized
+DEBUG - 2024-08-22 13:41:51 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:41:51 --> Input Class Initialized
+INFO - 2024-08-22 13:41:51 --> Language Class Initialized
+INFO - 2024-08-22 13:41:51 --> Loader Class Initialized
+INFO - 2024-08-22 13:41:51 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:41:51 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:41:51 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:41:51 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:41:51 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:41:51 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:41:51 --> Controller Class Initialized
+INFO - 2024-08-22 13:41:51 --> Model Class Initialized
+INFO - 2024-08-22 13:41:51 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:41:51 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:41:51 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:41:51 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:41:51 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:41:51 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:41:51 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:41:51 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:41:51 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:41:51 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:41:51 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:41:51 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:41:51 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:41:51 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:41:51 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+INFO - 2024-08-22 13:41:51 --> File loaded: C:\laragon\www\limsonewater\application\views\Sample_reception/index.php
+INFO - 2024-08-22 13:41:51 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:41:51 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:41:51 --> Final output sent to browser
+DEBUG - 2024-08-22 13:41:51 --> Total execution time: 0.1246
+INFO - 2024-08-22 13:41:51 --> Config Class Initialized
+INFO - 2024-08-22 13:41:51 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:41:51 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:41:51 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:41:51 --> URI Class Initialized
+INFO - 2024-08-22 13:41:51 --> Router Class Initialized
+INFO - 2024-08-22 13:41:51 --> Output Class Initialized
+INFO - 2024-08-22 13:41:51 --> Security Class Initialized
+DEBUG - 2024-08-22 13:41:51 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:41:51 --> Input Class Initialized
+INFO - 2024-08-22 13:41:51 --> Language Class Initialized
+INFO - 2024-08-22 13:41:51 --> Loader Class Initialized
+INFO - 2024-08-22 13:41:51 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:41:51 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:41:51 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:41:51 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:41:51 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:41:51 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:41:51 --> Controller Class Initialized
+INFO - 2024-08-22 13:41:51 --> Model Class Initialized
+INFO - 2024-08-22 13:41:51 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:41:51 --> Final output sent to browser
+DEBUG - 2024-08-22 13:41:51 --> Total execution time: 0.0416
+INFO - 2024-08-22 13:42:57 --> Config Class Initialized
+INFO - 2024-08-22 13:42:57 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:42:57 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:42:57 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:42:57 --> URI Class Initialized
+INFO - 2024-08-22 13:42:57 --> Router Class Initialized
+INFO - 2024-08-22 13:42:57 --> Output Class Initialized
+INFO - 2024-08-22 13:42:57 --> Security Class Initialized
+DEBUG - 2024-08-22 13:42:57 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:42:57 --> Input Class Initialized
+INFO - 2024-08-22 13:42:57 --> Language Class Initialized
+INFO - 2024-08-22 13:42:57 --> Loader Class Initialized
+INFO - 2024-08-22 13:42:57 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:42:57 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:42:57 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:42:57 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:42:57 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:42:57 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:42:57 --> Controller Class Initialized
+INFO - 2024-08-22 13:42:57 --> Model Class Initialized
+INFO - 2024-08-22 13:42:57 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:42:57 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:42:57 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:42:57 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:42:57 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:42:57 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:42:57 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:42:57 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:42:57 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:42:57 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:42:57 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:42:57 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:42:57 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:42:57 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:42:57 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+INFO - 2024-08-22 13:42:57 --> File loaded: C:\laragon\www\limsonewater\application\views\Sample_reception/index.php
+INFO - 2024-08-22 13:42:57 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:42:57 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:42:57 --> Final output sent to browser
+DEBUG - 2024-08-22 13:42:57 --> Total execution time: 0.1522
+INFO - 2024-08-22 13:42:57 --> Config Class Initialized
+INFO - 2024-08-22 13:42:57 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:42:57 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:42:57 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:42:57 --> URI Class Initialized
+INFO - 2024-08-22 13:42:57 --> Router Class Initialized
+INFO - 2024-08-22 13:42:57 --> Output Class Initialized
+INFO - 2024-08-22 13:42:57 --> Security Class Initialized
+DEBUG - 2024-08-22 13:42:57 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:42:57 --> Input Class Initialized
+INFO - 2024-08-22 13:42:57 --> Language Class Initialized
+INFO - 2024-08-22 13:42:57 --> Loader Class Initialized
+INFO - 2024-08-22 13:42:57 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:42:57 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:42:57 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:42:57 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:42:57 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:42:57 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:42:57 --> Controller Class Initialized
+INFO - 2024-08-22 13:42:57 --> Model Class Initialized
+INFO - 2024-08-22 13:42:57 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:42:57 --> Final output sent to browser
+DEBUG - 2024-08-22 13:42:57 --> Total execution time: 0.0575
+INFO - 2024-08-22 13:44:04 --> Config Class Initialized
+INFO - 2024-08-22 13:44:04 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:44:04 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:44:04 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:44:04 --> URI Class Initialized
+INFO - 2024-08-22 13:44:04 --> Router Class Initialized
+INFO - 2024-08-22 13:44:04 --> Output Class Initialized
+INFO - 2024-08-22 13:44:04 --> Security Class Initialized
+DEBUG - 2024-08-22 13:44:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:44:04 --> Input Class Initialized
+INFO - 2024-08-22 13:44:04 --> Language Class Initialized
+INFO - 2024-08-22 13:44:04 --> Loader Class Initialized
+INFO - 2024-08-22 13:44:04 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:44:04 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:44:04 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:44:04 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:44:04 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:44:04 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:44:04 --> Controller Class Initialized
+INFO - 2024-08-22 13:44:04 --> Model Class Initialized
+INFO - 2024-08-22 13:44:04 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:44:04 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:44:04 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:44:04 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:44:04 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:44:04 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:44:04 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:44:04 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:44:04 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:44:04 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:44:04 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:44:04 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:44:04 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:44:04 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:44:04 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+INFO - 2024-08-22 13:44:04 --> File loaded: C:\laragon\www\limsonewater\application\views\Sample_reception/index.php
+INFO - 2024-08-22 13:44:04 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:44:04 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:44:04 --> Final output sent to browser
+DEBUG - 2024-08-22 13:44:04 --> Total execution time: 0.0763
+INFO - 2024-08-22 13:44:04 --> Config Class Initialized
+INFO - 2024-08-22 13:44:04 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:44:04 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:44:04 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:44:04 --> URI Class Initialized
+INFO - 2024-08-22 13:44:04 --> Router Class Initialized
+INFO - 2024-08-22 13:44:04 --> Output Class Initialized
+INFO - 2024-08-22 13:44:04 --> Security Class Initialized
+DEBUG - 2024-08-22 13:44:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:44:04 --> Input Class Initialized
+INFO - 2024-08-22 13:44:04 --> Language Class Initialized
+INFO - 2024-08-22 13:44:04 --> Loader Class Initialized
+INFO - 2024-08-22 13:44:04 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:44:04 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:44:04 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:44:04 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:44:04 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:44:04 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:44:04 --> Controller Class Initialized
+INFO - 2024-08-22 13:44:04 --> Model Class Initialized
+INFO - 2024-08-22 13:44:04 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:44:04 --> Final output sent to browser
+DEBUG - 2024-08-22 13:44:04 --> Total execution time: 0.0322
+INFO - 2024-08-22 13:44:32 --> Config Class Initialized
+INFO - 2024-08-22 13:44:32 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:44:32 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:44:32 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:44:32 --> URI Class Initialized
+INFO - 2024-08-22 13:44:32 --> Router Class Initialized
+INFO - 2024-08-22 13:44:32 --> Output Class Initialized
+INFO - 2024-08-22 13:44:32 --> Security Class Initialized
+DEBUG - 2024-08-22 13:44:32 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:44:32 --> Input Class Initialized
+INFO - 2024-08-22 13:44:32 --> Language Class Initialized
+INFO - 2024-08-22 13:44:32 --> Loader Class Initialized
+INFO - 2024-08-22 13:44:32 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:44:32 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:44:32 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:44:32 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:44:32 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:44:32 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:44:32 --> Controller Class Initialized
+INFO - 2024-08-22 13:44:32 --> Model Class Initialized
+INFO - 2024-08-22 13:44:32 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:44:32 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:44:32 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:44:32 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:44:32 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:44:32 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:44:32 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:44:32 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:44:32 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:44:32 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:44:32 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:44:32 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:44:32 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:44:32 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:44:32 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+INFO - 2024-08-22 13:44:32 --> File loaded: C:\laragon\www\limsonewater\application\views\Sample_reception/index.php
+INFO - 2024-08-22 13:44:32 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:44:32 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:44:32 --> Final output sent to browser
+DEBUG - 2024-08-22 13:44:32 --> Total execution time: 0.0827
+INFO - 2024-08-22 13:44:32 --> Config Class Initialized
+INFO - 2024-08-22 13:44:32 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:44:32 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:44:32 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:44:32 --> URI Class Initialized
+INFO - 2024-08-22 13:44:32 --> Router Class Initialized
+INFO - 2024-08-22 13:44:32 --> Output Class Initialized
+INFO - 2024-08-22 13:44:32 --> Security Class Initialized
+DEBUG - 2024-08-22 13:44:32 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:44:32 --> Input Class Initialized
+INFO - 2024-08-22 13:44:32 --> Language Class Initialized
+INFO - 2024-08-22 13:44:32 --> Loader Class Initialized
+INFO - 2024-08-22 13:44:32 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:44:32 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:44:32 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:44:32 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:44:32 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:44:32 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:44:32 --> Controller Class Initialized
+INFO - 2024-08-22 13:44:32 --> Model Class Initialized
+INFO - 2024-08-22 13:44:32 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:44:32 --> Final output sent to browser
+DEBUG - 2024-08-22 13:44:32 --> Total execution time: 0.0304
+INFO - 2024-08-22 13:44:50 --> Config Class Initialized
+INFO - 2024-08-22 13:44:50 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:44:50 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:44:50 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:44:50 --> URI Class Initialized
+INFO - 2024-08-22 13:44:50 --> Router Class Initialized
+INFO - 2024-08-22 13:44:50 --> Output Class Initialized
+INFO - 2024-08-22 13:44:50 --> Security Class Initialized
+DEBUG - 2024-08-22 13:44:50 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:44:50 --> Input Class Initialized
+INFO - 2024-08-22 13:44:50 --> Language Class Initialized
+INFO - 2024-08-22 13:44:50 --> Loader Class Initialized
+INFO - 2024-08-22 13:44:50 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:44:50 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:44:50 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:44:50 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:44:50 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:44:50 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:44:50 --> Controller Class Initialized
+INFO - 2024-08-22 13:44:50 --> Model Class Initialized
+INFO - 2024-08-22 13:44:50 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:44:50 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:44:50 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:44:50 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:44:50 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:44:50 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:44:50 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:44:50 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:44:50 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:44:50 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:44:50 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:44:50 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:44:50 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:44:50 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:44:50 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+INFO - 2024-08-22 13:44:50 --> File loaded: C:\laragon\www\limsonewater\application\views\Sample_reception/index.php
+INFO - 2024-08-22 13:44:50 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:44:50 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:44:50 --> Final output sent to browser
+DEBUG - 2024-08-22 13:44:50 --> Total execution time: 0.0932
+INFO - 2024-08-22 13:44:51 --> Config Class Initialized
+INFO - 2024-08-22 13:44:51 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:44:51 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:44:51 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:44:51 --> URI Class Initialized
+INFO - 2024-08-22 13:44:51 --> Router Class Initialized
+INFO - 2024-08-22 13:44:51 --> Output Class Initialized
+INFO - 2024-08-22 13:44:51 --> Security Class Initialized
+DEBUG - 2024-08-22 13:44:51 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:44:51 --> Input Class Initialized
+INFO - 2024-08-22 13:44:51 --> Language Class Initialized
+INFO - 2024-08-22 13:44:51 --> Loader Class Initialized
+INFO - 2024-08-22 13:44:51 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:44:51 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:44:51 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:44:51 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:44:51 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:44:51 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:44:51 --> Controller Class Initialized
+INFO - 2024-08-22 13:44:51 --> Model Class Initialized
+INFO - 2024-08-22 13:44:51 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:44:51 --> Final output sent to browser
+DEBUG - 2024-08-22 13:44:51 --> Total execution time: 0.0310
+INFO - 2024-08-22 13:45:04 --> Config Class Initialized
+INFO - 2024-08-22 13:45:04 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:04 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:04 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:04 --> URI Class Initialized
+INFO - 2024-08-22 13:45:04 --> Router Class Initialized
+INFO - 2024-08-22 13:45:04 --> Output Class Initialized
+INFO - 2024-08-22 13:45:04 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:04 --> Input Class Initialized
+INFO - 2024-08-22 13:45:04 --> Language Class Initialized
+INFO - 2024-08-22 13:45:04 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:04 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:04 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:04 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:04 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:04 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:04 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:04 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:04 --> Model Class Initialized
+INFO - 2024-08-22 13:45:04 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:45:04 --> File loaded: C:\laragon\www\limsonewater\application\views\kelolamenu/tbl_menu_list.php
+INFO - 2024-08-22 13:45:04 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:45:04 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:45:04 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:04 --> Total execution time: 0.0332
+INFO - 2024-08-22 13:45:04 --> Config Class Initialized
+INFO - 2024-08-22 13:45:04 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:04 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:04 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:04 --> URI Class Initialized
+INFO - 2024-08-22 13:45:04 --> Router Class Initialized
+INFO - 2024-08-22 13:45:04 --> Output Class Initialized
+INFO - 2024-08-22 13:45:04 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:04 --> Input Class Initialized
+INFO - 2024-08-22 13:45:04 --> Language Class Initialized
+INFO - 2024-08-22 13:45:04 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:04 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:04 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:04 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:04 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:04 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:04 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:04 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:04 --> Model Class Initialized
+INFO - 2024-08-22 13:45:04 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:45:04 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:04 --> Total execution time: 0.0414
+INFO - 2024-08-22 13:45:10 --> Config Class Initialized
+INFO - 2024-08-22 13:45:10 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:10 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:10 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:10 --> URI Class Initialized
+INFO - 2024-08-22 13:45:10 --> Router Class Initialized
+INFO - 2024-08-22 13:45:10 --> Output Class Initialized
+INFO - 2024-08-22 13:45:10 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:10 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:10 --> Input Class Initialized
+INFO - 2024-08-22 13:45:10 --> Language Class Initialized
+INFO - 2024-08-22 13:45:10 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:10 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:10 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:10 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:10 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:10 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:10 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:10 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:10 --> Model Class Initialized
+INFO - 2024-08-22 13:45:10 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:45:10 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:10 --> Total execution time: 0.0704
+INFO - 2024-08-22 13:45:11 --> Config Class Initialized
+INFO - 2024-08-22 13:45:11 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:11 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:11 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:11 --> URI Class Initialized
+INFO - 2024-08-22 13:45:11 --> Router Class Initialized
+INFO - 2024-08-22 13:45:11 --> Output Class Initialized
+INFO - 2024-08-22 13:45:11 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:11 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:11 --> Input Class Initialized
+INFO - 2024-08-22 13:45:11 --> Language Class Initialized
+INFO - 2024-08-22 13:45:11 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:11 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:11 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:11 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:11 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:11 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:11 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:11 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:11 --> Model Class Initialized
+INFO - 2024-08-22 13:45:11 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:45:11 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:11 --> Total execution time: 0.0596
+INFO - 2024-08-22 13:45:16 --> Config Class Initialized
+INFO - 2024-08-22 13:45:16 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:16 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:16 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:16 --> URI Class Initialized
+INFO - 2024-08-22 13:45:16 --> Router Class Initialized
+INFO - 2024-08-22 13:45:16 --> Output Class Initialized
+INFO - 2024-08-22 13:45:16 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:16 --> Input Class Initialized
+INFO - 2024-08-22 13:45:16 --> Language Class Initialized
+INFO - 2024-08-22 13:45:16 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:16 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:16 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:16 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:16 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:16 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:16 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:16 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:16 --> Model Class Initialized
+INFO - 2024-08-22 13:45:16 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:45:16 --> File loaded: C:\laragon\www\limsonewater\application\views\kelolamenu/tbl_menu_form.php
+INFO - 2024-08-22 13:45:16 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:45:16 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:45:16 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:16 --> Total execution time: 0.0655
+INFO - 2024-08-22 13:45:16 --> Config Class Initialized
+INFO - 2024-08-22 13:45:16 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:16 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:16 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:16 --> URI Class Initialized
+INFO - 2024-08-22 13:45:16 --> Router Class Initialized
+INFO - 2024-08-22 13:45:16 --> Output Class Initialized
+INFO - 2024-08-22 13:45:16 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:16 --> Input Class Initialized
+INFO - 2024-08-22 13:45:16 --> Language Class Initialized
+ERROR - 2024-08-22 13:45:16 --> 404 Page Not Found: Kelolamenu/img
+INFO - 2024-08-22 13:45:24 --> Config Class Initialized
+INFO - 2024-08-22 13:45:24 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:24 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:24 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:24 --> URI Class Initialized
+INFO - 2024-08-22 13:45:24 --> Router Class Initialized
+INFO - 2024-08-22 13:45:24 --> Output Class Initialized
+INFO - 2024-08-22 13:45:25 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:25 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:25 --> Input Class Initialized
+INFO - 2024-08-22 13:45:25 --> Language Class Initialized
+INFO - 2024-08-22 13:45:25 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:25 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:25 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:25 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:25 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:25 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:25 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:25 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:25 --> Model Class Initialized
+INFO - 2024-08-22 13:45:25 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:45:25 --> Language file loaded: language/english/form_validation_lang.php
+INFO - 2024-08-22 13:45:25 --> Config Class Initialized
+INFO - 2024-08-22 13:45:25 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:25 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:25 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:25 --> URI Class Initialized
+INFO - 2024-08-22 13:45:25 --> Router Class Initialized
+INFO - 2024-08-22 13:45:25 --> Output Class Initialized
+INFO - 2024-08-22 13:45:25 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:25 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:25 --> Input Class Initialized
+INFO - 2024-08-22 13:45:25 --> Language Class Initialized
+INFO - 2024-08-22 13:45:25 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:25 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:25 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:25 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:25 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:25 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:25 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:25 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:25 --> Model Class Initialized
+INFO - 2024-08-22 13:45:25 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:45:25 --> File loaded: C:\laragon\www\limsonewater\application\views\kelolamenu/tbl_menu_list.php
+INFO - 2024-08-22 13:45:25 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:45:25 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:45:25 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:25 --> Total execution time: 0.0656
+INFO - 2024-08-22 13:45:25 --> Config Class Initialized
+INFO - 2024-08-22 13:45:25 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:25 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:25 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:25 --> URI Class Initialized
+INFO - 2024-08-22 13:45:25 --> Router Class Initialized
+INFO - 2024-08-22 13:45:25 --> Output Class Initialized
+INFO - 2024-08-22 13:45:25 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:25 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:25 --> Input Class Initialized
+INFO - 2024-08-22 13:45:25 --> Language Class Initialized
+INFO - 2024-08-22 13:45:25 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:25 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:25 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:25 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:25 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:25 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:25 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:25 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:25 --> Model Class Initialized
+INFO - 2024-08-22 13:45:25 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:45:25 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:25 --> Total execution time: 0.0415
+INFO - 2024-08-22 13:45:28 --> Config Class Initialized
+INFO - 2024-08-22 13:45:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:28 --> URI Class Initialized
+INFO - 2024-08-22 13:45:28 --> Router Class Initialized
+INFO - 2024-08-22 13:45:28 --> Output Class Initialized
+INFO - 2024-08-22 13:45:28 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:28 --> Input Class Initialized
+INFO - 2024-08-22 13:45:28 --> Language Class Initialized
+INFO - 2024-08-22 13:45:28 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:28 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:28 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:28 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:28 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:28 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:28 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:28 --> Model Class Initialized
+INFO - 2024-08-22 13:45:28 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:45:28 --> File loaded: C:\laragon\www\limsonewater\application\views\kelolamenu/tbl_menu_list.php
+INFO - 2024-08-22 13:45:28 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:45:28 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:45:28 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:28 --> Total execution time: 0.0416
+INFO - 2024-08-22 13:45:28 --> Config Class Initialized
+INFO - 2024-08-22 13:45:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:28 --> URI Class Initialized
+INFO - 2024-08-22 13:45:28 --> Router Class Initialized
+INFO - 2024-08-22 13:45:28 --> Output Class Initialized
+INFO - 2024-08-22 13:45:28 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:28 --> Input Class Initialized
+INFO - 2024-08-22 13:45:28 --> Language Class Initialized
+INFO - 2024-08-22 13:45:28 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:28 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:28 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:28 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:28 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:28 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:28 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:28 --> Model Class Initialized
+INFO - 2024-08-22 13:45:28 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:45:28 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:28 --> Total execution time: 0.0389
+INFO - 2024-08-22 13:45:30 --> Config Class Initialized
+INFO - 2024-08-22 13:45:30 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:30 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:30 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:30 --> URI Class Initialized
+INFO - 2024-08-22 13:45:30 --> Router Class Initialized
+INFO - 2024-08-22 13:45:30 --> Output Class Initialized
+INFO - 2024-08-22 13:45:30 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:30 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:30 --> Input Class Initialized
+INFO - 2024-08-22 13:45:30 --> Language Class Initialized
+INFO - 2024-08-22 13:45:30 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:30 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:30 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:30 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:30 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:30 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:30 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:30 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:30 --> Model Class Initialized
+INFO - 2024-08-22 13:45:30 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:45:30 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:30 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:30 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:30 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:30 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:30 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:30 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:30 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:30 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:45:30 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:45:30 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:45:30 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:45:30 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:45:30 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+INFO - 2024-08-22 13:45:30 --> File loaded: C:\laragon\www\limsonewater\application\views\Sample_reception/index.php
+INFO - 2024-08-22 13:45:30 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:45:30 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:45:30 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:30 --> Total execution time: 0.0905
+INFO - 2024-08-22 13:45:31 --> Config Class Initialized
+INFO - 2024-08-22 13:45:31 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:31 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:31 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:31 --> URI Class Initialized
+INFO - 2024-08-22 13:45:31 --> Router Class Initialized
+INFO - 2024-08-22 13:45:31 --> Output Class Initialized
+INFO - 2024-08-22 13:45:31 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:31 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:31 --> Input Class Initialized
+INFO - 2024-08-22 13:45:31 --> Language Class Initialized
+INFO - 2024-08-22 13:45:31 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:31 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:31 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:31 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:31 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:31 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:31 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:31 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:31 --> Model Class Initialized
+INFO - 2024-08-22 13:45:31 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:45:31 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:31 --> Total execution time: 0.0488
+INFO - 2024-08-22 13:45:33 --> Config Class Initialized
+INFO - 2024-08-22 13:45:33 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:34 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:34 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:34 --> URI Class Initialized
+INFO - 2024-08-22 13:45:34 --> Router Class Initialized
+INFO - 2024-08-22 13:45:34 --> Output Class Initialized
+INFO - 2024-08-22 13:45:34 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:34 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:34 --> Input Class Initialized
+INFO - 2024-08-22 13:45:34 --> Language Class Initialized
+INFO - 2024-08-22 13:45:34 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:34 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:34 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:34 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:34 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:34 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:34 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:34 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:34 --> Model Class Initialized
+INFO - 2024-08-22 13:45:34 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:45:34 --> Severity: Notice --> Undefined variable: id_one_water_sample C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 77
+ERROR - 2024-08-22 13:45:34 --> Severity: Notice --> Undefined variable: id_one_water_sample C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 77
+ERROR - 2024-08-22 13:45:34 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 95
+ERROR - 2024-08-22 13:45:34 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 95
+ERROR - 2024-08-22 13:45:34 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 95
+ERROR - 2024-08-22 13:45:34 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 95
+ERROR - 2024-08-22 13:45:34 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 95
+ERROR - 2024-08-22 13:45:34 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 95
+ERROR - 2024-08-22 13:45:34 --> Severity: Notice --> Undefined variable: id_kit C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 149
+ERROR - 2024-08-22 13:45:34 --> Severity: Notice --> Undefined variable: id_kit C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 149
+ERROR - 2024-08-22 13:45:34 --> Severity: Notice --> Undefined variable: id_kit C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 149
+ERROR - 2024-08-22 13:45:34 --> Severity: Notice --> Undefined variable: id_kit C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 149
+ERROR - 2024-08-22 13:45:34 --> Severity: Notice --> Undefined variable: id_kit C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 149
+INFO - 2024-08-22 13:45:34 --> File loaded: C:\laragon\www\limsonewater\application\views\Sample_extraction/index.php
+INFO - 2024-08-22 13:45:34 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:45:34 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:45:34 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:34 --> Total execution time: 0.0772
+INFO - 2024-08-22 13:45:34 --> Config Class Initialized
+INFO - 2024-08-22 13:45:34 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:34 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:34 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:34 --> URI Class Initialized
+INFO - 2024-08-22 13:45:34 --> Router Class Initialized
+INFO - 2024-08-22 13:45:34 --> Output Class Initialized
+INFO - 2024-08-22 13:45:34 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:34 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:34 --> Input Class Initialized
+INFO - 2024-08-22 13:45:34 --> Language Class Initialized
+INFO - 2024-08-22 13:45:34 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:34 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:34 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:34 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:34 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:34 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:34 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:34 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:34 --> Model Class Initialized
+INFO - 2024-08-22 13:45:34 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:45:34 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:34 --> Total execution time: 0.0360
+INFO - 2024-08-22 13:45:37 --> Config Class Initialized
+INFO - 2024-08-22 13:45:37 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:37 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:37 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:37 --> URI Class Initialized
+INFO - 2024-08-22 13:45:37 --> Router Class Initialized
+INFO - 2024-08-22 13:45:37 --> Output Class Initialized
+INFO - 2024-08-22 13:45:37 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:37 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:37 --> Input Class Initialized
+INFO - 2024-08-22 13:45:37 --> Language Class Initialized
+INFO - 2024-08-22 13:45:37 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:37 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:37 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:37 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:37 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:37 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:37 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:37 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:37 --> Model Class Initialized
+INFO - 2024-08-22 13:45:37 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:45:37 --> Severity: Notice --> Undefined variable: id_project C:\laragon\www\limsonewater\application\views\moisture_content\index.php 13
+ERROR - 2024-08-22 13:45:37 --> Severity: Notice --> Undefined variable: client C:\laragon\www\limsonewater\application\views\moisture_content\index.php 16
+ERROR - 2024-08-22 13:45:37 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 13:45:37 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 13:45:37 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 13:45:37 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 13:45:37 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 13:45:37 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+INFO - 2024-08-22 13:45:37 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index.php
+INFO - 2024-08-22 13:45:37 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:45:37 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:45:37 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:37 --> Total execution time: 0.0826
+INFO - 2024-08-22 13:45:37 --> Config Class Initialized
+INFO - 2024-08-22 13:45:37 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:37 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:37 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:37 --> URI Class Initialized
+INFO - 2024-08-22 13:45:37 --> Router Class Initialized
+INFO - 2024-08-22 13:45:37 --> Output Class Initialized
+INFO - 2024-08-22 13:45:37 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:37 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:37 --> Input Class Initialized
+INFO - 2024-08-22 13:45:37 --> Language Class Initialized
+INFO - 2024-08-22 13:45:37 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:37 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:37 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:37 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:37 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:37 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:37 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:37 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:37 --> Model Class Initialized
+INFO - 2024-08-22 13:45:37 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:45:37 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:37 --> Total execution time: 0.0359
+INFO - 2024-08-22 13:45:39 --> Config Class Initialized
+INFO - 2024-08-22 13:45:39 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:39 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:39 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:39 --> URI Class Initialized
+INFO - 2024-08-22 13:45:39 --> Router Class Initialized
+INFO - 2024-08-22 13:45:39 --> Output Class Initialized
+INFO - 2024-08-22 13:45:39 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:39 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:39 --> Input Class Initialized
+INFO - 2024-08-22 13:45:39 --> Language Class Initialized
+INFO - 2024-08-22 13:45:39 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:39 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:39 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:39 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:39 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:39 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:39 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:39 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:39 --> Model Class Initialized
+INFO - 2024-08-22 13:45:39 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:45:39 --> Severity: Notice --> Undefined variable: id_one_water_sample C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 77
+ERROR - 2024-08-22 13:45:39 --> Severity: Notice --> Undefined variable: id_one_water_sample C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 77
+ERROR - 2024-08-22 13:45:39 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 95
+ERROR - 2024-08-22 13:45:39 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 95
+ERROR - 2024-08-22 13:45:39 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 95
+ERROR - 2024-08-22 13:45:39 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 95
+ERROR - 2024-08-22 13:45:39 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 95
+ERROR - 2024-08-22 13:45:39 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 95
+ERROR - 2024-08-22 13:45:39 --> Severity: Notice --> Undefined variable: id_kit C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 149
+ERROR - 2024-08-22 13:45:39 --> Severity: Notice --> Undefined variable: id_kit C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 149
+ERROR - 2024-08-22 13:45:39 --> Severity: Notice --> Undefined variable: id_kit C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 149
+ERROR - 2024-08-22 13:45:39 --> Severity: Notice --> Undefined variable: id_kit C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 149
+ERROR - 2024-08-22 13:45:39 --> Severity: Notice --> Undefined variable: id_kit C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 149
+INFO - 2024-08-22 13:45:39 --> File loaded: C:\laragon\www\limsonewater\application\views\Sample_extraction/index.php
+INFO - 2024-08-22 13:45:39 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:45:39 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:45:39 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:39 --> Total execution time: 0.0710
+INFO - 2024-08-22 13:45:39 --> Config Class Initialized
+INFO - 2024-08-22 13:45:39 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:39 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:39 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:39 --> URI Class Initialized
+INFO - 2024-08-22 13:45:39 --> Router Class Initialized
+INFO - 2024-08-22 13:45:39 --> Output Class Initialized
+INFO - 2024-08-22 13:45:39 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:39 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:39 --> Input Class Initialized
+INFO - 2024-08-22 13:45:39 --> Language Class Initialized
+INFO - 2024-08-22 13:45:39 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:39 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:39 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:39 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:39 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:39 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:39 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:39 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:39 --> Model Class Initialized
+INFO - 2024-08-22 13:45:39 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:45:39 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:39 --> Total execution time: 0.0309
+INFO - 2024-08-22 13:45:40 --> Config Class Initialized
+INFO - 2024-08-22 13:45:40 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:40 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:40 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:40 --> URI Class Initialized
+INFO - 2024-08-22 13:45:40 --> Router Class Initialized
+INFO - 2024-08-22 13:45:40 --> Output Class Initialized
+INFO - 2024-08-22 13:45:40 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:40 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:40 --> Input Class Initialized
+INFO - 2024-08-22 13:45:40 --> Language Class Initialized
+INFO - 2024-08-22 13:45:40 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:40 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:40 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:40 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:40 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:40 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:40 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:40 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:40 --> Model Class Initialized
+INFO - 2024-08-22 13:45:40 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:45:40 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:40 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:40 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:40 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:40 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:40 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:40 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:40 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:40 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:45:40 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:45:40 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:45:40 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:45:40 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:45:40 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+INFO - 2024-08-22 13:45:40 --> File loaded: C:\laragon\www\limsonewater\application\views\Sample_reception/index.php
+INFO - 2024-08-22 13:45:40 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:45:40 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:45:40 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:40 --> Total execution time: 0.0704
+INFO - 2024-08-22 13:45:40 --> Config Class Initialized
+INFO - 2024-08-22 13:45:40 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:40 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:40 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:40 --> URI Class Initialized
+INFO - 2024-08-22 13:45:40 --> Router Class Initialized
+INFO - 2024-08-22 13:45:40 --> Output Class Initialized
+INFO - 2024-08-22 13:45:40 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:40 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:40 --> Input Class Initialized
+INFO - 2024-08-22 13:45:40 --> Language Class Initialized
+INFO - 2024-08-22 13:45:40 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:40 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:40 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:40 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:40 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:40 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:40 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:40 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:40 --> Model Class Initialized
+INFO - 2024-08-22 13:45:40 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:45:40 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:40 --> Total execution time: 0.0513
+INFO - 2024-08-22 13:45:41 --> Config Class Initialized
+INFO - 2024-08-22 13:45:41 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:41 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:41 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:41 --> URI Class Initialized
+INFO - 2024-08-22 13:45:41 --> Router Class Initialized
+INFO - 2024-08-22 13:45:41 --> Output Class Initialized
+INFO - 2024-08-22 13:45:41 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:41 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:41 --> Input Class Initialized
+INFO - 2024-08-22 13:45:41 --> Language Class Initialized
+INFO - 2024-08-22 13:45:41 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:41 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:41 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:41 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:41 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:41 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:41 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:41 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:41 --> Model Class Initialized
+INFO - 2024-08-22 13:45:41 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:45:41 --> Severity: Notice --> Undefined variable: id_one_water_sample C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 77
+ERROR - 2024-08-22 13:45:41 --> Severity: Notice --> Undefined variable: id_one_water_sample C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 77
+ERROR - 2024-08-22 13:45:41 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 95
+ERROR - 2024-08-22 13:45:41 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 95
+ERROR - 2024-08-22 13:45:41 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 95
+ERROR - 2024-08-22 13:45:41 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 95
+ERROR - 2024-08-22 13:45:41 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 95
+ERROR - 2024-08-22 13:45:41 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 95
+ERROR - 2024-08-22 13:45:41 --> Severity: Notice --> Undefined variable: id_kit C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 149
+ERROR - 2024-08-22 13:45:41 --> Severity: Notice --> Undefined variable: id_kit C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 149
+ERROR - 2024-08-22 13:45:41 --> Severity: Notice --> Undefined variable: id_kit C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 149
+ERROR - 2024-08-22 13:45:41 --> Severity: Notice --> Undefined variable: id_kit C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 149
+ERROR - 2024-08-22 13:45:41 --> Severity: Notice --> Undefined variable: id_kit C:\laragon\www\limsonewater\application\views\sample_extraction\index.php 149
+INFO - 2024-08-22 13:45:41 --> File loaded: C:\laragon\www\limsonewater\application\views\Sample_extraction/index.php
+INFO - 2024-08-22 13:45:41 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:45:41 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:45:41 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:41 --> Total execution time: 0.0603
+INFO - 2024-08-22 13:45:41 --> Config Class Initialized
+INFO - 2024-08-22 13:45:41 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:41 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:41 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:41 --> URI Class Initialized
+INFO - 2024-08-22 13:45:41 --> Router Class Initialized
+INFO - 2024-08-22 13:45:41 --> Output Class Initialized
+INFO - 2024-08-22 13:45:41 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:41 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:41 --> Input Class Initialized
+INFO - 2024-08-22 13:45:41 --> Language Class Initialized
+INFO - 2024-08-22 13:45:41 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:41 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:41 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:41 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:41 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:41 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:41 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:41 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:41 --> Model Class Initialized
+INFO - 2024-08-22 13:45:41 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:45:41 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:41 --> Total execution time: 0.0273
+INFO - 2024-08-22 13:45:42 --> Config Class Initialized
+INFO - 2024-08-22 13:45:42 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:42 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:42 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:42 --> URI Class Initialized
+INFO - 2024-08-22 13:45:42 --> Router Class Initialized
+INFO - 2024-08-22 13:45:42 --> Output Class Initialized
+INFO - 2024-08-22 13:45:42 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:42 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:42 --> Input Class Initialized
+INFO - 2024-08-22 13:45:42 --> Language Class Initialized
+INFO - 2024-08-22 13:45:42 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:42 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:42 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:42 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:42 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:42 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:42 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:42 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:42 --> Model Class Initialized
+INFO - 2024-08-22 13:45:42 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:45:42 --> Severity: Notice --> Undefined variable: id_project C:\laragon\www\limsonewater\application\views\moisture_content\index.php 13
+ERROR - 2024-08-22 13:45:42 --> Severity: Notice --> Undefined variable: client C:\laragon\www\limsonewater\application\views\moisture_content\index.php 16
+ERROR - 2024-08-22 13:45:42 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 13:45:42 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 13:45:42 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 13:45:42 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 13:45:42 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 13:45:42 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+INFO - 2024-08-22 13:45:42 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index.php
+INFO - 2024-08-22 13:45:42 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:45:42 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:45:42 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:42 --> Total execution time: 0.0683
+INFO - 2024-08-22 13:45:42 --> Config Class Initialized
+INFO - 2024-08-22 13:45:42 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:42 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:42 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:42 --> URI Class Initialized
+INFO - 2024-08-22 13:45:42 --> Router Class Initialized
+INFO - 2024-08-22 13:45:42 --> Output Class Initialized
+INFO - 2024-08-22 13:45:42 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:42 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:42 --> Input Class Initialized
+INFO - 2024-08-22 13:45:42 --> Language Class Initialized
+INFO - 2024-08-22 13:45:42 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:42 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:42 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:42 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:42 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:42 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:42 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:42 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:42 --> Model Class Initialized
+INFO - 2024-08-22 13:45:42 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:45:42 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:42 --> Total execution time: 0.0337
+INFO - 2024-08-22 13:45:44 --> Config Class Initialized
+INFO - 2024-08-22 13:45:44 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:44 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:44 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:44 --> URI Class Initialized
+INFO - 2024-08-22 13:45:44 --> Router Class Initialized
+INFO - 2024-08-22 13:45:44 --> Output Class Initialized
+INFO - 2024-08-22 13:45:44 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:44 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:44 --> Input Class Initialized
+INFO - 2024-08-22 13:45:44 --> Language Class Initialized
+INFO - 2024-08-22 13:45:44 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:44 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:44 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:44 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:44 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:44 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:44 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:44 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:44 --> Model Class Initialized
+INFO - 2024-08-22 13:45:44 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:45:44 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:44 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:44 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:44 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:44 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:44 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:44 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:44 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:44 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:45:44 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:45:44 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:45:44 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:45:44 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:45:44 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+INFO - 2024-08-22 13:45:44 --> File loaded: C:\laragon\www\limsonewater\application\views\Sample_reception/index.php
+INFO - 2024-08-22 13:45:44 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:45:44 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:45:44 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:44 --> Total execution time: 0.0730
+INFO - 2024-08-22 13:45:44 --> Config Class Initialized
+INFO - 2024-08-22 13:45:44 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:44 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:44 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:44 --> URI Class Initialized
+INFO - 2024-08-22 13:45:44 --> Router Class Initialized
+INFO - 2024-08-22 13:45:44 --> Output Class Initialized
+INFO - 2024-08-22 13:45:44 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:44 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:44 --> Input Class Initialized
+INFO - 2024-08-22 13:45:44 --> Language Class Initialized
+INFO - 2024-08-22 13:45:44 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:44 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:44 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:44 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:44 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:44 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:44 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:44 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:44 --> Model Class Initialized
+INFO - 2024-08-22 13:45:44 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:45:44 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:44 --> Total execution time: 0.0299
+INFO - 2024-08-22 13:45:47 --> Config Class Initialized
+INFO - 2024-08-22 13:45:47 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:47 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:47 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:47 --> URI Class Initialized
+INFO - 2024-08-22 13:45:47 --> Router Class Initialized
+INFO - 2024-08-22 13:45:47 --> Output Class Initialized
+INFO - 2024-08-22 13:45:47 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:47 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:47 --> Input Class Initialized
+INFO - 2024-08-22 13:45:47 --> Language Class Initialized
+INFO - 2024-08-22 13:45:47 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:47 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:47 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:47 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:47 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:47 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:47 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:47 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:47 --> Model Class Initialized
+INFO - 2024-08-22 13:45:47 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:45:47 --> Severity: Notice --> Undefined variable: id_project C:\laragon\www\limsonewater\application\views\moisture_content\index.php 13
+ERROR - 2024-08-22 13:45:47 --> Severity: Notice --> Undefined variable: client C:\laragon\www\limsonewater\application\views\moisture_content\index.php 16
+ERROR - 2024-08-22 13:45:47 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 13:45:47 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 13:45:47 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 13:45:47 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 13:45:47 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 13:45:47 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+INFO - 2024-08-22 13:45:47 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index.php
+INFO - 2024-08-22 13:45:47 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:45:47 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:45:47 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:47 --> Total execution time: 0.0524
+INFO - 2024-08-22 13:45:47 --> Config Class Initialized
+INFO - 2024-08-22 13:45:47 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:47 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:47 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:47 --> URI Class Initialized
+INFO - 2024-08-22 13:45:47 --> Router Class Initialized
+INFO - 2024-08-22 13:45:47 --> Output Class Initialized
+INFO - 2024-08-22 13:45:47 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:47 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:47 --> Input Class Initialized
+INFO - 2024-08-22 13:45:47 --> Language Class Initialized
+INFO - 2024-08-22 13:45:47 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:47 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:47 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:47 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:47 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:47 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:47 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:47 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:47 --> Model Class Initialized
+INFO - 2024-08-22 13:45:47 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:45:47 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:47 --> Total execution time: 0.0396
+INFO - 2024-08-22 13:45:50 --> Config Class Initialized
+INFO - 2024-08-22 13:45:50 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:50 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:50 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:50 --> URI Class Initialized
+INFO - 2024-08-22 13:45:50 --> Router Class Initialized
+INFO - 2024-08-22 13:45:50 --> Output Class Initialized
+INFO - 2024-08-22 13:45:50 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:50 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:50 --> Input Class Initialized
+INFO - 2024-08-22 13:45:50 --> Language Class Initialized
+INFO - 2024-08-22 13:45:50 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:50 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:50 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:50 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:50 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:50 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:50 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:50 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:50 --> Model Class Initialized
+INFO - 2024-08-22 13:45:50 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:45:50 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:50 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:50 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:50 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:50 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:50 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:50 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:50 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:45:50 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:45:50 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:45:50 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:45:50 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:45:50 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:45:50 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+INFO - 2024-08-22 13:45:50 --> File loaded: C:\laragon\www\limsonewater\application\views\Sample_reception/index.php
+INFO - 2024-08-22 13:45:50 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:45:50 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:45:50 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:50 --> Total execution time: 0.1010
+INFO - 2024-08-22 13:45:50 --> Config Class Initialized
+INFO - 2024-08-22 13:45:50 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:50 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:50 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:50 --> URI Class Initialized
+INFO - 2024-08-22 13:45:50 --> Router Class Initialized
+INFO - 2024-08-22 13:45:50 --> Output Class Initialized
+INFO - 2024-08-22 13:45:50 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:50 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:50 --> Input Class Initialized
+INFO - 2024-08-22 13:45:50 --> Language Class Initialized
+INFO - 2024-08-22 13:45:50 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:50 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:50 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:50 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:50 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:50 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:50 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:50 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:50 --> Model Class Initialized
+INFO - 2024-08-22 13:45:50 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:45:50 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:50 --> Total execution time: 0.0582
+INFO - 2024-08-22 13:45:52 --> Config Class Initialized
+INFO - 2024-08-22 13:45:52 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:52 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:52 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:52 --> URI Class Initialized
+INFO - 2024-08-22 13:45:52 --> Router Class Initialized
+INFO - 2024-08-22 13:45:52 --> Output Class Initialized
+INFO - 2024-08-22 13:45:52 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:52 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:52 --> Input Class Initialized
+INFO - 2024-08-22 13:45:52 --> Language Class Initialized
+INFO - 2024-08-22 13:45:52 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:52 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:52 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:52 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:52 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:52 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:52 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:52 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:52 --> Model Class Initialized
+INFO - 2024-08-22 13:45:52 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:45:52 --> File loaded: C:\laragon\www\limsonewater\application\views\Sample_reception/index_det.php
+INFO - 2024-08-22 13:45:52 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:45:52 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:45:52 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:52 --> Total execution time: 0.0413
+INFO - 2024-08-22 13:45:52 --> Config Class Initialized
+INFO - 2024-08-22 13:45:52 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:52 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:52 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:52 --> URI Class Initialized
+INFO - 2024-08-22 13:45:52 --> Router Class Initialized
+INFO - 2024-08-22 13:45:52 --> Output Class Initialized
+INFO - 2024-08-22 13:45:52 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:52 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:52 --> Input Class Initialized
+INFO - 2024-08-22 13:45:52 --> Language Class Initialized
+ERROR - 2024-08-22 13:45:52 --> 404 Page Not Found: Sample_reception/img
+INFO - 2024-08-22 13:45:52 --> Config Class Initialized
+INFO - 2024-08-22 13:45:52 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:45:52 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:45:52 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:45:52 --> URI Class Initialized
+INFO - 2024-08-22 13:45:52 --> Router Class Initialized
+INFO - 2024-08-22 13:45:52 --> Output Class Initialized
+INFO - 2024-08-22 13:45:52 --> Security Class Initialized
+DEBUG - 2024-08-22 13:45:52 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:45:52 --> Input Class Initialized
+INFO - 2024-08-22 13:45:52 --> Language Class Initialized
+INFO - 2024-08-22 13:45:52 --> Loader Class Initialized
+INFO - 2024-08-22 13:45:52 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:45:52 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:45:52 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:45:52 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:45:52 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:45:52 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:45:52 --> Controller Class Initialized
+INFO - 2024-08-22 13:45:52 --> Model Class Initialized
+INFO - 2024-08-22 13:45:52 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:45:52 --> Final output sent to browser
+DEBUG - 2024-08-22 13:45:52 --> Total execution time: 0.0281
+INFO - 2024-08-22 13:46:06 --> Config Class Initialized
+INFO - 2024-08-22 13:46:06 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:46:06 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:46:06 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:46:06 --> URI Class Initialized
+INFO - 2024-08-22 13:46:06 --> Router Class Initialized
+INFO - 2024-08-22 13:46:06 --> Output Class Initialized
+INFO - 2024-08-22 13:46:06 --> Security Class Initialized
+DEBUG - 2024-08-22 13:46:06 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:46:06 --> Input Class Initialized
+INFO - 2024-08-22 13:46:06 --> Language Class Initialized
+INFO - 2024-08-22 13:46:06 --> Loader Class Initialized
+INFO - 2024-08-22 13:46:06 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:46:06 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:46:06 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:46:06 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:46:06 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:46:06 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:46:06 --> Controller Class Initialized
+INFO - 2024-08-22 13:46:06 --> Model Class Initialized
+INFO - 2024-08-22 13:46:06 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:46:06 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:46:06 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:46:06 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:46:06 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:46:06 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:46:06 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:46:06 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:46:06 --> Severity: Notice --> Undefined variable: id_sampletype C:\laragon\www\limsonewater\application\views\sample_reception\index.php 122
+ERROR - 2024-08-22 13:46:06 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:46:06 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:46:06 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:46:06 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:46:06 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+ERROR - 2024-08-22 13:46:06 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\sample_reception\index.php 141
+INFO - 2024-08-22 13:46:06 --> File loaded: C:\laragon\www\limsonewater\application\views\Sample_reception/index.php
+INFO - 2024-08-22 13:46:06 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:46:06 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:46:06 --> Final output sent to browser
+DEBUG - 2024-08-22 13:46:06 --> Total execution time: 0.0563
+INFO - 2024-08-22 13:46:07 --> Config Class Initialized
+INFO - 2024-08-22 13:46:07 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:46:07 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:46:07 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:46:07 --> URI Class Initialized
+INFO - 2024-08-22 13:46:07 --> Router Class Initialized
+INFO - 2024-08-22 13:46:07 --> Output Class Initialized
+INFO - 2024-08-22 13:46:07 --> Security Class Initialized
+DEBUG - 2024-08-22 13:46:07 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:46:07 --> Input Class Initialized
+INFO - 2024-08-22 13:46:07 --> Language Class Initialized
+INFO - 2024-08-22 13:46:07 --> Loader Class Initialized
+INFO - 2024-08-22 13:46:07 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:46:07 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:46:07 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:46:07 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:46:07 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:46:07 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:46:07 --> Controller Class Initialized
+INFO - 2024-08-22 13:46:07 --> Model Class Initialized
+INFO - 2024-08-22 13:46:07 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:46:07 --> Final output sent to browser
+DEBUG - 2024-08-22 13:46:07 --> Total execution time: 0.0287
+INFO - 2024-08-22 13:49:14 --> Config Class Initialized
+INFO - 2024-08-22 13:49:14 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:49:14 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:49:14 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:49:14 --> URI Class Initialized
+INFO - 2024-08-22 13:49:14 --> Router Class Initialized
+INFO - 2024-08-22 13:49:14 --> Output Class Initialized
+INFO - 2024-08-22 13:49:14 --> Security Class Initialized
+DEBUG - 2024-08-22 13:49:14 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:49:14 --> Input Class Initialized
+INFO - 2024-08-22 13:49:14 --> Language Class Initialized
+INFO - 2024-08-22 13:49:14 --> Loader Class Initialized
+INFO - 2024-08-22 13:49:14 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:49:14 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:49:14 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:49:14 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:49:14 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:49:14 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:49:14 --> Controller Class Initialized
+INFO - 2024-08-22 13:49:14 --> Model Class Initialized
+INFO - 2024-08-22 13:49:14 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:49:14 --> Severity: Notice --> Undefined variable: id_project C:\laragon\www\limsonewater\application\views\moisture_content\index.php 13
+ERROR - 2024-08-22 13:49:14 --> Severity: Notice --> Undefined variable: client C:\laragon\www\limsonewater\application\views\moisture_content\index.php 16
+ERROR - 2024-08-22 13:49:14 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 13:49:14 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 13:49:14 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 13:49:14 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 13:49:14 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 13:49:14 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+INFO - 2024-08-22 13:49:14 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index.php
+INFO - 2024-08-22 13:49:14 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:49:14 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:49:14 --> Final output sent to browser
+DEBUG - 2024-08-22 13:49:14 --> Total execution time: 0.0526
+INFO - 2024-08-22 13:49:14 --> Config Class Initialized
+INFO - 2024-08-22 13:49:14 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:49:14 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:49:14 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:49:14 --> URI Class Initialized
+INFO - 2024-08-22 13:49:14 --> Router Class Initialized
+INFO - 2024-08-22 13:49:14 --> Output Class Initialized
+INFO - 2024-08-22 13:49:14 --> Security Class Initialized
+DEBUG - 2024-08-22 13:49:14 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:49:14 --> Input Class Initialized
+INFO - 2024-08-22 13:49:14 --> Language Class Initialized
+INFO - 2024-08-22 13:49:14 --> Loader Class Initialized
+INFO - 2024-08-22 13:49:14 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:49:14 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:49:14 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:49:14 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:49:14 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:49:14 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:49:14 --> Controller Class Initialized
+INFO - 2024-08-22 13:49:14 --> Model Class Initialized
+INFO - 2024-08-22 13:49:14 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:49:14 --> Final output sent to browser
+DEBUG - 2024-08-22 13:49:14 --> Total execution time: 0.0465
+INFO - 2024-08-22 13:49:16 --> Config Class Initialized
+INFO - 2024-08-22 13:49:16 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:49:16 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:49:16 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:49:16 --> URI Class Initialized
+INFO - 2024-08-22 13:49:16 --> Router Class Initialized
+INFO - 2024-08-22 13:49:16 --> Output Class Initialized
+INFO - 2024-08-22 13:49:16 --> Security Class Initialized
+DEBUG - 2024-08-22 13:49:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:49:16 --> Input Class Initialized
+INFO - 2024-08-22 13:49:16 --> Language Class Initialized
+INFO - 2024-08-22 13:49:16 --> Loader Class Initialized
+INFO - 2024-08-22 13:49:16 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:49:16 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:49:16 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:49:16 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:49:16 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:49:16 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:49:16 --> Controller Class Initialized
+INFO - 2024-08-22 13:49:16 --> Model Class Initialized
+INFO - 2024-08-22 13:49:16 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:49:16 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 13:49:16 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:49:16 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:49:16 --> Final output sent to browser
+DEBUG - 2024-08-22 13:49:16 --> Total execution time: 0.0407
+INFO - 2024-08-22 13:49:16 --> Config Class Initialized
+INFO - 2024-08-22 13:49:16 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:49:16 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:49:16 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:49:16 --> URI Class Initialized
+INFO - 2024-08-22 13:49:16 --> Router Class Initialized
+INFO - 2024-08-22 13:49:16 --> Output Class Initialized
+INFO - 2024-08-22 13:49:16 --> Security Class Initialized
+DEBUG - 2024-08-22 13:49:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:49:16 --> Input Class Initialized
+INFO - 2024-08-22 13:49:16 --> Language Class Initialized
+ERROR - 2024-08-22 13:49:16 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 13:49:16 --> Config Class Initialized
+INFO - 2024-08-22 13:49:16 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:49:16 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:49:16 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:49:16 --> URI Class Initialized
+INFO - 2024-08-22 13:49:16 --> Router Class Initialized
+INFO - 2024-08-22 13:49:16 --> Output Class Initialized
+INFO - 2024-08-22 13:49:16 --> Security Class Initialized
+DEBUG - 2024-08-22 13:49:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:49:16 --> Input Class Initialized
+INFO - 2024-08-22 13:49:16 --> Language Class Initialized
+INFO - 2024-08-22 13:49:16 --> Loader Class Initialized
+INFO - 2024-08-22 13:49:16 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:49:16 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:49:16 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:49:16 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:49:16 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:49:16 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:49:16 --> Controller Class Initialized
+INFO - 2024-08-22 13:49:16 --> Model Class Initialized
+INFO - 2024-08-22 13:49:16 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:49:16 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 13:49:16 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 13:50:39 --> Config Class Initialized
+INFO - 2024-08-22 13:50:39 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:50:39 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:50:39 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:50:39 --> URI Class Initialized
+INFO - 2024-08-22 13:50:39 --> Router Class Initialized
+INFO - 2024-08-22 13:50:39 --> Output Class Initialized
+INFO - 2024-08-22 13:50:39 --> Security Class Initialized
+DEBUG - 2024-08-22 13:50:39 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:50:39 --> Input Class Initialized
+INFO - 2024-08-22 13:50:39 --> Language Class Initialized
+INFO - 2024-08-22 13:50:39 --> Loader Class Initialized
+INFO - 2024-08-22 13:50:39 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:50:39 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:50:39 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:50:39 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:50:39 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:50:39 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:50:39 --> Controller Class Initialized
+INFO - 2024-08-22 13:50:39 --> Model Class Initialized
+INFO - 2024-08-22 13:50:39 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:50:39 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 13:50:39 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:50:39 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:50:39 --> Final output sent to browser
+DEBUG - 2024-08-22 13:50:39 --> Total execution time: 0.0702
+INFO - 2024-08-22 13:50:39 --> Config Class Initialized
+INFO - 2024-08-22 13:50:39 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:50:39 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:50:39 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:50:39 --> URI Class Initialized
+INFO - 2024-08-22 13:50:39 --> Router Class Initialized
+INFO - 2024-08-22 13:50:39 --> Output Class Initialized
+INFO - 2024-08-22 13:50:39 --> Security Class Initialized
+DEBUG - 2024-08-22 13:50:39 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:50:39 --> Input Class Initialized
+INFO - 2024-08-22 13:50:39 --> Language Class Initialized
+ERROR - 2024-08-22 13:50:39 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 13:50:39 --> Config Class Initialized
+INFO - 2024-08-22 13:50:39 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:50:39 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:50:39 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:50:39 --> URI Class Initialized
+INFO - 2024-08-22 13:50:39 --> Router Class Initialized
+INFO - 2024-08-22 13:50:39 --> Output Class Initialized
+INFO - 2024-08-22 13:50:39 --> Security Class Initialized
+DEBUG - 2024-08-22 13:50:39 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:50:39 --> Input Class Initialized
+INFO - 2024-08-22 13:50:39 --> Language Class Initialized
+INFO - 2024-08-22 13:50:39 --> Loader Class Initialized
+INFO - 2024-08-22 13:50:39 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:50:39 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:50:39 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:50:39 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:50:39 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:50:39 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:50:39 --> Controller Class Initialized
+INFO - 2024-08-22 13:50:39 --> Model Class Initialized
+INFO - 2024-08-22 13:50:39 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:50:39 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 13:50:39 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 13:50:58 --> Config Class Initialized
+INFO - 2024-08-22 13:50:58 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:50:58 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:50:58 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:50:58 --> URI Class Initialized
+INFO - 2024-08-22 13:50:58 --> Router Class Initialized
+INFO - 2024-08-22 13:50:58 --> Output Class Initialized
+INFO - 2024-08-22 13:50:58 --> Security Class Initialized
+DEBUG - 2024-08-22 13:50:58 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:50:58 --> Input Class Initialized
+INFO - 2024-08-22 13:50:58 --> Language Class Initialized
+INFO - 2024-08-22 13:50:58 --> Loader Class Initialized
+INFO - 2024-08-22 13:50:58 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:50:58 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:50:58 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:50:58 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:50:58 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:50:58 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:50:58 --> Controller Class Initialized
+INFO - 2024-08-22 13:50:58 --> Model Class Initialized
+INFO - 2024-08-22 13:50:58 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:50:58 --> Final output sent to browser
+DEBUG - 2024-08-22 13:50:58 --> Total execution time: 0.0887
+INFO - 2024-08-22 13:51:07 --> Config Class Initialized
+INFO - 2024-08-22 13:51:07 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:51:07 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:51:07 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:51:07 --> URI Class Initialized
+INFO - 2024-08-22 13:51:07 --> Router Class Initialized
+INFO - 2024-08-22 13:51:07 --> Output Class Initialized
+INFO - 2024-08-22 13:51:07 --> Security Class Initialized
+DEBUG - 2024-08-22 13:51:07 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:51:07 --> Input Class Initialized
+INFO - 2024-08-22 13:51:07 --> Language Class Initialized
+INFO - 2024-08-22 13:51:07 --> Loader Class Initialized
+INFO - 2024-08-22 13:51:07 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:51:07 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:51:07 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:51:07 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:51:07 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:51:07 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:51:07 --> Controller Class Initialized
+INFO - 2024-08-22 13:51:07 --> Model Class Initialized
+INFO - 2024-08-22 13:51:07 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:51:07 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 13:51:07 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:51:07 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:51:07 --> Final output sent to browser
+DEBUG - 2024-08-22 13:51:07 --> Total execution time: 0.0403
+INFO - 2024-08-22 13:51:07 --> Config Class Initialized
+INFO - 2024-08-22 13:51:07 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:51:07 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:51:07 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:51:07 --> URI Class Initialized
+INFO - 2024-08-22 13:51:07 --> Router Class Initialized
+INFO - 2024-08-22 13:51:07 --> Output Class Initialized
+INFO - 2024-08-22 13:51:07 --> Security Class Initialized
+DEBUG - 2024-08-22 13:51:07 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:51:07 --> Input Class Initialized
+INFO - 2024-08-22 13:51:07 --> Language Class Initialized
+ERROR - 2024-08-22 13:51:07 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 13:51:07 --> Config Class Initialized
+INFO - 2024-08-22 13:51:07 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:51:07 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:51:07 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:51:07 --> URI Class Initialized
+INFO - 2024-08-22 13:51:07 --> Router Class Initialized
+INFO - 2024-08-22 13:51:07 --> Output Class Initialized
+INFO - 2024-08-22 13:51:07 --> Security Class Initialized
+DEBUG - 2024-08-22 13:51:07 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:51:07 --> Input Class Initialized
+INFO - 2024-08-22 13:51:07 --> Language Class Initialized
+INFO - 2024-08-22 13:51:07 --> Loader Class Initialized
+INFO - 2024-08-22 13:51:07 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:51:07 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:51:07 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:51:07 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:51:07 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:51:07 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:51:07 --> Controller Class Initialized
+INFO - 2024-08-22 13:51:07 --> Model Class Initialized
+INFO - 2024-08-22 13:51:07 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:51:07 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 13:51:07 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 13:53:07 --> Config Class Initialized
+INFO - 2024-08-22 13:53:07 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:53:07 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:53:07 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:53:07 --> URI Class Initialized
+INFO - 2024-08-22 13:53:07 --> Router Class Initialized
+INFO - 2024-08-22 13:53:07 --> Output Class Initialized
+INFO - 2024-08-22 13:53:07 --> Security Class Initialized
+DEBUG - 2024-08-22 13:53:07 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:53:07 --> Input Class Initialized
+INFO - 2024-08-22 13:53:07 --> Language Class Initialized
+INFO - 2024-08-22 13:53:07 --> Loader Class Initialized
+INFO - 2024-08-22 13:53:07 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:53:07 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:53:07 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:53:07 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:53:07 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:53:07 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:53:07 --> Controller Class Initialized
+INFO - 2024-08-22 13:53:07 --> Model Class Initialized
+INFO - 2024-08-22 13:53:07 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:53:07 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 13:53:07 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:53:07 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:53:07 --> Final output sent to browser
+DEBUG - 2024-08-22 13:53:07 --> Total execution time: 0.0921
+INFO - 2024-08-22 13:53:07 --> Config Class Initialized
+INFO - 2024-08-22 13:53:07 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:53:07 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:53:07 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:53:07 --> URI Class Initialized
+INFO - 2024-08-22 13:53:07 --> Router Class Initialized
+INFO - 2024-08-22 13:53:07 --> Output Class Initialized
+INFO - 2024-08-22 13:53:07 --> Security Class Initialized
+DEBUG - 2024-08-22 13:53:07 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:53:07 --> Input Class Initialized
+INFO - 2024-08-22 13:53:07 --> Language Class Initialized
+ERROR - 2024-08-22 13:53:07 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 13:53:07 --> Config Class Initialized
+INFO - 2024-08-22 13:53:07 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:53:07 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:53:07 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:53:07 --> URI Class Initialized
+INFO - 2024-08-22 13:53:07 --> Router Class Initialized
+INFO - 2024-08-22 13:53:07 --> Output Class Initialized
+INFO - 2024-08-22 13:53:07 --> Security Class Initialized
+DEBUG - 2024-08-22 13:53:07 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:53:07 --> Input Class Initialized
+INFO - 2024-08-22 13:53:07 --> Language Class Initialized
+INFO - 2024-08-22 13:53:07 --> Loader Class Initialized
+INFO - 2024-08-22 13:53:07 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:53:07 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:53:07 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:53:07 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:53:07 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:53:07 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:53:07 --> Controller Class Initialized
+INFO - 2024-08-22 13:53:07 --> Model Class Initialized
+INFO - 2024-08-22 13:53:07 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:53:07 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 13:53:07 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 13:53:13 --> Config Class Initialized
+INFO - 2024-08-22 13:53:13 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:53:13 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:53:13 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:53:13 --> URI Class Initialized
+INFO - 2024-08-22 13:53:13 --> Router Class Initialized
+INFO - 2024-08-22 13:53:13 --> Output Class Initialized
+INFO - 2024-08-22 13:53:13 --> Security Class Initialized
+DEBUG - 2024-08-22 13:53:13 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:53:13 --> Input Class Initialized
+INFO - 2024-08-22 13:53:13 --> Language Class Initialized
+INFO - 2024-08-22 13:53:13 --> Loader Class Initialized
+INFO - 2024-08-22 13:53:13 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:53:13 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:53:13 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:53:13 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:53:13 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:53:13 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:53:13 --> Controller Class Initialized
+INFO - 2024-08-22 13:53:13 --> Model Class Initialized
+INFO - 2024-08-22 13:53:13 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:53:13 --> Final output sent to browser
+DEBUG - 2024-08-22 13:53:13 --> Total execution time: 0.0672
+INFO - 2024-08-22 13:53:19 --> Config Class Initialized
+INFO - 2024-08-22 13:53:19 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:53:19 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:53:19 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:53:19 --> URI Class Initialized
+INFO - 2024-08-22 13:53:19 --> Router Class Initialized
+INFO - 2024-08-22 13:53:19 --> Output Class Initialized
+INFO - 2024-08-22 13:53:19 --> Security Class Initialized
+DEBUG - 2024-08-22 13:53:19 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:53:19 --> Input Class Initialized
+INFO - 2024-08-22 13:53:19 --> Language Class Initialized
+INFO - 2024-08-22 13:53:19 --> Loader Class Initialized
+INFO - 2024-08-22 13:53:19 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:53:19 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:53:19 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:53:19 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:53:19 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:53:19 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:53:19 --> Controller Class Initialized
+INFO - 2024-08-22 13:53:19 --> Model Class Initialized
+INFO - 2024-08-22 13:53:19 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:53:19 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 13:53:19 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:53:19 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:53:19 --> Final output sent to browser
+DEBUG - 2024-08-22 13:53:19 --> Total execution time: 0.0925
+INFO - 2024-08-22 13:53:20 --> Config Class Initialized
+INFO - 2024-08-22 13:53:20 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:53:20 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:53:20 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:53:20 --> URI Class Initialized
+INFO - 2024-08-22 13:53:20 --> Router Class Initialized
+INFO - 2024-08-22 13:53:20 --> Output Class Initialized
+INFO - 2024-08-22 13:53:20 --> Security Class Initialized
+DEBUG - 2024-08-22 13:53:20 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:53:20 --> Input Class Initialized
+INFO - 2024-08-22 13:53:20 --> Language Class Initialized
+ERROR - 2024-08-22 13:53:20 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 13:53:20 --> Config Class Initialized
+INFO - 2024-08-22 13:53:20 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:53:20 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:53:20 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:53:20 --> URI Class Initialized
+INFO - 2024-08-22 13:53:20 --> Router Class Initialized
+INFO - 2024-08-22 13:53:20 --> Output Class Initialized
+INFO - 2024-08-22 13:53:20 --> Security Class Initialized
+DEBUG - 2024-08-22 13:53:20 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:53:20 --> Input Class Initialized
+INFO - 2024-08-22 13:53:20 --> Language Class Initialized
+INFO - 2024-08-22 13:53:20 --> Loader Class Initialized
+INFO - 2024-08-22 13:53:20 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:53:20 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:53:20 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:53:20 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:53:20 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:53:20 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:53:20 --> Controller Class Initialized
+INFO - 2024-08-22 13:53:20 --> Model Class Initialized
+INFO - 2024-08-22 13:53:20 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:53:20 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 13:53:20 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 13:53:59 --> Config Class Initialized
+INFO - 2024-08-22 13:53:59 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:53:59 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:53:59 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:53:59 --> URI Class Initialized
+INFO - 2024-08-22 13:53:59 --> Router Class Initialized
+INFO - 2024-08-22 13:53:59 --> Output Class Initialized
+INFO - 2024-08-22 13:53:59 --> Security Class Initialized
+DEBUG - 2024-08-22 13:53:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:53:59 --> Input Class Initialized
+INFO - 2024-08-22 13:53:59 --> Language Class Initialized
+INFO - 2024-08-22 13:53:59 --> Loader Class Initialized
+INFO - 2024-08-22 13:53:59 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:53:59 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:53:59 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:53:59 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:53:59 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:53:59 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:53:59 --> Controller Class Initialized
+INFO - 2024-08-22 13:53:59 --> Model Class Initialized
+INFO - 2024-08-22 13:53:59 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:53:59 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 13:53:59 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:53:59 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:53:59 --> Final output sent to browser
+DEBUG - 2024-08-22 13:53:59 --> Total execution time: 0.0460
+INFO - 2024-08-22 13:53:59 --> Config Class Initialized
+INFO - 2024-08-22 13:53:59 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:53:59 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:53:59 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:53:59 --> URI Class Initialized
+INFO - 2024-08-22 13:53:59 --> Router Class Initialized
+INFO - 2024-08-22 13:53:59 --> Output Class Initialized
+INFO - 2024-08-22 13:53:59 --> Security Class Initialized
+DEBUG - 2024-08-22 13:53:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:53:59 --> Input Class Initialized
+INFO - 2024-08-22 13:53:59 --> Language Class Initialized
+ERROR - 2024-08-22 13:53:59 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 13:53:59 --> Config Class Initialized
+INFO - 2024-08-22 13:53:59 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:53:59 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:53:59 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:53:59 --> URI Class Initialized
+INFO - 2024-08-22 13:53:59 --> Router Class Initialized
+INFO - 2024-08-22 13:53:59 --> Output Class Initialized
+INFO - 2024-08-22 13:53:59 --> Security Class Initialized
+DEBUG - 2024-08-22 13:53:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:53:59 --> Input Class Initialized
+INFO - 2024-08-22 13:53:59 --> Language Class Initialized
+INFO - 2024-08-22 13:53:59 --> Loader Class Initialized
+INFO - 2024-08-22 13:53:59 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:53:59 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:53:59 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:53:59 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:53:59 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:53:59 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:53:59 --> Controller Class Initialized
+INFO - 2024-08-22 13:53:59 --> Model Class Initialized
+INFO - 2024-08-22 13:53:59 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:53:59 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 13:53:59 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 13:54:04 --> Config Class Initialized
+INFO - 2024-08-22 13:54:04 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:54:04 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:54:04 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:54:04 --> URI Class Initialized
+INFO - 2024-08-22 13:54:04 --> Router Class Initialized
+INFO - 2024-08-22 13:54:04 --> Output Class Initialized
+INFO - 2024-08-22 13:54:04 --> Security Class Initialized
+DEBUG - 2024-08-22 13:54:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:54:04 --> Input Class Initialized
+INFO - 2024-08-22 13:54:04 --> Language Class Initialized
+INFO - 2024-08-22 13:54:04 --> Loader Class Initialized
+INFO - 2024-08-22 13:54:04 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:54:04 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:54:04 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:54:04 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:54:04 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:54:04 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:54:04 --> Controller Class Initialized
+INFO - 2024-08-22 13:54:04 --> Model Class Initialized
+INFO - 2024-08-22 13:54:04 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:54:04 --> Final output sent to browser
+DEBUG - 2024-08-22 13:54:04 --> Total execution time: 0.0723
+INFO - 2024-08-22 13:54:56 --> Config Class Initialized
+INFO - 2024-08-22 13:54:56 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:54:56 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:54:56 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:54:56 --> URI Class Initialized
+INFO - 2024-08-22 13:54:56 --> Router Class Initialized
+INFO - 2024-08-22 13:54:56 --> Output Class Initialized
+INFO - 2024-08-22 13:54:56 --> Security Class Initialized
+DEBUG - 2024-08-22 13:54:56 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:54:56 --> Input Class Initialized
+INFO - 2024-08-22 13:54:56 --> Language Class Initialized
+INFO - 2024-08-22 13:54:56 --> Loader Class Initialized
+INFO - 2024-08-22 13:54:56 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:54:56 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:54:56 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:54:56 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:54:56 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:54:56 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:54:56 --> Controller Class Initialized
+INFO - 2024-08-22 13:54:56 --> Model Class Initialized
+INFO - 2024-08-22 13:54:56 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:54:56 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 13:54:56 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:54:56 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:54:56 --> Final output sent to browser
+DEBUG - 2024-08-22 13:54:56 --> Total execution time: 0.1001
+INFO - 2024-08-22 13:54:56 --> Config Class Initialized
+INFO - 2024-08-22 13:54:56 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:54:56 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:54:56 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:54:56 --> URI Class Initialized
+INFO - 2024-08-22 13:54:57 --> Router Class Initialized
+INFO - 2024-08-22 13:54:57 --> Output Class Initialized
+INFO - 2024-08-22 13:54:57 --> Security Class Initialized
+DEBUG - 2024-08-22 13:54:57 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:54:57 --> Input Class Initialized
+INFO - 2024-08-22 13:54:57 --> Language Class Initialized
+ERROR - 2024-08-22 13:54:57 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 13:54:57 --> Config Class Initialized
+INFO - 2024-08-22 13:54:57 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:54:57 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:54:57 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:54:57 --> URI Class Initialized
+INFO - 2024-08-22 13:54:57 --> Router Class Initialized
+INFO - 2024-08-22 13:54:57 --> Output Class Initialized
+INFO - 2024-08-22 13:54:57 --> Security Class Initialized
+DEBUG - 2024-08-22 13:54:57 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:54:57 --> Input Class Initialized
+INFO - 2024-08-22 13:54:57 --> Language Class Initialized
+INFO - 2024-08-22 13:54:57 --> Loader Class Initialized
+INFO - 2024-08-22 13:54:57 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:54:57 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:54:57 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:54:57 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:54:57 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:54:57 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:54:57 --> Controller Class Initialized
+INFO - 2024-08-22 13:54:57 --> Model Class Initialized
+INFO - 2024-08-22 13:54:57 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:54:57 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 13:54:57 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 13:55:20 --> Config Class Initialized
+INFO - 2024-08-22 13:55:20 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:55:20 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:55:20 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:55:20 --> URI Class Initialized
+INFO - 2024-08-22 13:55:20 --> Router Class Initialized
+INFO - 2024-08-22 13:55:20 --> Output Class Initialized
+INFO - 2024-08-22 13:55:20 --> Security Class Initialized
+DEBUG - 2024-08-22 13:55:20 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:55:20 --> Input Class Initialized
+INFO - 2024-08-22 13:55:20 --> Language Class Initialized
+INFO - 2024-08-22 13:55:20 --> Loader Class Initialized
+INFO - 2024-08-22 13:55:20 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:55:20 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:55:20 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:55:20 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:55:20 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:55:20 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:55:20 --> Controller Class Initialized
+INFO - 2024-08-22 13:55:20 --> Model Class Initialized
+INFO - 2024-08-22 13:55:20 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:55:20 --> Final output sent to browser
+DEBUG - 2024-08-22 13:55:20 --> Total execution time: 0.0656
+INFO - 2024-08-22 13:56:42 --> Config Class Initialized
+INFO - 2024-08-22 13:56:42 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:56:42 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:56:42 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:56:42 --> URI Class Initialized
+INFO - 2024-08-22 13:56:42 --> Router Class Initialized
+INFO - 2024-08-22 13:56:42 --> Output Class Initialized
+INFO - 2024-08-22 13:56:42 --> Security Class Initialized
+DEBUG - 2024-08-22 13:56:42 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:56:42 --> Input Class Initialized
+INFO - 2024-08-22 13:56:42 --> Language Class Initialized
+INFO - 2024-08-22 13:56:42 --> Loader Class Initialized
+INFO - 2024-08-22 13:56:42 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:56:42 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:56:42 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:56:42 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:56:42 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:56:42 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:56:42 --> Controller Class Initialized
+INFO - 2024-08-22 13:56:42 --> Model Class Initialized
+INFO - 2024-08-22 13:56:42 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:56:42 --> Final output sent to browser
+DEBUG - 2024-08-22 13:56:42 --> Total execution time: 0.1070
+INFO - 2024-08-22 13:56:57 --> Config Class Initialized
+INFO - 2024-08-22 13:56:57 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:56:57 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:56:57 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:56:57 --> URI Class Initialized
+INFO - 2024-08-22 13:56:57 --> Router Class Initialized
+INFO - 2024-08-22 13:56:57 --> Output Class Initialized
+INFO - 2024-08-22 13:56:57 --> Security Class Initialized
+DEBUG - 2024-08-22 13:56:57 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:56:57 --> Input Class Initialized
+INFO - 2024-08-22 13:56:57 --> Language Class Initialized
+INFO - 2024-08-22 13:56:57 --> Loader Class Initialized
+INFO - 2024-08-22 13:56:57 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:56:57 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:56:57 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:56:57 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:56:57 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:56:57 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:56:57 --> Controller Class Initialized
+INFO - 2024-08-22 13:56:57 --> Model Class Initialized
+INFO - 2024-08-22 13:56:57 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:56:57 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 13:56:57 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:56:57 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:56:57 --> Final output sent to browser
+DEBUG - 2024-08-22 13:56:57 --> Total execution time: 0.0913
+INFO - 2024-08-22 13:56:57 --> Config Class Initialized
+INFO - 2024-08-22 13:56:57 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:56:57 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:56:57 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:56:57 --> URI Class Initialized
+INFO - 2024-08-22 13:56:57 --> Router Class Initialized
+INFO - 2024-08-22 13:56:57 --> Output Class Initialized
+INFO - 2024-08-22 13:56:57 --> Security Class Initialized
+DEBUG - 2024-08-22 13:56:57 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:56:57 --> Input Class Initialized
+INFO - 2024-08-22 13:56:57 --> Language Class Initialized
+ERROR - 2024-08-22 13:56:57 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 13:56:58 --> Config Class Initialized
+INFO - 2024-08-22 13:56:58 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:56:58 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:56:58 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:56:58 --> URI Class Initialized
+INFO - 2024-08-22 13:56:58 --> Router Class Initialized
+INFO - 2024-08-22 13:56:58 --> Output Class Initialized
+INFO - 2024-08-22 13:56:58 --> Security Class Initialized
+DEBUG - 2024-08-22 13:56:58 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:56:58 --> Input Class Initialized
+INFO - 2024-08-22 13:56:58 --> Language Class Initialized
+INFO - 2024-08-22 13:56:58 --> Loader Class Initialized
+INFO - 2024-08-22 13:56:58 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:56:58 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:56:58 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:56:58 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:56:58 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:56:58 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:56:58 --> Controller Class Initialized
+INFO - 2024-08-22 13:56:58 --> Model Class Initialized
+INFO - 2024-08-22 13:56:58 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:56:58 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 13:56:58 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 13:57:04 --> Config Class Initialized
+INFO - 2024-08-22 13:57:04 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:57:04 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:57:04 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:57:04 --> URI Class Initialized
+INFO - 2024-08-22 13:57:04 --> Router Class Initialized
+INFO - 2024-08-22 13:57:04 --> Output Class Initialized
+INFO - 2024-08-22 13:57:04 --> Security Class Initialized
+DEBUG - 2024-08-22 13:57:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:57:04 --> Input Class Initialized
+INFO - 2024-08-22 13:57:04 --> Language Class Initialized
+INFO - 2024-08-22 13:57:04 --> Loader Class Initialized
+INFO - 2024-08-22 13:57:04 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:57:04 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:57:04 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:57:04 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:57:04 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:57:04 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:57:04 --> Controller Class Initialized
+INFO - 2024-08-22 13:57:04 --> Model Class Initialized
+INFO - 2024-08-22 13:57:04 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:57:04 --> Final output sent to browser
+DEBUG - 2024-08-22 13:57:04 --> Total execution time: 0.1224
+INFO - 2024-08-22 13:58:27 --> Config Class Initialized
+INFO - 2024-08-22 13:58:27 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:58:27 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:58:27 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:58:27 --> URI Class Initialized
+INFO - 2024-08-22 13:58:27 --> Router Class Initialized
+INFO - 2024-08-22 13:58:27 --> Output Class Initialized
+INFO - 2024-08-22 13:58:27 --> Security Class Initialized
+DEBUG - 2024-08-22 13:58:27 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:58:27 --> Input Class Initialized
+INFO - 2024-08-22 13:58:27 --> Language Class Initialized
+INFO - 2024-08-22 13:58:27 --> Loader Class Initialized
+INFO - 2024-08-22 13:58:27 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:58:27 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:58:27 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:58:27 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:58:27 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:58:27 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:58:27 --> Controller Class Initialized
+INFO - 2024-08-22 13:58:27 --> Model Class Initialized
+INFO - 2024-08-22 13:58:27 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:58:27 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 13:58:27 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:58:27 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:58:27 --> Final output sent to browser
+DEBUG - 2024-08-22 13:58:27 --> Total execution time: 0.0799
+INFO - 2024-08-22 13:58:27 --> Config Class Initialized
+INFO - 2024-08-22 13:58:27 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:58:27 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:58:27 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:58:27 --> URI Class Initialized
+INFO - 2024-08-22 13:58:27 --> Router Class Initialized
+INFO - 2024-08-22 13:58:27 --> Output Class Initialized
+INFO - 2024-08-22 13:58:27 --> Security Class Initialized
+DEBUG - 2024-08-22 13:58:27 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:58:27 --> Input Class Initialized
+INFO - 2024-08-22 13:58:27 --> Language Class Initialized
+ERROR - 2024-08-22 13:58:27 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 13:58:28 --> Config Class Initialized
+INFO - 2024-08-22 13:58:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:58:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:58:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:58:28 --> URI Class Initialized
+INFO - 2024-08-22 13:58:28 --> Router Class Initialized
+INFO - 2024-08-22 13:58:28 --> Output Class Initialized
+INFO - 2024-08-22 13:58:28 --> Security Class Initialized
+DEBUG - 2024-08-22 13:58:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:58:28 --> Input Class Initialized
+INFO - 2024-08-22 13:58:28 --> Language Class Initialized
+INFO - 2024-08-22 13:58:28 --> Loader Class Initialized
+INFO - 2024-08-22 13:58:28 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:58:28 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:58:28 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:58:28 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:58:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:58:28 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:58:28 --> Controller Class Initialized
+INFO - 2024-08-22 13:58:28 --> Model Class Initialized
+INFO - 2024-08-22 13:58:28 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:58:28 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 13:58:28 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 13:58:32 --> Config Class Initialized
+INFO - 2024-08-22 13:58:32 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:58:32 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:58:32 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:58:32 --> URI Class Initialized
+INFO - 2024-08-22 13:58:32 --> Router Class Initialized
+INFO - 2024-08-22 13:58:32 --> Output Class Initialized
+INFO - 2024-08-22 13:58:32 --> Security Class Initialized
+DEBUG - 2024-08-22 13:58:32 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:58:32 --> Input Class Initialized
+INFO - 2024-08-22 13:58:32 --> Language Class Initialized
+INFO - 2024-08-22 13:58:32 --> Loader Class Initialized
+INFO - 2024-08-22 13:58:32 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:58:32 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:58:32 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:58:32 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:58:32 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:58:32 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:58:32 --> Controller Class Initialized
+INFO - 2024-08-22 13:58:32 --> Model Class Initialized
+INFO - 2024-08-22 13:58:32 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:58:32 --> Final output sent to browser
+DEBUG - 2024-08-22 13:58:32 --> Total execution time: 0.0587
+INFO - 2024-08-22 13:58:36 --> Config Class Initialized
+INFO - 2024-08-22 13:58:36 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:58:36 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:58:36 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:58:36 --> URI Class Initialized
+INFO - 2024-08-22 13:58:36 --> Router Class Initialized
+INFO - 2024-08-22 13:58:36 --> Output Class Initialized
+INFO - 2024-08-22 13:58:36 --> Security Class Initialized
+DEBUG - 2024-08-22 13:58:36 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:58:36 --> Input Class Initialized
+INFO - 2024-08-22 13:58:36 --> Language Class Initialized
+INFO - 2024-08-22 13:58:36 --> Loader Class Initialized
+INFO - 2024-08-22 13:58:36 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:58:36 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:58:36 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:58:36 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:58:36 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:58:36 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:58:36 --> Controller Class Initialized
+INFO - 2024-08-22 13:58:36 --> Model Class Initialized
+INFO - 2024-08-22 13:58:36 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:58:36 --> Final output sent to browser
+DEBUG - 2024-08-22 13:58:36 --> Total execution time: 0.0403
+INFO - 2024-08-22 13:58:43 --> Config Class Initialized
+INFO - 2024-08-22 13:58:43 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:58:43 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:58:43 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:58:43 --> URI Class Initialized
+INFO - 2024-08-22 13:58:43 --> Router Class Initialized
+INFO - 2024-08-22 13:58:43 --> Output Class Initialized
+INFO - 2024-08-22 13:58:43 --> Security Class Initialized
+DEBUG - 2024-08-22 13:58:43 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:58:43 --> Input Class Initialized
+INFO - 2024-08-22 13:58:43 --> Language Class Initialized
+INFO - 2024-08-22 13:58:43 --> Loader Class Initialized
+INFO - 2024-08-22 13:58:43 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:58:43 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:58:43 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:58:43 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:58:43 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:58:43 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:58:43 --> Controller Class Initialized
+INFO - 2024-08-22 13:58:43 --> Model Class Initialized
+INFO - 2024-08-22 13:58:43 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:58:43 --> Final output sent to browser
+DEBUG - 2024-08-22 13:58:43 --> Total execution time: 0.0466
+INFO - 2024-08-22 13:59:20 --> Config Class Initialized
+INFO - 2024-08-22 13:59:20 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:59:20 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:59:20 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:59:20 --> URI Class Initialized
+INFO - 2024-08-22 13:59:20 --> Router Class Initialized
+INFO - 2024-08-22 13:59:20 --> Output Class Initialized
+INFO - 2024-08-22 13:59:20 --> Security Class Initialized
+DEBUG - 2024-08-22 13:59:20 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:59:20 --> Input Class Initialized
+INFO - 2024-08-22 13:59:20 --> Language Class Initialized
+INFO - 2024-08-22 13:59:20 --> Loader Class Initialized
+INFO - 2024-08-22 13:59:20 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:59:20 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:59:20 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:59:20 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:59:20 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:59:20 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:59:20 --> Controller Class Initialized
+INFO - 2024-08-22 13:59:20 --> Model Class Initialized
+INFO - 2024-08-22 13:59:20 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:59:20 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 13:59:20 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 13:59:20 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 13:59:20 --> Final output sent to browser
+DEBUG - 2024-08-22 13:59:20 --> Total execution time: 0.0645
+INFO - 2024-08-22 13:59:20 --> Config Class Initialized
+INFO - 2024-08-22 13:59:20 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:59:20 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:59:20 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:59:20 --> URI Class Initialized
+INFO - 2024-08-22 13:59:20 --> Router Class Initialized
+INFO - 2024-08-22 13:59:20 --> Output Class Initialized
+INFO - 2024-08-22 13:59:20 --> Security Class Initialized
+DEBUG - 2024-08-22 13:59:20 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:59:20 --> Input Class Initialized
+INFO - 2024-08-22 13:59:20 --> Language Class Initialized
+ERROR - 2024-08-22 13:59:20 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 13:59:20 --> Config Class Initialized
+INFO - 2024-08-22 13:59:20 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:59:20 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:59:20 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:59:20 --> URI Class Initialized
+INFO - 2024-08-22 13:59:20 --> Router Class Initialized
+INFO - 2024-08-22 13:59:20 --> Output Class Initialized
+INFO - 2024-08-22 13:59:20 --> Security Class Initialized
+DEBUG - 2024-08-22 13:59:20 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:59:20 --> Input Class Initialized
+INFO - 2024-08-22 13:59:20 --> Language Class Initialized
+INFO - 2024-08-22 13:59:20 --> Loader Class Initialized
+INFO - 2024-08-22 13:59:20 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:59:20 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:59:20 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:59:20 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:59:20 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:59:20 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:59:20 --> Controller Class Initialized
+INFO - 2024-08-22 13:59:20 --> Model Class Initialized
+INFO - 2024-08-22 13:59:20 --> Form Validation Class Initialized
+ERROR - 2024-08-22 13:59:20 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 13:59:20 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 13:59:27 --> Config Class Initialized
+INFO - 2024-08-22 13:59:27 --> Hooks Class Initialized
+DEBUG - 2024-08-22 13:59:27 --> UTF-8 Support Enabled
+INFO - 2024-08-22 13:59:27 --> Utf8 Class Initialized
+INFO - 2024-08-22 13:59:27 --> URI Class Initialized
+INFO - 2024-08-22 13:59:27 --> Router Class Initialized
+INFO - 2024-08-22 13:59:27 --> Output Class Initialized
+INFO - 2024-08-22 13:59:27 --> Security Class Initialized
+DEBUG - 2024-08-22 13:59:27 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 13:59:27 --> Input Class Initialized
+INFO - 2024-08-22 13:59:27 --> Language Class Initialized
+INFO - 2024-08-22 13:59:27 --> Loader Class Initialized
+INFO - 2024-08-22 13:59:27 --> Helper loaded: url_helper
+INFO - 2024-08-22 13:59:27 --> Helper loaded: form_helper
+INFO - 2024-08-22 13:59:27 --> Helper loaded: racode_helper
+INFO - 2024-08-22 13:59:27 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 13:59:27 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 13:59:27 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 13:59:27 --> Controller Class Initialized
+INFO - 2024-08-22 13:59:27 --> Model Class Initialized
+INFO - 2024-08-22 13:59:27 --> Form Validation Class Initialized
+INFO - 2024-08-22 13:59:27 --> Final output sent to browser
+DEBUG - 2024-08-22 13:59:27 --> Total execution time: 0.0455
+INFO - 2024-08-22 14:00:19 --> Config Class Initialized
+INFO - 2024-08-22 14:00:19 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:00:19 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:00:19 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:00:19 --> URI Class Initialized
+INFO - 2024-08-22 14:00:19 --> Router Class Initialized
+INFO - 2024-08-22 14:00:19 --> Output Class Initialized
+INFO - 2024-08-22 14:00:19 --> Security Class Initialized
+DEBUG - 2024-08-22 14:00:19 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:00:19 --> Input Class Initialized
+INFO - 2024-08-22 14:00:19 --> Language Class Initialized
+INFO - 2024-08-22 14:00:19 --> Loader Class Initialized
+INFO - 2024-08-22 14:00:19 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:00:19 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:00:19 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:00:19 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:00:19 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:00:19 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:00:19 --> Controller Class Initialized
+INFO - 2024-08-22 14:00:19 --> Model Class Initialized
+INFO - 2024-08-22 14:00:19 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:00:19 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:00:19 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:00:19 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:00:19 --> Final output sent to browser
+DEBUG - 2024-08-22 14:00:19 --> Total execution time: 0.0681
+INFO - 2024-08-22 14:00:19 --> Config Class Initialized
+INFO - 2024-08-22 14:00:19 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:00:19 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:00:19 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:00:19 --> URI Class Initialized
+INFO - 2024-08-22 14:00:19 --> Router Class Initialized
+INFO - 2024-08-22 14:00:19 --> Output Class Initialized
+INFO - 2024-08-22 14:00:19 --> Security Class Initialized
+DEBUG - 2024-08-22 14:00:19 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:00:19 --> Input Class Initialized
+INFO - 2024-08-22 14:00:19 --> Language Class Initialized
+ERROR - 2024-08-22 14:00:19 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:00:19 --> Config Class Initialized
+INFO - 2024-08-22 14:00:19 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:00:19 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:00:19 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:00:19 --> URI Class Initialized
+INFO - 2024-08-22 14:00:19 --> Router Class Initialized
+INFO - 2024-08-22 14:00:19 --> Output Class Initialized
+INFO - 2024-08-22 14:00:19 --> Security Class Initialized
+DEBUG - 2024-08-22 14:00:19 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:00:19 --> Input Class Initialized
+INFO - 2024-08-22 14:00:19 --> Language Class Initialized
+INFO - 2024-08-22 14:00:19 --> Loader Class Initialized
+INFO - 2024-08-22 14:00:19 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:00:19 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:00:19 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:00:19 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:00:19 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:00:19 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:00:19 --> Controller Class Initialized
+INFO - 2024-08-22 14:00:19 --> Model Class Initialized
+INFO - 2024-08-22 14:00:19 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:00:19 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:00:19 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:00:23 --> Config Class Initialized
+INFO - 2024-08-22 14:00:23 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:00:23 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:00:23 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:00:23 --> URI Class Initialized
+INFO - 2024-08-22 14:00:23 --> Router Class Initialized
+INFO - 2024-08-22 14:00:23 --> Output Class Initialized
+INFO - 2024-08-22 14:00:23 --> Security Class Initialized
+DEBUG - 2024-08-22 14:00:23 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:00:23 --> Input Class Initialized
+INFO - 2024-08-22 14:00:23 --> Language Class Initialized
+INFO - 2024-08-22 14:00:23 --> Loader Class Initialized
+INFO - 2024-08-22 14:00:23 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:00:23 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:00:23 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:00:23 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:00:23 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:00:23 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:00:23 --> Controller Class Initialized
+INFO - 2024-08-22 14:00:23 --> Model Class Initialized
+INFO - 2024-08-22 14:00:23 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:00:23 --> Final output sent to browser
+DEBUG - 2024-08-22 14:00:23 --> Total execution time: 0.0491
+INFO - 2024-08-22 14:00:26 --> Config Class Initialized
+INFO - 2024-08-22 14:00:26 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:00:26 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:00:26 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:00:26 --> URI Class Initialized
+INFO - 2024-08-22 14:00:26 --> Router Class Initialized
+INFO - 2024-08-22 14:00:26 --> Output Class Initialized
+INFO - 2024-08-22 14:00:26 --> Security Class Initialized
+DEBUG - 2024-08-22 14:00:26 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:00:26 --> Input Class Initialized
+INFO - 2024-08-22 14:00:26 --> Language Class Initialized
+INFO - 2024-08-22 14:00:26 --> Loader Class Initialized
+INFO - 2024-08-22 14:00:26 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:00:26 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:00:26 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:00:26 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:00:26 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:00:26 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:00:26 --> Controller Class Initialized
+INFO - 2024-08-22 14:00:26 --> Model Class Initialized
+INFO - 2024-08-22 14:00:26 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:00:26 --> Final output sent to browser
+DEBUG - 2024-08-22 14:00:26 --> Total execution time: 0.0666
+INFO - 2024-08-22 14:01:51 --> Config Class Initialized
+INFO - 2024-08-22 14:01:51 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:01:51 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:01:51 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:01:51 --> URI Class Initialized
+INFO - 2024-08-22 14:01:51 --> Router Class Initialized
+INFO - 2024-08-22 14:01:51 --> Output Class Initialized
+INFO - 2024-08-22 14:01:51 --> Security Class Initialized
+DEBUG - 2024-08-22 14:01:51 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:01:51 --> Input Class Initialized
+INFO - 2024-08-22 14:01:51 --> Language Class Initialized
+INFO - 2024-08-22 14:01:51 --> Loader Class Initialized
+INFO - 2024-08-22 14:01:51 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:01:51 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:01:51 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:01:51 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:01:51 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:01:51 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:01:51 --> Controller Class Initialized
+INFO - 2024-08-22 14:01:51 --> Model Class Initialized
+INFO - 2024-08-22 14:01:51 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:01:51 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:01:51 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:01:51 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:01:51 --> Final output sent to browser
+DEBUG - 2024-08-22 14:01:51 --> Total execution time: 0.1312
+INFO - 2024-08-22 14:01:51 --> Config Class Initialized
+INFO - 2024-08-22 14:01:51 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:01:51 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:01:51 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:01:51 --> URI Class Initialized
+INFO - 2024-08-22 14:01:51 --> Router Class Initialized
+INFO - 2024-08-22 14:01:51 --> Output Class Initialized
+INFO - 2024-08-22 14:01:51 --> Security Class Initialized
+DEBUG - 2024-08-22 14:01:51 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:01:51 --> Input Class Initialized
+INFO - 2024-08-22 14:01:51 --> Language Class Initialized
+ERROR - 2024-08-22 14:01:51 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:01:51 --> Config Class Initialized
+INFO - 2024-08-22 14:01:51 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:01:52 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:01:52 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:01:52 --> URI Class Initialized
+INFO - 2024-08-22 14:01:52 --> Router Class Initialized
+INFO - 2024-08-22 14:01:52 --> Output Class Initialized
+INFO - 2024-08-22 14:01:52 --> Security Class Initialized
+DEBUG - 2024-08-22 14:01:52 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:01:52 --> Input Class Initialized
+INFO - 2024-08-22 14:01:52 --> Language Class Initialized
+INFO - 2024-08-22 14:01:52 --> Loader Class Initialized
+INFO - 2024-08-22 14:01:52 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:01:52 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:01:52 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:01:52 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:01:52 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:01:52 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:01:52 --> Controller Class Initialized
+INFO - 2024-08-22 14:01:52 --> Model Class Initialized
+INFO - 2024-08-22 14:01:52 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:01:52 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:01:52 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:01:56 --> Config Class Initialized
+INFO - 2024-08-22 14:01:56 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:01:56 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:01:57 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:01:57 --> URI Class Initialized
+INFO - 2024-08-22 14:01:57 --> Router Class Initialized
+INFO - 2024-08-22 14:01:57 --> Output Class Initialized
+INFO - 2024-08-22 14:01:57 --> Security Class Initialized
+DEBUG - 2024-08-22 14:01:57 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:01:57 --> Input Class Initialized
+INFO - 2024-08-22 14:01:57 --> Language Class Initialized
+INFO - 2024-08-22 14:01:57 --> Loader Class Initialized
+INFO - 2024-08-22 14:01:57 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:01:57 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:01:57 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:01:57 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:01:57 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:01:57 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:01:57 --> Controller Class Initialized
+INFO - 2024-08-22 14:01:57 --> Model Class Initialized
+INFO - 2024-08-22 14:01:57 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:01:57 --> Final output sent to browser
+DEBUG - 2024-08-22 14:01:57 --> Total execution time: 0.0724
+INFO - 2024-08-22 14:01:59 --> Config Class Initialized
+INFO - 2024-08-22 14:01:59 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:01:59 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:01:59 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:01:59 --> URI Class Initialized
+INFO - 2024-08-22 14:01:59 --> Router Class Initialized
+INFO - 2024-08-22 14:01:59 --> Output Class Initialized
+INFO - 2024-08-22 14:01:59 --> Security Class Initialized
+DEBUG - 2024-08-22 14:01:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:01:59 --> Input Class Initialized
+INFO - 2024-08-22 14:01:59 --> Language Class Initialized
+INFO - 2024-08-22 14:01:59 --> Loader Class Initialized
+INFO - 2024-08-22 14:01:59 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:01:59 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:01:59 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:01:59 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:01:59 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:01:59 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:01:59 --> Controller Class Initialized
+INFO - 2024-08-22 14:01:59 --> Model Class Initialized
+INFO - 2024-08-22 14:01:59 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:01:59 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:01:59 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:01:59 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:01:59 --> Final output sent to browser
+DEBUG - 2024-08-22 14:01:59 --> Total execution time: 0.0746
+INFO - 2024-08-22 14:01:59 --> Config Class Initialized
+INFO - 2024-08-22 14:01:59 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:01:59 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:01:59 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:01:59 --> URI Class Initialized
+INFO - 2024-08-22 14:01:59 --> Router Class Initialized
+INFO - 2024-08-22 14:01:59 --> Output Class Initialized
+INFO - 2024-08-22 14:01:59 --> Security Class Initialized
+DEBUG - 2024-08-22 14:01:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:01:59 --> Input Class Initialized
+INFO - 2024-08-22 14:01:59 --> Language Class Initialized
+ERROR - 2024-08-22 14:01:59 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:01:59 --> Config Class Initialized
+INFO - 2024-08-22 14:01:59 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:01:59 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:01:59 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:01:59 --> URI Class Initialized
+INFO - 2024-08-22 14:01:59 --> Router Class Initialized
+INFO - 2024-08-22 14:01:59 --> Output Class Initialized
+INFO - 2024-08-22 14:01:59 --> Security Class Initialized
+DEBUG - 2024-08-22 14:01:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:01:59 --> Input Class Initialized
+INFO - 2024-08-22 14:01:59 --> Language Class Initialized
+INFO - 2024-08-22 14:01:59 --> Loader Class Initialized
+INFO - 2024-08-22 14:01:59 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:01:59 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:01:59 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:01:59 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:01:59 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:01:59 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:01:59 --> Controller Class Initialized
+INFO - 2024-08-22 14:01:59 --> Model Class Initialized
+INFO - 2024-08-22 14:01:59 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:01:59 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:01:59 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:02:19 --> Config Class Initialized
+INFO - 2024-08-22 14:02:19 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:02:19 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:02:19 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:02:19 --> URI Class Initialized
+INFO - 2024-08-22 14:02:19 --> Router Class Initialized
+INFO - 2024-08-22 14:02:19 --> Output Class Initialized
+INFO - 2024-08-22 14:02:19 --> Security Class Initialized
+DEBUG - 2024-08-22 14:02:19 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:02:19 --> Input Class Initialized
+INFO - 2024-08-22 14:02:19 --> Language Class Initialized
+INFO - 2024-08-22 14:02:19 --> Loader Class Initialized
+INFO - 2024-08-22 14:02:19 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:02:19 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:02:19 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:02:19 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:02:19 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:02:19 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:02:19 --> Controller Class Initialized
+INFO - 2024-08-22 14:02:19 --> Model Class Initialized
+INFO - 2024-08-22 14:02:19 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:02:19 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:02:19 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:02:19 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:02:19 --> Final output sent to browser
+DEBUG - 2024-08-22 14:02:19 --> Total execution time: 0.0778
+INFO - 2024-08-22 14:02:19 --> Config Class Initialized
+INFO - 2024-08-22 14:02:19 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:02:19 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:02:19 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:02:19 --> URI Class Initialized
+INFO - 2024-08-22 14:02:19 --> Router Class Initialized
+INFO - 2024-08-22 14:02:19 --> Output Class Initialized
+INFO - 2024-08-22 14:02:19 --> Security Class Initialized
+DEBUG - 2024-08-22 14:02:19 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:02:19 --> Input Class Initialized
+INFO - 2024-08-22 14:02:19 --> Language Class Initialized
+ERROR - 2024-08-22 14:02:19 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:02:19 --> Config Class Initialized
+INFO - 2024-08-22 14:02:19 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:02:19 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:02:19 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:02:19 --> URI Class Initialized
+INFO - 2024-08-22 14:02:19 --> Router Class Initialized
+INFO - 2024-08-22 14:02:19 --> Output Class Initialized
+INFO - 2024-08-22 14:02:19 --> Security Class Initialized
+DEBUG - 2024-08-22 14:02:19 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:02:19 --> Input Class Initialized
+INFO - 2024-08-22 14:02:19 --> Language Class Initialized
+INFO - 2024-08-22 14:02:19 --> Loader Class Initialized
+INFO - 2024-08-22 14:02:19 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:02:19 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:02:19 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:02:19 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:02:19 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:02:19 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:02:19 --> Controller Class Initialized
+INFO - 2024-08-22 14:02:19 --> Model Class Initialized
+INFO - 2024-08-22 14:02:19 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:02:19 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:02:19 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:02:25 --> Config Class Initialized
+INFO - 2024-08-22 14:02:25 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:02:25 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:02:25 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:02:25 --> URI Class Initialized
+INFO - 2024-08-22 14:02:25 --> Router Class Initialized
+INFO - 2024-08-22 14:02:25 --> Output Class Initialized
+INFO - 2024-08-22 14:02:25 --> Security Class Initialized
+DEBUG - 2024-08-22 14:02:25 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:02:25 --> Input Class Initialized
+INFO - 2024-08-22 14:02:25 --> Language Class Initialized
+INFO - 2024-08-22 14:02:25 --> Loader Class Initialized
+INFO - 2024-08-22 14:02:25 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:02:25 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:02:25 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:02:25 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:02:25 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:02:25 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:02:25 --> Controller Class Initialized
+INFO - 2024-08-22 14:02:25 --> Model Class Initialized
+INFO - 2024-08-22 14:02:25 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:02:25 --> Final output sent to browser
+DEBUG - 2024-08-22 14:02:25 --> Total execution time: 0.0722
+INFO - 2024-08-22 14:03:21 --> Config Class Initialized
+INFO - 2024-08-22 14:03:21 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:03:21 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:03:21 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:03:21 --> URI Class Initialized
+INFO - 2024-08-22 14:03:21 --> Router Class Initialized
+INFO - 2024-08-22 14:03:21 --> Output Class Initialized
+INFO - 2024-08-22 14:03:21 --> Security Class Initialized
+DEBUG - 2024-08-22 14:03:21 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:03:21 --> Input Class Initialized
+INFO - 2024-08-22 14:03:21 --> Language Class Initialized
+INFO - 2024-08-22 14:03:21 --> Loader Class Initialized
+INFO - 2024-08-22 14:03:21 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:03:21 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:03:21 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:03:21 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:03:21 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:03:21 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:03:21 --> Controller Class Initialized
+INFO - 2024-08-22 14:03:21 --> Model Class Initialized
+INFO - 2024-08-22 14:03:21 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:03:21 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:03:21 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:03:21 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:03:21 --> Final output sent to browser
+DEBUG - 2024-08-22 14:03:21 --> Total execution time: 0.0875
+INFO - 2024-08-22 14:03:21 --> Config Class Initialized
+INFO - 2024-08-22 14:03:21 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:03:21 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:03:21 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:03:21 --> URI Class Initialized
+INFO - 2024-08-22 14:03:21 --> Router Class Initialized
+INFO - 2024-08-22 14:03:21 --> Output Class Initialized
+INFO - 2024-08-22 14:03:21 --> Security Class Initialized
+DEBUG - 2024-08-22 14:03:21 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:03:21 --> Input Class Initialized
+INFO - 2024-08-22 14:03:21 --> Language Class Initialized
+ERROR - 2024-08-22 14:03:21 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:03:21 --> Config Class Initialized
+INFO - 2024-08-22 14:03:21 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:03:21 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:03:21 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:03:21 --> URI Class Initialized
+INFO - 2024-08-22 14:03:21 --> Router Class Initialized
+INFO - 2024-08-22 14:03:21 --> Output Class Initialized
+INFO - 2024-08-22 14:03:21 --> Security Class Initialized
+DEBUG - 2024-08-22 14:03:21 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:03:21 --> Input Class Initialized
+INFO - 2024-08-22 14:03:21 --> Language Class Initialized
+INFO - 2024-08-22 14:03:21 --> Loader Class Initialized
+INFO - 2024-08-22 14:03:21 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:03:21 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:03:21 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:03:21 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:03:21 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:03:21 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:03:21 --> Controller Class Initialized
+INFO - 2024-08-22 14:03:21 --> Model Class Initialized
+INFO - 2024-08-22 14:03:21 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:03:21 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:03:21 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:03:25 --> Config Class Initialized
+INFO - 2024-08-22 14:03:25 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:03:25 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:03:25 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:03:25 --> URI Class Initialized
+INFO - 2024-08-22 14:03:25 --> Router Class Initialized
+INFO - 2024-08-22 14:03:25 --> Output Class Initialized
+INFO - 2024-08-22 14:03:25 --> Security Class Initialized
+DEBUG - 2024-08-22 14:03:25 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:03:25 --> Input Class Initialized
+INFO - 2024-08-22 14:03:25 --> Language Class Initialized
+INFO - 2024-08-22 14:03:25 --> Loader Class Initialized
+INFO - 2024-08-22 14:03:25 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:03:25 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:03:25 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:03:25 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:03:25 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:03:25 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:03:25 --> Controller Class Initialized
+INFO - 2024-08-22 14:03:25 --> Model Class Initialized
+INFO - 2024-08-22 14:03:25 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:03:25 --> Final output sent to browser
+DEBUG - 2024-08-22 14:03:25 --> Total execution time: 0.0352
+INFO - 2024-08-22 14:03:38 --> Config Class Initialized
+INFO - 2024-08-22 14:03:38 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:03:38 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:03:38 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:03:38 --> URI Class Initialized
+INFO - 2024-08-22 14:03:38 --> Router Class Initialized
+INFO - 2024-08-22 14:03:38 --> Output Class Initialized
+INFO - 2024-08-22 14:03:38 --> Security Class Initialized
+DEBUG - 2024-08-22 14:03:38 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:03:38 --> Input Class Initialized
+INFO - 2024-08-22 14:03:38 --> Language Class Initialized
+INFO - 2024-08-22 14:03:38 --> Loader Class Initialized
+INFO - 2024-08-22 14:03:38 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:03:38 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:03:38 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:03:38 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:03:38 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:03:38 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:03:38 --> Controller Class Initialized
+INFO - 2024-08-22 14:03:38 --> Model Class Initialized
+INFO - 2024-08-22 14:03:38 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:03:39 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:03:39 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:03:39 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:03:39 --> Final output sent to browser
+DEBUG - 2024-08-22 14:03:39 --> Total execution time: 0.0637
+INFO - 2024-08-22 14:03:39 --> Config Class Initialized
+INFO - 2024-08-22 14:03:39 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:03:39 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:03:39 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:03:39 --> URI Class Initialized
+INFO - 2024-08-22 14:03:39 --> Router Class Initialized
+INFO - 2024-08-22 14:03:39 --> Output Class Initialized
+INFO - 2024-08-22 14:03:39 --> Security Class Initialized
+DEBUG - 2024-08-22 14:03:39 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:03:39 --> Input Class Initialized
+INFO - 2024-08-22 14:03:39 --> Language Class Initialized
+ERROR - 2024-08-22 14:03:39 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:03:39 --> Config Class Initialized
+INFO - 2024-08-22 14:03:39 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:03:39 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:03:39 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:03:39 --> URI Class Initialized
+INFO - 2024-08-22 14:03:39 --> Router Class Initialized
+INFO - 2024-08-22 14:03:39 --> Output Class Initialized
+INFO - 2024-08-22 14:03:39 --> Security Class Initialized
+DEBUG - 2024-08-22 14:03:39 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:03:39 --> Input Class Initialized
+INFO - 2024-08-22 14:03:39 --> Language Class Initialized
+INFO - 2024-08-22 14:03:39 --> Loader Class Initialized
+INFO - 2024-08-22 14:03:39 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:03:39 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:03:39 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:03:39 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:03:39 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:03:39 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:03:39 --> Controller Class Initialized
+INFO - 2024-08-22 14:03:39 --> Model Class Initialized
+INFO - 2024-08-22 14:03:39 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:03:39 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:03:39 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:03:42 --> Config Class Initialized
+INFO - 2024-08-22 14:03:42 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:03:42 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:03:42 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:03:42 --> URI Class Initialized
+INFO - 2024-08-22 14:03:42 --> Router Class Initialized
+INFO - 2024-08-22 14:03:42 --> Output Class Initialized
+INFO - 2024-08-22 14:03:42 --> Security Class Initialized
+DEBUG - 2024-08-22 14:03:42 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:03:42 --> Input Class Initialized
+INFO - 2024-08-22 14:03:42 --> Language Class Initialized
+INFO - 2024-08-22 14:03:42 --> Loader Class Initialized
+INFO - 2024-08-22 14:03:42 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:03:42 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:03:42 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:03:42 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:03:42 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:03:42 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:03:42 --> Controller Class Initialized
+INFO - 2024-08-22 14:03:42 --> Model Class Initialized
+INFO - 2024-08-22 14:03:42 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:03:42 --> Final output sent to browser
+DEBUG - 2024-08-22 14:03:42 --> Total execution time: 0.0326
+INFO - 2024-08-22 14:03:59 --> Config Class Initialized
+INFO - 2024-08-22 14:03:59 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:03:59 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:03:59 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:03:59 --> URI Class Initialized
+INFO - 2024-08-22 14:03:59 --> Router Class Initialized
+INFO - 2024-08-22 14:03:59 --> Output Class Initialized
+INFO - 2024-08-22 14:03:59 --> Security Class Initialized
+DEBUG - 2024-08-22 14:03:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:03:59 --> Input Class Initialized
+INFO - 2024-08-22 14:03:59 --> Language Class Initialized
+INFO - 2024-08-22 14:03:59 --> Loader Class Initialized
+INFO - 2024-08-22 14:03:59 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:03:59 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:03:59 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:03:59 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:03:59 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:03:59 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:03:59 --> Controller Class Initialized
+INFO - 2024-08-22 14:03:59 --> Model Class Initialized
+INFO - 2024-08-22 14:03:59 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:03:59 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:03:59 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:03:59 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:03:59 --> Final output sent to browser
+DEBUG - 2024-08-22 14:03:59 --> Total execution time: 0.1009
+INFO - 2024-08-22 14:03:59 --> Config Class Initialized
+INFO - 2024-08-22 14:03:59 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:03:59 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:03:59 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:03:59 --> URI Class Initialized
+INFO - 2024-08-22 14:03:59 --> Router Class Initialized
+INFO - 2024-08-22 14:03:59 --> Output Class Initialized
+INFO - 2024-08-22 14:03:59 --> Security Class Initialized
+DEBUG - 2024-08-22 14:03:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:03:59 --> Input Class Initialized
+INFO - 2024-08-22 14:03:59 --> Language Class Initialized
+ERROR - 2024-08-22 14:03:59 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:03:59 --> Config Class Initialized
+INFO - 2024-08-22 14:03:59 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:03:59 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:03:59 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:03:59 --> URI Class Initialized
+INFO - 2024-08-22 14:03:59 --> Router Class Initialized
+INFO - 2024-08-22 14:03:59 --> Output Class Initialized
+INFO - 2024-08-22 14:03:59 --> Security Class Initialized
+DEBUG - 2024-08-22 14:03:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:03:59 --> Input Class Initialized
+INFO - 2024-08-22 14:03:59 --> Language Class Initialized
+INFO - 2024-08-22 14:03:59 --> Loader Class Initialized
+INFO - 2024-08-22 14:03:59 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:03:59 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:03:59 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:03:59 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:03:59 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:03:59 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:03:59 --> Controller Class Initialized
+INFO - 2024-08-22 14:03:59 --> Model Class Initialized
+INFO - 2024-08-22 14:03:59 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:03:59 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:03:59 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:04:03 --> Config Class Initialized
+INFO - 2024-08-22 14:04:03 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:04:03 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:04:03 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:04:03 --> URI Class Initialized
+INFO - 2024-08-22 14:04:03 --> Router Class Initialized
+INFO - 2024-08-22 14:04:03 --> Output Class Initialized
+INFO - 2024-08-22 14:04:03 --> Security Class Initialized
+DEBUG - 2024-08-22 14:04:03 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:04:03 --> Input Class Initialized
+INFO - 2024-08-22 14:04:03 --> Language Class Initialized
+INFO - 2024-08-22 14:04:03 --> Loader Class Initialized
+INFO - 2024-08-22 14:04:03 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:04:03 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:04:03 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:04:03 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:04:03 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:04:03 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:04:03 --> Controller Class Initialized
+INFO - 2024-08-22 14:04:03 --> Model Class Initialized
+INFO - 2024-08-22 14:04:03 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:04:03 --> Final output sent to browser
+DEBUG - 2024-08-22 14:04:03 --> Total execution time: 0.0578
+INFO - 2024-08-22 14:04:58 --> Config Class Initialized
+INFO - 2024-08-22 14:04:58 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:04:58 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:04:58 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:04:58 --> URI Class Initialized
+INFO - 2024-08-22 14:04:58 --> Router Class Initialized
+INFO - 2024-08-22 14:04:58 --> Output Class Initialized
+INFO - 2024-08-22 14:04:58 --> Security Class Initialized
+DEBUG - 2024-08-22 14:04:58 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:04:58 --> Input Class Initialized
+INFO - 2024-08-22 14:04:58 --> Language Class Initialized
+INFO - 2024-08-22 14:04:58 --> Loader Class Initialized
+INFO - 2024-08-22 14:04:58 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:04:58 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:04:58 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:04:58 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:04:58 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:04:58 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:04:58 --> Controller Class Initialized
+INFO - 2024-08-22 14:04:58 --> Model Class Initialized
+INFO - 2024-08-22 14:04:58 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:04:59 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:04:59 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:04:59 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:04:59 --> Final output sent to browser
+DEBUG - 2024-08-22 14:04:59 --> Total execution time: 0.1179
+INFO - 2024-08-22 14:04:59 --> Config Class Initialized
+INFO - 2024-08-22 14:04:59 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:04:59 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:04:59 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:04:59 --> URI Class Initialized
+INFO - 2024-08-22 14:04:59 --> Router Class Initialized
+INFO - 2024-08-22 14:04:59 --> Output Class Initialized
+INFO - 2024-08-22 14:04:59 --> Security Class Initialized
+DEBUG - 2024-08-22 14:04:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:04:59 --> Input Class Initialized
+INFO - 2024-08-22 14:04:59 --> Language Class Initialized
+ERROR - 2024-08-22 14:04:59 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:04:59 --> Config Class Initialized
+INFO - 2024-08-22 14:04:59 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:04:59 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:04:59 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:04:59 --> URI Class Initialized
+INFO - 2024-08-22 14:04:59 --> Router Class Initialized
+INFO - 2024-08-22 14:04:59 --> Output Class Initialized
+INFO - 2024-08-22 14:04:59 --> Security Class Initialized
+DEBUG - 2024-08-22 14:04:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:04:59 --> Input Class Initialized
+INFO - 2024-08-22 14:04:59 --> Language Class Initialized
+INFO - 2024-08-22 14:04:59 --> Loader Class Initialized
+INFO - 2024-08-22 14:04:59 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:04:59 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:04:59 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:04:59 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:04:59 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:04:59 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:04:59 --> Controller Class Initialized
+INFO - 2024-08-22 14:04:59 --> Model Class Initialized
+INFO - 2024-08-22 14:04:59 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:04:59 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:04:59 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:05:03 --> Config Class Initialized
+INFO - 2024-08-22 14:05:03 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:05:03 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:05:03 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:05:03 --> URI Class Initialized
+INFO - 2024-08-22 14:05:03 --> Router Class Initialized
+INFO - 2024-08-22 14:05:03 --> Output Class Initialized
+INFO - 2024-08-22 14:05:03 --> Security Class Initialized
+DEBUG - 2024-08-22 14:05:03 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:05:03 --> Input Class Initialized
+INFO - 2024-08-22 14:05:03 --> Language Class Initialized
+INFO - 2024-08-22 14:05:03 --> Loader Class Initialized
+INFO - 2024-08-22 14:05:03 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:05:03 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:05:03 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:05:03 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:05:03 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:05:03 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:05:03 --> Controller Class Initialized
+INFO - 2024-08-22 14:05:03 --> Model Class Initialized
+INFO - 2024-08-22 14:05:03 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:05:03 --> Final output sent to browser
+DEBUG - 2024-08-22 14:05:03 --> Total execution time: 0.0488
+INFO - 2024-08-22 14:05:35 --> Config Class Initialized
+INFO - 2024-08-22 14:05:35 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:05:35 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:05:35 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:05:35 --> URI Class Initialized
+INFO - 2024-08-22 14:05:35 --> Router Class Initialized
+INFO - 2024-08-22 14:05:35 --> Output Class Initialized
+INFO - 2024-08-22 14:05:35 --> Security Class Initialized
+DEBUG - 2024-08-22 14:05:35 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:05:35 --> Input Class Initialized
+INFO - 2024-08-22 14:05:35 --> Language Class Initialized
+INFO - 2024-08-22 14:05:35 --> Loader Class Initialized
+INFO - 2024-08-22 14:05:35 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:05:35 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:05:35 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:05:35 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:05:35 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:05:35 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:05:35 --> Controller Class Initialized
+INFO - 2024-08-22 14:05:35 --> Model Class Initialized
+INFO - 2024-08-22 14:05:35 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:05:35 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:05:35 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:05:35 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:05:35 --> Final output sent to browser
+DEBUG - 2024-08-22 14:05:35 --> Total execution time: 0.0843
+INFO - 2024-08-22 14:05:35 --> Config Class Initialized
+INFO - 2024-08-22 14:05:35 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:05:35 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:05:35 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:05:35 --> URI Class Initialized
+INFO - 2024-08-22 14:05:35 --> Router Class Initialized
+INFO - 2024-08-22 14:05:35 --> Output Class Initialized
+INFO - 2024-08-22 14:05:35 --> Security Class Initialized
+DEBUG - 2024-08-22 14:05:35 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:05:35 --> Input Class Initialized
+INFO - 2024-08-22 14:05:35 --> Language Class Initialized
+ERROR - 2024-08-22 14:05:35 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:05:35 --> Config Class Initialized
+INFO - 2024-08-22 14:05:35 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:05:35 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:05:35 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:05:35 --> URI Class Initialized
+INFO - 2024-08-22 14:05:35 --> Router Class Initialized
+INFO - 2024-08-22 14:05:35 --> Output Class Initialized
+INFO - 2024-08-22 14:05:35 --> Security Class Initialized
+DEBUG - 2024-08-22 14:05:35 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:05:35 --> Input Class Initialized
+INFO - 2024-08-22 14:05:35 --> Language Class Initialized
+INFO - 2024-08-22 14:05:35 --> Loader Class Initialized
+INFO - 2024-08-22 14:05:35 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:05:35 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:05:35 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:05:35 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:05:35 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:05:35 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:05:35 --> Controller Class Initialized
+INFO - 2024-08-22 14:05:35 --> Model Class Initialized
+INFO - 2024-08-22 14:05:35 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:05:35 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:05:35 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:08:27 --> Config Class Initialized
+INFO - 2024-08-22 14:08:27 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:08:27 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:08:27 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:08:27 --> URI Class Initialized
+INFO - 2024-08-22 14:08:28 --> Router Class Initialized
+INFO - 2024-08-22 14:08:28 --> Output Class Initialized
+INFO - 2024-08-22 14:08:28 --> Security Class Initialized
+DEBUG - 2024-08-22 14:08:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:08:28 --> Input Class Initialized
+INFO - 2024-08-22 14:08:28 --> Language Class Initialized
+INFO - 2024-08-22 14:08:28 --> Loader Class Initialized
+INFO - 2024-08-22 14:08:28 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:08:28 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:08:28 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:08:28 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:08:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:08:28 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:08:28 --> Controller Class Initialized
+INFO - 2024-08-22 14:08:28 --> Model Class Initialized
+INFO - 2024-08-22 14:08:28 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:08:28 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:08:28 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:08:28 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:08:28 --> Final output sent to browser
+DEBUG - 2024-08-22 14:08:28 --> Total execution time: 0.1019
+INFO - 2024-08-22 14:08:28 --> Config Class Initialized
+INFO - 2024-08-22 14:08:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:08:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:08:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:08:28 --> URI Class Initialized
+INFO - 2024-08-22 14:08:28 --> Router Class Initialized
+INFO - 2024-08-22 14:08:28 --> Output Class Initialized
+INFO - 2024-08-22 14:08:28 --> Security Class Initialized
+DEBUG - 2024-08-22 14:08:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:08:28 --> Input Class Initialized
+INFO - 2024-08-22 14:08:28 --> Language Class Initialized
+ERROR - 2024-08-22 14:08:28 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:08:28 --> Config Class Initialized
+INFO - 2024-08-22 14:08:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:08:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:08:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:08:28 --> URI Class Initialized
+INFO - 2024-08-22 14:08:28 --> Router Class Initialized
+INFO - 2024-08-22 14:08:28 --> Output Class Initialized
+INFO - 2024-08-22 14:08:28 --> Security Class Initialized
+DEBUG - 2024-08-22 14:08:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:08:28 --> Input Class Initialized
+INFO - 2024-08-22 14:08:28 --> Language Class Initialized
+INFO - 2024-08-22 14:08:28 --> Loader Class Initialized
+INFO - 2024-08-22 14:08:28 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:08:28 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:08:28 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:08:28 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:08:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:08:28 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:08:28 --> Controller Class Initialized
+INFO - 2024-08-22 14:08:28 --> Model Class Initialized
+INFO - 2024-08-22 14:08:28 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:08:28 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:08:28 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:08:32 --> Config Class Initialized
+INFO - 2024-08-22 14:08:32 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:08:32 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:08:32 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:08:32 --> URI Class Initialized
+INFO - 2024-08-22 14:08:32 --> Router Class Initialized
+INFO - 2024-08-22 14:08:32 --> Output Class Initialized
+INFO - 2024-08-22 14:08:32 --> Security Class Initialized
+DEBUG - 2024-08-22 14:08:32 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:08:32 --> Input Class Initialized
+INFO - 2024-08-22 14:08:32 --> Language Class Initialized
+INFO - 2024-08-22 14:08:32 --> Loader Class Initialized
+INFO - 2024-08-22 14:08:32 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:08:32 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:08:32 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:08:32 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:08:32 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:08:32 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:08:32 --> Controller Class Initialized
+INFO - 2024-08-22 14:08:32 --> Model Class Initialized
+INFO - 2024-08-22 14:08:32 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:08:32 --> Final output sent to browser
+DEBUG - 2024-08-22 14:08:32 --> Total execution time: 0.0437
+INFO - 2024-08-22 14:09:12 --> Config Class Initialized
+INFO - 2024-08-22 14:09:12 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:09:12 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:09:12 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:09:12 --> URI Class Initialized
+INFO - 2024-08-22 14:09:12 --> Router Class Initialized
+INFO - 2024-08-22 14:09:12 --> Output Class Initialized
+INFO - 2024-08-22 14:09:12 --> Security Class Initialized
+DEBUG - 2024-08-22 14:09:12 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:09:12 --> Input Class Initialized
+INFO - 2024-08-22 14:09:12 --> Language Class Initialized
+INFO - 2024-08-22 14:09:12 --> Loader Class Initialized
+INFO - 2024-08-22 14:09:12 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:09:12 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:09:12 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:09:12 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:09:12 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:09:12 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:09:12 --> Controller Class Initialized
+INFO - 2024-08-22 14:09:12 --> Model Class Initialized
+INFO - 2024-08-22 14:09:12 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:09:12 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:09:12 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:09:12 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:09:12 --> Final output sent to browser
+DEBUG - 2024-08-22 14:09:12 --> Total execution time: 0.0487
+INFO - 2024-08-22 14:09:12 --> Config Class Initialized
+INFO - 2024-08-22 14:09:12 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:09:12 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:09:12 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:09:12 --> URI Class Initialized
+INFO - 2024-08-22 14:09:12 --> Router Class Initialized
+INFO - 2024-08-22 14:09:12 --> Output Class Initialized
+INFO - 2024-08-22 14:09:12 --> Security Class Initialized
+DEBUG - 2024-08-22 14:09:12 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:09:12 --> Input Class Initialized
+INFO - 2024-08-22 14:09:12 --> Language Class Initialized
+ERROR - 2024-08-22 14:09:12 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:09:13 --> Config Class Initialized
+INFO - 2024-08-22 14:09:13 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:09:13 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:09:13 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:09:13 --> URI Class Initialized
+INFO - 2024-08-22 14:09:13 --> Router Class Initialized
+INFO - 2024-08-22 14:09:13 --> Output Class Initialized
+INFO - 2024-08-22 14:09:13 --> Security Class Initialized
+DEBUG - 2024-08-22 14:09:13 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:09:13 --> Input Class Initialized
+INFO - 2024-08-22 14:09:13 --> Language Class Initialized
+INFO - 2024-08-22 14:09:13 --> Loader Class Initialized
+INFO - 2024-08-22 14:09:13 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:09:13 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:09:13 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:09:13 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:09:13 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:09:13 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:09:13 --> Controller Class Initialized
+INFO - 2024-08-22 14:09:13 --> Model Class Initialized
+INFO - 2024-08-22 14:09:13 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:09:13 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:09:13 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:09:17 --> Config Class Initialized
+INFO - 2024-08-22 14:09:17 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:09:17 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:09:17 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:09:17 --> URI Class Initialized
+INFO - 2024-08-22 14:09:17 --> Router Class Initialized
+INFO - 2024-08-22 14:09:17 --> Output Class Initialized
+INFO - 2024-08-22 14:09:17 --> Security Class Initialized
+DEBUG - 2024-08-22 14:09:17 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:09:17 --> Input Class Initialized
+INFO - 2024-08-22 14:09:17 --> Language Class Initialized
+INFO - 2024-08-22 14:09:17 --> Loader Class Initialized
+INFO - 2024-08-22 14:09:17 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:09:17 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:09:17 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:09:17 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:09:17 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:09:17 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:09:17 --> Controller Class Initialized
+INFO - 2024-08-22 14:09:17 --> Model Class Initialized
+INFO - 2024-08-22 14:09:17 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:09:17 --> Query error: Unknown column 'barcode_tray' in 'field list' - Invalid query: 
+        SELECT barcode_tray FROM moisture_content
+        WHERE barcode_tray = "reee"
+        AND flag = 0 
+        
+INFO - 2024-08-22 14:09:17 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:09:28 --> Config Class Initialized
+INFO - 2024-08-22 14:09:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:09:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:09:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:09:28 --> URI Class Initialized
+INFO - 2024-08-22 14:09:28 --> Router Class Initialized
+INFO - 2024-08-22 14:09:28 --> Output Class Initialized
+INFO - 2024-08-22 14:09:28 --> Security Class Initialized
+DEBUG - 2024-08-22 14:09:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:09:28 --> Input Class Initialized
+INFO - 2024-08-22 14:09:28 --> Language Class Initialized
+INFO - 2024-08-22 14:09:28 --> Loader Class Initialized
+INFO - 2024-08-22 14:09:28 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:09:28 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:09:28 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:09:28 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:09:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:09:28 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:09:28 --> Controller Class Initialized
+INFO - 2024-08-22 14:09:28 --> Model Class Initialized
+INFO - 2024-08-22 14:09:28 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:09:28 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:09:28 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:09:28 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:09:28 --> Final output sent to browser
+DEBUG - 2024-08-22 14:09:28 --> Total execution time: 0.1207
+INFO - 2024-08-22 14:09:28 --> Config Class Initialized
+INFO - 2024-08-22 14:09:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:09:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:09:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:09:28 --> URI Class Initialized
+INFO - 2024-08-22 14:09:28 --> Router Class Initialized
+INFO - 2024-08-22 14:09:28 --> Output Class Initialized
+INFO - 2024-08-22 14:09:28 --> Security Class Initialized
+DEBUG - 2024-08-22 14:09:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:09:28 --> Input Class Initialized
+INFO - 2024-08-22 14:09:28 --> Language Class Initialized
+ERROR - 2024-08-22 14:09:28 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:09:28 --> Config Class Initialized
+INFO - 2024-08-22 14:09:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:09:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:09:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:09:28 --> URI Class Initialized
+INFO - 2024-08-22 14:09:28 --> Router Class Initialized
+INFO - 2024-08-22 14:09:28 --> Output Class Initialized
+INFO - 2024-08-22 14:09:28 --> Security Class Initialized
+DEBUG - 2024-08-22 14:09:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:09:28 --> Input Class Initialized
+INFO - 2024-08-22 14:09:28 --> Language Class Initialized
+INFO - 2024-08-22 14:09:28 --> Loader Class Initialized
+INFO - 2024-08-22 14:09:28 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:09:28 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:09:28 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:09:28 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:09:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:09:28 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:09:28 --> Controller Class Initialized
+INFO - 2024-08-22 14:09:28 --> Model Class Initialized
+INFO - 2024-08-22 14:09:28 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:09:28 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:09:28 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:09:32 --> Config Class Initialized
+INFO - 2024-08-22 14:09:32 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:09:32 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:09:32 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:09:32 --> URI Class Initialized
+INFO - 2024-08-22 14:09:32 --> Router Class Initialized
+INFO - 2024-08-22 14:09:32 --> Output Class Initialized
+INFO - 2024-08-22 14:09:32 --> Security Class Initialized
+DEBUG - 2024-08-22 14:09:32 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:09:32 --> Input Class Initialized
+INFO - 2024-08-22 14:09:32 --> Language Class Initialized
+ERROR - 2024-08-22 14:09:32 --> 404 Page Not Found: Moisture_content/Moisture_content
+INFO - 2024-08-22 14:09:39 --> Config Class Initialized
+INFO - 2024-08-22 14:09:39 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:09:39 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:09:39 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:09:39 --> URI Class Initialized
+INFO - 2024-08-22 14:09:39 --> Router Class Initialized
+INFO - 2024-08-22 14:09:39 --> Output Class Initialized
+INFO - 2024-08-22 14:09:39 --> Security Class Initialized
+DEBUG - 2024-08-22 14:09:39 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:09:39 --> Input Class Initialized
+INFO - 2024-08-22 14:09:39 --> Language Class Initialized
+INFO - 2024-08-22 14:09:39 --> Loader Class Initialized
+INFO - 2024-08-22 14:09:39 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:09:39 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:09:39 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:09:39 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:09:39 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:09:39 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:09:39 --> Controller Class Initialized
+INFO - 2024-08-22 14:09:39 --> Model Class Initialized
+INFO - 2024-08-22 14:09:39 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:09:39 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:09:39 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:09:39 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:09:39 --> Final output sent to browser
+DEBUG - 2024-08-22 14:09:39 --> Total execution time: 0.0938
+INFO - 2024-08-22 14:09:39 --> Config Class Initialized
+INFO - 2024-08-22 14:09:39 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:09:39 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:09:39 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:09:39 --> URI Class Initialized
+INFO - 2024-08-22 14:09:39 --> Router Class Initialized
+INFO - 2024-08-22 14:09:39 --> Output Class Initialized
+INFO - 2024-08-22 14:09:39 --> Security Class Initialized
+DEBUG - 2024-08-22 14:09:39 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:09:39 --> Input Class Initialized
+INFO - 2024-08-22 14:09:39 --> Language Class Initialized
+ERROR - 2024-08-22 14:09:39 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:09:39 --> Config Class Initialized
+INFO - 2024-08-22 14:09:39 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:09:39 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:09:39 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:09:39 --> URI Class Initialized
+INFO - 2024-08-22 14:09:39 --> Router Class Initialized
+INFO - 2024-08-22 14:09:39 --> Output Class Initialized
+INFO - 2024-08-22 14:09:39 --> Security Class Initialized
+DEBUG - 2024-08-22 14:09:39 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:09:39 --> Input Class Initialized
+INFO - 2024-08-22 14:09:39 --> Language Class Initialized
+INFO - 2024-08-22 14:09:39 --> Loader Class Initialized
+INFO - 2024-08-22 14:09:39 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:09:39 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:09:39 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:09:39 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:09:39 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:09:39 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:09:39 --> Controller Class Initialized
+INFO - 2024-08-22 14:09:39 --> Model Class Initialized
+INFO - 2024-08-22 14:09:39 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:09:39 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:09:39 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:10:26 --> Config Class Initialized
+INFO - 2024-08-22 14:10:26 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:10:26 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:10:26 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:10:26 --> URI Class Initialized
+INFO - 2024-08-22 14:10:26 --> Router Class Initialized
+INFO - 2024-08-22 14:10:26 --> Output Class Initialized
+INFO - 2024-08-22 14:10:26 --> Security Class Initialized
+DEBUG - 2024-08-22 14:10:26 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:10:26 --> Input Class Initialized
+INFO - 2024-08-22 14:10:26 --> Language Class Initialized
+INFO - 2024-08-22 14:10:26 --> Loader Class Initialized
+INFO - 2024-08-22 14:10:26 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:10:26 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:10:26 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:10:26 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:10:26 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:10:26 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:10:26 --> Controller Class Initialized
+INFO - 2024-08-22 14:10:26 --> Model Class Initialized
+INFO - 2024-08-22 14:10:26 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:10:26 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:10:26 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:10:26 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:10:26 --> Final output sent to browser
+DEBUG - 2024-08-22 14:10:26 --> Total execution time: 0.0721
+INFO - 2024-08-22 14:10:26 --> Config Class Initialized
+INFO - 2024-08-22 14:10:26 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:10:26 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:10:26 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:10:26 --> URI Class Initialized
+INFO - 2024-08-22 14:10:26 --> Router Class Initialized
+INFO - 2024-08-22 14:10:26 --> Output Class Initialized
+INFO - 2024-08-22 14:10:26 --> Security Class Initialized
+DEBUG - 2024-08-22 14:10:26 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:10:26 --> Input Class Initialized
+INFO - 2024-08-22 14:10:26 --> Language Class Initialized
+ERROR - 2024-08-22 14:10:26 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:10:26 --> Config Class Initialized
+INFO - 2024-08-22 14:10:26 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:10:26 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:10:26 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:10:26 --> URI Class Initialized
+INFO - 2024-08-22 14:10:26 --> Router Class Initialized
+INFO - 2024-08-22 14:10:26 --> Output Class Initialized
+INFO - 2024-08-22 14:10:26 --> Security Class Initialized
+DEBUG - 2024-08-22 14:10:26 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:10:26 --> Input Class Initialized
+INFO - 2024-08-22 14:10:26 --> Language Class Initialized
+INFO - 2024-08-22 14:10:26 --> Loader Class Initialized
+INFO - 2024-08-22 14:10:26 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:10:26 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:10:26 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:10:26 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:10:26 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:10:26 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:10:26 --> Controller Class Initialized
+INFO - 2024-08-22 14:10:26 --> Model Class Initialized
+INFO - 2024-08-22 14:10:26 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:10:26 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:10:26 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:10:30 --> Config Class Initialized
+INFO - 2024-08-22 14:10:30 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:10:30 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:10:30 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:10:30 --> URI Class Initialized
+INFO - 2024-08-22 14:10:30 --> Router Class Initialized
+INFO - 2024-08-22 14:10:30 --> Output Class Initialized
+INFO - 2024-08-22 14:10:30 --> Security Class Initialized
+DEBUG - 2024-08-22 14:10:30 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:10:30 --> Input Class Initialized
+INFO - 2024-08-22 14:10:30 --> Language Class Initialized
+INFO - 2024-08-22 14:10:30 --> Loader Class Initialized
+INFO - 2024-08-22 14:10:30 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:10:30 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:10:30 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:10:30 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:10:30 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:10:30 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:10:30 --> Controller Class Initialized
+INFO - 2024-08-22 14:10:30 --> Model Class Initialized
+INFO - 2024-08-22 14:10:30 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:10:30 --> Final output sent to browser
+DEBUG - 2024-08-22 14:10:30 --> Total execution time: 0.0432
+INFO - 2024-08-22 14:13:29 --> Config Class Initialized
+INFO - 2024-08-22 14:13:29 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:13:29 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:13:29 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:13:29 --> URI Class Initialized
+INFO - 2024-08-22 14:13:29 --> Router Class Initialized
+INFO - 2024-08-22 14:13:29 --> Output Class Initialized
+INFO - 2024-08-22 14:13:29 --> Security Class Initialized
+DEBUG - 2024-08-22 14:13:29 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:13:29 --> Input Class Initialized
+INFO - 2024-08-22 14:13:29 --> Language Class Initialized
+INFO - 2024-08-22 14:13:29 --> Loader Class Initialized
+INFO - 2024-08-22 14:13:29 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:13:29 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:13:29 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:13:29 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:13:29 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:13:29 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:13:29 --> Controller Class Initialized
+INFO - 2024-08-22 14:13:29 --> Model Class Initialized
+INFO - 2024-08-22 14:13:29 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:13:29 --> Final output sent to browser
+DEBUG - 2024-08-22 14:13:29 --> Total execution time: 0.0620
+INFO - 2024-08-22 14:13:37 --> Config Class Initialized
+INFO - 2024-08-22 14:13:37 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:13:37 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:13:37 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:13:37 --> URI Class Initialized
+INFO - 2024-08-22 14:13:37 --> Router Class Initialized
+INFO - 2024-08-22 14:13:37 --> Output Class Initialized
+INFO - 2024-08-22 14:13:37 --> Security Class Initialized
+DEBUG - 2024-08-22 14:13:37 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:13:37 --> Input Class Initialized
+INFO - 2024-08-22 14:13:37 --> Language Class Initialized
+INFO - 2024-08-22 14:13:37 --> Loader Class Initialized
+INFO - 2024-08-22 14:13:37 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:13:37 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:13:37 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:13:37 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:13:37 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:13:37 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:13:37 --> Controller Class Initialized
+INFO - 2024-08-22 14:13:37 --> Model Class Initialized
+INFO - 2024-08-22 14:13:37 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:13:37 --> Final output sent to browser
+DEBUG - 2024-08-22 14:13:37 --> Total execution time: 0.0670
+INFO - 2024-08-22 14:15:23 --> Config Class Initialized
+INFO - 2024-08-22 14:15:23 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:15:23 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:15:23 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:15:23 --> URI Class Initialized
+INFO - 2024-08-22 14:15:23 --> Router Class Initialized
+INFO - 2024-08-22 14:15:23 --> Output Class Initialized
+INFO - 2024-08-22 14:15:23 --> Security Class Initialized
+DEBUG - 2024-08-22 14:15:23 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:15:23 --> Input Class Initialized
+INFO - 2024-08-22 14:15:23 --> Language Class Initialized
+INFO - 2024-08-22 14:15:23 --> Loader Class Initialized
+INFO - 2024-08-22 14:15:23 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:15:23 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:15:23 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:15:23 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:15:23 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:15:23 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:15:23 --> Controller Class Initialized
+INFO - 2024-08-22 14:15:23 --> Model Class Initialized
+INFO - 2024-08-22 14:15:23 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:15:23 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:15:23 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:15:23 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:15:23 --> Final output sent to browser
+DEBUG - 2024-08-22 14:15:23 --> Total execution time: 0.0699
+INFO - 2024-08-22 14:15:23 --> Config Class Initialized
+INFO - 2024-08-22 14:15:23 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:15:23 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:15:23 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:15:23 --> URI Class Initialized
+INFO - 2024-08-22 14:15:23 --> Router Class Initialized
+INFO - 2024-08-22 14:15:23 --> Output Class Initialized
+INFO - 2024-08-22 14:15:23 --> Security Class Initialized
+DEBUG - 2024-08-22 14:15:23 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:15:23 --> Input Class Initialized
+INFO - 2024-08-22 14:15:23 --> Language Class Initialized
+ERROR - 2024-08-22 14:15:23 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:15:23 --> Config Class Initialized
+INFO - 2024-08-22 14:15:23 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:15:23 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:15:23 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:15:23 --> URI Class Initialized
+INFO - 2024-08-22 14:15:23 --> Router Class Initialized
+INFO - 2024-08-22 14:15:23 --> Output Class Initialized
+INFO - 2024-08-22 14:15:23 --> Security Class Initialized
+DEBUG - 2024-08-22 14:15:23 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:15:23 --> Input Class Initialized
+INFO - 2024-08-22 14:15:23 --> Language Class Initialized
+INFO - 2024-08-22 14:15:23 --> Loader Class Initialized
+INFO - 2024-08-22 14:15:23 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:15:23 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:15:23 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:15:23 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:15:23 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:15:23 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:15:23 --> Controller Class Initialized
+INFO - 2024-08-22 14:15:23 --> Model Class Initialized
+INFO - 2024-08-22 14:15:23 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:15:23 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:15:23 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:15:28 --> Config Class Initialized
+INFO - 2024-08-22 14:15:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:15:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:15:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:15:28 --> URI Class Initialized
+INFO - 2024-08-22 14:15:28 --> Router Class Initialized
+INFO - 2024-08-22 14:15:28 --> Output Class Initialized
+INFO - 2024-08-22 14:15:28 --> Security Class Initialized
+DEBUG - 2024-08-22 14:15:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:15:28 --> Input Class Initialized
+INFO - 2024-08-22 14:15:28 --> Language Class Initialized
+INFO - 2024-08-22 14:15:28 --> Loader Class Initialized
+INFO - 2024-08-22 14:15:28 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:15:28 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:15:28 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:15:28 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:15:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:15:28 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:15:28 --> Controller Class Initialized
+INFO - 2024-08-22 14:15:28 --> Model Class Initialized
+INFO - 2024-08-22 14:15:28 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:15:28 --> Final output sent to browser
+DEBUG - 2024-08-22 14:15:28 --> Total execution time: 0.0298
+INFO - 2024-08-22 14:16:36 --> Config Class Initialized
+INFO - 2024-08-22 14:16:36 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:16:36 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:16:36 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:16:36 --> URI Class Initialized
+INFO - 2024-08-22 14:16:36 --> Router Class Initialized
+INFO - 2024-08-22 14:16:36 --> Output Class Initialized
+INFO - 2024-08-22 14:16:36 --> Security Class Initialized
+DEBUG - 2024-08-22 14:16:36 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:16:36 --> Input Class Initialized
+INFO - 2024-08-22 14:16:36 --> Language Class Initialized
+INFO - 2024-08-22 14:16:36 --> Loader Class Initialized
+INFO - 2024-08-22 14:16:36 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:16:36 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:16:36 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:16:36 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:16:36 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:16:36 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:16:36 --> Controller Class Initialized
+INFO - 2024-08-22 14:16:36 --> Model Class Initialized
+INFO - 2024-08-22 14:16:36 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:16:36 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:16:36 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:16:36 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:16:36 --> Final output sent to browser
+DEBUG - 2024-08-22 14:16:36 --> Total execution time: 0.0733
+INFO - 2024-08-22 14:16:36 --> Config Class Initialized
+INFO - 2024-08-22 14:16:36 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:16:36 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:16:36 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:16:36 --> URI Class Initialized
+INFO - 2024-08-22 14:16:36 --> Router Class Initialized
+INFO - 2024-08-22 14:16:36 --> Output Class Initialized
+INFO - 2024-08-22 14:16:36 --> Security Class Initialized
+DEBUG - 2024-08-22 14:16:36 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:16:36 --> Input Class Initialized
+INFO - 2024-08-22 14:16:36 --> Language Class Initialized
+ERROR - 2024-08-22 14:16:36 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:16:36 --> Config Class Initialized
+INFO - 2024-08-22 14:16:36 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:16:36 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:16:36 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:16:36 --> URI Class Initialized
+INFO - 2024-08-22 14:16:36 --> Router Class Initialized
+INFO - 2024-08-22 14:16:36 --> Output Class Initialized
+INFO - 2024-08-22 14:16:36 --> Security Class Initialized
+DEBUG - 2024-08-22 14:16:36 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:16:36 --> Input Class Initialized
+INFO - 2024-08-22 14:16:36 --> Language Class Initialized
+INFO - 2024-08-22 14:16:36 --> Loader Class Initialized
+INFO - 2024-08-22 14:16:36 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:16:36 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:16:36 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:16:36 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:16:36 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:16:36 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:16:36 --> Controller Class Initialized
+INFO - 2024-08-22 14:16:36 --> Model Class Initialized
+INFO - 2024-08-22 14:16:36 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:16:36 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:16:36 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:16:40 --> Config Class Initialized
+INFO - 2024-08-22 14:16:40 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:16:40 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:16:40 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:16:40 --> URI Class Initialized
+INFO - 2024-08-22 14:16:40 --> Router Class Initialized
+INFO - 2024-08-22 14:16:40 --> Output Class Initialized
+INFO - 2024-08-22 14:16:40 --> Security Class Initialized
+DEBUG - 2024-08-22 14:16:40 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:16:40 --> Input Class Initialized
+INFO - 2024-08-22 14:16:40 --> Language Class Initialized
+INFO - 2024-08-22 14:16:40 --> Loader Class Initialized
+INFO - 2024-08-22 14:16:40 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:16:40 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:16:40 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:16:40 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:16:40 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:16:40 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:16:40 --> Controller Class Initialized
+INFO - 2024-08-22 14:16:40 --> Model Class Initialized
+INFO - 2024-08-22 14:16:40 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:16:40 --> Final output sent to browser
+DEBUG - 2024-08-22 14:16:40 --> Total execution time: 0.0524
+INFO - 2024-08-22 14:16:54 --> Config Class Initialized
+INFO - 2024-08-22 14:16:54 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:16:54 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:16:54 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:16:54 --> URI Class Initialized
+INFO - 2024-08-22 14:16:54 --> Router Class Initialized
+INFO - 2024-08-22 14:16:54 --> Output Class Initialized
+INFO - 2024-08-22 14:16:54 --> Security Class Initialized
+DEBUG - 2024-08-22 14:16:54 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:16:54 --> Input Class Initialized
+INFO - 2024-08-22 14:16:54 --> Language Class Initialized
+INFO - 2024-08-22 14:16:54 --> Loader Class Initialized
+INFO - 2024-08-22 14:16:54 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:16:54 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:16:54 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:16:54 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:16:54 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:16:54 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:16:54 --> Controller Class Initialized
+INFO - 2024-08-22 14:16:54 --> Model Class Initialized
+INFO - 2024-08-22 14:16:54 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:16:54 --> Final output sent to browser
+DEBUG - 2024-08-22 14:16:54 --> Total execution time: 0.0494
+INFO - 2024-08-22 14:19:53 --> Config Class Initialized
+INFO - 2024-08-22 14:19:53 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:19:53 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:19:53 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:19:53 --> URI Class Initialized
+INFO - 2024-08-22 14:19:53 --> Router Class Initialized
+INFO - 2024-08-22 14:19:53 --> Output Class Initialized
+INFO - 2024-08-22 14:19:53 --> Security Class Initialized
+DEBUG - 2024-08-22 14:19:53 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:19:53 --> Input Class Initialized
+INFO - 2024-08-22 14:19:53 --> Language Class Initialized
+INFO - 2024-08-22 14:19:53 --> Loader Class Initialized
+INFO - 2024-08-22 14:19:53 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:19:53 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:19:53 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:19:53 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:19:53 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:19:53 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:19:53 --> Controller Class Initialized
+INFO - 2024-08-22 14:19:53 --> Model Class Initialized
+INFO - 2024-08-22 14:19:53 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:19:53 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:19:53 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:19:53 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:19:53 --> Final output sent to browser
+DEBUG - 2024-08-22 14:19:53 --> Total execution time: 0.0657
+INFO - 2024-08-22 14:19:53 --> Config Class Initialized
+INFO - 2024-08-22 14:19:53 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:19:53 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:19:53 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:19:53 --> URI Class Initialized
+INFO - 2024-08-22 14:19:53 --> Router Class Initialized
+INFO - 2024-08-22 14:19:53 --> Output Class Initialized
+INFO - 2024-08-22 14:19:53 --> Security Class Initialized
+DEBUG - 2024-08-22 14:19:53 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:19:53 --> Input Class Initialized
+INFO - 2024-08-22 14:19:53 --> Language Class Initialized
+ERROR - 2024-08-22 14:19:53 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:19:53 --> Config Class Initialized
+INFO - 2024-08-22 14:19:53 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:19:53 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:19:53 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:19:53 --> URI Class Initialized
+INFO - 2024-08-22 14:19:53 --> Router Class Initialized
+INFO - 2024-08-22 14:19:53 --> Output Class Initialized
+INFO - 2024-08-22 14:19:53 --> Security Class Initialized
+DEBUG - 2024-08-22 14:19:53 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:19:53 --> Input Class Initialized
+INFO - 2024-08-22 14:19:53 --> Language Class Initialized
+INFO - 2024-08-22 14:19:53 --> Loader Class Initialized
+INFO - 2024-08-22 14:19:53 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:19:53 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:19:53 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:19:53 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:19:53 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:19:53 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:19:53 --> Controller Class Initialized
+INFO - 2024-08-22 14:19:53 --> Model Class Initialized
+INFO - 2024-08-22 14:19:53 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:19:53 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:19:53 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:19:57 --> Config Class Initialized
+INFO - 2024-08-22 14:19:57 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:19:57 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:19:57 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:19:57 --> URI Class Initialized
+INFO - 2024-08-22 14:19:57 --> Router Class Initialized
+INFO - 2024-08-22 14:19:57 --> Output Class Initialized
+INFO - 2024-08-22 14:19:57 --> Security Class Initialized
+DEBUG - 2024-08-22 14:19:57 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:19:57 --> Input Class Initialized
+INFO - 2024-08-22 14:19:57 --> Language Class Initialized
+INFO - 2024-08-22 14:19:57 --> Loader Class Initialized
+INFO - 2024-08-22 14:19:57 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:19:57 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:19:57 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:19:57 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:19:58 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:19:58 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:19:58 --> Controller Class Initialized
+INFO - 2024-08-22 14:19:58 --> Model Class Initialized
+INFO - 2024-08-22 14:19:58 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:19:58 --> Final output sent to browser
+DEBUG - 2024-08-22 14:19:58 --> Total execution time: 0.0531
+INFO - 2024-08-22 14:21:12 --> Config Class Initialized
+INFO - 2024-08-22 14:21:12 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:21:12 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:21:12 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:21:12 --> URI Class Initialized
+INFO - 2024-08-22 14:21:12 --> Router Class Initialized
+INFO - 2024-08-22 14:21:12 --> Output Class Initialized
+INFO - 2024-08-22 14:21:12 --> Security Class Initialized
+DEBUG - 2024-08-22 14:21:12 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:21:12 --> Input Class Initialized
+INFO - 2024-08-22 14:21:12 --> Language Class Initialized
+INFO - 2024-08-22 14:21:12 --> Loader Class Initialized
+INFO - 2024-08-22 14:21:12 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:21:12 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:21:12 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:21:12 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:21:12 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:21:12 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:21:12 --> Controller Class Initialized
+INFO - 2024-08-22 14:21:12 --> Model Class Initialized
+INFO - 2024-08-22 14:21:12 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:21:12 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:21:12 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:21:12 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:21:12 --> Final output sent to browser
+DEBUG - 2024-08-22 14:21:12 --> Total execution time: 0.0556
+INFO - 2024-08-22 14:21:12 --> Config Class Initialized
+INFO - 2024-08-22 14:21:12 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:21:12 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:21:12 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:21:12 --> URI Class Initialized
+INFO - 2024-08-22 14:21:12 --> Router Class Initialized
+INFO - 2024-08-22 14:21:12 --> Output Class Initialized
+INFO - 2024-08-22 14:21:12 --> Security Class Initialized
+DEBUG - 2024-08-22 14:21:12 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:21:12 --> Input Class Initialized
+INFO - 2024-08-22 14:21:12 --> Language Class Initialized
+ERROR - 2024-08-22 14:21:12 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:21:12 --> Config Class Initialized
+INFO - 2024-08-22 14:21:12 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:21:12 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:21:12 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:21:12 --> URI Class Initialized
+INFO - 2024-08-22 14:21:12 --> Router Class Initialized
+INFO - 2024-08-22 14:21:12 --> Output Class Initialized
+INFO - 2024-08-22 14:21:12 --> Security Class Initialized
+DEBUG - 2024-08-22 14:21:12 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:21:12 --> Input Class Initialized
+INFO - 2024-08-22 14:21:12 --> Language Class Initialized
+INFO - 2024-08-22 14:21:12 --> Loader Class Initialized
+INFO - 2024-08-22 14:21:12 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:21:12 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:21:12 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:21:12 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:21:12 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:21:12 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:21:12 --> Controller Class Initialized
+INFO - 2024-08-22 14:21:12 --> Model Class Initialized
+INFO - 2024-08-22 14:21:12 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:21:12 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:21:12 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:21:16 --> Config Class Initialized
+INFO - 2024-08-22 14:21:16 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:21:16 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:21:16 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:21:16 --> URI Class Initialized
+INFO - 2024-08-22 14:21:16 --> Router Class Initialized
+INFO - 2024-08-22 14:21:16 --> Output Class Initialized
+INFO - 2024-08-22 14:21:16 --> Security Class Initialized
+DEBUG - 2024-08-22 14:21:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:21:16 --> Input Class Initialized
+INFO - 2024-08-22 14:21:16 --> Language Class Initialized
+INFO - 2024-08-22 14:21:16 --> Loader Class Initialized
+INFO - 2024-08-22 14:21:16 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:21:16 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:21:16 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:21:16 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:21:16 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:21:16 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:21:16 --> Controller Class Initialized
+INFO - 2024-08-22 14:21:16 --> Model Class Initialized
+INFO - 2024-08-22 14:21:16 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:21:16 --> Final output sent to browser
+DEBUG - 2024-08-22 14:21:16 --> Total execution time: 0.0389
+INFO - 2024-08-22 14:21:18 --> Config Class Initialized
+INFO - 2024-08-22 14:21:18 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:21:18 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:21:18 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:21:18 --> URI Class Initialized
+INFO - 2024-08-22 14:21:18 --> Router Class Initialized
+INFO - 2024-08-22 14:21:18 --> Output Class Initialized
+INFO - 2024-08-22 14:21:18 --> Security Class Initialized
+DEBUG - 2024-08-22 14:21:18 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:21:18 --> Input Class Initialized
+INFO - 2024-08-22 14:21:18 --> Language Class Initialized
+INFO - 2024-08-22 14:21:18 --> Loader Class Initialized
+INFO - 2024-08-22 14:21:18 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:21:18 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:21:18 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:21:18 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:21:18 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:21:18 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:21:18 --> Controller Class Initialized
+INFO - 2024-08-22 14:21:18 --> Model Class Initialized
+INFO - 2024-08-22 14:21:18 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:21:18 --> Final output sent to browser
+DEBUG - 2024-08-22 14:21:18 --> Total execution time: 0.0402
+INFO - 2024-08-22 14:22:32 --> Config Class Initialized
+INFO - 2024-08-22 14:22:32 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:22:32 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:22:32 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:22:32 --> URI Class Initialized
+INFO - 2024-08-22 14:22:32 --> Router Class Initialized
+INFO - 2024-08-22 14:22:32 --> Output Class Initialized
+INFO - 2024-08-22 14:22:32 --> Security Class Initialized
+DEBUG - 2024-08-22 14:22:32 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:22:32 --> Input Class Initialized
+INFO - 2024-08-22 14:22:32 --> Language Class Initialized
+INFO - 2024-08-22 14:22:32 --> Loader Class Initialized
+INFO - 2024-08-22 14:22:32 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:22:32 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:22:32 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:22:32 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:22:32 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:22:32 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:22:32 --> Controller Class Initialized
+INFO - 2024-08-22 14:22:32 --> Model Class Initialized
+INFO - 2024-08-22 14:22:32 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:22:32 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:22:32 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:22:32 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:22:32 --> Final output sent to browser
+DEBUG - 2024-08-22 14:22:32 --> Total execution time: 0.1058
+INFO - 2024-08-22 14:22:32 --> Config Class Initialized
+INFO - 2024-08-22 14:22:32 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:22:32 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:22:32 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:22:32 --> URI Class Initialized
+INFO - 2024-08-22 14:22:32 --> Router Class Initialized
+INFO - 2024-08-22 14:22:32 --> Output Class Initialized
+INFO - 2024-08-22 14:22:32 --> Security Class Initialized
+DEBUG - 2024-08-22 14:22:32 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:22:32 --> Input Class Initialized
+INFO - 2024-08-22 14:22:32 --> Language Class Initialized
+ERROR - 2024-08-22 14:22:32 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:22:33 --> Config Class Initialized
+INFO - 2024-08-22 14:22:33 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:22:33 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:22:33 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:22:33 --> URI Class Initialized
+INFO - 2024-08-22 14:22:33 --> Router Class Initialized
+INFO - 2024-08-22 14:22:33 --> Output Class Initialized
+INFO - 2024-08-22 14:22:33 --> Security Class Initialized
+DEBUG - 2024-08-22 14:22:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:22:33 --> Input Class Initialized
+INFO - 2024-08-22 14:22:33 --> Language Class Initialized
+INFO - 2024-08-22 14:22:33 --> Loader Class Initialized
+INFO - 2024-08-22 14:22:33 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:22:33 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:22:33 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:22:33 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:22:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:22:33 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:22:33 --> Controller Class Initialized
+INFO - 2024-08-22 14:22:33 --> Model Class Initialized
+INFO - 2024-08-22 14:22:33 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:22:33 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:22:33 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:22:38 --> Config Class Initialized
+INFO - 2024-08-22 14:22:38 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:22:38 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:22:38 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:22:38 --> URI Class Initialized
+INFO - 2024-08-22 14:22:38 --> Router Class Initialized
+INFO - 2024-08-22 14:22:38 --> Output Class Initialized
+INFO - 2024-08-22 14:22:38 --> Security Class Initialized
+DEBUG - 2024-08-22 14:22:38 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:22:38 --> Input Class Initialized
+INFO - 2024-08-22 14:22:38 --> Language Class Initialized
+INFO - 2024-08-22 14:22:38 --> Loader Class Initialized
+INFO - 2024-08-22 14:22:38 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:22:38 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:22:38 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:22:38 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:22:38 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:22:38 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:22:38 --> Controller Class Initialized
+INFO - 2024-08-22 14:22:38 --> Model Class Initialized
+INFO - 2024-08-22 14:22:38 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:22:38 --> Final output sent to browser
+DEBUG - 2024-08-22 14:22:38 --> Total execution time: 0.0935
+INFO - 2024-08-22 14:24:37 --> Config Class Initialized
+INFO - 2024-08-22 14:24:37 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:24:37 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:24:37 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:24:37 --> URI Class Initialized
+INFO - 2024-08-22 14:24:37 --> Router Class Initialized
+INFO - 2024-08-22 14:24:37 --> Output Class Initialized
+INFO - 2024-08-22 14:24:37 --> Security Class Initialized
+DEBUG - 2024-08-22 14:24:37 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:24:37 --> Input Class Initialized
+INFO - 2024-08-22 14:24:37 --> Language Class Initialized
+INFO - 2024-08-22 14:24:37 --> Loader Class Initialized
+INFO - 2024-08-22 14:24:37 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:24:37 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:24:37 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:24:37 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:24:37 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:24:37 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:24:37 --> Controller Class Initialized
+INFO - 2024-08-22 14:24:37 --> Model Class Initialized
+INFO - 2024-08-22 14:24:37 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:24:37 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:24:37 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:24:37 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:24:37 --> Final output sent to browser
+DEBUG - 2024-08-22 14:24:37 --> Total execution time: 0.0837
+INFO - 2024-08-22 14:24:37 --> Config Class Initialized
+INFO - 2024-08-22 14:24:37 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:24:37 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:24:37 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:24:37 --> URI Class Initialized
+INFO - 2024-08-22 14:24:37 --> Router Class Initialized
+INFO - 2024-08-22 14:24:37 --> Output Class Initialized
+INFO - 2024-08-22 14:24:37 --> Security Class Initialized
+DEBUG - 2024-08-22 14:24:37 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:24:37 --> Input Class Initialized
+INFO - 2024-08-22 14:24:37 --> Language Class Initialized
+ERROR - 2024-08-22 14:24:37 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:24:37 --> Config Class Initialized
+INFO - 2024-08-22 14:24:37 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:24:37 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:24:37 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:24:37 --> URI Class Initialized
+INFO - 2024-08-22 14:24:37 --> Router Class Initialized
+INFO - 2024-08-22 14:24:37 --> Output Class Initialized
+INFO - 2024-08-22 14:24:37 --> Security Class Initialized
+DEBUG - 2024-08-22 14:24:37 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:24:37 --> Input Class Initialized
+INFO - 2024-08-22 14:24:37 --> Language Class Initialized
+INFO - 2024-08-22 14:24:37 --> Loader Class Initialized
+INFO - 2024-08-22 14:24:37 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:24:37 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:24:37 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:24:37 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:24:37 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:24:37 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:24:37 --> Controller Class Initialized
+INFO - 2024-08-22 14:24:37 --> Model Class Initialized
+INFO - 2024-08-22 14:24:37 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:24:37 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:24:37 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:24:41 --> Config Class Initialized
+INFO - 2024-08-22 14:24:41 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:24:41 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:24:41 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:24:41 --> URI Class Initialized
+INFO - 2024-08-22 14:24:41 --> Router Class Initialized
+INFO - 2024-08-22 14:24:41 --> Output Class Initialized
+INFO - 2024-08-22 14:24:41 --> Security Class Initialized
+DEBUG - 2024-08-22 14:24:41 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:24:41 --> Input Class Initialized
+INFO - 2024-08-22 14:24:41 --> Language Class Initialized
+INFO - 2024-08-22 14:24:41 --> Loader Class Initialized
+INFO - 2024-08-22 14:24:41 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:24:41 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:24:41 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:24:41 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:24:41 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:24:41 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:24:41 --> Controller Class Initialized
+INFO - 2024-08-22 14:24:41 --> Model Class Initialized
+INFO - 2024-08-22 14:24:41 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:24:41 --> Final output sent to browser
+DEBUG - 2024-08-22 14:24:41 --> Total execution time: 0.0350
+INFO - 2024-08-22 14:24:43 --> Config Class Initialized
+INFO - 2024-08-22 14:24:43 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:24:43 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:24:43 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:24:43 --> URI Class Initialized
+INFO - 2024-08-22 14:24:43 --> Router Class Initialized
+INFO - 2024-08-22 14:24:43 --> Output Class Initialized
+INFO - 2024-08-22 14:24:43 --> Security Class Initialized
+DEBUG - 2024-08-22 14:24:43 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:24:43 --> Input Class Initialized
+INFO - 2024-08-22 14:24:43 --> Language Class Initialized
+INFO - 2024-08-22 14:24:43 --> Loader Class Initialized
+INFO - 2024-08-22 14:24:43 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:24:43 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:24:43 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:24:43 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:24:43 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:24:43 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:24:43 --> Controller Class Initialized
+INFO - 2024-08-22 14:24:43 --> Model Class Initialized
+INFO - 2024-08-22 14:24:43 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:24:43 --> Final output sent to browser
+DEBUG - 2024-08-22 14:24:43 --> Total execution time: 0.0834
+INFO - 2024-08-22 14:25:09 --> Config Class Initialized
+INFO - 2024-08-22 14:25:09 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:25:09 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:25:09 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:25:09 --> URI Class Initialized
+INFO - 2024-08-22 14:25:09 --> Router Class Initialized
+INFO - 2024-08-22 14:25:09 --> Output Class Initialized
+INFO - 2024-08-22 14:25:09 --> Security Class Initialized
+DEBUG - 2024-08-22 14:25:09 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:25:09 --> Input Class Initialized
+INFO - 2024-08-22 14:25:09 --> Language Class Initialized
+INFO - 2024-08-22 14:25:09 --> Loader Class Initialized
+INFO - 2024-08-22 14:25:09 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:25:09 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:25:09 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:25:09 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:25:09 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:25:09 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:25:09 --> Controller Class Initialized
+INFO - 2024-08-22 14:25:09 --> Model Class Initialized
+INFO - 2024-08-22 14:25:09 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:25:09 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:25:09 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:25:09 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:25:09 --> Final output sent to browser
+DEBUG - 2024-08-22 14:25:09 --> Total execution time: 0.0665
+INFO - 2024-08-22 14:25:09 --> Config Class Initialized
+INFO - 2024-08-22 14:25:09 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:25:09 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:25:09 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:25:09 --> URI Class Initialized
+INFO - 2024-08-22 14:25:09 --> Router Class Initialized
+INFO - 2024-08-22 14:25:09 --> Output Class Initialized
+INFO - 2024-08-22 14:25:09 --> Security Class Initialized
+DEBUG - 2024-08-22 14:25:09 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:25:09 --> Input Class Initialized
+INFO - 2024-08-22 14:25:09 --> Language Class Initialized
+ERROR - 2024-08-22 14:25:09 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:25:10 --> Config Class Initialized
+INFO - 2024-08-22 14:25:10 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:25:10 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:25:10 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:25:10 --> URI Class Initialized
+INFO - 2024-08-22 14:25:10 --> Router Class Initialized
+INFO - 2024-08-22 14:25:10 --> Output Class Initialized
+INFO - 2024-08-22 14:25:10 --> Security Class Initialized
+DEBUG - 2024-08-22 14:25:10 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:25:10 --> Input Class Initialized
+INFO - 2024-08-22 14:25:10 --> Language Class Initialized
+INFO - 2024-08-22 14:25:10 --> Loader Class Initialized
+INFO - 2024-08-22 14:25:10 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:25:10 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:25:10 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:25:10 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:25:10 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:25:10 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:25:10 --> Controller Class Initialized
+INFO - 2024-08-22 14:25:10 --> Model Class Initialized
+INFO - 2024-08-22 14:25:10 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:25:10 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:25:10 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:25:21 --> Config Class Initialized
+INFO - 2024-08-22 14:25:21 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:25:21 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:25:21 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:25:21 --> URI Class Initialized
+INFO - 2024-08-22 14:25:21 --> Router Class Initialized
+INFO - 2024-08-22 14:25:21 --> Output Class Initialized
+INFO - 2024-08-22 14:25:21 --> Security Class Initialized
+DEBUG - 2024-08-22 14:25:21 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:25:21 --> Input Class Initialized
+INFO - 2024-08-22 14:25:21 --> Language Class Initialized
+INFO - 2024-08-22 14:25:21 --> Loader Class Initialized
+INFO - 2024-08-22 14:25:21 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:25:21 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:25:21 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:25:21 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:25:21 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:25:21 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:25:21 --> Controller Class Initialized
+INFO - 2024-08-22 14:25:21 --> Model Class Initialized
+INFO - 2024-08-22 14:25:21 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:25:22 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:25:22 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:25:22 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:25:22 --> Final output sent to browser
+DEBUG - 2024-08-22 14:25:22 --> Total execution time: 0.5988
+INFO - 2024-08-22 14:25:22 --> Config Class Initialized
+INFO - 2024-08-22 14:25:22 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:25:22 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:25:22 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:25:22 --> URI Class Initialized
+INFO - 2024-08-22 14:25:22 --> Router Class Initialized
+INFO - 2024-08-22 14:25:22 --> Output Class Initialized
+INFO - 2024-08-22 14:25:22 --> Security Class Initialized
+DEBUG - 2024-08-22 14:25:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:25:22 --> Input Class Initialized
+INFO - 2024-08-22 14:25:22 --> Language Class Initialized
+ERROR - 2024-08-22 14:25:22 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:25:22 --> Config Class Initialized
+INFO - 2024-08-22 14:25:22 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:25:22 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:25:22 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:25:22 --> URI Class Initialized
+INFO - 2024-08-22 14:25:22 --> Router Class Initialized
+INFO - 2024-08-22 14:25:22 --> Output Class Initialized
+INFO - 2024-08-22 14:25:22 --> Security Class Initialized
+DEBUG - 2024-08-22 14:25:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:25:22 --> Input Class Initialized
+INFO - 2024-08-22 14:25:22 --> Language Class Initialized
+INFO - 2024-08-22 14:25:22 --> Loader Class Initialized
+INFO - 2024-08-22 14:25:22 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:25:22 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:25:22 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:25:22 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:25:22 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:25:22 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:25:22 --> Controller Class Initialized
+INFO - 2024-08-22 14:25:22 --> Model Class Initialized
+INFO - 2024-08-22 14:25:22 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:25:22 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:25:22 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:25:26 --> Config Class Initialized
+INFO - 2024-08-22 14:25:26 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:25:26 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:25:26 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:25:26 --> URI Class Initialized
+INFO - 2024-08-22 14:25:26 --> Router Class Initialized
+INFO - 2024-08-22 14:25:26 --> Output Class Initialized
+INFO - 2024-08-22 14:25:26 --> Security Class Initialized
+DEBUG - 2024-08-22 14:25:26 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:25:26 --> Input Class Initialized
+INFO - 2024-08-22 14:25:26 --> Language Class Initialized
+INFO - 2024-08-22 14:25:26 --> Loader Class Initialized
+INFO - 2024-08-22 14:25:26 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:25:26 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:25:26 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:25:26 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:25:26 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:25:26 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:25:26 --> Controller Class Initialized
+INFO - 2024-08-22 14:25:26 --> Model Class Initialized
+INFO - 2024-08-22 14:25:26 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:25:53 --> Config Class Initialized
+INFO - 2024-08-22 14:25:53 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:25:53 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:25:53 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:25:53 --> URI Class Initialized
+INFO - 2024-08-22 14:25:53 --> Router Class Initialized
+INFO - 2024-08-22 14:25:53 --> Output Class Initialized
+INFO - 2024-08-22 14:25:53 --> Security Class Initialized
+DEBUG - 2024-08-22 14:25:53 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:25:53 --> Input Class Initialized
+INFO - 2024-08-22 14:25:53 --> Language Class Initialized
+INFO - 2024-08-22 14:25:53 --> Loader Class Initialized
+INFO - 2024-08-22 14:25:53 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:25:53 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:25:53 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:25:53 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:25:53 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:25:53 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:25:53 --> Controller Class Initialized
+INFO - 2024-08-22 14:25:53 --> Model Class Initialized
+INFO - 2024-08-22 14:25:53 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:25:53 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:25:53 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:25:53 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:25:53 --> Final output sent to browser
+DEBUG - 2024-08-22 14:25:53 --> Total execution time: 0.1474
+INFO - 2024-08-22 14:25:53 --> Config Class Initialized
+INFO - 2024-08-22 14:25:53 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:25:53 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:25:53 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:25:53 --> URI Class Initialized
+INFO - 2024-08-22 14:25:53 --> Router Class Initialized
+INFO - 2024-08-22 14:25:53 --> Output Class Initialized
+INFO - 2024-08-22 14:25:53 --> Security Class Initialized
+DEBUG - 2024-08-22 14:25:53 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:25:53 --> Input Class Initialized
+INFO - 2024-08-22 14:25:53 --> Language Class Initialized
+ERROR - 2024-08-22 14:25:53 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:25:54 --> Config Class Initialized
+INFO - 2024-08-22 14:25:54 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:25:54 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:25:54 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:25:54 --> URI Class Initialized
+INFO - 2024-08-22 14:25:54 --> Router Class Initialized
+INFO - 2024-08-22 14:25:54 --> Output Class Initialized
+INFO - 2024-08-22 14:25:54 --> Security Class Initialized
+DEBUG - 2024-08-22 14:25:54 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:25:54 --> Input Class Initialized
+INFO - 2024-08-22 14:25:54 --> Language Class Initialized
+INFO - 2024-08-22 14:25:54 --> Loader Class Initialized
+INFO - 2024-08-22 14:25:54 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:25:54 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:25:54 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:25:54 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:25:54 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:25:54 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:25:54 --> Controller Class Initialized
+INFO - 2024-08-22 14:25:54 --> Model Class Initialized
+INFO - 2024-08-22 14:25:54 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:25:54 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:25:54 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:25:59 --> Config Class Initialized
+INFO - 2024-08-22 14:25:59 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:25:59 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:25:59 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:25:59 --> URI Class Initialized
+INFO - 2024-08-22 14:25:59 --> Router Class Initialized
+INFO - 2024-08-22 14:25:59 --> Output Class Initialized
+INFO - 2024-08-22 14:25:59 --> Security Class Initialized
+DEBUG - 2024-08-22 14:25:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:25:59 --> Input Class Initialized
+INFO - 2024-08-22 14:25:59 --> Language Class Initialized
+INFO - 2024-08-22 14:25:59 --> Loader Class Initialized
+INFO - 2024-08-22 14:25:59 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:25:59 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:25:59 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:25:59 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:25:59 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:25:59 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:25:59 --> Controller Class Initialized
+INFO - 2024-08-22 14:25:59 --> Model Class Initialized
+INFO - 2024-08-22 14:25:59 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:31:00 --> Config Class Initialized
+INFO - 2024-08-22 14:31:00 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:31:00 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:31:00 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:31:00 --> URI Class Initialized
+INFO - 2024-08-22 14:31:00 --> Router Class Initialized
+INFO - 2024-08-22 14:31:00 --> Output Class Initialized
+INFO - 2024-08-22 14:31:00 --> Security Class Initialized
+DEBUG - 2024-08-22 14:31:00 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:31:00 --> Input Class Initialized
+INFO - 2024-08-22 14:31:00 --> Language Class Initialized
+INFO - 2024-08-22 14:31:00 --> Loader Class Initialized
+INFO - 2024-08-22 14:31:00 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:31:00 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:31:00 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:31:00 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:31:00 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:31:00 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:31:00 --> Controller Class Initialized
+INFO - 2024-08-22 14:31:00 --> Model Class Initialized
+INFO - 2024-08-22 14:31:00 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:31:00 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:31:00 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:31:00 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:31:00 --> Final output sent to browser
+DEBUG - 2024-08-22 14:31:00 --> Total execution time: 0.0776
+INFO - 2024-08-22 14:31:00 --> Config Class Initialized
+INFO - 2024-08-22 14:31:00 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:31:00 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:31:00 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:31:00 --> URI Class Initialized
+INFO - 2024-08-22 14:31:00 --> Router Class Initialized
+INFO - 2024-08-22 14:31:00 --> Output Class Initialized
+INFO - 2024-08-22 14:31:00 --> Security Class Initialized
+DEBUG - 2024-08-22 14:31:00 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:31:00 --> Input Class Initialized
+INFO - 2024-08-22 14:31:00 --> Language Class Initialized
+ERROR - 2024-08-22 14:31:00 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:31:00 --> Config Class Initialized
+INFO - 2024-08-22 14:31:00 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:31:00 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:31:00 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:31:00 --> URI Class Initialized
+INFO - 2024-08-22 14:31:00 --> Router Class Initialized
+INFO - 2024-08-22 14:31:00 --> Output Class Initialized
+INFO - 2024-08-22 14:31:00 --> Security Class Initialized
+DEBUG - 2024-08-22 14:31:00 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:31:00 --> Input Class Initialized
+INFO - 2024-08-22 14:31:00 --> Language Class Initialized
+INFO - 2024-08-22 14:31:00 --> Loader Class Initialized
+INFO - 2024-08-22 14:31:00 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:31:00 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:31:00 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:31:00 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:31:00 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:31:00 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:31:00 --> Controller Class Initialized
+INFO - 2024-08-22 14:31:00 --> Model Class Initialized
+INFO - 2024-08-22 14:31:00 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:31:00 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:31:00 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:31:04 --> Config Class Initialized
+INFO - 2024-08-22 14:31:04 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:31:04 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:31:04 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:31:04 --> URI Class Initialized
+INFO - 2024-08-22 14:31:04 --> Router Class Initialized
+INFO - 2024-08-22 14:31:04 --> Output Class Initialized
+INFO - 2024-08-22 14:31:04 --> Security Class Initialized
+DEBUG - 2024-08-22 14:31:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:31:04 --> Input Class Initialized
+INFO - 2024-08-22 14:31:04 --> Language Class Initialized
+INFO - 2024-08-22 14:31:04 --> Loader Class Initialized
+INFO - 2024-08-22 14:31:04 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:31:04 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:31:04 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:31:04 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:31:04 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:31:04 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:31:04 --> Controller Class Initialized
+INFO - 2024-08-22 14:31:04 --> Model Class Initialized
+INFO - 2024-08-22 14:31:04 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:31:04 --> Final output sent to browser
+DEBUG - 2024-08-22 14:31:04 --> Total execution time: 0.0949
+INFO - 2024-08-22 14:31:20 --> Config Class Initialized
+INFO - 2024-08-22 14:31:20 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:31:20 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:31:20 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:31:20 --> URI Class Initialized
+INFO - 2024-08-22 14:31:20 --> Router Class Initialized
+INFO - 2024-08-22 14:31:20 --> Output Class Initialized
+INFO - 2024-08-22 14:31:20 --> Security Class Initialized
+DEBUG - 2024-08-22 14:31:20 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:31:20 --> Input Class Initialized
+INFO - 2024-08-22 14:31:20 --> Language Class Initialized
+INFO - 2024-08-22 14:31:20 --> Loader Class Initialized
+INFO - 2024-08-22 14:31:20 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:31:20 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:31:20 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:31:20 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:31:20 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:31:20 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:31:20 --> Controller Class Initialized
+INFO - 2024-08-22 14:31:20 --> Model Class Initialized
+INFO - 2024-08-22 14:31:20 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:31:20 --> Severity: Notice --> Undefined variable: id_project C:\laragon\www\limsonewater\application\views\moisture_content\index.php 13
+ERROR - 2024-08-22 14:31:20 --> Severity: Notice --> Undefined variable: client C:\laragon\www\limsonewater\application\views\moisture_content\index.php 16
+ERROR - 2024-08-22 14:31:20 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 14:31:20 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 14:31:20 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 14:31:20 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 14:31:20 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 14:31:20 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+INFO - 2024-08-22 14:31:20 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index.php
+INFO - 2024-08-22 14:31:20 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:31:20 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:31:20 --> Final output sent to browser
+DEBUG - 2024-08-22 14:31:20 --> Total execution time: 0.0587
+INFO - 2024-08-22 14:31:20 --> Config Class Initialized
+INFO - 2024-08-22 14:31:20 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:31:20 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:31:20 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:31:20 --> URI Class Initialized
+INFO - 2024-08-22 14:31:20 --> Router Class Initialized
+INFO - 2024-08-22 14:31:20 --> Output Class Initialized
+INFO - 2024-08-22 14:31:20 --> Security Class Initialized
+DEBUG - 2024-08-22 14:31:20 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:31:20 --> Input Class Initialized
+INFO - 2024-08-22 14:31:20 --> Language Class Initialized
+INFO - 2024-08-22 14:31:20 --> Loader Class Initialized
+INFO - 2024-08-22 14:31:20 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:31:20 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:31:20 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:31:20 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:31:20 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:31:20 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:31:20 --> Controller Class Initialized
+INFO - 2024-08-22 14:31:20 --> Model Class Initialized
+INFO - 2024-08-22 14:31:20 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:31:20 --> Final output sent to browser
+DEBUG - 2024-08-22 14:31:20 --> Total execution time: 0.0484
+INFO - 2024-08-22 14:31:22 --> Config Class Initialized
+INFO - 2024-08-22 14:31:22 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:31:22 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:31:22 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:31:22 --> URI Class Initialized
+INFO - 2024-08-22 14:31:22 --> Router Class Initialized
+INFO - 2024-08-22 14:31:22 --> Output Class Initialized
+INFO - 2024-08-22 14:31:22 --> Security Class Initialized
+DEBUG - 2024-08-22 14:31:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:31:22 --> Input Class Initialized
+INFO - 2024-08-22 14:31:22 --> Language Class Initialized
+INFO - 2024-08-22 14:31:22 --> Loader Class Initialized
+INFO - 2024-08-22 14:31:22 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:31:22 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:31:22 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:31:22 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:31:22 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:31:22 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:31:22 --> Controller Class Initialized
+INFO - 2024-08-22 14:31:22 --> Model Class Initialized
+INFO - 2024-08-22 14:31:22 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:31:22 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:31:22 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:31:22 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:31:22 --> Final output sent to browser
+DEBUG - 2024-08-22 14:31:22 --> Total execution time: 0.0664
+INFO - 2024-08-22 14:31:22 --> Config Class Initialized
+INFO - 2024-08-22 14:31:22 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:31:22 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:31:22 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:31:22 --> URI Class Initialized
+INFO - 2024-08-22 14:31:22 --> Router Class Initialized
+INFO - 2024-08-22 14:31:22 --> Output Class Initialized
+INFO - 2024-08-22 14:31:22 --> Security Class Initialized
+DEBUG - 2024-08-22 14:31:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:31:22 --> Input Class Initialized
+INFO - 2024-08-22 14:31:22 --> Language Class Initialized
+ERROR - 2024-08-22 14:31:22 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:31:22 --> Config Class Initialized
+INFO - 2024-08-22 14:31:22 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:31:22 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:31:22 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:31:22 --> URI Class Initialized
+INFO - 2024-08-22 14:31:22 --> Router Class Initialized
+INFO - 2024-08-22 14:31:22 --> Output Class Initialized
+INFO - 2024-08-22 14:31:22 --> Security Class Initialized
+DEBUG - 2024-08-22 14:31:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:31:22 --> Input Class Initialized
+INFO - 2024-08-22 14:31:22 --> Language Class Initialized
+INFO - 2024-08-22 14:31:22 --> Loader Class Initialized
+INFO - 2024-08-22 14:31:22 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:31:22 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:31:22 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:31:22 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:31:22 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:31:22 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:31:22 --> Controller Class Initialized
+INFO - 2024-08-22 14:31:22 --> Model Class Initialized
+INFO - 2024-08-22 14:31:22 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:31:22 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:31:22 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:31:27 --> Config Class Initialized
+INFO - 2024-08-22 14:31:27 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:31:27 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:31:27 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:31:27 --> URI Class Initialized
+INFO - 2024-08-22 14:31:27 --> Router Class Initialized
+INFO - 2024-08-22 14:31:27 --> Output Class Initialized
+INFO - 2024-08-22 14:31:27 --> Security Class Initialized
+DEBUG - 2024-08-22 14:31:27 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:31:27 --> Input Class Initialized
+INFO - 2024-08-22 14:31:27 --> Language Class Initialized
+INFO - 2024-08-22 14:31:27 --> Loader Class Initialized
+INFO - 2024-08-22 14:31:27 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:31:27 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:31:27 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:31:27 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:31:27 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:31:27 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:31:27 --> Controller Class Initialized
+INFO - 2024-08-22 14:31:27 --> Model Class Initialized
+INFO - 2024-08-22 14:31:27 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:31:27 --> Final output sent to browser
+DEBUG - 2024-08-22 14:31:27 --> Total execution time: 0.0596
+INFO - 2024-08-22 14:31:55 --> Config Class Initialized
+INFO - 2024-08-22 14:31:55 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:31:55 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:31:55 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:31:55 --> URI Class Initialized
+INFO - 2024-08-22 14:31:55 --> Router Class Initialized
+INFO - 2024-08-22 14:31:55 --> Output Class Initialized
+INFO - 2024-08-22 14:31:55 --> Security Class Initialized
+DEBUG - 2024-08-22 14:31:55 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:31:55 --> Input Class Initialized
+INFO - 2024-08-22 14:31:55 --> Language Class Initialized
+INFO - 2024-08-22 14:31:55 --> Loader Class Initialized
+INFO - 2024-08-22 14:31:55 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:31:55 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:31:56 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:31:56 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:31:56 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:31:56 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:31:56 --> Controller Class Initialized
+INFO - 2024-08-22 14:31:56 --> Model Class Initialized
+INFO - 2024-08-22 14:31:56 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:31:56 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:31:56 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:31:56 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:31:56 --> Final output sent to browser
+DEBUG - 2024-08-22 14:31:56 --> Total execution time: 0.1782
+INFO - 2024-08-22 14:31:56 --> Config Class Initialized
+INFO - 2024-08-22 14:31:56 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:31:56 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:31:56 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:31:56 --> URI Class Initialized
+INFO - 2024-08-22 14:31:56 --> Router Class Initialized
+INFO - 2024-08-22 14:31:56 --> Output Class Initialized
+INFO - 2024-08-22 14:31:56 --> Security Class Initialized
+DEBUG - 2024-08-22 14:31:56 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:31:56 --> Input Class Initialized
+INFO - 2024-08-22 14:31:56 --> Language Class Initialized
+ERROR - 2024-08-22 14:31:56 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:31:56 --> Config Class Initialized
+INFO - 2024-08-22 14:31:56 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:31:56 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:31:56 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:31:56 --> URI Class Initialized
+INFO - 2024-08-22 14:31:56 --> Router Class Initialized
+INFO - 2024-08-22 14:31:56 --> Output Class Initialized
+INFO - 2024-08-22 14:31:56 --> Security Class Initialized
+DEBUG - 2024-08-22 14:31:56 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:31:56 --> Input Class Initialized
+INFO - 2024-08-22 14:31:56 --> Language Class Initialized
+INFO - 2024-08-22 14:31:56 --> Loader Class Initialized
+INFO - 2024-08-22 14:31:56 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:31:56 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:31:56 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:31:56 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:31:56 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:31:56 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:31:56 --> Controller Class Initialized
+INFO - 2024-08-22 14:31:56 --> Model Class Initialized
+INFO - 2024-08-22 14:31:56 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:31:56 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:31:56 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:31:59 --> Config Class Initialized
+INFO - 2024-08-22 14:31:59 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:31:59 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:31:59 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:31:59 --> URI Class Initialized
+INFO - 2024-08-22 14:31:59 --> Router Class Initialized
+INFO - 2024-08-22 14:31:59 --> Output Class Initialized
+INFO - 2024-08-22 14:31:59 --> Security Class Initialized
+DEBUG - 2024-08-22 14:31:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:31:59 --> Input Class Initialized
+INFO - 2024-08-22 14:31:59 --> Language Class Initialized
+INFO - 2024-08-22 14:31:59 --> Loader Class Initialized
+INFO - 2024-08-22 14:31:59 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:31:59 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:31:59 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:31:59 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:31:59 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:31:59 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:31:59 --> Controller Class Initialized
+INFO - 2024-08-22 14:31:59 --> Model Class Initialized
+INFO - 2024-08-22 14:31:59 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:31:59 --> Severity: Notice --> Trying to access array offset on value of type null C:\laragon\www\limsonewater\application\libraries\Datatables.php 296
+ERROR - 2024-08-22 14:31:59 --> Severity: Notice --> Trying to access array offset on value of type null C:\laragon\www\limsonewater\application\libraries\Datatables.php 296
+INFO - 2024-08-22 14:31:59 --> Final output sent to browser
+DEBUG - 2024-08-22 14:31:59 --> Total execution time: 0.0927
+INFO - 2024-08-22 14:32:23 --> Config Class Initialized
+INFO - 2024-08-22 14:32:23 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:32:23 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:32:23 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:32:23 --> URI Class Initialized
+INFO - 2024-08-22 14:32:23 --> Router Class Initialized
+INFO - 2024-08-22 14:32:23 --> Output Class Initialized
+INFO - 2024-08-22 14:32:23 --> Security Class Initialized
+DEBUG - 2024-08-22 14:32:23 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:32:23 --> Input Class Initialized
+INFO - 2024-08-22 14:32:23 --> Language Class Initialized
+INFO - 2024-08-22 14:32:23 --> Loader Class Initialized
+INFO - 2024-08-22 14:32:23 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:32:23 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:32:23 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:32:23 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:32:23 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:32:23 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:32:23 --> Controller Class Initialized
+INFO - 2024-08-22 14:32:23 --> Model Class Initialized
+INFO - 2024-08-22 14:32:23 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:32:23 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:32:23 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:32:23 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:32:23 --> Final output sent to browser
+DEBUG - 2024-08-22 14:32:23 --> Total execution time: 0.0829
+INFO - 2024-08-22 14:32:23 --> Config Class Initialized
+INFO - 2024-08-22 14:32:23 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:32:23 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:32:23 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:32:23 --> URI Class Initialized
+INFO - 2024-08-22 14:32:23 --> Router Class Initialized
+INFO - 2024-08-22 14:32:23 --> Output Class Initialized
+INFO - 2024-08-22 14:32:23 --> Security Class Initialized
+DEBUG - 2024-08-22 14:32:23 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:32:23 --> Input Class Initialized
+INFO - 2024-08-22 14:32:23 --> Language Class Initialized
+ERROR - 2024-08-22 14:32:23 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:32:23 --> Config Class Initialized
+INFO - 2024-08-22 14:32:23 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:32:23 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:32:23 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:32:23 --> URI Class Initialized
+INFO - 2024-08-22 14:32:23 --> Router Class Initialized
+INFO - 2024-08-22 14:32:23 --> Output Class Initialized
+INFO - 2024-08-22 14:32:23 --> Security Class Initialized
+DEBUG - 2024-08-22 14:32:23 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:32:23 --> Input Class Initialized
+INFO - 2024-08-22 14:32:23 --> Language Class Initialized
+INFO - 2024-08-22 14:32:23 --> Loader Class Initialized
+INFO - 2024-08-22 14:32:23 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:32:23 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:32:23 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:32:23 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:32:23 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:32:23 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:32:23 --> Controller Class Initialized
+INFO - 2024-08-22 14:32:23 --> Model Class Initialized
+INFO - 2024-08-22 14:32:23 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:32:23 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:32:23 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:32:27 --> Config Class Initialized
+INFO - 2024-08-22 14:32:27 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:32:27 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:32:27 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:32:27 --> URI Class Initialized
+INFO - 2024-08-22 14:32:27 --> Router Class Initialized
+INFO - 2024-08-22 14:32:27 --> Output Class Initialized
+INFO - 2024-08-22 14:32:27 --> Security Class Initialized
+DEBUG - 2024-08-22 14:32:27 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:32:27 --> Input Class Initialized
+INFO - 2024-08-22 14:32:27 --> Language Class Initialized
+ERROR - 2024-08-22 14:32:27 --> 404 Page Not Found: Moisture_content/Moisture_content
+INFO - 2024-08-22 14:32:44 --> Config Class Initialized
+INFO - 2024-08-22 14:32:44 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:32:44 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:32:44 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:32:44 --> URI Class Initialized
+INFO - 2024-08-22 14:32:44 --> Router Class Initialized
+INFO - 2024-08-22 14:32:44 --> Output Class Initialized
+INFO - 2024-08-22 14:32:44 --> Security Class Initialized
+DEBUG - 2024-08-22 14:32:44 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:32:44 --> Input Class Initialized
+INFO - 2024-08-22 14:32:44 --> Language Class Initialized
+INFO - 2024-08-22 14:32:44 --> Loader Class Initialized
+INFO - 2024-08-22 14:32:44 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:32:44 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:32:44 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:32:44 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:32:44 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:32:44 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:32:44 --> Controller Class Initialized
+INFO - 2024-08-22 14:32:44 --> Model Class Initialized
+INFO - 2024-08-22 14:32:44 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:32:44 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:32:44 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:32:44 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:32:44 --> Final output sent to browser
+DEBUG - 2024-08-22 14:32:44 --> Total execution time: 0.0773
+INFO - 2024-08-22 14:32:44 --> Config Class Initialized
+INFO - 2024-08-22 14:32:44 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:32:44 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:32:44 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:32:44 --> URI Class Initialized
+INFO - 2024-08-22 14:32:44 --> Router Class Initialized
+INFO - 2024-08-22 14:32:44 --> Output Class Initialized
+INFO - 2024-08-22 14:32:44 --> Security Class Initialized
+DEBUG - 2024-08-22 14:32:44 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:32:44 --> Input Class Initialized
+INFO - 2024-08-22 14:32:44 --> Language Class Initialized
+ERROR - 2024-08-22 14:32:44 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:32:45 --> Config Class Initialized
+INFO - 2024-08-22 14:32:45 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:32:45 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:32:45 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:32:45 --> URI Class Initialized
+INFO - 2024-08-22 14:32:45 --> Router Class Initialized
+INFO - 2024-08-22 14:32:45 --> Output Class Initialized
+INFO - 2024-08-22 14:32:45 --> Security Class Initialized
+DEBUG - 2024-08-22 14:32:45 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:32:45 --> Input Class Initialized
+INFO - 2024-08-22 14:32:45 --> Language Class Initialized
+INFO - 2024-08-22 14:32:45 --> Loader Class Initialized
+INFO - 2024-08-22 14:32:45 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:32:45 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:32:45 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:32:45 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:32:45 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:32:45 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:32:45 --> Controller Class Initialized
+INFO - 2024-08-22 14:32:45 --> Model Class Initialized
+INFO - 2024-08-22 14:32:45 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:32:45 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:32:45 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:33:01 --> Config Class Initialized
+INFO - 2024-08-22 14:33:01 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:33:01 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:33:01 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:33:01 --> URI Class Initialized
+INFO - 2024-08-22 14:33:01 --> Router Class Initialized
+INFO - 2024-08-22 14:33:01 --> Output Class Initialized
+INFO - 2024-08-22 14:33:01 --> Security Class Initialized
+DEBUG - 2024-08-22 14:33:01 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:33:01 --> Input Class Initialized
+INFO - 2024-08-22 14:33:01 --> Language Class Initialized
+INFO - 2024-08-22 14:33:01 --> Loader Class Initialized
+INFO - 2024-08-22 14:33:01 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:33:01 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:33:01 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:33:01 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:33:01 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:33:01 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:33:01 --> Controller Class Initialized
+INFO - 2024-08-22 14:33:01 --> Model Class Initialized
+INFO - 2024-08-22 14:33:01 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:33:01 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:33:01 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:33:01 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:33:01 --> Final output sent to browser
+DEBUG - 2024-08-22 14:33:01 --> Total execution time: 0.0810
+INFO - 2024-08-22 14:33:01 --> Config Class Initialized
+INFO - 2024-08-22 14:33:01 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:33:01 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:33:01 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:33:01 --> URI Class Initialized
+INFO - 2024-08-22 14:33:01 --> Router Class Initialized
+INFO - 2024-08-22 14:33:01 --> Output Class Initialized
+INFO - 2024-08-22 14:33:01 --> Security Class Initialized
+DEBUG - 2024-08-22 14:33:01 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:33:01 --> Input Class Initialized
+INFO - 2024-08-22 14:33:01 --> Language Class Initialized
+ERROR - 2024-08-22 14:33:01 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:33:02 --> Config Class Initialized
+INFO - 2024-08-22 14:33:02 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:33:02 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:33:02 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:33:02 --> URI Class Initialized
+INFO - 2024-08-22 14:33:02 --> Router Class Initialized
+INFO - 2024-08-22 14:33:02 --> Output Class Initialized
+INFO - 2024-08-22 14:33:02 --> Security Class Initialized
+DEBUG - 2024-08-22 14:33:02 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:33:02 --> Input Class Initialized
+INFO - 2024-08-22 14:33:02 --> Language Class Initialized
+INFO - 2024-08-22 14:33:02 --> Loader Class Initialized
+INFO - 2024-08-22 14:33:02 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:33:02 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:33:02 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:33:02 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:33:02 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:33:02 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:33:02 --> Controller Class Initialized
+INFO - 2024-08-22 14:33:02 --> Model Class Initialized
+INFO - 2024-08-22 14:33:02 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:33:02 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:33:02 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:33:05 --> Config Class Initialized
+INFO - 2024-08-22 14:33:05 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:33:05 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:33:05 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:33:05 --> URI Class Initialized
+INFO - 2024-08-22 14:33:05 --> Router Class Initialized
+INFO - 2024-08-22 14:33:05 --> Output Class Initialized
+INFO - 2024-08-22 14:33:05 --> Security Class Initialized
+DEBUG - 2024-08-22 14:33:05 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:33:05 --> Input Class Initialized
+INFO - 2024-08-22 14:33:05 --> Language Class Initialized
+INFO - 2024-08-22 14:33:05 --> Loader Class Initialized
+INFO - 2024-08-22 14:33:05 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:33:05 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:33:05 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:33:05 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:33:05 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:33:05 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:33:05 --> Controller Class Initialized
+INFO - 2024-08-22 14:33:05 --> Model Class Initialized
+INFO - 2024-08-22 14:33:05 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:33:05 --> Severity: Notice --> Trying to access array offset on value of type null C:\laragon\www\limsonewater\application\libraries\Datatables.php 296
+ERROR - 2024-08-22 14:33:05 --> Severity: Notice --> Trying to access array offset on value of type null C:\laragon\www\limsonewater\application\libraries\Datatables.php 296
+INFO - 2024-08-22 14:33:05 --> Final output sent to browser
+DEBUG - 2024-08-22 14:33:05 --> Total execution time: 0.0437
+INFO - 2024-08-22 14:34:10 --> Config Class Initialized
+INFO - 2024-08-22 14:34:10 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:34:10 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:34:10 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:34:10 --> URI Class Initialized
+INFO - 2024-08-22 14:34:10 --> Router Class Initialized
+INFO - 2024-08-22 14:34:10 --> Output Class Initialized
+INFO - 2024-08-22 14:34:10 --> Security Class Initialized
+DEBUG - 2024-08-22 14:34:10 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:34:10 --> Input Class Initialized
+INFO - 2024-08-22 14:34:10 --> Language Class Initialized
+INFO - 2024-08-22 14:34:10 --> Loader Class Initialized
+INFO - 2024-08-22 14:34:10 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:34:10 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:34:10 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:34:10 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:34:10 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:34:10 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:34:10 --> Controller Class Initialized
+INFO - 2024-08-22 14:34:10 --> Model Class Initialized
+INFO - 2024-08-22 14:34:10 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:34:10 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:34:10 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:34:10 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:34:10 --> Final output sent to browser
+DEBUG - 2024-08-22 14:34:10 --> Total execution time: 0.0677
+INFO - 2024-08-22 14:34:10 --> Config Class Initialized
+INFO - 2024-08-22 14:34:10 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:34:10 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:34:10 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:34:10 --> URI Class Initialized
+INFO - 2024-08-22 14:34:10 --> Router Class Initialized
+INFO - 2024-08-22 14:34:10 --> Output Class Initialized
+INFO - 2024-08-22 14:34:10 --> Security Class Initialized
+DEBUG - 2024-08-22 14:34:10 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:34:10 --> Input Class Initialized
+INFO - 2024-08-22 14:34:10 --> Language Class Initialized
+ERROR - 2024-08-22 14:34:10 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:34:10 --> Config Class Initialized
+INFO - 2024-08-22 14:34:10 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:34:10 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:34:10 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:34:10 --> URI Class Initialized
+INFO - 2024-08-22 14:34:10 --> Router Class Initialized
+INFO - 2024-08-22 14:34:10 --> Output Class Initialized
+INFO - 2024-08-22 14:34:10 --> Security Class Initialized
+DEBUG - 2024-08-22 14:34:10 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:34:10 --> Input Class Initialized
+INFO - 2024-08-22 14:34:10 --> Language Class Initialized
+INFO - 2024-08-22 14:34:10 --> Loader Class Initialized
+INFO - 2024-08-22 14:34:10 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:34:10 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:34:10 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:34:10 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:34:10 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:34:10 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:34:10 --> Controller Class Initialized
+INFO - 2024-08-22 14:34:10 --> Model Class Initialized
+INFO - 2024-08-22 14:34:10 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:34:10 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:34:10 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:34:14 --> Config Class Initialized
+INFO - 2024-08-22 14:34:14 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:34:14 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:34:14 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:34:14 --> URI Class Initialized
+INFO - 2024-08-22 14:34:14 --> Router Class Initialized
+INFO - 2024-08-22 14:34:14 --> Output Class Initialized
+INFO - 2024-08-22 14:34:14 --> Security Class Initialized
+DEBUG - 2024-08-22 14:34:14 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:34:14 --> Input Class Initialized
+INFO - 2024-08-22 14:34:14 --> Language Class Initialized
+INFO - 2024-08-22 14:34:14 --> Loader Class Initialized
+INFO - 2024-08-22 14:34:14 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:34:14 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:34:14 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:34:14 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:34:14 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:34:14 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:34:14 --> Controller Class Initialized
+INFO - 2024-08-22 14:34:14 --> Model Class Initialized
+INFO - 2024-08-22 14:34:14 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:34:29 --> Config Class Initialized
+INFO - 2024-08-22 14:34:29 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:34:29 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:34:29 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:34:29 --> URI Class Initialized
+INFO - 2024-08-22 14:34:29 --> Router Class Initialized
+INFO - 2024-08-22 14:34:29 --> Output Class Initialized
+INFO - 2024-08-22 14:34:29 --> Security Class Initialized
+DEBUG - 2024-08-22 14:34:29 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:34:29 --> Input Class Initialized
+INFO - 2024-08-22 14:34:29 --> Language Class Initialized
+INFO - 2024-08-22 14:34:29 --> Loader Class Initialized
+INFO - 2024-08-22 14:34:29 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:34:29 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:34:29 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:34:29 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:34:29 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:34:29 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:34:29 --> Controller Class Initialized
+INFO - 2024-08-22 14:34:29 --> Model Class Initialized
+INFO - 2024-08-22 14:34:29 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:34:29 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:34:29 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:34:29 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:34:29 --> Final output sent to browser
+DEBUG - 2024-08-22 14:34:29 --> Total execution time: 0.1034
+INFO - 2024-08-22 14:34:29 --> Config Class Initialized
+INFO - 2024-08-22 14:34:29 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:34:29 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:34:29 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:34:29 --> URI Class Initialized
+INFO - 2024-08-22 14:34:29 --> Router Class Initialized
+INFO - 2024-08-22 14:34:29 --> Output Class Initialized
+INFO - 2024-08-22 14:34:29 --> Security Class Initialized
+DEBUG - 2024-08-22 14:34:29 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:34:29 --> Input Class Initialized
+INFO - 2024-08-22 14:34:29 --> Language Class Initialized
+ERROR - 2024-08-22 14:34:29 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:34:29 --> Config Class Initialized
+INFO - 2024-08-22 14:34:29 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:34:29 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:34:29 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:34:29 --> URI Class Initialized
+INFO - 2024-08-22 14:34:29 --> Router Class Initialized
+INFO - 2024-08-22 14:34:29 --> Output Class Initialized
+INFO - 2024-08-22 14:34:29 --> Security Class Initialized
+DEBUG - 2024-08-22 14:34:29 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:34:29 --> Input Class Initialized
+INFO - 2024-08-22 14:34:29 --> Language Class Initialized
+INFO - 2024-08-22 14:34:29 --> Loader Class Initialized
+INFO - 2024-08-22 14:34:29 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:34:29 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:34:29 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:34:29 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:34:30 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:34:30 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:34:30 --> Controller Class Initialized
+INFO - 2024-08-22 14:34:30 --> Model Class Initialized
+INFO - 2024-08-22 14:34:30 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:34:30 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:34:30 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:34:49 --> Config Class Initialized
+INFO - 2024-08-22 14:34:49 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:34:49 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:34:49 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:34:49 --> URI Class Initialized
+INFO - 2024-08-22 14:34:49 --> Router Class Initialized
+INFO - 2024-08-22 14:34:49 --> Output Class Initialized
+INFO - 2024-08-22 14:34:49 --> Security Class Initialized
+DEBUG - 2024-08-22 14:34:49 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:34:49 --> Input Class Initialized
+INFO - 2024-08-22 14:34:49 --> Language Class Initialized
+INFO - 2024-08-22 14:34:49 --> Loader Class Initialized
+INFO - 2024-08-22 14:34:49 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:34:49 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:34:49 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:34:49 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:34:49 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:34:49 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:34:49 --> Controller Class Initialized
+INFO - 2024-08-22 14:34:49 --> Model Class Initialized
+INFO - 2024-08-22 14:34:49 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:34:49 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:34:49 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:34:49 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:34:49 --> Final output sent to browser
+DEBUG - 2024-08-22 14:34:49 --> Total execution time: 0.0817
+INFO - 2024-08-22 14:34:49 --> Config Class Initialized
+INFO - 2024-08-22 14:34:49 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:34:49 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:34:49 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:34:49 --> URI Class Initialized
+INFO - 2024-08-22 14:34:49 --> Router Class Initialized
+INFO - 2024-08-22 14:34:49 --> Output Class Initialized
+INFO - 2024-08-22 14:34:49 --> Security Class Initialized
+DEBUG - 2024-08-22 14:34:49 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:34:49 --> Input Class Initialized
+INFO - 2024-08-22 14:34:49 --> Language Class Initialized
+ERROR - 2024-08-22 14:34:49 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:34:49 --> Config Class Initialized
+INFO - 2024-08-22 14:34:49 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:34:49 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:34:49 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:34:49 --> URI Class Initialized
+INFO - 2024-08-22 14:34:49 --> Router Class Initialized
+INFO - 2024-08-22 14:34:49 --> Output Class Initialized
+INFO - 2024-08-22 14:34:49 --> Security Class Initialized
+DEBUG - 2024-08-22 14:34:49 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:34:49 --> Input Class Initialized
+INFO - 2024-08-22 14:34:49 --> Language Class Initialized
+INFO - 2024-08-22 14:34:49 --> Loader Class Initialized
+INFO - 2024-08-22 14:34:49 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:34:49 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:34:49 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:34:49 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:34:49 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:34:49 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:34:49 --> Controller Class Initialized
+INFO - 2024-08-22 14:34:49 --> Model Class Initialized
+INFO - 2024-08-22 14:34:49 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:34:49 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:34:49 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:34:52 --> Config Class Initialized
+INFO - 2024-08-22 14:34:52 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:34:52 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:34:52 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:34:52 --> URI Class Initialized
+INFO - 2024-08-22 14:34:52 --> Router Class Initialized
+INFO - 2024-08-22 14:34:52 --> Output Class Initialized
+INFO - 2024-08-22 14:34:52 --> Security Class Initialized
+DEBUG - 2024-08-22 14:34:52 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:34:52 --> Input Class Initialized
+INFO - 2024-08-22 14:34:52 --> Language Class Initialized
+INFO - 2024-08-22 14:34:52 --> Loader Class Initialized
+INFO - 2024-08-22 14:34:52 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:34:52 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:34:52 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:34:52 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:34:52 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:34:52 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:34:53 --> Controller Class Initialized
+INFO - 2024-08-22 14:34:53 --> Model Class Initialized
+INFO - 2024-08-22 14:34:53 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:34:53 --> Final output sent to browser
+DEBUG - 2024-08-22 14:34:53 --> Total execution time: 0.0588
+INFO - 2024-08-22 14:35:50 --> Config Class Initialized
+INFO - 2024-08-22 14:35:50 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:35:50 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:35:50 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:35:50 --> URI Class Initialized
+INFO - 2024-08-22 14:35:50 --> Router Class Initialized
+INFO - 2024-08-22 14:35:50 --> Output Class Initialized
+INFO - 2024-08-22 14:35:50 --> Security Class Initialized
+DEBUG - 2024-08-22 14:35:50 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:35:50 --> Input Class Initialized
+INFO - 2024-08-22 14:35:50 --> Language Class Initialized
+INFO - 2024-08-22 14:35:50 --> Loader Class Initialized
+INFO - 2024-08-22 14:35:50 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:35:50 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:35:50 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:35:50 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:35:50 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:35:50 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:35:50 --> Controller Class Initialized
+INFO - 2024-08-22 14:35:50 --> Model Class Initialized
+INFO - 2024-08-22 14:35:50 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:35:50 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:35:50 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:35:50 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:35:50 --> Final output sent to browser
+DEBUG - 2024-08-22 14:35:50 --> Total execution time: 0.1230
+INFO - 2024-08-22 14:35:50 --> Config Class Initialized
+INFO - 2024-08-22 14:35:50 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:35:50 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:35:50 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:35:50 --> URI Class Initialized
+INFO - 2024-08-22 14:35:50 --> Router Class Initialized
+INFO - 2024-08-22 14:35:50 --> Output Class Initialized
+INFO - 2024-08-22 14:35:50 --> Security Class Initialized
+DEBUG - 2024-08-22 14:35:50 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:35:50 --> Input Class Initialized
+INFO - 2024-08-22 14:35:50 --> Language Class Initialized
+ERROR - 2024-08-22 14:35:50 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:35:51 --> Config Class Initialized
+INFO - 2024-08-22 14:35:51 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:35:51 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:35:51 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:35:51 --> URI Class Initialized
+INFO - 2024-08-22 14:35:51 --> Router Class Initialized
+INFO - 2024-08-22 14:35:51 --> Output Class Initialized
+INFO - 2024-08-22 14:35:51 --> Security Class Initialized
+DEBUG - 2024-08-22 14:35:51 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:35:51 --> Input Class Initialized
+INFO - 2024-08-22 14:35:51 --> Language Class Initialized
+INFO - 2024-08-22 14:35:51 --> Loader Class Initialized
+INFO - 2024-08-22 14:35:51 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:35:51 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:35:51 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:35:51 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:35:51 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:35:51 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:35:51 --> Controller Class Initialized
+INFO - 2024-08-22 14:35:51 --> Model Class Initialized
+INFO - 2024-08-22 14:35:51 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:35:51 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:35:51 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:36:15 --> Config Class Initialized
+INFO - 2024-08-22 14:36:15 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:36:15 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:36:15 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:36:15 --> URI Class Initialized
+INFO - 2024-08-22 14:36:15 --> Router Class Initialized
+INFO - 2024-08-22 14:36:15 --> Output Class Initialized
+INFO - 2024-08-22 14:36:15 --> Security Class Initialized
+DEBUG - 2024-08-22 14:36:15 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:36:15 --> Input Class Initialized
+INFO - 2024-08-22 14:36:15 --> Language Class Initialized
+INFO - 2024-08-22 14:36:15 --> Loader Class Initialized
+INFO - 2024-08-22 14:36:15 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:36:15 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:36:15 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:36:15 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:36:15 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:36:15 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:36:15 --> Controller Class Initialized
+INFO - 2024-08-22 14:36:15 --> Model Class Initialized
+INFO - 2024-08-22 14:36:15 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:36:16 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:36:16 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:36:16 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:36:16 --> Final output sent to browser
+DEBUG - 2024-08-22 14:36:16 --> Total execution time: 0.1174
+INFO - 2024-08-22 14:36:16 --> Config Class Initialized
+INFO - 2024-08-22 14:36:16 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:36:16 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:36:16 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:36:16 --> URI Class Initialized
+INFO - 2024-08-22 14:36:16 --> Router Class Initialized
+INFO - 2024-08-22 14:36:16 --> Output Class Initialized
+INFO - 2024-08-22 14:36:16 --> Security Class Initialized
+DEBUG - 2024-08-22 14:36:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:36:16 --> Input Class Initialized
+INFO - 2024-08-22 14:36:16 --> Language Class Initialized
+ERROR - 2024-08-22 14:36:16 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:36:16 --> Config Class Initialized
+INFO - 2024-08-22 14:36:16 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:36:16 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:36:16 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:36:16 --> URI Class Initialized
+INFO - 2024-08-22 14:36:16 --> Router Class Initialized
+INFO - 2024-08-22 14:36:16 --> Output Class Initialized
+INFO - 2024-08-22 14:36:16 --> Security Class Initialized
+DEBUG - 2024-08-22 14:36:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:36:16 --> Input Class Initialized
+INFO - 2024-08-22 14:36:16 --> Language Class Initialized
+INFO - 2024-08-22 14:36:16 --> Loader Class Initialized
+INFO - 2024-08-22 14:36:16 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:36:16 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:36:16 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:36:16 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:36:16 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:36:16 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:36:16 --> Controller Class Initialized
+INFO - 2024-08-22 14:36:16 --> Model Class Initialized
+INFO - 2024-08-22 14:36:16 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:36:16 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:36:16 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:36:19 --> Config Class Initialized
+INFO - 2024-08-22 14:36:19 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:36:19 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:36:19 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:36:19 --> URI Class Initialized
+INFO - 2024-08-22 14:36:19 --> Router Class Initialized
+INFO - 2024-08-22 14:36:19 --> Output Class Initialized
+INFO - 2024-08-22 14:36:19 --> Security Class Initialized
+DEBUG - 2024-08-22 14:36:19 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:36:19 --> Input Class Initialized
+INFO - 2024-08-22 14:36:19 --> Language Class Initialized
+INFO - 2024-08-22 14:36:19 --> Loader Class Initialized
+INFO - 2024-08-22 14:36:19 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:36:19 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:36:19 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:36:19 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:36:19 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:36:19 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:36:19 --> Controller Class Initialized
+INFO - 2024-08-22 14:36:19 --> Model Class Initialized
+INFO - 2024-08-22 14:36:19 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:36:19 --> Final output sent to browser
+DEBUG - 2024-08-22 14:36:19 --> Total execution time: 0.0460
+INFO - 2024-08-22 14:37:09 --> Config Class Initialized
+INFO - 2024-08-22 14:37:09 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:37:09 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:37:09 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:37:09 --> URI Class Initialized
+INFO - 2024-08-22 14:37:09 --> Router Class Initialized
+INFO - 2024-08-22 14:37:09 --> Output Class Initialized
+INFO - 2024-08-22 14:37:09 --> Security Class Initialized
+DEBUG - 2024-08-22 14:37:09 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:37:09 --> Input Class Initialized
+INFO - 2024-08-22 14:37:09 --> Language Class Initialized
+INFO - 2024-08-22 14:37:09 --> Loader Class Initialized
+INFO - 2024-08-22 14:37:09 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:37:09 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:37:09 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:37:09 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:37:09 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:37:09 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:37:09 --> Controller Class Initialized
+INFO - 2024-08-22 14:37:09 --> Model Class Initialized
+INFO - 2024-08-22 14:37:09 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:37:09 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:37:09 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:37:09 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:37:09 --> Final output sent to browser
+DEBUG - 2024-08-22 14:37:09 --> Total execution time: 0.1035
+INFO - 2024-08-22 14:37:09 --> Config Class Initialized
+INFO - 2024-08-22 14:37:09 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:37:09 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:37:09 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:37:09 --> URI Class Initialized
+INFO - 2024-08-22 14:37:09 --> Router Class Initialized
+INFO - 2024-08-22 14:37:09 --> Output Class Initialized
+INFO - 2024-08-22 14:37:09 --> Security Class Initialized
+DEBUG - 2024-08-22 14:37:09 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:37:09 --> Input Class Initialized
+INFO - 2024-08-22 14:37:09 --> Language Class Initialized
+ERROR - 2024-08-22 14:37:09 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:37:10 --> Config Class Initialized
+INFO - 2024-08-22 14:37:10 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:37:10 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:37:10 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:37:10 --> URI Class Initialized
+INFO - 2024-08-22 14:37:10 --> Router Class Initialized
+INFO - 2024-08-22 14:37:10 --> Output Class Initialized
+INFO - 2024-08-22 14:37:10 --> Security Class Initialized
+DEBUG - 2024-08-22 14:37:10 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:37:10 --> Input Class Initialized
+INFO - 2024-08-22 14:37:10 --> Language Class Initialized
+INFO - 2024-08-22 14:37:10 --> Loader Class Initialized
+INFO - 2024-08-22 14:37:10 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:37:10 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:37:10 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:37:10 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:37:10 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:37:10 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:37:10 --> Controller Class Initialized
+INFO - 2024-08-22 14:37:10 --> Model Class Initialized
+INFO - 2024-08-22 14:37:10 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:37:10 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:37:10 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:37:17 --> Config Class Initialized
+INFO - 2024-08-22 14:37:17 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:37:17 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:37:17 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:37:17 --> URI Class Initialized
+INFO - 2024-08-22 14:37:17 --> Router Class Initialized
+INFO - 2024-08-22 14:37:17 --> Output Class Initialized
+INFO - 2024-08-22 14:37:17 --> Security Class Initialized
+DEBUG - 2024-08-22 14:37:17 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:37:17 --> Input Class Initialized
+INFO - 2024-08-22 14:37:17 --> Language Class Initialized
+INFO - 2024-08-22 14:37:17 --> Loader Class Initialized
+INFO - 2024-08-22 14:37:17 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:37:17 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:37:17 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:37:17 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:37:17 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:37:17 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:37:17 --> Controller Class Initialized
+INFO - 2024-08-22 14:37:17 --> Model Class Initialized
+INFO - 2024-08-22 14:37:17 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:37:17 --> Final output sent to browser
+DEBUG - 2024-08-22 14:37:17 --> Total execution time: 0.0536
+INFO - 2024-08-22 14:37:25 --> Config Class Initialized
+INFO - 2024-08-22 14:37:25 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:37:25 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:37:25 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:37:25 --> URI Class Initialized
+INFO - 2024-08-22 14:37:25 --> Router Class Initialized
+INFO - 2024-08-22 14:37:25 --> Output Class Initialized
+INFO - 2024-08-22 14:37:25 --> Security Class Initialized
+DEBUG - 2024-08-22 14:37:25 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:37:25 --> Input Class Initialized
+INFO - 2024-08-22 14:37:25 --> Language Class Initialized
+INFO - 2024-08-22 14:37:25 --> Loader Class Initialized
+INFO - 2024-08-22 14:37:25 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:37:25 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:37:25 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:37:25 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:37:25 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:37:25 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:37:25 --> Controller Class Initialized
+INFO - 2024-08-22 14:37:25 --> Model Class Initialized
+INFO - 2024-08-22 14:37:25 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:37:25 --> Final output sent to browser
+DEBUG - 2024-08-22 14:37:25 --> Total execution time: 0.0432
+INFO - 2024-08-22 14:39:24 --> Config Class Initialized
+INFO - 2024-08-22 14:39:24 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:39:24 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:39:24 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:39:24 --> URI Class Initialized
+INFO - 2024-08-22 14:39:24 --> Router Class Initialized
+INFO - 2024-08-22 14:39:24 --> Output Class Initialized
+INFO - 2024-08-22 14:39:24 --> Security Class Initialized
+DEBUG - 2024-08-22 14:39:24 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:39:24 --> Input Class Initialized
+INFO - 2024-08-22 14:39:24 --> Language Class Initialized
+INFO - 2024-08-22 14:39:24 --> Loader Class Initialized
+INFO - 2024-08-22 14:39:24 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:39:24 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:39:24 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:39:24 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:39:24 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:39:24 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:39:24 --> Controller Class Initialized
+INFO - 2024-08-22 14:39:24 --> Model Class Initialized
+INFO - 2024-08-22 14:39:24 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:39:24 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:39:24 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:39:24 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:39:24 --> Final output sent to browser
+DEBUG - 2024-08-22 14:39:24 --> Total execution time: 0.0379
+INFO - 2024-08-22 14:39:24 --> Config Class Initialized
+INFO - 2024-08-22 14:39:24 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:39:24 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:39:24 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:39:24 --> URI Class Initialized
+INFO - 2024-08-22 14:39:24 --> Router Class Initialized
+INFO - 2024-08-22 14:39:24 --> Output Class Initialized
+INFO - 2024-08-22 14:39:24 --> Security Class Initialized
+DEBUG - 2024-08-22 14:39:24 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:39:24 --> Input Class Initialized
+INFO - 2024-08-22 14:39:24 --> Language Class Initialized
+ERROR - 2024-08-22 14:39:24 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:39:25 --> Config Class Initialized
+INFO - 2024-08-22 14:39:25 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:39:25 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:39:25 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:39:25 --> URI Class Initialized
+INFO - 2024-08-22 14:39:25 --> Router Class Initialized
+INFO - 2024-08-22 14:39:25 --> Output Class Initialized
+INFO - 2024-08-22 14:39:25 --> Security Class Initialized
+DEBUG - 2024-08-22 14:39:25 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:39:25 --> Input Class Initialized
+INFO - 2024-08-22 14:39:25 --> Language Class Initialized
+INFO - 2024-08-22 14:39:25 --> Loader Class Initialized
+INFO - 2024-08-22 14:39:25 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:39:25 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:39:25 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:39:25 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:39:25 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:39:25 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:39:25 --> Controller Class Initialized
+INFO - 2024-08-22 14:39:25 --> Model Class Initialized
+INFO - 2024-08-22 14:39:25 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:39:25 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:39:25 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:39:28 --> Config Class Initialized
+INFO - 2024-08-22 14:39:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:39:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:39:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:39:28 --> URI Class Initialized
+INFO - 2024-08-22 14:39:28 --> Router Class Initialized
+INFO - 2024-08-22 14:39:28 --> Output Class Initialized
+INFO - 2024-08-22 14:39:28 --> Security Class Initialized
+DEBUG - 2024-08-22 14:39:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:39:28 --> Input Class Initialized
+INFO - 2024-08-22 14:39:28 --> Language Class Initialized
+INFO - 2024-08-22 14:39:28 --> Loader Class Initialized
+INFO - 2024-08-22 14:39:28 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:39:28 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:39:28 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:39:28 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:39:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:39:28 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:39:28 --> Controller Class Initialized
+INFO - 2024-08-22 14:39:28 --> Model Class Initialized
+INFO - 2024-08-22 14:39:28 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:39:28 --> Final output sent to browser
+DEBUG - 2024-08-22 14:39:28 --> Total execution time: 0.0371
+INFO - 2024-08-22 14:39:40 --> Config Class Initialized
+INFO - 2024-08-22 14:39:40 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:39:40 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:39:40 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:39:40 --> URI Class Initialized
+INFO - 2024-08-22 14:39:40 --> Router Class Initialized
+INFO - 2024-08-22 14:39:40 --> Output Class Initialized
+INFO - 2024-08-22 14:39:40 --> Security Class Initialized
+DEBUG - 2024-08-22 14:39:40 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:39:40 --> Input Class Initialized
+INFO - 2024-08-22 14:39:40 --> Language Class Initialized
+INFO - 2024-08-22 14:39:40 --> Loader Class Initialized
+INFO - 2024-08-22 14:39:40 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:39:40 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:39:40 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:39:40 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:39:40 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:39:40 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:39:40 --> Controller Class Initialized
+INFO - 2024-08-22 14:39:40 --> Model Class Initialized
+INFO - 2024-08-22 14:39:40 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:39:40 --> Final output sent to browser
+DEBUG - 2024-08-22 14:39:40 --> Total execution time: 0.0922
+INFO - 2024-08-22 14:40:23 --> Config Class Initialized
+INFO - 2024-08-22 14:40:23 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:40:23 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:40:23 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:40:23 --> URI Class Initialized
+INFO - 2024-08-22 14:40:23 --> Router Class Initialized
+INFO - 2024-08-22 14:40:23 --> Output Class Initialized
+INFO - 2024-08-22 14:40:23 --> Security Class Initialized
+DEBUG - 2024-08-22 14:40:23 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:40:23 --> Input Class Initialized
+INFO - 2024-08-22 14:40:23 --> Language Class Initialized
+INFO - 2024-08-22 14:40:23 --> Loader Class Initialized
+INFO - 2024-08-22 14:40:23 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:40:23 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:40:23 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:40:23 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:40:23 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:40:23 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:40:23 --> Controller Class Initialized
+INFO - 2024-08-22 14:40:23 --> Model Class Initialized
+INFO - 2024-08-22 14:40:23 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:40:23 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:40:23 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:40:23 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:40:23 --> Final output sent to browser
+DEBUG - 2024-08-22 14:40:23 --> Total execution time: 0.0362
+INFO - 2024-08-22 14:40:23 --> Config Class Initialized
+INFO - 2024-08-22 14:40:23 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:40:23 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:40:23 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:40:23 --> URI Class Initialized
+INFO - 2024-08-22 14:40:24 --> Router Class Initialized
+INFO - 2024-08-22 14:40:24 --> Output Class Initialized
+INFO - 2024-08-22 14:40:24 --> Security Class Initialized
+DEBUG - 2024-08-22 14:40:24 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:40:24 --> Input Class Initialized
+INFO - 2024-08-22 14:40:24 --> Language Class Initialized
+ERROR - 2024-08-22 14:40:24 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:40:24 --> Config Class Initialized
+INFO - 2024-08-22 14:40:24 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:40:24 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:40:24 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:40:24 --> URI Class Initialized
+INFO - 2024-08-22 14:40:24 --> Router Class Initialized
+INFO - 2024-08-22 14:40:24 --> Output Class Initialized
+INFO - 2024-08-22 14:40:24 --> Security Class Initialized
+DEBUG - 2024-08-22 14:40:24 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:40:24 --> Input Class Initialized
+INFO - 2024-08-22 14:40:24 --> Language Class Initialized
+INFO - 2024-08-22 14:40:24 --> Loader Class Initialized
+INFO - 2024-08-22 14:40:24 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:40:24 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:40:24 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:40:24 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:40:24 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:40:24 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:40:24 --> Controller Class Initialized
+INFO - 2024-08-22 14:40:24 --> Model Class Initialized
+INFO - 2024-08-22 14:40:24 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:40:24 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:40:24 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:40:28 --> Config Class Initialized
+INFO - 2024-08-22 14:40:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:40:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:40:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:40:28 --> URI Class Initialized
+INFO - 2024-08-22 14:40:28 --> Router Class Initialized
+INFO - 2024-08-22 14:40:28 --> Output Class Initialized
+INFO - 2024-08-22 14:40:28 --> Security Class Initialized
+DEBUG - 2024-08-22 14:40:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:40:28 --> Input Class Initialized
+INFO - 2024-08-22 14:40:28 --> Language Class Initialized
+INFO - 2024-08-22 14:40:28 --> Loader Class Initialized
+INFO - 2024-08-22 14:40:28 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:40:28 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:40:28 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:40:28 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:40:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:40:28 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:40:28 --> Controller Class Initialized
+INFO - 2024-08-22 14:40:28 --> Model Class Initialized
+INFO - 2024-08-22 14:40:28 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:40:28 --> Final output sent to browser
+DEBUG - 2024-08-22 14:40:28 --> Total execution time: 0.0391
+INFO - 2024-08-22 14:41:32 --> Config Class Initialized
+INFO - 2024-08-22 14:41:32 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:41:32 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:41:32 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:41:32 --> URI Class Initialized
+INFO - 2024-08-22 14:41:32 --> Router Class Initialized
+INFO - 2024-08-22 14:41:32 --> Output Class Initialized
+INFO - 2024-08-22 14:41:32 --> Security Class Initialized
+DEBUG - 2024-08-22 14:41:32 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:41:32 --> Input Class Initialized
+INFO - 2024-08-22 14:41:32 --> Language Class Initialized
+INFO - 2024-08-22 14:41:32 --> Loader Class Initialized
+INFO - 2024-08-22 14:41:32 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:41:32 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:41:32 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:41:32 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:41:32 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:41:32 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:41:32 --> Controller Class Initialized
+INFO - 2024-08-22 14:41:32 --> Model Class Initialized
+INFO - 2024-08-22 14:41:32 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:41:32 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:41:32 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:41:32 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:41:32 --> Final output sent to browser
+DEBUG - 2024-08-22 14:41:32 --> Total execution time: 0.0939
+INFO - 2024-08-22 14:41:32 --> Config Class Initialized
+INFO - 2024-08-22 14:41:32 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:41:32 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:41:32 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:41:32 --> URI Class Initialized
+INFO - 2024-08-22 14:41:32 --> Router Class Initialized
+INFO - 2024-08-22 14:41:32 --> Output Class Initialized
+INFO - 2024-08-22 14:41:32 --> Security Class Initialized
+DEBUG - 2024-08-22 14:41:32 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:41:32 --> Input Class Initialized
+INFO - 2024-08-22 14:41:32 --> Language Class Initialized
+ERROR - 2024-08-22 14:41:32 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:41:32 --> Config Class Initialized
+INFO - 2024-08-22 14:41:32 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:41:32 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:41:32 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:41:32 --> URI Class Initialized
+INFO - 2024-08-22 14:41:32 --> Router Class Initialized
+INFO - 2024-08-22 14:41:32 --> Output Class Initialized
+INFO - 2024-08-22 14:41:32 --> Security Class Initialized
+DEBUG - 2024-08-22 14:41:32 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:41:32 --> Input Class Initialized
+INFO - 2024-08-22 14:41:32 --> Language Class Initialized
+INFO - 2024-08-22 14:41:32 --> Loader Class Initialized
+INFO - 2024-08-22 14:41:32 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:41:32 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:41:32 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:41:32 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:41:32 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:41:32 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:41:32 --> Controller Class Initialized
+INFO - 2024-08-22 14:41:32 --> Model Class Initialized
+INFO - 2024-08-22 14:41:32 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:41:32 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:41:32 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:41:37 --> Config Class Initialized
+INFO - 2024-08-22 14:41:37 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:41:37 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:41:37 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:41:37 --> URI Class Initialized
+INFO - 2024-08-22 14:41:37 --> Router Class Initialized
+INFO - 2024-08-22 14:41:37 --> Output Class Initialized
+INFO - 2024-08-22 14:41:37 --> Security Class Initialized
+DEBUG - 2024-08-22 14:41:37 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:41:37 --> Input Class Initialized
+INFO - 2024-08-22 14:41:37 --> Language Class Initialized
+INFO - 2024-08-22 14:41:37 --> Loader Class Initialized
+INFO - 2024-08-22 14:41:37 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:41:37 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:41:37 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:41:37 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:41:37 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:41:37 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:41:37 --> Controller Class Initialized
+INFO - 2024-08-22 14:41:37 --> Model Class Initialized
+INFO - 2024-08-22 14:41:37 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:41:37 --> Final output sent to browser
+DEBUG - 2024-08-22 14:41:37 --> Total execution time: 0.0897
+INFO - 2024-08-22 14:44:22 --> Config Class Initialized
+INFO - 2024-08-22 14:44:22 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:44:22 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:44:22 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:44:22 --> URI Class Initialized
+INFO - 2024-08-22 14:44:22 --> Router Class Initialized
+INFO - 2024-08-22 14:44:22 --> Output Class Initialized
+INFO - 2024-08-22 14:44:22 --> Security Class Initialized
+DEBUG - 2024-08-22 14:44:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:44:22 --> Input Class Initialized
+INFO - 2024-08-22 14:44:22 --> Language Class Initialized
+INFO - 2024-08-22 14:44:22 --> Loader Class Initialized
+INFO - 2024-08-22 14:44:22 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:44:22 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:44:22 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:44:22 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:44:22 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:44:22 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:44:22 --> Controller Class Initialized
+INFO - 2024-08-22 14:44:22 --> Model Class Initialized
+INFO - 2024-08-22 14:44:22 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:44:22 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:44:22 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:44:22 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:44:22 --> Final output sent to browser
+DEBUG - 2024-08-22 14:44:22 --> Total execution time: 0.1368
+INFO - 2024-08-22 14:44:22 --> Config Class Initialized
+INFO - 2024-08-22 14:44:22 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:44:22 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:44:22 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:44:22 --> URI Class Initialized
+INFO - 2024-08-22 14:44:22 --> Router Class Initialized
+INFO - 2024-08-22 14:44:22 --> Output Class Initialized
+INFO - 2024-08-22 14:44:22 --> Security Class Initialized
+DEBUG - 2024-08-22 14:44:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:44:22 --> Input Class Initialized
+INFO - 2024-08-22 14:44:22 --> Language Class Initialized
+ERROR - 2024-08-22 14:44:22 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:44:23 --> Config Class Initialized
+INFO - 2024-08-22 14:44:23 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:44:23 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:44:23 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:44:23 --> URI Class Initialized
+INFO - 2024-08-22 14:44:23 --> Router Class Initialized
+INFO - 2024-08-22 14:44:23 --> Output Class Initialized
+INFO - 2024-08-22 14:44:23 --> Security Class Initialized
+DEBUG - 2024-08-22 14:44:23 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:44:23 --> Input Class Initialized
+INFO - 2024-08-22 14:44:23 --> Language Class Initialized
+INFO - 2024-08-22 14:44:23 --> Loader Class Initialized
+INFO - 2024-08-22 14:44:23 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:44:23 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:44:23 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:44:23 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:44:23 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:44:23 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:44:23 --> Controller Class Initialized
+INFO - 2024-08-22 14:44:23 --> Model Class Initialized
+INFO - 2024-08-22 14:44:23 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:44:23 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:44:23 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:44:27 --> Config Class Initialized
+INFO - 2024-08-22 14:44:27 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:44:27 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:44:27 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:44:27 --> URI Class Initialized
+INFO - 2024-08-22 14:44:27 --> Router Class Initialized
+INFO - 2024-08-22 14:44:27 --> Output Class Initialized
+INFO - 2024-08-22 14:44:27 --> Security Class Initialized
+DEBUG - 2024-08-22 14:44:27 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:44:27 --> Input Class Initialized
+INFO - 2024-08-22 14:44:27 --> Language Class Initialized
+INFO - 2024-08-22 14:44:27 --> Loader Class Initialized
+INFO - 2024-08-22 14:44:27 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:44:27 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:44:27 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:44:27 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:44:27 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:44:27 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:44:27 --> Controller Class Initialized
+INFO - 2024-08-22 14:44:27 --> Model Class Initialized
+INFO - 2024-08-22 14:44:27 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:46:03 --> Config Class Initialized
+INFO - 2024-08-22 14:46:03 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:46:03 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:46:03 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:46:03 --> URI Class Initialized
+INFO - 2024-08-22 14:46:03 --> Router Class Initialized
+INFO - 2024-08-22 14:46:03 --> Output Class Initialized
+INFO - 2024-08-22 14:46:03 --> Security Class Initialized
+DEBUG - 2024-08-22 14:46:03 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:46:03 --> Input Class Initialized
+INFO - 2024-08-22 14:46:03 --> Language Class Initialized
+INFO - 2024-08-22 14:46:03 --> Loader Class Initialized
+INFO - 2024-08-22 14:46:03 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:46:03 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:46:03 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:46:03 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:46:03 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:46:03 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:46:03 --> Controller Class Initialized
+INFO - 2024-08-22 14:46:03 --> Model Class Initialized
+INFO - 2024-08-22 14:46:03 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:46:03 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:46:03 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:46:03 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:46:03 --> Final output sent to browser
+DEBUG - 2024-08-22 14:46:03 --> Total execution time: 0.0321
+INFO - 2024-08-22 14:46:03 --> Config Class Initialized
+INFO - 2024-08-22 14:46:03 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:46:03 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:46:03 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:46:03 --> URI Class Initialized
+INFO - 2024-08-22 14:46:03 --> Router Class Initialized
+INFO - 2024-08-22 14:46:03 --> Output Class Initialized
+INFO - 2024-08-22 14:46:03 --> Security Class Initialized
+DEBUG - 2024-08-22 14:46:03 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:46:03 --> Input Class Initialized
+INFO - 2024-08-22 14:46:03 --> Language Class Initialized
+ERROR - 2024-08-22 14:46:04 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:46:04 --> Config Class Initialized
+INFO - 2024-08-22 14:46:04 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:46:04 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:46:04 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:46:04 --> URI Class Initialized
+INFO - 2024-08-22 14:46:04 --> Router Class Initialized
+INFO - 2024-08-22 14:46:04 --> Output Class Initialized
+INFO - 2024-08-22 14:46:04 --> Security Class Initialized
+DEBUG - 2024-08-22 14:46:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:46:04 --> Input Class Initialized
+INFO - 2024-08-22 14:46:04 --> Language Class Initialized
+INFO - 2024-08-22 14:46:04 --> Loader Class Initialized
+INFO - 2024-08-22 14:46:04 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:46:04 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:46:04 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:46:04 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:46:04 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:46:04 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:46:04 --> Controller Class Initialized
+INFO - 2024-08-22 14:46:04 --> Model Class Initialized
+INFO - 2024-08-22 14:46:04 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:46:04 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:46:04 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:46:14 --> Config Class Initialized
+INFO - 2024-08-22 14:46:14 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:46:14 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:46:14 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:46:14 --> URI Class Initialized
+INFO - 2024-08-22 14:46:14 --> Router Class Initialized
+INFO - 2024-08-22 14:46:14 --> Output Class Initialized
+INFO - 2024-08-22 14:46:14 --> Security Class Initialized
+DEBUG - 2024-08-22 14:46:14 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:46:14 --> Input Class Initialized
+INFO - 2024-08-22 14:46:14 --> Language Class Initialized
+INFO - 2024-08-22 14:46:14 --> Loader Class Initialized
+INFO - 2024-08-22 14:46:14 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:46:14 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:46:14 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:46:14 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:46:14 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:46:14 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:46:14 --> Controller Class Initialized
+INFO - 2024-08-22 14:46:14 --> Model Class Initialized
+INFO - 2024-08-22 14:46:14 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:47:59 --> Config Class Initialized
+INFO - 2024-08-22 14:47:59 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:47:59 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:47:59 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:47:59 --> URI Class Initialized
+INFO - 2024-08-22 14:47:59 --> Router Class Initialized
+INFO - 2024-08-22 14:47:59 --> Output Class Initialized
+INFO - 2024-08-22 14:47:59 --> Security Class Initialized
+DEBUG - 2024-08-22 14:47:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:47:59 --> Input Class Initialized
+INFO - 2024-08-22 14:47:59 --> Language Class Initialized
+INFO - 2024-08-22 14:47:59 --> Loader Class Initialized
+INFO - 2024-08-22 14:47:59 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:47:59 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:47:59 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:47:59 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:47:59 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:47:59 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:47:59 --> Controller Class Initialized
+INFO - 2024-08-22 14:47:59 --> Model Class Initialized
+INFO - 2024-08-22 14:47:59 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:47:59 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:47:59 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:47:59 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:47:59 --> Final output sent to browser
+DEBUG - 2024-08-22 14:47:59 --> Total execution time: 0.1126
+INFO - 2024-08-22 14:47:59 --> Config Class Initialized
+INFO - 2024-08-22 14:47:59 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:47:59 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:47:59 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:47:59 --> URI Class Initialized
+INFO - 2024-08-22 14:47:59 --> Router Class Initialized
+INFO - 2024-08-22 14:47:59 --> Output Class Initialized
+INFO - 2024-08-22 14:47:59 --> Security Class Initialized
+DEBUG - 2024-08-22 14:47:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:47:59 --> Input Class Initialized
+INFO - 2024-08-22 14:47:59 --> Language Class Initialized
+ERROR - 2024-08-22 14:47:59 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:47:59 --> Config Class Initialized
+INFO - 2024-08-22 14:47:59 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:47:59 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:47:59 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:47:59 --> URI Class Initialized
+INFO - 2024-08-22 14:47:59 --> Router Class Initialized
+INFO - 2024-08-22 14:47:59 --> Output Class Initialized
+INFO - 2024-08-22 14:47:59 --> Security Class Initialized
+DEBUG - 2024-08-22 14:47:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:47:59 --> Input Class Initialized
+INFO - 2024-08-22 14:47:59 --> Language Class Initialized
+INFO - 2024-08-22 14:47:59 --> Loader Class Initialized
+INFO - 2024-08-22 14:47:59 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:47:59 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:47:59 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:47:59 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:47:59 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:47:59 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:47:59 --> Controller Class Initialized
+INFO - 2024-08-22 14:47:59 --> Model Class Initialized
+INFO - 2024-08-22 14:47:59 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:47:59 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:47:59 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:48:05 --> Config Class Initialized
+INFO - 2024-08-22 14:48:05 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:48:05 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:48:05 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:48:05 --> URI Class Initialized
+INFO - 2024-08-22 14:48:05 --> Router Class Initialized
+INFO - 2024-08-22 14:48:05 --> Output Class Initialized
+INFO - 2024-08-22 14:48:05 --> Security Class Initialized
+DEBUG - 2024-08-22 14:48:05 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:48:05 --> Input Class Initialized
+INFO - 2024-08-22 14:48:05 --> Language Class Initialized
+INFO - 2024-08-22 14:48:05 --> Loader Class Initialized
+INFO - 2024-08-22 14:48:05 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:48:05 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:48:05 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:48:05 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:48:05 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:48:05 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:48:05 --> Controller Class Initialized
+INFO - 2024-08-22 14:48:05 --> Model Class Initialized
+INFO - 2024-08-22 14:48:05 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:48:40 --> Config Class Initialized
+INFO - 2024-08-22 14:48:40 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:48:40 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:48:40 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:48:40 --> URI Class Initialized
+INFO - 2024-08-22 14:48:40 --> Router Class Initialized
+INFO - 2024-08-22 14:48:40 --> Output Class Initialized
+INFO - 2024-08-22 14:48:40 --> Security Class Initialized
+DEBUG - 2024-08-22 14:48:40 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:48:40 --> Input Class Initialized
+INFO - 2024-08-22 14:48:40 --> Language Class Initialized
+INFO - 2024-08-22 14:48:40 --> Loader Class Initialized
+INFO - 2024-08-22 14:48:40 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:48:40 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:48:40 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:48:40 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:48:40 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:48:40 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:48:40 --> Controller Class Initialized
+INFO - 2024-08-22 14:48:40 --> Model Class Initialized
+INFO - 2024-08-22 14:48:40 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:48:40 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:48:40 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:48:40 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:48:40 --> Final output sent to browser
+DEBUG - 2024-08-22 14:48:40 --> Total execution time: 0.0683
+INFO - 2024-08-22 14:48:40 --> Config Class Initialized
+INFO - 2024-08-22 14:48:40 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:48:40 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:48:40 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:48:40 --> URI Class Initialized
+INFO - 2024-08-22 14:48:40 --> Router Class Initialized
+INFO - 2024-08-22 14:48:40 --> Output Class Initialized
+INFO - 2024-08-22 14:48:40 --> Security Class Initialized
+DEBUG - 2024-08-22 14:48:40 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:48:40 --> Input Class Initialized
+INFO - 2024-08-22 14:48:40 --> Language Class Initialized
+ERROR - 2024-08-22 14:48:40 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:48:40 --> Config Class Initialized
+INFO - 2024-08-22 14:48:40 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:48:40 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:48:40 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:48:40 --> URI Class Initialized
+INFO - 2024-08-22 14:48:40 --> Router Class Initialized
+INFO - 2024-08-22 14:48:40 --> Output Class Initialized
+INFO - 2024-08-22 14:48:40 --> Security Class Initialized
+DEBUG - 2024-08-22 14:48:40 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:48:40 --> Input Class Initialized
+INFO - 2024-08-22 14:48:40 --> Language Class Initialized
+INFO - 2024-08-22 14:48:40 --> Loader Class Initialized
+INFO - 2024-08-22 14:48:40 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:48:40 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:48:40 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:48:40 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:48:40 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:48:40 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:48:40 --> Controller Class Initialized
+INFO - 2024-08-22 14:48:40 --> Model Class Initialized
+INFO - 2024-08-22 14:48:40 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:48:40 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:48:40 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:48:44 --> Config Class Initialized
+INFO - 2024-08-22 14:48:44 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:48:44 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:48:44 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:48:44 --> URI Class Initialized
+INFO - 2024-08-22 14:48:44 --> Router Class Initialized
+INFO - 2024-08-22 14:48:44 --> Output Class Initialized
+INFO - 2024-08-22 14:48:44 --> Security Class Initialized
+DEBUG - 2024-08-22 14:48:44 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:48:44 --> Input Class Initialized
+INFO - 2024-08-22 14:48:44 --> Language Class Initialized
+INFO - 2024-08-22 14:48:44 --> Loader Class Initialized
+INFO - 2024-08-22 14:48:44 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:48:44 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:48:44 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:48:44 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:48:44 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:48:44 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:48:44 --> Controller Class Initialized
+INFO - 2024-08-22 14:48:44 --> Model Class Initialized
+INFO - 2024-08-22 14:48:44 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:54:23 --> Config Class Initialized
+INFO - 2024-08-22 14:54:23 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:54:23 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:54:23 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:54:23 --> URI Class Initialized
+INFO - 2024-08-22 14:54:23 --> Router Class Initialized
+INFO - 2024-08-22 14:54:23 --> Output Class Initialized
+INFO - 2024-08-22 14:54:23 --> Security Class Initialized
+DEBUG - 2024-08-22 14:54:23 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:54:23 --> Input Class Initialized
+INFO - 2024-08-22 14:54:23 --> Language Class Initialized
+INFO - 2024-08-22 14:54:23 --> Loader Class Initialized
+INFO - 2024-08-22 14:54:23 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:54:23 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:54:23 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:54:23 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:54:23 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:54:23 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:54:23 --> Controller Class Initialized
+INFO - 2024-08-22 14:54:23 --> Model Class Initialized
+INFO - 2024-08-22 14:54:23 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:54:23 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:54:23 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:54:23 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:54:23 --> Final output sent to browser
+DEBUG - 2024-08-22 14:54:23 --> Total execution time: 0.0758
+INFO - 2024-08-22 14:54:23 --> Config Class Initialized
+INFO - 2024-08-22 14:54:23 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:54:23 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:54:23 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:54:23 --> URI Class Initialized
+INFO - 2024-08-22 14:54:23 --> Router Class Initialized
+INFO - 2024-08-22 14:54:23 --> Output Class Initialized
+INFO - 2024-08-22 14:54:23 --> Security Class Initialized
+DEBUG - 2024-08-22 14:54:23 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:54:23 --> Input Class Initialized
+INFO - 2024-08-22 14:54:23 --> Language Class Initialized
+ERROR - 2024-08-22 14:54:23 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:54:23 --> Config Class Initialized
+INFO - 2024-08-22 14:54:23 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:54:23 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:54:23 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:54:23 --> URI Class Initialized
+INFO - 2024-08-22 14:54:23 --> Router Class Initialized
+INFO - 2024-08-22 14:54:23 --> Output Class Initialized
+INFO - 2024-08-22 14:54:23 --> Security Class Initialized
+DEBUG - 2024-08-22 14:54:23 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:54:23 --> Input Class Initialized
+INFO - 2024-08-22 14:54:23 --> Language Class Initialized
+INFO - 2024-08-22 14:54:23 --> Loader Class Initialized
+INFO - 2024-08-22 14:54:23 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:54:23 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:54:23 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:54:23 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:54:24 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:54:24 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:54:24 --> Controller Class Initialized
+INFO - 2024-08-22 14:54:24 --> Model Class Initialized
+INFO - 2024-08-22 14:54:24 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:54:24 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:54:24 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:54:28 --> Config Class Initialized
+INFO - 2024-08-22 14:54:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:54:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:54:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:54:28 --> URI Class Initialized
+INFO - 2024-08-22 14:54:28 --> Router Class Initialized
+INFO - 2024-08-22 14:54:28 --> Output Class Initialized
+INFO - 2024-08-22 14:54:28 --> Security Class Initialized
+DEBUG - 2024-08-22 14:54:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:54:28 --> Input Class Initialized
+INFO - 2024-08-22 14:54:28 --> Language Class Initialized
+INFO - 2024-08-22 14:54:28 --> Loader Class Initialized
+INFO - 2024-08-22 14:54:28 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:54:28 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:54:28 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:54:28 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:54:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:54:28 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:54:28 --> Controller Class Initialized
+INFO - 2024-08-22 14:54:28 --> Model Class Initialized
+INFO - 2024-08-22 14:54:28 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:54:28 --> Query error: Unknown column 'barcode_foil' in 'IN/ALL/ANY subquery' - Invalid query: 
+        SELECT barcode_moisture_content FROM moisture_content
+        WHERE barcode_moisture_content = "reee"
+        AND barcode_foil NOT IN (SELECT barcode_foil FROM moisture_content)
+        AND flag = 0 
+        
+INFO - 2024-08-22 14:54:28 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:55:50 --> Config Class Initialized
+INFO - 2024-08-22 14:55:50 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:55:50 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:55:50 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:55:50 --> URI Class Initialized
+INFO - 2024-08-22 14:55:50 --> Router Class Initialized
+INFO - 2024-08-22 14:55:50 --> Output Class Initialized
+INFO - 2024-08-22 14:55:50 --> Security Class Initialized
+DEBUG - 2024-08-22 14:55:50 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:55:50 --> Input Class Initialized
+INFO - 2024-08-22 14:55:50 --> Language Class Initialized
+INFO - 2024-08-22 14:55:50 --> Loader Class Initialized
+INFO - 2024-08-22 14:55:50 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:55:50 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:55:50 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:55:50 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:55:50 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:55:50 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:55:50 --> Controller Class Initialized
+INFO - 2024-08-22 14:55:50 --> Model Class Initialized
+INFO - 2024-08-22 14:55:50 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:55:50 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:55:50 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:55:50 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:55:50 --> Final output sent to browser
+DEBUG - 2024-08-22 14:55:50 --> Total execution time: 0.0748
+INFO - 2024-08-22 14:55:50 --> Config Class Initialized
+INFO - 2024-08-22 14:55:50 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:55:50 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:55:50 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:55:50 --> URI Class Initialized
+INFO - 2024-08-22 14:55:50 --> Router Class Initialized
+INFO - 2024-08-22 14:55:50 --> Output Class Initialized
+INFO - 2024-08-22 14:55:50 --> Security Class Initialized
+DEBUG - 2024-08-22 14:55:50 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:55:50 --> Input Class Initialized
+INFO - 2024-08-22 14:55:50 --> Language Class Initialized
+ERROR - 2024-08-22 14:55:50 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:55:51 --> Config Class Initialized
+INFO - 2024-08-22 14:55:51 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:55:51 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:55:51 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:55:51 --> URI Class Initialized
+INFO - 2024-08-22 14:55:51 --> Router Class Initialized
+INFO - 2024-08-22 14:55:51 --> Output Class Initialized
+INFO - 2024-08-22 14:55:51 --> Security Class Initialized
+DEBUG - 2024-08-22 14:55:51 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:55:51 --> Input Class Initialized
+INFO - 2024-08-22 14:55:51 --> Language Class Initialized
+INFO - 2024-08-22 14:55:51 --> Loader Class Initialized
+INFO - 2024-08-22 14:55:51 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:55:51 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:55:51 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:55:51 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:55:51 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:55:51 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:55:51 --> Controller Class Initialized
+INFO - 2024-08-22 14:55:51 --> Model Class Initialized
+INFO - 2024-08-22 14:55:51 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:55:51 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:55:51 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:55:55 --> Config Class Initialized
+INFO - 2024-08-22 14:55:55 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:55:55 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:55:55 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:55:55 --> URI Class Initialized
+INFO - 2024-08-22 14:55:55 --> Router Class Initialized
+INFO - 2024-08-22 14:55:55 --> Output Class Initialized
+INFO - 2024-08-22 14:55:55 --> Security Class Initialized
+DEBUG - 2024-08-22 14:55:55 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:55:55 --> Input Class Initialized
+INFO - 2024-08-22 14:55:55 --> Language Class Initialized
+INFO - 2024-08-22 14:55:55 --> Loader Class Initialized
+INFO - 2024-08-22 14:55:55 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:55:55 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:55:55 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:55:55 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:55:55 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:55:55 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:55:55 --> Controller Class Initialized
+INFO - 2024-08-22 14:55:55 --> Model Class Initialized
+INFO - 2024-08-22 14:55:55 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:55:55 --> Query error: Unknown column 'barcode_foil' in 'IN/ALL/ANY subquery' - Invalid query: 
+        SELECT barcode_moisture_content FROM moisture_content
+        WHERE barcode_moisture_content = "reee"
+        AND barcode_foil NOT IN (SELECT barcode_foil FROM moisture_content)
+        AND flag = 0 
+        
+INFO - 2024-08-22 14:55:55 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:57:16 --> Config Class Initialized
+INFO - 2024-08-22 14:57:16 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:57:16 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:57:16 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:57:16 --> URI Class Initialized
+INFO - 2024-08-22 14:57:16 --> Router Class Initialized
+INFO - 2024-08-22 14:57:16 --> Output Class Initialized
+INFO - 2024-08-22 14:57:16 --> Security Class Initialized
+DEBUG - 2024-08-22 14:57:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:57:16 --> Input Class Initialized
+INFO - 2024-08-22 14:57:16 --> Language Class Initialized
+INFO - 2024-08-22 14:57:16 --> Loader Class Initialized
+INFO - 2024-08-22 14:57:16 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:57:16 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:57:16 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:57:16 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:57:16 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:57:16 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:57:16 --> Controller Class Initialized
+INFO - 2024-08-22 14:57:16 --> Model Class Initialized
+INFO - 2024-08-22 14:57:16 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:57:16 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:57:16 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:57:16 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:57:16 --> Final output sent to browser
+DEBUG - 2024-08-22 14:57:16 --> Total execution time: 0.0687
+INFO - 2024-08-22 14:57:16 --> Config Class Initialized
+INFO - 2024-08-22 14:57:16 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:57:16 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:57:16 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:57:16 --> URI Class Initialized
+INFO - 2024-08-22 14:57:16 --> Router Class Initialized
+INFO - 2024-08-22 14:57:16 --> Output Class Initialized
+INFO - 2024-08-22 14:57:16 --> Security Class Initialized
+DEBUG - 2024-08-22 14:57:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:57:16 --> Input Class Initialized
+INFO - 2024-08-22 14:57:16 --> Language Class Initialized
+ERROR - 2024-08-22 14:57:16 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:57:16 --> Config Class Initialized
+INFO - 2024-08-22 14:57:16 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:57:16 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:57:16 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:57:16 --> URI Class Initialized
+INFO - 2024-08-22 14:57:16 --> Router Class Initialized
+INFO - 2024-08-22 14:57:16 --> Output Class Initialized
+INFO - 2024-08-22 14:57:16 --> Security Class Initialized
+DEBUG - 2024-08-22 14:57:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:57:16 --> Input Class Initialized
+INFO - 2024-08-22 14:57:16 --> Language Class Initialized
+INFO - 2024-08-22 14:57:16 --> Loader Class Initialized
+INFO - 2024-08-22 14:57:16 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:57:16 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:57:16 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:57:16 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:57:16 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:57:16 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:57:16 --> Controller Class Initialized
+INFO - 2024-08-22 14:57:16 --> Model Class Initialized
+INFO - 2024-08-22 14:57:16 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:57:16 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:57:16 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:57:20 --> Config Class Initialized
+INFO - 2024-08-22 14:57:20 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:57:20 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:57:20 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:57:20 --> URI Class Initialized
+INFO - 2024-08-22 14:57:20 --> Router Class Initialized
+INFO - 2024-08-22 14:57:20 --> Output Class Initialized
+INFO - 2024-08-22 14:57:20 --> Security Class Initialized
+DEBUG - 2024-08-22 14:57:20 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:57:20 --> Input Class Initialized
+INFO - 2024-08-22 14:57:20 --> Language Class Initialized
+INFO - 2024-08-22 14:57:20 --> Loader Class Initialized
+INFO - 2024-08-22 14:57:20 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:57:20 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:57:20 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:57:20 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:57:20 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:57:20 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:57:20 --> Controller Class Initialized
+INFO - 2024-08-22 14:57:20 --> Model Class Initialized
+INFO - 2024-08-22 14:57:20 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:57:20 --> Final output sent to browser
+DEBUG - 2024-08-22 14:57:20 --> Total execution time: 0.0637
+INFO - 2024-08-22 14:57:42 --> Config Class Initialized
+INFO - 2024-08-22 14:57:42 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:57:42 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:57:42 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:57:42 --> URI Class Initialized
+INFO - 2024-08-22 14:57:42 --> Router Class Initialized
+INFO - 2024-08-22 14:57:42 --> Output Class Initialized
+INFO - 2024-08-22 14:57:42 --> Security Class Initialized
+DEBUG - 2024-08-22 14:57:42 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:57:42 --> Input Class Initialized
+INFO - 2024-08-22 14:57:42 --> Language Class Initialized
+INFO - 2024-08-22 14:57:42 --> Loader Class Initialized
+INFO - 2024-08-22 14:57:42 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:57:42 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:57:42 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:57:42 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:57:42 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:57:42 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:57:42 --> Controller Class Initialized
+INFO - 2024-08-22 14:57:42 --> Model Class Initialized
+INFO - 2024-08-22 14:57:42 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:57:42 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:57:42 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:57:42 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:57:42 --> Final output sent to browser
+DEBUG - 2024-08-22 14:57:42 --> Total execution time: 0.0542
+INFO - 2024-08-22 14:57:42 --> Config Class Initialized
+INFO - 2024-08-22 14:57:42 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:57:42 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:57:42 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:57:42 --> URI Class Initialized
+INFO - 2024-08-22 14:57:42 --> Router Class Initialized
+INFO - 2024-08-22 14:57:42 --> Output Class Initialized
+INFO - 2024-08-22 14:57:42 --> Security Class Initialized
+DEBUG - 2024-08-22 14:57:42 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:57:42 --> Input Class Initialized
+INFO - 2024-08-22 14:57:42 --> Language Class Initialized
+ERROR - 2024-08-22 14:57:42 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:57:42 --> Config Class Initialized
+INFO - 2024-08-22 14:57:42 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:57:42 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:57:42 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:57:42 --> URI Class Initialized
+INFO - 2024-08-22 14:57:42 --> Router Class Initialized
+INFO - 2024-08-22 14:57:42 --> Output Class Initialized
+INFO - 2024-08-22 14:57:42 --> Security Class Initialized
+DEBUG - 2024-08-22 14:57:42 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:57:42 --> Input Class Initialized
+INFO - 2024-08-22 14:57:42 --> Language Class Initialized
+INFO - 2024-08-22 14:57:42 --> Loader Class Initialized
+INFO - 2024-08-22 14:57:42 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:57:42 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:57:42 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:57:42 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:57:42 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:57:42 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:57:42 --> Controller Class Initialized
+INFO - 2024-08-22 14:57:42 --> Model Class Initialized
+INFO - 2024-08-22 14:57:42 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:57:42 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:57:42 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:57:46 --> Config Class Initialized
+INFO - 2024-08-22 14:57:46 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:57:46 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:57:46 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:57:46 --> URI Class Initialized
+INFO - 2024-08-22 14:57:46 --> Router Class Initialized
+INFO - 2024-08-22 14:57:46 --> Output Class Initialized
+INFO - 2024-08-22 14:57:46 --> Security Class Initialized
+DEBUG - 2024-08-22 14:57:46 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:57:46 --> Input Class Initialized
+INFO - 2024-08-22 14:57:46 --> Language Class Initialized
+INFO - 2024-08-22 14:57:46 --> Loader Class Initialized
+INFO - 2024-08-22 14:57:46 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:57:46 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:57:46 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:57:46 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:57:46 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:57:46 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:57:46 --> Controller Class Initialized
+INFO - 2024-08-22 14:57:46 --> Model Class Initialized
+INFO - 2024-08-22 14:57:46 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:57:46 --> Query error: Unknown column 'barcode_foil' in 'IN/ALL/ANY subquery' - Invalid query: 
+        SELECT barcode_moisture_content FROM moisture_content
+        WHERE barcode_moisture_content = "reee"
+        AND barcode_foil NOT IN (SELECT barcode_foil FROM moisture_content)
+        AND flag = 0 
+        
+INFO - 2024-08-22 14:57:46 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:58:32 --> Config Class Initialized
+INFO - 2024-08-22 14:58:32 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:58:32 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:58:32 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:58:32 --> URI Class Initialized
+INFO - 2024-08-22 14:58:32 --> Router Class Initialized
+INFO - 2024-08-22 14:58:32 --> Output Class Initialized
+INFO - 2024-08-22 14:58:32 --> Security Class Initialized
+DEBUG - 2024-08-22 14:58:32 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:58:32 --> Input Class Initialized
+INFO - 2024-08-22 14:58:32 --> Language Class Initialized
+INFO - 2024-08-22 14:58:32 --> Loader Class Initialized
+INFO - 2024-08-22 14:58:32 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:58:32 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:58:32 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:58:32 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:58:32 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:58:32 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:58:32 --> Controller Class Initialized
+INFO - 2024-08-22 14:58:32 --> Model Class Initialized
+INFO - 2024-08-22 14:58:32 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:58:33 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:58:33 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:58:33 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:58:33 --> Final output sent to browser
+DEBUG - 2024-08-22 14:58:33 --> Total execution time: 0.0831
+INFO - 2024-08-22 14:58:33 --> Config Class Initialized
+INFO - 2024-08-22 14:58:33 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:58:33 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:58:33 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:58:33 --> URI Class Initialized
+INFO - 2024-08-22 14:58:33 --> Router Class Initialized
+INFO - 2024-08-22 14:58:33 --> Output Class Initialized
+INFO - 2024-08-22 14:58:33 --> Security Class Initialized
+DEBUG - 2024-08-22 14:58:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:58:33 --> Input Class Initialized
+INFO - 2024-08-22 14:58:33 --> Language Class Initialized
+ERROR - 2024-08-22 14:58:33 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:58:33 --> Config Class Initialized
+INFO - 2024-08-22 14:58:33 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:58:33 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:58:33 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:58:33 --> URI Class Initialized
+INFO - 2024-08-22 14:58:33 --> Router Class Initialized
+INFO - 2024-08-22 14:58:33 --> Output Class Initialized
+INFO - 2024-08-22 14:58:33 --> Security Class Initialized
+DEBUG - 2024-08-22 14:58:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:58:33 --> Input Class Initialized
+INFO - 2024-08-22 14:58:33 --> Language Class Initialized
+INFO - 2024-08-22 14:58:33 --> Loader Class Initialized
+INFO - 2024-08-22 14:58:33 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:58:33 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:58:33 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:58:33 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:58:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:58:33 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:58:33 --> Controller Class Initialized
+INFO - 2024-08-22 14:58:33 --> Model Class Initialized
+INFO - 2024-08-22 14:58:33 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:58:33 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:58:33 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:58:36 --> Config Class Initialized
+INFO - 2024-08-22 14:58:36 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:58:36 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:58:36 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:58:36 --> URI Class Initialized
+INFO - 2024-08-22 14:58:36 --> Router Class Initialized
+INFO - 2024-08-22 14:58:36 --> Output Class Initialized
+INFO - 2024-08-22 14:58:36 --> Security Class Initialized
+DEBUG - 2024-08-22 14:58:36 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:58:36 --> Input Class Initialized
+INFO - 2024-08-22 14:58:36 --> Language Class Initialized
+INFO - 2024-08-22 14:58:36 --> Loader Class Initialized
+INFO - 2024-08-22 14:58:36 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:58:36 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:58:36 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:58:36 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:58:36 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:58:36 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:58:36 --> Controller Class Initialized
+INFO - 2024-08-22 14:58:36 --> Model Class Initialized
+INFO - 2024-08-22 14:58:36 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:58:36 --> Final output sent to browser
+DEBUG - 2024-08-22 14:58:36 --> Total execution time: 0.0355
+INFO - 2024-08-22 14:59:04 --> Config Class Initialized
+INFO - 2024-08-22 14:59:04 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:59:04 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:59:04 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:59:04 --> URI Class Initialized
+INFO - 2024-08-22 14:59:04 --> Router Class Initialized
+INFO - 2024-08-22 14:59:04 --> Output Class Initialized
+INFO - 2024-08-22 14:59:04 --> Security Class Initialized
+DEBUG - 2024-08-22 14:59:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:59:04 --> Input Class Initialized
+INFO - 2024-08-22 14:59:04 --> Language Class Initialized
+INFO - 2024-08-22 14:59:04 --> Loader Class Initialized
+INFO - 2024-08-22 14:59:04 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:59:04 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:59:04 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:59:04 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:59:04 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:59:04 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:59:04 --> Controller Class Initialized
+INFO - 2024-08-22 14:59:04 --> Model Class Initialized
+INFO - 2024-08-22 14:59:04 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:59:04 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:59:04 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:59:04 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:59:04 --> Final output sent to browser
+DEBUG - 2024-08-22 14:59:04 --> Total execution time: 0.0633
+INFO - 2024-08-22 14:59:04 --> Config Class Initialized
+INFO - 2024-08-22 14:59:04 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:59:04 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:59:04 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:59:04 --> URI Class Initialized
+INFO - 2024-08-22 14:59:04 --> Router Class Initialized
+INFO - 2024-08-22 14:59:04 --> Output Class Initialized
+INFO - 2024-08-22 14:59:04 --> Security Class Initialized
+DEBUG - 2024-08-22 14:59:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:59:04 --> Input Class Initialized
+INFO - 2024-08-22 14:59:04 --> Language Class Initialized
+ERROR - 2024-08-22 14:59:04 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:59:04 --> Config Class Initialized
+INFO - 2024-08-22 14:59:04 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:59:04 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:59:04 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:59:04 --> URI Class Initialized
+INFO - 2024-08-22 14:59:04 --> Router Class Initialized
+INFO - 2024-08-22 14:59:04 --> Output Class Initialized
+INFO - 2024-08-22 14:59:04 --> Security Class Initialized
+DEBUG - 2024-08-22 14:59:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:59:04 --> Input Class Initialized
+INFO - 2024-08-22 14:59:04 --> Language Class Initialized
+INFO - 2024-08-22 14:59:04 --> Loader Class Initialized
+INFO - 2024-08-22 14:59:04 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:59:04 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:59:04 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:59:04 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:59:04 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:59:04 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:59:04 --> Controller Class Initialized
+INFO - 2024-08-22 14:59:05 --> Model Class Initialized
+INFO - 2024-08-22 14:59:05 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:59:05 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:59:05 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:59:08 --> Config Class Initialized
+INFO - 2024-08-22 14:59:08 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:59:08 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:59:08 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:59:08 --> URI Class Initialized
+INFO - 2024-08-22 14:59:08 --> Router Class Initialized
+INFO - 2024-08-22 14:59:08 --> Output Class Initialized
+INFO - 2024-08-22 14:59:08 --> Security Class Initialized
+DEBUG - 2024-08-22 14:59:08 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:59:08 --> Input Class Initialized
+INFO - 2024-08-22 14:59:08 --> Language Class Initialized
+INFO - 2024-08-22 14:59:08 --> Loader Class Initialized
+INFO - 2024-08-22 14:59:08 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:59:08 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:59:08 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:59:08 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:59:08 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:59:08 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:59:08 --> Controller Class Initialized
+INFO - 2024-08-22 14:59:08 --> Model Class Initialized
+INFO - 2024-08-22 14:59:08 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:59:08 --> Query error: Unknown column 'barcode_foil' in 'IN/ALL/ANY subquery' - Invalid query: 
+        SELECT barcode_moisture_content FROM moisture_content
+        WHERE barcode_moisture_content = "reeen"
+        AND barcode_foil NOT IN (SELECT barcode_foil FROM moisture_content)
+        AND flag = 0 
+        
+INFO - 2024-08-22 14:59:08 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 14:59:35 --> Config Class Initialized
+INFO - 2024-08-22 14:59:35 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:59:35 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:59:35 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:59:35 --> URI Class Initialized
+INFO - 2024-08-22 14:59:35 --> Router Class Initialized
+INFO - 2024-08-22 14:59:35 --> Output Class Initialized
+INFO - 2024-08-22 14:59:35 --> Security Class Initialized
+DEBUG - 2024-08-22 14:59:35 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:59:35 --> Input Class Initialized
+INFO - 2024-08-22 14:59:35 --> Language Class Initialized
+INFO - 2024-08-22 14:59:35 --> Loader Class Initialized
+INFO - 2024-08-22 14:59:35 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:59:35 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:59:35 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:59:35 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:59:35 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:59:35 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:59:35 --> Controller Class Initialized
+INFO - 2024-08-22 14:59:35 --> Model Class Initialized
+INFO - 2024-08-22 14:59:35 --> Form Validation Class Initialized
+INFO - 2024-08-22 14:59:35 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 14:59:35 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 14:59:35 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 14:59:35 --> Final output sent to browser
+DEBUG - 2024-08-22 14:59:35 --> Total execution time: 0.1071
+INFO - 2024-08-22 14:59:35 --> Config Class Initialized
+INFO - 2024-08-22 14:59:35 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:59:35 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:59:35 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:59:35 --> URI Class Initialized
+INFO - 2024-08-22 14:59:35 --> Router Class Initialized
+INFO - 2024-08-22 14:59:35 --> Output Class Initialized
+INFO - 2024-08-22 14:59:35 --> Security Class Initialized
+DEBUG - 2024-08-22 14:59:35 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:59:35 --> Input Class Initialized
+INFO - 2024-08-22 14:59:35 --> Language Class Initialized
+ERROR - 2024-08-22 14:59:35 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 14:59:36 --> Config Class Initialized
+INFO - 2024-08-22 14:59:36 --> Hooks Class Initialized
+DEBUG - 2024-08-22 14:59:36 --> UTF-8 Support Enabled
+INFO - 2024-08-22 14:59:36 --> Utf8 Class Initialized
+INFO - 2024-08-22 14:59:36 --> URI Class Initialized
+INFO - 2024-08-22 14:59:36 --> Router Class Initialized
+INFO - 2024-08-22 14:59:36 --> Output Class Initialized
+INFO - 2024-08-22 14:59:36 --> Security Class Initialized
+DEBUG - 2024-08-22 14:59:36 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 14:59:36 --> Input Class Initialized
+INFO - 2024-08-22 14:59:36 --> Language Class Initialized
+INFO - 2024-08-22 14:59:36 --> Loader Class Initialized
+INFO - 2024-08-22 14:59:36 --> Helper loaded: url_helper
+INFO - 2024-08-22 14:59:36 --> Helper loaded: form_helper
+INFO - 2024-08-22 14:59:36 --> Helper loaded: racode_helper
+INFO - 2024-08-22 14:59:36 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 14:59:36 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 14:59:36 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 14:59:36 --> Controller Class Initialized
+INFO - 2024-08-22 14:59:36 --> Model Class Initialized
+INFO - 2024-08-22 14:59:36 --> Form Validation Class Initialized
+ERROR - 2024-08-22 14:59:36 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 14:59:36 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:01:21 --> Config Class Initialized
+INFO - 2024-08-22 15:01:21 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:01:21 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:01:21 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:01:21 --> URI Class Initialized
+INFO - 2024-08-22 15:01:21 --> Router Class Initialized
+INFO - 2024-08-22 15:01:21 --> Output Class Initialized
+INFO - 2024-08-22 15:01:21 --> Security Class Initialized
+DEBUG - 2024-08-22 15:01:21 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:01:21 --> Input Class Initialized
+INFO - 2024-08-22 15:01:21 --> Language Class Initialized
+INFO - 2024-08-22 15:01:21 --> Loader Class Initialized
+INFO - 2024-08-22 15:01:21 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:01:21 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:01:21 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:01:21 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:01:21 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:01:21 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:01:21 --> Controller Class Initialized
+INFO - 2024-08-22 15:01:21 --> Model Class Initialized
+INFO - 2024-08-22 15:01:21 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:01:21 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:01:21 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:01:21 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:01:21 --> Final output sent to browser
+DEBUG - 2024-08-22 15:01:21 --> Total execution time: 0.0835
+INFO - 2024-08-22 15:01:21 --> Config Class Initialized
+INFO - 2024-08-22 15:01:21 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:01:21 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:01:21 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:01:21 --> URI Class Initialized
+INFO - 2024-08-22 15:01:21 --> Router Class Initialized
+INFO - 2024-08-22 15:01:21 --> Output Class Initialized
+INFO - 2024-08-22 15:01:21 --> Security Class Initialized
+DEBUG - 2024-08-22 15:01:21 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:01:21 --> Input Class Initialized
+INFO - 2024-08-22 15:01:21 --> Language Class Initialized
+ERROR - 2024-08-22 15:01:21 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:01:21 --> Config Class Initialized
+INFO - 2024-08-22 15:01:21 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:01:21 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:01:21 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:01:21 --> URI Class Initialized
+INFO - 2024-08-22 15:01:21 --> Router Class Initialized
+INFO - 2024-08-22 15:01:21 --> Output Class Initialized
+INFO - 2024-08-22 15:01:21 --> Security Class Initialized
+DEBUG - 2024-08-22 15:01:21 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:01:21 --> Input Class Initialized
+INFO - 2024-08-22 15:01:21 --> Language Class Initialized
+INFO - 2024-08-22 15:01:21 --> Loader Class Initialized
+INFO - 2024-08-22 15:01:21 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:01:21 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:01:21 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:01:21 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:01:21 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:01:21 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:01:21 --> Controller Class Initialized
+INFO - 2024-08-22 15:01:21 --> Model Class Initialized
+INFO - 2024-08-22 15:01:21 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:01:21 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:01:21 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:01:25 --> Config Class Initialized
+INFO - 2024-08-22 15:01:25 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:01:25 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:01:25 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:01:25 --> URI Class Initialized
+INFO - 2024-08-22 15:01:25 --> Router Class Initialized
+INFO - 2024-08-22 15:01:25 --> Output Class Initialized
+INFO - 2024-08-22 15:01:25 --> Security Class Initialized
+DEBUG - 2024-08-22 15:01:25 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:01:25 --> Input Class Initialized
+INFO - 2024-08-22 15:01:25 --> Language Class Initialized
+INFO - 2024-08-22 15:01:25 --> Loader Class Initialized
+INFO - 2024-08-22 15:01:25 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:01:25 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:01:25 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:01:25 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:01:25 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:01:25 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:01:25 --> Controller Class Initialized
+INFO - 2024-08-22 15:01:25 --> Model Class Initialized
+INFO - 2024-08-22 15:01:25 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:01:25 --> Final output sent to browser
+DEBUG - 2024-08-22 15:01:25 --> Total execution time: 0.0514
+INFO - 2024-08-22 15:01:54 --> Config Class Initialized
+INFO - 2024-08-22 15:01:54 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:01:54 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:01:54 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:01:54 --> URI Class Initialized
+INFO - 2024-08-22 15:01:54 --> Router Class Initialized
+INFO - 2024-08-22 15:01:54 --> Output Class Initialized
+INFO - 2024-08-22 15:01:54 --> Security Class Initialized
+DEBUG - 2024-08-22 15:01:54 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:01:54 --> Input Class Initialized
+INFO - 2024-08-22 15:01:54 --> Language Class Initialized
+INFO - 2024-08-22 15:01:54 --> Loader Class Initialized
+INFO - 2024-08-22 15:01:54 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:01:54 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:01:54 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:01:54 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:01:54 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:01:54 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:01:54 --> Controller Class Initialized
+INFO - 2024-08-22 15:01:54 --> Model Class Initialized
+INFO - 2024-08-22 15:01:54 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:01:55 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:01:55 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:01:55 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:01:55 --> Final output sent to browser
+DEBUG - 2024-08-22 15:01:55 --> Total execution time: 0.0822
+INFO - 2024-08-22 15:01:55 --> Config Class Initialized
+INFO - 2024-08-22 15:01:55 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:01:55 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:01:55 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:01:55 --> URI Class Initialized
+INFO - 2024-08-22 15:01:55 --> Router Class Initialized
+INFO - 2024-08-22 15:01:55 --> Output Class Initialized
+INFO - 2024-08-22 15:01:55 --> Security Class Initialized
+DEBUG - 2024-08-22 15:01:55 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:01:55 --> Input Class Initialized
+INFO - 2024-08-22 15:01:55 --> Language Class Initialized
+ERROR - 2024-08-22 15:01:55 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:01:55 --> Config Class Initialized
+INFO - 2024-08-22 15:01:55 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:01:55 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:01:55 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:01:55 --> URI Class Initialized
+INFO - 2024-08-22 15:01:55 --> Router Class Initialized
+INFO - 2024-08-22 15:01:55 --> Output Class Initialized
+INFO - 2024-08-22 15:01:55 --> Security Class Initialized
+DEBUG - 2024-08-22 15:01:55 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:01:55 --> Input Class Initialized
+INFO - 2024-08-22 15:01:55 --> Language Class Initialized
+INFO - 2024-08-22 15:01:55 --> Loader Class Initialized
+INFO - 2024-08-22 15:01:55 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:01:55 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:01:55 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:01:55 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:01:55 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:01:55 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:01:55 --> Controller Class Initialized
+INFO - 2024-08-22 15:01:55 --> Model Class Initialized
+INFO - 2024-08-22 15:01:55 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:01:55 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:01:55 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:01:58 --> Config Class Initialized
+INFO - 2024-08-22 15:01:58 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:01:58 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:01:58 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:01:58 --> URI Class Initialized
+INFO - 2024-08-22 15:01:58 --> Router Class Initialized
+INFO - 2024-08-22 15:01:58 --> Output Class Initialized
+INFO - 2024-08-22 15:01:58 --> Security Class Initialized
+DEBUG - 2024-08-22 15:01:58 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:01:58 --> Input Class Initialized
+INFO - 2024-08-22 15:01:58 --> Language Class Initialized
+INFO - 2024-08-22 15:01:58 --> Loader Class Initialized
+INFO - 2024-08-22 15:01:58 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:01:58 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:01:58 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:01:58 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:01:58 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:01:58 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:01:58 --> Controller Class Initialized
+INFO - 2024-08-22 15:01:58 --> Model Class Initialized
+INFO - 2024-08-22 15:01:58 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:01:58 --> Final output sent to browser
+DEBUG - 2024-08-22 15:01:58 --> Total execution time: 0.0389
+INFO - 2024-08-22 15:02:27 --> Config Class Initialized
+INFO - 2024-08-22 15:02:27 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:02:27 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:02:27 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:02:27 --> URI Class Initialized
+INFO - 2024-08-22 15:02:27 --> Router Class Initialized
+INFO - 2024-08-22 15:02:27 --> Output Class Initialized
+INFO - 2024-08-22 15:02:27 --> Security Class Initialized
+DEBUG - 2024-08-22 15:02:27 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:02:27 --> Input Class Initialized
+INFO - 2024-08-22 15:02:27 --> Language Class Initialized
+INFO - 2024-08-22 15:02:27 --> Loader Class Initialized
+INFO - 2024-08-22 15:02:27 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:02:27 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:02:27 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:02:27 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:02:27 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:02:27 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:02:27 --> Controller Class Initialized
+INFO - 2024-08-22 15:02:27 --> Model Class Initialized
+INFO - 2024-08-22 15:02:27 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:02:27 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:02:27 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:02:27 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:02:27 --> Final output sent to browser
+DEBUG - 2024-08-22 15:02:27 --> Total execution time: 0.0918
+INFO - 2024-08-22 15:02:27 --> Config Class Initialized
+INFO - 2024-08-22 15:02:27 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:02:27 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:02:27 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:02:27 --> URI Class Initialized
+INFO - 2024-08-22 15:02:27 --> Router Class Initialized
+INFO - 2024-08-22 15:02:27 --> Output Class Initialized
+INFO - 2024-08-22 15:02:27 --> Security Class Initialized
+DEBUG - 2024-08-22 15:02:27 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:02:27 --> Input Class Initialized
+INFO - 2024-08-22 15:02:27 --> Language Class Initialized
+ERROR - 2024-08-22 15:02:27 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:02:28 --> Config Class Initialized
+INFO - 2024-08-22 15:02:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:02:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:02:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:02:28 --> URI Class Initialized
+INFO - 2024-08-22 15:02:28 --> Router Class Initialized
+INFO - 2024-08-22 15:02:28 --> Output Class Initialized
+INFO - 2024-08-22 15:02:28 --> Security Class Initialized
+DEBUG - 2024-08-22 15:02:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:02:28 --> Input Class Initialized
+INFO - 2024-08-22 15:02:28 --> Language Class Initialized
+INFO - 2024-08-22 15:02:28 --> Loader Class Initialized
+INFO - 2024-08-22 15:02:28 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:02:28 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:02:28 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:02:28 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:02:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:02:28 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:02:28 --> Controller Class Initialized
+INFO - 2024-08-22 15:02:28 --> Model Class Initialized
+INFO - 2024-08-22 15:02:28 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:02:28 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:02:28 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:02:32 --> Config Class Initialized
+INFO - 2024-08-22 15:02:32 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:02:32 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:02:32 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:02:59 --> Config Class Initialized
+INFO - 2024-08-22 15:02:59 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:02:59 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:02:59 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:02:59 --> URI Class Initialized
+INFO - 2024-08-22 15:02:59 --> Router Class Initialized
+INFO - 2024-08-22 15:02:59 --> Output Class Initialized
+INFO - 2024-08-22 15:02:59 --> Security Class Initialized
+DEBUG - 2024-08-22 15:02:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:02:59 --> Input Class Initialized
+INFO - 2024-08-22 15:02:59 --> Language Class Initialized
+INFO - 2024-08-22 15:02:59 --> Loader Class Initialized
+INFO - 2024-08-22 15:02:59 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:02:59 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:02:59 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:02:59 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:02:59 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:02:59 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:02:59 --> Controller Class Initialized
+INFO - 2024-08-22 15:02:59 --> Model Class Initialized
+INFO - 2024-08-22 15:02:59 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:02:59 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:02:59 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:02:59 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:02:59 --> Final output sent to browser
+DEBUG - 2024-08-22 15:02:59 --> Total execution time: 0.0940
+INFO - 2024-08-22 15:02:59 --> Config Class Initialized
+INFO - 2024-08-22 15:02:59 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:02:59 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:02:59 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:02:59 --> URI Class Initialized
+INFO - 2024-08-22 15:02:59 --> Router Class Initialized
+INFO - 2024-08-22 15:02:59 --> Output Class Initialized
+INFO - 2024-08-22 15:02:59 --> Security Class Initialized
+DEBUG - 2024-08-22 15:02:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:02:59 --> Input Class Initialized
+INFO - 2024-08-22 15:02:59 --> Language Class Initialized
+ERROR - 2024-08-22 15:02:59 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:02:59 --> Config Class Initialized
+INFO - 2024-08-22 15:02:59 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:02:59 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:02:59 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:02:59 --> URI Class Initialized
+INFO - 2024-08-22 15:02:59 --> Router Class Initialized
+INFO - 2024-08-22 15:02:59 --> Output Class Initialized
+INFO - 2024-08-22 15:02:59 --> Security Class Initialized
+DEBUG - 2024-08-22 15:02:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:02:59 --> Input Class Initialized
+INFO - 2024-08-22 15:02:59 --> Language Class Initialized
+INFO - 2024-08-22 15:02:59 --> Loader Class Initialized
+INFO - 2024-08-22 15:02:59 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:02:59 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:02:59 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:02:59 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:02:59 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:02:59 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:02:59 --> Controller Class Initialized
+INFO - 2024-08-22 15:02:59 --> Model Class Initialized
+INFO - 2024-08-22 15:02:59 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:02:59 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:02:59 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:03:26 --> Config Class Initialized
+INFO - 2024-08-22 15:03:26 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:03:26 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:03:26 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:03:26 --> URI Class Initialized
+INFO - 2024-08-22 15:03:26 --> Router Class Initialized
+INFO - 2024-08-22 15:03:26 --> Output Class Initialized
+INFO - 2024-08-22 15:03:26 --> Security Class Initialized
+DEBUG - 2024-08-22 15:03:26 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:03:26 --> Input Class Initialized
+INFO - 2024-08-22 15:03:26 --> Language Class Initialized
+INFO - 2024-08-22 15:03:26 --> Loader Class Initialized
+INFO - 2024-08-22 15:03:26 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:03:26 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:03:26 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:03:26 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:03:26 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:03:26 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:03:26 --> Controller Class Initialized
+INFO - 2024-08-22 15:03:26 --> Model Class Initialized
+INFO - 2024-08-22 15:03:26 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:03:26 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:03:26 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:03:26 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:03:26 --> Final output sent to browser
+DEBUG - 2024-08-22 15:03:26 --> Total execution time: 0.0811
+INFO - 2024-08-22 15:03:26 --> Config Class Initialized
+INFO - 2024-08-22 15:03:26 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:03:26 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:03:26 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:03:26 --> URI Class Initialized
+INFO - 2024-08-22 15:03:26 --> Router Class Initialized
+INFO - 2024-08-22 15:03:26 --> Output Class Initialized
+INFO - 2024-08-22 15:03:26 --> Security Class Initialized
+DEBUG - 2024-08-22 15:03:26 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:03:26 --> Input Class Initialized
+INFO - 2024-08-22 15:03:26 --> Language Class Initialized
+ERROR - 2024-08-22 15:03:26 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:03:26 --> Config Class Initialized
+INFO - 2024-08-22 15:03:26 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:03:26 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:03:26 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:03:26 --> URI Class Initialized
+INFO - 2024-08-22 15:03:26 --> Router Class Initialized
+INFO - 2024-08-22 15:03:26 --> Output Class Initialized
+INFO - 2024-08-22 15:03:26 --> Security Class Initialized
+DEBUG - 2024-08-22 15:03:26 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:03:26 --> Input Class Initialized
+INFO - 2024-08-22 15:03:26 --> Language Class Initialized
+INFO - 2024-08-22 15:03:26 --> Loader Class Initialized
+INFO - 2024-08-22 15:03:26 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:03:26 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:03:26 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:03:26 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:03:26 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:03:26 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:03:26 --> Controller Class Initialized
+INFO - 2024-08-22 15:03:26 --> Model Class Initialized
+INFO - 2024-08-22 15:03:26 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:03:26 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:03:26 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:03:30 --> Config Class Initialized
+INFO - 2024-08-22 15:03:30 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:03:30 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:03:30 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:03:30 --> URI Class Initialized
+INFO - 2024-08-22 15:03:30 --> Router Class Initialized
+INFO - 2024-08-22 15:03:30 --> Output Class Initialized
+INFO - 2024-08-22 15:03:30 --> Security Class Initialized
+DEBUG - 2024-08-22 15:03:30 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:03:30 --> Input Class Initialized
+INFO - 2024-08-22 15:03:30 --> Language Class Initialized
+INFO - 2024-08-22 15:03:30 --> Loader Class Initialized
+INFO - 2024-08-22 15:03:30 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:03:30 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:03:30 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:03:30 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:03:30 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:03:30 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:03:30 --> Controller Class Initialized
+INFO - 2024-08-22 15:03:30 --> Model Class Initialized
+INFO - 2024-08-22 15:03:30 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:03:30 --> Final output sent to browser
+DEBUG - 2024-08-22 15:03:30 --> Total execution time: 0.0353
+INFO - 2024-08-22 15:04:06 --> Config Class Initialized
+INFO - 2024-08-22 15:04:06 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:04:06 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:04:06 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:04:06 --> URI Class Initialized
+INFO - 2024-08-22 15:04:06 --> Router Class Initialized
+INFO - 2024-08-22 15:04:06 --> Output Class Initialized
+INFO - 2024-08-22 15:04:06 --> Security Class Initialized
+DEBUG - 2024-08-22 15:04:06 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:04:06 --> Input Class Initialized
+INFO - 2024-08-22 15:04:06 --> Language Class Initialized
+INFO - 2024-08-22 15:04:06 --> Loader Class Initialized
+INFO - 2024-08-22 15:04:06 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:04:06 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:04:06 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:04:06 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:04:06 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:04:06 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:04:06 --> Controller Class Initialized
+INFO - 2024-08-22 15:04:06 --> Model Class Initialized
+INFO - 2024-08-22 15:04:06 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:04:06 --> Final output sent to browser
+DEBUG - 2024-08-22 15:04:06 --> Total execution time: 0.0264
+INFO - 2024-08-22 15:04:22 --> Config Class Initialized
+INFO - 2024-08-22 15:04:22 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:04:22 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:04:22 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:04:22 --> URI Class Initialized
+INFO - 2024-08-22 15:04:22 --> Router Class Initialized
+INFO - 2024-08-22 15:04:22 --> Output Class Initialized
+INFO - 2024-08-22 15:04:22 --> Security Class Initialized
+DEBUG - 2024-08-22 15:04:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:04:22 --> Input Class Initialized
+INFO - 2024-08-22 15:04:22 --> Language Class Initialized
+INFO - 2024-08-22 15:04:22 --> Loader Class Initialized
+INFO - 2024-08-22 15:04:22 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:04:22 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:04:22 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:04:22 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:04:22 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:04:22 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:04:22 --> Controller Class Initialized
+INFO - 2024-08-22 15:04:22 --> Model Class Initialized
+INFO - 2024-08-22 15:04:22 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:04:22 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:04:22 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:04:22 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:04:22 --> Final output sent to browser
+DEBUG - 2024-08-22 15:04:22 --> Total execution time: 0.0781
+INFO - 2024-08-22 15:04:22 --> Config Class Initialized
+INFO - 2024-08-22 15:04:22 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:04:22 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:04:22 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:04:22 --> URI Class Initialized
+INFO - 2024-08-22 15:04:22 --> Router Class Initialized
+INFO - 2024-08-22 15:04:22 --> Output Class Initialized
+INFO - 2024-08-22 15:04:22 --> Security Class Initialized
+DEBUG - 2024-08-22 15:04:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:04:22 --> Input Class Initialized
+INFO - 2024-08-22 15:04:22 --> Language Class Initialized
+ERROR - 2024-08-22 15:04:22 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:04:22 --> Config Class Initialized
+INFO - 2024-08-22 15:04:22 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:04:22 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:04:22 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:04:22 --> URI Class Initialized
+INFO - 2024-08-22 15:04:22 --> Router Class Initialized
+INFO - 2024-08-22 15:04:22 --> Output Class Initialized
+INFO - 2024-08-22 15:04:22 --> Security Class Initialized
+DEBUG - 2024-08-22 15:04:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:04:22 --> Input Class Initialized
+INFO - 2024-08-22 15:04:22 --> Language Class Initialized
+INFO - 2024-08-22 15:04:22 --> Loader Class Initialized
+INFO - 2024-08-22 15:04:22 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:04:22 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:04:22 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:04:22 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:04:22 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:04:22 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:04:22 --> Controller Class Initialized
+INFO - 2024-08-22 15:04:22 --> Model Class Initialized
+INFO - 2024-08-22 15:04:22 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:04:22 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:04:22 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:04:26 --> Config Class Initialized
+INFO - 2024-08-22 15:04:26 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:04:26 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:04:26 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:04:26 --> URI Class Initialized
+INFO - 2024-08-22 15:04:26 --> Router Class Initialized
+INFO - 2024-08-22 15:04:26 --> Output Class Initialized
+INFO - 2024-08-22 15:04:26 --> Security Class Initialized
+DEBUG - 2024-08-22 15:04:26 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:04:26 --> Input Class Initialized
+INFO - 2024-08-22 15:04:26 --> Language Class Initialized
+INFO - 2024-08-22 15:04:26 --> Loader Class Initialized
+INFO - 2024-08-22 15:04:26 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:04:26 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:04:26 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:04:26 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:04:26 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:04:26 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:04:26 --> Controller Class Initialized
+INFO - 2024-08-22 15:04:26 --> Model Class Initialized
+INFO - 2024-08-22 15:04:26 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:04:26 --> Query error: Unknown column 'barcode_foil' in 'IN/ALL/ANY subquery' - Invalid query: 
+        SELECT barcode_moisture_content FROM moisture_content
+        WHERE barcode_moisture_content = "reee"
+        AND barcode_foil NOT IN (SELECT barcode_foil FROM moisture_content)
+        AND flag = 0 
+        
+INFO - 2024-08-22 15:04:26 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:04:41 --> Config Class Initialized
+INFO - 2024-08-22 15:04:41 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:04:41 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:04:41 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:04:41 --> URI Class Initialized
+INFO - 2024-08-22 15:04:41 --> Router Class Initialized
+INFO - 2024-08-22 15:04:41 --> Output Class Initialized
+INFO - 2024-08-22 15:04:41 --> Security Class Initialized
+DEBUG - 2024-08-22 15:04:41 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:04:41 --> Input Class Initialized
+INFO - 2024-08-22 15:04:41 --> Language Class Initialized
+INFO - 2024-08-22 15:04:41 --> Loader Class Initialized
+INFO - 2024-08-22 15:04:41 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:04:41 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:04:41 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:04:41 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:04:41 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:04:41 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:04:41 --> Controller Class Initialized
+INFO - 2024-08-22 15:04:41 --> Model Class Initialized
+INFO - 2024-08-22 15:04:41 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:04:41 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:04:41 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:04:41 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:04:41 --> Final output sent to browser
+DEBUG - 2024-08-22 15:04:41 --> Total execution time: 0.1012
+INFO - 2024-08-22 15:04:41 --> Config Class Initialized
+INFO - 2024-08-22 15:04:41 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:04:41 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:04:41 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:04:41 --> URI Class Initialized
+INFO - 2024-08-22 15:04:41 --> Router Class Initialized
+INFO - 2024-08-22 15:04:41 --> Output Class Initialized
+INFO - 2024-08-22 15:04:41 --> Security Class Initialized
+DEBUG - 2024-08-22 15:04:41 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:04:41 --> Input Class Initialized
+INFO - 2024-08-22 15:04:41 --> Language Class Initialized
+ERROR - 2024-08-22 15:04:41 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:04:41 --> Config Class Initialized
+INFO - 2024-08-22 15:04:41 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:04:41 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:04:41 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:04:41 --> URI Class Initialized
+INFO - 2024-08-22 15:04:41 --> Router Class Initialized
+INFO - 2024-08-22 15:04:41 --> Output Class Initialized
+INFO - 2024-08-22 15:04:41 --> Security Class Initialized
+DEBUG - 2024-08-22 15:04:41 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:04:41 --> Input Class Initialized
+INFO - 2024-08-22 15:04:41 --> Language Class Initialized
+INFO - 2024-08-22 15:04:41 --> Loader Class Initialized
+INFO - 2024-08-22 15:04:41 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:04:41 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:04:41 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:04:41 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:04:42 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:04:42 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:04:42 --> Controller Class Initialized
+INFO - 2024-08-22 15:04:42 --> Model Class Initialized
+INFO - 2024-08-22 15:04:42 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:04:42 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:04:42 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:05:04 --> Config Class Initialized
+INFO - 2024-08-22 15:05:04 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:05:04 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:05:04 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:05:04 --> URI Class Initialized
+INFO - 2024-08-22 15:05:04 --> Router Class Initialized
+INFO - 2024-08-22 15:05:04 --> Output Class Initialized
+INFO - 2024-08-22 15:05:04 --> Security Class Initialized
+DEBUG - 2024-08-22 15:05:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:05:04 --> Input Class Initialized
+INFO - 2024-08-22 15:05:04 --> Language Class Initialized
+INFO - 2024-08-22 15:05:04 --> Loader Class Initialized
+INFO - 2024-08-22 15:05:04 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:05:04 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:05:04 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:05:04 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:05:04 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:05:04 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:05:04 --> Controller Class Initialized
+INFO - 2024-08-22 15:05:04 --> Model Class Initialized
+INFO - 2024-08-22 15:05:04 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:05:04 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:05:04 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:05:04 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:05:04 --> Final output sent to browser
+DEBUG - 2024-08-22 15:05:04 --> Total execution time: 0.0672
+INFO - 2024-08-22 15:05:04 --> Config Class Initialized
+INFO - 2024-08-22 15:05:04 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:05:04 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:05:04 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:05:04 --> URI Class Initialized
+INFO - 2024-08-22 15:05:04 --> Router Class Initialized
+INFO - 2024-08-22 15:05:04 --> Output Class Initialized
+INFO - 2024-08-22 15:05:04 --> Security Class Initialized
+DEBUG - 2024-08-22 15:05:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:05:04 --> Input Class Initialized
+INFO - 2024-08-22 15:05:04 --> Language Class Initialized
+ERROR - 2024-08-22 15:05:04 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:05:05 --> Config Class Initialized
+INFO - 2024-08-22 15:05:05 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:05:05 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:05:05 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:05:05 --> URI Class Initialized
+INFO - 2024-08-22 15:05:05 --> Router Class Initialized
+INFO - 2024-08-22 15:05:05 --> Output Class Initialized
+INFO - 2024-08-22 15:05:05 --> Security Class Initialized
+DEBUG - 2024-08-22 15:05:05 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:05:05 --> Input Class Initialized
+INFO - 2024-08-22 15:05:05 --> Language Class Initialized
+INFO - 2024-08-22 15:05:05 --> Loader Class Initialized
+INFO - 2024-08-22 15:05:05 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:05:05 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:05:05 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:05:05 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:05:05 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:05:05 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:05:05 --> Controller Class Initialized
+INFO - 2024-08-22 15:05:05 --> Model Class Initialized
+INFO - 2024-08-22 15:05:05 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:05:05 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:05:05 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:06:32 --> Config Class Initialized
+INFO - 2024-08-22 15:06:32 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:06:32 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:06:32 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:06:32 --> URI Class Initialized
+INFO - 2024-08-22 15:06:32 --> Router Class Initialized
+INFO - 2024-08-22 15:06:32 --> Output Class Initialized
+INFO - 2024-08-22 15:06:32 --> Security Class Initialized
+DEBUG - 2024-08-22 15:06:32 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:06:32 --> Input Class Initialized
+INFO - 2024-08-22 15:06:32 --> Language Class Initialized
+INFO - 2024-08-22 15:06:32 --> Loader Class Initialized
+INFO - 2024-08-22 15:06:32 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:06:32 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:06:32 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:06:32 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:06:32 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:06:32 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:06:32 --> Controller Class Initialized
+INFO - 2024-08-22 15:06:32 --> Model Class Initialized
+INFO - 2024-08-22 15:06:32 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:06:32 --> Severity: Warning --> Use of undefined constant id_moisture - assumed 'id_moisture' (this will throw an Error in a future version of PHP) C:\laragon\www\limsonewater\application\views\moisture_content\index_det.php 306
+ERROR - 2024-08-22 15:06:32 --> Severity: Warning --> A non-numeric value encountered C:\laragon\www\limsonewater\application\views\moisture_content\index_det.php 306
+ERROR - 2024-08-22 15:06:32 --> Severity: Warning --> A non-numeric value encountered C:\laragon\www\limsonewater\application\views\moisture_content\index_det.php 306
+INFO - 2024-08-22 15:06:32 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:06:32 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:06:32 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:06:32 --> Final output sent to browser
+DEBUG - 2024-08-22 15:06:32 --> Total execution time: 0.0994
+INFO - 2024-08-22 15:06:32 --> Config Class Initialized
+INFO - 2024-08-22 15:06:32 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:06:32 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:06:32 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:06:32 --> URI Class Initialized
+INFO - 2024-08-22 15:06:32 --> Router Class Initialized
+INFO - 2024-08-22 15:06:32 --> Output Class Initialized
+INFO - 2024-08-22 15:06:32 --> Security Class Initialized
+DEBUG - 2024-08-22 15:06:32 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:06:32 --> Input Class Initialized
+INFO - 2024-08-22 15:06:32 --> Language Class Initialized
+ERROR - 2024-08-22 15:06:32 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:07:21 --> Config Class Initialized
+INFO - 2024-08-22 15:07:21 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:07:21 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:07:21 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:07:21 --> URI Class Initialized
+INFO - 2024-08-22 15:07:21 --> Router Class Initialized
+INFO - 2024-08-22 15:07:21 --> Output Class Initialized
+INFO - 2024-08-22 15:07:21 --> Security Class Initialized
+DEBUG - 2024-08-22 15:07:21 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:07:21 --> Input Class Initialized
+INFO - 2024-08-22 15:07:21 --> Language Class Initialized
+INFO - 2024-08-22 15:07:21 --> Loader Class Initialized
+INFO - 2024-08-22 15:07:21 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:07:21 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:07:21 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:07:21 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:07:21 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:07:21 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:07:21 --> Controller Class Initialized
+INFO - 2024-08-22 15:07:21 --> Model Class Initialized
+INFO - 2024-08-22 15:07:21 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:07:21 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:07:21 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:07:21 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:07:21 --> Final output sent to browser
+DEBUG - 2024-08-22 15:07:21 --> Total execution time: 0.0929
+INFO - 2024-08-22 15:07:21 --> Config Class Initialized
+INFO - 2024-08-22 15:07:21 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:07:21 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:07:21 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:07:21 --> URI Class Initialized
+INFO - 2024-08-22 15:07:21 --> Router Class Initialized
+INFO - 2024-08-22 15:07:21 --> Output Class Initialized
+INFO - 2024-08-22 15:07:21 --> Security Class Initialized
+DEBUG - 2024-08-22 15:07:21 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:07:21 --> Input Class Initialized
+INFO - 2024-08-22 15:07:21 --> Language Class Initialized
+ERROR - 2024-08-22 15:07:21 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:07:21 --> Config Class Initialized
+INFO - 2024-08-22 15:07:21 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:07:21 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:07:21 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:07:21 --> URI Class Initialized
+INFO - 2024-08-22 15:07:21 --> Router Class Initialized
+INFO - 2024-08-22 15:07:21 --> Output Class Initialized
+INFO - 2024-08-22 15:07:21 --> Security Class Initialized
+DEBUG - 2024-08-22 15:07:21 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:07:21 --> Input Class Initialized
+INFO - 2024-08-22 15:07:21 --> Language Class Initialized
+INFO - 2024-08-22 15:07:21 --> Loader Class Initialized
+INFO - 2024-08-22 15:07:21 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:07:21 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:07:21 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:07:21 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:07:21 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:07:21 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:07:21 --> Controller Class Initialized
+INFO - 2024-08-22 15:07:21 --> Model Class Initialized
+INFO - 2024-08-22 15:07:21 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:07:21 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:07:21 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:07:25 --> Config Class Initialized
+INFO - 2024-08-22 15:07:25 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:07:25 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:07:25 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:07:25 --> URI Class Initialized
+INFO - 2024-08-22 15:07:25 --> Router Class Initialized
+INFO - 2024-08-22 15:07:25 --> Output Class Initialized
+INFO - 2024-08-22 15:07:25 --> Security Class Initialized
+DEBUG - 2024-08-22 15:07:25 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:07:25 --> Input Class Initialized
+INFO - 2024-08-22 15:07:25 --> Language Class Initialized
+INFO - 2024-08-22 15:07:25 --> Loader Class Initialized
+INFO - 2024-08-22 15:07:25 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:07:25 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:07:25 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:07:25 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:07:25 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:07:25 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:07:25 --> Controller Class Initialized
+INFO - 2024-08-22 15:07:25 --> Model Class Initialized
+INFO - 2024-08-22 15:07:25 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:07:25 --> Severity: Notice --> Trying to access array offset on value of type null C:\laragon\www\limsonewater\application\libraries\Datatables.php 296
+ERROR - 2024-08-22 15:07:25 --> Severity: Notice --> Trying to access array offset on value of type null C:\laragon\www\limsonewater\application\libraries\Datatables.php 296
+INFO - 2024-08-22 15:07:25 --> Final output sent to browser
+DEBUG - 2024-08-22 15:07:25 --> Total execution time: 0.0419
+INFO - 2024-08-22 15:07:51 --> Config Class Initialized
+INFO - 2024-08-22 15:07:51 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:07:51 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:07:51 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:07:51 --> URI Class Initialized
+INFO - 2024-08-22 15:07:51 --> Router Class Initialized
+INFO - 2024-08-22 15:07:51 --> Output Class Initialized
+INFO - 2024-08-22 15:07:51 --> Security Class Initialized
+DEBUG - 2024-08-22 15:07:51 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:07:51 --> Input Class Initialized
+INFO - 2024-08-22 15:07:51 --> Language Class Initialized
+INFO - 2024-08-22 15:07:51 --> Loader Class Initialized
+INFO - 2024-08-22 15:07:51 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:07:51 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:07:51 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:07:51 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:07:51 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:07:51 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:07:51 --> Controller Class Initialized
+INFO - 2024-08-22 15:07:51 --> Model Class Initialized
+INFO - 2024-08-22 15:07:51 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:07:51 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:07:51 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:07:51 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:07:51 --> Final output sent to browser
+DEBUG - 2024-08-22 15:07:51 --> Total execution time: 0.0737
+INFO - 2024-08-22 15:07:51 --> Config Class Initialized
+INFO - 2024-08-22 15:07:51 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:07:51 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:07:51 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:07:51 --> URI Class Initialized
+INFO - 2024-08-22 15:07:51 --> Router Class Initialized
+INFO - 2024-08-22 15:07:51 --> Output Class Initialized
+INFO - 2024-08-22 15:07:51 --> Security Class Initialized
+DEBUG - 2024-08-22 15:07:51 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:07:51 --> Input Class Initialized
+INFO - 2024-08-22 15:07:51 --> Language Class Initialized
+ERROR - 2024-08-22 15:07:51 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:07:51 --> Config Class Initialized
+INFO - 2024-08-22 15:07:51 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:07:51 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:07:51 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:07:51 --> URI Class Initialized
+INFO - 2024-08-22 15:07:51 --> Router Class Initialized
+INFO - 2024-08-22 15:07:51 --> Output Class Initialized
+INFO - 2024-08-22 15:07:51 --> Security Class Initialized
+DEBUG - 2024-08-22 15:07:51 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:07:51 --> Input Class Initialized
+INFO - 2024-08-22 15:07:51 --> Language Class Initialized
+INFO - 2024-08-22 15:07:51 --> Loader Class Initialized
+INFO - 2024-08-22 15:07:51 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:07:51 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:07:51 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:07:51 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:07:51 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:07:51 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:07:51 --> Controller Class Initialized
+INFO - 2024-08-22 15:07:51 --> Model Class Initialized
+INFO - 2024-08-22 15:07:51 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:07:51 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:07:51 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:08:19 --> Config Class Initialized
+INFO - 2024-08-22 15:08:19 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:08:19 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:08:19 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:08:19 --> URI Class Initialized
+INFO - 2024-08-22 15:08:19 --> Router Class Initialized
+INFO - 2024-08-22 15:08:19 --> Output Class Initialized
+INFO - 2024-08-22 15:08:19 --> Security Class Initialized
+DEBUG - 2024-08-22 15:08:19 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:08:19 --> Input Class Initialized
+INFO - 2024-08-22 15:08:19 --> Language Class Initialized
+INFO - 2024-08-22 15:08:19 --> Loader Class Initialized
+INFO - 2024-08-22 15:08:19 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:08:19 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:08:19 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:08:19 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:08:19 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:08:19 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:08:19 --> Controller Class Initialized
+INFO - 2024-08-22 15:08:19 --> Model Class Initialized
+INFO - 2024-08-22 15:08:19 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:08:19 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:08:19 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:08:19 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:08:19 --> Final output sent to browser
+DEBUG - 2024-08-22 15:08:19 --> Total execution time: 0.0723
+INFO - 2024-08-22 15:08:19 --> Config Class Initialized
+INFO - 2024-08-22 15:08:19 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:08:19 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:08:19 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:08:19 --> URI Class Initialized
+INFO - 2024-08-22 15:08:19 --> Router Class Initialized
+INFO - 2024-08-22 15:08:19 --> Output Class Initialized
+INFO - 2024-08-22 15:08:19 --> Security Class Initialized
+DEBUG - 2024-08-22 15:08:19 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:08:19 --> Input Class Initialized
+INFO - 2024-08-22 15:08:19 --> Language Class Initialized
+ERROR - 2024-08-22 15:08:19 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:08:20 --> Config Class Initialized
+INFO - 2024-08-22 15:08:20 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:08:20 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:08:20 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:08:20 --> URI Class Initialized
+INFO - 2024-08-22 15:08:20 --> Router Class Initialized
+INFO - 2024-08-22 15:08:20 --> Output Class Initialized
+INFO - 2024-08-22 15:08:20 --> Security Class Initialized
+DEBUG - 2024-08-22 15:08:20 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:08:20 --> Input Class Initialized
+INFO - 2024-08-22 15:08:20 --> Language Class Initialized
+INFO - 2024-08-22 15:08:20 --> Loader Class Initialized
+INFO - 2024-08-22 15:08:20 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:08:20 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:08:20 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:08:20 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:08:20 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:08:20 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:08:20 --> Controller Class Initialized
+INFO - 2024-08-22 15:08:20 --> Model Class Initialized
+INFO - 2024-08-22 15:08:20 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:08:20 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:08:20 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:09:34 --> Config Class Initialized
+INFO - 2024-08-22 15:09:34 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:09:34 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:09:34 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:09:34 --> URI Class Initialized
+INFO - 2024-08-22 15:09:34 --> Router Class Initialized
+INFO - 2024-08-22 15:09:34 --> Output Class Initialized
+INFO - 2024-08-22 15:09:34 --> Security Class Initialized
+DEBUG - 2024-08-22 15:09:34 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:09:34 --> Input Class Initialized
+INFO - 2024-08-22 15:09:34 --> Language Class Initialized
+INFO - 2024-08-22 15:09:34 --> Loader Class Initialized
+INFO - 2024-08-22 15:09:34 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:09:34 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:09:34 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:09:34 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:09:34 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:09:34 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:09:34 --> Controller Class Initialized
+INFO - 2024-08-22 15:09:34 --> Model Class Initialized
+INFO - 2024-08-22 15:09:34 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:09:35 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:09:35 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:09:35 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:09:35 --> Final output sent to browser
+DEBUG - 2024-08-22 15:09:35 --> Total execution time: 0.0768
+INFO - 2024-08-22 15:09:35 --> Config Class Initialized
+INFO - 2024-08-22 15:09:35 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:09:35 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:09:35 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:09:35 --> URI Class Initialized
+INFO - 2024-08-22 15:09:35 --> Router Class Initialized
+INFO - 2024-08-22 15:09:35 --> Output Class Initialized
+INFO - 2024-08-22 15:09:35 --> Security Class Initialized
+DEBUG - 2024-08-22 15:09:35 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:09:35 --> Input Class Initialized
+INFO - 2024-08-22 15:09:35 --> Language Class Initialized
+ERROR - 2024-08-22 15:09:35 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:09:35 --> Config Class Initialized
+INFO - 2024-08-22 15:09:35 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:09:35 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:09:35 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:09:35 --> URI Class Initialized
+INFO - 2024-08-22 15:09:35 --> Router Class Initialized
+INFO - 2024-08-22 15:09:35 --> Output Class Initialized
+INFO - 2024-08-22 15:09:35 --> Security Class Initialized
+DEBUG - 2024-08-22 15:09:35 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:09:35 --> Input Class Initialized
+INFO - 2024-08-22 15:09:35 --> Language Class Initialized
+INFO - 2024-08-22 15:09:35 --> Loader Class Initialized
+INFO - 2024-08-22 15:09:35 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:09:35 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:09:35 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:09:35 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:09:35 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:09:35 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:09:35 --> Controller Class Initialized
+INFO - 2024-08-22 15:09:35 --> Model Class Initialized
+INFO - 2024-08-22 15:09:35 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:09:35 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:09:35 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:11:27 --> Config Class Initialized
+INFO - 2024-08-22 15:11:27 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:11:27 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:11:27 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:11:27 --> URI Class Initialized
+INFO - 2024-08-22 15:11:27 --> Router Class Initialized
+INFO - 2024-08-22 15:11:27 --> Output Class Initialized
+INFO - 2024-08-22 15:11:27 --> Security Class Initialized
+DEBUG - 2024-08-22 15:11:27 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:11:27 --> Input Class Initialized
+INFO - 2024-08-22 15:11:27 --> Language Class Initialized
+INFO - 2024-08-22 15:11:27 --> Loader Class Initialized
+INFO - 2024-08-22 15:11:27 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:11:27 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:11:27 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:11:27 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:11:27 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:11:27 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:11:27 --> Controller Class Initialized
+INFO - 2024-08-22 15:11:27 --> Model Class Initialized
+INFO - 2024-08-22 15:11:27 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:11:28 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:11:28 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:11:28 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:11:28 --> Final output sent to browser
+DEBUG - 2024-08-22 15:11:28 --> Total execution time: 0.1010
+INFO - 2024-08-22 15:11:28 --> Config Class Initialized
+INFO - 2024-08-22 15:11:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:11:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:11:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:11:28 --> URI Class Initialized
+INFO - 2024-08-22 15:11:28 --> Router Class Initialized
+INFO - 2024-08-22 15:11:28 --> Output Class Initialized
+INFO - 2024-08-22 15:11:28 --> Security Class Initialized
+DEBUG - 2024-08-22 15:11:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:11:28 --> Input Class Initialized
+INFO - 2024-08-22 15:11:28 --> Language Class Initialized
+ERROR - 2024-08-22 15:11:28 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:11:28 --> Config Class Initialized
+INFO - 2024-08-22 15:11:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:11:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:11:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:11:28 --> URI Class Initialized
+INFO - 2024-08-22 15:11:28 --> Router Class Initialized
+INFO - 2024-08-22 15:11:28 --> Output Class Initialized
+INFO - 2024-08-22 15:11:28 --> Security Class Initialized
+DEBUG - 2024-08-22 15:11:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:11:28 --> Input Class Initialized
+INFO - 2024-08-22 15:11:28 --> Language Class Initialized
+INFO - 2024-08-22 15:11:28 --> Loader Class Initialized
+INFO - 2024-08-22 15:11:28 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:11:28 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:11:28 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:11:28 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:11:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:11:28 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:11:28 --> Controller Class Initialized
+INFO - 2024-08-22 15:11:28 --> Model Class Initialized
+INFO - 2024-08-22 15:11:28 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:11:28 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:11:28 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:12:10 --> Config Class Initialized
+INFO - 2024-08-22 15:12:10 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:12:10 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:12:10 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:12:10 --> URI Class Initialized
+INFO - 2024-08-22 15:12:10 --> Router Class Initialized
+INFO - 2024-08-22 15:12:10 --> Output Class Initialized
+INFO - 2024-08-22 15:12:10 --> Security Class Initialized
+DEBUG - 2024-08-22 15:12:10 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:12:10 --> Input Class Initialized
+INFO - 2024-08-22 15:12:10 --> Language Class Initialized
+INFO - 2024-08-22 15:12:10 --> Loader Class Initialized
+INFO - 2024-08-22 15:12:10 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:12:10 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:12:10 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:12:10 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:12:10 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:12:10 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:12:10 --> Controller Class Initialized
+INFO - 2024-08-22 15:12:10 --> Model Class Initialized
+INFO - 2024-08-22 15:12:10 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:12:10 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:12:10 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:12:10 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:12:10 --> Final output sent to browser
+DEBUG - 2024-08-22 15:12:10 --> Total execution time: 0.0940
+INFO - 2024-08-22 15:12:10 --> Config Class Initialized
+INFO - 2024-08-22 15:12:10 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:12:10 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:12:10 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:12:10 --> URI Class Initialized
+INFO - 2024-08-22 15:12:10 --> Router Class Initialized
+INFO - 2024-08-22 15:12:10 --> Output Class Initialized
+INFO - 2024-08-22 15:12:11 --> Security Class Initialized
+DEBUG - 2024-08-22 15:12:11 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:12:11 --> Input Class Initialized
+INFO - 2024-08-22 15:12:11 --> Language Class Initialized
+ERROR - 2024-08-22 15:12:11 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:12:11 --> Config Class Initialized
+INFO - 2024-08-22 15:12:11 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:12:11 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:12:11 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:12:11 --> URI Class Initialized
+INFO - 2024-08-22 15:12:11 --> Router Class Initialized
+INFO - 2024-08-22 15:12:11 --> Output Class Initialized
+INFO - 2024-08-22 15:12:11 --> Security Class Initialized
+DEBUG - 2024-08-22 15:12:11 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:12:11 --> Input Class Initialized
+INFO - 2024-08-22 15:12:11 --> Language Class Initialized
+INFO - 2024-08-22 15:12:11 --> Loader Class Initialized
+INFO - 2024-08-22 15:12:11 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:12:11 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:12:11 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:12:11 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:12:11 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:12:11 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:12:11 --> Controller Class Initialized
+INFO - 2024-08-22 15:12:11 --> Model Class Initialized
+INFO - 2024-08-22 15:12:11 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:12:11 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:12:11 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:12:50 --> Config Class Initialized
+INFO - 2024-08-22 15:12:50 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:12:50 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:12:50 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:12:50 --> URI Class Initialized
+INFO - 2024-08-22 15:12:50 --> Router Class Initialized
+INFO - 2024-08-22 15:12:50 --> Output Class Initialized
+INFO - 2024-08-22 15:12:50 --> Security Class Initialized
+DEBUG - 2024-08-22 15:12:50 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:12:50 --> Input Class Initialized
+INFO - 2024-08-22 15:12:50 --> Language Class Initialized
+INFO - 2024-08-22 15:12:50 --> Loader Class Initialized
+INFO - 2024-08-22 15:12:50 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:12:50 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:12:50 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:12:50 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:12:50 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:12:50 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:12:50 --> Controller Class Initialized
+INFO - 2024-08-22 15:12:50 --> Model Class Initialized
+INFO - 2024-08-22 15:12:50 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:12:50 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:12:50 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:12:50 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:12:50 --> Final output sent to browser
+DEBUG - 2024-08-22 15:12:50 --> Total execution time: 0.1080
+INFO - 2024-08-22 15:12:51 --> Config Class Initialized
+INFO - 2024-08-22 15:12:51 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:12:51 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:12:51 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:12:51 --> URI Class Initialized
+INFO - 2024-08-22 15:12:51 --> Router Class Initialized
+INFO - 2024-08-22 15:12:51 --> Output Class Initialized
+INFO - 2024-08-22 15:12:51 --> Security Class Initialized
+DEBUG - 2024-08-22 15:12:51 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:12:51 --> Input Class Initialized
+INFO - 2024-08-22 15:12:51 --> Language Class Initialized
+ERROR - 2024-08-22 15:12:51 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:12:51 --> Config Class Initialized
+INFO - 2024-08-22 15:12:51 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:12:51 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:12:51 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:12:51 --> URI Class Initialized
+INFO - 2024-08-22 15:12:51 --> Router Class Initialized
+INFO - 2024-08-22 15:12:51 --> Output Class Initialized
+INFO - 2024-08-22 15:12:51 --> Security Class Initialized
+DEBUG - 2024-08-22 15:12:51 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:12:51 --> Input Class Initialized
+INFO - 2024-08-22 15:12:51 --> Language Class Initialized
+INFO - 2024-08-22 15:12:51 --> Loader Class Initialized
+INFO - 2024-08-22 15:12:51 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:12:51 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:12:51 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:12:51 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:12:51 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:12:51 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:12:51 --> Controller Class Initialized
+INFO - 2024-08-22 15:12:51 --> Model Class Initialized
+INFO - 2024-08-22 15:12:51 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:12:51 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:12:51 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:12:56 --> Config Class Initialized
+INFO - 2024-08-22 15:12:56 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:12:56 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:12:56 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:12:56 --> URI Class Initialized
+INFO - 2024-08-22 15:12:56 --> Router Class Initialized
+INFO - 2024-08-22 15:12:56 --> Output Class Initialized
+INFO - 2024-08-22 15:12:56 --> Security Class Initialized
+DEBUG - 2024-08-22 15:12:56 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:12:56 --> Input Class Initialized
+INFO - 2024-08-22 15:12:56 --> Language Class Initialized
+INFO - 2024-08-22 15:12:56 --> Loader Class Initialized
+INFO - 2024-08-22 15:12:56 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:12:56 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:12:56 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:12:56 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:12:56 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:12:56 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:12:56 --> Controller Class Initialized
+INFO - 2024-08-22 15:12:56 --> Model Class Initialized
+INFO - 2024-08-22 15:12:56 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:12:56 --> Final output sent to browser
+DEBUG - 2024-08-22 15:12:56 --> Total execution time: 0.0673
+INFO - 2024-08-22 15:13:20 --> Config Class Initialized
+INFO - 2024-08-22 15:13:20 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:13:20 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:13:20 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:13:20 --> URI Class Initialized
+INFO - 2024-08-22 15:13:20 --> Router Class Initialized
+INFO - 2024-08-22 15:13:20 --> Output Class Initialized
+INFO - 2024-08-22 15:13:20 --> Security Class Initialized
+DEBUG - 2024-08-22 15:13:20 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:13:20 --> Input Class Initialized
+INFO - 2024-08-22 15:13:20 --> Language Class Initialized
+INFO - 2024-08-22 15:13:20 --> Loader Class Initialized
+INFO - 2024-08-22 15:13:20 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:13:20 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:13:20 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:13:20 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:13:20 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:13:20 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:13:20 --> Controller Class Initialized
+INFO - 2024-08-22 15:13:20 --> Model Class Initialized
+INFO - 2024-08-22 15:13:20 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:13:20 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:13:20 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:13:20 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:13:20 --> Final output sent to browser
+DEBUG - 2024-08-22 15:13:20 --> Total execution time: 0.0739
+INFO - 2024-08-22 15:13:20 --> Config Class Initialized
+INFO - 2024-08-22 15:13:20 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:13:20 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:13:20 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:13:20 --> URI Class Initialized
+INFO - 2024-08-22 15:13:20 --> Router Class Initialized
+INFO - 2024-08-22 15:13:20 --> Output Class Initialized
+INFO - 2024-08-22 15:13:20 --> Security Class Initialized
+DEBUG - 2024-08-22 15:13:20 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:13:20 --> Input Class Initialized
+INFO - 2024-08-22 15:13:20 --> Language Class Initialized
+ERROR - 2024-08-22 15:13:20 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:13:20 --> Config Class Initialized
+INFO - 2024-08-22 15:13:20 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:13:20 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:13:20 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:13:20 --> URI Class Initialized
+INFO - 2024-08-22 15:13:20 --> Router Class Initialized
+INFO - 2024-08-22 15:13:20 --> Output Class Initialized
+INFO - 2024-08-22 15:13:20 --> Security Class Initialized
+DEBUG - 2024-08-22 15:13:20 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:13:20 --> Input Class Initialized
+INFO - 2024-08-22 15:13:20 --> Language Class Initialized
+INFO - 2024-08-22 15:13:20 --> Loader Class Initialized
+INFO - 2024-08-22 15:13:20 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:13:20 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:13:20 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:13:20 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:13:20 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:13:20 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:13:20 --> Controller Class Initialized
+INFO - 2024-08-22 15:13:20 --> Model Class Initialized
+INFO - 2024-08-22 15:13:20 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:13:20 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:13:20 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:13:38 --> Config Class Initialized
+INFO - 2024-08-22 15:13:38 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:13:38 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:13:38 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:13:38 --> URI Class Initialized
+INFO - 2024-08-22 15:13:38 --> Router Class Initialized
+INFO - 2024-08-22 15:13:38 --> Output Class Initialized
+INFO - 2024-08-22 15:13:38 --> Security Class Initialized
+DEBUG - 2024-08-22 15:13:38 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:13:38 --> Input Class Initialized
+INFO - 2024-08-22 15:13:38 --> Language Class Initialized
+INFO - 2024-08-22 15:13:38 --> Loader Class Initialized
+INFO - 2024-08-22 15:13:38 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:13:38 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:13:38 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:13:38 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:13:38 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:13:38 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:13:38 --> Controller Class Initialized
+INFO - 2024-08-22 15:13:38 --> Model Class Initialized
+INFO - 2024-08-22 15:13:38 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:13:38 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:13:39 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:13:39 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:13:39 --> Final output sent to browser
+DEBUG - 2024-08-22 15:13:39 --> Total execution time: 0.1507
+INFO - 2024-08-22 15:13:39 --> Config Class Initialized
+INFO - 2024-08-22 15:13:39 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:13:39 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:13:39 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:13:39 --> URI Class Initialized
+INFO - 2024-08-22 15:13:39 --> Router Class Initialized
+INFO - 2024-08-22 15:13:39 --> Output Class Initialized
+INFO - 2024-08-22 15:13:39 --> Security Class Initialized
+DEBUG - 2024-08-22 15:13:39 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:13:39 --> Input Class Initialized
+INFO - 2024-08-22 15:13:39 --> Language Class Initialized
+ERROR - 2024-08-22 15:13:39 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:13:39 --> Config Class Initialized
+INFO - 2024-08-22 15:13:39 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:13:39 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:13:39 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:13:39 --> URI Class Initialized
+INFO - 2024-08-22 15:13:39 --> Router Class Initialized
+INFO - 2024-08-22 15:13:39 --> Output Class Initialized
+INFO - 2024-08-22 15:13:39 --> Security Class Initialized
+DEBUG - 2024-08-22 15:13:39 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:13:39 --> Input Class Initialized
+INFO - 2024-08-22 15:13:39 --> Language Class Initialized
+INFO - 2024-08-22 15:13:39 --> Loader Class Initialized
+INFO - 2024-08-22 15:13:39 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:13:39 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:13:39 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:13:39 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:13:39 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:13:39 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:13:39 --> Controller Class Initialized
+INFO - 2024-08-22 15:13:39 --> Model Class Initialized
+INFO - 2024-08-22 15:13:39 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:13:39 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:13:39 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:13:44 --> Config Class Initialized
+INFO - 2024-08-22 15:13:44 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:13:44 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:13:44 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:13:44 --> URI Class Initialized
+INFO - 2024-08-22 15:13:44 --> Router Class Initialized
+INFO - 2024-08-22 15:13:44 --> Output Class Initialized
+INFO - 2024-08-22 15:13:44 --> Security Class Initialized
+DEBUG - 2024-08-22 15:13:44 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:13:44 --> Input Class Initialized
+INFO - 2024-08-22 15:13:44 --> Language Class Initialized
+INFO - 2024-08-22 15:13:44 --> Loader Class Initialized
+INFO - 2024-08-22 15:13:44 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:13:44 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:13:44 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:13:44 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:13:44 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:13:44 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:13:44 --> Controller Class Initialized
+INFO - 2024-08-22 15:13:44 --> Model Class Initialized
+INFO - 2024-08-22 15:13:44 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:13:44 --> Final output sent to browser
+DEBUG - 2024-08-22 15:13:44 --> Total execution time: 0.0348
+INFO - 2024-08-22 15:14:06 --> Config Class Initialized
+INFO - 2024-08-22 15:14:06 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:14:06 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:14:06 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:14:06 --> URI Class Initialized
+INFO - 2024-08-22 15:14:06 --> Router Class Initialized
+INFO - 2024-08-22 15:14:06 --> Output Class Initialized
+INFO - 2024-08-22 15:14:06 --> Security Class Initialized
+DEBUG - 2024-08-22 15:14:06 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:14:06 --> Input Class Initialized
+INFO - 2024-08-22 15:14:06 --> Language Class Initialized
+INFO - 2024-08-22 15:14:06 --> Loader Class Initialized
+INFO - 2024-08-22 15:14:06 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:14:06 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:14:06 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:14:06 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:14:06 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:14:06 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:14:06 --> Controller Class Initialized
+INFO - 2024-08-22 15:14:06 --> Model Class Initialized
+INFO - 2024-08-22 15:14:06 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:14:06 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:14:06 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:14:06 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:14:06 --> Final output sent to browser
+DEBUG - 2024-08-22 15:14:06 --> Total execution time: 0.0813
+INFO - 2024-08-22 15:14:06 --> Config Class Initialized
+INFO - 2024-08-22 15:14:06 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:14:06 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:14:06 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:14:06 --> URI Class Initialized
+INFO - 2024-08-22 15:14:06 --> Router Class Initialized
+INFO - 2024-08-22 15:14:06 --> Output Class Initialized
+INFO - 2024-08-22 15:14:06 --> Security Class Initialized
+DEBUG - 2024-08-22 15:14:06 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:14:06 --> Input Class Initialized
+INFO - 2024-08-22 15:14:06 --> Language Class Initialized
+ERROR - 2024-08-22 15:14:06 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:14:06 --> Config Class Initialized
+INFO - 2024-08-22 15:14:06 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:14:06 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:14:06 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:14:06 --> URI Class Initialized
+INFO - 2024-08-22 15:14:06 --> Router Class Initialized
+INFO - 2024-08-22 15:14:06 --> Output Class Initialized
+INFO - 2024-08-22 15:14:06 --> Security Class Initialized
+DEBUG - 2024-08-22 15:14:06 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:14:06 --> Input Class Initialized
+INFO - 2024-08-22 15:14:06 --> Language Class Initialized
+INFO - 2024-08-22 15:14:06 --> Loader Class Initialized
+INFO - 2024-08-22 15:14:06 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:14:06 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:14:06 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:14:06 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:14:06 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:14:06 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:14:06 --> Controller Class Initialized
+INFO - 2024-08-22 15:14:06 --> Model Class Initialized
+INFO - 2024-08-22 15:14:06 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:14:06 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:14:06 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:14:10 --> Config Class Initialized
+INFO - 2024-08-22 15:14:10 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:14:10 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:14:10 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:14:10 --> URI Class Initialized
+INFO - 2024-08-22 15:14:10 --> Router Class Initialized
+INFO - 2024-08-22 15:14:10 --> Output Class Initialized
+INFO - 2024-08-22 15:14:10 --> Security Class Initialized
+DEBUG - 2024-08-22 15:14:10 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:14:10 --> Input Class Initialized
+INFO - 2024-08-22 15:14:10 --> Language Class Initialized
+INFO - 2024-08-22 15:14:10 --> Loader Class Initialized
+INFO - 2024-08-22 15:14:10 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:14:10 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:14:10 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:14:10 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:14:10 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:14:10 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:14:10 --> Controller Class Initialized
+INFO - 2024-08-22 15:14:10 --> Model Class Initialized
+INFO - 2024-08-22 15:14:10 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:14:10 --> Query error: Unknown column 'barcode_foil' in 'IN/ALL/ANY subquery' - Invalid query: 
+        SELECT barcode_moisture_content FROM moisture_content
+        WHERE barcode_moisture_content = "reee"
+        AND barcode_foil NOT IN (SELECT barcode_foil FROM moisture_content)
+        AND flag = 0 
+        
+INFO - 2024-08-22 15:14:10 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:14:22 --> Config Class Initialized
+INFO - 2024-08-22 15:14:22 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:14:22 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:14:22 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:14:22 --> URI Class Initialized
+INFO - 2024-08-22 15:14:22 --> Router Class Initialized
+INFO - 2024-08-22 15:14:22 --> Output Class Initialized
+INFO - 2024-08-22 15:14:22 --> Security Class Initialized
+DEBUG - 2024-08-22 15:14:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:14:22 --> Input Class Initialized
+INFO - 2024-08-22 15:14:22 --> Language Class Initialized
+INFO - 2024-08-22 15:14:22 --> Loader Class Initialized
+INFO - 2024-08-22 15:14:22 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:14:22 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:14:22 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:14:22 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:14:22 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:14:22 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:14:22 --> Controller Class Initialized
+INFO - 2024-08-22 15:14:22 --> Model Class Initialized
+INFO - 2024-08-22 15:14:22 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:14:22 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:14:22 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:14:22 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:14:22 --> Final output sent to browser
+DEBUG - 2024-08-22 15:14:22 --> Total execution time: 0.5151
+INFO - 2024-08-22 15:14:22 --> Config Class Initialized
+INFO - 2024-08-22 15:14:22 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:14:22 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:14:22 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:14:22 --> URI Class Initialized
+INFO - 2024-08-22 15:14:22 --> Router Class Initialized
+INFO - 2024-08-22 15:14:22 --> Output Class Initialized
+INFO - 2024-08-22 15:14:22 --> Security Class Initialized
+DEBUG - 2024-08-22 15:14:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:14:22 --> Input Class Initialized
+INFO - 2024-08-22 15:14:22 --> Language Class Initialized
+ERROR - 2024-08-22 15:14:22 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:14:22 --> Config Class Initialized
+INFO - 2024-08-22 15:14:22 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:14:22 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:14:22 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:14:22 --> URI Class Initialized
+INFO - 2024-08-22 15:14:22 --> Router Class Initialized
+INFO - 2024-08-22 15:14:22 --> Output Class Initialized
+INFO - 2024-08-22 15:14:22 --> Security Class Initialized
+DEBUG - 2024-08-22 15:14:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:14:22 --> Input Class Initialized
+INFO - 2024-08-22 15:14:22 --> Language Class Initialized
+INFO - 2024-08-22 15:14:22 --> Loader Class Initialized
+INFO - 2024-08-22 15:14:22 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:14:22 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:14:22 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:14:22 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:14:22 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:14:22 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:14:22 --> Controller Class Initialized
+INFO - 2024-08-22 15:14:22 --> Model Class Initialized
+INFO - 2024-08-22 15:14:22 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:14:22 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:14:22 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:14:26 --> Config Class Initialized
+INFO - 2024-08-22 15:14:26 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:14:26 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:14:26 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:14:26 --> URI Class Initialized
+INFO - 2024-08-22 15:14:26 --> Router Class Initialized
+INFO - 2024-08-22 15:14:26 --> Output Class Initialized
+INFO - 2024-08-22 15:14:26 --> Security Class Initialized
+DEBUG - 2024-08-22 15:14:26 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:14:26 --> Input Class Initialized
+INFO - 2024-08-22 15:14:26 --> Language Class Initialized
+ERROR - 2024-08-22 15:14:26 --> 404 Page Not Found: Validate24/index
+INFO - 2024-08-22 15:14:36 --> Config Class Initialized
+INFO - 2024-08-22 15:14:36 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:14:36 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:14:36 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:14:36 --> URI Class Initialized
+INFO - 2024-08-22 15:14:36 --> Router Class Initialized
+INFO - 2024-08-22 15:14:36 --> Output Class Initialized
+INFO - 2024-08-22 15:14:36 --> Security Class Initialized
+DEBUG - 2024-08-22 15:14:36 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:14:36 --> Input Class Initialized
+INFO - 2024-08-22 15:14:36 --> Language Class Initialized
+INFO - 2024-08-22 15:14:36 --> Loader Class Initialized
+INFO - 2024-08-22 15:14:36 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:14:36 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:14:36 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:14:36 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:14:36 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:14:36 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:14:36 --> Controller Class Initialized
+INFO - 2024-08-22 15:14:36 --> Model Class Initialized
+INFO - 2024-08-22 15:14:36 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:14:36 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:14:36 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:14:36 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:14:36 --> Final output sent to browser
+DEBUG - 2024-08-22 15:14:36 --> Total execution time: 0.0708
+INFO - 2024-08-22 15:14:36 --> Config Class Initialized
+INFO - 2024-08-22 15:14:36 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:14:36 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:14:36 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:14:36 --> URI Class Initialized
+INFO - 2024-08-22 15:14:36 --> Router Class Initialized
+INFO - 2024-08-22 15:14:36 --> Output Class Initialized
+INFO - 2024-08-22 15:14:36 --> Security Class Initialized
+DEBUG - 2024-08-22 15:14:36 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:14:36 --> Input Class Initialized
+INFO - 2024-08-22 15:14:36 --> Language Class Initialized
+ERROR - 2024-08-22 15:14:36 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:14:36 --> Config Class Initialized
+INFO - 2024-08-22 15:14:36 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:14:36 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:14:36 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:14:36 --> URI Class Initialized
+INFO - 2024-08-22 15:14:36 --> Router Class Initialized
+INFO - 2024-08-22 15:14:36 --> Output Class Initialized
+INFO - 2024-08-22 15:14:36 --> Security Class Initialized
+DEBUG - 2024-08-22 15:14:36 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:14:36 --> Input Class Initialized
+INFO - 2024-08-22 15:14:36 --> Language Class Initialized
+INFO - 2024-08-22 15:14:36 --> Loader Class Initialized
+INFO - 2024-08-22 15:14:36 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:14:36 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:14:36 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:14:36 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:14:36 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:14:36 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:14:36 --> Controller Class Initialized
+INFO - 2024-08-22 15:14:36 --> Model Class Initialized
+INFO - 2024-08-22 15:14:36 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:14:36 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:14:36 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:14:53 --> Config Class Initialized
+INFO - 2024-08-22 15:14:53 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:14:53 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:14:53 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:14:53 --> URI Class Initialized
+INFO - 2024-08-22 15:14:53 --> Router Class Initialized
+INFO - 2024-08-22 15:14:53 --> Output Class Initialized
+INFO - 2024-08-22 15:14:53 --> Security Class Initialized
+DEBUG - 2024-08-22 15:14:53 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:14:53 --> Input Class Initialized
+INFO - 2024-08-22 15:14:53 --> Language Class Initialized
+INFO - 2024-08-22 15:14:53 --> Loader Class Initialized
+INFO - 2024-08-22 15:14:53 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:14:53 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:14:53 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:14:53 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:14:53 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:14:53 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:14:53 --> Controller Class Initialized
+INFO - 2024-08-22 15:14:53 --> Model Class Initialized
+INFO - 2024-08-22 15:14:53 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:14:54 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:14:54 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:14:54 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:14:54 --> Final output sent to browser
+DEBUG - 2024-08-22 15:14:54 --> Total execution time: 0.1527
+INFO - 2024-08-22 15:14:54 --> Config Class Initialized
+INFO - 2024-08-22 15:14:54 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:14:54 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:14:54 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:14:54 --> URI Class Initialized
+INFO - 2024-08-22 15:14:54 --> Router Class Initialized
+INFO - 2024-08-22 15:14:54 --> Output Class Initialized
+INFO - 2024-08-22 15:14:54 --> Security Class Initialized
+DEBUG - 2024-08-22 15:14:54 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:14:54 --> Input Class Initialized
+INFO - 2024-08-22 15:14:54 --> Language Class Initialized
+ERROR - 2024-08-22 15:14:54 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:14:54 --> Config Class Initialized
+INFO - 2024-08-22 15:14:54 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:14:54 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:14:54 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:14:54 --> URI Class Initialized
+INFO - 2024-08-22 15:14:54 --> Router Class Initialized
+INFO - 2024-08-22 15:14:54 --> Output Class Initialized
+INFO - 2024-08-22 15:14:54 --> Security Class Initialized
+DEBUG - 2024-08-22 15:14:54 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:14:54 --> Input Class Initialized
+INFO - 2024-08-22 15:14:54 --> Language Class Initialized
+INFO - 2024-08-22 15:14:54 --> Loader Class Initialized
+INFO - 2024-08-22 15:14:54 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:14:54 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:14:54 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:14:54 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:14:54 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:14:54 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:14:54 --> Controller Class Initialized
+INFO - 2024-08-22 15:14:54 --> Model Class Initialized
+INFO - 2024-08-22 15:14:54 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:14:54 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:14:54 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:15:08 --> Config Class Initialized
+INFO - 2024-08-22 15:15:08 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:15:08 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:15:08 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:15:08 --> URI Class Initialized
+INFO - 2024-08-22 15:15:08 --> Router Class Initialized
+INFO - 2024-08-22 15:15:08 --> Output Class Initialized
+INFO - 2024-08-22 15:15:08 --> Security Class Initialized
+DEBUG - 2024-08-22 15:15:08 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:15:08 --> Input Class Initialized
+INFO - 2024-08-22 15:15:08 --> Language Class Initialized
+INFO - 2024-08-22 15:15:08 --> Loader Class Initialized
+INFO - 2024-08-22 15:15:08 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:15:08 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:15:08 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:15:08 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:15:08 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:15:08 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:15:08 --> Controller Class Initialized
+INFO - 2024-08-22 15:15:08 --> Model Class Initialized
+INFO - 2024-08-22 15:15:08 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:15:08 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:15:08 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:15:08 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:15:08 --> Final output sent to browser
+DEBUG - 2024-08-22 15:15:08 --> Total execution time: 0.1072
+INFO - 2024-08-22 15:15:08 --> Config Class Initialized
+INFO - 2024-08-22 15:15:08 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:15:08 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:15:08 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:15:08 --> URI Class Initialized
+INFO - 2024-08-22 15:15:08 --> Router Class Initialized
+INFO - 2024-08-22 15:15:08 --> Output Class Initialized
+INFO - 2024-08-22 15:15:08 --> Security Class Initialized
+DEBUG - 2024-08-22 15:15:08 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:15:08 --> Input Class Initialized
+INFO - 2024-08-22 15:15:08 --> Language Class Initialized
+ERROR - 2024-08-22 15:15:08 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:15:08 --> Config Class Initialized
+INFO - 2024-08-22 15:15:08 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:15:08 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:15:08 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:15:08 --> URI Class Initialized
+INFO - 2024-08-22 15:15:08 --> Router Class Initialized
+INFO - 2024-08-22 15:15:08 --> Output Class Initialized
+INFO - 2024-08-22 15:15:08 --> Security Class Initialized
+DEBUG - 2024-08-22 15:15:08 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:15:08 --> Input Class Initialized
+INFO - 2024-08-22 15:15:08 --> Language Class Initialized
+INFO - 2024-08-22 15:15:08 --> Loader Class Initialized
+INFO - 2024-08-22 15:15:08 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:15:08 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:15:08 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:15:08 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:15:08 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:15:08 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:15:08 --> Controller Class Initialized
+INFO - 2024-08-22 15:15:08 --> Model Class Initialized
+INFO - 2024-08-22 15:15:08 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:15:08 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:15:08 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:15:13 --> Config Class Initialized
+INFO - 2024-08-22 15:15:13 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:15:13 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:15:13 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:15:13 --> URI Class Initialized
+INFO - 2024-08-22 15:15:13 --> Router Class Initialized
+INFO - 2024-08-22 15:15:13 --> Output Class Initialized
+INFO - 2024-08-22 15:15:13 --> Security Class Initialized
+DEBUG - 2024-08-22 15:15:13 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:15:13 --> Input Class Initialized
+INFO - 2024-08-22 15:15:13 --> Language Class Initialized
+INFO - 2024-08-22 15:15:13 --> Loader Class Initialized
+INFO - 2024-08-22 15:15:13 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:15:13 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:15:13 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:15:13 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:15:13 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:15:13 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:15:13 --> Controller Class Initialized
+INFO - 2024-08-22 15:15:13 --> Model Class Initialized
+INFO - 2024-08-22 15:15:13 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:15:13 --> Final output sent to browser
+DEBUG - 2024-08-22 15:15:13 --> Total execution time: 0.0674
+INFO - 2024-08-22 15:15:24 --> Config Class Initialized
+INFO - 2024-08-22 15:15:24 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:15:24 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:15:24 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:15:24 --> URI Class Initialized
+INFO - 2024-08-22 15:15:24 --> Router Class Initialized
+INFO - 2024-08-22 15:15:24 --> Output Class Initialized
+INFO - 2024-08-22 15:15:24 --> Security Class Initialized
+DEBUG - 2024-08-22 15:15:24 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:15:24 --> Input Class Initialized
+INFO - 2024-08-22 15:15:24 --> Language Class Initialized
+INFO - 2024-08-22 15:15:24 --> Loader Class Initialized
+INFO - 2024-08-22 15:15:24 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:15:24 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:15:24 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:15:24 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:15:24 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:15:24 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:15:24 --> Controller Class Initialized
+INFO - 2024-08-22 15:15:24 --> Model Class Initialized
+INFO - 2024-08-22 15:15:24 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:15:24 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:15:24 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:15:24 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:15:24 --> Final output sent to browser
+DEBUG - 2024-08-22 15:15:24 --> Total execution time: 0.1020
+INFO - 2024-08-22 15:15:25 --> Config Class Initialized
+INFO - 2024-08-22 15:15:25 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:15:25 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:15:25 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:15:25 --> URI Class Initialized
+INFO - 2024-08-22 15:15:25 --> Router Class Initialized
+INFO - 2024-08-22 15:15:25 --> Output Class Initialized
+INFO - 2024-08-22 15:15:25 --> Security Class Initialized
+DEBUG - 2024-08-22 15:15:25 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:15:25 --> Input Class Initialized
+INFO - 2024-08-22 15:15:25 --> Language Class Initialized
+ERROR - 2024-08-22 15:15:25 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:15:25 --> Config Class Initialized
+INFO - 2024-08-22 15:15:25 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:15:25 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:15:25 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:15:25 --> URI Class Initialized
+INFO - 2024-08-22 15:15:25 --> Router Class Initialized
+INFO - 2024-08-22 15:15:25 --> Output Class Initialized
+INFO - 2024-08-22 15:15:25 --> Security Class Initialized
+DEBUG - 2024-08-22 15:15:25 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:15:25 --> Input Class Initialized
+INFO - 2024-08-22 15:15:25 --> Language Class Initialized
+INFO - 2024-08-22 15:15:25 --> Loader Class Initialized
+INFO - 2024-08-22 15:15:25 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:15:25 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:15:25 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:15:25 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:15:25 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:15:25 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:15:25 --> Controller Class Initialized
+INFO - 2024-08-22 15:15:25 --> Model Class Initialized
+INFO - 2024-08-22 15:15:25 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:15:25 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:15:25 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:16:07 --> Config Class Initialized
+INFO - 2024-08-22 15:16:07 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:16:07 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:16:07 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:16:07 --> URI Class Initialized
+INFO - 2024-08-22 15:16:07 --> Router Class Initialized
+INFO - 2024-08-22 15:16:07 --> Output Class Initialized
+INFO - 2024-08-22 15:16:07 --> Security Class Initialized
+DEBUG - 2024-08-22 15:16:07 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:16:07 --> Input Class Initialized
+INFO - 2024-08-22 15:16:07 --> Language Class Initialized
+INFO - 2024-08-22 15:16:07 --> Loader Class Initialized
+INFO - 2024-08-22 15:16:07 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:16:07 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:16:07 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:16:07 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:16:07 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:16:07 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:16:07 --> Controller Class Initialized
+INFO - 2024-08-22 15:16:07 --> Model Class Initialized
+INFO - 2024-08-22 15:16:07 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:16:07 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:16:07 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:16:07 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:16:07 --> Final output sent to browser
+DEBUG - 2024-08-22 15:16:07 --> Total execution time: 0.1657
+INFO - 2024-08-22 15:16:07 --> Config Class Initialized
+INFO - 2024-08-22 15:16:07 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:16:07 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:16:07 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:16:07 --> URI Class Initialized
+INFO - 2024-08-22 15:16:07 --> Router Class Initialized
+INFO - 2024-08-22 15:16:07 --> Output Class Initialized
+INFO - 2024-08-22 15:16:07 --> Security Class Initialized
+DEBUG - 2024-08-22 15:16:07 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:16:07 --> Input Class Initialized
+INFO - 2024-08-22 15:16:07 --> Language Class Initialized
+ERROR - 2024-08-22 15:16:07 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:16:07 --> Config Class Initialized
+INFO - 2024-08-22 15:16:07 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:16:07 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:16:07 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:16:07 --> URI Class Initialized
+INFO - 2024-08-22 15:16:07 --> Router Class Initialized
+INFO - 2024-08-22 15:16:07 --> Output Class Initialized
+INFO - 2024-08-22 15:16:07 --> Security Class Initialized
+DEBUG - 2024-08-22 15:16:07 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:16:07 --> Input Class Initialized
+INFO - 2024-08-22 15:16:07 --> Language Class Initialized
+INFO - 2024-08-22 15:16:07 --> Loader Class Initialized
+INFO - 2024-08-22 15:16:07 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:16:07 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:16:07 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:16:07 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:16:07 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:16:07 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:16:07 --> Controller Class Initialized
+INFO - 2024-08-22 15:16:07 --> Model Class Initialized
+INFO - 2024-08-22 15:16:07 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:16:07 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:16:07 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:16:11 --> Config Class Initialized
+INFO - 2024-08-22 15:16:11 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:16:11 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:16:11 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:16:11 --> URI Class Initialized
+INFO - 2024-08-22 15:16:11 --> Router Class Initialized
+INFO - 2024-08-22 15:16:11 --> Output Class Initialized
+INFO - 2024-08-22 15:16:11 --> Security Class Initialized
+DEBUG - 2024-08-22 15:16:11 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:16:11 --> Input Class Initialized
+INFO - 2024-08-22 15:16:11 --> Language Class Initialized
+INFO - 2024-08-22 15:16:11 --> Loader Class Initialized
+INFO - 2024-08-22 15:16:11 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:16:11 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:16:11 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:16:11 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:16:11 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:16:11 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:16:11 --> Controller Class Initialized
+INFO - 2024-08-22 15:16:11 --> Model Class Initialized
+INFO - 2024-08-22 15:16:11 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:16:11 --> Final output sent to browser
+DEBUG - 2024-08-22 15:16:11 --> Total execution time: 0.0543
+INFO - 2024-08-22 15:16:35 --> Config Class Initialized
+INFO - 2024-08-22 15:16:35 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:16:35 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:16:35 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:16:35 --> URI Class Initialized
+INFO - 2024-08-22 15:16:35 --> Router Class Initialized
+INFO - 2024-08-22 15:16:35 --> Output Class Initialized
+INFO - 2024-08-22 15:16:35 --> Security Class Initialized
+DEBUG - 2024-08-22 15:16:35 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:16:35 --> Input Class Initialized
+INFO - 2024-08-22 15:16:35 --> Language Class Initialized
+INFO - 2024-08-22 15:16:35 --> Loader Class Initialized
+INFO - 2024-08-22 15:16:35 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:16:35 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:16:35 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:16:35 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:16:35 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:16:35 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:16:35 --> Controller Class Initialized
+INFO - 2024-08-22 15:16:35 --> Model Class Initialized
+INFO - 2024-08-22 15:16:35 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:16:35 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:16:35 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:16:35 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:16:35 --> Final output sent to browser
+DEBUG - 2024-08-22 15:16:35 --> Total execution time: 0.0879
+INFO - 2024-08-22 15:16:35 --> Config Class Initialized
+INFO - 2024-08-22 15:16:35 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:16:35 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:16:35 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:16:35 --> URI Class Initialized
+INFO - 2024-08-22 15:16:35 --> Router Class Initialized
+INFO - 2024-08-22 15:16:35 --> Output Class Initialized
+INFO - 2024-08-22 15:16:35 --> Security Class Initialized
+DEBUG - 2024-08-22 15:16:35 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:16:35 --> Input Class Initialized
+INFO - 2024-08-22 15:16:35 --> Language Class Initialized
+ERROR - 2024-08-22 15:16:36 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:16:36 --> Config Class Initialized
+INFO - 2024-08-22 15:16:36 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:16:36 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:16:36 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:16:36 --> URI Class Initialized
+INFO - 2024-08-22 15:16:36 --> Router Class Initialized
+INFO - 2024-08-22 15:16:36 --> Output Class Initialized
+INFO - 2024-08-22 15:16:36 --> Security Class Initialized
+DEBUG - 2024-08-22 15:16:36 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:16:36 --> Input Class Initialized
+INFO - 2024-08-22 15:16:36 --> Language Class Initialized
+INFO - 2024-08-22 15:16:36 --> Loader Class Initialized
+INFO - 2024-08-22 15:16:36 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:16:36 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:16:36 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:16:36 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:16:36 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:16:36 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:16:36 --> Controller Class Initialized
+INFO - 2024-08-22 15:16:36 --> Model Class Initialized
+INFO - 2024-08-22 15:16:36 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:16:36 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:16:36 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:16:40 --> Config Class Initialized
+INFO - 2024-08-22 15:16:40 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:16:40 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:16:40 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:16:40 --> URI Class Initialized
+INFO - 2024-08-22 15:16:40 --> Router Class Initialized
+INFO - 2024-08-22 15:16:40 --> Output Class Initialized
+INFO - 2024-08-22 15:16:40 --> Security Class Initialized
+DEBUG - 2024-08-22 15:16:40 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:16:40 --> Input Class Initialized
+INFO - 2024-08-22 15:16:40 --> Language Class Initialized
+INFO - 2024-08-22 15:16:40 --> Loader Class Initialized
+INFO - 2024-08-22 15:16:40 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:16:40 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:16:40 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:16:40 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:16:40 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:16:40 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:16:40 --> Controller Class Initialized
+INFO - 2024-08-22 15:16:40 --> Model Class Initialized
+INFO - 2024-08-22 15:16:40 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:16:40 --> Final output sent to browser
+DEBUG - 2024-08-22 15:16:40 --> Total execution time: 0.0723
+INFO - 2024-08-22 15:23:27 --> Config Class Initialized
+INFO - 2024-08-22 15:23:27 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:23:27 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:23:27 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:23:27 --> URI Class Initialized
+INFO - 2024-08-22 15:23:27 --> Router Class Initialized
+INFO - 2024-08-22 15:23:27 --> Output Class Initialized
+INFO - 2024-08-22 15:23:27 --> Security Class Initialized
+DEBUG - 2024-08-22 15:23:27 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:23:27 --> Input Class Initialized
+INFO - 2024-08-22 15:23:27 --> Language Class Initialized
+INFO - 2024-08-22 15:23:27 --> Loader Class Initialized
+INFO - 2024-08-22 15:23:27 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:23:27 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:23:27 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:23:27 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:23:27 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:23:27 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:23:27 --> Controller Class Initialized
+INFO - 2024-08-22 15:23:27 --> Model Class Initialized
+INFO - 2024-08-22 15:23:27 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:23:27 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:23:27 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:23:27 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:23:27 --> Final output sent to browser
+DEBUG - 2024-08-22 15:23:27 --> Total execution time: 0.0809
+INFO - 2024-08-22 15:23:27 --> Config Class Initialized
+INFO - 2024-08-22 15:23:27 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:23:27 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:23:27 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:23:27 --> URI Class Initialized
+INFO - 2024-08-22 15:23:27 --> Router Class Initialized
+INFO - 2024-08-22 15:23:27 --> Output Class Initialized
+INFO - 2024-08-22 15:23:27 --> Security Class Initialized
+DEBUG - 2024-08-22 15:23:27 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:23:27 --> Input Class Initialized
+INFO - 2024-08-22 15:23:27 --> Language Class Initialized
+ERROR - 2024-08-22 15:23:27 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:23:27 --> Config Class Initialized
+INFO - 2024-08-22 15:23:27 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:23:27 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:23:27 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:23:27 --> URI Class Initialized
+INFO - 2024-08-22 15:23:27 --> Router Class Initialized
+INFO - 2024-08-22 15:23:27 --> Output Class Initialized
+INFO - 2024-08-22 15:23:27 --> Security Class Initialized
+DEBUG - 2024-08-22 15:23:27 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:23:27 --> Input Class Initialized
+INFO - 2024-08-22 15:23:27 --> Language Class Initialized
+INFO - 2024-08-22 15:23:27 --> Loader Class Initialized
+INFO - 2024-08-22 15:23:27 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:23:27 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:23:27 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:23:27 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:23:27 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:23:27 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:23:27 --> Controller Class Initialized
+INFO - 2024-08-22 15:23:27 --> Model Class Initialized
+INFO - 2024-08-22 15:23:27 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:23:27 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:23:27 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:23:31 --> Config Class Initialized
+INFO - 2024-08-22 15:23:31 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:23:31 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:23:31 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:23:31 --> URI Class Initialized
+INFO - 2024-08-22 15:23:31 --> Router Class Initialized
+INFO - 2024-08-22 15:23:31 --> Output Class Initialized
+INFO - 2024-08-22 15:23:31 --> Security Class Initialized
+DEBUG - 2024-08-22 15:23:31 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:23:31 --> Input Class Initialized
+INFO - 2024-08-22 15:23:31 --> Language Class Initialized
+INFO - 2024-08-22 15:23:31 --> Loader Class Initialized
+INFO - 2024-08-22 15:23:31 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:23:31 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:23:31 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:23:31 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:23:31 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:23:31 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:23:31 --> Controller Class Initialized
+INFO - 2024-08-22 15:23:31 --> Model Class Initialized
+INFO - 2024-08-22 15:23:31 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:23:31 --> Query error: Unknown column 'barcode_foil' in 'IN/ALL/ANY subquery' - Invalid query: 
+        SELECT barcode_moisture_content FROM moisture_content
+        WHERE barcode_moisture_content = "reee"
+        AND barcode_foil NOT IN (SELECT barcode_foil FROM moisture_content)
+        AND flag = 0 
+        
+INFO - 2024-08-22 15:23:31 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:24:42 --> Config Class Initialized
+INFO - 2024-08-22 15:24:42 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:24:42 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:24:42 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:24:42 --> URI Class Initialized
+INFO - 2024-08-22 15:24:42 --> Router Class Initialized
+INFO - 2024-08-22 15:24:42 --> Output Class Initialized
+INFO - 2024-08-22 15:24:42 --> Security Class Initialized
+DEBUG - 2024-08-22 15:24:42 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:24:42 --> Input Class Initialized
+INFO - 2024-08-22 15:24:42 --> Language Class Initialized
+INFO - 2024-08-22 15:24:42 --> Loader Class Initialized
+INFO - 2024-08-22 15:24:42 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:24:42 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:24:42 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:24:42 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:24:42 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:24:42 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:24:42 --> Controller Class Initialized
+INFO - 2024-08-22 15:24:42 --> Model Class Initialized
+INFO - 2024-08-22 15:24:42 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:24:42 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:24:42 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:24:42 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:24:42 --> Final output sent to browser
+DEBUG - 2024-08-22 15:24:42 --> Total execution time: 0.0749
+INFO - 2024-08-22 15:24:42 --> Config Class Initialized
+INFO - 2024-08-22 15:24:42 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:24:42 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:24:42 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:24:42 --> URI Class Initialized
+INFO - 2024-08-22 15:24:42 --> Router Class Initialized
+INFO - 2024-08-22 15:24:42 --> Output Class Initialized
+INFO - 2024-08-22 15:24:42 --> Security Class Initialized
+DEBUG - 2024-08-22 15:24:42 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:24:42 --> Input Class Initialized
+INFO - 2024-08-22 15:24:42 --> Language Class Initialized
+ERROR - 2024-08-22 15:24:42 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:24:43 --> Config Class Initialized
+INFO - 2024-08-22 15:24:43 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:24:43 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:24:43 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:24:43 --> URI Class Initialized
+INFO - 2024-08-22 15:24:43 --> Router Class Initialized
+INFO - 2024-08-22 15:24:43 --> Output Class Initialized
+INFO - 2024-08-22 15:24:43 --> Security Class Initialized
+DEBUG - 2024-08-22 15:24:43 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:24:43 --> Input Class Initialized
+INFO - 2024-08-22 15:24:43 --> Language Class Initialized
+INFO - 2024-08-22 15:24:43 --> Loader Class Initialized
+INFO - 2024-08-22 15:24:43 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:24:43 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:24:43 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:24:43 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:24:43 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:24:43 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:24:43 --> Controller Class Initialized
+INFO - 2024-08-22 15:24:43 --> Model Class Initialized
+INFO - 2024-08-22 15:24:43 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:24:43 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:24:43 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:24:47 --> Config Class Initialized
+INFO - 2024-08-22 15:24:47 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:24:47 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:24:47 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:24:47 --> URI Class Initialized
+INFO - 2024-08-22 15:24:47 --> Router Class Initialized
+INFO - 2024-08-22 15:24:47 --> Output Class Initialized
+INFO - 2024-08-22 15:24:47 --> Security Class Initialized
+DEBUG - 2024-08-22 15:24:47 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:24:47 --> Input Class Initialized
+INFO - 2024-08-22 15:24:47 --> Language Class Initialized
+INFO - 2024-08-22 15:24:47 --> Loader Class Initialized
+INFO - 2024-08-22 15:24:47 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:24:47 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:24:47 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:24:47 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:24:47 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:24:47 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:24:47 --> Controller Class Initialized
+INFO - 2024-08-22 15:24:47 --> Model Class Initialized
+INFO - 2024-08-22 15:24:47 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:24:47 --> Query error: Unknown column 'barcode_foil' in 'IN/ALL/ANY subquery' - Invalid query: 
+        SELECT barcode_moisture_content FROM moisture_content
+        WHERE barcode_moisture_content = "reee"
+        AND barcode_foil NOT IN (SELECT barcode_moisture_content FROM moisture_content)
+        AND flag = 0 
+        
+INFO - 2024-08-22 15:24:47 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:25:20 --> Config Class Initialized
+INFO - 2024-08-22 15:25:20 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:25:20 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:25:20 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:25:20 --> URI Class Initialized
+INFO - 2024-08-22 15:25:20 --> Router Class Initialized
+INFO - 2024-08-22 15:25:20 --> Output Class Initialized
+INFO - 2024-08-22 15:25:20 --> Security Class Initialized
+DEBUG - 2024-08-22 15:25:20 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:25:20 --> Input Class Initialized
+INFO - 2024-08-22 15:25:20 --> Language Class Initialized
+INFO - 2024-08-22 15:25:20 --> Loader Class Initialized
+INFO - 2024-08-22 15:25:20 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:25:20 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:25:20 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:25:20 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:25:20 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:25:20 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:25:20 --> Controller Class Initialized
+INFO - 2024-08-22 15:25:20 --> Model Class Initialized
+INFO - 2024-08-22 15:25:20 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:25:20 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:25:20 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:25:20 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:25:20 --> Final output sent to browser
+DEBUG - 2024-08-22 15:25:20 --> Total execution time: 0.0725
+INFO - 2024-08-22 15:25:20 --> Config Class Initialized
+INFO - 2024-08-22 15:25:20 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:25:20 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:25:20 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:25:20 --> URI Class Initialized
+INFO - 2024-08-22 15:25:20 --> Router Class Initialized
+INFO - 2024-08-22 15:25:20 --> Output Class Initialized
+INFO - 2024-08-22 15:25:20 --> Security Class Initialized
+DEBUG - 2024-08-22 15:25:20 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:25:20 --> Input Class Initialized
+INFO - 2024-08-22 15:25:20 --> Language Class Initialized
+ERROR - 2024-08-22 15:25:20 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:25:20 --> Config Class Initialized
+INFO - 2024-08-22 15:25:20 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:25:20 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:25:20 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:25:20 --> URI Class Initialized
+INFO - 2024-08-22 15:25:20 --> Router Class Initialized
+INFO - 2024-08-22 15:25:20 --> Output Class Initialized
+INFO - 2024-08-22 15:25:20 --> Security Class Initialized
+DEBUG - 2024-08-22 15:25:20 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:25:20 --> Input Class Initialized
+INFO - 2024-08-22 15:25:20 --> Language Class Initialized
+INFO - 2024-08-22 15:25:20 --> Loader Class Initialized
+INFO - 2024-08-22 15:25:20 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:25:20 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:25:20 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:25:20 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:25:20 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:25:20 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:25:20 --> Controller Class Initialized
+INFO - 2024-08-22 15:25:20 --> Model Class Initialized
+INFO - 2024-08-22 15:25:20 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:25:20 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:25:20 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:25:25 --> Config Class Initialized
+INFO - 2024-08-22 15:25:25 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:25:25 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:25:25 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:25:25 --> URI Class Initialized
+INFO - 2024-08-22 15:25:25 --> Router Class Initialized
+INFO - 2024-08-22 15:25:25 --> Output Class Initialized
+INFO - 2024-08-22 15:25:25 --> Security Class Initialized
+DEBUG - 2024-08-22 15:25:25 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:25:25 --> Input Class Initialized
+INFO - 2024-08-22 15:25:25 --> Language Class Initialized
+INFO - 2024-08-22 15:25:25 --> Loader Class Initialized
+INFO - 2024-08-22 15:25:25 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:25:25 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:25:25 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:25:25 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:25:25 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:25:25 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:25:25 --> Controller Class Initialized
+INFO - 2024-08-22 15:25:25 --> Model Class Initialized
+INFO - 2024-08-22 15:25:25 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:25:25 --> Final output sent to browser
+DEBUG - 2024-08-22 15:25:25 --> Total execution time: 0.0406
+INFO - 2024-08-22 15:26:21 --> Config Class Initialized
+INFO - 2024-08-22 15:26:21 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:26:21 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:26:21 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:26:21 --> URI Class Initialized
+INFO - 2024-08-22 15:26:21 --> Router Class Initialized
+INFO - 2024-08-22 15:26:21 --> Output Class Initialized
+INFO - 2024-08-22 15:26:21 --> Security Class Initialized
+DEBUG - 2024-08-22 15:26:21 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:26:21 --> Input Class Initialized
+INFO - 2024-08-22 15:26:21 --> Language Class Initialized
+INFO - 2024-08-22 15:26:21 --> Loader Class Initialized
+INFO - 2024-08-22 15:26:21 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:26:21 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:26:21 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:26:21 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:26:21 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:26:21 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:26:21 --> Controller Class Initialized
+INFO - 2024-08-22 15:26:21 --> Model Class Initialized
+INFO - 2024-08-22 15:26:21 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:26:21 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:26:21 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:26:21 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:26:21 --> Final output sent to browser
+DEBUG - 2024-08-22 15:26:21 --> Total execution time: 0.0837
+INFO - 2024-08-22 15:26:21 --> Config Class Initialized
+INFO - 2024-08-22 15:26:21 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:26:21 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:26:21 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:26:21 --> URI Class Initialized
+INFO - 2024-08-22 15:26:21 --> Router Class Initialized
+INFO - 2024-08-22 15:26:21 --> Output Class Initialized
+INFO - 2024-08-22 15:26:21 --> Security Class Initialized
+DEBUG - 2024-08-22 15:26:21 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:26:21 --> Input Class Initialized
+INFO - 2024-08-22 15:26:21 --> Language Class Initialized
+ERROR - 2024-08-22 15:26:21 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:26:21 --> Config Class Initialized
+INFO - 2024-08-22 15:26:21 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:26:21 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:26:21 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:26:21 --> URI Class Initialized
+INFO - 2024-08-22 15:26:21 --> Router Class Initialized
+INFO - 2024-08-22 15:26:21 --> Output Class Initialized
+INFO - 2024-08-22 15:26:21 --> Security Class Initialized
+DEBUG - 2024-08-22 15:26:21 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:26:21 --> Input Class Initialized
+INFO - 2024-08-22 15:26:21 --> Language Class Initialized
+INFO - 2024-08-22 15:26:21 --> Loader Class Initialized
+INFO - 2024-08-22 15:26:21 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:26:21 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:26:21 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:26:21 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:26:21 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:26:21 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:26:21 --> Controller Class Initialized
+INFO - 2024-08-22 15:26:21 --> Model Class Initialized
+INFO - 2024-08-22 15:26:21 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:26:21 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:26:21 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:26:25 --> Config Class Initialized
+INFO - 2024-08-22 15:26:25 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:26:25 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:26:25 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:26:25 --> URI Class Initialized
+INFO - 2024-08-22 15:26:25 --> Router Class Initialized
+INFO - 2024-08-22 15:26:25 --> Output Class Initialized
+INFO - 2024-08-22 15:26:25 --> Security Class Initialized
+DEBUG - 2024-08-22 15:26:25 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:26:25 --> Input Class Initialized
+INFO - 2024-08-22 15:26:25 --> Language Class Initialized
+INFO - 2024-08-22 15:26:25 --> Loader Class Initialized
+INFO - 2024-08-22 15:26:25 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:26:25 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:26:25 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:26:25 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:26:25 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:26:25 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:26:25 --> Controller Class Initialized
+INFO - 2024-08-22 15:26:25 --> Model Class Initialized
+INFO - 2024-08-22 15:26:25 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:26:25 --> Final output sent to browser
+DEBUG - 2024-08-22 15:26:25 --> Total execution time: 0.0590
+INFO - 2024-08-22 15:27:12 --> Config Class Initialized
+INFO - 2024-08-22 15:27:12 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:27:12 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:27:12 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:27:12 --> URI Class Initialized
+INFO - 2024-08-22 15:27:12 --> Router Class Initialized
+INFO - 2024-08-22 15:27:12 --> Output Class Initialized
+INFO - 2024-08-22 15:27:12 --> Security Class Initialized
+DEBUG - 2024-08-22 15:27:12 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:27:12 --> Input Class Initialized
+INFO - 2024-08-22 15:27:12 --> Language Class Initialized
+INFO - 2024-08-22 15:27:12 --> Loader Class Initialized
+INFO - 2024-08-22 15:27:12 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:27:12 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:27:12 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:27:12 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:27:12 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:27:12 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:27:12 --> Controller Class Initialized
+INFO - 2024-08-22 15:27:12 --> Model Class Initialized
+INFO - 2024-08-22 15:27:12 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:27:12 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:27:12 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:27:12 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:27:12 --> Final output sent to browser
+DEBUG - 2024-08-22 15:27:12 --> Total execution time: 0.0484
+INFO - 2024-08-22 15:27:12 --> Config Class Initialized
+INFO - 2024-08-22 15:27:12 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:27:12 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:27:12 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:27:12 --> URI Class Initialized
+INFO - 2024-08-22 15:27:12 --> Router Class Initialized
+INFO - 2024-08-22 15:27:12 --> Output Class Initialized
+INFO - 2024-08-22 15:27:12 --> Security Class Initialized
+DEBUG - 2024-08-22 15:27:12 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:27:12 --> Input Class Initialized
+INFO - 2024-08-22 15:27:12 --> Language Class Initialized
+ERROR - 2024-08-22 15:27:12 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:27:12 --> Config Class Initialized
+INFO - 2024-08-22 15:27:12 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:27:12 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:27:12 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:27:12 --> URI Class Initialized
+INFO - 2024-08-22 15:27:12 --> Router Class Initialized
+INFO - 2024-08-22 15:27:12 --> Output Class Initialized
+INFO - 2024-08-22 15:27:12 --> Security Class Initialized
+DEBUG - 2024-08-22 15:27:12 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:27:12 --> Input Class Initialized
+INFO - 2024-08-22 15:27:12 --> Language Class Initialized
+INFO - 2024-08-22 15:27:12 --> Loader Class Initialized
+INFO - 2024-08-22 15:27:12 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:27:12 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:27:12 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:27:12 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:27:12 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:27:12 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:27:12 --> Controller Class Initialized
+INFO - 2024-08-22 15:27:12 --> Model Class Initialized
+INFO - 2024-08-22 15:27:12 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:27:13 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:27:13 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:27:30 --> Config Class Initialized
+INFO - 2024-08-22 15:27:30 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:27:30 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:27:30 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:27:30 --> URI Class Initialized
+INFO - 2024-08-22 15:27:30 --> Router Class Initialized
+INFO - 2024-08-22 15:27:30 --> Output Class Initialized
+INFO - 2024-08-22 15:27:30 --> Security Class Initialized
+DEBUG - 2024-08-22 15:27:30 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:27:30 --> Input Class Initialized
+INFO - 2024-08-22 15:27:30 --> Language Class Initialized
+INFO - 2024-08-22 15:27:30 --> Loader Class Initialized
+INFO - 2024-08-22 15:27:30 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:27:30 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:27:30 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:27:30 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:27:30 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:27:30 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:27:30 --> Controller Class Initialized
+INFO - 2024-08-22 15:27:30 --> Model Class Initialized
+INFO - 2024-08-22 15:27:30 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:27:30 --> Final output sent to browser
+DEBUG - 2024-08-22 15:27:30 --> Total execution time: 0.0670
+INFO - 2024-08-22 15:28:45 --> Config Class Initialized
+INFO - 2024-08-22 15:28:45 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:28:45 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:28:45 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:28:45 --> URI Class Initialized
+INFO - 2024-08-22 15:28:45 --> Router Class Initialized
+INFO - 2024-08-22 15:28:45 --> Output Class Initialized
+INFO - 2024-08-22 15:28:45 --> Security Class Initialized
+DEBUG - 2024-08-22 15:28:45 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:28:45 --> Input Class Initialized
+INFO - 2024-08-22 15:28:45 --> Language Class Initialized
+INFO - 2024-08-22 15:28:45 --> Loader Class Initialized
+INFO - 2024-08-22 15:28:45 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:28:45 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:28:45 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:28:45 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:28:45 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:28:45 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:28:45 --> Controller Class Initialized
+INFO - 2024-08-22 15:28:45 --> Model Class Initialized
+INFO - 2024-08-22 15:28:45 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:28:45 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:28:45 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:28:45 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:28:45 --> Final output sent to browser
+DEBUG - 2024-08-22 15:28:45 --> Total execution time: 0.0994
+INFO - 2024-08-22 15:28:46 --> Config Class Initialized
+INFO - 2024-08-22 15:28:46 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:28:46 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:28:46 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:28:46 --> URI Class Initialized
+INFO - 2024-08-22 15:28:46 --> Router Class Initialized
+INFO - 2024-08-22 15:28:46 --> Output Class Initialized
+INFO - 2024-08-22 15:28:46 --> Security Class Initialized
+DEBUG - 2024-08-22 15:28:46 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:28:46 --> Input Class Initialized
+INFO - 2024-08-22 15:28:46 --> Language Class Initialized
+ERROR - 2024-08-22 15:28:46 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:28:46 --> Config Class Initialized
+INFO - 2024-08-22 15:28:46 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:28:46 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:28:46 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:28:46 --> URI Class Initialized
+INFO - 2024-08-22 15:28:46 --> Router Class Initialized
+INFO - 2024-08-22 15:28:46 --> Output Class Initialized
+INFO - 2024-08-22 15:28:46 --> Security Class Initialized
+DEBUG - 2024-08-22 15:28:46 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:28:46 --> Input Class Initialized
+INFO - 2024-08-22 15:28:46 --> Language Class Initialized
+INFO - 2024-08-22 15:28:46 --> Loader Class Initialized
+INFO - 2024-08-22 15:28:46 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:28:46 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:28:46 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:28:46 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:28:46 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:28:46 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:28:46 --> Controller Class Initialized
+INFO - 2024-08-22 15:28:46 --> Model Class Initialized
+INFO - 2024-08-22 15:28:46 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:28:46 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:28:46 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:29:04 --> Config Class Initialized
+INFO - 2024-08-22 15:29:04 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:29:04 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:29:04 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:29:04 --> URI Class Initialized
+INFO - 2024-08-22 15:29:04 --> Router Class Initialized
+INFO - 2024-08-22 15:29:04 --> Output Class Initialized
+INFO - 2024-08-22 15:29:04 --> Security Class Initialized
+DEBUG - 2024-08-22 15:29:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:29:04 --> Input Class Initialized
+INFO - 2024-08-22 15:29:04 --> Language Class Initialized
+INFO - 2024-08-22 15:29:04 --> Loader Class Initialized
+INFO - 2024-08-22 15:29:04 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:29:04 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:29:04 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:29:04 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:29:04 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:29:04 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:29:04 --> Controller Class Initialized
+INFO - 2024-08-22 15:29:04 --> Model Class Initialized
+INFO - 2024-08-22 15:29:04 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:29:04 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:29:04 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:29:04 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:29:04 --> Final output sent to browser
+DEBUG - 2024-08-22 15:29:04 --> Total execution time: 0.0870
+INFO - 2024-08-22 15:29:04 --> Config Class Initialized
+INFO - 2024-08-22 15:29:04 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:29:04 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:29:04 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:29:04 --> URI Class Initialized
+INFO - 2024-08-22 15:29:04 --> Router Class Initialized
+INFO - 2024-08-22 15:29:04 --> Output Class Initialized
+INFO - 2024-08-22 15:29:04 --> Security Class Initialized
+DEBUG - 2024-08-22 15:29:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:29:04 --> Input Class Initialized
+INFO - 2024-08-22 15:29:04 --> Language Class Initialized
+ERROR - 2024-08-22 15:29:04 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:29:04 --> Config Class Initialized
+INFO - 2024-08-22 15:29:04 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:29:04 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:29:04 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:29:04 --> URI Class Initialized
+INFO - 2024-08-22 15:29:04 --> Router Class Initialized
+INFO - 2024-08-22 15:29:04 --> Output Class Initialized
+INFO - 2024-08-22 15:29:04 --> Security Class Initialized
+DEBUG - 2024-08-22 15:29:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:29:04 --> Input Class Initialized
+INFO - 2024-08-22 15:29:04 --> Language Class Initialized
+INFO - 2024-08-22 15:29:04 --> Loader Class Initialized
+INFO - 2024-08-22 15:29:04 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:29:04 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:29:04 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:29:04 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:29:04 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:29:04 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:29:04 --> Controller Class Initialized
+INFO - 2024-08-22 15:29:04 --> Model Class Initialized
+INFO - 2024-08-22 15:29:04 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:29:04 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:29:04 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:29:10 --> Config Class Initialized
+INFO - 2024-08-22 15:29:10 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:29:10 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:29:10 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:29:10 --> URI Class Initialized
+INFO - 2024-08-22 15:29:10 --> Router Class Initialized
+INFO - 2024-08-22 15:29:10 --> Output Class Initialized
+INFO - 2024-08-22 15:29:10 --> Security Class Initialized
+DEBUG - 2024-08-22 15:29:10 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:29:10 --> Input Class Initialized
+INFO - 2024-08-22 15:29:10 --> Language Class Initialized
+INFO - 2024-08-22 15:29:10 --> Loader Class Initialized
+INFO - 2024-08-22 15:29:10 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:29:10 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:29:10 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:29:10 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:29:10 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:29:10 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:29:10 --> Controller Class Initialized
+INFO - 2024-08-22 15:29:10 --> Model Class Initialized
+INFO - 2024-08-22 15:29:10 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:29:10 --> Final output sent to browser
+DEBUG - 2024-08-22 15:29:10 --> Total execution time: 0.0468
+INFO - 2024-08-22 15:29:28 --> Config Class Initialized
+INFO - 2024-08-22 15:29:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:29:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:29:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:29:28 --> URI Class Initialized
+INFO - 2024-08-22 15:29:28 --> Router Class Initialized
+INFO - 2024-08-22 15:29:28 --> Output Class Initialized
+INFO - 2024-08-22 15:29:28 --> Security Class Initialized
+DEBUG - 2024-08-22 15:29:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:29:28 --> Input Class Initialized
+INFO - 2024-08-22 15:29:28 --> Language Class Initialized
+INFO - 2024-08-22 15:29:28 --> Loader Class Initialized
+INFO - 2024-08-22 15:29:28 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:29:28 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:29:28 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:29:28 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:29:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:29:28 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:29:28 --> Controller Class Initialized
+INFO - 2024-08-22 15:29:28 --> Model Class Initialized
+INFO - 2024-08-22 15:29:28 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:29:28 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:29:28 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:29:28 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:29:28 --> Final output sent to browser
+DEBUG - 2024-08-22 15:29:28 --> Total execution time: 0.0720
+INFO - 2024-08-22 15:29:28 --> Config Class Initialized
+INFO - 2024-08-22 15:29:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:29:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:29:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:29:28 --> URI Class Initialized
+INFO - 2024-08-22 15:29:28 --> Router Class Initialized
+INFO - 2024-08-22 15:29:28 --> Output Class Initialized
+INFO - 2024-08-22 15:29:28 --> Security Class Initialized
+DEBUG - 2024-08-22 15:29:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:29:28 --> Input Class Initialized
+INFO - 2024-08-22 15:29:28 --> Language Class Initialized
+ERROR - 2024-08-22 15:29:28 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:29:28 --> Config Class Initialized
+INFO - 2024-08-22 15:29:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:29:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:29:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:29:28 --> URI Class Initialized
+INFO - 2024-08-22 15:29:28 --> Router Class Initialized
+INFO - 2024-08-22 15:29:28 --> Output Class Initialized
+INFO - 2024-08-22 15:29:28 --> Security Class Initialized
+DEBUG - 2024-08-22 15:29:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:29:28 --> Input Class Initialized
+INFO - 2024-08-22 15:29:28 --> Language Class Initialized
+INFO - 2024-08-22 15:29:28 --> Loader Class Initialized
+INFO - 2024-08-22 15:29:28 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:29:28 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:29:28 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:29:28 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:29:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:29:28 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:29:28 --> Controller Class Initialized
+INFO - 2024-08-22 15:29:28 --> Model Class Initialized
+INFO - 2024-08-22 15:29:28 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:29:28 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:29:28 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:29:32 --> Config Class Initialized
+INFO - 2024-08-22 15:29:32 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:29:32 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:29:32 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:29:32 --> URI Class Initialized
+INFO - 2024-08-22 15:29:32 --> Router Class Initialized
+INFO - 2024-08-22 15:29:32 --> Output Class Initialized
+INFO - 2024-08-22 15:29:32 --> Security Class Initialized
+DEBUG - 2024-08-22 15:29:32 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:29:32 --> Input Class Initialized
+INFO - 2024-08-22 15:29:32 --> Language Class Initialized
+INFO - 2024-08-22 15:29:32 --> Loader Class Initialized
+INFO - 2024-08-22 15:29:32 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:29:32 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:29:32 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:29:32 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:29:32 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:29:32 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:29:32 --> Controller Class Initialized
+INFO - 2024-08-22 15:29:32 --> Model Class Initialized
+INFO - 2024-08-22 15:29:32 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:29:32 --> Final output sent to browser
+DEBUG - 2024-08-22 15:29:32 --> Total execution time: 0.0312
+INFO - 2024-08-22 15:29:36 --> Config Class Initialized
+INFO - 2024-08-22 15:29:36 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:29:36 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:29:36 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:29:36 --> URI Class Initialized
+INFO - 2024-08-22 15:29:36 --> Router Class Initialized
+INFO - 2024-08-22 15:29:36 --> Output Class Initialized
+INFO - 2024-08-22 15:29:36 --> Security Class Initialized
+DEBUG - 2024-08-22 15:29:36 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:29:36 --> Input Class Initialized
+INFO - 2024-08-22 15:29:36 --> Language Class Initialized
+INFO - 2024-08-22 15:29:36 --> Loader Class Initialized
+INFO - 2024-08-22 15:29:36 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:29:36 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:29:36 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:29:36 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:29:36 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:29:36 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:29:36 --> Controller Class Initialized
+INFO - 2024-08-22 15:29:36 --> Model Class Initialized
+INFO - 2024-08-22 15:29:36 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:29:36 --> Final output sent to browser
+DEBUG - 2024-08-22 15:29:36 --> Total execution time: 0.0636
+INFO - 2024-08-22 15:29:48 --> Config Class Initialized
+INFO - 2024-08-22 15:29:48 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:29:48 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:29:48 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:29:48 --> URI Class Initialized
+INFO - 2024-08-22 15:29:48 --> Router Class Initialized
+INFO - 2024-08-22 15:29:48 --> Output Class Initialized
+INFO - 2024-08-22 15:29:48 --> Security Class Initialized
+DEBUG - 2024-08-22 15:29:48 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:29:48 --> Input Class Initialized
+INFO - 2024-08-22 15:29:48 --> Language Class Initialized
+INFO - 2024-08-22 15:29:48 --> Loader Class Initialized
+INFO - 2024-08-22 15:29:48 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:29:48 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:29:48 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:29:48 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:29:48 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:29:48 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:29:48 --> Controller Class Initialized
+INFO - 2024-08-22 15:29:48 --> Model Class Initialized
+INFO - 2024-08-22 15:29:48 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:29:48 --> Final output sent to browser
+DEBUG - 2024-08-22 15:29:48 --> Total execution time: 0.0251
+INFO - 2024-08-22 15:31:18 --> Config Class Initialized
+INFO - 2024-08-22 15:31:18 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:31:18 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:31:18 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:31:18 --> URI Class Initialized
+INFO - 2024-08-22 15:31:18 --> Router Class Initialized
+INFO - 2024-08-22 15:31:18 --> Output Class Initialized
+INFO - 2024-08-22 15:31:18 --> Security Class Initialized
+DEBUG - 2024-08-22 15:31:18 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:31:18 --> Input Class Initialized
+INFO - 2024-08-22 15:31:18 --> Language Class Initialized
+INFO - 2024-08-22 15:31:18 --> Loader Class Initialized
+INFO - 2024-08-22 15:31:18 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:31:18 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:31:18 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:31:18 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:31:18 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:31:18 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:31:18 --> Controller Class Initialized
+INFO - 2024-08-22 15:31:18 --> Model Class Initialized
+INFO - 2024-08-22 15:31:18 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:31:18 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 15:31:18 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 15:31:18 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 15:31:18 --> Final output sent to browser
+DEBUG - 2024-08-22 15:31:18 --> Total execution time: 0.0503
+INFO - 2024-08-22 15:31:18 --> Config Class Initialized
+INFO - 2024-08-22 15:31:18 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:31:18 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:31:18 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:31:18 --> URI Class Initialized
+INFO - 2024-08-22 15:31:18 --> Router Class Initialized
+INFO - 2024-08-22 15:31:18 --> Output Class Initialized
+INFO - 2024-08-22 15:31:18 --> Security Class Initialized
+DEBUG - 2024-08-22 15:31:18 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:31:18 --> Input Class Initialized
+INFO - 2024-08-22 15:31:18 --> Language Class Initialized
+ERROR - 2024-08-22 15:31:18 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 15:31:18 --> Config Class Initialized
+INFO - 2024-08-22 15:31:18 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:31:18 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:31:18 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:31:18 --> URI Class Initialized
+INFO - 2024-08-22 15:31:18 --> Router Class Initialized
+INFO - 2024-08-22 15:31:18 --> Output Class Initialized
+INFO - 2024-08-22 15:31:18 --> Security Class Initialized
+DEBUG - 2024-08-22 15:31:18 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:31:18 --> Input Class Initialized
+INFO - 2024-08-22 15:31:18 --> Language Class Initialized
+INFO - 2024-08-22 15:31:18 --> Loader Class Initialized
+INFO - 2024-08-22 15:31:18 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:31:18 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:31:18 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:31:18 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:31:18 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:31:18 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:31:18 --> Controller Class Initialized
+INFO - 2024-08-22 15:31:18 --> Model Class Initialized
+INFO - 2024-08-22 15:31:18 --> Form Validation Class Initialized
+ERROR - 2024-08-22 15:31:18 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 15:31:18 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 15:31:22 --> Config Class Initialized
+INFO - 2024-08-22 15:31:22 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:31:22 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:31:22 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:31:22 --> URI Class Initialized
+INFO - 2024-08-22 15:31:22 --> Router Class Initialized
+INFO - 2024-08-22 15:31:22 --> Output Class Initialized
+INFO - 2024-08-22 15:31:22 --> Security Class Initialized
+DEBUG - 2024-08-22 15:31:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:31:22 --> Input Class Initialized
+INFO - 2024-08-22 15:31:22 --> Language Class Initialized
+INFO - 2024-08-22 15:31:22 --> Loader Class Initialized
+INFO - 2024-08-22 15:31:22 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:31:22 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:31:22 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:31:22 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:31:22 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:31:22 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:31:22 --> Controller Class Initialized
+INFO - 2024-08-22 15:31:22 --> Model Class Initialized
+INFO - 2024-08-22 15:31:22 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:31:22 --> Final output sent to browser
+DEBUG - 2024-08-22 15:31:22 --> Total execution time: 0.0415
+INFO - 2024-08-22 15:31:33 --> Config Class Initialized
+INFO - 2024-08-22 15:31:33 --> Hooks Class Initialized
+DEBUG - 2024-08-22 15:31:33 --> UTF-8 Support Enabled
+INFO - 2024-08-22 15:31:33 --> Utf8 Class Initialized
+INFO - 2024-08-22 15:31:33 --> URI Class Initialized
+INFO - 2024-08-22 15:31:33 --> Router Class Initialized
+INFO - 2024-08-22 15:31:33 --> Output Class Initialized
+INFO - 2024-08-22 15:31:33 --> Security Class Initialized
+DEBUG - 2024-08-22 15:31:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 15:31:33 --> Input Class Initialized
+INFO - 2024-08-22 15:31:33 --> Language Class Initialized
+INFO - 2024-08-22 15:31:33 --> Loader Class Initialized
+INFO - 2024-08-22 15:31:33 --> Helper loaded: url_helper
+INFO - 2024-08-22 15:31:33 --> Helper loaded: form_helper
+INFO - 2024-08-22 15:31:33 --> Helper loaded: racode_helper
+INFO - 2024-08-22 15:31:33 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 15:31:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 15:31:33 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 15:31:33 --> Controller Class Initialized
+INFO - 2024-08-22 15:31:33 --> Model Class Initialized
+INFO - 2024-08-22 15:31:33 --> Form Validation Class Initialized
+INFO - 2024-08-22 15:31:33 --> Final output sent to browser
+DEBUG - 2024-08-22 15:31:33 --> Total execution time: 0.0724
+INFO - 2024-08-22 16:00:13 --> Config Class Initialized
+INFO - 2024-08-22 16:00:13 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:00:13 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:00:13 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:00:13 --> URI Class Initialized
+INFO - 2024-08-22 16:00:13 --> Router Class Initialized
+INFO - 2024-08-22 16:00:13 --> Output Class Initialized
+INFO - 2024-08-22 16:00:13 --> Security Class Initialized
+DEBUG - 2024-08-22 16:00:13 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:00:13 --> Input Class Initialized
+INFO - 2024-08-22 16:00:13 --> Language Class Initialized
+INFO - 2024-08-22 16:00:13 --> Loader Class Initialized
+INFO - 2024-08-22 16:00:13 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:00:13 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:00:13 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:00:13 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:00:13 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:00:13 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:00:13 --> Controller Class Initialized
+INFO - 2024-08-22 16:00:13 --> Model Class Initialized
+INFO - 2024-08-22 16:00:13 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:00:13 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 16:00:13 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 16:00:13 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 16:00:13 --> Final output sent to browser
+DEBUG - 2024-08-22 16:00:13 --> Total execution time: 0.0664
+INFO - 2024-08-22 16:00:13 --> Config Class Initialized
+INFO - 2024-08-22 16:00:13 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:00:13 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:00:13 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:00:13 --> URI Class Initialized
+INFO - 2024-08-22 16:00:13 --> Router Class Initialized
+INFO - 2024-08-22 16:00:13 --> Output Class Initialized
+INFO - 2024-08-22 16:00:13 --> Security Class Initialized
+DEBUG - 2024-08-22 16:00:13 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:00:13 --> Input Class Initialized
+INFO - 2024-08-22 16:00:13 --> Language Class Initialized
+ERROR - 2024-08-22 16:00:13 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 16:00:13 --> Config Class Initialized
+INFO - 2024-08-22 16:00:13 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:00:13 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:00:13 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:00:13 --> URI Class Initialized
+INFO - 2024-08-22 16:00:13 --> Router Class Initialized
+INFO - 2024-08-22 16:00:13 --> Output Class Initialized
+INFO - 2024-08-22 16:00:13 --> Security Class Initialized
+DEBUG - 2024-08-22 16:00:13 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:00:13 --> Input Class Initialized
+INFO - 2024-08-22 16:00:13 --> Language Class Initialized
+INFO - 2024-08-22 16:00:13 --> Loader Class Initialized
+INFO - 2024-08-22 16:00:13 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:00:13 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:00:13 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:00:13 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:00:13 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:00:13 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:00:13 --> Controller Class Initialized
+INFO - 2024-08-22 16:00:13 --> Model Class Initialized
+INFO - 2024-08-22 16:00:13 --> Form Validation Class Initialized
+ERROR - 2024-08-22 16:00:13 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 16:00:13 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 16:00:19 --> Config Class Initialized
+INFO - 2024-08-22 16:00:19 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:00:19 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:00:19 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:00:19 --> URI Class Initialized
+INFO - 2024-08-22 16:00:19 --> Router Class Initialized
+INFO - 2024-08-22 16:00:19 --> Output Class Initialized
+INFO - 2024-08-22 16:00:19 --> Security Class Initialized
+DEBUG - 2024-08-22 16:00:19 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:00:19 --> Input Class Initialized
+INFO - 2024-08-22 16:00:19 --> Language Class Initialized
+INFO - 2024-08-22 16:00:19 --> Loader Class Initialized
+INFO - 2024-08-22 16:00:19 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:00:19 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:00:19 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:00:19 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:00:19 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:00:19 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:00:19 --> Controller Class Initialized
+INFO - 2024-08-22 16:00:19 --> Model Class Initialized
+INFO - 2024-08-22 16:00:19 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:00:19 --> Final output sent to browser
+DEBUG - 2024-08-22 16:00:19 --> Total execution time: 0.0712
+INFO - 2024-08-22 16:00:23 --> Config Class Initialized
+INFO - 2024-08-22 16:00:23 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:00:23 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:00:23 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:00:23 --> URI Class Initialized
+INFO - 2024-08-22 16:00:23 --> Router Class Initialized
+INFO - 2024-08-22 16:00:23 --> Output Class Initialized
+INFO - 2024-08-22 16:00:23 --> Security Class Initialized
+DEBUG - 2024-08-22 16:00:23 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:00:23 --> Input Class Initialized
+INFO - 2024-08-22 16:00:23 --> Language Class Initialized
+INFO - 2024-08-22 16:00:23 --> Loader Class Initialized
+INFO - 2024-08-22 16:00:23 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:00:23 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:00:23 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:00:23 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:00:23 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:00:23 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:00:23 --> Controller Class Initialized
+INFO - 2024-08-22 16:00:23 --> Model Class Initialized
+INFO - 2024-08-22 16:00:23 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:00:23 --> Final output sent to browser
+DEBUG - 2024-08-22 16:00:23 --> Total execution time: 0.0466
+INFO - 2024-08-22 16:00:28 --> Config Class Initialized
+INFO - 2024-08-22 16:00:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:00:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:00:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:00:28 --> URI Class Initialized
+INFO - 2024-08-22 16:00:28 --> Router Class Initialized
+INFO - 2024-08-22 16:00:28 --> Output Class Initialized
+INFO - 2024-08-22 16:00:28 --> Security Class Initialized
+DEBUG - 2024-08-22 16:00:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:00:28 --> Input Class Initialized
+INFO - 2024-08-22 16:00:28 --> Language Class Initialized
+INFO - 2024-08-22 16:00:28 --> Loader Class Initialized
+INFO - 2024-08-22 16:00:28 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:00:28 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:00:28 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:00:28 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:00:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:00:28 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:00:28 --> Controller Class Initialized
+INFO - 2024-08-22 16:00:28 --> Model Class Initialized
+INFO - 2024-08-22 16:00:28 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:00:28 --> Final output sent to browser
+DEBUG - 2024-08-22 16:00:28 --> Total execution time: 0.0405
+INFO - 2024-08-22 16:00:30 --> Config Class Initialized
+INFO - 2024-08-22 16:00:30 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:00:30 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:00:30 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:00:30 --> URI Class Initialized
+INFO - 2024-08-22 16:00:30 --> Router Class Initialized
+INFO - 2024-08-22 16:00:30 --> Output Class Initialized
+INFO - 2024-08-22 16:00:30 --> Security Class Initialized
+DEBUG - 2024-08-22 16:00:30 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:00:30 --> Input Class Initialized
+INFO - 2024-08-22 16:00:30 --> Language Class Initialized
+INFO - 2024-08-22 16:00:30 --> Loader Class Initialized
+INFO - 2024-08-22 16:00:30 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:00:30 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:00:30 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:00:30 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:00:30 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:00:30 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:00:30 --> Controller Class Initialized
+INFO - 2024-08-22 16:00:30 --> Model Class Initialized
+INFO - 2024-08-22 16:00:30 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:00:30 --> Final output sent to browser
+DEBUG - 2024-08-22 16:00:30 --> Total execution time: 0.0627
+INFO - 2024-08-22 16:00:32 --> Config Class Initialized
+INFO - 2024-08-22 16:00:32 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:00:32 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:00:32 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:00:32 --> URI Class Initialized
+INFO - 2024-08-22 16:00:32 --> Router Class Initialized
+INFO - 2024-08-22 16:00:32 --> Output Class Initialized
+INFO - 2024-08-22 16:00:32 --> Security Class Initialized
+DEBUG - 2024-08-22 16:00:32 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:00:32 --> Input Class Initialized
+INFO - 2024-08-22 16:00:32 --> Language Class Initialized
+INFO - 2024-08-22 16:00:32 --> Loader Class Initialized
+INFO - 2024-08-22 16:00:32 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:00:32 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:00:32 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:00:32 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:00:32 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:00:32 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:00:32 --> Controller Class Initialized
+INFO - 2024-08-22 16:00:32 --> Model Class Initialized
+INFO - 2024-08-22 16:00:32 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:00:32 --> Final output sent to browser
+DEBUG - 2024-08-22 16:00:32 --> Total execution time: 0.0517
+INFO - 2024-08-22 16:00:34 --> Config Class Initialized
+INFO - 2024-08-22 16:00:34 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:00:34 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:00:34 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:00:34 --> URI Class Initialized
+INFO - 2024-08-22 16:00:34 --> Router Class Initialized
+INFO - 2024-08-22 16:00:34 --> Output Class Initialized
+INFO - 2024-08-22 16:00:34 --> Security Class Initialized
+DEBUG - 2024-08-22 16:00:34 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:00:34 --> Input Class Initialized
+INFO - 2024-08-22 16:00:34 --> Language Class Initialized
+INFO - 2024-08-22 16:00:34 --> Loader Class Initialized
+INFO - 2024-08-22 16:00:34 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:00:34 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:00:34 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:00:34 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:00:34 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:00:34 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:00:34 --> Controller Class Initialized
+INFO - 2024-08-22 16:00:34 --> Model Class Initialized
+INFO - 2024-08-22 16:00:34 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:00:34 --> Final output sent to browser
+DEBUG - 2024-08-22 16:00:34 --> Total execution time: 0.0475
+INFO - 2024-08-22 16:00:42 --> Config Class Initialized
+INFO - 2024-08-22 16:00:42 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:00:42 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:00:42 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:00:42 --> URI Class Initialized
+INFO - 2024-08-22 16:00:42 --> Router Class Initialized
+INFO - 2024-08-22 16:00:42 --> Output Class Initialized
+INFO - 2024-08-22 16:00:42 --> Security Class Initialized
+DEBUG - 2024-08-22 16:00:42 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:00:42 --> Input Class Initialized
+INFO - 2024-08-22 16:00:42 --> Language Class Initialized
+INFO - 2024-08-22 16:00:42 --> Loader Class Initialized
+INFO - 2024-08-22 16:00:42 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:00:42 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:00:42 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:00:42 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:00:42 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:00:42 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:00:42 --> Controller Class Initialized
+INFO - 2024-08-22 16:00:42 --> Model Class Initialized
+INFO - 2024-08-22 16:00:42 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:00:42 --> Final output sent to browser
+DEBUG - 2024-08-22 16:00:42 --> Total execution time: 0.0554
+INFO - 2024-08-22 16:01:17 --> Config Class Initialized
+INFO - 2024-08-22 16:01:17 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:01:17 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:01:17 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:01:17 --> URI Class Initialized
+INFO - 2024-08-22 16:01:17 --> Router Class Initialized
+INFO - 2024-08-22 16:01:17 --> Output Class Initialized
+INFO - 2024-08-22 16:01:17 --> Security Class Initialized
+DEBUG - 2024-08-22 16:01:17 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:01:17 --> Input Class Initialized
+INFO - 2024-08-22 16:01:17 --> Language Class Initialized
+INFO - 2024-08-22 16:01:17 --> Loader Class Initialized
+INFO - 2024-08-22 16:01:17 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:01:17 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:01:17 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:01:17 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:01:17 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:01:17 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:01:17 --> Controller Class Initialized
+INFO - 2024-08-22 16:01:17 --> Model Class Initialized
+INFO - 2024-08-22 16:01:17 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:01:17 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 16:01:17 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 16:01:17 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 16:01:17 --> Final output sent to browser
+DEBUG - 2024-08-22 16:01:17 --> Total execution time: 0.0321
+INFO - 2024-08-22 16:01:17 --> Config Class Initialized
+INFO - 2024-08-22 16:01:17 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:01:17 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:01:17 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:01:17 --> URI Class Initialized
+INFO - 2024-08-22 16:01:17 --> Router Class Initialized
+INFO - 2024-08-22 16:01:17 --> Output Class Initialized
+INFO - 2024-08-22 16:01:17 --> Security Class Initialized
+DEBUG - 2024-08-22 16:01:17 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:01:17 --> Input Class Initialized
+INFO - 2024-08-22 16:01:17 --> Language Class Initialized
+ERROR - 2024-08-22 16:01:17 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 16:01:17 --> Config Class Initialized
+INFO - 2024-08-22 16:01:17 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:01:17 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:01:17 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:01:17 --> URI Class Initialized
+INFO - 2024-08-22 16:01:17 --> Router Class Initialized
+INFO - 2024-08-22 16:01:17 --> Output Class Initialized
+INFO - 2024-08-22 16:01:17 --> Security Class Initialized
+DEBUG - 2024-08-22 16:01:17 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:01:17 --> Input Class Initialized
+INFO - 2024-08-22 16:01:17 --> Language Class Initialized
+INFO - 2024-08-22 16:01:17 --> Loader Class Initialized
+INFO - 2024-08-22 16:01:17 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:01:17 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:01:17 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:01:17 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:01:17 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:01:17 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:01:17 --> Controller Class Initialized
+INFO - 2024-08-22 16:01:17 --> Model Class Initialized
+INFO - 2024-08-22 16:01:17 --> Form Validation Class Initialized
+ERROR - 2024-08-22 16:01:17 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 16:01:17 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 16:01:41 --> Config Class Initialized
+INFO - 2024-08-22 16:01:41 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:01:41 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:01:41 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:01:41 --> URI Class Initialized
+INFO - 2024-08-22 16:01:41 --> Router Class Initialized
+INFO - 2024-08-22 16:01:41 --> Output Class Initialized
+INFO - 2024-08-22 16:01:41 --> Security Class Initialized
+DEBUG - 2024-08-22 16:01:41 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:01:41 --> Input Class Initialized
+INFO - 2024-08-22 16:01:41 --> Language Class Initialized
+INFO - 2024-08-22 16:01:41 --> Loader Class Initialized
+INFO - 2024-08-22 16:01:41 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:01:41 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:01:41 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:01:41 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:01:41 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:01:41 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:01:41 --> Controller Class Initialized
+INFO - 2024-08-22 16:01:41 --> Model Class Initialized
+INFO - 2024-08-22 16:01:41 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:01:41 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 16:01:41 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 16:01:41 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 16:01:41 --> Final output sent to browser
+DEBUG - 2024-08-22 16:01:41 --> Total execution time: 0.0845
+INFO - 2024-08-22 16:01:41 --> Config Class Initialized
+INFO - 2024-08-22 16:01:41 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:01:41 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:01:41 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:01:41 --> URI Class Initialized
+INFO - 2024-08-22 16:01:41 --> Router Class Initialized
+INFO - 2024-08-22 16:01:41 --> Output Class Initialized
+INFO - 2024-08-22 16:01:41 --> Security Class Initialized
+DEBUG - 2024-08-22 16:01:41 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:01:41 --> Input Class Initialized
+INFO - 2024-08-22 16:01:41 --> Language Class Initialized
+ERROR - 2024-08-22 16:01:41 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 16:01:41 --> Config Class Initialized
+INFO - 2024-08-22 16:01:41 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:01:41 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:01:41 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:01:41 --> URI Class Initialized
+INFO - 2024-08-22 16:01:41 --> Router Class Initialized
+INFO - 2024-08-22 16:01:41 --> Output Class Initialized
+INFO - 2024-08-22 16:01:41 --> Security Class Initialized
+DEBUG - 2024-08-22 16:01:41 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:01:41 --> Input Class Initialized
+INFO - 2024-08-22 16:01:41 --> Language Class Initialized
+INFO - 2024-08-22 16:01:41 --> Loader Class Initialized
+INFO - 2024-08-22 16:01:41 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:01:41 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:01:41 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:01:41 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:01:41 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:01:41 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:01:41 --> Controller Class Initialized
+INFO - 2024-08-22 16:01:41 --> Model Class Initialized
+INFO - 2024-08-22 16:01:41 --> Form Validation Class Initialized
+ERROR - 2024-08-22 16:01:41 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 16:01:41 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 16:01:50 --> Config Class Initialized
+INFO - 2024-08-22 16:01:50 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:01:50 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:01:50 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:01:50 --> URI Class Initialized
+INFO - 2024-08-22 16:01:50 --> Router Class Initialized
+INFO - 2024-08-22 16:01:50 --> Output Class Initialized
+INFO - 2024-08-22 16:01:50 --> Security Class Initialized
+DEBUG - 2024-08-22 16:01:50 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:01:50 --> Input Class Initialized
+INFO - 2024-08-22 16:01:50 --> Language Class Initialized
+INFO - 2024-08-22 16:01:50 --> Loader Class Initialized
+INFO - 2024-08-22 16:01:50 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:01:50 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:01:50 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:01:50 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:01:50 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:01:50 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:01:50 --> Controller Class Initialized
+INFO - 2024-08-22 16:01:50 --> Model Class Initialized
+INFO - 2024-08-22 16:01:50 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:01:51 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 16:01:51 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 16:01:51 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 16:01:51 --> Final output sent to browser
+DEBUG - 2024-08-22 16:01:51 --> Total execution time: 0.1179
+INFO - 2024-08-22 16:01:51 --> Config Class Initialized
+INFO - 2024-08-22 16:01:51 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:01:51 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:01:51 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:01:51 --> URI Class Initialized
+INFO - 2024-08-22 16:01:51 --> Router Class Initialized
+INFO - 2024-08-22 16:01:51 --> Output Class Initialized
+INFO - 2024-08-22 16:01:51 --> Security Class Initialized
+DEBUG - 2024-08-22 16:01:51 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:01:51 --> Input Class Initialized
+INFO - 2024-08-22 16:01:51 --> Language Class Initialized
+ERROR - 2024-08-22 16:01:51 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 16:01:51 --> Config Class Initialized
+INFO - 2024-08-22 16:01:51 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:01:51 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:01:51 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:01:51 --> URI Class Initialized
+INFO - 2024-08-22 16:01:51 --> Router Class Initialized
+INFO - 2024-08-22 16:01:51 --> Output Class Initialized
+INFO - 2024-08-22 16:01:51 --> Security Class Initialized
+DEBUG - 2024-08-22 16:01:51 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:01:51 --> Input Class Initialized
+INFO - 2024-08-22 16:01:51 --> Language Class Initialized
+INFO - 2024-08-22 16:01:51 --> Loader Class Initialized
+INFO - 2024-08-22 16:01:51 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:01:51 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:01:51 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:01:51 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:01:51 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:01:51 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:01:51 --> Controller Class Initialized
+INFO - 2024-08-22 16:01:51 --> Model Class Initialized
+INFO - 2024-08-22 16:01:51 --> Form Validation Class Initialized
+ERROR - 2024-08-22 16:01:51 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 16:01:51 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 16:02:22 --> Config Class Initialized
+INFO - 2024-08-22 16:02:22 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:02:22 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:02:22 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:02:22 --> URI Class Initialized
+INFO - 2024-08-22 16:02:22 --> Router Class Initialized
+INFO - 2024-08-22 16:02:22 --> Output Class Initialized
+INFO - 2024-08-22 16:02:22 --> Security Class Initialized
+DEBUG - 2024-08-22 16:02:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:02:22 --> Input Class Initialized
+INFO - 2024-08-22 16:02:22 --> Language Class Initialized
+INFO - 2024-08-22 16:02:22 --> Loader Class Initialized
+INFO - 2024-08-22 16:02:22 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:02:22 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:02:22 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:02:22 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:02:22 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:02:22 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:02:22 --> Controller Class Initialized
+INFO - 2024-08-22 16:02:22 --> Model Class Initialized
+INFO - 2024-08-22 16:02:22 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:02:22 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 16:02:22 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 16:02:22 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 16:02:22 --> Final output sent to browser
+DEBUG - 2024-08-22 16:02:22 --> Total execution time: 0.0728
+INFO - 2024-08-22 16:02:22 --> Config Class Initialized
+INFO - 2024-08-22 16:02:22 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:02:22 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:02:22 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:02:22 --> URI Class Initialized
+INFO - 2024-08-22 16:02:22 --> Router Class Initialized
+INFO - 2024-08-22 16:02:22 --> Output Class Initialized
+INFO - 2024-08-22 16:02:22 --> Security Class Initialized
+DEBUG - 2024-08-22 16:02:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:02:22 --> Input Class Initialized
+INFO - 2024-08-22 16:02:22 --> Language Class Initialized
+ERROR - 2024-08-22 16:02:22 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 16:02:22 --> Config Class Initialized
+INFO - 2024-08-22 16:02:22 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:02:22 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:02:22 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:02:22 --> URI Class Initialized
+INFO - 2024-08-22 16:02:22 --> Router Class Initialized
+INFO - 2024-08-22 16:02:22 --> Output Class Initialized
+INFO - 2024-08-22 16:02:22 --> Security Class Initialized
+DEBUG - 2024-08-22 16:02:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:02:22 --> Input Class Initialized
+INFO - 2024-08-22 16:02:22 --> Language Class Initialized
+INFO - 2024-08-22 16:02:22 --> Loader Class Initialized
+INFO - 2024-08-22 16:02:22 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:02:22 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:02:22 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:02:22 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:02:22 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:02:22 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:02:22 --> Controller Class Initialized
+INFO - 2024-08-22 16:02:22 --> Model Class Initialized
+INFO - 2024-08-22 16:02:22 --> Form Validation Class Initialized
+ERROR - 2024-08-22 16:02:22 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 16:02:22 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 16:02:26 --> Config Class Initialized
+INFO - 2024-08-22 16:02:26 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:02:26 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:02:26 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:02:26 --> URI Class Initialized
+INFO - 2024-08-22 16:02:26 --> Router Class Initialized
+INFO - 2024-08-22 16:02:26 --> Output Class Initialized
+INFO - 2024-08-22 16:02:26 --> Security Class Initialized
+DEBUG - 2024-08-22 16:02:26 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:02:26 --> Input Class Initialized
+INFO - 2024-08-22 16:02:26 --> Language Class Initialized
+ERROR - 2024-08-22 16:02:26 --> 404 Page Not Found: Indexphp/Moisture_content
+INFO - 2024-08-22 16:02:32 --> Config Class Initialized
+INFO - 2024-08-22 16:02:32 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:02:32 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:02:32 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:02:32 --> URI Class Initialized
+INFO - 2024-08-22 16:02:32 --> Router Class Initialized
+INFO - 2024-08-22 16:02:32 --> Output Class Initialized
+INFO - 2024-08-22 16:02:32 --> Security Class Initialized
+DEBUG - 2024-08-22 16:02:32 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:02:32 --> Input Class Initialized
+INFO - 2024-08-22 16:02:32 --> Language Class Initialized
+INFO - 2024-08-22 16:02:32 --> Loader Class Initialized
+INFO - 2024-08-22 16:02:32 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:02:32 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:02:32 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:02:32 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:02:32 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:02:32 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:02:32 --> Controller Class Initialized
+INFO - 2024-08-22 16:02:32 --> Model Class Initialized
+INFO - 2024-08-22 16:02:32 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:02:32 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 16:02:32 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 16:02:32 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 16:02:32 --> Final output sent to browser
+DEBUG - 2024-08-22 16:02:32 --> Total execution time: 0.0903
+INFO - 2024-08-22 16:02:32 --> Config Class Initialized
+INFO - 2024-08-22 16:02:32 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:02:32 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:02:32 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:02:32 --> URI Class Initialized
+INFO - 2024-08-22 16:02:32 --> Router Class Initialized
+INFO - 2024-08-22 16:02:32 --> Output Class Initialized
+INFO - 2024-08-22 16:02:32 --> Security Class Initialized
+DEBUG - 2024-08-22 16:02:32 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:02:32 --> Input Class Initialized
+INFO - 2024-08-22 16:02:32 --> Language Class Initialized
+ERROR - 2024-08-22 16:02:32 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 16:02:32 --> Config Class Initialized
+INFO - 2024-08-22 16:02:32 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:02:32 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:02:32 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:02:32 --> URI Class Initialized
+INFO - 2024-08-22 16:02:32 --> Router Class Initialized
+INFO - 2024-08-22 16:02:32 --> Output Class Initialized
+INFO - 2024-08-22 16:02:32 --> Security Class Initialized
+DEBUG - 2024-08-22 16:02:32 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:02:32 --> Input Class Initialized
+INFO - 2024-08-22 16:02:32 --> Language Class Initialized
+INFO - 2024-08-22 16:02:32 --> Loader Class Initialized
+INFO - 2024-08-22 16:02:32 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:02:32 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:02:32 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:02:32 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:02:32 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:02:32 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:02:32 --> Controller Class Initialized
+INFO - 2024-08-22 16:02:32 --> Model Class Initialized
+INFO - 2024-08-22 16:02:32 --> Form Validation Class Initialized
+ERROR - 2024-08-22 16:02:32 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 16:02:32 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 16:02:37 --> Config Class Initialized
+INFO - 2024-08-22 16:02:37 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:02:37 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:02:37 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:02:37 --> URI Class Initialized
+INFO - 2024-08-22 16:02:37 --> Router Class Initialized
+INFO - 2024-08-22 16:02:37 --> Output Class Initialized
+INFO - 2024-08-22 16:02:37 --> Security Class Initialized
+DEBUG - 2024-08-22 16:02:37 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:02:37 --> Input Class Initialized
+INFO - 2024-08-22 16:02:37 --> Language Class Initialized
+ERROR - 2024-08-22 16:02:37 --> 404 Page Not Found: Indexphp/Moisture_content
+INFO - 2024-08-22 16:02:55 --> Config Class Initialized
+INFO - 2024-08-22 16:02:55 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:02:55 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:02:55 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:02:55 --> URI Class Initialized
+INFO - 2024-08-22 16:02:55 --> Router Class Initialized
+INFO - 2024-08-22 16:02:55 --> Output Class Initialized
+INFO - 2024-08-22 16:02:55 --> Security Class Initialized
+DEBUG - 2024-08-22 16:02:55 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:02:55 --> Input Class Initialized
+INFO - 2024-08-22 16:02:55 --> Language Class Initialized
+INFO - 2024-08-22 16:02:55 --> Loader Class Initialized
+INFO - 2024-08-22 16:02:55 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:02:55 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:02:55 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:02:55 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:02:55 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:02:55 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:02:55 --> Controller Class Initialized
+INFO - 2024-08-22 16:02:55 --> Model Class Initialized
+INFO - 2024-08-22 16:02:55 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:02:55 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 16:02:55 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 16:02:55 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 16:02:55 --> Final output sent to browser
+DEBUG - 2024-08-22 16:02:55 --> Total execution time: 0.0853
+INFO - 2024-08-22 16:02:55 --> Config Class Initialized
+INFO - 2024-08-22 16:02:55 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:02:55 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:02:55 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:02:55 --> URI Class Initialized
+INFO - 2024-08-22 16:02:55 --> Router Class Initialized
+INFO - 2024-08-22 16:02:55 --> Output Class Initialized
+INFO - 2024-08-22 16:02:55 --> Security Class Initialized
+DEBUG - 2024-08-22 16:02:55 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:02:55 --> Input Class Initialized
+INFO - 2024-08-22 16:02:55 --> Language Class Initialized
+ERROR - 2024-08-22 16:02:55 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 16:02:55 --> Config Class Initialized
+INFO - 2024-08-22 16:02:55 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:02:55 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:02:55 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:02:55 --> URI Class Initialized
+INFO - 2024-08-22 16:02:55 --> Router Class Initialized
+INFO - 2024-08-22 16:02:55 --> Output Class Initialized
+INFO - 2024-08-22 16:02:55 --> Security Class Initialized
+DEBUG - 2024-08-22 16:02:55 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:02:55 --> Input Class Initialized
+INFO - 2024-08-22 16:02:55 --> Language Class Initialized
+INFO - 2024-08-22 16:02:55 --> Loader Class Initialized
+INFO - 2024-08-22 16:02:55 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:02:55 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:02:55 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:02:55 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:02:55 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:02:55 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:02:55 --> Controller Class Initialized
+INFO - 2024-08-22 16:02:55 --> Model Class Initialized
+INFO - 2024-08-22 16:02:55 --> Form Validation Class Initialized
+ERROR - 2024-08-22 16:02:55 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 16:02:55 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 16:02:59 --> Config Class Initialized
+INFO - 2024-08-22 16:02:59 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:02:59 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:02:59 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:02:59 --> URI Class Initialized
+INFO - 2024-08-22 16:02:59 --> Router Class Initialized
+INFO - 2024-08-22 16:02:59 --> Output Class Initialized
+INFO - 2024-08-22 16:02:59 --> Security Class Initialized
+DEBUG - 2024-08-22 16:02:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:02:59 --> Input Class Initialized
+INFO - 2024-08-22 16:02:59 --> Language Class Initialized
+INFO - 2024-08-22 16:02:59 --> Loader Class Initialized
+INFO - 2024-08-22 16:02:59 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:02:59 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:02:59 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:02:59 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:02:59 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:02:59 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:02:59 --> Controller Class Initialized
+INFO - 2024-08-22 16:02:59 --> Model Class Initialized
+INFO - 2024-08-22 16:02:59 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:02:59 --> Final output sent to browser
+DEBUG - 2024-08-22 16:02:59 --> Total execution time: 0.0538
+INFO - 2024-08-22 16:04:33 --> Config Class Initialized
+INFO - 2024-08-22 16:04:33 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:04:33 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:04:33 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:04:33 --> URI Class Initialized
+INFO - 2024-08-22 16:04:33 --> Router Class Initialized
+INFO - 2024-08-22 16:04:33 --> Output Class Initialized
+INFO - 2024-08-22 16:04:33 --> Security Class Initialized
+DEBUG - 2024-08-22 16:04:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:04:33 --> Input Class Initialized
+INFO - 2024-08-22 16:04:33 --> Language Class Initialized
+INFO - 2024-08-22 16:04:33 --> Loader Class Initialized
+INFO - 2024-08-22 16:04:33 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:04:33 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:04:33 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:04:33 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:04:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:04:33 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:04:33 --> Controller Class Initialized
+INFO - 2024-08-22 16:04:33 --> Model Class Initialized
+INFO - 2024-08-22 16:04:33 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:04:33 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 16:04:33 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 16:04:33 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 16:04:33 --> Final output sent to browser
+DEBUG - 2024-08-22 16:04:33 --> Total execution time: 0.1186
+INFO - 2024-08-22 16:04:33 --> Config Class Initialized
+INFO - 2024-08-22 16:04:33 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:04:33 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:04:33 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:04:33 --> URI Class Initialized
+INFO - 2024-08-22 16:04:33 --> Router Class Initialized
+INFO - 2024-08-22 16:04:33 --> Output Class Initialized
+INFO - 2024-08-22 16:04:33 --> Security Class Initialized
+DEBUG - 2024-08-22 16:04:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:04:33 --> Input Class Initialized
+INFO - 2024-08-22 16:04:33 --> Language Class Initialized
+ERROR - 2024-08-22 16:04:33 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 16:04:34 --> Config Class Initialized
+INFO - 2024-08-22 16:04:34 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:04:34 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:04:34 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:04:34 --> URI Class Initialized
+INFO - 2024-08-22 16:04:34 --> Router Class Initialized
+INFO - 2024-08-22 16:04:34 --> Output Class Initialized
+INFO - 2024-08-22 16:04:34 --> Security Class Initialized
+DEBUG - 2024-08-22 16:04:34 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:04:34 --> Input Class Initialized
+INFO - 2024-08-22 16:04:34 --> Language Class Initialized
+INFO - 2024-08-22 16:04:34 --> Loader Class Initialized
+INFO - 2024-08-22 16:04:34 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:04:34 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:04:34 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:04:34 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:04:34 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:04:34 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:04:34 --> Controller Class Initialized
+INFO - 2024-08-22 16:04:34 --> Model Class Initialized
+INFO - 2024-08-22 16:04:34 --> Form Validation Class Initialized
+ERROR - 2024-08-22 16:04:34 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 16:04:34 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 16:04:37 --> Config Class Initialized
+INFO - 2024-08-22 16:04:37 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:04:37 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:04:37 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:04:37 --> URI Class Initialized
+INFO - 2024-08-22 16:04:37 --> Router Class Initialized
+INFO - 2024-08-22 16:04:37 --> Output Class Initialized
+INFO - 2024-08-22 16:04:37 --> Security Class Initialized
+DEBUG - 2024-08-22 16:04:37 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:04:37 --> Input Class Initialized
+INFO - 2024-08-22 16:04:37 --> Language Class Initialized
+INFO - 2024-08-22 16:04:37 --> Loader Class Initialized
+INFO - 2024-08-22 16:04:37 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:04:37 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:04:37 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:04:37 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:04:37 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:04:37 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:04:37 --> Controller Class Initialized
+INFO - 2024-08-22 16:04:37 --> Model Class Initialized
+INFO - 2024-08-22 16:04:37 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:04:37 --> Final output sent to browser
+DEBUG - 2024-08-22 16:04:37 --> Total execution time: 0.0398
+INFO - 2024-08-22 16:06:16 --> Config Class Initialized
+INFO - 2024-08-22 16:06:16 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:06:16 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:06:16 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:06:16 --> URI Class Initialized
+INFO - 2024-08-22 16:06:16 --> Router Class Initialized
+INFO - 2024-08-22 16:06:16 --> Output Class Initialized
+INFO - 2024-08-22 16:06:16 --> Security Class Initialized
+DEBUG - 2024-08-22 16:06:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:06:16 --> Input Class Initialized
+INFO - 2024-08-22 16:06:16 --> Language Class Initialized
+INFO - 2024-08-22 16:06:16 --> Loader Class Initialized
+INFO - 2024-08-22 16:06:16 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:06:16 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:06:16 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:06:16 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:06:16 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:06:16 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:06:16 --> Controller Class Initialized
+INFO - 2024-08-22 16:06:16 --> Model Class Initialized
+INFO - 2024-08-22 16:06:16 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:06:16 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 16:06:16 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 16:06:16 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 16:06:16 --> Final output sent to browser
+DEBUG - 2024-08-22 16:06:16 --> Total execution time: 0.0858
+INFO - 2024-08-22 16:06:16 --> Config Class Initialized
+INFO - 2024-08-22 16:06:16 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:06:16 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:06:16 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:06:16 --> URI Class Initialized
+INFO - 2024-08-22 16:06:16 --> Router Class Initialized
+INFO - 2024-08-22 16:06:16 --> Output Class Initialized
+INFO - 2024-08-22 16:06:16 --> Security Class Initialized
+DEBUG - 2024-08-22 16:06:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:06:16 --> Input Class Initialized
+INFO - 2024-08-22 16:06:16 --> Language Class Initialized
+ERROR - 2024-08-22 16:06:16 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 16:06:16 --> Config Class Initialized
+INFO - 2024-08-22 16:06:16 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:06:16 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:06:16 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:06:16 --> URI Class Initialized
+INFO - 2024-08-22 16:06:16 --> Router Class Initialized
+INFO - 2024-08-22 16:06:16 --> Output Class Initialized
+INFO - 2024-08-22 16:06:16 --> Security Class Initialized
+DEBUG - 2024-08-22 16:06:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:06:16 --> Input Class Initialized
+INFO - 2024-08-22 16:06:16 --> Language Class Initialized
+INFO - 2024-08-22 16:06:16 --> Loader Class Initialized
+INFO - 2024-08-22 16:06:16 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:06:16 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:06:16 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:06:16 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:06:16 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:06:16 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:06:16 --> Controller Class Initialized
+INFO - 2024-08-22 16:06:16 --> Model Class Initialized
+INFO - 2024-08-22 16:06:16 --> Form Validation Class Initialized
+ERROR - 2024-08-22 16:06:16 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 16:06:16 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 16:06:22 --> Config Class Initialized
+INFO - 2024-08-22 16:06:22 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:06:22 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:06:22 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:06:22 --> URI Class Initialized
+INFO - 2024-08-22 16:06:22 --> Router Class Initialized
+INFO - 2024-08-22 16:06:22 --> Output Class Initialized
+INFO - 2024-08-22 16:06:22 --> Security Class Initialized
+DEBUG - 2024-08-22 16:06:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:06:22 --> Input Class Initialized
+INFO - 2024-08-22 16:06:22 --> Language Class Initialized
+INFO - 2024-08-22 16:06:22 --> Loader Class Initialized
+INFO - 2024-08-22 16:06:22 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:06:22 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:06:22 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:06:22 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:06:22 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:06:22 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:06:22 --> Controller Class Initialized
+INFO - 2024-08-22 16:06:22 --> Model Class Initialized
+INFO - 2024-08-22 16:06:22 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:06:22 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 16:06:22 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 16:06:22 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 16:06:22 --> Final output sent to browser
+DEBUG - 2024-08-22 16:06:22 --> Total execution time: 0.0655
+INFO - 2024-08-22 16:06:22 --> Config Class Initialized
+INFO - 2024-08-22 16:06:22 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:06:22 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:06:22 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:06:22 --> URI Class Initialized
+INFO - 2024-08-22 16:06:22 --> Router Class Initialized
+INFO - 2024-08-22 16:06:22 --> Output Class Initialized
+INFO - 2024-08-22 16:06:22 --> Security Class Initialized
+DEBUG - 2024-08-22 16:06:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:06:22 --> Input Class Initialized
+INFO - 2024-08-22 16:06:22 --> Language Class Initialized
+ERROR - 2024-08-22 16:06:22 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 16:06:22 --> Config Class Initialized
+INFO - 2024-08-22 16:06:22 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:06:22 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:06:22 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:06:22 --> URI Class Initialized
+INFO - 2024-08-22 16:06:22 --> Router Class Initialized
+INFO - 2024-08-22 16:06:22 --> Output Class Initialized
+INFO - 2024-08-22 16:06:22 --> Security Class Initialized
+DEBUG - 2024-08-22 16:06:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:06:22 --> Input Class Initialized
+INFO - 2024-08-22 16:06:22 --> Language Class Initialized
+INFO - 2024-08-22 16:06:22 --> Loader Class Initialized
+INFO - 2024-08-22 16:06:22 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:06:22 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:06:22 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:06:22 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:06:22 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:06:22 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:06:22 --> Controller Class Initialized
+INFO - 2024-08-22 16:06:22 --> Model Class Initialized
+INFO - 2024-08-22 16:06:22 --> Form Validation Class Initialized
+ERROR - 2024-08-22 16:06:22 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 16:06:22 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 16:06:37 --> Config Class Initialized
+INFO - 2024-08-22 16:06:37 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:06:37 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:06:37 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:06:37 --> URI Class Initialized
+INFO - 2024-08-22 16:06:37 --> Router Class Initialized
+INFO - 2024-08-22 16:06:37 --> Output Class Initialized
+INFO - 2024-08-22 16:06:37 --> Security Class Initialized
+DEBUG - 2024-08-22 16:06:37 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:06:37 --> Input Class Initialized
+INFO - 2024-08-22 16:06:37 --> Language Class Initialized
+INFO - 2024-08-22 16:06:37 --> Loader Class Initialized
+INFO - 2024-08-22 16:06:37 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:06:37 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:06:37 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:06:37 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:06:37 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:06:37 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:06:37 --> Controller Class Initialized
+INFO - 2024-08-22 16:06:37 --> Model Class Initialized
+INFO - 2024-08-22 16:06:37 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:06:37 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 16:06:37 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 16:06:37 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 16:06:37 --> Final output sent to browser
+DEBUG - 2024-08-22 16:06:37 --> Total execution time: 0.0693
+INFO - 2024-08-22 16:06:37 --> Config Class Initialized
+INFO - 2024-08-22 16:06:37 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:06:37 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:06:37 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:06:37 --> URI Class Initialized
+INFO - 2024-08-22 16:06:37 --> Router Class Initialized
+INFO - 2024-08-22 16:06:37 --> Output Class Initialized
+INFO - 2024-08-22 16:06:37 --> Security Class Initialized
+DEBUG - 2024-08-22 16:06:37 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:06:37 --> Input Class Initialized
+INFO - 2024-08-22 16:06:37 --> Language Class Initialized
+ERROR - 2024-08-22 16:06:37 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 16:06:38 --> Config Class Initialized
+INFO - 2024-08-22 16:06:38 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:06:38 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:06:38 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:06:38 --> URI Class Initialized
+INFO - 2024-08-22 16:06:38 --> Router Class Initialized
+INFO - 2024-08-22 16:06:38 --> Output Class Initialized
+INFO - 2024-08-22 16:06:38 --> Security Class Initialized
+DEBUG - 2024-08-22 16:06:38 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:06:38 --> Input Class Initialized
+INFO - 2024-08-22 16:06:38 --> Language Class Initialized
+INFO - 2024-08-22 16:06:38 --> Loader Class Initialized
+INFO - 2024-08-22 16:06:38 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:06:38 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:06:38 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:06:38 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:06:38 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:06:38 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:06:38 --> Controller Class Initialized
+INFO - 2024-08-22 16:06:38 --> Model Class Initialized
+INFO - 2024-08-22 16:06:38 --> Form Validation Class Initialized
+ERROR - 2024-08-22 16:06:38 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 16:06:38 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 16:06:43 --> Config Class Initialized
+INFO - 2024-08-22 16:06:43 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:06:43 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:06:43 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:06:43 --> URI Class Initialized
+INFO - 2024-08-22 16:06:43 --> Router Class Initialized
+INFO - 2024-08-22 16:06:43 --> Output Class Initialized
+INFO - 2024-08-22 16:06:43 --> Security Class Initialized
+DEBUG - 2024-08-22 16:06:43 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:06:43 --> Input Class Initialized
+INFO - 2024-08-22 16:06:43 --> Language Class Initialized
+INFO - 2024-08-22 16:06:43 --> Loader Class Initialized
+INFO - 2024-08-22 16:06:43 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:06:43 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:06:43 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:06:43 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:06:43 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:06:43 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:06:43 --> Controller Class Initialized
+INFO - 2024-08-22 16:06:43 --> Model Class Initialized
+INFO - 2024-08-22 16:06:43 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:06:43 --> Final output sent to browser
+DEBUG - 2024-08-22 16:06:43 --> Total execution time: 0.0678
+INFO - 2024-08-22 16:07:08 --> Config Class Initialized
+INFO - 2024-08-22 16:07:08 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:07:08 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:07:08 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:07:08 --> URI Class Initialized
+INFO - 2024-08-22 16:07:08 --> Router Class Initialized
+INFO - 2024-08-22 16:07:08 --> Output Class Initialized
+INFO - 2024-08-22 16:07:08 --> Security Class Initialized
+DEBUG - 2024-08-22 16:07:08 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:07:08 --> Input Class Initialized
+INFO - 2024-08-22 16:07:08 --> Language Class Initialized
+INFO - 2024-08-22 16:07:08 --> Loader Class Initialized
+INFO - 2024-08-22 16:07:08 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:07:08 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:07:08 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:07:08 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:07:08 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:07:08 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:07:08 --> Controller Class Initialized
+INFO - 2024-08-22 16:07:08 --> Model Class Initialized
+INFO - 2024-08-22 16:07:08 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:07:08 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 16:07:08 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 16:07:08 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 16:07:08 --> Final output sent to browser
+DEBUG - 2024-08-22 16:07:08 --> Total execution time: 0.0896
+INFO - 2024-08-22 16:07:08 --> Config Class Initialized
+INFO - 2024-08-22 16:07:08 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:07:08 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:07:08 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:07:08 --> URI Class Initialized
+INFO - 2024-08-22 16:07:08 --> Router Class Initialized
+INFO - 2024-08-22 16:07:08 --> Output Class Initialized
+INFO - 2024-08-22 16:07:08 --> Security Class Initialized
+DEBUG - 2024-08-22 16:07:08 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:07:08 --> Input Class Initialized
+INFO - 2024-08-22 16:07:08 --> Language Class Initialized
+ERROR - 2024-08-22 16:07:08 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 16:07:08 --> Config Class Initialized
+INFO - 2024-08-22 16:07:08 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:07:08 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:07:08 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:07:08 --> URI Class Initialized
+INFO - 2024-08-22 16:07:08 --> Router Class Initialized
+INFO - 2024-08-22 16:07:08 --> Output Class Initialized
+INFO - 2024-08-22 16:07:08 --> Security Class Initialized
+DEBUG - 2024-08-22 16:07:08 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:07:08 --> Input Class Initialized
+INFO - 2024-08-22 16:07:08 --> Language Class Initialized
+INFO - 2024-08-22 16:07:08 --> Loader Class Initialized
+INFO - 2024-08-22 16:07:08 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:07:08 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:07:08 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:07:08 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:07:08 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:07:08 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:07:08 --> Controller Class Initialized
+INFO - 2024-08-22 16:07:08 --> Model Class Initialized
+INFO - 2024-08-22 16:07:08 --> Form Validation Class Initialized
+ERROR - 2024-08-22 16:07:08 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 16:07:08 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 16:08:16 --> Config Class Initialized
+INFO - 2024-08-22 16:08:16 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:08:16 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:08:16 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:08:16 --> URI Class Initialized
+INFO - 2024-08-22 16:08:16 --> Router Class Initialized
+INFO - 2024-08-22 16:08:16 --> Output Class Initialized
+INFO - 2024-08-22 16:08:16 --> Security Class Initialized
+DEBUG - 2024-08-22 16:08:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:08:16 --> Input Class Initialized
+INFO - 2024-08-22 16:08:16 --> Language Class Initialized
+INFO - 2024-08-22 16:08:16 --> Loader Class Initialized
+INFO - 2024-08-22 16:08:16 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:08:16 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:08:16 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:08:16 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:08:16 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:08:16 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:08:16 --> Controller Class Initialized
+INFO - 2024-08-22 16:08:16 --> Model Class Initialized
+INFO - 2024-08-22 16:08:16 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:08:16 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 16:08:16 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 16:08:16 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 16:08:16 --> Final output sent to browser
+DEBUG - 2024-08-22 16:08:16 --> Total execution time: 0.1217
+INFO - 2024-08-22 16:08:16 --> Config Class Initialized
+INFO - 2024-08-22 16:08:16 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:08:16 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:08:16 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:08:16 --> URI Class Initialized
+INFO - 2024-08-22 16:08:16 --> Router Class Initialized
+INFO - 2024-08-22 16:08:16 --> Output Class Initialized
+INFO - 2024-08-22 16:08:16 --> Security Class Initialized
+DEBUG - 2024-08-22 16:08:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:08:16 --> Input Class Initialized
+INFO - 2024-08-22 16:08:16 --> Language Class Initialized
+ERROR - 2024-08-22 16:08:16 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 16:08:16 --> Config Class Initialized
+INFO - 2024-08-22 16:08:16 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:08:16 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:08:16 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:08:16 --> URI Class Initialized
+INFO - 2024-08-22 16:08:16 --> Router Class Initialized
+INFO - 2024-08-22 16:08:16 --> Output Class Initialized
+INFO - 2024-08-22 16:08:16 --> Security Class Initialized
+DEBUG - 2024-08-22 16:08:16 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:08:16 --> Input Class Initialized
+INFO - 2024-08-22 16:08:16 --> Language Class Initialized
+INFO - 2024-08-22 16:08:16 --> Loader Class Initialized
+INFO - 2024-08-22 16:08:16 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:08:16 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:08:16 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:08:16 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:08:16 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:08:16 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:08:16 --> Controller Class Initialized
+INFO - 2024-08-22 16:08:16 --> Model Class Initialized
+INFO - 2024-08-22 16:08:16 --> Form Validation Class Initialized
+ERROR - 2024-08-22 16:08:16 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 16:08:16 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 16:08:20 --> Config Class Initialized
+INFO - 2024-08-22 16:08:20 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:08:20 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:08:20 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:08:20 --> URI Class Initialized
+INFO - 2024-08-22 16:08:20 --> Router Class Initialized
+INFO - 2024-08-22 16:08:20 --> Output Class Initialized
+INFO - 2024-08-22 16:08:20 --> Security Class Initialized
+DEBUG - 2024-08-22 16:08:20 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:08:20 --> Input Class Initialized
+INFO - 2024-08-22 16:08:20 --> Language Class Initialized
+INFO - 2024-08-22 16:08:20 --> Loader Class Initialized
+INFO - 2024-08-22 16:08:20 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:08:20 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:08:20 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:08:20 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:08:20 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:08:20 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:08:20 --> Controller Class Initialized
+INFO - 2024-08-22 16:08:20 --> Model Class Initialized
+INFO - 2024-08-22 16:08:20 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:08:20 --> Final output sent to browser
+DEBUG - 2024-08-22 16:08:20 --> Total execution time: 0.0600
+INFO - 2024-08-22 16:09:28 --> Config Class Initialized
+INFO - 2024-08-22 16:09:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:09:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:09:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:09:28 --> URI Class Initialized
+INFO - 2024-08-22 16:09:28 --> Router Class Initialized
+INFO - 2024-08-22 16:09:28 --> Output Class Initialized
+INFO - 2024-08-22 16:09:28 --> Security Class Initialized
+DEBUG - 2024-08-22 16:09:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:09:28 --> Input Class Initialized
+INFO - 2024-08-22 16:09:28 --> Language Class Initialized
+INFO - 2024-08-22 16:09:28 --> Loader Class Initialized
+INFO - 2024-08-22 16:09:28 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:09:28 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:09:28 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:09:28 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:09:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:09:28 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:09:28 --> Controller Class Initialized
+INFO - 2024-08-22 16:09:28 --> Model Class Initialized
+INFO - 2024-08-22 16:09:28 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:09:28 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 16:09:28 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 16:09:28 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 16:09:28 --> Final output sent to browser
+DEBUG - 2024-08-22 16:09:28 --> Total execution time: 0.0956
+INFO - 2024-08-22 16:09:28 --> Config Class Initialized
+INFO - 2024-08-22 16:09:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:09:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:09:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:09:28 --> URI Class Initialized
+INFO - 2024-08-22 16:09:28 --> Router Class Initialized
+INFO - 2024-08-22 16:09:28 --> Output Class Initialized
+INFO - 2024-08-22 16:09:28 --> Security Class Initialized
+DEBUG - 2024-08-22 16:09:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:09:28 --> Input Class Initialized
+INFO - 2024-08-22 16:09:28 --> Language Class Initialized
+ERROR - 2024-08-22 16:09:28 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 16:09:28 --> Config Class Initialized
+INFO - 2024-08-22 16:09:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:09:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:09:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:09:28 --> URI Class Initialized
+INFO - 2024-08-22 16:09:28 --> Router Class Initialized
+INFO - 2024-08-22 16:09:28 --> Output Class Initialized
+INFO - 2024-08-22 16:09:28 --> Security Class Initialized
+DEBUG - 2024-08-22 16:09:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:09:28 --> Input Class Initialized
+INFO - 2024-08-22 16:09:28 --> Language Class Initialized
+INFO - 2024-08-22 16:09:28 --> Loader Class Initialized
+INFO - 2024-08-22 16:09:28 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:09:28 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:09:28 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:09:28 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:09:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:09:28 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:09:28 --> Controller Class Initialized
+INFO - 2024-08-22 16:09:28 --> Model Class Initialized
+INFO - 2024-08-22 16:09:28 --> Form Validation Class Initialized
+ERROR - 2024-08-22 16:09:28 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 16:09:28 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 16:09:31 --> Config Class Initialized
+INFO - 2024-08-22 16:09:31 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:09:31 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:09:31 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:09:31 --> URI Class Initialized
+INFO - 2024-08-22 16:09:31 --> Router Class Initialized
+INFO - 2024-08-22 16:09:31 --> Output Class Initialized
+INFO - 2024-08-22 16:09:31 --> Security Class Initialized
+DEBUG - 2024-08-22 16:09:31 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:09:31 --> Input Class Initialized
+INFO - 2024-08-22 16:09:31 --> Language Class Initialized
+ERROR - 2024-08-22 16:09:31 --> 404 Page Not Found: Indexphp/Moisture_content
+INFO - 2024-08-22 16:09:43 --> Config Class Initialized
+INFO - 2024-08-22 16:09:43 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:09:43 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:09:43 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:09:43 --> URI Class Initialized
+INFO - 2024-08-22 16:09:43 --> Router Class Initialized
+INFO - 2024-08-22 16:09:43 --> Output Class Initialized
+INFO - 2024-08-22 16:09:43 --> Security Class Initialized
+DEBUG - 2024-08-22 16:09:43 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:09:43 --> Input Class Initialized
+INFO - 2024-08-22 16:09:43 --> Language Class Initialized
+INFO - 2024-08-22 16:09:43 --> Loader Class Initialized
+INFO - 2024-08-22 16:09:43 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:09:43 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:09:43 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:09:43 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:09:43 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:09:43 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:09:43 --> Controller Class Initialized
+INFO - 2024-08-22 16:09:43 --> Model Class Initialized
+INFO - 2024-08-22 16:09:43 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:09:43 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 16:09:43 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 16:09:43 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 16:09:43 --> Final output sent to browser
+DEBUG - 2024-08-22 16:09:43 --> Total execution time: 0.0813
+INFO - 2024-08-22 16:09:43 --> Config Class Initialized
+INFO - 2024-08-22 16:09:43 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:09:43 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:09:43 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:09:43 --> URI Class Initialized
+INFO - 2024-08-22 16:09:43 --> Router Class Initialized
+INFO - 2024-08-22 16:09:43 --> Output Class Initialized
+INFO - 2024-08-22 16:09:43 --> Security Class Initialized
+DEBUG - 2024-08-22 16:09:43 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:09:43 --> Input Class Initialized
+INFO - 2024-08-22 16:09:43 --> Language Class Initialized
+ERROR - 2024-08-22 16:09:43 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 16:09:44 --> Config Class Initialized
+INFO - 2024-08-22 16:09:44 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:09:44 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:09:44 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:09:44 --> URI Class Initialized
+INFO - 2024-08-22 16:09:44 --> Router Class Initialized
+INFO - 2024-08-22 16:09:44 --> Output Class Initialized
+INFO - 2024-08-22 16:09:44 --> Security Class Initialized
+DEBUG - 2024-08-22 16:09:44 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:09:44 --> Input Class Initialized
+INFO - 2024-08-22 16:09:44 --> Language Class Initialized
+INFO - 2024-08-22 16:09:44 --> Loader Class Initialized
+INFO - 2024-08-22 16:09:44 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:09:44 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:09:44 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:09:44 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:09:44 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:09:44 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:09:44 --> Controller Class Initialized
+INFO - 2024-08-22 16:09:44 --> Model Class Initialized
+INFO - 2024-08-22 16:09:44 --> Form Validation Class Initialized
+ERROR - 2024-08-22 16:09:44 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 16:09:44 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 16:09:48 --> Config Class Initialized
+INFO - 2024-08-22 16:09:48 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:09:48 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:09:48 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:09:48 --> URI Class Initialized
+INFO - 2024-08-22 16:09:48 --> Router Class Initialized
+INFO - 2024-08-22 16:09:48 --> Output Class Initialized
+INFO - 2024-08-22 16:09:48 --> Security Class Initialized
+DEBUG - 2024-08-22 16:09:48 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:09:48 --> Input Class Initialized
+INFO - 2024-08-22 16:09:48 --> Language Class Initialized
+INFO - 2024-08-22 16:09:48 --> Loader Class Initialized
+INFO - 2024-08-22 16:09:48 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:09:48 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:09:48 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:09:48 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:09:48 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:09:48 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:09:48 --> Controller Class Initialized
+INFO - 2024-08-22 16:09:48 --> Model Class Initialized
+INFO - 2024-08-22 16:09:48 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:09:48 --> Final output sent to browser
+DEBUG - 2024-08-22 16:09:48 --> Total execution time: 0.1178
+INFO - 2024-08-22 16:09:51 --> Config Class Initialized
+INFO - 2024-08-22 16:09:51 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:09:51 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:09:51 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:09:51 --> URI Class Initialized
+INFO - 2024-08-22 16:09:51 --> Router Class Initialized
+INFO - 2024-08-22 16:09:51 --> Output Class Initialized
+INFO - 2024-08-22 16:09:51 --> Security Class Initialized
+DEBUG - 2024-08-22 16:09:51 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:09:51 --> Input Class Initialized
+INFO - 2024-08-22 16:09:51 --> Language Class Initialized
+INFO - 2024-08-22 16:09:51 --> Loader Class Initialized
+INFO - 2024-08-22 16:09:51 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:09:51 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:09:51 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:09:51 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:09:51 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:09:51 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:09:51 --> Controller Class Initialized
+INFO - 2024-08-22 16:09:51 --> Model Class Initialized
+INFO - 2024-08-22 16:09:51 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:09:51 --> Final output sent to browser
+DEBUG - 2024-08-22 16:09:51 --> Total execution time: 0.0888
+INFO - 2024-08-22 16:13:54 --> Config Class Initialized
+INFO - 2024-08-22 16:13:54 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:13:54 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:13:54 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:13:54 --> URI Class Initialized
+INFO - 2024-08-22 16:13:54 --> Router Class Initialized
+INFO - 2024-08-22 16:13:54 --> Output Class Initialized
+INFO - 2024-08-22 16:13:54 --> Security Class Initialized
+DEBUG - 2024-08-22 16:13:54 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:13:54 --> Input Class Initialized
+INFO - 2024-08-22 16:13:54 --> Language Class Initialized
+INFO - 2024-08-22 16:13:54 --> Loader Class Initialized
+INFO - 2024-08-22 16:13:54 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:13:54 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:13:54 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:13:54 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:13:54 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:13:54 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:13:54 --> Controller Class Initialized
+INFO - 2024-08-22 16:13:54 --> Model Class Initialized
+INFO - 2024-08-22 16:13:54 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:13:54 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 16:13:54 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 16:13:54 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 16:13:54 --> Final output sent to browser
+DEBUG - 2024-08-22 16:13:54 --> Total execution time: 0.0679
+INFO - 2024-08-22 16:13:54 --> Config Class Initialized
+INFO - 2024-08-22 16:13:54 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:13:54 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:13:54 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:13:54 --> URI Class Initialized
+INFO - 2024-08-22 16:13:54 --> Router Class Initialized
+INFO - 2024-08-22 16:13:54 --> Output Class Initialized
+INFO - 2024-08-22 16:13:54 --> Security Class Initialized
+DEBUG - 2024-08-22 16:13:54 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:13:54 --> Input Class Initialized
+INFO - 2024-08-22 16:13:54 --> Language Class Initialized
+ERROR - 2024-08-22 16:13:54 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 16:13:54 --> Config Class Initialized
+INFO - 2024-08-22 16:13:54 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:13:54 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:13:54 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:13:54 --> URI Class Initialized
+INFO - 2024-08-22 16:13:54 --> Router Class Initialized
+INFO - 2024-08-22 16:13:54 --> Output Class Initialized
+INFO - 2024-08-22 16:13:54 --> Security Class Initialized
+DEBUG - 2024-08-22 16:13:54 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:13:54 --> Input Class Initialized
+INFO - 2024-08-22 16:13:54 --> Language Class Initialized
+INFO - 2024-08-22 16:13:54 --> Loader Class Initialized
+INFO - 2024-08-22 16:13:54 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:13:54 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:13:54 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:13:54 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:13:54 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:13:54 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:13:54 --> Controller Class Initialized
+INFO - 2024-08-22 16:13:54 --> Model Class Initialized
+INFO - 2024-08-22 16:13:54 --> Form Validation Class Initialized
+ERROR - 2024-08-22 16:13:54 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 16:13:54 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 16:14:02 --> Config Class Initialized
+INFO - 2024-08-22 16:14:02 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:14:02 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:14:02 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:14:02 --> URI Class Initialized
+INFO - 2024-08-22 16:14:02 --> Router Class Initialized
+INFO - 2024-08-22 16:14:02 --> Output Class Initialized
+INFO - 2024-08-22 16:14:02 --> Security Class Initialized
+DEBUG - 2024-08-22 16:14:02 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:14:02 --> Input Class Initialized
+INFO - 2024-08-22 16:14:02 --> Language Class Initialized
+INFO - 2024-08-22 16:14:02 --> Loader Class Initialized
+INFO - 2024-08-22 16:14:02 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:14:02 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:14:02 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:14:02 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:14:02 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:14:02 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:14:02 --> Controller Class Initialized
+INFO - 2024-08-22 16:14:02 --> Model Class Initialized
+INFO - 2024-08-22 16:14:02 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:14:02 --> Final output sent to browser
+DEBUG - 2024-08-22 16:14:02 --> Total execution time: 0.0700
+INFO - 2024-08-22 16:14:12 --> Config Class Initialized
+INFO - 2024-08-22 16:14:12 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:14:12 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:14:12 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:14:12 --> URI Class Initialized
+INFO - 2024-08-22 16:14:12 --> Router Class Initialized
+INFO - 2024-08-22 16:14:12 --> Output Class Initialized
+INFO - 2024-08-22 16:14:12 --> Security Class Initialized
+DEBUG - 2024-08-22 16:14:12 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:14:12 --> Input Class Initialized
+INFO - 2024-08-22 16:14:12 --> Language Class Initialized
+INFO - 2024-08-22 16:14:12 --> Loader Class Initialized
+INFO - 2024-08-22 16:14:12 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:14:12 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:14:12 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:14:12 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:14:12 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:14:12 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:14:12 --> Controller Class Initialized
+INFO - 2024-08-22 16:14:12 --> Model Class Initialized
+INFO - 2024-08-22 16:14:12 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:14:12 --> Final output sent to browser
+DEBUG - 2024-08-22 16:14:12 --> Total execution time: 0.0731
+INFO - 2024-08-22 16:15:15 --> Config Class Initialized
+INFO - 2024-08-22 16:15:15 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:15:15 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:15:15 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:15:15 --> URI Class Initialized
+INFO - 2024-08-22 16:15:15 --> Router Class Initialized
+INFO - 2024-08-22 16:15:15 --> Output Class Initialized
+INFO - 2024-08-22 16:15:15 --> Security Class Initialized
+DEBUG - 2024-08-22 16:15:15 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:15:15 --> Input Class Initialized
+INFO - 2024-08-22 16:15:15 --> Language Class Initialized
+INFO - 2024-08-22 16:15:15 --> Loader Class Initialized
+INFO - 2024-08-22 16:15:15 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:15:15 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:15:15 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:15:15 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:15:16 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:15:16 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:15:16 --> Controller Class Initialized
+INFO - 2024-08-22 16:15:16 --> Model Class Initialized
+INFO - 2024-08-22 16:15:16 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:15:16 --> Final output sent to browser
+DEBUG - 2024-08-22 16:15:16 --> Total execution time: 0.0640
+INFO - 2024-08-22 16:29:43 --> Config Class Initialized
+INFO - 2024-08-22 16:29:43 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:29:43 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:29:43 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:29:43 --> URI Class Initialized
+INFO - 2024-08-22 16:29:43 --> Router Class Initialized
+INFO - 2024-08-22 16:29:43 --> Output Class Initialized
+INFO - 2024-08-22 16:29:43 --> Security Class Initialized
+DEBUG - 2024-08-22 16:29:43 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:29:43 --> Input Class Initialized
+INFO - 2024-08-22 16:29:43 --> Language Class Initialized
+INFO - 2024-08-22 16:29:43 --> Loader Class Initialized
+INFO - 2024-08-22 16:29:43 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:29:43 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:29:43 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:29:43 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:29:43 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:29:43 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:29:43 --> Controller Class Initialized
+INFO - 2024-08-22 16:29:43 --> Model Class Initialized
+INFO - 2024-08-22 16:29:43 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:29:43 --> Final output sent to browser
+DEBUG - 2024-08-22 16:29:43 --> Total execution time: 0.0422
+INFO - 2024-08-22 16:50:56 --> Config Class Initialized
+INFO - 2024-08-22 16:50:56 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:50:56 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:50:56 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:50:56 --> URI Class Initialized
+INFO - 2024-08-22 16:50:56 --> Router Class Initialized
+INFO - 2024-08-22 16:50:56 --> Output Class Initialized
+INFO - 2024-08-22 16:50:56 --> Security Class Initialized
+DEBUG - 2024-08-22 16:50:56 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:50:56 --> Input Class Initialized
+INFO - 2024-08-22 16:50:56 --> Language Class Initialized
+INFO - 2024-08-22 16:50:56 --> Loader Class Initialized
+INFO - 2024-08-22 16:50:56 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:50:56 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:50:56 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:50:56 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:50:56 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:50:56 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:50:56 --> Controller Class Initialized
+INFO - 2024-08-22 16:50:56 --> Model Class Initialized
+INFO - 2024-08-22 16:50:56 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:50:56 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 16:50:56 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 16:50:56 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 16:50:56 --> Final output sent to browser
+DEBUG - 2024-08-22 16:50:56 --> Total execution time: 0.1029
+INFO - 2024-08-22 16:50:56 --> Config Class Initialized
+INFO - 2024-08-22 16:50:56 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:50:56 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:50:56 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:50:56 --> URI Class Initialized
+INFO - 2024-08-22 16:50:56 --> Router Class Initialized
+INFO - 2024-08-22 16:50:56 --> Output Class Initialized
+INFO - 2024-08-22 16:50:56 --> Security Class Initialized
+DEBUG - 2024-08-22 16:50:56 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:50:56 --> Input Class Initialized
+INFO - 2024-08-22 16:50:56 --> Language Class Initialized
+ERROR - 2024-08-22 16:50:56 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 16:50:56 --> Config Class Initialized
+INFO - 2024-08-22 16:50:56 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:50:56 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:50:56 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:50:56 --> URI Class Initialized
+INFO - 2024-08-22 16:50:56 --> Router Class Initialized
+INFO - 2024-08-22 16:50:56 --> Output Class Initialized
+INFO - 2024-08-22 16:50:56 --> Security Class Initialized
+DEBUG - 2024-08-22 16:50:56 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:50:56 --> Input Class Initialized
+INFO - 2024-08-22 16:50:56 --> Language Class Initialized
+INFO - 2024-08-22 16:50:56 --> Loader Class Initialized
+INFO - 2024-08-22 16:50:56 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:50:56 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:50:56 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:50:56 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:50:56 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:50:56 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:50:56 --> Controller Class Initialized
+INFO - 2024-08-22 16:50:56 --> Model Class Initialized
+INFO - 2024-08-22 16:50:56 --> Form Validation Class Initialized
+ERROR - 2024-08-22 16:50:56 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 16:50:56 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 16:51:05 --> Config Class Initialized
+INFO - 2024-08-22 16:51:05 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:51:05 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:51:05 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:51:05 --> URI Class Initialized
+INFO - 2024-08-22 16:51:05 --> Router Class Initialized
+INFO - 2024-08-22 16:51:05 --> Output Class Initialized
+INFO - 2024-08-22 16:51:05 --> Security Class Initialized
+DEBUG - 2024-08-22 16:51:05 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:51:05 --> Input Class Initialized
+INFO - 2024-08-22 16:51:05 --> Language Class Initialized
+INFO - 2024-08-22 16:51:05 --> Loader Class Initialized
+INFO - 2024-08-22 16:51:05 --> Helper loaded: url_helper
+INFO - 2024-08-22 16:51:05 --> Helper loaded: form_helper
+INFO - 2024-08-22 16:51:05 --> Helper loaded: racode_helper
+INFO - 2024-08-22 16:51:05 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 16:51:05 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 16:51:05 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 16:51:05 --> Controller Class Initialized
+INFO - 2024-08-22 16:51:05 --> Model Class Initialized
+INFO - 2024-08-22 16:51:05 --> Form Validation Class Initialized
+INFO - 2024-08-22 16:51:05 --> Final output sent to browser
+DEBUG - 2024-08-22 16:51:05 --> Total execution time: 0.0318
+INFO - 2024-08-22 16:58:17 --> Config Class Initialized
+INFO - 2024-08-22 16:58:17 --> Hooks Class Initialized
+DEBUG - 2024-08-22 16:58:17 --> UTF-8 Support Enabled
+INFO - 2024-08-22 16:58:17 --> Utf8 Class Initialized
+INFO - 2024-08-22 16:58:17 --> URI Class Initialized
+INFO - 2024-08-22 16:58:17 --> Router Class Initialized
+INFO - 2024-08-22 16:58:17 --> Output Class Initialized
+INFO - 2024-08-22 16:58:17 --> Security Class Initialized
+DEBUG - 2024-08-22 16:58:17 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 16:58:17 --> Input Class Initialized
+INFO - 2024-08-22 16:58:17 --> Language Class Initialized
+ERROR - 2024-08-22 16:58:18 --> Severity: error --> Exception: syntax error, unexpected '=>' (T_DOUBLE_ARROW) C:\laragon\www\limsonewater\application\controllers\Moisture_content.php 309
+INFO - 2024-08-22 17:03:56 --> Config Class Initialized
+INFO - 2024-08-22 17:03:56 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:03:56 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:03:56 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:03:56 --> URI Class Initialized
+INFO - 2024-08-22 17:03:56 --> Router Class Initialized
+INFO - 2024-08-22 17:03:56 --> Output Class Initialized
+INFO - 2024-08-22 17:03:56 --> Security Class Initialized
+DEBUG - 2024-08-22 17:03:56 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:03:56 --> Input Class Initialized
+INFO - 2024-08-22 17:03:56 --> Language Class Initialized
+INFO - 2024-08-22 17:03:56 --> Loader Class Initialized
+INFO - 2024-08-22 17:03:56 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:03:56 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:03:56 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:03:56 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:03:56 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:03:56 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:03:56 --> Controller Class Initialized
+INFO - 2024-08-22 17:03:56 --> Model Class Initialized
+INFO - 2024-08-22 17:03:56 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:03:56 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:03:56 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:03:56 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:03:56 --> Final output sent to browser
+DEBUG - 2024-08-22 17:03:56 --> Total execution time: 0.0384
+INFO - 2024-08-22 17:03:56 --> Config Class Initialized
+INFO - 2024-08-22 17:03:56 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:03:56 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:03:56 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:03:56 --> URI Class Initialized
+INFO - 2024-08-22 17:03:56 --> Router Class Initialized
+INFO - 2024-08-22 17:03:56 --> Output Class Initialized
+INFO - 2024-08-22 17:03:56 --> Security Class Initialized
+DEBUG - 2024-08-22 17:03:56 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:03:56 --> Input Class Initialized
+INFO - 2024-08-22 17:03:56 --> Language Class Initialized
+ERROR - 2024-08-22 17:03:56 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 17:03:57 --> Config Class Initialized
+INFO - 2024-08-22 17:03:57 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:03:57 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:03:57 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:03:57 --> URI Class Initialized
+INFO - 2024-08-22 17:03:57 --> Router Class Initialized
+INFO - 2024-08-22 17:03:57 --> Output Class Initialized
+INFO - 2024-08-22 17:03:57 --> Security Class Initialized
+DEBUG - 2024-08-22 17:03:57 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:03:57 --> Input Class Initialized
+INFO - 2024-08-22 17:03:57 --> Language Class Initialized
+INFO - 2024-08-22 17:03:57 --> Loader Class Initialized
+INFO - 2024-08-22 17:03:57 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:03:57 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:03:57 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:03:57 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:03:57 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:03:57 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:03:57 --> Controller Class Initialized
+INFO - 2024-08-22 17:03:57 --> Model Class Initialized
+INFO - 2024-08-22 17:03:57 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:03:57 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:03:57 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:04:17 --> Config Class Initialized
+INFO - 2024-08-22 17:04:17 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:04:17 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:04:17 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:04:17 --> URI Class Initialized
+INFO - 2024-08-22 17:04:17 --> Router Class Initialized
+INFO - 2024-08-22 17:04:17 --> Output Class Initialized
+INFO - 2024-08-22 17:04:17 --> Security Class Initialized
+DEBUG - 2024-08-22 17:04:17 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:04:17 --> Input Class Initialized
+INFO - 2024-08-22 17:04:17 --> Language Class Initialized
+INFO - 2024-08-22 17:04:17 --> Loader Class Initialized
+INFO - 2024-08-22 17:04:17 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:04:17 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:04:17 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:04:17 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:04:17 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:04:17 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:04:17 --> Controller Class Initialized
+INFO - 2024-08-22 17:04:17 --> Model Class Initialized
+INFO - 2024-08-22 17:04:17 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:04:17 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:04:17 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:04:17 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:04:17 --> Final output sent to browser
+DEBUG - 2024-08-22 17:04:17 --> Total execution time: 0.0880
+INFO - 2024-08-22 17:04:17 --> Config Class Initialized
+INFO - 2024-08-22 17:04:17 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:04:17 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:04:17 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:04:17 --> URI Class Initialized
+INFO - 2024-08-22 17:04:17 --> Router Class Initialized
+INFO - 2024-08-22 17:04:17 --> Output Class Initialized
+INFO - 2024-08-22 17:04:17 --> Security Class Initialized
+DEBUG - 2024-08-22 17:04:17 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:04:17 --> Input Class Initialized
+INFO - 2024-08-22 17:04:17 --> Language Class Initialized
+ERROR - 2024-08-22 17:04:17 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 17:04:18 --> Config Class Initialized
+INFO - 2024-08-22 17:04:18 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:04:18 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:04:18 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:04:18 --> URI Class Initialized
+INFO - 2024-08-22 17:04:18 --> Router Class Initialized
+INFO - 2024-08-22 17:04:18 --> Output Class Initialized
+INFO - 2024-08-22 17:04:18 --> Security Class Initialized
+DEBUG - 2024-08-22 17:04:18 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:04:18 --> Input Class Initialized
+INFO - 2024-08-22 17:04:18 --> Language Class Initialized
+INFO - 2024-08-22 17:04:18 --> Loader Class Initialized
+INFO - 2024-08-22 17:04:18 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:04:18 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:04:18 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:04:18 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:04:18 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:04:18 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:04:18 --> Controller Class Initialized
+INFO - 2024-08-22 17:04:18 --> Model Class Initialized
+INFO - 2024-08-22 17:04:18 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:04:18 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:04:18 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:04:23 --> Config Class Initialized
+INFO - 2024-08-22 17:04:23 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:04:23 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:04:23 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:04:23 --> URI Class Initialized
+INFO - 2024-08-22 17:04:23 --> Router Class Initialized
+INFO - 2024-08-22 17:04:23 --> Output Class Initialized
+INFO - 2024-08-22 17:04:23 --> Security Class Initialized
+DEBUG - 2024-08-22 17:04:23 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:04:23 --> Input Class Initialized
+INFO - 2024-08-22 17:04:23 --> Language Class Initialized
+INFO - 2024-08-22 17:04:23 --> Loader Class Initialized
+INFO - 2024-08-22 17:04:23 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:04:23 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:04:23 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:04:23 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:04:23 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:04:23 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:04:23 --> Controller Class Initialized
+INFO - 2024-08-22 17:04:23 --> Model Class Initialized
+INFO - 2024-08-22 17:04:23 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:04:23 --> Final output sent to browser
+DEBUG - 2024-08-22 17:04:23 --> Total execution time: 0.0590
+INFO - 2024-08-22 17:04:28 --> Config Class Initialized
+INFO - 2024-08-22 17:04:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:04:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:04:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:04:28 --> URI Class Initialized
+INFO - 2024-08-22 17:04:28 --> Router Class Initialized
+INFO - 2024-08-22 17:04:28 --> Output Class Initialized
+INFO - 2024-08-22 17:04:28 --> Security Class Initialized
+DEBUG - 2024-08-22 17:04:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:04:28 --> Input Class Initialized
+INFO - 2024-08-22 17:04:28 --> Language Class Initialized
+ERROR - 2024-08-22 17:04:28 --> 404 Page Not Found: Mousture_content/savedetail24
+INFO - 2024-08-22 17:05:38 --> Config Class Initialized
+INFO - 2024-08-22 17:05:38 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:05:38 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:05:38 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:05:38 --> URI Class Initialized
+INFO - 2024-08-22 17:05:38 --> Router Class Initialized
+INFO - 2024-08-22 17:05:38 --> Output Class Initialized
+INFO - 2024-08-22 17:05:38 --> Security Class Initialized
+DEBUG - 2024-08-22 17:05:38 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:05:38 --> Input Class Initialized
+INFO - 2024-08-22 17:05:38 --> Language Class Initialized
+INFO - 2024-08-22 17:05:38 --> Loader Class Initialized
+INFO - 2024-08-22 17:05:38 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:05:38 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:05:38 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:05:38 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:05:38 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:05:38 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:05:38 --> Controller Class Initialized
+INFO - 2024-08-22 17:05:38 --> Model Class Initialized
+INFO - 2024-08-22 17:05:38 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:05:38 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:05:38 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:05:38 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:05:38 --> Final output sent to browser
+DEBUG - 2024-08-22 17:05:38 --> Total execution time: 0.0401
+INFO - 2024-08-22 17:05:39 --> Config Class Initialized
+INFO - 2024-08-22 17:05:39 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:05:39 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:05:39 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:05:39 --> URI Class Initialized
+INFO - 2024-08-22 17:05:39 --> Router Class Initialized
+INFO - 2024-08-22 17:05:39 --> Output Class Initialized
+INFO - 2024-08-22 17:05:39 --> Security Class Initialized
+DEBUG - 2024-08-22 17:05:39 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:05:39 --> Input Class Initialized
+INFO - 2024-08-22 17:05:39 --> Language Class Initialized
+INFO - 2024-08-22 17:05:39 --> Loader Class Initialized
+INFO - 2024-08-22 17:05:39 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:05:39 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:05:39 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:05:39 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:05:39 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:05:39 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:05:39 --> Controller Class Initialized
+INFO - 2024-08-22 17:05:39 --> Model Class Initialized
+INFO - 2024-08-22 17:05:39 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:05:39 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:05:39 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:07:03 --> Config Class Initialized
+INFO - 2024-08-22 17:07:03 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:07:03 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:07:03 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:07:03 --> URI Class Initialized
+INFO - 2024-08-22 17:07:03 --> Router Class Initialized
+INFO - 2024-08-22 17:07:03 --> Output Class Initialized
+INFO - 2024-08-22 17:07:03 --> Security Class Initialized
+DEBUG - 2024-08-22 17:07:03 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:07:03 --> Input Class Initialized
+INFO - 2024-08-22 17:07:03 --> Language Class Initialized
+INFO - 2024-08-22 17:07:03 --> Loader Class Initialized
+INFO - 2024-08-22 17:07:03 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:07:03 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:07:03 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:07:03 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:07:03 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:07:03 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:07:03 --> Controller Class Initialized
+INFO - 2024-08-22 17:07:03 --> Model Class Initialized
+INFO - 2024-08-22 17:07:03 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:07:03 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:07:03 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:07:03 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:07:03 --> Final output sent to browser
+DEBUG - 2024-08-22 17:07:03 --> Total execution time: 0.0564
+INFO - 2024-08-22 17:07:03 --> Config Class Initialized
+INFO - 2024-08-22 17:07:03 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:07:03 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:07:03 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:07:03 --> URI Class Initialized
+INFO - 2024-08-22 17:07:03 --> Router Class Initialized
+INFO - 2024-08-22 17:07:03 --> Output Class Initialized
+INFO - 2024-08-22 17:07:03 --> Security Class Initialized
+DEBUG - 2024-08-22 17:07:03 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:07:03 --> Input Class Initialized
+INFO - 2024-08-22 17:07:03 --> Language Class Initialized
+ERROR - 2024-08-22 17:07:03 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 17:07:03 --> Config Class Initialized
+INFO - 2024-08-22 17:07:03 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:07:03 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:07:03 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:07:03 --> URI Class Initialized
+INFO - 2024-08-22 17:07:03 --> Router Class Initialized
+INFO - 2024-08-22 17:07:03 --> Output Class Initialized
+INFO - 2024-08-22 17:07:03 --> Security Class Initialized
+DEBUG - 2024-08-22 17:07:03 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:07:03 --> Input Class Initialized
+INFO - 2024-08-22 17:07:03 --> Language Class Initialized
+INFO - 2024-08-22 17:07:03 --> Loader Class Initialized
+INFO - 2024-08-22 17:07:03 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:07:03 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:07:03 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:07:03 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:07:03 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:07:03 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:07:03 --> Controller Class Initialized
+INFO - 2024-08-22 17:07:03 --> Model Class Initialized
+INFO - 2024-08-22 17:07:03 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:07:03 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:07:03 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:07:08 --> Config Class Initialized
+INFO - 2024-08-22 17:07:08 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:07:08 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:07:08 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:07:08 --> URI Class Initialized
+INFO - 2024-08-22 17:07:08 --> Router Class Initialized
+INFO - 2024-08-22 17:07:08 --> Output Class Initialized
+INFO - 2024-08-22 17:07:08 --> Security Class Initialized
+DEBUG - 2024-08-22 17:07:08 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:07:08 --> Input Class Initialized
+INFO - 2024-08-22 17:07:08 --> Language Class Initialized
+INFO - 2024-08-22 17:07:08 --> Loader Class Initialized
+INFO - 2024-08-22 17:07:08 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:07:08 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:07:08 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:07:08 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:07:08 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:07:08 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:07:08 --> Controller Class Initialized
+INFO - 2024-08-22 17:07:08 --> Model Class Initialized
+INFO - 2024-08-22 17:07:08 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:07:08 --> Final output sent to browser
+DEBUG - 2024-08-22 17:07:08 --> Total execution time: 0.0710
+INFO - 2024-08-22 17:07:11 --> Config Class Initialized
+INFO - 2024-08-22 17:07:11 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:07:11 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:07:11 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:07:11 --> URI Class Initialized
+INFO - 2024-08-22 17:07:11 --> Router Class Initialized
+INFO - 2024-08-22 17:07:11 --> Output Class Initialized
+INFO - 2024-08-22 17:07:11 --> Security Class Initialized
+DEBUG - 2024-08-22 17:07:11 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:07:11 --> Input Class Initialized
+INFO - 2024-08-22 17:07:11 --> Language Class Initialized
+ERROR - 2024-08-22 17:07:11 --> 404 Page Not Found: Mousture_content/savedetail24
+INFO - 2024-08-22 17:07:17 --> Config Class Initialized
+INFO - 2024-08-22 17:07:17 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:07:17 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:07:17 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:07:17 --> URI Class Initialized
+INFO - 2024-08-22 17:07:17 --> Router Class Initialized
+INFO - 2024-08-22 17:07:17 --> Output Class Initialized
+INFO - 2024-08-22 17:07:17 --> Security Class Initialized
+DEBUG - 2024-08-22 17:07:17 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:07:17 --> Input Class Initialized
+INFO - 2024-08-22 17:07:17 --> Language Class Initialized
+INFO - 2024-08-22 17:07:17 --> Loader Class Initialized
+INFO - 2024-08-22 17:07:17 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:07:17 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:07:17 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:07:17 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:07:17 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:07:17 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:07:17 --> Controller Class Initialized
+INFO - 2024-08-22 17:07:17 --> Model Class Initialized
+INFO - 2024-08-22 17:07:17 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:07:17 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:07:17 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:07:17 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:07:17 --> Final output sent to browser
+DEBUG - 2024-08-22 17:07:17 --> Total execution time: 0.0647
+INFO - 2024-08-22 17:07:17 --> Config Class Initialized
+INFO - 2024-08-22 17:07:17 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:07:17 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:07:17 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:07:17 --> URI Class Initialized
+INFO - 2024-08-22 17:07:17 --> Router Class Initialized
+INFO - 2024-08-22 17:07:17 --> Output Class Initialized
+INFO - 2024-08-22 17:07:17 --> Security Class Initialized
+DEBUG - 2024-08-22 17:07:17 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:07:17 --> Input Class Initialized
+INFO - 2024-08-22 17:07:17 --> Language Class Initialized
+INFO - 2024-08-22 17:07:17 --> Loader Class Initialized
+INFO - 2024-08-22 17:07:17 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:07:17 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:07:17 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:07:17 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:07:17 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:07:17 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:07:17 --> Controller Class Initialized
+INFO - 2024-08-22 17:07:17 --> Model Class Initialized
+INFO - 2024-08-22 17:07:17 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:07:17 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:07:17 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:07:23 --> Config Class Initialized
+INFO - 2024-08-22 17:07:23 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:07:23 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:07:23 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:07:23 --> URI Class Initialized
+INFO - 2024-08-22 17:07:23 --> Router Class Initialized
+INFO - 2024-08-22 17:07:23 --> Output Class Initialized
+INFO - 2024-08-22 17:07:23 --> Security Class Initialized
+DEBUG - 2024-08-22 17:07:23 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:07:23 --> Input Class Initialized
+INFO - 2024-08-22 17:07:23 --> Language Class Initialized
+ERROR - 2024-08-22 17:07:23 --> 404 Page Not Found: Mousture_content/savedetail24
+INFO - 2024-08-22 17:09:20 --> Config Class Initialized
+INFO - 2024-08-22 17:09:20 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:09:20 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:09:20 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:09:20 --> URI Class Initialized
+INFO - 2024-08-22 17:09:20 --> Router Class Initialized
+INFO - 2024-08-22 17:09:20 --> Output Class Initialized
+INFO - 2024-08-22 17:09:20 --> Security Class Initialized
+DEBUG - 2024-08-22 17:09:20 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:09:20 --> Input Class Initialized
+INFO - 2024-08-22 17:09:20 --> Language Class Initialized
+INFO - 2024-08-22 17:09:20 --> Loader Class Initialized
+INFO - 2024-08-22 17:09:20 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:09:20 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:09:20 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:09:20 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:09:20 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:09:20 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:09:20 --> Controller Class Initialized
+INFO - 2024-08-22 17:09:20 --> Model Class Initialized
+INFO - 2024-08-22 17:09:20 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:09:20 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:09:20 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:09:20 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:09:20 --> Final output sent to browser
+DEBUG - 2024-08-22 17:09:20 --> Total execution time: 0.1070
+INFO - 2024-08-22 17:09:21 --> Config Class Initialized
+INFO - 2024-08-22 17:09:21 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:09:21 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:09:21 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:09:21 --> URI Class Initialized
+INFO - 2024-08-22 17:09:21 --> Router Class Initialized
+INFO - 2024-08-22 17:09:21 --> Output Class Initialized
+INFO - 2024-08-22 17:09:21 --> Security Class Initialized
+DEBUG - 2024-08-22 17:09:21 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:09:21 --> Input Class Initialized
+INFO - 2024-08-22 17:09:21 --> Language Class Initialized
+INFO - 2024-08-22 17:09:21 --> Loader Class Initialized
+INFO - 2024-08-22 17:09:21 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:09:21 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:09:21 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:09:21 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:09:21 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:09:21 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:09:21 --> Controller Class Initialized
+INFO - 2024-08-22 17:09:21 --> Model Class Initialized
+INFO - 2024-08-22 17:09:21 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:09:21 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:09:21 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:09:21 --> Config Class Initialized
+INFO - 2024-08-22 17:09:21 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:09:21 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:09:21 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:09:21 --> URI Class Initialized
+INFO - 2024-08-22 17:09:22 --> Router Class Initialized
+INFO - 2024-08-22 17:09:22 --> Output Class Initialized
+INFO - 2024-08-22 17:09:22 --> Security Class Initialized
+DEBUG - 2024-08-22 17:09:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:09:22 --> Input Class Initialized
+INFO - 2024-08-22 17:09:22 --> Language Class Initialized
+INFO - 2024-08-22 17:09:22 --> Loader Class Initialized
+INFO - 2024-08-22 17:09:22 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:09:22 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:09:22 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:09:22 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:09:22 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:09:22 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:09:22 --> Controller Class Initialized
+INFO - 2024-08-22 17:09:22 --> Model Class Initialized
+INFO - 2024-08-22 17:09:22 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:09:22 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:09:22 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:09:22 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:09:22 --> Final output sent to browser
+DEBUG - 2024-08-22 17:09:22 --> Total execution time: 0.0529
+INFO - 2024-08-22 17:09:22 --> Config Class Initialized
+INFO - 2024-08-22 17:09:22 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:09:22 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:09:22 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:09:22 --> URI Class Initialized
+INFO - 2024-08-22 17:09:22 --> Router Class Initialized
+INFO - 2024-08-22 17:09:22 --> Output Class Initialized
+INFO - 2024-08-22 17:09:22 --> Security Class Initialized
+DEBUG - 2024-08-22 17:09:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:09:22 --> Input Class Initialized
+INFO - 2024-08-22 17:09:22 --> Language Class Initialized
+ERROR - 2024-08-22 17:09:22 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 17:09:22 --> Config Class Initialized
+INFO - 2024-08-22 17:09:22 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:09:22 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:09:22 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:09:22 --> URI Class Initialized
+INFO - 2024-08-22 17:09:22 --> Router Class Initialized
+INFO - 2024-08-22 17:09:22 --> Output Class Initialized
+INFO - 2024-08-22 17:09:22 --> Security Class Initialized
+DEBUG - 2024-08-22 17:09:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:09:22 --> Input Class Initialized
+INFO - 2024-08-22 17:09:22 --> Language Class Initialized
+INFO - 2024-08-22 17:09:22 --> Loader Class Initialized
+INFO - 2024-08-22 17:09:22 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:09:22 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:09:22 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:09:22 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:09:22 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:09:22 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:09:22 --> Controller Class Initialized
+INFO - 2024-08-22 17:09:22 --> Model Class Initialized
+INFO - 2024-08-22 17:09:22 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:09:22 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:09:22 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:09:25 --> Config Class Initialized
+INFO - 2024-08-22 17:09:25 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:09:25 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:09:25 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:09:25 --> URI Class Initialized
+INFO - 2024-08-22 17:09:25 --> Router Class Initialized
+INFO - 2024-08-22 17:09:25 --> Output Class Initialized
+INFO - 2024-08-22 17:09:25 --> Security Class Initialized
+DEBUG - 2024-08-22 17:09:25 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:09:25 --> Input Class Initialized
+INFO - 2024-08-22 17:09:25 --> Language Class Initialized
+ERROR - 2024-08-22 17:09:25 --> 404 Page Not Found: Mousture_content/savedetail24
+INFO - 2024-08-22 17:12:54 --> Config Class Initialized
+INFO - 2024-08-22 17:12:54 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:12:54 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:12:54 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:12:54 --> URI Class Initialized
+INFO - 2024-08-22 17:12:54 --> Router Class Initialized
+INFO - 2024-08-22 17:12:54 --> Output Class Initialized
+INFO - 2024-08-22 17:12:54 --> Security Class Initialized
+DEBUG - 2024-08-22 17:12:54 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:12:54 --> Input Class Initialized
+INFO - 2024-08-22 17:12:54 --> Language Class Initialized
+INFO - 2024-08-22 17:12:54 --> Loader Class Initialized
+INFO - 2024-08-22 17:12:54 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:12:54 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:12:54 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:12:54 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:12:54 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:12:54 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:12:54 --> Controller Class Initialized
+INFO - 2024-08-22 17:12:54 --> Model Class Initialized
+INFO - 2024-08-22 17:12:54 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:12:54 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:12:54 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:12:54 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:12:54 --> Final output sent to browser
+DEBUG - 2024-08-22 17:12:54 --> Total execution time: 0.0672
+INFO - 2024-08-22 17:12:54 --> Config Class Initialized
+INFO - 2024-08-22 17:12:54 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:12:54 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:12:54 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:12:54 --> URI Class Initialized
+INFO - 2024-08-22 17:12:54 --> Router Class Initialized
+INFO - 2024-08-22 17:12:54 --> Output Class Initialized
+INFO - 2024-08-22 17:12:54 --> Security Class Initialized
+DEBUG - 2024-08-22 17:12:54 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:12:54 --> Input Class Initialized
+INFO - 2024-08-22 17:12:54 --> Language Class Initialized
+INFO - 2024-08-22 17:12:54 --> Loader Class Initialized
+INFO - 2024-08-22 17:12:54 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:12:54 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:12:54 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:12:54 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:12:54 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:12:54 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:12:54 --> Controller Class Initialized
+INFO - 2024-08-22 17:12:54 --> Model Class Initialized
+INFO - 2024-08-22 17:12:54 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:12:54 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:12:54 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:12:56 --> Config Class Initialized
+INFO - 2024-08-22 17:12:56 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:12:56 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:12:56 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:12:56 --> URI Class Initialized
+INFO - 2024-08-22 17:12:56 --> Router Class Initialized
+INFO - 2024-08-22 17:12:56 --> Output Class Initialized
+INFO - 2024-08-22 17:12:56 --> Security Class Initialized
+DEBUG - 2024-08-22 17:12:56 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:12:56 --> Input Class Initialized
+INFO - 2024-08-22 17:12:56 --> Language Class Initialized
+INFO - 2024-08-22 17:12:56 --> Loader Class Initialized
+INFO - 2024-08-22 17:12:56 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:12:56 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:12:56 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:12:56 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:12:56 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:12:56 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:12:56 --> Controller Class Initialized
+INFO - 2024-08-22 17:12:56 --> Model Class Initialized
+INFO - 2024-08-22 17:12:56 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:12:56 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:12:56 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:12:56 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:12:56 --> Final output sent to browser
+DEBUG - 2024-08-22 17:12:56 --> Total execution time: 0.0543
+INFO - 2024-08-22 17:12:56 --> Config Class Initialized
+INFO - 2024-08-22 17:12:56 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:12:56 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:12:56 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:12:56 --> URI Class Initialized
+INFO - 2024-08-22 17:12:56 --> Router Class Initialized
+INFO - 2024-08-22 17:12:56 --> Output Class Initialized
+INFO - 2024-08-22 17:12:56 --> Security Class Initialized
+DEBUG - 2024-08-22 17:12:56 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:12:56 --> Input Class Initialized
+INFO - 2024-08-22 17:12:56 --> Language Class Initialized
+ERROR - 2024-08-22 17:12:56 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 17:12:56 --> Config Class Initialized
+INFO - 2024-08-22 17:12:56 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:12:56 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:12:56 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:12:56 --> URI Class Initialized
+INFO - 2024-08-22 17:12:56 --> Router Class Initialized
+INFO - 2024-08-22 17:12:56 --> Output Class Initialized
+INFO - 2024-08-22 17:12:56 --> Security Class Initialized
+DEBUG - 2024-08-22 17:12:56 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:12:56 --> Input Class Initialized
+INFO - 2024-08-22 17:12:56 --> Language Class Initialized
+INFO - 2024-08-22 17:12:56 --> Loader Class Initialized
+INFO - 2024-08-22 17:12:56 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:12:56 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:12:56 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:12:56 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:12:56 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:12:56 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:12:56 --> Controller Class Initialized
+INFO - 2024-08-22 17:12:56 --> Model Class Initialized
+INFO - 2024-08-22 17:12:56 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:12:56 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:12:56 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:13:01 --> Config Class Initialized
+INFO - 2024-08-22 17:13:01 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:13:01 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:13:01 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:13:01 --> URI Class Initialized
+INFO - 2024-08-22 17:13:01 --> Router Class Initialized
+INFO - 2024-08-22 17:13:01 --> Output Class Initialized
+INFO - 2024-08-22 17:13:01 --> Security Class Initialized
+DEBUG - 2024-08-22 17:13:01 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:13:01 --> Input Class Initialized
+INFO - 2024-08-22 17:13:01 --> Language Class Initialized
+INFO - 2024-08-22 17:13:01 --> Loader Class Initialized
+INFO - 2024-08-22 17:13:01 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:13:01 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:13:01 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:13:01 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:13:01 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:13:01 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:13:01 --> Controller Class Initialized
+INFO - 2024-08-22 17:13:01 --> Model Class Initialized
+INFO - 2024-08-22 17:13:01 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:13:01 --> Final output sent to browser
+DEBUG - 2024-08-22 17:13:01 --> Total execution time: 0.0572
+INFO - 2024-08-22 17:13:04 --> Config Class Initialized
+INFO - 2024-08-22 17:13:04 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:13:04 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:13:04 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:13:04 --> URI Class Initialized
+INFO - 2024-08-22 17:13:04 --> Router Class Initialized
+INFO - 2024-08-22 17:13:04 --> Output Class Initialized
+INFO - 2024-08-22 17:13:04 --> Security Class Initialized
+DEBUG - 2024-08-22 17:13:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:13:04 --> Input Class Initialized
+INFO - 2024-08-22 17:13:04 --> Language Class Initialized
+ERROR - 2024-08-22 17:13:04 --> 404 Page Not Found: Mousture_content/savedetail24
+INFO - 2024-08-22 17:13:08 --> Config Class Initialized
+INFO - 2024-08-22 17:13:08 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:13:08 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:13:08 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:13:08 --> URI Class Initialized
+INFO - 2024-08-22 17:13:08 --> Router Class Initialized
+INFO - 2024-08-22 17:13:08 --> Output Class Initialized
+INFO - 2024-08-22 17:13:08 --> Security Class Initialized
+DEBUG - 2024-08-22 17:13:08 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:13:08 --> Input Class Initialized
+INFO - 2024-08-22 17:13:08 --> Language Class Initialized
+INFO - 2024-08-22 17:13:08 --> Loader Class Initialized
+INFO - 2024-08-22 17:13:08 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:13:08 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:13:08 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:13:08 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:13:08 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:13:08 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:13:08 --> Controller Class Initialized
+INFO - 2024-08-22 17:13:08 --> Model Class Initialized
+INFO - 2024-08-22 17:13:08 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:13:08 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:13:08 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:13:08 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:13:08 --> Final output sent to browser
+DEBUG - 2024-08-22 17:13:08 --> Total execution time: 0.0539
+INFO - 2024-08-22 17:13:08 --> Config Class Initialized
+INFO - 2024-08-22 17:13:08 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:13:08 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:13:08 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:13:08 --> URI Class Initialized
+INFO - 2024-08-22 17:13:08 --> Router Class Initialized
+INFO - 2024-08-22 17:13:08 --> Output Class Initialized
+INFO - 2024-08-22 17:13:08 --> Security Class Initialized
+DEBUG - 2024-08-22 17:13:08 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:13:08 --> Input Class Initialized
+INFO - 2024-08-22 17:13:08 --> Language Class Initialized
+INFO - 2024-08-22 17:13:08 --> Loader Class Initialized
+INFO - 2024-08-22 17:13:08 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:13:08 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:13:08 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:13:08 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:13:08 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:13:08 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:13:08 --> Controller Class Initialized
+INFO - 2024-08-22 17:13:08 --> Model Class Initialized
+INFO - 2024-08-22 17:13:08 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:13:08 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:13:08 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:15:21 --> Config Class Initialized
+INFO - 2024-08-22 17:15:21 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:15:21 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:15:21 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:15:21 --> URI Class Initialized
+INFO - 2024-08-22 17:15:21 --> Router Class Initialized
+INFO - 2024-08-22 17:15:21 --> Output Class Initialized
+INFO - 2024-08-22 17:15:21 --> Security Class Initialized
+DEBUG - 2024-08-22 17:15:21 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:15:21 --> Input Class Initialized
+INFO - 2024-08-22 17:15:21 --> Language Class Initialized
+INFO - 2024-08-22 17:15:21 --> Loader Class Initialized
+INFO - 2024-08-22 17:15:21 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:15:21 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:15:21 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:15:21 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:15:21 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:15:21 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:15:21 --> Controller Class Initialized
+INFO - 2024-08-22 17:15:21 --> Model Class Initialized
+INFO - 2024-08-22 17:15:21 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:15:21 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:15:21 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:15:21 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:15:21 --> Final output sent to browser
+DEBUG - 2024-08-22 17:15:21 --> Total execution time: 0.0864
+INFO - 2024-08-22 17:15:21 --> Config Class Initialized
+INFO - 2024-08-22 17:15:21 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:15:21 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:15:21 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:15:21 --> URI Class Initialized
+INFO - 2024-08-22 17:15:21 --> Router Class Initialized
+INFO - 2024-08-22 17:15:21 --> Output Class Initialized
+INFO - 2024-08-22 17:15:21 --> Security Class Initialized
+DEBUG - 2024-08-22 17:15:21 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:15:21 --> Input Class Initialized
+INFO - 2024-08-22 17:15:21 --> Language Class Initialized
+ERROR - 2024-08-22 17:15:21 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 17:15:21 --> Config Class Initialized
+INFO - 2024-08-22 17:15:21 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:15:21 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:15:21 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:15:21 --> URI Class Initialized
+INFO - 2024-08-22 17:15:21 --> Router Class Initialized
+INFO - 2024-08-22 17:15:21 --> Output Class Initialized
+INFO - 2024-08-22 17:15:21 --> Security Class Initialized
+DEBUG - 2024-08-22 17:15:21 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:15:21 --> Input Class Initialized
+INFO - 2024-08-22 17:15:21 --> Language Class Initialized
+INFO - 2024-08-22 17:15:21 --> Loader Class Initialized
+INFO - 2024-08-22 17:15:21 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:15:21 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:15:21 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:15:21 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:15:21 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:15:21 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:15:21 --> Controller Class Initialized
+INFO - 2024-08-22 17:15:21 --> Model Class Initialized
+INFO - 2024-08-22 17:15:21 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:15:21 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:15:21 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:15:24 --> Config Class Initialized
+INFO - 2024-08-22 17:15:24 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:15:24 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:15:24 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:15:24 --> URI Class Initialized
+INFO - 2024-08-22 17:15:24 --> Router Class Initialized
+INFO - 2024-08-22 17:15:25 --> Output Class Initialized
+INFO - 2024-08-22 17:15:25 --> Security Class Initialized
+DEBUG - 2024-08-22 17:15:25 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:15:25 --> Input Class Initialized
+INFO - 2024-08-22 17:15:25 --> Language Class Initialized
+INFO - 2024-08-22 17:15:25 --> Loader Class Initialized
+INFO - 2024-08-22 17:15:25 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:15:25 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:15:25 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:15:25 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:15:25 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:15:25 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:15:25 --> Controller Class Initialized
+INFO - 2024-08-22 17:15:25 --> Model Class Initialized
+INFO - 2024-08-22 17:15:25 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:15:25 --> Final output sent to browser
+DEBUG - 2024-08-22 17:15:25 --> Total execution time: 0.0391
+INFO - 2024-08-22 17:15:43 --> Config Class Initialized
+INFO - 2024-08-22 17:15:43 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:15:43 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:15:43 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:15:43 --> URI Class Initialized
+INFO - 2024-08-22 17:15:43 --> Router Class Initialized
+INFO - 2024-08-22 17:15:43 --> Output Class Initialized
+INFO - 2024-08-22 17:15:43 --> Security Class Initialized
+DEBUG - 2024-08-22 17:15:43 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:15:43 --> Input Class Initialized
+INFO - 2024-08-22 17:15:43 --> Language Class Initialized
+INFO - 2024-08-22 17:15:43 --> Loader Class Initialized
+INFO - 2024-08-22 17:15:44 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:15:44 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:15:44 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:15:44 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:15:44 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:15:44 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:15:44 --> Controller Class Initialized
+INFO - 2024-08-22 17:15:44 --> Model Class Initialized
+INFO - 2024-08-22 17:15:44 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:15:44 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:15:44 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:15:44 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:15:44 --> Final output sent to browser
+DEBUG - 2024-08-22 17:15:44 --> Total execution time: 0.0616
+INFO - 2024-08-22 17:15:44 --> Config Class Initialized
+INFO - 2024-08-22 17:15:44 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:15:44 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:15:44 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:15:44 --> URI Class Initialized
+INFO - 2024-08-22 17:15:44 --> Router Class Initialized
+INFO - 2024-08-22 17:15:44 --> Output Class Initialized
+INFO - 2024-08-22 17:15:44 --> Security Class Initialized
+DEBUG - 2024-08-22 17:15:44 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:15:44 --> Input Class Initialized
+INFO - 2024-08-22 17:15:44 --> Language Class Initialized
+ERROR - 2024-08-22 17:15:44 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 17:15:44 --> Config Class Initialized
+INFO - 2024-08-22 17:15:44 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:15:44 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:15:44 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:15:44 --> URI Class Initialized
+INFO - 2024-08-22 17:15:44 --> Router Class Initialized
+INFO - 2024-08-22 17:15:44 --> Output Class Initialized
+INFO - 2024-08-22 17:15:44 --> Security Class Initialized
+DEBUG - 2024-08-22 17:15:44 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:15:44 --> Input Class Initialized
+INFO - 2024-08-22 17:15:44 --> Language Class Initialized
+INFO - 2024-08-22 17:15:44 --> Loader Class Initialized
+INFO - 2024-08-22 17:15:44 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:15:44 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:15:44 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:15:44 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:15:44 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:15:44 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:15:44 --> Controller Class Initialized
+INFO - 2024-08-22 17:15:44 --> Model Class Initialized
+INFO - 2024-08-22 17:15:44 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:15:44 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:15:44 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:15:49 --> Config Class Initialized
+INFO - 2024-08-22 17:15:49 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:15:49 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:15:49 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:15:49 --> URI Class Initialized
+INFO - 2024-08-22 17:15:49 --> Router Class Initialized
+INFO - 2024-08-22 17:15:49 --> Output Class Initialized
+INFO - 2024-08-22 17:15:49 --> Security Class Initialized
+DEBUG - 2024-08-22 17:15:49 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:15:49 --> Input Class Initialized
+INFO - 2024-08-22 17:15:49 --> Language Class Initialized
+INFO - 2024-08-22 17:15:49 --> Loader Class Initialized
+INFO - 2024-08-22 17:15:49 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:15:49 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:15:49 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:15:49 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:15:49 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:15:49 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:15:49 --> Controller Class Initialized
+INFO - 2024-08-22 17:15:49 --> Model Class Initialized
+INFO - 2024-08-22 17:15:49 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:15:49 --> Final output sent to browser
+DEBUG - 2024-08-22 17:15:49 --> Total execution time: 0.0621
+INFO - 2024-08-22 17:15:53 --> Config Class Initialized
+INFO - 2024-08-22 17:15:53 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:15:53 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:15:53 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:15:53 --> URI Class Initialized
+INFO - 2024-08-22 17:15:53 --> Router Class Initialized
+INFO - 2024-08-22 17:15:53 --> Output Class Initialized
+INFO - 2024-08-22 17:15:53 --> Security Class Initialized
+DEBUG - 2024-08-22 17:15:53 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:15:53 --> Input Class Initialized
+INFO - 2024-08-22 17:15:53 --> Language Class Initialized
+ERROR - 2024-08-22 17:15:53 --> 404 Page Not Found: Mousture_content/savedetail24
+INFO - 2024-08-22 17:17:17 --> Config Class Initialized
+INFO - 2024-08-22 17:17:17 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:17:17 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:17:17 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:17:17 --> URI Class Initialized
+INFO - 2024-08-22 17:17:17 --> Router Class Initialized
+INFO - 2024-08-22 17:17:17 --> Output Class Initialized
+INFO - 2024-08-22 17:17:17 --> Security Class Initialized
+DEBUG - 2024-08-22 17:17:17 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:17:17 --> Input Class Initialized
+INFO - 2024-08-22 17:17:17 --> Language Class Initialized
+ERROR - 2024-08-22 17:17:17 --> 404 Page Not Found: Mousture_content/savedetail24
+INFO - 2024-08-22 17:17:18 --> Config Class Initialized
+INFO - 2024-08-22 17:17:18 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:17:18 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:17:18 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:17:18 --> URI Class Initialized
+INFO - 2024-08-22 17:17:18 --> Router Class Initialized
+INFO - 2024-08-22 17:17:18 --> Output Class Initialized
+INFO - 2024-08-22 17:17:18 --> Security Class Initialized
+DEBUG - 2024-08-22 17:17:18 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:17:18 --> Input Class Initialized
+INFO - 2024-08-22 17:17:18 --> Language Class Initialized
+INFO - 2024-08-22 17:17:18 --> Loader Class Initialized
+INFO - 2024-08-22 17:17:18 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:17:18 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:17:18 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:17:18 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:17:18 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:17:18 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:17:18 --> Controller Class Initialized
+INFO - 2024-08-22 17:17:18 --> Model Class Initialized
+INFO - 2024-08-22 17:17:18 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:17:18 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:17:18 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:17:18 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:17:18 --> Final output sent to browser
+DEBUG - 2024-08-22 17:17:18 --> Total execution time: 0.0659
+INFO - 2024-08-22 17:17:18 --> Config Class Initialized
+INFO - 2024-08-22 17:17:18 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:17:18 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:17:18 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:17:18 --> URI Class Initialized
+INFO - 2024-08-22 17:17:18 --> Router Class Initialized
+INFO - 2024-08-22 17:17:18 --> Output Class Initialized
+INFO - 2024-08-22 17:17:18 --> Security Class Initialized
+DEBUG - 2024-08-22 17:17:18 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:17:18 --> Input Class Initialized
+INFO - 2024-08-22 17:17:18 --> Language Class Initialized
+INFO - 2024-08-22 17:17:18 --> Loader Class Initialized
+INFO - 2024-08-22 17:17:18 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:17:18 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:17:18 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:17:18 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:17:18 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:17:18 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:17:18 --> Controller Class Initialized
+INFO - 2024-08-22 17:17:18 --> Model Class Initialized
+INFO - 2024-08-22 17:17:18 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:17:19 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:17:19 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:17:22 --> Config Class Initialized
+INFO - 2024-08-22 17:17:22 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:17:22 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:17:22 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:17:22 --> URI Class Initialized
+INFO - 2024-08-22 17:17:22 --> Router Class Initialized
+INFO - 2024-08-22 17:17:22 --> Output Class Initialized
+INFO - 2024-08-22 17:17:22 --> Security Class Initialized
+DEBUG - 2024-08-22 17:17:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:17:22 --> Input Class Initialized
+INFO - 2024-08-22 17:17:22 --> Language Class Initialized
+INFO - 2024-08-22 17:17:22 --> Loader Class Initialized
+INFO - 2024-08-22 17:17:22 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:17:22 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:17:22 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:17:22 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:17:22 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:17:22 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:17:22 --> Controller Class Initialized
+INFO - 2024-08-22 17:17:22 --> Model Class Initialized
+INFO - 2024-08-22 17:17:22 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:17:22 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:17:22 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:17:22 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:17:22 --> Final output sent to browser
+DEBUG - 2024-08-22 17:17:22 --> Total execution time: 0.0382
+INFO - 2024-08-22 17:17:22 --> Config Class Initialized
+INFO - 2024-08-22 17:17:22 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:17:22 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:17:22 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:17:22 --> URI Class Initialized
+INFO - 2024-08-22 17:17:22 --> Router Class Initialized
+INFO - 2024-08-22 17:17:22 --> Output Class Initialized
+INFO - 2024-08-22 17:17:22 --> Security Class Initialized
+DEBUG - 2024-08-22 17:17:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:17:22 --> Input Class Initialized
+INFO - 2024-08-22 17:17:22 --> Language Class Initialized
+ERROR - 2024-08-22 17:17:22 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 17:17:22 --> Config Class Initialized
+INFO - 2024-08-22 17:17:22 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:17:22 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:17:22 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:17:22 --> URI Class Initialized
+INFO - 2024-08-22 17:17:22 --> Router Class Initialized
+INFO - 2024-08-22 17:17:22 --> Output Class Initialized
+INFO - 2024-08-22 17:17:22 --> Security Class Initialized
+DEBUG - 2024-08-22 17:17:22 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:17:22 --> Input Class Initialized
+INFO - 2024-08-22 17:17:22 --> Language Class Initialized
+INFO - 2024-08-22 17:17:22 --> Loader Class Initialized
+INFO - 2024-08-22 17:17:22 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:17:22 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:17:22 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:17:22 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:17:22 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:17:22 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:17:22 --> Controller Class Initialized
+INFO - 2024-08-22 17:17:22 --> Model Class Initialized
+INFO - 2024-08-22 17:17:22 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:17:22 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:17:22 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:17:27 --> Config Class Initialized
+INFO - 2024-08-22 17:17:27 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:17:27 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:17:27 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:17:27 --> URI Class Initialized
+INFO - 2024-08-22 17:17:27 --> Router Class Initialized
+INFO - 2024-08-22 17:17:27 --> Output Class Initialized
+INFO - 2024-08-22 17:17:27 --> Security Class Initialized
+DEBUG - 2024-08-22 17:17:27 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:17:27 --> Input Class Initialized
+INFO - 2024-08-22 17:17:27 --> Language Class Initialized
+INFO - 2024-08-22 17:17:27 --> Loader Class Initialized
+INFO - 2024-08-22 17:17:27 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:17:27 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:17:27 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:17:27 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:17:27 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:17:27 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:17:27 --> Controller Class Initialized
+INFO - 2024-08-22 17:17:27 --> Model Class Initialized
+INFO - 2024-08-22 17:17:27 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:17:27 --> Final output sent to browser
+DEBUG - 2024-08-22 17:17:27 --> Total execution time: 0.0350
+INFO - 2024-08-22 17:17:29 --> Config Class Initialized
+INFO - 2024-08-22 17:17:29 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:17:29 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:17:29 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:17:29 --> URI Class Initialized
+INFO - 2024-08-22 17:17:29 --> Router Class Initialized
+INFO - 2024-08-22 17:17:29 --> Output Class Initialized
+INFO - 2024-08-22 17:17:29 --> Security Class Initialized
+DEBUG - 2024-08-22 17:17:29 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:17:29 --> Input Class Initialized
+INFO - 2024-08-22 17:17:29 --> Language Class Initialized
+ERROR - 2024-08-22 17:17:29 --> 404 Page Not Found: Mousture_content/savedetail24
+INFO - 2024-08-22 17:24:48 --> Config Class Initialized
+INFO - 2024-08-22 17:24:48 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:24:48 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:24:48 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:24:48 --> URI Class Initialized
+INFO - 2024-08-22 17:24:48 --> Router Class Initialized
+INFO - 2024-08-22 17:24:48 --> Output Class Initialized
+INFO - 2024-08-22 17:24:48 --> Security Class Initialized
+DEBUG - 2024-08-22 17:24:48 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:24:48 --> Input Class Initialized
+INFO - 2024-08-22 17:24:48 --> Language Class Initialized
+ERROR - 2024-08-22 17:24:48 --> 404 Page Not Found: Mousture_content/savedetail24
+INFO - 2024-08-22 17:24:50 --> Config Class Initialized
+INFO - 2024-08-22 17:24:50 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:24:50 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:24:50 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:24:50 --> URI Class Initialized
+INFO - 2024-08-22 17:24:50 --> Router Class Initialized
+INFO - 2024-08-22 17:24:50 --> Output Class Initialized
+INFO - 2024-08-22 17:24:50 --> Security Class Initialized
+DEBUG - 2024-08-22 17:24:50 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:24:50 --> Input Class Initialized
+INFO - 2024-08-22 17:24:50 --> Language Class Initialized
+INFO - 2024-08-22 17:24:50 --> Loader Class Initialized
+INFO - 2024-08-22 17:24:50 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:24:50 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:24:50 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:24:50 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:24:50 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:24:50 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:24:50 --> Controller Class Initialized
+INFO - 2024-08-22 17:24:50 --> Model Class Initialized
+INFO - 2024-08-22 17:24:50 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:24:50 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:24:50 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:24:50 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:24:50 --> Final output sent to browser
+DEBUG - 2024-08-22 17:24:50 --> Total execution time: 0.1237
+INFO - 2024-08-22 17:24:50 --> Config Class Initialized
+INFO - 2024-08-22 17:24:50 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:24:50 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:24:50 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:24:50 --> URI Class Initialized
+INFO - 2024-08-22 17:24:50 --> Router Class Initialized
+INFO - 2024-08-22 17:24:50 --> Output Class Initialized
+INFO - 2024-08-22 17:24:50 --> Security Class Initialized
+DEBUG - 2024-08-22 17:24:50 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:24:50 --> Input Class Initialized
+INFO - 2024-08-22 17:24:50 --> Language Class Initialized
+INFO - 2024-08-22 17:24:50 --> Loader Class Initialized
+INFO - 2024-08-22 17:24:50 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:24:50 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:24:50 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:24:50 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:24:50 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:24:50 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:24:50 --> Controller Class Initialized
+INFO - 2024-08-22 17:24:50 --> Model Class Initialized
+INFO - 2024-08-22 17:24:50 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:24:50 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:24:50 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:24:53 --> Config Class Initialized
+INFO - 2024-08-22 17:24:53 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:24:53 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:24:53 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:24:53 --> URI Class Initialized
+INFO - 2024-08-22 17:24:53 --> Router Class Initialized
+INFO - 2024-08-22 17:24:53 --> Output Class Initialized
+INFO - 2024-08-22 17:24:53 --> Security Class Initialized
+DEBUG - 2024-08-22 17:24:53 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:24:53 --> Input Class Initialized
+INFO - 2024-08-22 17:24:53 --> Language Class Initialized
+INFO - 2024-08-22 17:24:53 --> Loader Class Initialized
+INFO - 2024-08-22 17:24:53 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:24:53 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:24:53 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:24:53 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:24:53 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:24:53 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:24:53 --> Controller Class Initialized
+INFO - 2024-08-22 17:24:53 --> Model Class Initialized
+INFO - 2024-08-22 17:24:53 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:24:53 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:24:53 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:24:53 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:24:53 --> Final output sent to browser
+DEBUG - 2024-08-22 17:24:53 --> Total execution time: 0.0588
+INFO - 2024-08-22 17:24:54 --> Config Class Initialized
+INFO - 2024-08-22 17:24:54 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:24:54 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:24:54 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:24:54 --> URI Class Initialized
+INFO - 2024-08-22 17:24:54 --> Router Class Initialized
+INFO - 2024-08-22 17:24:54 --> Output Class Initialized
+INFO - 2024-08-22 17:24:54 --> Security Class Initialized
+DEBUG - 2024-08-22 17:24:54 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:24:54 --> Input Class Initialized
+INFO - 2024-08-22 17:24:54 --> Language Class Initialized
+ERROR - 2024-08-22 17:24:54 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 17:24:54 --> Config Class Initialized
+INFO - 2024-08-22 17:24:54 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:24:54 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:24:54 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:24:54 --> URI Class Initialized
+INFO - 2024-08-22 17:24:54 --> Router Class Initialized
+INFO - 2024-08-22 17:24:54 --> Output Class Initialized
+INFO - 2024-08-22 17:24:54 --> Security Class Initialized
+DEBUG - 2024-08-22 17:24:54 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:24:54 --> Input Class Initialized
+INFO - 2024-08-22 17:24:54 --> Language Class Initialized
+INFO - 2024-08-22 17:24:54 --> Loader Class Initialized
+INFO - 2024-08-22 17:24:54 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:24:54 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:24:54 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:24:54 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:24:54 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:24:54 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:24:54 --> Controller Class Initialized
+INFO - 2024-08-22 17:24:54 --> Model Class Initialized
+INFO - 2024-08-22 17:24:54 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:24:54 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:24:54 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:24:57 --> Config Class Initialized
+INFO - 2024-08-22 17:24:57 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:24:57 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:24:57 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:24:57 --> URI Class Initialized
+INFO - 2024-08-22 17:24:57 --> Router Class Initialized
+INFO - 2024-08-22 17:24:57 --> Output Class Initialized
+INFO - 2024-08-22 17:24:57 --> Security Class Initialized
+DEBUG - 2024-08-22 17:24:57 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:24:57 --> Input Class Initialized
+INFO - 2024-08-22 17:24:57 --> Language Class Initialized
+ERROR - 2024-08-22 17:24:57 --> 404 Page Not Found: Mousture_content/savedetail24
+INFO - 2024-08-22 17:25:00 --> Config Class Initialized
+INFO - 2024-08-22 17:25:00 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:25:00 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:25:00 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:25:00 --> URI Class Initialized
+INFO - 2024-08-22 17:25:00 --> Router Class Initialized
+INFO - 2024-08-22 17:25:00 --> Output Class Initialized
+INFO - 2024-08-22 17:25:00 --> Security Class Initialized
+DEBUG - 2024-08-22 17:25:00 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:25:00 --> Input Class Initialized
+INFO - 2024-08-22 17:25:00 --> Language Class Initialized
+INFO - 2024-08-22 17:25:00 --> Loader Class Initialized
+INFO - 2024-08-22 17:25:00 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:25:00 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:25:00 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:25:00 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:25:00 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:25:00 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:25:00 --> Controller Class Initialized
+INFO - 2024-08-22 17:25:00 --> Model Class Initialized
+INFO - 2024-08-22 17:25:00 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:25:00 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:25:00 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:25:00 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:25:00 --> Final output sent to browser
+DEBUG - 2024-08-22 17:25:00 --> Total execution time: 0.0536
+INFO - 2024-08-22 17:25:00 --> Config Class Initialized
+INFO - 2024-08-22 17:25:00 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:25:00 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:25:00 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:25:00 --> URI Class Initialized
+INFO - 2024-08-22 17:25:00 --> Router Class Initialized
+INFO - 2024-08-22 17:25:00 --> Output Class Initialized
+INFO - 2024-08-22 17:25:00 --> Security Class Initialized
+DEBUG - 2024-08-22 17:25:00 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:25:00 --> Input Class Initialized
+INFO - 2024-08-22 17:25:00 --> Language Class Initialized
+INFO - 2024-08-22 17:25:00 --> Loader Class Initialized
+INFO - 2024-08-22 17:25:00 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:25:00 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:25:00 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:25:00 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:25:00 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:25:00 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:25:00 --> Controller Class Initialized
+INFO - 2024-08-22 17:25:00 --> Model Class Initialized
+INFO - 2024-08-22 17:25:00 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:25:00 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:25:00 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:25:06 --> Config Class Initialized
+INFO - 2024-08-22 17:25:06 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:25:06 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:25:06 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:25:06 --> URI Class Initialized
+INFO - 2024-08-22 17:25:06 --> Router Class Initialized
+INFO - 2024-08-22 17:25:06 --> Output Class Initialized
+INFO - 2024-08-22 17:25:06 --> Security Class Initialized
+DEBUG - 2024-08-22 17:25:06 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:25:06 --> Input Class Initialized
+INFO - 2024-08-22 17:25:06 --> Language Class Initialized
+ERROR - 2024-08-22 17:25:06 --> 404 Page Not Found: Mousture_content/savedetail24
+INFO - 2024-08-22 17:25:11 --> Config Class Initialized
+INFO - 2024-08-22 17:25:11 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:25:11 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:25:11 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:25:11 --> URI Class Initialized
+INFO - 2024-08-22 17:25:11 --> Router Class Initialized
+INFO - 2024-08-22 17:25:11 --> Output Class Initialized
+INFO - 2024-08-22 17:25:11 --> Security Class Initialized
+DEBUG - 2024-08-22 17:25:11 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:25:11 --> Input Class Initialized
+INFO - 2024-08-22 17:25:11 --> Language Class Initialized
+INFO - 2024-08-22 17:25:11 --> Loader Class Initialized
+INFO - 2024-08-22 17:25:11 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:25:11 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:25:11 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:25:11 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:25:11 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:25:11 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:25:11 --> Controller Class Initialized
+INFO - 2024-08-22 17:25:11 --> Model Class Initialized
+INFO - 2024-08-22 17:25:11 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:25:11 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:25:11 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:25:11 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:25:11 --> Final output sent to browser
+DEBUG - 2024-08-22 17:25:11 --> Total execution time: 0.0755
+INFO - 2024-08-22 17:25:11 --> Config Class Initialized
+INFO - 2024-08-22 17:25:11 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:25:11 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:25:11 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:25:11 --> URI Class Initialized
+INFO - 2024-08-22 17:25:11 --> Router Class Initialized
+INFO - 2024-08-22 17:25:11 --> Output Class Initialized
+INFO - 2024-08-22 17:25:11 --> Security Class Initialized
+DEBUG - 2024-08-22 17:25:11 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:25:11 --> Input Class Initialized
+INFO - 2024-08-22 17:25:11 --> Language Class Initialized
+INFO - 2024-08-22 17:25:11 --> Loader Class Initialized
+INFO - 2024-08-22 17:25:11 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:25:11 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:25:11 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:25:11 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:25:11 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:25:11 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:25:11 --> Controller Class Initialized
+INFO - 2024-08-22 17:25:11 --> Model Class Initialized
+INFO - 2024-08-22 17:25:11 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:25:11 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:25:11 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:25:17 --> Config Class Initialized
+INFO - 2024-08-22 17:25:17 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:25:17 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:25:17 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:25:17 --> URI Class Initialized
+INFO - 2024-08-22 17:25:17 --> Router Class Initialized
+INFO - 2024-08-22 17:25:17 --> Output Class Initialized
+INFO - 2024-08-22 17:25:17 --> Security Class Initialized
+DEBUG - 2024-08-22 17:25:17 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:25:17 --> Input Class Initialized
+INFO - 2024-08-22 17:25:17 --> Language Class Initialized
+ERROR - 2024-08-22 17:25:17 --> 404 Page Not Found: Mousture_content/savedetail24
+INFO - 2024-08-22 17:25:20 --> Config Class Initialized
+INFO - 2024-08-22 17:25:20 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:25:20 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:25:20 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:25:20 --> URI Class Initialized
+INFO - 2024-08-22 17:25:20 --> Router Class Initialized
+INFO - 2024-08-22 17:25:20 --> Output Class Initialized
+INFO - 2024-08-22 17:25:20 --> Security Class Initialized
+DEBUG - 2024-08-22 17:25:20 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:25:20 --> Input Class Initialized
+INFO - 2024-08-22 17:25:20 --> Language Class Initialized
+INFO - 2024-08-22 17:25:20 --> Loader Class Initialized
+INFO - 2024-08-22 17:25:20 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:25:20 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:25:20 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:25:20 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:25:20 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:25:20 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:25:20 --> Controller Class Initialized
+INFO - 2024-08-22 17:25:20 --> Model Class Initialized
+INFO - 2024-08-22 17:25:20 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:25:20 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:25:20 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:25:20 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:25:20 --> Final output sent to browser
+DEBUG - 2024-08-22 17:25:20 --> Total execution time: 0.0478
+INFO - 2024-08-22 17:25:20 --> Config Class Initialized
+INFO - 2024-08-22 17:25:20 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:25:20 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:25:20 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:25:20 --> URI Class Initialized
+INFO - 2024-08-22 17:25:20 --> Router Class Initialized
+INFO - 2024-08-22 17:25:20 --> Output Class Initialized
+INFO - 2024-08-22 17:25:20 --> Security Class Initialized
+DEBUG - 2024-08-22 17:25:20 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:25:20 --> Input Class Initialized
+INFO - 2024-08-22 17:25:20 --> Language Class Initialized
+INFO - 2024-08-22 17:25:20 --> Loader Class Initialized
+INFO - 2024-08-22 17:25:20 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:25:20 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:25:20 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:25:20 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:25:20 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:25:20 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:25:20 --> Controller Class Initialized
+INFO - 2024-08-22 17:25:20 --> Model Class Initialized
+INFO - 2024-08-22 17:25:20 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:25:20 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:25:20 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:25:25 --> Config Class Initialized
+INFO - 2024-08-22 17:25:25 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:25:25 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:25:25 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:25:25 --> URI Class Initialized
+INFO - 2024-08-22 17:25:25 --> Router Class Initialized
+INFO - 2024-08-22 17:25:25 --> Output Class Initialized
+INFO - 2024-08-22 17:25:25 --> Security Class Initialized
+DEBUG - 2024-08-22 17:25:25 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:25:25 --> Input Class Initialized
+INFO - 2024-08-22 17:25:25 --> Language Class Initialized
+ERROR - 2024-08-22 17:25:25 --> 404 Page Not Found: Mousture_content/savedetail24
+INFO - 2024-08-22 17:25:28 --> Config Class Initialized
+INFO - 2024-08-22 17:25:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:25:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:25:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:25:28 --> URI Class Initialized
+INFO - 2024-08-22 17:25:28 --> Router Class Initialized
+INFO - 2024-08-22 17:25:28 --> Output Class Initialized
+INFO - 2024-08-22 17:25:28 --> Security Class Initialized
+DEBUG - 2024-08-22 17:25:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:25:28 --> Input Class Initialized
+INFO - 2024-08-22 17:25:28 --> Language Class Initialized
+INFO - 2024-08-22 17:25:28 --> Loader Class Initialized
+INFO - 2024-08-22 17:25:28 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:25:28 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:25:28 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:25:28 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:25:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:25:28 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:25:28 --> Controller Class Initialized
+INFO - 2024-08-22 17:25:28 --> Model Class Initialized
+INFO - 2024-08-22 17:25:28 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:25:28 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:25:28 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:25:28 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:25:28 --> Final output sent to browser
+DEBUG - 2024-08-22 17:25:28 --> Total execution time: 0.0573
+INFO - 2024-08-22 17:25:29 --> Config Class Initialized
+INFO - 2024-08-22 17:25:29 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:25:29 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:25:29 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:25:29 --> URI Class Initialized
+INFO - 2024-08-22 17:25:29 --> Router Class Initialized
+INFO - 2024-08-22 17:25:29 --> Output Class Initialized
+INFO - 2024-08-22 17:25:29 --> Security Class Initialized
+DEBUG - 2024-08-22 17:25:29 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:25:29 --> Input Class Initialized
+INFO - 2024-08-22 17:25:29 --> Language Class Initialized
+INFO - 2024-08-22 17:25:29 --> Loader Class Initialized
+INFO - 2024-08-22 17:25:29 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:25:29 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:25:29 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:25:29 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:25:29 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:25:29 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:25:29 --> Controller Class Initialized
+INFO - 2024-08-22 17:25:29 --> Model Class Initialized
+INFO - 2024-08-22 17:25:29 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:25:29 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:25:29 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:25:52 --> Config Class Initialized
+INFO - 2024-08-22 17:25:52 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:25:52 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:25:52 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:25:52 --> URI Class Initialized
+INFO - 2024-08-22 17:25:52 --> Router Class Initialized
+INFO - 2024-08-22 17:25:52 --> Output Class Initialized
+INFO - 2024-08-22 17:25:52 --> Security Class Initialized
+DEBUG - 2024-08-22 17:25:52 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:25:52 --> Input Class Initialized
+INFO - 2024-08-22 17:25:52 --> Language Class Initialized
+INFO - 2024-08-22 17:25:52 --> Loader Class Initialized
+INFO - 2024-08-22 17:25:52 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:25:52 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:25:52 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:25:52 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:25:52 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:25:52 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:25:52 --> Controller Class Initialized
+INFO - 2024-08-22 17:25:52 --> Model Class Initialized
+INFO - 2024-08-22 17:25:52 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:25:52 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:25:52 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:25:52 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:25:52 --> Final output sent to browser
+DEBUG - 2024-08-22 17:25:52 --> Total execution time: 0.1468
+INFO - 2024-08-22 17:25:52 --> Config Class Initialized
+INFO - 2024-08-22 17:25:52 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:25:52 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:25:52 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:25:52 --> URI Class Initialized
+INFO - 2024-08-22 17:25:52 --> Router Class Initialized
+INFO - 2024-08-22 17:25:52 --> Output Class Initialized
+INFO - 2024-08-22 17:25:52 --> Security Class Initialized
+DEBUG - 2024-08-22 17:25:52 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:25:52 --> Input Class Initialized
+INFO - 2024-08-22 17:25:52 --> Language Class Initialized
+ERROR - 2024-08-22 17:25:52 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 17:25:52 --> Config Class Initialized
+INFO - 2024-08-22 17:25:52 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:25:52 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:25:52 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:25:52 --> URI Class Initialized
+INFO - 2024-08-22 17:25:52 --> Router Class Initialized
+INFO - 2024-08-22 17:25:52 --> Output Class Initialized
+INFO - 2024-08-22 17:25:52 --> Security Class Initialized
+DEBUG - 2024-08-22 17:25:52 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:25:52 --> Input Class Initialized
+INFO - 2024-08-22 17:25:52 --> Language Class Initialized
+INFO - 2024-08-22 17:25:52 --> Loader Class Initialized
+INFO - 2024-08-22 17:25:52 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:25:52 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:25:52 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:25:53 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:25:53 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:25:53 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:25:53 --> Controller Class Initialized
+INFO - 2024-08-22 17:25:53 --> Model Class Initialized
+INFO - 2024-08-22 17:25:53 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:25:53 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:25:53 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:25:56 --> Config Class Initialized
+INFO - 2024-08-22 17:25:56 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:25:56 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:25:56 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:25:56 --> URI Class Initialized
+INFO - 2024-08-22 17:25:56 --> Router Class Initialized
+INFO - 2024-08-22 17:25:56 --> Output Class Initialized
+INFO - 2024-08-22 17:25:56 --> Security Class Initialized
+DEBUG - 2024-08-22 17:25:56 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:25:56 --> Input Class Initialized
+INFO - 2024-08-22 17:25:56 --> Language Class Initialized
+INFO - 2024-08-22 17:25:56 --> Loader Class Initialized
+INFO - 2024-08-22 17:25:56 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:25:56 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:25:56 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:25:56 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:25:56 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:25:56 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:25:56 --> Controller Class Initialized
+INFO - 2024-08-22 17:25:56 --> Model Class Initialized
+INFO - 2024-08-22 17:25:56 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:25:56 --> Final output sent to browser
+DEBUG - 2024-08-22 17:25:56 --> Total execution time: 0.0477
+INFO - 2024-08-22 17:25:57 --> Config Class Initialized
+INFO - 2024-08-22 17:25:57 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:25:57 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:25:57 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:25:57 --> URI Class Initialized
+INFO - 2024-08-22 17:25:57 --> Router Class Initialized
+INFO - 2024-08-22 17:25:57 --> Output Class Initialized
+INFO - 2024-08-22 17:25:57 --> Security Class Initialized
+DEBUG - 2024-08-22 17:25:57 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:25:57 --> Input Class Initialized
+INFO - 2024-08-22 17:25:57 --> Language Class Initialized
+INFO - 2024-08-22 17:25:57 --> Loader Class Initialized
+INFO - 2024-08-22 17:25:57 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:25:57 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:25:57 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:25:57 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:25:57 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:25:57 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:25:57 --> Controller Class Initialized
+INFO - 2024-08-22 17:25:57 --> Model Class Initialized
+INFO - 2024-08-22 17:25:57 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:25:57 --> Final output sent to browser
+DEBUG - 2024-08-22 17:25:57 --> Total execution time: 0.0605
+INFO - 2024-08-22 17:26:00 --> Config Class Initialized
+INFO - 2024-08-22 17:26:00 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:26:00 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:26:00 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:26:00 --> URI Class Initialized
+INFO - 2024-08-22 17:26:00 --> Router Class Initialized
+INFO - 2024-08-22 17:26:00 --> Output Class Initialized
+INFO - 2024-08-22 17:26:00 --> Security Class Initialized
+DEBUG - 2024-08-22 17:26:00 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:26:00 --> Input Class Initialized
+INFO - 2024-08-22 17:26:00 --> Language Class Initialized
+INFO - 2024-08-22 17:26:00 --> Loader Class Initialized
+INFO - 2024-08-22 17:26:00 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:26:00 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:26:00 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:26:00 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:26:00 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:26:00 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:26:00 --> Controller Class Initialized
+INFO - 2024-08-22 17:26:00 --> Model Class Initialized
+INFO - 2024-08-22 17:26:00 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:27:24 --> Config Class Initialized
+INFO - 2024-08-22 17:27:24 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:27:24 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:27:24 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:27:24 --> URI Class Initialized
+INFO - 2024-08-22 17:27:24 --> Router Class Initialized
+INFO - 2024-08-22 17:27:24 --> Output Class Initialized
+INFO - 2024-08-22 17:27:24 --> Security Class Initialized
+DEBUG - 2024-08-22 17:27:24 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:27:24 --> Input Class Initialized
+INFO - 2024-08-22 17:27:24 --> Language Class Initialized
+INFO - 2024-08-22 17:27:24 --> Loader Class Initialized
+INFO - 2024-08-22 17:27:24 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:27:24 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:27:24 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:27:24 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:27:24 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:27:24 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:27:24 --> Controller Class Initialized
+INFO - 2024-08-22 17:27:24 --> Model Class Initialized
+INFO - 2024-08-22 17:27:24 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:27:24 --> Severity: Notice --> Undefined variable: table C:\laragon\www\limsonewater\application\models\Moisture_content_model.php 231
+ERROR - 2024-08-22 17:27:24 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(`date_moisture24`, `time_moisture24`, `barcode_tray`, `dry_weight24`, `comme...' at line 1 - Invalid query: INSERT INTO  (`date_moisture24`, `time_moisture24`, `barcode_tray`, `dry_weight24`, `comments`) VALUES ('2024-08-22', '17:25', 'w240001', '1.2', 'd')
+INFO - 2024-08-22 17:27:24 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:27:50 --> Config Class Initialized
+INFO - 2024-08-22 17:27:50 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:27:50 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:27:50 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:27:50 --> URI Class Initialized
+INFO - 2024-08-22 17:27:50 --> Router Class Initialized
+INFO - 2024-08-22 17:27:50 --> Output Class Initialized
+INFO - 2024-08-22 17:27:50 --> Security Class Initialized
+DEBUG - 2024-08-22 17:27:50 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:27:50 --> Input Class Initialized
+INFO - 2024-08-22 17:27:50 --> Language Class Initialized
+INFO - 2024-08-22 17:27:50 --> Loader Class Initialized
+INFO - 2024-08-22 17:27:50 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:27:50 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:27:50 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:27:50 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:27:50 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:27:50 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:27:50 --> Controller Class Initialized
+INFO - 2024-08-22 17:27:50 --> Model Class Initialized
+INFO - 2024-08-22 17:27:50 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:27:50 --> Query error: Unknown column 'date_moisture24' in 'field list' - Invalid query: INSERT INTO `moisture_content` (`date_moisture24`, `time_moisture24`, `barcode_tray`, `dry_weight24`, `comments`) VALUES ('2024-08-22', '17:25', 'w240001', '1.2', 'd')
+INFO - 2024-08-22 17:27:50 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:28:46 --> Config Class Initialized
+INFO - 2024-08-22 17:28:46 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:28:46 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:28:46 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:28:46 --> URI Class Initialized
+INFO - 2024-08-22 17:28:46 --> Router Class Initialized
+INFO - 2024-08-22 17:28:46 --> Output Class Initialized
+INFO - 2024-08-22 17:28:46 --> Security Class Initialized
+DEBUG - 2024-08-22 17:28:46 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:28:46 --> Input Class Initialized
+INFO - 2024-08-22 17:28:46 --> Language Class Initialized
+INFO - 2024-08-22 17:28:46 --> Loader Class Initialized
+INFO - 2024-08-22 17:28:46 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:28:46 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:28:46 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:28:46 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:28:46 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:28:46 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:28:46 --> Controller Class Initialized
+INFO - 2024-08-22 17:28:47 --> Model Class Initialized
+INFO - 2024-08-22 17:28:47 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:28:47 --> Query error: Unknown column 'date_moisture24' in 'field list' - Invalid query: INSERT INTO `moisture_content` (`date_moisture24`, `time_moisture24`, `barcode_tray`, `dry_weight24`, `comments`) VALUES ('2024-08-22', '17:25', 'w240001', '1.2', 'd')
+INFO - 2024-08-22 17:28:47 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:30:30 --> Config Class Initialized
+INFO - 2024-08-22 17:30:30 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:30:30 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:30:30 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:30:30 --> URI Class Initialized
+INFO - 2024-08-22 17:30:30 --> Router Class Initialized
+INFO - 2024-08-22 17:30:30 --> Output Class Initialized
+INFO - 2024-08-22 17:30:30 --> Security Class Initialized
+DEBUG - 2024-08-22 17:30:30 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:30:30 --> Input Class Initialized
+INFO - 2024-08-22 17:30:30 --> Language Class Initialized
+INFO - 2024-08-22 17:30:30 --> Loader Class Initialized
+INFO - 2024-08-22 17:30:30 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:30:30 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:30:30 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:30:30 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:30:30 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:30:30 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:30:30 --> Controller Class Initialized
+INFO - 2024-08-22 17:30:30 --> Model Class Initialized
+INFO - 2024-08-22 17:30:30 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:30:30 --> Config Class Initialized
+INFO - 2024-08-22 17:30:30 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:30:30 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:30:30 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:30:30 --> URI Class Initialized
+INFO - 2024-08-22 17:30:30 --> Router Class Initialized
+INFO - 2024-08-22 17:30:30 --> Output Class Initialized
+INFO - 2024-08-22 17:30:30 --> Security Class Initialized
+DEBUG - 2024-08-22 17:30:30 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:30:30 --> Input Class Initialized
+INFO - 2024-08-22 17:30:30 --> Language Class Initialized
+INFO - 2024-08-22 17:30:30 --> Loader Class Initialized
+INFO - 2024-08-22 17:30:30 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:30:30 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:30:30 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:30:30 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:30:30 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:30:30 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:30:30 --> Controller Class Initialized
+INFO - 2024-08-22 17:30:30 --> Model Class Initialized
+INFO - 2024-08-22 17:30:30 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:30:30 --> Severity: error --> Exception: Too few arguments to function Moisture_content::read(), 0 passed in C:\laragon\www\limsonewater\system\core\CodeIgniter.php on line 532 and exactly 1 expected C:\laragon\www\limsonewater\application\controllers\Moisture_content.php 58
+INFO - 2024-08-22 17:32:32 --> Config Class Initialized
+INFO - 2024-08-22 17:32:32 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:32:32 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:32:32 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:32:32 --> URI Class Initialized
+INFO - 2024-08-22 17:32:32 --> Router Class Initialized
+INFO - 2024-08-22 17:32:32 --> Output Class Initialized
+INFO - 2024-08-22 17:32:32 --> Security Class Initialized
+DEBUG - 2024-08-22 17:32:32 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:32:32 --> Input Class Initialized
+INFO - 2024-08-22 17:32:32 --> Language Class Initialized
+INFO - 2024-08-22 17:32:32 --> Loader Class Initialized
+INFO - 2024-08-22 17:32:32 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:32:32 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:32:32 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:32:32 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:32:32 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:32:32 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:32:32 --> Controller Class Initialized
+INFO - 2024-08-22 17:32:32 --> Model Class Initialized
+INFO - 2024-08-22 17:32:32 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:32:32 --> Severity: error --> Exception: Too few arguments to function Moisture_content::read(), 0 passed in C:\laragon\www\limsonewater\system\core\CodeIgniter.php on line 532 and exactly 1 expected C:\laragon\www\limsonewater\application\controllers\Moisture_content.php 58
+INFO - 2024-08-22 17:32:33 --> Config Class Initialized
+INFO - 2024-08-22 17:32:33 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:32:33 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:32:33 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:32:33 --> URI Class Initialized
+INFO - 2024-08-22 17:32:33 --> Router Class Initialized
+INFO - 2024-08-22 17:32:33 --> Output Class Initialized
+INFO - 2024-08-22 17:32:33 --> Security Class Initialized
+DEBUG - 2024-08-22 17:32:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:32:33 --> Input Class Initialized
+INFO - 2024-08-22 17:32:33 --> Language Class Initialized
+INFO - 2024-08-22 17:32:33 --> Loader Class Initialized
+INFO - 2024-08-22 17:32:33 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:32:33 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:32:33 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:32:33 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:32:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:32:33 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:32:33 --> Controller Class Initialized
+INFO - 2024-08-22 17:32:33 --> Model Class Initialized
+INFO - 2024-08-22 17:32:33 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:32:33 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:32:33 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:32:33 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:32:33 --> Final output sent to browser
+DEBUG - 2024-08-22 17:32:33 --> Total execution time: 0.0462
+INFO - 2024-08-22 17:32:34 --> Config Class Initialized
+INFO - 2024-08-22 17:32:34 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:32:34 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:32:34 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:32:34 --> URI Class Initialized
+INFO - 2024-08-22 17:32:34 --> Router Class Initialized
+INFO - 2024-08-22 17:32:34 --> Output Class Initialized
+INFO - 2024-08-22 17:32:34 --> Security Class Initialized
+DEBUG - 2024-08-22 17:32:34 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:32:34 --> Input Class Initialized
+INFO - 2024-08-22 17:32:34 --> Language Class Initialized
+INFO - 2024-08-22 17:32:34 --> Loader Class Initialized
+INFO - 2024-08-22 17:32:34 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:32:34 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:32:34 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:32:34 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:32:34 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:32:34 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:32:34 --> Controller Class Initialized
+INFO - 2024-08-22 17:32:34 --> Model Class Initialized
+INFO - 2024-08-22 17:32:34 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:32:34 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:32:34 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:32:37 --> Config Class Initialized
+INFO - 2024-08-22 17:32:37 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:32:37 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:32:37 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:32:37 --> URI Class Initialized
+INFO - 2024-08-22 17:32:37 --> Router Class Initialized
+INFO - 2024-08-22 17:32:37 --> Output Class Initialized
+INFO - 2024-08-22 17:32:37 --> Security Class Initialized
+DEBUG - 2024-08-22 17:32:37 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:32:37 --> Input Class Initialized
+INFO - 2024-08-22 17:32:37 --> Language Class Initialized
+INFO - 2024-08-22 17:32:37 --> Loader Class Initialized
+INFO - 2024-08-22 17:32:37 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:32:37 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:32:37 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:32:38 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:32:38 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:32:38 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:32:38 --> Controller Class Initialized
+INFO - 2024-08-22 17:32:38 --> Model Class Initialized
+INFO - 2024-08-22 17:32:38 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:32:38 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:32:38 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:32:38 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:32:38 --> Final output sent to browser
+DEBUG - 2024-08-22 17:32:38 --> Total execution time: 0.0759
+INFO - 2024-08-22 17:32:38 --> Config Class Initialized
+INFO - 2024-08-22 17:32:38 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:32:38 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:32:38 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:32:38 --> URI Class Initialized
+INFO - 2024-08-22 17:32:38 --> Router Class Initialized
+INFO - 2024-08-22 17:32:38 --> Output Class Initialized
+INFO - 2024-08-22 17:32:38 --> Security Class Initialized
+DEBUG - 2024-08-22 17:32:38 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:32:38 --> Input Class Initialized
+INFO - 2024-08-22 17:32:38 --> Language Class Initialized
+ERROR - 2024-08-22 17:32:38 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 17:32:38 --> Config Class Initialized
+INFO - 2024-08-22 17:32:38 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:32:38 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:32:38 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:32:38 --> URI Class Initialized
+INFO - 2024-08-22 17:32:38 --> Router Class Initialized
+INFO - 2024-08-22 17:32:38 --> Output Class Initialized
+INFO - 2024-08-22 17:32:38 --> Security Class Initialized
+DEBUG - 2024-08-22 17:32:38 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:32:38 --> Input Class Initialized
+INFO - 2024-08-22 17:32:38 --> Language Class Initialized
+INFO - 2024-08-22 17:32:38 --> Loader Class Initialized
+INFO - 2024-08-22 17:32:38 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:32:38 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:32:38 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:32:38 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:32:38 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:32:38 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:32:38 --> Controller Class Initialized
+INFO - 2024-08-22 17:32:38 --> Model Class Initialized
+INFO - 2024-08-22 17:32:38 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:32:38 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:32:38 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:32:43 --> Config Class Initialized
+INFO - 2024-08-22 17:32:43 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:32:43 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:32:43 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:32:43 --> URI Class Initialized
+INFO - 2024-08-22 17:32:43 --> Router Class Initialized
+INFO - 2024-08-22 17:32:43 --> Output Class Initialized
+INFO - 2024-08-22 17:32:43 --> Security Class Initialized
+DEBUG - 2024-08-22 17:32:43 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:32:43 --> Input Class Initialized
+INFO - 2024-08-22 17:32:43 --> Language Class Initialized
+INFO - 2024-08-22 17:32:43 --> Loader Class Initialized
+INFO - 2024-08-22 17:32:43 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:32:43 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:32:43 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:32:43 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:32:43 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:32:43 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:32:43 --> Controller Class Initialized
+INFO - 2024-08-22 17:32:43 --> Model Class Initialized
+INFO - 2024-08-22 17:32:43 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:32:43 --> Final output sent to browser
+DEBUG - 2024-08-22 17:32:43 --> Total execution time: 0.0909
+INFO - 2024-08-22 17:32:46 --> Config Class Initialized
+INFO - 2024-08-22 17:32:46 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:32:46 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:32:46 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:32:46 --> URI Class Initialized
+INFO - 2024-08-22 17:32:46 --> Router Class Initialized
+INFO - 2024-08-22 17:32:46 --> Output Class Initialized
+INFO - 2024-08-22 17:32:46 --> Security Class Initialized
+DEBUG - 2024-08-22 17:32:46 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:32:46 --> Input Class Initialized
+INFO - 2024-08-22 17:32:46 --> Language Class Initialized
+INFO - 2024-08-22 17:32:46 --> Loader Class Initialized
+INFO - 2024-08-22 17:32:46 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:32:46 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:32:46 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:32:46 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:32:46 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:32:46 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:32:46 --> Controller Class Initialized
+INFO - 2024-08-22 17:32:46 --> Model Class Initialized
+INFO - 2024-08-22 17:32:46 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:32:50 --> Config Class Initialized
+INFO - 2024-08-22 17:32:50 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:32:50 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:32:50 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:32:50 --> URI Class Initialized
+INFO - 2024-08-22 17:32:50 --> Router Class Initialized
+INFO - 2024-08-22 17:32:50 --> Output Class Initialized
+INFO - 2024-08-22 17:32:50 --> Security Class Initialized
+DEBUG - 2024-08-22 17:32:50 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:32:50 --> Input Class Initialized
+INFO - 2024-08-22 17:32:50 --> Language Class Initialized
+INFO - 2024-08-22 17:32:50 --> Loader Class Initialized
+INFO - 2024-08-22 17:32:50 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:32:50 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:32:50 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:32:50 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:32:50 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:32:50 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:32:50 --> Controller Class Initialized
+INFO - 2024-08-22 17:32:50 --> Model Class Initialized
+INFO - 2024-08-22 17:32:50 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:32:50 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:32:50 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:32:50 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:32:50 --> Final output sent to browser
+DEBUG - 2024-08-22 17:32:50 --> Total execution time: 0.0954
+INFO - 2024-08-22 17:32:50 --> Config Class Initialized
+INFO - 2024-08-22 17:32:50 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:32:50 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:32:50 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:32:50 --> URI Class Initialized
+INFO - 2024-08-22 17:32:50 --> Router Class Initialized
+INFO - 2024-08-22 17:32:50 --> Output Class Initialized
+INFO - 2024-08-22 17:32:50 --> Security Class Initialized
+DEBUG - 2024-08-22 17:32:50 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:32:50 --> Input Class Initialized
+INFO - 2024-08-22 17:32:50 --> Language Class Initialized
+INFO - 2024-08-22 17:32:50 --> Loader Class Initialized
+INFO - 2024-08-22 17:32:50 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:32:50 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:32:50 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:32:50 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:32:50 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:32:50 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:32:50 --> Controller Class Initialized
+INFO - 2024-08-22 17:32:50 --> Model Class Initialized
+INFO - 2024-08-22 17:32:50 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:32:50 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:32:50 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:32:55 --> Config Class Initialized
+INFO - 2024-08-22 17:32:55 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:32:55 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:32:55 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:32:55 --> URI Class Initialized
+INFO - 2024-08-22 17:32:55 --> Router Class Initialized
+INFO - 2024-08-22 17:32:55 --> Output Class Initialized
+INFO - 2024-08-22 17:32:55 --> Security Class Initialized
+DEBUG - 2024-08-22 17:32:55 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:32:55 --> Input Class Initialized
+INFO - 2024-08-22 17:32:55 --> Language Class Initialized
+INFO - 2024-08-22 17:32:55 --> Loader Class Initialized
+INFO - 2024-08-22 17:32:55 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:32:55 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:32:55 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:32:55 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:32:55 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:32:55 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:32:55 --> Controller Class Initialized
+INFO - 2024-08-22 17:32:55 --> Model Class Initialized
+INFO - 2024-08-22 17:32:55 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:32:55 --> Severity: Notice --> Undefined variable: id_project C:\laragon\www\limsonewater\application\views\moisture_content\index.php 13
+ERROR - 2024-08-22 17:32:55 --> Severity: Notice --> Undefined variable: client C:\laragon\www\limsonewater\application\views\moisture_content\index.php 16
+ERROR - 2024-08-22 17:32:55 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 17:32:55 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 17:32:55 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 17:32:55 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 17:32:55 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 17:32:55 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+INFO - 2024-08-22 17:32:55 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index.php
+INFO - 2024-08-22 17:32:55 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:32:55 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:32:55 --> Final output sent to browser
+DEBUG - 2024-08-22 17:32:55 --> Total execution time: 0.1225
+INFO - 2024-08-22 17:32:55 --> Config Class Initialized
+INFO - 2024-08-22 17:32:55 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:32:55 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:32:55 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:32:55 --> URI Class Initialized
+INFO - 2024-08-22 17:32:55 --> Router Class Initialized
+INFO - 2024-08-22 17:32:55 --> Output Class Initialized
+INFO - 2024-08-22 17:32:55 --> Security Class Initialized
+DEBUG - 2024-08-22 17:32:55 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:32:55 --> Input Class Initialized
+INFO - 2024-08-22 17:32:55 --> Language Class Initialized
+INFO - 2024-08-22 17:32:55 --> Loader Class Initialized
+INFO - 2024-08-22 17:32:55 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:32:55 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:32:55 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:32:55 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:32:55 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:32:55 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:32:55 --> Controller Class Initialized
+INFO - 2024-08-22 17:32:55 --> Model Class Initialized
+INFO - 2024-08-22 17:32:55 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:32:55 --> Final output sent to browser
+DEBUG - 2024-08-22 17:32:55 --> Total execution time: 0.0752
+INFO - 2024-08-22 17:36:25 --> Config Class Initialized
+INFO - 2024-08-22 17:36:25 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:36:25 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:36:25 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:36:25 --> URI Class Initialized
+INFO - 2024-08-22 17:36:25 --> Router Class Initialized
+INFO - 2024-08-22 17:36:25 --> Output Class Initialized
+INFO - 2024-08-22 17:36:25 --> Security Class Initialized
+DEBUG - 2024-08-22 17:36:25 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:36:25 --> Input Class Initialized
+INFO - 2024-08-22 17:36:25 --> Language Class Initialized
+INFO - 2024-08-22 17:36:25 --> Loader Class Initialized
+INFO - 2024-08-22 17:36:25 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:36:25 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:36:25 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:36:25 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:36:25 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:36:25 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:36:25 --> Controller Class Initialized
+INFO - 2024-08-22 17:36:25 --> Model Class Initialized
+INFO - 2024-08-22 17:36:25 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:36:25 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:36:25 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:36:25 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:36:25 --> Final output sent to browser
+DEBUG - 2024-08-22 17:36:25 --> Total execution time: 0.0577
+INFO - 2024-08-22 17:36:26 --> Config Class Initialized
+INFO - 2024-08-22 17:36:26 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:36:26 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:36:26 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:36:26 --> URI Class Initialized
+INFO - 2024-08-22 17:36:26 --> Router Class Initialized
+INFO - 2024-08-22 17:36:26 --> Output Class Initialized
+INFO - 2024-08-22 17:36:26 --> Security Class Initialized
+DEBUG - 2024-08-22 17:36:26 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:36:26 --> Input Class Initialized
+INFO - 2024-08-22 17:36:26 --> Language Class Initialized
+ERROR - 2024-08-22 17:36:26 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 17:36:26 --> Config Class Initialized
+INFO - 2024-08-22 17:36:26 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:36:26 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:36:26 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:36:26 --> URI Class Initialized
+INFO - 2024-08-22 17:36:26 --> Router Class Initialized
+INFO - 2024-08-22 17:36:26 --> Output Class Initialized
+INFO - 2024-08-22 17:36:26 --> Security Class Initialized
+DEBUG - 2024-08-22 17:36:26 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:36:26 --> Input Class Initialized
+INFO - 2024-08-22 17:36:26 --> Language Class Initialized
+INFO - 2024-08-22 17:36:26 --> Loader Class Initialized
+INFO - 2024-08-22 17:36:26 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:36:26 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:36:26 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:36:26 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:36:26 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:36:26 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:36:26 --> Controller Class Initialized
+INFO - 2024-08-22 17:36:26 --> Model Class Initialized
+INFO - 2024-08-22 17:36:26 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:36:26 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:36:26 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:36:32 --> Config Class Initialized
+INFO - 2024-08-22 17:36:32 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:36:32 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:36:32 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:36:32 --> URI Class Initialized
+INFO - 2024-08-22 17:36:32 --> Router Class Initialized
+INFO - 2024-08-22 17:36:32 --> Output Class Initialized
+INFO - 2024-08-22 17:36:32 --> Security Class Initialized
+DEBUG - 2024-08-22 17:36:32 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:36:32 --> Input Class Initialized
+INFO - 2024-08-22 17:36:32 --> Language Class Initialized
+INFO - 2024-08-22 17:36:32 --> Loader Class Initialized
+INFO - 2024-08-22 17:36:32 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:36:32 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:36:32 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:36:32 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:36:32 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:36:32 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:36:32 --> Controller Class Initialized
+INFO - 2024-08-22 17:36:32 --> Model Class Initialized
+INFO - 2024-08-22 17:36:32 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:36:32 --> Final output sent to browser
+DEBUG - 2024-08-22 17:36:32 --> Total execution time: 0.0477
+INFO - 2024-08-22 17:36:38 --> Config Class Initialized
+INFO - 2024-08-22 17:36:38 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:36:38 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:36:38 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:36:38 --> URI Class Initialized
+INFO - 2024-08-22 17:36:38 --> Router Class Initialized
+INFO - 2024-08-22 17:36:38 --> Output Class Initialized
+INFO - 2024-08-22 17:36:38 --> Security Class Initialized
+DEBUG - 2024-08-22 17:36:38 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:36:38 --> Input Class Initialized
+INFO - 2024-08-22 17:36:38 --> Language Class Initialized
+INFO - 2024-08-22 17:36:38 --> Loader Class Initialized
+INFO - 2024-08-22 17:36:38 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:36:38 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:36:38 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:36:38 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:36:38 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:36:38 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:36:38 --> Controller Class Initialized
+INFO - 2024-08-22 17:36:38 --> Model Class Initialized
+INFO - 2024-08-22 17:36:38 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:38:33 --> Config Class Initialized
+INFO - 2024-08-22 17:38:33 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:38:33 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:38:33 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:38:33 --> URI Class Initialized
+INFO - 2024-08-22 17:38:33 --> Router Class Initialized
+INFO - 2024-08-22 17:38:33 --> Output Class Initialized
+INFO - 2024-08-22 17:38:33 --> Security Class Initialized
+DEBUG - 2024-08-22 17:38:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:38:33 --> Input Class Initialized
+INFO - 2024-08-22 17:38:33 --> Language Class Initialized
+INFO - 2024-08-22 17:38:33 --> Loader Class Initialized
+INFO - 2024-08-22 17:38:33 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:38:33 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:38:33 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:38:33 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:38:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:38:33 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:38:33 --> Controller Class Initialized
+INFO - 2024-08-22 17:38:33 --> Model Class Initialized
+INFO - 2024-08-22 17:38:33 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:38:33 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:38:33 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:38:33 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:38:33 --> Final output sent to browser
+DEBUG - 2024-08-22 17:38:33 --> Total execution time: 0.0572
+INFO - 2024-08-22 17:38:34 --> Config Class Initialized
+INFO - 2024-08-22 17:38:34 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:38:34 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:38:34 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:38:34 --> URI Class Initialized
+INFO - 2024-08-22 17:38:34 --> Router Class Initialized
+INFO - 2024-08-22 17:38:34 --> Output Class Initialized
+INFO - 2024-08-22 17:38:34 --> Security Class Initialized
+DEBUG - 2024-08-22 17:38:34 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:38:34 --> Input Class Initialized
+INFO - 2024-08-22 17:38:34 --> Language Class Initialized
+INFO - 2024-08-22 17:38:34 --> Loader Class Initialized
+INFO - 2024-08-22 17:38:34 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:38:34 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:38:34 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:38:34 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:38:34 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:38:34 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:38:34 --> Controller Class Initialized
+INFO - 2024-08-22 17:38:34 --> Model Class Initialized
+INFO - 2024-08-22 17:38:34 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:38:34 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:38:34 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:38:35 --> Config Class Initialized
+INFO - 2024-08-22 17:38:35 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:38:35 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:38:35 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:38:35 --> URI Class Initialized
+INFO - 2024-08-22 17:38:35 --> Router Class Initialized
+INFO - 2024-08-22 17:38:35 --> Output Class Initialized
+INFO - 2024-08-22 17:38:35 --> Security Class Initialized
+DEBUG - 2024-08-22 17:38:35 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:38:35 --> Input Class Initialized
+INFO - 2024-08-22 17:38:35 --> Language Class Initialized
+INFO - 2024-08-22 17:38:35 --> Loader Class Initialized
+INFO - 2024-08-22 17:38:35 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:38:35 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:38:35 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:38:35 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:38:35 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:38:35 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:38:35 --> Controller Class Initialized
+INFO - 2024-08-22 17:38:35 --> Model Class Initialized
+INFO - 2024-08-22 17:38:35 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:38:35 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:38:35 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:38:35 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:38:35 --> Final output sent to browser
+DEBUG - 2024-08-22 17:38:35 --> Total execution time: 0.0660
+INFO - 2024-08-22 17:38:35 --> Config Class Initialized
+INFO - 2024-08-22 17:38:35 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:38:35 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:38:35 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:38:35 --> URI Class Initialized
+INFO - 2024-08-22 17:38:35 --> Router Class Initialized
+INFO - 2024-08-22 17:38:35 --> Output Class Initialized
+INFO - 2024-08-22 17:38:35 --> Security Class Initialized
+DEBUG - 2024-08-22 17:38:35 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:38:35 --> Input Class Initialized
+INFO - 2024-08-22 17:38:35 --> Language Class Initialized
+ERROR - 2024-08-22 17:38:35 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 17:38:35 --> Config Class Initialized
+INFO - 2024-08-22 17:38:35 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:38:35 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:38:35 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:38:35 --> URI Class Initialized
+INFO - 2024-08-22 17:38:35 --> Router Class Initialized
+INFO - 2024-08-22 17:38:35 --> Output Class Initialized
+INFO - 2024-08-22 17:38:35 --> Security Class Initialized
+DEBUG - 2024-08-22 17:38:35 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:38:35 --> Input Class Initialized
+INFO - 2024-08-22 17:38:35 --> Language Class Initialized
+INFO - 2024-08-22 17:38:35 --> Loader Class Initialized
+INFO - 2024-08-22 17:38:35 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:38:35 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:38:35 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:38:35 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:38:35 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:38:35 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:38:35 --> Controller Class Initialized
+INFO - 2024-08-22 17:38:35 --> Model Class Initialized
+INFO - 2024-08-22 17:38:35 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:38:35 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:38:35 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:38:45 --> Config Class Initialized
+INFO - 2024-08-22 17:38:45 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:38:45 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:38:45 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:38:45 --> URI Class Initialized
+INFO - 2024-08-22 17:38:45 --> Router Class Initialized
+INFO - 2024-08-22 17:38:45 --> Output Class Initialized
+INFO - 2024-08-22 17:38:45 --> Security Class Initialized
+DEBUG - 2024-08-22 17:38:45 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:38:45 --> Input Class Initialized
+INFO - 2024-08-22 17:38:45 --> Language Class Initialized
+INFO - 2024-08-22 17:38:45 --> Loader Class Initialized
+INFO - 2024-08-22 17:38:45 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:38:45 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:38:45 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:38:45 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:38:45 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:38:45 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:38:45 --> Controller Class Initialized
+INFO - 2024-08-22 17:38:46 --> Model Class Initialized
+INFO - 2024-08-22 17:38:46 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:38:46 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:38:46 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:38:46 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:38:46 --> Final output sent to browser
+DEBUG - 2024-08-22 17:38:46 --> Total execution time: 0.0515
+INFO - 2024-08-22 17:38:46 --> Config Class Initialized
+INFO - 2024-08-22 17:38:46 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:38:46 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:38:46 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:38:46 --> URI Class Initialized
+INFO - 2024-08-22 17:38:46 --> Router Class Initialized
+INFO - 2024-08-22 17:38:46 --> Output Class Initialized
+INFO - 2024-08-22 17:38:46 --> Security Class Initialized
+DEBUG - 2024-08-22 17:38:46 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:38:46 --> Input Class Initialized
+INFO - 2024-08-22 17:38:46 --> Language Class Initialized
+ERROR - 2024-08-22 17:38:46 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 17:38:46 --> Config Class Initialized
+INFO - 2024-08-22 17:38:46 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:38:46 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:38:46 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:38:46 --> URI Class Initialized
+INFO - 2024-08-22 17:38:46 --> Router Class Initialized
+INFO - 2024-08-22 17:38:46 --> Output Class Initialized
+INFO - 2024-08-22 17:38:46 --> Security Class Initialized
+DEBUG - 2024-08-22 17:38:46 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:38:46 --> Input Class Initialized
+INFO - 2024-08-22 17:38:46 --> Language Class Initialized
+INFO - 2024-08-22 17:38:46 --> Loader Class Initialized
+INFO - 2024-08-22 17:38:46 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:38:46 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:38:46 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:38:46 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:38:46 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:38:46 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:38:46 --> Controller Class Initialized
+INFO - 2024-08-22 17:38:46 --> Model Class Initialized
+INFO - 2024-08-22 17:38:46 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:38:46 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:38:46 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:38:50 --> Config Class Initialized
+INFO - 2024-08-22 17:38:50 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:38:50 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:38:50 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:38:50 --> URI Class Initialized
+INFO - 2024-08-22 17:38:50 --> Router Class Initialized
+INFO - 2024-08-22 17:38:50 --> Output Class Initialized
+INFO - 2024-08-22 17:38:50 --> Security Class Initialized
+DEBUG - 2024-08-22 17:38:50 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:38:50 --> Input Class Initialized
+INFO - 2024-08-22 17:38:50 --> Language Class Initialized
+INFO - 2024-08-22 17:38:50 --> Loader Class Initialized
+INFO - 2024-08-22 17:38:50 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:38:50 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:38:50 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:38:50 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:38:50 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:38:50 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:38:50 --> Controller Class Initialized
+INFO - 2024-08-22 17:38:50 --> Model Class Initialized
+INFO - 2024-08-22 17:38:50 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:38:50 --> Final output sent to browser
+DEBUG - 2024-08-22 17:38:50 --> Total execution time: 0.0493
+INFO - 2024-08-22 17:39:38 --> Config Class Initialized
+INFO - 2024-08-22 17:39:38 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:39:38 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:39:38 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:39:38 --> URI Class Initialized
+INFO - 2024-08-22 17:39:38 --> Router Class Initialized
+INFO - 2024-08-22 17:39:38 --> Output Class Initialized
+INFO - 2024-08-22 17:39:38 --> Security Class Initialized
+DEBUG - 2024-08-22 17:39:38 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:39:38 --> Input Class Initialized
+INFO - 2024-08-22 17:39:38 --> Language Class Initialized
+ERROR - 2024-08-22 17:39:38 --> Severity: error --> Exception: syntax error, unexpected ')' C:\laragon\www\limsonewater\application\controllers\Moisture_content.php 308
+INFO - 2024-08-22 17:39:56 --> Config Class Initialized
+INFO - 2024-08-22 17:39:56 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:39:56 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:39:56 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:39:56 --> URI Class Initialized
+INFO - 2024-08-22 17:39:56 --> Router Class Initialized
+INFO - 2024-08-22 17:39:56 --> Output Class Initialized
+INFO - 2024-08-22 17:39:56 --> Security Class Initialized
+DEBUG - 2024-08-22 17:39:56 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:39:56 --> Input Class Initialized
+INFO - 2024-08-22 17:39:56 --> Language Class Initialized
+INFO - 2024-08-22 17:39:56 --> Loader Class Initialized
+INFO - 2024-08-22 17:39:56 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:39:56 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:39:56 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:39:56 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:39:56 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:39:56 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:39:56 --> Controller Class Initialized
+INFO - 2024-08-22 17:39:56 --> Model Class Initialized
+INFO - 2024-08-22 17:39:56 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:39:56 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:39:56 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:39:56 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:39:56 --> Final output sent to browser
+DEBUG - 2024-08-22 17:39:56 --> Total execution time: 0.0898
+INFO - 2024-08-22 17:39:56 --> Config Class Initialized
+INFO - 2024-08-22 17:39:56 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:39:56 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:39:56 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:39:56 --> URI Class Initialized
+INFO - 2024-08-22 17:39:56 --> Router Class Initialized
+INFO - 2024-08-22 17:39:56 --> Output Class Initialized
+INFO - 2024-08-22 17:39:56 --> Security Class Initialized
+DEBUG - 2024-08-22 17:39:56 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:39:56 --> Input Class Initialized
+INFO - 2024-08-22 17:39:56 --> Language Class Initialized
+ERROR - 2024-08-22 17:39:56 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 17:39:56 --> Config Class Initialized
+INFO - 2024-08-22 17:39:56 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:39:56 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:39:56 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:39:56 --> URI Class Initialized
+INFO - 2024-08-22 17:39:56 --> Router Class Initialized
+INFO - 2024-08-22 17:39:56 --> Output Class Initialized
+INFO - 2024-08-22 17:39:56 --> Security Class Initialized
+DEBUG - 2024-08-22 17:39:56 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:39:56 --> Input Class Initialized
+INFO - 2024-08-22 17:39:56 --> Language Class Initialized
+INFO - 2024-08-22 17:39:56 --> Loader Class Initialized
+INFO - 2024-08-22 17:39:56 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:39:56 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:39:56 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:39:56 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:39:56 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:39:56 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:39:56 --> Controller Class Initialized
+INFO - 2024-08-22 17:39:56 --> Model Class Initialized
+INFO - 2024-08-22 17:39:56 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:39:56 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:39:56 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:40:00 --> Config Class Initialized
+INFO - 2024-08-22 17:40:00 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:40:00 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:40:00 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:40:00 --> URI Class Initialized
+INFO - 2024-08-22 17:40:00 --> Router Class Initialized
+INFO - 2024-08-22 17:40:00 --> Output Class Initialized
+INFO - 2024-08-22 17:40:00 --> Security Class Initialized
+DEBUG - 2024-08-22 17:40:00 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:40:00 --> Input Class Initialized
+INFO - 2024-08-22 17:40:00 --> Language Class Initialized
+INFO - 2024-08-22 17:40:00 --> Loader Class Initialized
+INFO - 2024-08-22 17:40:00 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:40:00 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:40:00 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:40:00 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:40:00 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:40:00 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:40:00 --> Controller Class Initialized
+INFO - 2024-08-22 17:40:00 --> Model Class Initialized
+INFO - 2024-08-22 17:40:00 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:40:00 --> Final output sent to browser
+DEBUG - 2024-08-22 17:40:00 --> Total execution time: 0.0499
+INFO - 2024-08-22 17:40:04 --> Config Class Initialized
+INFO - 2024-08-22 17:40:04 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:40:04 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:40:04 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:40:04 --> URI Class Initialized
+INFO - 2024-08-22 17:40:04 --> Router Class Initialized
+INFO - 2024-08-22 17:40:04 --> Output Class Initialized
+INFO - 2024-08-22 17:40:04 --> Security Class Initialized
+DEBUG - 2024-08-22 17:40:04 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:40:04 --> Input Class Initialized
+INFO - 2024-08-22 17:40:04 --> Language Class Initialized
+INFO - 2024-08-22 17:40:04 --> Loader Class Initialized
+INFO - 2024-08-22 17:40:04 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:40:04 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:40:04 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:40:04 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:40:04 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:40:04 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:40:04 --> Controller Class Initialized
+INFO - 2024-08-22 17:40:04 --> Model Class Initialized
+INFO - 2024-08-22 17:40:04 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:40:04 --> Severity: Notice --> Undefined variable: dt C:\laragon\www\limsonewater\application\controllers\Moisture_content.php 306
+ERROR - 2024-08-22 17:40:04 --> Severity: error --> Exception: Call to a member function format() on null C:\laragon\www\limsonewater\application\controllers\Moisture_content.php 306
+INFO - 2024-08-22 17:40:29 --> Config Class Initialized
+INFO - 2024-08-22 17:40:29 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:40:29 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:40:29 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:40:29 --> URI Class Initialized
+INFO - 2024-08-22 17:40:29 --> Router Class Initialized
+INFO - 2024-08-22 17:40:29 --> Output Class Initialized
+INFO - 2024-08-22 17:40:29 --> Security Class Initialized
+DEBUG - 2024-08-22 17:40:29 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:40:29 --> Input Class Initialized
+INFO - 2024-08-22 17:40:29 --> Language Class Initialized
+INFO - 2024-08-22 17:40:29 --> Loader Class Initialized
+INFO - 2024-08-22 17:40:29 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:40:29 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:40:29 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:40:29 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:40:29 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:40:29 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:40:29 --> Controller Class Initialized
+INFO - 2024-08-22 17:40:29 --> Model Class Initialized
+INFO - 2024-08-22 17:40:29 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:41:31 --> Config Class Initialized
+INFO - 2024-08-22 17:41:31 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:41:31 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:41:31 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:41:31 --> URI Class Initialized
+INFO - 2024-08-22 17:41:31 --> Router Class Initialized
+INFO - 2024-08-22 17:41:31 --> Output Class Initialized
+INFO - 2024-08-22 17:41:31 --> Security Class Initialized
+DEBUG - 2024-08-22 17:41:31 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:41:31 --> Input Class Initialized
+INFO - 2024-08-22 17:41:31 --> Language Class Initialized
+INFO - 2024-08-22 17:41:31 --> Loader Class Initialized
+INFO - 2024-08-22 17:41:31 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:41:31 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:41:31 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:41:31 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:41:31 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:41:31 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:41:31 --> Controller Class Initialized
+INFO - 2024-08-22 17:41:31 --> Model Class Initialized
+INFO - 2024-08-22 17:41:31 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:41:40 --> Config Class Initialized
+INFO - 2024-08-22 17:41:40 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:41:40 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:41:40 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:41:40 --> URI Class Initialized
+INFO - 2024-08-22 17:41:40 --> Router Class Initialized
+INFO - 2024-08-22 17:41:40 --> Output Class Initialized
+INFO - 2024-08-22 17:41:40 --> Security Class Initialized
+DEBUG - 2024-08-22 17:41:40 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:41:40 --> Input Class Initialized
+INFO - 2024-08-22 17:41:40 --> Language Class Initialized
+INFO - 2024-08-22 17:41:40 --> Loader Class Initialized
+INFO - 2024-08-22 17:41:40 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:41:40 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:41:40 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:41:40 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:41:40 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:41:40 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:41:40 --> Controller Class Initialized
+INFO - 2024-08-22 17:41:40 --> Model Class Initialized
+INFO - 2024-08-22 17:41:40 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:41:40 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:41:40 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:41:40 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:41:40 --> Final output sent to browser
+DEBUG - 2024-08-22 17:41:40 --> Total execution time: 0.0491
+INFO - 2024-08-22 17:41:40 --> Config Class Initialized
+INFO - 2024-08-22 17:41:40 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:41:40 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:41:40 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:41:40 --> URI Class Initialized
+INFO - 2024-08-22 17:41:40 --> Router Class Initialized
+INFO - 2024-08-22 17:41:40 --> Output Class Initialized
+INFO - 2024-08-22 17:41:40 --> Security Class Initialized
+DEBUG - 2024-08-22 17:41:40 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:41:40 --> Input Class Initialized
+INFO - 2024-08-22 17:41:40 --> Language Class Initialized
+INFO - 2024-08-22 17:41:40 --> Loader Class Initialized
+INFO - 2024-08-22 17:41:40 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:41:40 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:41:40 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:41:40 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:41:40 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:41:40 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:41:40 --> Controller Class Initialized
+INFO - 2024-08-22 17:41:40 --> Model Class Initialized
+INFO - 2024-08-22 17:41:40 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:41:40 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:41:40 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:41:55 --> Config Class Initialized
+INFO - 2024-08-22 17:41:55 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:41:55 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:41:55 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:41:55 --> URI Class Initialized
+INFO - 2024-08-22 17:41:55 --> Router Class Initialized
+INFO - 2024-08-22 17:41:55 --> Output Class Initialized
+INFO - 2024-08-22 17:41:55 --> Security Class Initialized
+DEBUG - 2024-08-22 17:41:55 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:41:55 --> Input Class Initialized
+INFO - 2024-08-22 17:41:55 --> Language Class Initialized
+INFO - 2024-08-22 17:41:55 --> Loader Class Initialized
+INFO - 2024-08-22 17:41:55 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:41:55 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:41:55 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:41:55 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:41:55 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:41:55 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:41:55 --> Controller Class Initialized
+INFO - 2024-08-22 17:41:55 --> Model Class Initialized
+INFO - 2024-08-22 17:41:55 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:41:55 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:41:55 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:41:55 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:41:55 --> Final output sent to browser
+DEBUG - 2024-08-22 17:41:55 --> Total execution time: 0.1110
+INFO - 2024-08-22 17:41:55 --> Config Class Initialized
+INFO - 2024-08-22 17:41:55 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:41:55 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:41:55 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:41:55 --> URI Class Initialized
+INFO - 2024-08-22 17:41:55 --> Router Class Initialized
+INFO - 2024-08-22 17:41:55 --> Output Class Initialized
+INFO - 2024-08-22 17:41:55 --> Security Class Initialized
+DEBUG - 2024-08-22 17:41:55 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:41:55 --> Input Class Initialized
+INFO - 2024-08-22 17:41:55 --> Language Class Initialized
+ERROR - 2024-08-22 17:41:55 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 17:41:56 --> Config Class Initialized
+INFO - 2024-08-22 17:41:56 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:41:56 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:41:56 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:41:56 --> URI Class Initialized
+INFO - 2024-08-22 17:41:56 --> Router Class Initialized
+INFO - 2024-08-22 17:41:56 --> Output Class Initialized
+INFO - 2024-08-22 17:41:56 --> Security Class Initialized
+DEBUG - 2024-08-22 17:41:56 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:41:56 --> Input Class Initialized
+INFO - 2024-08-22 17:41:56 --> Language Class Initialized
+INFO - 2024-08-22 17:41:56 --> Loader Class Initialized
+INFO - 2024-08-22 17:41:56 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:41:56 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:41:56 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:41:56 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:41:56 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:41:56 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:41:56 --> Controller Class Initialized
+INFO - 2024-08-22 17:41:56 --> Model Class Initialized
+INFO - 2024-08-22 17:41:56 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:41:56 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:41:56 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:41:59 --> Config Class Initialized
+INFO - 2024-08-22 17:41:59 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:41:59 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:41:59 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:41:59 --> URI Class Initialized
+INFO - 2024-08-22 17:41:59 --> Router Class Initialized
+INFO - 2024-08-22 17:41:59 --> Output Class Initialized
+INFO - 2024-08-22 17:41:59 --> Security Class Initialized
+DEBUG - 2024-08-22 17:41:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:41:59 --> Input Class Initialized
+INFO - 2024-08-22 17:41:59 --> Language Class Initialized
+INFO - 2024-08-22 17:41:59 --> Loader Class Initialized
+INFO - 2024-08-22 17:41:59 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:41:59 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:41:59 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:41:59 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:41:59 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:41:59 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:41:59 --> Controller Class Initialized
+INFO - 2024-08-22 17:41:59 --> Model Class Initialized
+INFO - 2024-08-22 17:41:59 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:41:59 --> Final output sent to browser
+DEBUG - 2024-08-22 17:41:59 --> Total execution time: 0.2131
+INFO - 2024-08-22 17:42:03 --> Config Class Initialized
+INFO - 2024-08-22 17:42:03 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:42:03 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:42:03 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:42:03 --> URI Class Initialized
+INFO - 2024-08-22 17:42:03 --> Router Class Initialized
+INFO - 2024-08-22 17:42:03 --> Output Class Initialized
+INFO - 2024-08-22 17:42:03 --> Security Class Initialized
+DEBUG - 2024-08-22 17:42:03 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:42:03 --> Input Class Initialized
+INFO - 2024-08-22 17:42:03 --> Language Class Initialized
+INFO - 2024-08-22 17:42:03 --> Loader Class Initialized
+INFO - 2024-08-22 17:42:03 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:42:03 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:42:03 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:42:03 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:42:03 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:42:03 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:42:03 --> Controller Class Initialized
+INFO - 2024-08-22 17:42:03 --> Model Class Initialized
+INFO - 2024-08-22 17:42:03 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:42:06 --> Config Class Initialized
+INFO - 2024-08-22 17:42:06 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:42:06 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:42:06 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:42:06 --> URI Class Initialized
+INFO - 2024-08-22 17:42:06 --> Router Class Initialized
+INFO - 2024-08-22 17:42:06 --> Output Class Initialized
+INFO - 2024-08-22 17:42:06 --> Security Class Initialized
+DEBUG - 2024-08-22 17:42:06 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:42:06 --> Input Class Initialized
+INFO - 2024-08-22 17:42:06 --> Language Class Initialized
+INFO - 2024-08-22 17:42:06 --> Loader Class Initialized
+INFO - 2024-08-22 17:42:06 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:42:06 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:42:06 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:42:06 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:42:06 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:42:06 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:42:06 --> Controller Class Initialized
+INFO - 2024-08-22 17:42:06 --> Model Class Initialized
+INFO - 2024-08-22 17:42:06 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:42:06 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:42:06 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:42:06 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:42:06 --> Final output sent to browser
+DEBUG - 2024-08-22 17:42:06 --> Total execution time: 0.0611
+INFO - 2024-08-22 17:42:06 --> Config Class Initialized
+INFO - 2024-08-22 17:42:06 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:42:06 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:42:06 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:42:06 --> URI Class Initialized
+INFO - 2024-08-22 17:42:06 --> Router Class Initialized
+INFO - 2024-08-22 17:42:06 --> Output Class Initialized
+INFO - 2024-08-22 17:42:06 --> Security Class Initialized
+DEBUG - 2024-08-22 17:42:06 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:42:06 --> Input Class Initialized
+INFO - 2024-08-22 17:42:06 --> Language Class Initialized
+INFO - 2024-08-22 17:42:06 --> Loader Class Initialized
+INFO - 2024-08-22 17:42:06 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:42:06 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:42:06 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:42:06 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:42:06 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:42:06 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:42:06 --> Controller Class Initialized
+INFO - 2024-08-22 17:42:06 --> Model Class Initialized
+INFO - 2024-08-22 17:42:06 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:42:06 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:42:06 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:42:07 --> Config Class Initialized
+INFO - 2024-08-22 17:42:07 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:42:07 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:42:07 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:42:07 --> URI Class Initialized
+INFO - 2024-08-22 17:42:07 --> Router Class Initialized
+INFO - 2024-08-22 17:42:07 --> Output Class Initialized
+INFO - 2024-08-22 17:42:07 --> Security Class Initialized
+DEBUG - 2024-08-22 17:42:07 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:42:07 --> Input Class Initialized
+INFO - 2024-08-22 17:42:07 --> Language Class Initialized
+INFO - 2024-08-22 17:42:07 --> Loader Class Initialized
+INFO - 2024-08-22 17:42:07 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:42:07 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:42:07 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:42:07 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:42:07 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:42:07 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:42:07 --> Controller Class Initialized
+INFO - 2024-08-22 17:42:07 --> Model Class Initialized
+INFO - 2024-08-22 17:42:07 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:42:07 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:42:07 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:42:07 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:42:07 --> Final output sent to browser
+DEBUG - 2024-08-22 17:42:07 --> Total execution time: 0.0639
+INFO - 2024-08-22 17:42:07 --> Config Class Initialized
+INFO - 2024-08-22 17:42:07 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:42:07 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:42:07 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:42:07 --> URI Class Initialized
+INFO - 2024-08-22 17:42:07 --> Router Class Initialized
+INFO - 2024-08-22 17:42:07 --> Output Class Initialized
+INFO - 2024-08-22 17:42:07 --> Security Class Initialized
+DEBUG - 2024-08-22 17:42:07 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:42:07 --> Input Class Initialized
+INFO - 2024-08-22 17:42:07 --> Language Class Initialized
+ERROR - 2024-08-22 17:42:07 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 17:42:07 --> Config Class Initialized
+INFO - 2024-08-22 17:42:07 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:42:07 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:42:07 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:42:07 --> URI Class Initialized
+INFO - 2024-08-22 17:42:07 --> Router Class Initialized
+INFO - 2024-08-22 17:42:07 --> Output Class Initialized
+INFO - 2024-08-22 17:42:07 --> Security Class Initialized
+DEBUG - 2024-08-22 17:42:07 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:42:07 --> Input Class Initialized
+INFO - 2024-08-22 17:42:07 --> Language Class Initialized
+INFO - 2024-08-22 17:42:07 --> Loader Class Initialized
+INFO - 2024-08-22 17:42:07 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:42:07 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:42:07 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:42:07 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:42:07 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:42:07 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:42:07 --> Controller Class Initialized
+INFO - 2024-08-22 17:42:07 --> Model Class Initialized
+INFO - 2024-08-22 17:42:07 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:42:07 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:42:07 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:42:44 --> Config Class Initialized
+INFO - 2024-08-22 17:42:44 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:42:44 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:42:44 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:42:44 --> URI Class Initialized
+INFO - 2024-08-22 17:42:44 --> Router Class Initialized
+INFO - 2024-08-22 17:42:44 --> Output Class Initialized
+INFO - 2024-08-22 17:42:44 --> Security Class Initialized
+DEBUG - 2024-08-22 17:42:44 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:42:44 --> Input Class Initialized
+INFO - 2024-08-22 17:42:44 --> Language Class Initialized
+INFO - 2024-08-22 17:42:44 --> Loader Class Initialized
+INFO - 2024-08-22 17:42:44 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:42:44 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:42:44 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:42:44 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:42:44 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:42:44 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:42:44 --> Controller Class Initialized
+INFO - 2024-08-22 17:42:44 --> Model Class Initialized
+INFO - 2024-08-22 17:42:44 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:42:44 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:42:44 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:42:44 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:42:44 --> Final output sent to browser
+DEBUG - 2024-08-22 17:42:44 --> Total execution time: 0.2047
+INFO - 2024-08-22 17:42:44 --> Config Class Initialized
+INFO - 2024-08-22 17:42:44 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:42:44 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:42:44 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:42:44 --> URI Class Initialized
+INFO - 2024-08-22 17:42:44 --> Router Class Initialized
+INFO - 2024-08-22 17:42:44 --> Output Class Initialized
+INFO - 2024-08-22 17:42:44 --> Security Class Initialized
+DEBUG - 2024-08-22 17:42:44 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:42:44 --> Input Class Initialized
+INFO - 2024-08-22 17:42:44 --> Language Class Initialized
+ERROR - 2024-08-22 17:42:44 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 17:42:44 --> Config Class Initialized
+INFO - 2024-08-22 17:42:44 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:42:44 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:42:44 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:42:44 --> URI Class Initialized
+INFO - 2024-08-22 17:42:44 --> Router Class Initialized
+INFO - 2024-08-22 17:42:44 --> Output Class Initialized
+INFO - 2024-08-22 17:42:44 --> Security Class Initialized
+DEBUG - 2024-08-22 17:42:44 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:42:44 --> Input Class Initialized
+INFO - 2024-08-22 17:42:44 --> Language Class Initialized
+INFO - 2024-08-22 17:42:44 --> Loader Class Initialized
+INFO - 2024-08-22 17:42:44 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:42:44 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:42:44 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:42:44 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:42:44 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:42:44 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:42:44 --> Controller Class Initialized
+INFO - 2024-08-22 17:42:44 --> Model Class Initialized
+INFO - 2024-08-22 17:42:44 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:42:44 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:42:44 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:42:48 --> Config Class Initialized
+INFO - 2024-08-22 17:42:48 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:42:48 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:42:48 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:42:48 --> URI Class Initialized
+INFO - 2024-08-22 17:42:48 --> Router Class Initialized
+INFO - 2024-08-22 17:42:48 --> Output Class Initialized
+INFO - 2024-08-22 17:42:48 --> Security Class Initialized
+DEBUG - 2024-08-22 17:42:48 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:42:48 --> Input Class Initialized
+INFO - 2024-08-22 17:42:48 --> Language Class Initialized
+INFO - 2024-08-22 17:42:48 --> Loader Class Initialized
+INFO - 2024-08-22 17:42:48 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:42:48 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:42:48 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:42:48 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:42:48 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:42:48 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:42:48 --> Controller Class Initialized
+INFO - 2024-08-22 17:42:48 --> Model Class Initialized
+INFO - 2024-08-22 17:42:48 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:42:48 --> Final output sent to browser
+DEBUG - 2024-08-22 17:42:48 --> Total execution time: 0.0402
+INFO - 2024-08-22 17:42:53 --> Config Class Initialized
+INFO - 2024-08-22 17:42:53 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:42:53 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:42:53 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:42:53 --> URI Class Initialized
+INFO - 2024-08-22 17:42:53 --> Router Class Initialized
+INFO - 2024-08-22 17:42:53 --> Output Class Initialized
+INFO - 2024-08-22 17:42:53 --> Security Class Initialized
+DEBUG - 2024-08-22 17:42:53 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:42:53 --> Input Class Initialized
+INFO - 2024-08-22 17:42:53 --> Language Class Initialized
+INFO - 2024-08-22 17:42:53 --> Loader Class Initialized
+INFO - 2024-08-22 17:42:53 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:42:53 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:42:53 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:42:53 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:42:53 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:42:53 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:42:53 --> Controller Class Initialized
+INFO - 2024-08-22 17:42:53 --> Model Class Initialized
+INFO - 2024-08-22 17:42:53 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:43:17 --> Config Class Initialized
+INFO - 2024-08-22 17:43:17 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:17 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:17 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:17 --> URI Class Initialized
+INFO - 2024-08-22 17:43:17 --> Router Class Initialized
+INFO - 2024-08-22 17:43:17 --> Output Class Initialized
+INFO - 2024-08-22 17:43:17 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:17 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:17 --> Input Class Initialized
+INFO - 2024-08-22 17:43:17 --> Language Class Initialized
+INFO - 2024-08-22 17:43:17 --> Loader Class Initialized
+INFO - 2024-08-22 17:43:17 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:43:17 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:43:17 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:43:17 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:43:17 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:43:17 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:43:17 --> Controller Class Initialized
+INFO - 2024-08-22 17:43:17 --> Model Class Initialized
+INFO - 2024-08-22 17:43:17 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:43:17 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:43:17 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:43:17 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:43:17 --> Final output sent to browser
+DEBUG - 2024-08-22 17:43:17 --> Total execution time: 0.0743
+INFO - 2024-08-22 17:43:18 --> Config Class Initialized
+INFO - 2024-08-22 17:43:18 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:18 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:18 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:18 --> URI Class Initialized
+INFO - 2024-08-22 17:43:18 --> Router Class Initialized
+INFO - 2024-08-22 17:43:18 --> Output Class Initialized
+INFO - 2024-08-22 17:43:18 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:18 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:18 --> Input Class Initialized
+INFO - 2024-08-22 17:43:18 --> Language Class Initialized
+INFO - 2024-08-22 17:43:18 --> Loader Class Initialized
+INFO - 2024-08-22 17:43:18 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:43:18 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:43:18 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:43:18 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:43:18 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:43:18 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:43:18 --> Controller Class Initialized
+INFO - 2024-08-22 17:43:18 --> Model Class Initialized
+INFO - 2024-08-22 17:43:18 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:43:18 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:43:18 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:43:19 --> Config Class Initialized
+INFO - 2024-08-22 17:43:19 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:19 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:19 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:19 --> URI Class Initialized
+INFO - 2024-08-22 17:43:19 --> Router Class Initialized
+INFO - 2024-08-22 17:43:19 --> Output Class Initialized
+INFO - 2024-08-22 17:43:19 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:19 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:19 --> Input Class Initialized
+INFO - 2024-08-22 17:43:19 --> Language Class Initialized
+INFO - 2024-08-22 17:43:19 --> Loader Class Initialized
+INFO - 2024-08-22 17:43:19 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:43:19 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:43:19 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:43:19 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:43:19 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:43:19 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:43:19 --> Controller Class Initialized
+INFO - 2024-08-22 17:43:19 --> Model Class Initialized
+INFO - 2024-08-22 17:43:19 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:43:19 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:43:19 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:43:19 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:43:19 --> Final output sent to browser
+DEBUG - 2024-08-22 17:43:19 --> Total execution time: 0.0533
+INFO - 2024-08-22 17:43:19 --> Config Class Initialized
+INFO - 2024-08-22 17:43:19 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:19 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:19 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:19 --> URI Class Initialized
+INFO - 2024-08-22 17:43:19 --> Router Class Initialized
+INFO - 2024-08-22 17:43:19 --> Output Class Initialized
+INFO - 2024-08-22 17:43:19 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:19 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:19 --> Input Class Initialized
+INFO - 2024-08-22 17:43:19 --> Language Class Initialized
+ERROR - 2024-08-22 17:43:19 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 17:43:19 --> Config Class Initialized
+INFO - 2024-08-22 17:43:19 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:19 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:19 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:19 --> URI Class Initialized
+INFO - 2024-08-22 17:43:19 --> Router Class Initialized
+INFO - 2024-08-22 17:43:19 --> Output Class Initialized
+INFO - 2024-08-22 17:43:19 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:19 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:19 --> Input Class Initialized
+INFO - 2024-08-22 17:43:19 --> Language Class Initialized
+INFO - 2024-08-22 17:43:19 --> Loader Class Initialized
+INFO - 2024-08-22 17:43:19 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:43:19 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:43:19 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:43:19 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:43:19 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:43:19 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:43:19 --> Controller Class Initialized
+INFO - 2024-08-22 17:43:19 --> Model Class Initialized
+INFO - 2024-08-22 17:43:19 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:43:19 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:43:19 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:43:23 --> Config Class Initialized
+INFO - 2024-08-22 17:43:23 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:23 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:23 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:23 --> URI Class Initialized
+INFO - 2024-08-22 17:43:23 --> Router Class Initialized
+INFO - 2024-08-22 17:43:23 --> Output Class Initialized
+INFO - 2024-08-22 17:43:23 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:23 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:23 --> Input Class Initialized
+INFO - 2024-08-22 17:43:23 --> Language Class Initialized
+INFO - 2024-08-22 17:43:23 --> Loader Class Initialized
+INFO - 2024-08-22 17:43:23 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:43:23 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:43:23 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:43:23 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:43:23 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:43:23 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:43:23 --> Controller Class Initialized
+INFO - 2024-08-22 17:43:23 --> Model Class Initialized
+INFO - 2024-08-22 17:43:23 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:43:23 --> Final output sent to browser
+DEBUG - 2024-08-22 17:43:23 --> Total execution time: 0.0718
+INFO - 2024-08-22 17:43:26 --> Config Class Initialized
+INFO - 2024-08-22 17:43:26 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:26 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:26 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:26 --> URI Class Initialized
+INFO - 2024-08-22 17:43:26 --> Router Class Initialized
+INFO - 2024-08-22 17:43:26 --> Output Class Initialized
+INFO - 2024-08-22 17:43:26 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:26 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:26 --> Input Class Initialized
+INFO - 2024-08-22 17:43:26 --> Language Class Initialized
+INFO - 2024-08-22 17:43:26 --> Loader Class Initialized
+INFO - 2024-08-22 17:43:26 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:43:26 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:43:26 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:43:26 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:43:26 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:43:26 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:43:26 --> Controller Class Initialized
+INFO - 2024-08-22 17:43:26 --> Model Class Initialized
+INFO - 2024-08-22 17:43:26 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:43:28 --> Config Class Initialized
+INFO - 2024-08-22 17:43:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:28 --> URI Class Initialized
+INFO - 2024-08-22 17:43:28 --> Router Class Initialized
+INFO - 2024-08-22 17:43:28 --> Output Class Initialized
+INFO - 2024-08-22 17:43:28 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:28 --> Input Class Initialized
+INFO - 2024-08-22 17:43:28 --> Language Class Initialized
+INFO - 2024-08-22 17:43:28 --> Loader Class Initialized
+INFO - 2024-08-22 17:43:28 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:43:28 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:43:28 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:43:28 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:43:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:43:28 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:43:28 --> Controller Class Initialized
+INFO - 2024-08-22 17:43:28 --> Model Class Initialized
+INFO - 2024-08-22 17:43:28 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:43:28 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:43:28 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:43:28 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:43:28 --> Final output sent to browser
+DEBUG - 2024-08-22 17:43:28 --> Total execution time: 0.0420
+INFO - 2024-08-22 17:43:28 --> Config Class Initialized
+INFO - 2024-08-22 17:43:28 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:28 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:28 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:28 --> URI Class Initialized
+INFO - 2024-08-22 17:43:28 --> Router Class Initialized
+INFO - 2024-08-22 17:43:28 --> Output Class Initialized
+INFO - 2024-08-22 17:43:28 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:28 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:28 --> Input Class Initialized
+INFO - 2024-08-22 17:43:28 --> Language Class Initialized
+INFO - 2024-08-22 17:43:28 --> Loader Class Initialized
+INFO - 2024-08-22 17:43:28 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:43:28 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:43:28 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:43:28 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:43:28 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:43:28 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:43:28 --> Controller Class Initialized
+INFO - 2024-08-22 17:43:28 --> Model Class Initialized
+INFO - 2024-08-22 17:43:28 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:43:28 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '7'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:43:28 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:43:31 --> Config Class Initialized
+INFO - 2024-08-22 17:43:31 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:31 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:31 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:31 --> URI Class Initialized
+INFO - 2024-08-22 17:43:31 --> Router Class Initialized
+INFO - 2024-08-22 17:43:31 --> Output Class Initialized
+INFO - 2024-08-22 17:43:31 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:31 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:31 --> Input Class Initialized
+INFO - 2024-08-22 17:43:31 --> Language Class Initialized
+INFO - 2024-08-22 17:43:31 --> Loader Class Initialized
+INFO - 2024-08-22 17:43:31 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:43:31 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:43:31 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:43:31 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:43:31 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:43:31 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:43:31 --> Controller Class Initialized
+INFO - 2024-08-22 17:43:31 --> Model Class Initialized
+INFO - 2024-08-22 17:43:31 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:43:31 --> Severity: Notice --> Undefined variable: id_project C:\laragon\www\limsonewater\application\views\moisture_content\index.php 13
+ERROR - 2024-08-22 17:43:31 --> Severity: Notice --> Undefined variable: client C:\laragon\www\limsonewater\application\views\moisture_content\index.php 16
+ERROR - 2024-08-22 17:43:31 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 17:43:31 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 17:43:31 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 17:43:31 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 17:43:31 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+ERROR - 2024-08-22 17:43:31 --> Severity: Notice --> Undefined variable: id_person C:\laragon\www\limsonewater\application\views\moisture_content\index.php 109
+INFO - 2024-08-22 17:43:31 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index.php
+INFO - 2024-08-22 17:43:31 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:43:31 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:43:31 --> Final output sent to browser
+DEBUG - 2024-08-22 17:43:31 --> Total execution time: 0.0673
+INFO - 2024-08-22 17:43:31 --> Config Class Initialized
+INFO - 2024-08-22 17:43:31 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:31 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:31 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:31 --> URI Class Initialized
+INFO - 2024-08-22 17:43:31 --> Router Class Initialized
+INFO - 2024-08-22 17:43:31 --> Output Class Initialized
+INFO - 2024-08-22 17:43:31 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:31 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:31 --> Input Class Initialized
+INFO - 2024-08-22 17:43:31 --> Language Class Initialized
+INFO - 2024-08-22 17:43:31 --> Loader Class Initialized
+INFO - 2024-08-22 17:43:31 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:43:31 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:43:31 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:43:31 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:43:31 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:43:31 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:43:31 --> Controller Class Initialized
+INFO - 2024-08-22 17:43:31 --> Model Class Initialized
+INFO - 2024-08-22 17:43:31 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:43:31 --> Final output sent to browser
+DEBUG - 2024-08-22 17:43:31 --> Total execution time: 0.0332
+INFO - 2024-08-22 17:43:33 --> Config Class Initialized
+INFO - 2024-08-22 17:43:33 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:33 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:33 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:33 --> URI Class Initialized
+INFO - 2024-08-22 17:43:33 --> Router Class Initialized
+INFO - 2024-08-22 17:43:33 --> Output Class Initialized
+INFO - 2024-08-22 17:43:33 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:33 --> Input Class Initialized
+INFO - 2024-08-22 17:43:33 --> Language Class Initialized
+INFO - 2024-08-22 17:43:33 --> Loader Class Initialized
+INFO - 2024-08-22 17:43:33 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:43:33 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:43:33 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:43:33 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:43:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:43:33 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:43:33 --> Controller Class Initialized
+INFO - 2024-08-22 17:43:33 --> Model Class Initialized
+INFO - 2024-08-22 17:43:33 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:43:33 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:43:33 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:43:33 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:43:33 --> Final output sent to browser
+DEBUG - 2024-08-22 17:43:33 --> Total execution time: 0.0623
+INFO - 2024-08-22 17:43:33 --> Config Class Initialized
+INFO - 2024-08-22 17:43:33 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:33 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:33 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:33 --> URI Class Initialized
+INFO - 2024-08-22 17:43:33 --> Router Class Initialized
+INFO - 2024-08-22 17:43:33 --> Output Class Initialized
+INFO - 2024-08-22 17:43:33 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:33 --> Input Class Initialized
+INFO - 2024-08-22 17:43:33 --> Language Class Initialized
+ERROR - 2024-08-22 17:43:33 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 17:43:33 --> Config Class Initialized
+INFO - 2024-08-22 17:43:33 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:33 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:33 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:33 --> URI Class Initialized
+INFO - 2024-08-22 17:43:33 --> Router Class Initialized
+INFO - 2024-08-22 17:43:33 --> Output Class Initialized
+INFO - 2024-08-22 17:43:33 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:33 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:33 --> Input Class Initialized
+INFO - 2024-08-22 17:43:33 --> Language Class Initialized
+INFO - 2024-08-22 17:43:33 --> Loader Class Initialized
+INFO - 2024-08-22 17:43:33 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:43:33 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:43:33 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:43:33 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:43:33 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:43:33 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:43:33 --> Controller Class Initialized
+INFO - 2024-08-22 17:43:33 --> Model Class Initialized
+INFO - 2024-08-22 17:43:33 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:43:33 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:43:33 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:43:37 --> Config Class Initialized
+INFO - 2024-08-22 17:43:37 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:37 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:37 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:37 --> URI Class Initialized
+INFO - 2024-08-22 17:43:37 --> Router Class Initialized
+INFO - 2024-08-22 17:43:37 --> Output Class Initialized
+INFO - 2024-08-22 17:43:37 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:37 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:37 --> Input Class Initialized
+INFO - 2024-08-22 17:43:37 --> Language Class Initialized
+INFO - 2024-08-22 17:43:37 --> Loader Class Initialized
+INFO - 2024-08-22 17:43:37 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:43:37 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:43:37 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:43:37 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:43:37 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:43:37 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:43:37 --> Controller Class Initialized
+INFO - 2024-08-22 17:43:37 --> Model Class Initialized
+INFO - 2024-08-22 17:43:37 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:43:37 --> Final output sent to browser
+DEBUG - 2024-08-22 17:43:37 --> Total execution time: 0.0582
+INFO - 2024-08-22 17:43:40 --> Config Class Initialized
+INFO - 2024-08-22 17:43:40 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:40 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:40 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:40 --> URI Class Initialized
+INFO - 2024-08-22 17:43:40 --> Router Class Initialized
+INFO - 2024-08-22 17:43:40 --> Output Class Initialized
+INFO - 2024-08-22 17:43:40 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:40 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:40 --> Input Class Initialized
+INFO - 2024-08-22 17:43:40 --> Language Class Initialized
+INFO - 2024-08-22 17:43:40 --> Loader Class Initialized
+INFO - 2024-08-22 17:43:40 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:43:40 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:43:40 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:43:40 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:43:40 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:43:40 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:43:40 --> Controller Class Initialized
+INFO - 2024-08-22 17:43:40 --> Model Class Initialized
+INFO - 2024-08-22 17:43:40 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:43:42 --> Config Class Initialized
+INFO - 2024-08-22 17:43:42 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:42 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:42 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:42 --> URI Class Initialized
+INFO - 2024-08-22 17:43:42 --> Router Class Initialized
+INFO - 2024-08-22 17:43:42 --> Output Class Initialized
+INFO - 2024-08-22 17:43:42 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:42 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:42 --> Input Class Initialized
+INFO - 2024-08-22 17:43:42 --> Language Class Initialized
+INFO - 2024-08-22 17:43:42 --> Loader Class Initialized
+INFO - 2024-08-22 17:43:42 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:43:42 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:43:42 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:43:42 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:43:42 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:43:42 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:43:42 --> Controller Class Initialized
+INFO - 2024-08-22 17:43:42 --> Model Class Initialized
+INFO - 2024-08-22 17:43:42 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:43:42 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:43:42 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:43:42 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:43:42 --> Final output sent to browser
+DEBUG - 2024-08-22 17:43:42 --> Total execution time: 0.0682
+INFO - 2024-08-22 17:43:43 --> Config Class Initialized
+INFO - 2024-08-22 17:43:43 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:43 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:43 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:43 --> URI Class Initialized
+INFO - 2024-08-22 17:43:43 --> Router Class Initialized
+INFO - 2024-08-22 17:43:43 --> Output Class Initialized
+INFO - 2024-08-22 17:43:43 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:43 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:43 --> Input Class Initialized
+INFO - 2024-08-22 17:43:43 --> Language Class Initialized
+INFO - 2024-08-22 17:43:43 --> Loader Class Initialized
+INFO - 2024-08-22 17:43:43 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:43:43 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:43:43 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:43:43 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:43:43 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:43:43 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:43:43 --> Controller Class Initialized
+INFO - 2024-08-22 17:43:43 --> Model Class Initialized
+INFO - 2024-08-22 17:43:43 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:43:43 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:43:43 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:43:49 --> Config Class Initialized
+INFO - 2024-08-22 17:43:49 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:49 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:49 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:49 --> URI Class Initialized
+INFO - 2024-08-22 17:43:49 --> Router Class Initialized
+INFO - 2024-08-22 17:43:49 --> Output Class Initialized
+INFO - 2024-08-22 17:43:49 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:49 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:49 --> Input Class Initialized
+INFO - 2024-08-22 17:43:49 --> Language Class Initialized
+INFO - 2024-08-22 17:43:49 --> Loader Class Initialized
+INFO - 2024-08-22 17:43:49 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:43:49 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:43:49 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:43:49 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:43:49 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:43:49 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:43:49 --> Controller Class Initialized
+INFO - 2024-08-22 17:43:49 --> Model Class Initialized
+INFO - 2024-08-22 17:43:49 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:43:49 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:43:50 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:43:50 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:43:50 --> Final output sent to browser
+DEBUG - 2024-08-22 17:43:50 --> Total execution time: 0.7545
+INFO - 2024-08-22 17:43:50 --> Config Class Initialized
+INFO - 2024-08-22 17:43:50 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:50 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:50 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:50 --> URI Class Initialized
+INFO - 2024-08-22 17:43:50 --> Router Class Initialized
+INFO - 2024-08-22 17:43:50 --> Output Class Initialized
+INFO - 2024-08-22 17:43:50 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:50 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:50 --> Input Class Initialized
+INFO - 2024-08-22 17:43:50 --> Language Class Initialized
+ERROR - 2024-08-22 17:43:50 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 17:43:50 --> Config Class Initialized
+INFO - 2024-08-22 17:43:50 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:50 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:50 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:50 --> URI Class Initialized
+INFO - 2024-08-22 17:43:50 --> Router Class Initialized
+INFO - 2024-08-22 17:43:50 --> Output Class Initialized
+INFO - 2024-08-22 17:43:50 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:50 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:50 --> Input Class Initialized
+INFO - 2024-08-22 17:43:50 --> Language Class Initialized
+INFO - 2024-08-22 17:43:50 --> Loader Class Initialized
+INFO - 2024-08-22 17:43:50 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:43:50 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:43:50 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:43:50 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:43:50 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:43:50 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:43:50 --> Controller Class Initialized
+INFO - 2024-08-22 17:43:50 --> Model Class Initialized
+INFO - 2024-08-22 17:43:50 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:43:50 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:43:50 --> Language file loaded: language/english/db_lang.php
+INFO - 2024-08-22 17:43:54 --> Config Class Initialized
+INFO - 2024-08-22 17:43:54 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:54 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:54 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:54 --> URI Class Initialized
+INFO - 2024-08-22 17:43:54 --> Router Class Initialized
+INFO - 2024-08-22 17:43:54 --> Output Class Initialized
+INFO - 2024-08-22 17:43:54 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:54 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:54 --> Input Class Initialized
+INFO - 2024-08-22 17:43:54 --> Language Class Initialized
+INFO - 2024-08-22 17:43:54 --> Loader Class Initialized
+INFO - 2024-08-22 17:43:54 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:43:54 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:43:54 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:43:54 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:43:54 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:43:54 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:43:54 --> Controller Class Initialized
+INFO - 2024-08-22 17:43:54 --> Model Class Initialized
+INFO - 2024-08-22 17:43:54 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:43:54 --> Final output sent to browser
+DEBUG - 2024-08-22 17:43:54 --> Total execution time: 0.0338
+INFO - 2024-08-22 17:43:59 --> Config Class Initialized
+INFO - 2024-08-22 17:43:59 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:59 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:59 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:59 --> URI Class Initialized
+INFO - 2024-08-22 17:43:59 --> Router Class Initialized
+INFO - 2024-08-22 17:43:59 --> Output Class Initialized
+INFO - 2024-08-22 17:43:59 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:59 --> Input Class Initialized
+INFO - 2024-08-22 17:43:59 --> Language Class Initialized
+INFO - 2024-08-22 17:43:59 --> Loader Class Initialized
+INFO - 2024-08-22 17:43:59 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:43:59 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:43:59 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:43:59 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:43:59 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:43:59 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:43:59 --> Controller Class Initialized
+INFO - 2024-08-22 17:43:59 --> Model Class Initialized
+INFO - 2024-08-22 17:43:59 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:43:59 --> Config Class Initialized
+INFO - 2024-08-22 17:43:59 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:59 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:59 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:59 --> URI Class Initialized
+INFO - 2024-08-22 17:43:59 --> Router Class Initialized
+INFO - 2024-08-22 17:43:59 --> Output Class Initialized
+INFO - 2024-08-22 17:43:59 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:59 --> Input Class Initialized
+INFO - 2024-08-22 17:43:59 --> Language Class Initialized
+INFO - 2024-08-22 17:43:59 --> Loader Class Initialized
+INFO - 2024-08-22 17:43:59 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:43:59 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:43:59 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:43:59 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:43:59 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:43:59 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:43:59 --> Controller Class Initialized
+INFO - 2024-08-22 17:43:59 --> Model Class Initialized
+INFO - 2024-08-22 17:43:59 --> Form Validation Class Initialized
+INFO - 2024-08-22 17:43:59 --> File loaded: C:\laragon\www\limsonewater\application\views\Moisture_content/index_det.php
+INFO - 2024-08-22 17:43:59 --> File loaded: C:\laragon\www\limsonewater\application\views\template/sidebar.php
+INFO - 2024-08-22 17:43:59 --> File loaded: C:\laragon\www\limsonewater\application\views\template.php
+INFO - 2024-08-22 17:43:59 --> Final output sent to browser
+DEBUG - 2024-08-22 17:43:59 --> Total execution time: 0.0294
+INFO - 2024-08-22 17:43:59 --> Config Class Initialized
+INFO - 2024-08-22 17:43:59 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:59 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:59 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:59 --> URI Class Initialized
+INFO - 2024-08-22 17:43:59 --> Router Class Initialized
+INFO - 2024-08-22 17:43:59 --> Output Class Initialized
+INFO - 2024-08-22 17:43:59 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:59 --> Input Class Initialized
+INFO - 2024-08-22 17:43:59 --> Language Class Initialized
+ERROR - 2024-08-22 17:43:59 --> 404 Page Not Found: Moisture_content/img
+INFO - 2024-08-22 17:43:59 --> Config Class Initialized
+INFO - 2024-08-22 17:43:59 --> Hooks Class Initialized
+DEBUG - 2024-08-22 17:43:59 --> UTF-8 Support Enabled
+INFO - 2024-08-22 17:43:59 --> Utf8 Class Initialized
+INFO - 2024-08-22 17:43:59 --> URI Class Initialized
+INFO - 2024-08-22 17:43:59 --> Router Class Initialized
+INFO - 2024-08-22 17:43:59 --> Output Class Initialized
+INFO - 2024-08-22 17:43:59 --> Security Class Initialized
+DEBUG - 2024-08-22 17:43:59 --> Global POST, GET and COOKIE data sanitized
+INFO - 2024-08-22 17:43:59 --> Input Class Initialized
+INFO - 2024-08-22 17:43:59 --> Language Class Initialized
+INFO - 2024-08-22 17:43:59 --> Loader Class Initialized
+INFO - 2024-08-22 17:43:59 --> Helper loaded: url_helper
+INFO - 2024-08-22 17:43:59 --> Helper loaded: form_helper
+INFO - 2024-08-22 17:43:59 --> Helper loaded: racode_helper
+INFO - 2024-08-22 17:43:59 --> Database Driver Class Initialized
+DEBUG - 2024-08-22 17:43:59 --> Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.
+INFO - 2024-08-22 17:43:59 --> Session: Class initialized using 'files' driver.
+INFO - 2024-08-22 17:43:59 --> Controller Class Initialized
+INFO - 2024-08-22 17:43:59 --> Model Class Initialized
+INFO - 2024-08-22 17:43:59 --> Form Validation Class Initialized
+ERROR - 2024-08-22 17:43:59 --> Query error: Unknown column 'date_moisture24' in 'order clause' - Invalid query: SELECT `a`.`id_sample`, `a`.`id_project`, `a`.`id_client_sample`, `a`.`id_testing_type`, `b`.`testing_type` AS `testing_type`, `a`.`flag`
+FROM `sample_reception_sample` `a`
+LEFT JOIN `ref_testing` `b` ON `FIND_IN_SET`(b.id_testing_type, a.id_testing_type)
+WHERE `a`.`flag` = '0'
+AND `a`.`id_client_sample` = '8'
+GROUP BY `a`.`id_sample`
+ORDER BY `date_moisture24` ASC
+INFO - 2024-08-22 17:43:59 --> Language file loaded: language/english/db_lang.php

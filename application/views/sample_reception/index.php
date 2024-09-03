@@ -29,20 +29,20 @@
                                         echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Sample Reception</button>";
                                     }
                             ?>        
-                            <!-- <?php echo anchor(site_url('Sample_reception/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?> -->
+                            <?php echo anchor(site_url('Sample_reception/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
                         </div>
                             <div class="table-responsive">
                                 <table class="table ho table-bordered table-striped tbody" id="mytable" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>Coc</th>
-                                            <th>Client as on Coc</th>
+                                            <th>ID Client</th>
                                             <th>Client Sample</th>
-                                            <th>Sample ID</th>
-                                            <th>Type of Sample</th>
-                                            <th>Received Lab</th>
-                                            <th>Date Of Arrival</th>
-                                            <th>Time Of Arrival</th>
+                                            <th>ID Sample</th>
+                                            <th>Sample Type</th>
+                                            <th>Lab Tech</th>
+                                            <th>Date Arrive</th>
+                                            <th>Time Arrive</th>
                                             <th width="120px">Action</th>
                                         </tr>
                                     </thead>
@@ -75,8 +75,8 @@
     <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                    <div class="modal-header box">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <div class="modal-header" style="background-color: #3c8dbc; color: white;">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
                         <h4 class="modal-title" id="modal-title">Sample reception | New</h4>
                     </div>
                     <form id="formSample"  action= <?php echo site_url('Sample_reception/save') ?> method="post" class="form-horizontal">
@@ -92,7 +92,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="clientx" class="col-sm-4 control-label">Client</label>
+                                <label for="clientx" class="col-sm-4 control-label">ID Client</label>
                                 <div class="col-sm-8">
                                     <input id="clientx" name="clientx" placeholder="Client (as on CoC)" type="text" class="form-control">
                                 </div>
@@ -102,21 +102,22 @@
                                 <label for="id_client_sample" class="col-sm-4 control-label">Client Sample</label>
                                 <div class="col-sm-8">
                                     <input id="id_client_sample" name="id_client_sample" placeholder="Client Sample" type="text" class="form-control">
+                                    <div class="val1tip"></div>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="idx_one_water_sample" class="col-sm-4 control-label">Sample ID</label>
+                                <label for="idx_one_water_sample" class="col-sm-4 control-label">ID Sample</label>
                                 <div class="col-sm-8">
                                     <input id="idx_one_water_sample" name="id_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="id_sampletype" class="col-sm-4 control-label">Type of Sample</label>
+                                <label for="id_sampletype" class="col-sm-4 control-label">Sample Type</label>
                                 <div class="col-sm-8" >
                                 <select id='id_sampletype' name="id_sampletype" class="form-control">
-                                    <option>-- Select Type of Sample --</option>
+                                    <option>-- Select Sample Type --</option>
                                     <?php
                                     foreach($sampletype as $row){
                                         if ($id_sampletype == $row['id_sampletype']) {
@@ -132,10 +133,10 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="id_person" class="col-sm-4 control-label">Received Lab</label>
+                                <label for="id_person" class="col-sm-4 control-label">Lab Tech</label>
                                 <div class="col-sm-8">
                                     <select id="id_person" name="id_person" class="form-control">
-                                        <option>-- Select Received Lab --</option>
+                                        <option>-- Select Lab Tech --</option>
                                         <?php
                                             foreach($labtech as $row) {
                                                 if ($id_person == $row['id_person']) {
@@ -150,14 +151,14 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="date_arrival" class="col-sm-4 control-label">Date of arrival</label>
+                                <label for="date_arrival" class="col-sm-4 control-label">Date Arrive</label>
                                 <div class="col-sm-8">
                                     <input id="date_arrival" name="date_arrival" type="date" class="form-control" placeholder="Date arrival" value="<?php echo date("Y-m-d"); ?>">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="time_arrival" class="col-sm-4 control-label">Time of arrival</label>
+                                <label for="time_arrival" class="col-sm-4 control-label">Time Arrive</label>
                                 <div class="col-sm-8">
                                     <div class="input-group clockpicker">
                                     <input id="time_arrival" name="time_arrival" class="form-control" placeholder="Time arrival" value="<?php 
@@ -172,14 +173,14 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="date_collected" class="col-sm-4 control-label">Date of collected</label>
+                                <label for="date_collected" class="col-sm-4 control-label">Date collected</label>
                                 <div class="col-sm-8">
                                     <input id="date_collected" name="date_collected" type="date" class="form-control" placeholder="Date collected" value="<?php echo date("Y-m-d"); ?>">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="time_collected" class="col-sm-4 control-label">Time of collected</label>
+                                <label for="time_collected" class="col-sm-4 control-label">Time collected</label>
                                 <div class="col-sm-8">
                                     <div class="input-group clockpicker">
                                     <input id="time_collected" name="time_collected" class="form-control" placeholder="Time collected" value="<?php 
@@ -211,6 +212,29 @@
         </div><!-- /.modal -->        
     </div>
 
+<!-- MODAL CONFIRMATION DELETE -->
+<div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #dd4b39; color: white;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
+                <h4 class="modal-title"><i class="fa fa-trash"></i> Sample reception | Delete <span id="my-another-cool-loader"></span></h4>
+            </div>
+            <div class="modal-body">
+                <div id="confirmation-content">
+                    <div class="modal-body">
+                        <p class="text-center" style="font-size: 15px;">Are you sure you want to delete ID <span id="id" style="font-weight: bold;"></span> ?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer clearfix">
+                <button type="button" id="confirm-save" class="btn btn-danger"><i class="fa fa-trash"></i> Yes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> No</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
@@ -222,6 +246,40 @@
     let id_one_water_sample = $('#id_one_water_sample').val();
 
     $(document).ready(function() {
+
+        function showConfirmation(url) {
+            deleteUrl = url; // Set the URL to the variable
+            $('#confirm-modal').modal('show');
+        }
+
+        // Handle the delete button click
+        $(document).on('click', '.btn_delete', function() {
+            let id = $(this).data('id');
+            let url = '<?php echo site_url('Sample_reception/delete'); ?>/' + id;
+            $('#confirm-modal #id').text(id);
+            console.log(id);
+            showConfirmation(url);
+        });
+
+        // When the confirm-save button is clicked
+        $('#confirm-save').click(function() {
+            $.ajax({
+                url: deleteUrl,
+                type: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        alert(response.message);
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                complete: function() {
+                    $('#confirm-modal').modal('hide');
+                    location.reload();
+                }
+            });
+        });
 
         $('.clockpicker').clockpicker({
         placement: 'bottom', // clock popover placement
@@ -245,10 +303,11 @@
 
         $('#compose-modal').on('shown.bs.modal', function () {
 			$('#id_client_sample').focus();
+            $('.val1tip').tooltipster('hide'); 
             // $('#budget_req').on('input', function() {
             //     formatNumber(this);
             //     });
-            });
+        });
     
 
         $("input").keypress(function(){
@@ -261,7 +320,44 @@
             }, 3000);                            
         });
 
-        var base_url = location.hostname;
+        $("input").keypress(function(){
+            $('.val1tip').tooltipster('hide'); 
+        });
+
+        $('#id_client_sample').click(function() {
+            $('.val1tip').tooltipster('hide');   
+        });
+
+        $('#id_client_sample').on("change", function() {
+            let idClientSample = $('#id_client_sample').val();
+            $.ajax({
+                type: "GET",
+                url: "Sample_reception/validateIdClientSample",
+                data: { id: idClientSample },
+                dataType: "json",
+                success: function(data) {
+                    if (data.length == 1) {
+                        let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Client Sample <strong> ' + idClientSample +'</strong> is already in the system !</span>');
+                        $('.val1tip').tooltipster('content', tip);
+                        $('.val1tip').tooltipster('show');
+                        $('#id_client_sample').focus();
+                        $('#id_client_sample').val('');       
+                        $('#id_client_sample').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#id_client_sample').css({'background-color' : '#FFFFFF'});
+                            setTimeout(function(){
+                                $('#id_client_sample').css({'background-color' : '#FFE6E7'});
+                                setTimeout(function(){
+                                    $('#id_client_sample').css({'background-color' : '#FFFFFF'});
+                                }, 300);                            
+                            }, 300);
+                        }, 300);
+                    }
+                }
+            });
+        });
+
+        let base_url = location.hostname;
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
         {
             return {
@@ -320,9 +416,9 @@
 			],
             order: [[0, 'asc']],
             rowCallback: function(row, data, iDisplayIndex) {
-                var info = this.fnPagingInfo();
-                var page = info.iPage;
-                var length = info.iLength;
+                let info = this.fnPagingInfo();
+                let page = info.iPage;
+                let length = info.iLength;
                 // var index = page * length + (iDisplayIndex + 1);
                 // $('td:eq(0)', row).html(index);
             }
@@ -330,7 +426,7 @@
 
         $('#addtombol').click(function() {
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> Sample reception | New<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Sample reception | New <span id="my-another-cool-loader"></span>');
             $('#idx_project').val(id_project);
             $('#idx_project').attr('readonly', true);
             $('#clientx').val(client);

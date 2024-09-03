@@ -148,9 +148,9 @@ class Sample_reception extends CI_Controller
                 'date_collected' => $date_collected,
                 'time_collected' => $time_collected,
                 'flag' => '0',
-                'uuid' => $this->uuid->v4(),
-                'user_created' => $this->session->userdata('id_users'),
-                'date_created' => $dt->format('Y-m-d H:i:s'),
+                // 'uuid' => $this->uuid->v4(),
+                'user_updated' => $this->session->userdata('id_users'),
+                'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
 
             $this->Sample_reception_model->update($id_project, $data);
@@ -240,9 +240,9 @@ class Sample_reception extends CI_Controller
                                 'id_client_sample' => $id_client_sample,
                                 'id_project' => $id2_project,
                                 'id_testing_type' => $id_testing_type,
-                                'uuid' => $this->uuid->v4(),
-                                'user_created' => $this->session->userdata('id_users'),
-                                'date_created' => $dt->format('Y-m-d H:i:s'),
+                                // 'uuid' => $this->uuid->v4(),
+                                'user_updated' => $this->session->userdata('id_users'),
+                                'date_updated' => $dt->format('Y-m-d H:i:s'),
                             ));
             
                             $data_barcode = array(
@@ -319,6 +319,103 @@ class Sample_reception extends CI_Controller
         }
     
         echo json_encode($data);
+    }
+
+    public function validateIdClientSample() {
+        $id = $this->input->get('id');
+        $data = $this->Sample_reception_model->validateIdClientSample($id);
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
+
+    public function excel() {
+        $spreadsheet = new Spreadsheet();    
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', "Coc"); 
+        $sheet->setCellValue('B1', "ID Client"); 
+        $sheet->setCellValue('C1', "Client Sample");
+        $sheet->setCellValue('D1', "ID Sample");
+        $sheet->setCellValue('E1', "Sample Type");
+        $sheet->setCellValue('F1', "Lab Tech");
+        $sheet->setCellValue('G1', "Date Arrival");
+        $sheet->setCellValue('H1', "Time Arrival");
+        $sheet->setCellValue('I1', "Comments");
+        $sheet->setCellValue('J1', "Testing Type");
+
+        $sample_reception = $this->Sample_reception_model->get_all();
+    
+        $numrow = 2;
+        foreach($sample_reception as $data){ 
+            if (property_exists($data, 'id_project')) {
+                $sheet->setCellValue('A'.$numrow, $data->id_project);
+            } else {
+                $sheet->setCellValue('A'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'client')) {
+                $sheet->setCellValue('B'.$numrow, $data->client);
+            } else {
+                $sheet->setCellValue('B'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'id_client_sample')) {
+                $sheet->setCellValue('C'.$numrow, $data->id_client_sample);
+            } else {
+                $sheet->setCellValue('C'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'id_one_water_sample')) {
+                $sheet->setCellValue('D'.$numrow, $data->id_one_water_sample);
+            } else {
+                $sheet->setCellValue('D'.$numrow, '');
+            }
+
+            if (property_exists($data, 'sampletype')) {
+                $sheet->setCellValue('F'.$numrow, $data->sampletype);
+            } else {
+                $sheet->setCellValue('F'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'initial')) {
+                $sheet->setCellValue('E'.$numrow, $data->initial);
+            } else {
+                $sheet->setCellValue('E'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'date_arrival')) {
+                $sheet->setCellValue('G'.$numrow, $data->date_arrival);
+            } else {
+                $sheet->setCellValue('G'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'time_arrival')) {
+                $sheet->setCellValue('H'.$numrow, $data->time_arrival);
+            } else {
+                $sheet->setCellValue('H'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'comments')) {
+                $sheet->setCellValue('I'.$numrow, $data->comments);
+            } else {
+                $sheet->setCellValue('I'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'testing_type')) {
+                $sheet->setCellValue('J'.$numrow, $data->testing_type);
+            } else {
+                $sheet->setCellValue('J'.$numrow, '');
+            }
+            $numrow++;
+        }
+
+        // Set header untuk file excel
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="Report_sample_reception.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        // Tampilkan file excel
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
     }
     
 
