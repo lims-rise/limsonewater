@@ -26,11 +26,11 @@ class Sample_biobankin_model extends CI_Model
         // $this->datatables->where('Water_sample_reception.id_country', $this->session->userdata('lab'));
         $this->datatables->where('sample_biobank.flag', '0');
         $lvl = $this->session->userdata('id_user_level');
-        if ($lvl == 7){
-            $this->datatables->add_column('action', anchor(site_url('Sample_biobankin/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_one_water_sample');
+        if ($lvl == 4){
+            $this->datatables->add_column('action', anchor(site_url('Sample_biobankin/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')), 'id_one_water_sample');
         }
-        else if (($lvl == 2) | ($lvl == 3)){
-            $this->datatables->add_column('action', anchor(site_url('Sample_biobankin/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
+        else if ($lvl == 3){
+            $this->datatables->add_column('action', anchor(site_url('Sample_biobankin/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
                 ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
         }
         else {
@@ -68,12 +68,11 @@ class Sample_biobankin_model extends CI_Model
         $this->datatables->where('a.id_one_water_sample', $id);
         // $this->datatables->group_by('a.id_sample');
         $lvl = $this->session->userdata('id_user_level');
-        if ($lvl == 7){
-            $this->datatables->add_column('action', anchor(site_url('Sample_biobankin/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'barcode_water');
+        if ($lvl == 4){
+            $this->datatables->add_column('action', '', 'barcode_water');
         }
-        else if (($lvl == 2) | ($lvl == 3)){
-            $this->datatables->add_column('action', anchor(site_url('Sample_biobankin/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
-                ".'<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'barcode_water');
+        else if ($lvl == 3){
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'barcode_water');
         }
         else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 

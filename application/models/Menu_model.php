@@ -19,6 +19,7 @@ class Menu_model extends CI_Model
     function json() {
         $this->datatables->select('id_menu,title,url,icon,is_main_menu,is_aktif');
         $this->datatables->from('tbl_menu');
+        // $this->datatables->order_by('id_menu', 'ASC');        
         $this->datatables->add_column('is_aktif', '$1', 'rename_string_is_aktif(is_aktif)');
         //add this line for join
         //$this->datatables->join('table2', 'tbl_menu.field = table2.field');

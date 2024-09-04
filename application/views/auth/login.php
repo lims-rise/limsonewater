@@ -147,7 +147,7 @@
                 <!-- <b><mark>LIMS</mark>2.0</b>|LOGIN -->
                 <!-- <img src="../img/lims_logo2.png"> -->
                 <!-- <b><span style="background-color: #bab8b8; color: #000000">ONE</span>WATER</b>|LOGIN -->
-                <b>one water</b>|LOGIN
+                <b>LIMS-One Water</b>|LOGIN
             <!-- </a> -->
             </div>
             <!-- <span id="typed-text"></span> -->

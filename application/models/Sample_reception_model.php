@@ -26,11 +26,11 @@ class Sample_reception_model extends CI_Model
         // $this->datatables->where('Water_sample_reception.id_country', $this->session->userdata('lab'));
         $this->datatables->where('sample_reception.flag', '0');
         $lvl = $this->session->userdata('id_user_level');
-        if ($lvl == 7){
-            $this->datatables->add_column('action', anchor(site_url('Sample_reception/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_project');
+        if ($lvl == 4){
+            $this->datatables->add_column('action', anchor(site_url('Sample_reception/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')), 'id_project');
         }
-        else if (($lvl == 2) | ($lvl == 3)){
-            $this->datatables->add_column('action', anchor(site_url('Sample_reception/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
+        else if ($lvl == 3){
+            $this->datatables->add_column('action', anchor(site_url('Sample_reception/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
                 ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_project');
         }
         else {
@@ -55,12 +55,11 @@ class Sample_reception_model extends CI_Model
         $this->datatables->where('a.id_client_sample', $id);
         $this->datatables->group_by('a.id_sample');
         $lvl = $this->session->userdata('id_user_level');
-        if ($lvl == 7){
-            $this->datatables->add_column('action', anchor(site_url('Sample_reception/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_sample');
+        if ($lvl == 4){
+            $this->datatables->add_column('action', '', 'id_sample');
         }
-        else if (($lvl == 2) | ($lvl == 3)){
-            $this->datatables->add_column('action', anchor(site_url('Sample_reception/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
-                ".'<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_sample');
+        else if ($lvl == 3){
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_sample');
         }
         else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
