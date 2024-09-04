@@ -29,7 +29,7 @@
                                         echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Enterolert Idexx In</button>";
                                     }
                             ?>        
-                            <?php echo anchor(site_url('Moisture_content/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
+                            <?php echo anchor(site_url('Enterolert_idexx_water/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
                         </div>
                             <div class="table-responsive">
                                 <table class="table ho table-bordered table-striped tbody" id="mytable" style="width:100%">

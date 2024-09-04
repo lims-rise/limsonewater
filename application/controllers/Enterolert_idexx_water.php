@@ -387,43 +387,43 @@ class Enterolert_idexx_water extends CI_Controller
     
         $spreadsheet = new Spreadsheet();    
         $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1', "Id One Water Sample"); 
-        $sheet->setCellValue('B1', "Lab Tech"); 
-        $sheet->setCellValue('C1', "Date Assay Start");
+        $sheet->setCellValue('A1', "Id Enterolert In"); 
+        $sheet->setCellValue('B1', "Id One Water Sample"); 
+        $sheet->setCellValue('C1', "Lab Tech"); 
         $sheet->setCellValue('D1', "Sample Type");
-        $sheet->setCellValue('E1', "Barcode Moisture Content");
-        $sheet->setCellValue('F1', "Tray Weight");
-        $sheet->setCellValue('G1', "Tray sample (wet weight)");
-        $sheet->setCellValue('H1', "Time Incubator");
-        $sheet->setCellValue('I1', "Comments");
-        $sheet->setCellValue('J1', "Date Moisture 24");
-        $sheet->setCellValue('K1', "Time Moisture 24");
-        $sheet->setCellValue('L1', "Dry Weight 24");
-        $sheet->setCellValue('M1', "Comments 24");
-        $sheet->setCellValue('N1', "Date Moisture 72");
-        $sheet->setCellValue('O1', "Time Moisture 72");
-        $sheet->setCellValue('P1', "Dry Weight 72");
-        $sheet->setCellValue('Q1', "Dry Weight Percentage");
-        $sheet->setCellValue('R1', "Comments 72");
+        $sheet->setCellValue('E1', "Enterolert Barcode");
+        $sheet->setCellValue('F1', "Date Sample In");
+        $sheet->setCellValue('G1', "Time Sample In");
+        $sheet->setCellValue('H1', "Volume Bottle");
+        $sheet->setCellValue('I1', "Dilution");
+        $sheet->setCellValue('J1', "Id Enterolert Out");
+        $sheet->setCellValue('K1', "Enterolert Barcode");
+        $sheet->setCellValue('L1', "Date Sample Out");
+        $sheet->setCellValue('M1', "Time Sample Out");
+        $sheet->setCellValue('N1', "Enterococcus Large Wells");
+        $sheet->setCellValue('O1', "Enterococcus Small Wells");
+        $sheet->setCellValue('P1', "Enterococcus");
+        $sheet->setCellValue('Q1', "Remarks");
 
         $moisture = $this->Enterolert_idexx_water_model->get_all();
     
         $numrow = 2;
         foreach($moisture as $data){ 
-            if (property_exists($data, 'id_one_water_sample')) {
-                $sheet->setCellValue('A'.$numrow, $data->id_one_water_sample);
+
+            if (property_exists($data, 'id_enterolert_in')) {
+                $sheet->setCellValue('A'.$numrow, $data->id_enterolert_in);
             } else {
                 $sheet->setCellValue('A'.$numrow, '');
             }
-    
-            if (property_exists($data, 'initial')) {
-                $sheet->setCellValue('B'.$numrow, $data->initial);
+
+            if (property_exists($data, 'id_one_water_sample')) {
+                $sheet->setCellValue('B'.$numrow, $data->id_one_water_sample);
             } else {
                 $sheet->setCellValue('B'.$numrow, '');
             }
     
-            if (property_exists($data, 'date_start')) {
-                $sheet->setCellValue('C'.$numrow, $data->date_start);
+            if (property_exists($data, 'initial')) {
+                $sheet->setCellValue('C'.$numrow, $data->initial);
             } else {
                 $sheet->setCellValue('C'.$numrow, '');
             }
@@ -434,87 +434,83 @@ class Enterolert_idexx_water extends CI_Controller
                 $sheet->setCellValue('D'.$numrow, '');
             }
     
-            if (property_exists($data, 'barcode_moisture_content')) {
-                $sheet->setCellValue('E'.$numrow, $data->barcode_moisture_content);
+            if (property_exists($data, 'enterolert_barcode')) {
+                $sheet->setCellValue('E'.$numrow, $data->enterolert_barcode);
             } else {
                 $sheet->setCellValue('E'.$numrow, '');
             }
     
-            if (property_exists($data, 'tray_weight')) {
-                $sheet->setCellValue('F'.$numrow, $data->tray_weight);
+            if (property_exists($data, 'date_sample')) {
+                $sheet->setCellValue('F'.$numrow, $data->date_sample);
             } else {
                 $sheet->setCellValue('F'.$numrow, '');
             }
     
-            if (property_exists($data, 'traysample_wetweight')) {
-                $sheet->setCellValue('G'.$numrow, $data->traysample_wetweight);
+            if (property_exists($data, 'time_sample')) {
+                $sheet->setCellValue('G'.$numrow, $data->time_sample);
             } else {
                 $sheet->setCellValue('G'.$numrow, '');
             }
     
-            if (property_exists($data, 'time_incubator')) {
-                $sheet->setCellValue('H'.$numrow, $data->time_incubator);
+            if (property_exists($data, 'volume_bottle')) {
+                $sheet->setCellValue('H'.$numrow, $data->volume_bottle);
             } else {
                 $sheet->setCellValue('H'.$numrow, '');
             }
     
-            if (property_exists($data, 'comments')) {
-                $sheet->setCellValue('I'.$numrow, $data->comments);
+            if (property_exists($data, 'dilution')) {
+                $sheet->setCellValue('I'.$numrow, $data->dilution);
             } else {
                 $sheet->setCellValue('I'.$numrow, '');
             }
-    
-            if (property_exists($data, 'date_moisture24')) {
-                $sheet->setCellValue('J'.$numrow, $data->date_moisture24);
+
+            if (property_exists($data, 'id_enterolert_out')) {
+                $sheet->setCellValue('J'.$numrow, $data->id_enterolert_out);
             } else {
                 $sheet->setCellValue('J'.$numrow, '');
             }
     
-            if (property_exists($data, 'time_moisture24')) {
-                $sheet->setCellValue('K'.$numrow, $data->time_moisture24);
-            }
-
-           
-            if (property_exists($data, 'dry_weight24')) {
-                $sheet->setCellValue('L'.$numrow, $data->dry_weight24);
+            if (property_exists($data, 'enterolert_barcode')) {
+                $sheet->setCellValue('K'.$numrow, $data->enterolert_barcode);
             } else {
+                $sheet->setCellValue('K'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'date_sample')) {
+                $sheet->setCellValue('L'.$numrow, $data->date_sample);
+            }  else {
                 $sheet->setCellValue('L'.$numrow, '');
             }
 
-            if (property_exists($data, 'comments24')) {
-                $sheet->setCellValue('M'.$numrow, $data->comments24);
+           
+            if (property_exists($data, 'time_sample')) {
+                $sheet->setCellValue('M'.$numrow, $data->time_sample);
             } else {
                 $sheet->setCellValue('M'.$numrow, '');
             }
 
-            if (property_exists($data, 'date_moisture72')) {
-                $sheet->setCellValue('N'.$numrow, $data->date_moisture72);
+            if (property_exists($data, 'enterococcus_largewells')) {
+                $sheet->setCellValue('N'.$numrow, $data->enterococcus_largewells);
             } else {
                 $sheet->setCellValue('N'.$numrow, '');
             }
 
-            if (property_exists($data, 'time_moisture72')) {
-                $sheet->setCellValue('O'.$numrow, $data->time_moisture72);
+            if (property_exists($data, 'enterococcus_smallwells')) {
+                $sheet->setCellValue('O'.$numrow, $data->enterococcus_smallwells);
             } else {
                 $sheet->setCellValue('O'.$numrow, '');
             }
 
-            if (property_exists($data, 'dry_weight72')) {
-                $sheet->setCellValue('P'.$numrow, $data->dry_weight72);
+            if (property_exists($data, 'enterococcus')) {
+                $sheet->setCellValue('P'.$numrow, $data->enterococcus);
             } else {
                 $sheet->setCellValue('P'.$numrow, '');
             }
 
-            if (property_exists($data, 'dry_weight_persen')) {
-                $sheet->setCellValue('Q'.$numrow, $data->dry_weight_persen);
+            if (property_exists($data, 'remarks')) {
+                $sheet->setCellValue('Q'.$numrow, $data->remarks);
             } else {
                 $sheet->setCellValue('Q'.$numrow, '');
-            }
-
-            if (property_exists($data, 'comments72')) {
-                $sheet->setCellValue('R'.$numrow, $data->comments72);
-            } else {
-                $sheet->setCellValue('R'.$numrow, '');
             }
 
             $numrow++;
@@ -522,7 +518,7 @@ class Enterolert_idexx_water extends CI_Controller
 
         // Set header untuk file excel
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="Report_moisture_content.xlsx"');
+        header('Content-Disposition: attachment;filename="Report_enterolert_idexx_water.xlsx"');
         header('Cache-Control: max-age=0');
 
         // Tampilkan file excel
