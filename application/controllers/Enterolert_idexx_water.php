@@ -428,7 +428,7 @@ class Enterolert_idexx_water extends CI_Controller
                 $sheet->setCellValue('C'.$numrow, '');
             }
     
-            if (property_exists($data, 'sample_type')) {
+            if (property_exists($data, 'sampletype')) {
                 $sheet->setCellValue('D'.$numrow, $data->sampletype);
             } else {
                 $sheet->setCellValue('D'.$numrow, '');
