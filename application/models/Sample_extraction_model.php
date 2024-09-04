@@ -32,10 +32,10 @@ class Sample_extraction_model extends CI_Model
         // $this->datatables->where('Sample_extraction.id_country', $this->session->userdata('lab'));
         $this->datatables->where('sample_extraction.flag', '0');
         $lvl = $this->session->userdata('id_user_level');
-        if ($lvl == 7){
+        if ($lvl == 4){
             $this->datatables->add_column('action', 'barcode_sample');
         }
-        else if (($lvl == 2) | ($lvl == 3)){
+        else if ($lvl == 3){
             $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'barcode_sample');
         }
         else {

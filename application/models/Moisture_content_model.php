@@ -27,14 +27,14 @@ class Moisture_content_model extends CI_Model
         $this->datatables->from($this->table);
         $this->datatables->join('ref_person', 'moisture_content.id_person = ref_person.id_person', 'left');
         $this->datatables->join('ref_sampletype', 'moisture_content.id_sampletype = ref_sampletype.id_sampletype', 'left');
-        $this->datatables->where('lab', $this->session->userdata('lab'));
+        // $this->datatables->where('lab', $this->session->userdata('lab'));
         $this->datatables->where('moisture_content.flag', '0');
         $lvl = $this->session->userdata('id_user_level');
-        if ($lvl == 7){
-            $this->datatables->add_column('action', anchor(site_url('Moisture_content/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_moisture');
+        if ($lvl == 4){
+            $this->datatables->add_column('action', anchor(site_url('Moisture_content/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')), 'id_moisture');
         }
-        else if (($lvl == 2) | ($lvl == 3)){
-            $this->datatables->add_column('action', anchor(site_url('Moisture_content/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
+        else if ($lvl == 3){
+            $this->datatables->add_column('action', anchor(site_url('Moisture_content/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
                 ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_moisture');
         }
         else {
@@ -54,12 +54,11 @@ class Moisture_content_model extends CI_Model
         $this->datatables->where('m24.id_moisture', $id);
         $this->datatables->group_by('m24.id_moisture24');
         $lvl = $this->session->userdata('id_user_level');
-        if ($lvl == 7){
-            $this->datatables->add_column('action', anchor(site_url('Moisture_content/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_moisture24');
+        if ($lvl == 4){
+            $this->datatables->add_column('action', '', 'id_moisture24');
         }
-        else if (($lvl == 2) | ($lvl == 3)){
-            $this->datatables->add_column('action', anchor(site_url('Moisture_content/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
-                ".'<button type="button" class="btn_edit_det24 btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_moisture24');
+        else if ($lvl == 3){
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit_det24 btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_moisture24');
         }
         else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit_det24 btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
@@ -77,12 +76,11 @@ class Moisture_content_model extends CI_Model
         $this->datatables->where('m72.id_moisture', $id);
         $this->datatables->group_by('m72.id_moisture72');
         $lvl = $this->session->userdata('id_user_level');
-        if ($lvl == 7){
-            $this->datatables->add_column('action', anchor(site_url('Moisture_content/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_moisture72');
+        if ($lvl == 4){
+            $this->datatables->add_column('action', '', 'id_moisture72');
         }
-        else if (($lvl == 2) | ($lvl == 3)){
-            $this->datatables->add_column('action', anchor(site_url('Moisture_content/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
-                ".'<button type="button" class="btn_edit_det72 btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_moisture72');
+        else if ($lvl == 3){
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit_det72 btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_moisture72');
         }
         else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit_det72 btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
