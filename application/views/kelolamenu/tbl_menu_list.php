@@ -97,9 +97,14 @@
             ajax: {"url": "kelolamenu/json", "type": "POST"},
             columns: [
                 {
-                    "data": "id_menu",
-                    "orderable": false
-                },{"data": "title"},{"data": "url"},{"data": "icon"},{"data": "is_main_menu"},{"data": "is_aktif"},
+                    "data": "id_menu"
+                    // "orderable": false
+                },
+                {"data": "title"},
+                {"data": "url"},
+                {"data": "icon"},
+                {"data": "is_main_menu"},
+                {"data": "is_aktif"},
                 {
                     "data" : "action",
                     "orderable": false,
