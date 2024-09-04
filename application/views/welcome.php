@@ -25,7 +25,7 @@
         }
         // echo alert('alert-info', 'Welcome '.$this->session->userdata('full_name') . ' to the '. $labname .' LIMS data', 
         // "<i class='fa fa-hand-o-left' aria-hidden='true'></i>" . ' To switch LIMS data between country labs, please select the corresponding countries on the left side panel.');
-        echo alert('alert-primary', 'Welcome '.$this->session->userdata('full_name') . ' to the One Water LIMS data', 
+        echo alert('alert-primary', 'Welcome '.$this->session->userdata('full_name') . ' to the One Water LIMS v1.0 data', 
         "");
         
         ?>
