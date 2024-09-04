@@ -215,6 +215,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
 <style>
     .hidden {
         visibility: hidden;
@@ -380,28 +381,28 @@
                 $('.val1tip').tooltipster('hide');   
             }, 3000);                            
         });
-
-        $('#barcode_moisture_content').on("change", function() {
-            let barcodeMoistureContent = $('#barcode_moisture_content').val();
+        
+        $('#enterolert_barcode').on("change", function() {
+            let enterolertBarcode = $('#enterolert_barcode').val();
             $.ajax({
                 type: "GET",
-                url: "Moisture_content/validateBarcodeMoistureContent",
-                data: { id: barcodeMoistureContent },
+                url: "Enterolert_idexx_water/validateEnterolertBarcode",
+                data: { id: enterolertBarcode },
                 dataType: "json",
                 success: function(data) {
                     if (data.length == 1) {
-                        let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode Moisture Content <strong> ' + barcodeMoistureContent +'</strong> is already in the system !</span>');
+                        let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Enterolert Barcode <strong> ' + enterolertBarcode +'</strong> is already in the system !</span>');
                         $('.val1tip').tooltipster('content', tip);
                         $('.val1tip').tooltipster('show');
-                        $('#barcode_moisture_content').focus();
-                        $('#barcode_moisture_content').val('');       
-                        $('#barcode_moisture_content').css({'background-color' : '#FFE6E7'});
+                        $('#enterolert_barcode').focus();
+                        $('#enterolert_barcode').val('');       
+                        $('#enterolert_barcode').css({'background-color' : '#FFE6E7'});
                         setTimeout(function(){
-                            $('#barcode_moisture_content').css({'background-color' : '#FFFFFF'});
+                            $('#enterolert_barcode').css({'background-color' : '#FFFFFF'});
                             setTimeout(function(){
-                                $('#barcode_moisture_content').css({'background-color' : '#FFE6E7'});
+                                $('#enterolert_barcode').css({'background-color' : '#FFE6E7'});
                                 setTimeout(function(){
-                                    $('#barcode_moisture_content').css({'background-color' : '#FFFFFF'});
+                                    $('#enterolert_barcode').css({'background-color' : '#FFFFFF'});
                                 }, 300);                            
                             }, 300);
                         }, 300);

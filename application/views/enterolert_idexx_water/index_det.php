@@ -82,7 +82,7 @@
                                             <th>Time Sample</th>
                                             <th>Enterococcus large wells</th>
                                             <th>Enterococcus small wells</th>
-                                            <th>enterococcus</th>
+                                            <th>Enterococcus (MPN/100 mL)</th>
                                             <th>Remarks</th>
                                             <th>Action</th>
 										</tr>
@@ -170,9 +170,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="enterococcus" class="col-sm-4 control-label">enterococcus</label>
+                                        <label for="enterococcus" class="col-sm-4 control-label">Enterococcus (MPN/100 mL)</label>
                                         <div class="col-sm-8">
-                                            <input id="enterococcus" name="enterococcus" type="text"  placeholder="Enterococcus" class="form-control">
+                                            <input id="enterococcus" name="enterococcus" type="text"  placeholder="Enterococcus (MPN/100 mL)" class="form-control">
                                             <!-- <div class="val1tip"></div> -->
                                         </div>
                                     </div>
