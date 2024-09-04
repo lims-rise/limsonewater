@@ -194,106 +194,6 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-<!-- MODAL FORM MOISTURE 72 -->
-<!-- <div class="modal fade" id="compose-modal72" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header" style="background-color: #3c8dbc; color: white;">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
-                        <h4 class="modal-title" id="modal-title-detail72">
-							<span id="my-another-cool-loader"></span></h4>
-                    </div>
-                        <form id="formDetail72" action=<?php echo site_url('Moisture_content/savedetail72') ?> method="post" class="form-horizontal">
-                            <div class="modal-body">
-                                <div class="form-group">
-                                        <div class="col-sm-9">
-                                            <input id="mode_det72" name="mode_det72" type="hidden" class="form-control input-sm">
-                                            <input id="idx_moisture72" name="idx_moisture72" type="hidden" class="form-control input-sm">
-                                            <input id="id_moisture72" name="id_moisture72" type="hidden" class="form-control input-sm">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="date_moisture72" class="col-sm-4 control-label">Date Moisture</label>
-                                        <div class="col-sm-8">
-                                            <input id="date_moisture72" name="date_moisture72"type="date" class="form-control" placeholder="Date Moisture" value="<?php echo date("Y-m-d"); ?>">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="time_moisture72" class="col-sm-4 control-label">Time Moisture Tested</label>
-                                        <div class="col-sm-8">
-                                            <div class="input-group clockpicker">
-                                            <input id="time_moisture72" name="time_moisture72" class="form-control" placeholder="Time Moisture Tested" value="<?php 
-                                            $datetime = new DateTime();
-                                            echo $datetime->format( 'H:i' );
-                                            ?>">
-                                            <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-time"></span>
-                                            </span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="barcode_tray72" class="col-sm-4 control-label">Barcode Tray</label>
-                                        <div class="col-sm-8">
-                                            <input id="barcode_tray72" name="barcode_tray72" type="text"  placeholder="Barcode Tray" class="form-control" required>
-                                            <div class="val2tip"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="dry_weight72" class="col-sm-4 control-label">Dry Weight 72h (g)</label>
-                                        <div class="col-sm-8 dryweightcount">
-                                            <input id="dry_weight72" name="dry_weight72" type="number" step="0.01"  placeholder="Dry Weight 72h (g)" class="form-control" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="dry_weight_persen" class="col-sm-4 control-label">Dry Weight %</label>
-                                        <div class="col-sm-8">
-                                            <input id="dry_weight_persen" name="dry_weight_persen" type="number" step="0.01"  placeholder="Dry Weight %" class="form-control" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="comments72" class="col-sm-4 control-label">Comments</label>
-                                        <div class="col-sm-8">
-                                            <textarea id="comments72" name="comments72" class="form-control" placeholder="Comments"></textarea>
-                                        </div>
-                                    </div>
-
-                            </div>
-                            <div class="modal-footer clearfix">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
-                                <button type="button" id='cancelButton' class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-                            </div>
-                        </form>
-                </div>
-            </div>
-</div> -->
-
-
-<!-- MODAL INFORMATION -->
-<!-- <div class="modal fade" id="confirm-modal" role="dialog" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header" style="background-color: #f39c12; color: white;">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
-					<h4 class="modal-title">Moisture Content | Information</h4>
-				</div>
-                <div id="confirmation-content">
-                    <div class="modal-body">
-                    </div>
-                </div>
-				<div class="modal-footer clearfix">
-					<button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Close </button>
-				</div>
-			</div>
-		</div>
-</div> -->
-
 
 <!-- MODAL CONFIRMATION DELETE -->
 <div class="modal fade" id="confirm-modal-delete" tabindex="-1" role="dialog" aria-hidden="true">
@@ -454,33 +354,19 @@
             $('.val1tip').tooltipster('hide');   
         });
 
-        // $('#barcode_tray72').click(function() {
-        //     $('.val2tip').tooltipster('hide');   
-        // });
 
         $('#compose-modal').on('shown.bs.modal', function () {
             $('.val1tip').tooltipster('hide'); 
         });
-
-        // $('#compose-modal72').on('shown.bs.modal', function () {
-        //     $('.val2tip').tooltipster('hide'); 
-        // });
 
         $("input").keypress(function(){
             $('.val1tip').tooltipster('hide'); 
         });
 
-        // $("input").keypress(function(){
-        //     $('.val2tip').tooltipster('hide'); 
-        // });
 
         $('#compose-modal').on('shown.bs.modal', function () {
             $('#barcode_tray24').focus();
         });
-
-        // $('#compose-modal72').on('shown.bs.modal', function () {
-        //     $('#dry_weight72').focus();
-        // });
 
         $('#barcode_tray24').on("change", function() {
             let barcode24 = $('#barcode_tray24').val();
@@ -511,51 +397,6 @@
             });
         });
 
-        // $('#barcode_tray72').on("change", function() {
-        //     let barcode72 = $('#barcode_tray72').val();
-        //     $.ajax({
-        //         type: "GET",
-        //         url: `${BASE_URL}/Moisture_content/validate72`,
-        //         data: { id72: barcode72 },
-        //         dataType: "json",
-        //         success: function(data) {
-        //             if (data.length == 0) {
-        //                 let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + barcode72 +'</strong> is not on moisture content or is not already in the system !</span>');
-        //                 $('.val2tip').tooltipster('content', tip);
-        //                 $('.val2tip').tooltipster('show');
-        //                 $('#barcode_tray72').focus();
-        //                 $('#barcode_tray72').val('');       
-        //                 $('#barcode_tray72').css({'background-color' : '#FFE6E7'});
-        //                 setTimeout(function(){
-        //                     $('#barcode_tray72').css({'background-color' : '#FFFFFF'});
-        //                     setTimeout(function(){
-        //                         $('#barcode_tray72').css({'background-color' : '#FFE6E7'});
-        //                         setTimeout(function(){
-        //                             $('#barcode_tray72').css({'background-color' : '#FFFFFF'});
-        //                         }, 300);                            
-        //                     }, 300);
-        //                 }, 300);
-        //             }
-        //         }
-        //     });
-        // });
-
-        // Function to calculate the dry_weight_persen
-        // function updateDryWeightPersen() {
-        //     let traysampleWetweight = parseFloat($('#traysample_wetweight').val()) || 0; // Get the traysample wet weight
-        //     let dryWeight72 = parseFloat($('#dry_weight72').val()) || 0; // Get the dry weight 72h
-
-        //     if (traysampleWetweight > 0) { // Ensure traysampleWetweight is not zero to avoid division by zero
-        //         let dryWeightPersen = (1-(((traysampleWetweight - dryWeight72) / dryWeight72) * 100)).toFixed(2); // Calculate percentage
-        //         $('#dry_weight_persen').val(dryWeightPersen); // Update the percentage field
-        //     } else {
-        //         $('#dry_weight_persen').val(''); // Clear the percentage field if traysampleWetweight is zero or invalid
-        //     }
-        // }
-
-        // Attach the function to the input event of dry_weight72
-        // $('#dry_weight72').on('input', updateDryWeightPersen);
-
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
             return {
                 "iStart": oSettings._iDisplayStart,
@@ -567,17 +408,6 @@
                 "iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
             };
         };
-
-        // $('#example2').on('draw.dt', function() {
-        //     let data = table.data();
-        //     if (data.length > 0) {
-        //         // Tampilkan tombol jika tabel example2 memiliki data
-        //         $('#addtombol_det72').show();
-        //     } else {
-        //         // Sembunyikan tombol jika tabel example2 tidak memiliki data
-        //         $('#addtombol_det72').hide();
-        //     }
-        // });
 
 
         table = $("#example2").DataTable({
@@ -624,47 +454,6 @@
             }
         });
 
-        // table1 = $("#example3").DataTable({
-        //     oLanguage: {
-        //         sProcessing: "Loading data, please wait..."
-        //     },
-        //     processing: true,
-        //     serverSide: true,
-        //     paging: false,
-        //     info: false,
-        //     bFilter: false,
-        //     ajax: {"url": "../../Moisture_content/subjson72?id72="+id_moisture, "type": "POST"},
-        //     columns: [
-        //         {"data": "date_moisture72"},
-        //         {"data": "time_moisture72"}, 
-        //         {"data": "barcode_tray"}, 
-        //         {"data": "dry_weight72"}, 
-        //         {"data": "dry_weight_persen"},
-        //         {"data": "comments72"},
-        //         {
-        //             "data" : "action",
-        //             "orderable": false,
-        //             "className" : "text-center"
-        //         }
-        //     ],
-        //     order: [[0, 'asc']],
-        //     rowCallback: function(row, data, iDisplayIndex) {
-        //         let info = this.fnPagingInfo();
-        //         if (info.iTotal > 0) {
-        //             $('#addtombol_det72').hide();
-        //         }
-        //     }
-        // });
-
-        // $('#example3 tbody').on('click', 'tr', function () {
-        //     if ($(this).hasClass('active')) {
-        //         $(this).removeClass('active');
-        //     } else {
-        //         table1.$('tr.active').removeClass('active');
-        //         $(this).addClass('active');
-        //     }
-        // });
-
         $('#addtombol_det').click(function() {
             $('#mode_det').val('insert');
             $('#modal-title-detail').html('<i class="fa fa-wpforms"></i> Enterolert Idexx Out | New <span id="my-another-cool-loader"></span>');
@@ -684,7 +473,6 @@
             console.log(data);
             $('#mode_det').val('edit');
             $('#modal-title-detail').html('<i class="fa fa-pencil-square"></i> Enterolert Idexx Out | Update <span id="my-another-cool-loader"></span>');
-            // $('#idx_moisture24').val('');
             $('#idx_enterolert_in').val(idEnterolertIn);
             $('#id_enterolert_out').val(data.id_enterolert_out);
             $('#enterolert_barcodex').val(data.enterolert_barcode);
@@ -697,64 +485,6 @@
             $('#remarks').val(data.remarks);
             $('#compose-modal').modal('show');
         });
-
-        // $('#addtombol_det72').click(function() {
-        //     // $('#mode_det72').val('insert');
-        //     // $('#modal-title-detail72').html('<i class="fa fa-wpforms"></i> Moisture Content | 72 Hour <span id="my-another-cool-loader"></span>');
-        //     // $('#barcode_tray72').val('');
-        //     // $('#barcode_tray72').attr('readonly', true);
-        //     // $('#barcode_tray72').attr('required', true);
-        //     // $('#idx_moisture72').val(id_moisture);
-        //     // $('#dry_weight72').val('');
-        //     // $('#dry_weight_persen').val('');
-        //     // $('#comments72').val('');
-        //     // $('#compose-modal72').modal('show');
-        // });
-
-        // $('#addtombol_det72').on('click', function() {
-        //     $('#mode_det72').val('insert');
-        //     $('#modal-title-detail72').html('<i class="fa fa-wpforms"></i> Moisture Content | 72 Hour <span id="my-another-cool-loader"></span>');
-        //     $('#barcode_tray72').val('');
-        //     $('#barcode_tray72').attr('readonly', true);
-        //     $('#barcode_tray72').attr('required', true);
-        //     $('#idx_moisture72').val(id_moisture);
-        //     $('#dry_weight72').val('');
-        //     $('#dry_weight_persen').val('');
-        //     $('#comments72').val('');
-
-        //     let td = $('#example2 td:first');
-        //     let data = table.row(td).data();
-            
-        //     if (data && data.barcode_tray) {
-        //         let barcode_tray = data.barcode_tray;
-        //         // Parsing data ke komponen
-        //         $('#barcode_tray72').val(barcode_tray);
-        //         $('#compose-modal72').modal('show');
-        //     } else {
-        //         // Tampilkan modal konfirmasi
-        //         $('#confirm-modal').modal('show');
-        //         // Tambahkan pesan ke modal
-        //         $('#confirm-modal .modal-body').html('<p class="text-center" style="font-size: 15px;">You have not filled in the 24-hour moisture data. Please fill in that data first.</p>');
-        //     }
-        // });
-        
-
-        // $('#example3').on('click', '.btn_edit_det72', function() {
-        //     let tr = $(this).closest('tr');
-        //     let data = table1.row(tr).data();
-        //     $('#mode_det72').val('edit');
-        //     $('#modal-title-detail72').html('<i class="fa fa-pencil-square"></i> Update Moisture | 72 Hour <span id="my-another-cool-loader"></span>');
-        //     $('#idx_moisture72').val(id_moisture);
-        //     $('#id_moisture72').val(data.id_moisture72);
-        //     $('#date_moisture72').val(data.date_moisture72);
-        //     $('#time_moisture72').val(data.time_moisture72);
-        //     $('#barcode_tray72').attr('readonly', true);
-        //     $('#barcode_tray72').val(data.barcode_tray);
-        //     $('#dry_weight72').val(data.dry_weight72);
-        //     $('#dry_weight_persen').val(data.dry_weight_persen);
-        //     $('#comments72').val(data.comments72);
-        //     $('#compose-modal72').modal('show');
-        // });
 
     });
 </script>

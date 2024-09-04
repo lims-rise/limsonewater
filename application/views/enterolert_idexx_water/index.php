@@ -6,21 +6,6 @@
                     <div class="box-header">
                         <h3 class="box-title">Processing | Enterolert Idexx Water | In </h3>
                     </div>
-                    <!-- <form role="form"  id="formKeg" method="post" class="form-horizontal">
-                        <div class="box-body">
-                            <div class="form-group">
-                                <div class="col-sm-4">
-                                    <input class="form-control " id="id_project" type="hidden"  value="<?php echo $id_project ?>"  disabled>
-                                </div>
-                                <div class="col-sm-4">
-                                    <input class="form-control " id="client" type="hidden"  value="<?php echo $client ?>"  disabled>
-                                </div>
-                                <div class="col-sm-4">
-                                    <input class="form-control " id="id_one_water_sample" type="hidden"  value="<?php echo $id_one_water_sample ?>"  disabled>
-                                </div>
-                            </div>
-                        </div>
-                    </form> -->
                     <div class="box-body">
                         <div style="padding-bottom: 10px;">
                             <?php
@@ -43,8 +28,6 @@
                                             <th>Time Sample</th>
                                             <th>Volume in Bottle (mL)</th>
                                             <th>Dilution</th>
-                                            <!-- <th>Date of Collected</th>
-                                            <th>Date of Collected</th> -->
                                             <th width="120px">Action</th>
                                         </tr>
                                     </thead>
@@ -77,7 +60,6 @@
                         <div class="modal-body">
                             <input id="mode" name="mode" type="hidden" class="form-control input-sm">
                             <input id="idx_enterolert" name="idx_enterolert" type="hidden" class="form-control input-sm">
-                            <!-- <input id="id_req" name="id_req" type="hidden" class="form-control input-sm"> -->
                             
                             <div class="form-group">
                                 <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
@@ -115,13 +97,6 @@
                                     </select>
                                 </div>
                             </div>
-
-                            <!-- <div class="form-group">
-                                <label for="date_start" class="col-sm-4 control-label">Date Assay Start</label>
-                                <div class="col-sm-8">
-                                    <input id="date_start" name="date_start" type="date" class="form-control" placeholder="Date Assay Start" value="<?php echo date("Y-m-d"); ?>">
-                                </div>
-                            </div> -->
 
                             <div class="form-group">
                                 <label for="sampletype" class="col-sm-4 control-label">Sample Type</label>
@@ -175,13 +150,6 @@
                                 </div>
                             </div>
 
-                            <!-- <div class="form-group">
-                                <label for="tray_weight" class="col-sm-4 control-label">Try weight(g)</label>
-                                <div class="col-sm-8">
-                                    <input id="tray_weight" name="tray_weight" type="number" step="0.01"  class="form-control" placeholder="Try weight(g)" required>
-                                </div>
-                            </div> -->
-
                         </div>
                         <div class="modal-footer clearfix">
                             <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
@@ -234,15 +202,6 @@
     let table;
     let deleteUrl; // Variable to hold the delete URL
     $(document).ready(function() {
-        // Update tray weight visibility based on sample type
-        // $('#sampletype').on('input', function() {
-        //     let sampleTypeValue = $(this).val().toLowerCase();
-        //     if (sampleTypeValue === 'soil') {
-        //         $('#tray_weight_container').show();
-        //     } else {
-        //         $('#tray_weight_container').hide();
-        //     }
-        // });
 
         $('#volume_bottle').on("keyup change click", function() {
             $('#dilution').val($('#volume_bottle').val()/100);
@@ -292,19 +251,6 @@
                 }
             });
         });
-
-
-        
-        // Saat form disubmit
-        // $('#formSample').on('submit', function(event) {
-        //     let sampletype = $('#sampletype').val().toLowerCase();
-        //     if (sampletype !== 'soil') {
-        //         // Jika sampletype bukan 'soil', pastikan tray_weight tidak divalidasi
-        //         $('#tray_weight').removeAttr('required');
-        //     } else {
-        //         $('#tray_weight').attr('required', 'required'); // Tambahkan required jika sampletype adalah 'soil'
-        //     }
-        // });
 
         $('.idOneWaterSampleSelect').change(function() {
             let id_one_water_sample = $(this).val(); // Mendapatkan ID produk yang dipilih
@@ -444,10 +390,6 @@
             serverSide: true,
             ajax: {"url": "Enterolert_idexx_water/json", "type": "POST"},
             columns: [
-                // {
-                //     "data": "barcode_sample",
-                //     "orderable": false
-                // },
                 {"data": "id_one_water_sample"},
                 {"data": "initial"},
                 {"data": "sampletype"},
@@ -456,8 +398,6 @@
                 {"data": "time_sample"},
                 {"data": "volume_bottle"},
                 {"data": "dilution"},
-                // {"data": "date_collected"},
-                // {"data": "time_collected"},
                 {
                     "data" : "action",
                     "orderable": false,
@@ -491,7 +431,6 @@
             $('#sampletype').val('');
             $('#sampletype').attr('readonly', true);
             $('#enterolert_barcode').val('');
-            // $('#tray_weight').val('');
             $('#volume_bottle').val('');
             $('#dilution').val('');
             $('#dilution').attr('readonly', true);
@@ -513,13 +452,6 @@
             $('#id_sampletype').val(data.id_sampletype);
             $('#sampletype').val(data.sampletype);
             $('#sampletype').attr('readonly', true);
-            // $('#sampletype').on('input', function() {
-            //     if ($(this).val().toLowerCase() === "soil") {
-            //         $('#tray_weight_container').show();
-            //     } else {
-            //         $('#tray_weight_container').hide();
-            //     }
-            // }).val(data.sampletype).trigger('input');
             $('#enterolert_barcode').val(data.enterolert_barcode);
             $('#date_sample').val(data.date_sample);
             $('#time_sample').val(data.time_sample);

@@ -83,25 +83,7 @@ class Enterolert_idexx_water extends CI_Controller
             // $this->template->load('template','Water_sample_reception/index_det', $test);
         }
 
-    } 
-
-    // public function read2($id)
-    // {
-    //     $data['test'] = $this->Enterolert_idexx_water_model->getTest();
-    //     $row = $this->Enterolert_idexx_water_model->get_detail2($id);
-    //     if ($row) {
-    //         $data = array(
-    //             // 'id_project' => $row->id_project,
-    //             // 'id_sample' => $row->id_sample,
-    //             // 'sample_description' => $row->sample_description,
-    //             'test' => $this->Enterolert_idexx_water_model->getTest(),
-    //             );
-    //             $this->template->load('template','Enterolert_idexx_water/index_det2', $data);
-    //     }
-    //     else {
-    //         // $this->template->load('template','Water_sample_reception/index_det');
-    //     }
-    // }     
+    }   
 
     public function save() {
         $mode = $this->input->post('mode', TRUE);
@@ -242,72 +224,6 @@ class Enterolert_idexx_water extends CI_Controller
     }
 
 
-    // public function savedetail72() {
-    //     $mode_det72 = $this->input->post('mode_det72', TRUE);
-    //     $dt = new DateTime();
-
-    //     $id_moisture = $this->input->post('idx_moisture72', TRUE);
-    //     $id_moisture72 = $this->input->post('id_moisture72', TRUE);
-    //     $date_moisture72 = $this->input->post('date_moisture72', TRUE);
-    //     $time_moisture72 = $this->input->post('time_moisture72', TRUE);
-    //     $barcode_tray = $this->input->post('barcode_tray72', TRUE);
-    //     $dry_weight72 = $this->input->post('dry_weight72', TRUE);
-    //     $dry_weight_persen = $this->input->post('dry_weight_persen', TRUE);
-    //     $comments72 = $this->input->post('comments72', TRUE);
-
-    //     if($mode_det72 == "insert") {
-    //         $data = array(
-    //             'id_moisture' => $id_moisture,
-    //             'date_moisture72' => $date_moisture72,
-    //             'time_moisture72' => $time_moisture72,
-    //             'barcode_tray' => $barcode_tray,
-    //             'dry_weight72' => $dry_weight72,
-    //             'dry_weight_persen' => $dry_weight_persen,
-    //             'comments72' => $comments72,
-    //             'flag' => '0',
-    //             'lab' => $this->session->userdata('lab'),
-    //             'uuid' => $this->uuid->v4(),
-    //             'user_created' => $this->session->userdata('id_users'),
-    //             'date_created' => $dt->format('Y-m-d H:i:s'),
-    //         );
-    //         // var_dump($data);
-    //         // die();
-    
-    //         $insert_id = $this->Enterolert_idexx_water_model->insert_det72($data);
-    //         if ($insert_id) {
-    //             $this->session->set_flashdata('message', 'Create Record Success');
-    //         } else {
-    //             $this->session->set_flashdata('error', 'Failed to create record');
-    //         }
-    //     } else if($mode_det72 == "edit") {
-    //         $data = array(
-    //             'date_moisture72' => $date_moisture72,
-    //             'time_moisture72' => $time_moisture72,
-    //             'barcode_tray' => $barcode_tray,
-    //             'dry_weight72' => $dry_weight72,
-    //             'dry_weight_persen' => $dry_weight_persen,
-    //             'comments72' => $comments72,
-    //             'flag' => '0',
-    //             'lab' => $this->session->userdata('lab'),
-    //             'uuid' => $this->uuid->v4(),
-    //             'user_created' => $this->session->userdata('id_users'),
-    //             'date_created' => $dt->format('Y-m-d H:i:s'),
-    //         );
-    //         // var_dump($data);
-    //         // die();
-    //         $result = $this->Enterolert_idexx_water_model->update_det72($id_moisture72, $data);
-    //         if ($result) {
-    //             $this->session->set_flashdata('message', 'Update Record Success');
-    //         } else {
-    //             $this->session->set_flashdata('error', 'Failed to update record');
-    //         }
-    //     }
-    
-    //     redirect(site_url("Moisture_content/read/" . $id_moisture));
-
-    // }
-  
-
     public function delete($id) 
     {
         $row = $this->Enterolert_idexx_water_model->get_by_id($id);
@@ -343,24 +259,6 @@ class Enterolert_idexx_water extends CI_Controller
         redirect(site_url('Enterolert_idexx_water/read/'.$id_parent));
     }
 
-    // public function delete_detail72($id) 
-    // {
-    //     $row = $this->Enterolert_idexx_water_model->get_by_id_detail72($id);
-    //     if ($row) {
-    //         $id_parent = $row->id_moisture; // Retrieve project_id before updating the record
-    //         $data = array(
-    //             'flag' => 1,
-    //         );
-    
-    //         $this->Enterolert_idexx_water_model->update_det72($id, $data);
-    //         $this->session->set_flashdata('message', 'Delete Record Success');
-    //     } else {
-    //         $this->session->set_flashdata('message', 'Record Not Found');
-    //     }
-    
-    //     redirect(site_url('Moisture_content/read/'.$id_parent));
-    // }
-
 
     public function getIdOneWaterDetails()
     {
@@ -375,13 +273,6 @@ class Enterolert_idexx_water extends CI_Controller
         header('Content-Type: application/json');
         echo json_encode($data);
     }
-
-    // public function validate72() {
-    //     $id = $this->input->get('id72');
-    //     $data = $this->Enterolert_idexx_water_model->validate72($id);
-    //     header('Content-Type: application/json');
-    //     echo json_encode($data);
-    // }
     
     public function excel() {
     
