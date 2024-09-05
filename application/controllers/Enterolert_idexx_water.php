@@ -293,7 +293,7 @@ class Enterolert_idexx_water extends CI_Controller
         $sheet->setCellValue('M1', "Time Sample Out");
         $sheet->setCellValue('N1', "Enterococcus Large Wells");
         $sheet->setCellValue('O1', "Enterococcus Small Wells");
-        $sheet->setCellValue('P1', "Enterococcus");
+        $sheet->setCellValue('P1', "Enterococcus (MPN/100mL)");
         $sheet->setCellValue('Q1', "Remarks");
 
         $moisture = $this->Enterolert_idexx_water_model->get_all();

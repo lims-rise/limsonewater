@@ -197,15 +197,15 @@ class Enterolert_idexx_biosolids_model extends CI_Model
 
     function get_all()
     {
-        $this->db->select('ewi.id_enterolert_in, ewi.id_one_water_sample, rp.initial, rs.sampletype, ewi.enterolert_barcode, ewi.date_sample,
-        ewi.time_sample, ewi.volume_bottle,ewi.dilution, ewo.id_enterolert_out, ewo.enterolert_barcode, ewo.date_sample, ewo.time_sample, ewo.enterococcus_largewells,
-        ewo.enterococcus_smallwells, ewo.enterococcus, ewo.remarks');
-        $this->db->from('enterolert_water_in AS ewi');
-        $this->db->join('ref_person AS rp', 'ewi.id_person = rp.id_person');
-        $this->db->join('ref_sampletype AS rs', 'ewi.id_sampletype = rs.id_sampletype');
-        $this->db->join('enterolert_water_out AS ewo', 'ewi.id_enterolert_in = ewo.id_enterolert_in');
-        $this->db->where('ewi.flag', '0');
-        $this->db->order_by('ewi.id_enterolert_in', 'ASC');
+        $this->db->select('ebi.id_enterolert_bio_in, ebi.id_one_water_sample, rp.initial, rs.sampletype, ebi.enterolert_barcode, ebi.date_sample,
+        ebi.time_sample, ebi.wet_weight, ebi.elution_volume, ebi.volume_bottle, ebi.dilution, ebo.id_enterolert_bio_out, ebo.enterolert_barcode, ebo.date_sample, ebo.time_sample, ebo.enterococcus_largewells,
+        ebo.enterococcus_smallwells, ebo.enterococcus, ebo.remarks');
+        $this->db->from('enterolert_biosolids_in AS ebi');
+        $this->db->join('ref_person AS rp', 'ebi.id_person = rp.id_person');
+        $this->db->join('ref_sampletype AS rs', 'ebi.id_sampletype = rs.id_sampletype');
+        $this->db->join('enterolert_biosolids_out AS ebo', 'ebi.id_enterolert_bio_in = ebo.id_enterolert_bio_in');
+        $this->db->where('ebi.flag', '0');
+        $this->db->order_by('ebi.id_enterolert_bio_in', 'ASC');
 
         return $this->db->get()->result();
     }

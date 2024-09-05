@@ -11,7 +11,7 @@
                             <?php
                                     $lvl = $this->session->userdata('id_user_level');
                                     if ($lvl != 7){
-                                        echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Enterolert Idexx In</button>";
+                                        echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Enterolert Idexx - Water</button>";
                                     }
                             ?>        
                             <?php echo anchor(site_url('Enterolert_idexx_water/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
@@ -423,7 +423,7 @@
         $('#addtombol').click(function() {
             handleSampleTypeInput('#sampletype');
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> Enterolert Idexx In | New<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Enterolert Idexx Water | New<span id="my-another-cool-loader"></span>');
             $('#id_one_water_sample').val('');
             $('#id_one_water_sample').show();
             $('#idx_one_water_sample').hide();
@@ -442,7 +442,7 @@
             let data = table.row(tr).data();
             console.log(data);
             $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Enterolert Idexx In | Update<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Enterolert Idexx Water | Update<span id="my-another-cool-loader"></span>');
             $('#idx_enterolert').val(data.id_enterolert_in);
             $('#id_one_water_sample').hide();
             $('#idx_one_water_sample').show();

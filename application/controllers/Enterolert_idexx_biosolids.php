@@ -290,134 +290,269 @@ class Enterolert_idexx_biosolids extends CI_Controller
         $sheet->setCellValue('B1', "Id One Water Sample"); 
         $sheet->setCellValue('C1', "Lab Tech"); 
         $sheet->setCellValue('D1', "Sample Type");
-        $sheet->setCellValue('E1', "Enterolert Barcode");
+        $sheet->setCellValue('E1', "Enterolert Barcode In");
         $sheet->setCellValue('F1', "Date Sample In");
         $sheet->setCellValue('G1', "Time Sample In");
-        $sheet->setCellValue('H1', "Volume Bottle");
-        $sheet->setCellValue('I1', "Dilution");
-        $sheet->setCellValue('J1', "Id Enterolert Out");
-        $sheet->setCellValue('K1', "Enterolert Barcode");
-        $sheet->setCellValue('L1', "Date Sample Out");
-        $sheet->setCellValue('M1', "Time Sample Out");
-        $sheet->setCellValue('N1', "Enterococcus Large Wells");
-        $sheet->setCellValue('O1', "Enterococcus Small Wells");
-        $sheet->setCellValue('P1', "Enterococcus");
-        $sheet->setCellValue('Q1', "Remarks");
+        $sheet->setCellValue('H1', "Wet Weight (g)");
+        $sheet->setCellValue('I1', "Elution Volume (mL)");
+        $sheet->setCellValue('J1', "Volume Bottle");
+        $sheet->setCellValue('K1', "Dilution");
+        $sheet->setCellValue('L1', "Id Enterolert Out");
+        $sheet->setCellValue('M1', "Enterolert Barcode Out");
+        $sheet->setCellValue('N1', "Date Sample Out");
+        $sheet->setCellValue('O1', "Time Sample Out");
+        $sheet->setCellValue('P1', "Enterococcus Large Wells");
+        $sheet->setCellValue('Q1', "Enterococcus Small Wells");
+        $sheet->setCellValue('R1', "Enterococcus (RAW MPN)");
+        $sheet->setCellValue('S1', "Remarks");
+
 
         $moisture = $this->Enterolert_idexx_biosolids_model->get_all();
     
         $numrow = 2;
+        // foreach($moisture as $data){ 
+
+        //     if (property_exists($data, 'id_enterolert_in')) {
+        //         $sheet->setCellValue('A'.$numrow, $data->id_enterolert_in);
+        //     } else {
+        //         $sheet->setCellValue('A'.$numrow, '');
+        //     }
+
+        //     if (property_exists($data, 'id_one_water_sample')) {
+        //         $sheet->setCellValue('B'.$numrow, $data->id_one_water_sample);
+        //     } else {
+        //         $sheet->setCellValue('B'.$numrow, '');
+        //     }
+    
+        //     if (property_exists($data, 'initial')) {
+        //         $sheet->setCellValue('C'.$numrow, $data->initial);
+        //     } else {
+        //         $sheet->setCellValue('C'.$numrow, '');
+        //     }
+    
+        //     if (property_exists($data, 'sampletype')) {
+        //         $sheet->setCellValue('D'.$numrow, $data->sampletype);
+        //     } else {
+        //         $sheet->setCellValue('D'.$numrow, '');
+        //     }
+    
+        //     if (property_exists($data, 'enterolert_barcode')) {
+        //         $sheet->setCellValue('E'.$numrow, $data->enterolert_barcode);
+        //     } else {
+        //         $sheet->setCellValue('E'.$numrow, '');
+        //     }
+    
+        //     if (property_exists($data, 'date_sample')) {
+        //         $sheet->setCellValue('F'.$numrow, $data->date_sample);
+        //     } else {
+        //         $sheet->setCellValue('F'.$numrow, '');
+        //     }
+    
+        //     if (property_exists($data, 'time_sample')) {
+        //         $sheet->setCellValue('G'.$numrow, $data->time_sample);
+        //     } else {
+        //         $sheet->setCellValue('G'.$numrow, '');
+        //     }
+
+        //     if (property_exists($data, 'wet_weight')) {
+        //         $sheet->setCellValue('H'.$numrow, $data->wet_weight);
+        //     } else {
+        //         $sheet->setCellValue('H'.$numrow, '');
+        //     }
+    
+        //     if (property_exists($data, 'elution_volume')) {
+        //         $sheet->setCellValue('I'.$numrow, $data->elution_volume);
+        //     } else {
+        //         $sheet->setCellValue('I'.$numrow, '');
+        //     }
+    
+        //     if (property_exists($data, 'volume_bottle')) {
+        //         $sheet->setCellValue('H'.$numrow, $data->volume_bottle);
+        //     } else {
+        //         $sheet->setCellValue('H'.$numrow, '');
+        //     }
+    
+        //     if (property_exists($data, 'dilution')) {
+        //         $sheet->setCellValue('I'.$numrow, $data->dilution);
+        //     } else {
+        //         $sheet->setCellValue('I'.$numrow, '');
+        //     }
+
+        //     if (property_exists($data, 'id_enterolert_out')) {
+        //         $sheet->setCellValue('J'.$numrow, $data->id_enterolert_out);
+        //     } else {
+        //         $sheet->setCellValue('J'.$numrow, '');
+        //     }
+    
+        //     if (property_exists($data, 'enterolert_barcode')) {
+        //         $sheet->setCellValue('K'.$numrow, $data->enterolert_barcode);
+        //     } else {
+        //         $sheet->setCellValue('K'.$numrow, '');
+        //     }
+    
+        //     if (property_exists($data, 'date_sample')) {
+        //         $sheet->setCellValue('L'.$numrow, $data->date_sample);
+        //     }  else {
+        //         $sheet->setCellValue('L'.$numrow, '');
+        //     }
+
+           
+        //     if (property_exists($data, 'time_sample')) {
+        //         $sheet->setCellValue('M'.$numrow, $data->time_sample);
+        //     } else {
+        //         $sheet->setCellValue('M'.$numrow, '');
+        //     }
+
+        //     if (property_exists($data, 'enterococcus_largewells')) {
+        //         $sheet->setCellValue('N'.$numrow, $data->enterococcus_largewells);
+        //     } else {
+        //         $sheet->setCellValue('N'.$numrow, '');
+        //     }
+
+        //     if (property_exists($data, 'enterococcus_smallwells')) {
+        //         $sheet->setCellValue('O'.$numrow, $data->enterococcus_smallwells);
+        //     } else {
+        //         $sheet->setCellValue('O'.$numrow, '');
+        //     }
+
+        //     if (property_exists($data, 'enterococcus')) {
+        //         $sheet->setCellValue('P'.$numrow, $data->enterococcus);
+        //     } else {
+        //         $sheet->setCellValue('P'.$numrow, '');
+        //     }
+
+        //     if (property_exists($data, 'remarks')) {
+        //         $sheet->setCellValue('Q'.$numrow, $data->remarks);
+        //     } else {
+        //         $sheet->setCellValue('Q'.$numrow, '');
+        //     }
+
+        //     $numrow++;
+        // }
+
         foreach($moisture as $data){ 
 
-            if (property_exists($data, 'id_enterolert_in')) {
-                $sheet->setCellValue('A'.$numrow, $data->id_enterolert_in);
+            if (property_exists($data, 'id_enterolert_bio_in')) {
+                $sheet->setCellValue('A'.$numrow, $data->id_enterolert_bio_in);
             } else {
                 $sheet->setCellValue('A'.$numrow, '');
             }
-
+        
             if (property_exists($data, 'id_one_water_sample')) {
                 $sheet->setCellValue('B'.$numrow, $data->id_one_water_sample);
             } else {
                 $sheet->setCellValue('B'.$numrow, '');
             }
-    
+        
             if (property_exists($data, 'initial')) {
                 $sheet->setCellValue('C'.$numrow, $data->initial);
             } else {
                 $sheet->setCellValue('C'.$numrow, '');
             }
-    
+        
             if (property_exists($data, 'sampletype')) {
                 $sheet->setCellValue('D'.$numrow, $data->sampletype);
             } else {
                 $sheet->setCellValue('D'.$numrow, '');
             }
-    
+        
             if (property_exists($data, 'enterolert_barcode')) {
                 $sheet->setCellValue('E'.$numrow, $data->enterolert_barcode);
             } else {
                 $sheet->setCellValue('E'.$numrow, '');
             }
-    
+        
             if (property_exists($data, 'date_sample')) {
                 $sheet->setCellValue('F'.$numrow, $data->date_sample);
             } else {
                 $sheet->setCellValue('F'.$numrow, '');
             }
-    
+        
             if (property_exists($data, 'time_sample')) {
                 $sheet->setCellValue('G'.$numrow, $data->time_sample);
             } else {
                 $sheet->setCellValue('G'.$numrow, '');
             }
-    
-            if (property_exists($data, 'volume_bottle')) {
-                $sheet->setCellValue('H'.$numrow, $data->volume_bottle);
+        
+            if (property_exists($data, 'wet_weight')) {
+                $sheet->setCellValue('H'.$numrow, $data->wet_weight);
             } else {
                 $sheet->setCellValue('H'.$numrow, '');
             }
-    
-            if (property_exists($data, 'dilution')) {
-                $sheet->setCellValue('I'.$numrow, $data->dilution);
+        
+            if (property_exists($data, 'elution_volume')) {
+                $sheet->setCellValue('I'.$numrow, $data->elution_volume);
             } else {
                 $sheet->setCellValue('I'.$numrow, '');
             }
-
-            if (property_exists($data, 'id_enterolert_out')) {
-                $sheet->setCellValue('J'.$numrow, $data->id_enterolert_out);
+        
+            if (property_exists($data, 'volume_bottle')) {
+                $sheet->setCellValue('J'.$numrow, $data->volume_bottle);
             } else {
                 $sheet->setCellValue('J'.$numrow, '');
             }
-    
-            if (property_exists($data, 'enterolert_barcode')) {
-                $sheet->setCellValue('K'.$numrow, $data->enterolert_barcode);
+        
+            if (property_exists($data, 'dilution')) {
+                $sheet->setCellValue('K'.$numrow, $data->dilution);
             } else {
                 $sheet->setCellValue('K'.$numrow, '');
             }
-    
-            if (property_exists($data, 'date_sample')) {
-                $sheet->setCellValue('L'.$numrow, $data->date_sample);
-            }  else {
+        
+            if (property_exists($data, 'id_enterolert_bio_out')) {
+                $sheet->setCellValue('L'.$numrow, $data->id_enterolert_bio_out);
+            } else {
                 $sheet->setCellValue('L'.$numrow, '');
             }
-
-           
-            if (property_exists($data, 'time_sample')) {
-                $sheet->setCellValue('M'.$numrow, $data->time_sample);
+        
+            if (property_exists($data, 'enterolert_barcode')) {
+                $sheet->setCellValue('M'.$numrow, $data->enterolert_barcode);
             } else {
                 $sheet->setCellValue('M'.$numrow, '');
             }
-
-            if (property_exists($data, 'enterococcus_largewells')) {
-                $sheet->setCellValue('N'.$numrow, $data->enterococcus_largewells);
+        
+            if (property_exists($data, 'date_sample')) {
+                $sheet->setCellValue('N'.$numrow, $data->date_sample);
             } else {
                 $sheet->setCellValue('N'.$numrow, '');
             }
-
-            if (property_exists($data, 'enterococcus_smallwells')) {
-                $sheet->setCellValue('O'.$numrow, $data->enterococcus_smallwells);
+        
+            if (property_exists($data, 'time_sample')) {
+                $sheet->setCellValue('O'.$numrow, $data->time_sample);
             } else {
                 $sheet->setCellValue('O'.$numrow, '');
             }
-
-            if (property_exists($data, 'enterococcus')) {
-                $sheet->setCellValue('P'.$numrow, $data->enterococcus);
+        
+            if (property_exists($data, 'enterococcus_largewells')) {
+                $sheet->setCellValue('P'.$numrow, $data->enterococcus_largewells);
             } else {
                 $sheet->setCellValue('P'.$numrow, '');
             }
-
-            if (property_exists($data, 'remarks')) {
-                $sheet->setCellValue('Q'.$numrow, $data->remarks);
+        
+            if (property_exists($data, 'enterococcus_smallwells')) {
+                $sheet->setCellValue('Q'.$numrow, $data->enterococcus_smallwells);
             } else {
                 $sheet->setCellValue('Q'.$numrow, '');
             }
-
+        
+            if (property_exists($data, 'enterococcus')) {
+                $sheet->setCellValue('R'.$numrow, $data->enterococcus);
+            } else {
+                $sheet->setCellValue('R'.$numrow, '');
+            }
+        
+            if (property_exists($data, 'remarks')) {
+                $sheet->setCellValue('S'.$numrow, $data->remarks);
+            } else {
+                $sheet->setCellValue('S'.$numrow, '');
+            }
+        
             $numrow++;
         }
+        
 
         // Set header untuk file excel
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="Report_enterolert_idexx_water.xlsx"');
+        header('Content-Disposition: attachment;filename="Report_enterolert_idexx_biosolids.xlsx"');
         header('Cache-Control: max-age=0');
 
         // Tampilkan file excel
