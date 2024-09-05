@@ -72,7 +72,7 @@
                     <span class="logo-mini">R<b>L</b></span>
                     <!-- logo for regular state and mobile devices -->
                     <span class="logo-lg">
-                    <img src="<?php echo base_url('img/onewaterlogo.png'); ?>" class="user-image" alt="User Image" style="width: 200px; height: 55px; float: left; margin-top: -7px;">
+                    <img src="<?php echo base_url('img/onewaterlogo.png'); ?>" class="user-image" alt="User Image" style="width: 200px; height: 36px; float: left; margin-top: 3px;">
                     </span>
                     <!-- <span class="logo-lg">RISE|<b><mark>LIMS</mark>2.0</b></span> -->
                     <!-- <span class="logo-lg">RISE|<b><span style="background-color: #FFFFFF; color: #000000">LIMS</span>2.0</b></span> -->
@@ -187,7 +187,7 @@
             <div class="noprint">
             <footer class="main-footer">
                 <div class="pull-right hidden-xs">
-                    <b>Version</b> 2.1.0
+                    <b>Version</b> 1.1.0
                 </div>
                 <strong><img src="../img/lims_logo4.png" height='25px'>  Copyright &copy; 2024 LIMS-1Water | 
                 <a href="https://www.linkedin.com/in/zainal-enal-452b4414a/" target="_blank">One Water Team</a>.</strong> All rights reserved.
