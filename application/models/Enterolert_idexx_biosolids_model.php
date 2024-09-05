@@ -3,13 +3,13 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Enterolert_idexx_water_model extends CI_Model
+class Enterolert_idexx_biosolids_model extends CI_Model
 {
 
-    public $table = 'enterolert_water_in';
-    public $tableOut = 'enterolert_water_out';
-    public $id = 'id_enterolert_in';
-    public $idOut = 'id_enterolert_out';
+    public $table = 'enterolert_biosolids_in';
+    public $tableOut = 'enterolert_biosolids_out';
+    public $id = 'id_enterolert_bio_in';
+    public $idOut = 'id_enterolert_bio_out';
     public $order = 'DESC';
 
     function __construct()
@@ -19,55 +19,57 @@ class Enterolert_idexx_water_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('enterolert_water_in.id_enterolert_in, enterolert_water_in.id_one_water_sample, enterolert_water_in.id_person, ref_person.initial,
-        enterolert_water_in.id_sampletype, ref_sampletype.sampletype, enterolert_water_in.enterolert_barcode, enterolert_water_in.date_sample, enterolert_water_in.time_sample,
-        enterolert_water_in.volume_bottle, enterolert_water_in.dilution');
+        $this->datatables->select('enterolert_biosolids_in.id_enterolert_bio_in, enterolert_biosolids_in.id_one_water_sample, enterolert_biosolids_in.id_person, ref_person.initial,
+        enterolert_biosolids_in.id_sampletype, ref_sampletype.sampletype, enterolert_biosolids_in.enterolert_barcode, enterolert_biosolids_in.date_sample, enterolert_biosolids_in.time_sample,
+        enterolert_biosolids_in.wet_weight, enterolert_biosolids_in.elution_volume, enterolert_biosolids_in.volume_bottle, enterolert_biosolids_in.dilution');
         $this->datatables->from($this->table);
-        $this->datatables->join('ref_person', 'enterolert_water_in.id_person = ref_person.id_person', 'left');
-        $this->datatables->join('ref_sampletype', 'enterolert_water_in.id_sampletype = ref_sampletype.id_sampletype', 'left');
+        $this->datatables->join('ref_person', 'enterolert_biosolids_in.id_person = ref_person.id_person', 'left');
+        $this->datatables->join('ref_sampletype', 'enterolert_biosolids_in.id_sampletype = ref_sampletype.id_sampletype', 'left');
         $this->datatables->where('lab', $this->session->userdata('lab'));
-        $this->datatables->where('enterolert_water_in.flag', '0');
+        $this->datatables->where('enterolert_biosolids_in.flag', '0');
 
         $lvl = $this->session->userdata('id_user_level');
 
         if ($lvl == 4){
-            // $this->datatables->add_column('action', anchor(site_url('Enterolert_idexx_water/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_enterolert_in');
-            $this->datatables->add_column('action', '', 'id_enterolert_in');
+            // $this->datatables->add_column('action', anchor(site_url('Enterolert_idexx_water/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_enterolert_bio_in');
+            $this->datatables->add_column('action', '', 'id_enterolert_bio_in');
         }
         else if ($lvl == 3){
             // $this->datatables->add_column('action', anchor(site_url('Enterolert_idexx_water/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
-            //     ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_enterolert_in');
+            //     ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_enterolert_bio_in');
             $this->datatables->add_column('action', 
             '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 
-            'id_enterolert_in');
+            'id_enterolert_bio_in');
         }
         else {
-            $this->datatables->add_column('action', anchor(site_url('Enterolert_idexx_water/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
+            $this->datatables->add_column('action', anchor(site_url('Enterolert_idexx_biosolids/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
             ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-            ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_enterolert_in');
+            ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_enterolert_bio_in');
         }
         return $this->datatables->generate();
     }
 
     function subjson($id) {
-        $this->datatables->select('ewo.id_enterolert_out, ewo.enterolert_barcode, ewo.date_sample, ewo.time_sample, ewo.enterococcus_largewells,  ewo.enterococcus_smallwells, ewo.enterococcus, ewo.remarks, ewo.flag');
-        $this->datatables->from('enterolert_water_out AS ewo');
+        $this->datatables->select('ebo.id_enterolert_bio_out, ebo.enterolert_barcode, ebo.date_sample, ebo.time_sample, ebo.enterococcus_largewells,  ebo.enterococcus_smallwells, ebo.enterococcus, ebo.remarks, ebo.flag');
+        $this->datatables->from('enterolert_biosolids_out AS ebo');
         // $this->datatables->join('ref_testing b', 'FIND_IN_SET(b.id_testing_type, a.id_testing_type)', 'left');
         // $this->datatables->join('ref_barcode c', 'a.sample_id = c.testing_type_id', 'left');
-        $this->datatables->where('ewo.flag', '0');
-        $this->datatables->where('ewo.id_enterolert_in', $id);
-        $this->datatables->group_by('ewo.id_enterolert_out');
+        $this->datatables->where('ebo.flag', '0');
+        $this->datatables->where('ebo.id_enterolert_bio_in', $id);
+        $this->datatables->group_by('ebo.id_enterolert_bio_out');
+
         $lvl = $this->session->userdata('id_user_level');
-        if ($lvl == 7){
-            $this->datatables->add_column('action', anchor(site_url('Enterolert_idexx_water/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_enterolert_out');
+
+        if ($lvl == 4){
+            $this->datatables->add_column('action', anchor(site_url('Enterolert_idexx_biosolids/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_enterolert_bio_out');
         }
-        else if (($lvl == 2) | ($lvl == 3)){
-            $this->datatables->add_column('action', anchor(site_url('Enterolert_idexx_water/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
-                ".'<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_enterolert_out');
+        else if ($lvl == 3){
+            $this->datatables->add_column('action', anchor(site_url('Enterolert_idexx_biosolids/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
+                ".'<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_enterolert_bio_out');
         }
         else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_enterolert_out');
+                ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_enterolert_bio_out');
         }
         return $this->datatables->generate();
     }
@@ -82,23 +84,23 @@ class Enterolert_idexx_water_model extends CI_Model
 
     function get_by_id_detail($id)
     {
-        $this->db->where('id_enterolert_out', $id);
+        $this->db->where('id_enterolert_bio_out', $id);
         $this->db->where('flag', '0');
         // $this->db->where('lab', $this->session->userdata('lab'));
-        return $this->db->get('enterolert_water_out')->row();
+        return $this->db->get('enterolert_biosolids_out')->row();
     }
 
     function get_detail($id)
     {
       $response = array();
-      $this->db->select('ewi.id_enterolert_in, ewi.id_one_water_sample, ewi.id_person, rp.initial,
-        ewi.id_sampletype, rs.sampletype, ewi.enterolert_barcode, ewi.date_sample, ewi.time_sample,
-        ewi.volume_bottle, ewi.dilution');
-      $this->db->from('enterolert_water_in AS ewi');
-      $this->db->join('ref_sampletype AS rs', 'ewi.id_sampletype = rs.id_sampletype', 'left');
-      $this->db->join('ref_person AS rp',  'ewi.id_person = rp.id_person', 'left');
-      $this->db->where('ewi.id_enterolert_in', $id);
-      $this->db->where('ewi.flag', '0');
+      $this->db->select('ebi.id_enterolert_bio_in, ebi.id_one_water_sample, ebi.id_person, rp.initial,
+        ebi.id_sampletype, rs.sampletype, ebi.enterolert_barcode, ebi.date_sample, ebi.time_sample,
+        ebi.wet_weight, ebi.elution_volume, ebi.volume_bottle, ebi.dilution');
+      $this->db->from('enterolert_biosolids_in AS ebi');
+      $this->db->join('ref_sampletype AS rs', 'ebi.id_sampletype = rs.id_sampletype', 'left');
+      $this->db->join('ref_person AS rp',  'ebi.id_person = rp.id_person', 'left');
+      $this->db->where('ebi.id_enterolert_bio_in', $id);
+      $this->db->where('ebi.flag', '0');
       $q = $this->db->get();
 
       if ($q->num_rows() > 0) {
@@ -116,7 +118,7 @@ class Enterolert_idexx_water_model extends CI_Model
     // Function update data
     function update($id, $data)
     {
-        $this->db->where('id_enterolert_in', $id);
+        $this->db->where('id_enterolert_bio_in', $id);
         $this->db->update($this->table, $data);
     }
 
@@ -126,8 +128,8 @@ class Enterolert_idexx_water_model extends CI_Model
     }
 
     function update_det($id, $data) {
-        $this->db->where('id_enterolert_out', $id);
-        $this->db->update('enterolert_water_out', $data);
+        $this->db->where('id_enterolert_bio_out', $id);
+        $this->db->update('enterolert_biosolids_out', $data);
     }
 
     // delete data
@@ -167,7 +169,7 @@ class Enterolert_idexx_water_model extends CI_Model
     function getID_one(){
         $q = $this->db->query('
         SELECT id_one_water_sample FROM sample_reception
-        WHERE id_one_water_sample NOT IN (SELECT id_one_water_sample FROM enterolert_water_in)
+        WHERE id_one_water_sample NOT IN (SELECT id_one_water_sample FROM enterolert_biosolids_in)
         AND flag = 0');       
         $response = $q->result_array();
         return $response;
@@ -195,22 +197,22 @@ class Enterolert_idexx_water_model extends CI_Model
 
     function get_all()
     {
-        $this->db->select('ewi.id_enterolert_in, ewi.id_one_water_sample, rp.initial, rs.sampletype, ewi.enterolert_barcode, ewi.date_sample,
-        ewi.time_sample, ewi.volume_bottle,ewi.dilution, ewo.id_enterolert_out, ewo.enterolert_barcode, ewo.date_sample, ewo.time_sample, ewo.enterococcus_largewells,
-        ewo.enterococcus_smallwells, ewo.enterococcus, ewo.remarks');
-        $this->db->from('enterolert_water_in AS ewi');
-        $this->db->join('ref_person AS rp', 'ewi.id_person = rp.id_person');
-        $this->db->join('ref_sampletype AS rs', 'ewi.id_sampletype = rs.id_sampletype');
-        $this->db->join('enterolert_water_out AS ewo', 'ewi.id_enterolert_in = ewo.id_enterolert_in');
-        $this->db->where('ewi.flag', '0');
-        $this->db->order_by('ewi.id_enterolert_in', 'ASC');
+        $this->db->select('ebi.id_enterolert_bio_in, ebi.id_one_water_sample, rp.initial, rs.sampletype, ebi.enterolert_barcode, ebi.date_sample,
+        ebi.time_sample, ebi.wet_weight, ebi.elution_volume, ebi.volume_bottle, ebi.dilution, ebo.id_enterolert_bio_out, ebo.enterolert_barcode, ebo.date_sample, ebo.time_sample, ebo.enterococcus_largewells,
+        ebo.enterococcus_smallwells, ebo.enterococcus, ebo.remarks');
+        $this->db->from('enterolert_biosolids_in AS ebi');
+        $this->db->join('ref_person AS rp', 'ebi.id_person = rp.id_person');
+        $this->db->join('ref_sampletype AS rs', 'ebi.id_sampletype = rs.id_sampletype');
+        $this->db->join('enterolert_biosolids_out AS ebo', 'ebi.id_enterolert_bio_in = ebo.id_enterolert_bio_in');
+        $this->db->where('ebi.flag', '0');
+        $this->db->order_by('ebi.id_enterolert_bio_in', 'ASC');
 
         return $this->db->get()->result();
     }
 
     function validateEnterolertBarcode($id){
         $q = $this->db->query('
-        SELECT enterolert_barcode FROM enterolert_water_in
+        SELECT enterolert_barcode FROM enterolert_biosolids_in
         WHERE enterolert_barcode = "'.$id.'"
         AND flag = 0 
         ');        
