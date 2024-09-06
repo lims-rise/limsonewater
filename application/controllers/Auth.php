@@ -87,18 +87,18 @@ Class Auth extends CI_Controller{
             $data = random_string('numeric', 6);
     
             try {
-                $this->email->from($config['smtp_user'], 'RISE LIMS2.0');
+                $this->email->from($config['smtp_user'], 'LIMS-Onewater');
                 $this->email->to($email);
-                $this->email->subject('LIMS2.0 Password Reset');
+                $this->email->subject('LIMS-Onewater Password Reset');
     
                 $message = 'Hi There, <br />';
-                $message .= 'This is an automatic generated code for LIMS password reset<br />';
+                $message .= 'This is an automatic generated code for LIMS Onewater password reset<br />';
                 $message .= '<br />';
                 $message .= 'Here`s your code : <h1>' . $data . '</h1><br />';
                 $message .= '<br />';
                 $message .= '<br />';
                 $message .= 'Regards, <br />';
-                $message .= 'RISE LIMS2.0';
+                $message .= 'LIMS Onewater';
     
                 $this->email->message($message);
     
@@ -121,7 +121,7 @@ Class Auth extends CI_Controller{
                 echo json_encode($response);
             }
         } else {
-            $response = array('status' => 'error', 'message' => 'LIMS login email not found !!.');
+            $response = array('status' => 'error', 'message' => 'LIMS Onewater login email not found !!.');
             echo json_encode($response);
         }
         // redirect(site_url("Auth"));
