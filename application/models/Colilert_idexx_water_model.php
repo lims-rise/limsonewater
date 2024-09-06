@@ -8,8 +8,8 @@ class Colilert_idexx_water_model extends CI_Model
 
     public $table = 'colilert_water_in';
     public $id = 'id_colilert_in';
-    public $tableOut = 'enterolert_biosolids_out';
-    public $idOut = 'id_enterolert_bio_out';
+    public $tableOut = 'colilert_water_out';
+    public $idOut = 'id_colilert_out';
     public $order = 'DESC';
 
     function __construct()
@@ -50,26 +50,27 @@ class Colilert_idexx_water_model extends CI_Model
     }
 
     function subjson($id) {
-        $this->datatables->select('ebo.id_enterolert_bio_out, ebo.enterolert_barcode, ebo.date_sample, ebo.time_sample, ebo.enterococcus_largewells,  ebo.enterococcus_smallwells, ebo.enterococcus, ebo.remarks, ebo.flag');
-        $this->datatables->from('enterolert_biosolids_out AS ebo');
+        $this->datatables->select('cwo.id_colilert_out, cwo.colilert_barcode, cwo.date_sample, cwo.time_sample, cwo.ecoli_largewells, cwo.ecoli_smallwells, 
+        cwo.ecoli, cwo.coliforms_largewells, cwo.coliforms_smallwells, cwo.total_coliforms, cwo.remarks, cwo.flag');
+        $this->datatables->from('colilert_water_out AS cwo');
         // $this->datatables->join('ref_testing b', 'FIND_IN_SET(b.id_testing_type, a.id_testing_type)', 'left');
         // $this->datatables->join('ref_barcode c', 'a.sample_id = c.testing_type_id', 'left');
-        $this->datatables->where('ebo.flag', '0');
-        $this->datatables->where('ebo.id_enterolert_bio_in', $id);
-        $this->datatables->group_by('ebo.id_enterolert_bio_out');
+        $this->datatables->where('cwo.flag', '0');
+        $this->datatables->where('cwo.id_colilert_in', $id);
+        $this->datatables->group_by('cwo.id_colilert_out');
 
         $lvl = $this->session->userdata('id_user_level');
 
         if ($lvl == 4){
-            $this->datatables->add_column('action', anchor(site_url('Enterolert_idexx_biosolids/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_enterolert_bio_out');
+            $this->datatables->add_column('action', anchor(site_url('Colilert_idexx_water/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_colilert_out');
         }
         else if ($lvl == 3){
-            $this->datatables->add_column('action', anchor(site_url('Enterolert_idexx_biosolids/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
-                ".'<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_enterolert_bio_out');
+            $this->datatables->add_column('action', anchor(site_url('Colilert_idexx_water/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
+                ".'<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_colilert_out');
         }
         else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_enterolert_bio_out');
+                ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_colilert_out');
         }
         return $this->datatables->generate();
     }
@@ -84,10 +85,10 @@ class Colilert_idexx_water_model extends CI_Model
 
     function get_by_id_detail($id)
     {
-        $this->db->where('id_enterolert_bio_out', $id);
+        $this->db->where('id_colilert_out', $id);
         $this->db->where('flag', '0');
         // $this->db->where('lab', $this->session->userdata('lab'));
-        return $this->db->get('enterolert_biosolids_out')->row();
+        return $this->db->get('colilert_water_out')->row();
     }
 
     function get_detail($id)
@@ -128,8 +129,8 @@ class Colilert_idexx_water_model extends CI_Model
     }
 
     function update_det($id, $data) {
-        $this->db->where('id_enterolert_bio_out', $id);
-        $this->db->update('enterolert_biosolids_out', $data);
+        $this->db->where('id_colilert_out', $id);
+        $this->db->update('colilert_water_out', $data);
     }
 
     // delete data
@@ -197,15 +198,16 @@ class Colilert_idexx_water_model extends CI_Model
 
     function get_all()
     {
-        $this->db->select('ebi.id_enterolert_bio_in, ebi.id_one_water_sample, rp.initial, rs.sampletype, ebi.enterolert_barcode, ebi.date_sample,
-        ebi.time_sample, ebi.wet_weight, ebi.elution_volume, ebi.volume_bottle, ebi.dilution, ebo.id_enterolert_bio_out, ebo.enterolert_barcode, ebo.date_sample, ebo.time_sample, ebo.enterococcus_largewells,
-        ebo.enterococcus_smallwells, ebo.enterococcus, ebo.remarks');
-        $this->db->from('enterolert_biosolids_in AS ebi');
-        $this->db->join('ref_person AS rp', 'ebi.id_person = rp.id_person');
-        $this->db->join('ref_sampletype AS rs', 'ebi.id_sampletype = rs.id_sampletype');
-        $this->db->join('enterolert_biosolids_out AS ebo', 'ebi.id_enterolert_bio_in = ebo.id_enterolert_bio_in');
-        $this->db->where('ebi.flag', '0');
-        $this->db->order_by('ebi.id_enterolert_bio_in', 'ASC');
+        $this->db->select('cwi.id_colilert_in, cwi.id_one_water_sample, rp.initial, rs.sampletype, cwi.colilert_barcode, cwi.date_sample,
+            cwi.time_sample, cwi.volume_bottle,cwi.dilution, cwo.id_colilert_out, cwo.colilert_barcode, cwo.date_sample, cwo.time_sample, 
+            cwo.ecoli_largewells, cwo.ecoli_smallwells,
+            cwo.ecoli, cwo.coliforms_largewells, cwo.coliforms_smallwells, cwo.total_coliforms, cwo.remarks');
+        $this->db->from('colilert_water_in AS cwi');
+        $this->db->join('ref_person AS rp', 'cwi.id_person = rp.id_person');
+        $this->db->join('ref_sampletype AS rs', 'cwi.id_sampletype = rs.id_sampletype');
+        $this->db->join('colilert_water_out AS cwo', 'cwi.id_colilert_in = cwo.id_colilert_in');
+        $this->db->where('cwi.flag', '0');
+        $this->db->order_by('cwi.id_colilert_in', 'ASC');
 
         return $this->db->get()->result();
     }

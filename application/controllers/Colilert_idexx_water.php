@@ -99,12 +99,8 @@ class Colilert_idexx_water extends CI_Controller
         $colilert_barcode = $this->input->post('colilert_barcode', TRUE);
         $date_sample = $this->input->post('date_sample', TRUE);
         $time_sample = $this->input->post('time_sample', TRUE);
-        // $wet_weight = $this->input->post('wet_weight', TRUE);
-        // $elution_volume = $this->input->post('elution_volume', TRUE);
         $volume_bottle = $this->input->post('volume_bottle', TRUE);
         $dilution = $this->input->post('dilution', TRUE);
-        // $date_collected = $this->input->post('date_collected',TRUE);
-        // $time_collected = $this->input->post('time_collected',TRUE);
         
     
         if ($mode == "insert") {
@@ -115,8 +111,6 @@ class Colilert_idexx_water extends CI_Controller
                 'colilert_barcode' => $colilert_barcode,
                 'date_sample' => $date_sample,
                 'time_sample' => $time_sample,
-                // 'wet_weight' => $wet_weight,
-                // 'elution_volume' => $elution_volume,
                 'volume_bottle' => $volume_bottle,
                 'dilution' => $dilution,
                 'flag' => '0',
@@ -140,13 +134,10 @@ class Colilert_idexx_water extends CI_Controller
                 'colilert_barcode' => $colilert_barcode,
                 'date_sample' => $date_sample,
                 'time_sample' => $time_sample,
-                // 'wet_weight' => $wet_weight,
-                // 'elution_volume' => $elution_volume,
                 'volume_bottle' => $volume_bottle,
                 'dilution' => $dilution,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
-                // 'uuid' => $this->uuid->v4(),
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
@@ -168,31 +159,38 @@ class Colilert_idexx_water extends CI_Controller
             // var_dump($id_moisture);
             // die();
         
-            $idx_enterolert_bio_in = $this->input->post('idx_enterolert_bio_in', TRUE);
-            $id_enterolert_bio_out = $this->input->post('id_enterolert_bio_out', TRUE);
-            $enterolert_barcode = $this->input->post('enterolert_barcodex', TRUE);
+            $idx_colilert_in = $this->input->post('idx_colilert_in', TRUE);
+            $id_colilert_out = $this->input->post('id_colilert_out', TRUE);
+            $colilert_barcode = $this->input->post('colilert_barcodex', TRUE);
             $date_sample = $this->input->post('date_sample', TRUE);
             $time_sample = $this->input->post('time_sample', TRUE);
-            $enterococcus_largewells = $this->input->post('enterococcus_largewells', TRUE);
-            $enterococcus_smallwells = $this->input->post('enterococcus_smallwells', TRUE);
-            $enterococcus = $this->input->post('enterococcus', TRUE);
+            $ecoli_largewells = $this->input->post('ecoli_largewells', TRUE);
+            $ecoli_smallwells = $this->input->post('ecoli_smallwells', TRUE);
+            $ecoli = $this->input->post('ecoli', TRUE);
+            $coliforms_largewells = $this->input->post('coliforms_largewells', TRUE);
+            $coliforms_smallwells = $this->input->post('coliforms_smallwells', TRUE);
+            $total_coliforms = $this->input->post('total_coliforms', TRUE);
             $remarks = $this->input->post('remarks', TRUE);
         
             if($mode_det == "insert") {
                 $data = array(
-                    'id_enterolert_bio_in' => $idx_enterolert_bio_in,
-                    'enterolert_barcode' => $enterolert_barcode,
+                    'id_colilert_in' => $idx_colilert_in,
+                    'colilert_barcode' => $colilert_barcode,
                     'date_sample' => $date_sample,
                     'time_sample' => $time_sample,
-                    'enterococcus_largewells' => $enterococcus_largewells,
-                    'enterococcus_smallwells' => $enterococcus_smallwells,
-                    'enterococcus' => $enterococcus,
+                    'ecoli_largewells' => $ecoli_largewells,
+                    'ecoli_smallwells' => $ecoli_smallwells,
+                    'ecoli' => $ecoli,
+                    'coliforms_largewells' => $coliforms_largewells,
+                    'coliforms_smallwells' => $coliforms_smallwells,
+                    'total_coliforms' => $total_coliforms,
                     'remarks' => $remarks,
                     'flag' => '0',
                     'lab' => $this->session->userdata('lab'),
                     'uuid' => $this->uuid->v4(),
                     'user_created' => $this->session->userdata('id_users'),
                     'date_created' => $dt->format('Y-m-d H:i:s'),
+
                 );
                 // var_dump($data);
                 // die();
@@ -205,12 +203,15 @@ class Colilert_idexx_water extends CI_Controller
                 }
             } else if($mode_det == "edit") {
                 $data = array(
-                    'enterolert_barcode' => $enterolert_barcode,
+                    'colilert_barcode' => $colilert_barcode,
                     'date_sample' => $date_sample,
                     'time_sample' => $time_sample,
-                    'enterococcus_largewells' => $enterococcus_largewells,
-                    'enterococcus_smallwells' => $enterococcus_smallwells,
-                    'enterococcus' => $enterococcus,
+                    'ecoli_largewells' => $ecoli_largewells,
+                    'ecoli_smallwells' => $ecoli_smallwells,
+                    'ecoli' => $ecoli,
+                    'coliforms_largewells' => $coliforms_largewells,
+                    'coliforms_smallwells' => $coliforms_smallwells,
+                    'total_coliforms' => $total_coliforms,
                     'remarks' => $remarks,
                     'flag' => '0',
                     'lab' => $this->session->userdata('lab'),
@@ -220,7 +221,7 @@ class Colilert_idexx_water extends CI_Controller
                 );
                 // var_dump($data);
                 // die();
-                $result = $this->Colilert_idexx_water_model->update_det($id_enterolert_bio_out, $data);
+                $result = $this->Colilert_idexx_water_model->update_det($id_colilert_out, $data);
                 if ($result) {
                     $this->session->set_flashdata('message', 'Update Record Success');
                 } else {
@@ -228,7 +229,7 @@ class Colilert_idexx_water extends CI_Controller
                 }
             }
         
-            redirect(site_url("Colilert_idexx_water/read/" . $idx_enterolert_bio_in));
+            redirect(site_url("Colilert_idexx_water/read/" . $idx_colilert_in));
     }
 
 
@@ -253,7 +254,7 @@ class Colilert_idexx_water extends CI_Controller
     {
         $row = $this->Colilert_idexx_water_model->get_by_id_detail($id);
         if ($row) {
-            $id_parent = $row->id_enterolert_bio_in; // Retrieve project_id before updating the record
+            $id_parent = $row->id_colilert_out; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
@@ -286,25 +287,27 @@ class Colilert_idexx_water extends CI_Controller
     
         $spreadsheet = new Spreadsheet();    
         $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1', "Id Enterolert In"); 
+        $sheet->setCellValue('A1', "Id Colilert In"); 
         $sheet->setCellValue('B1', "Id One Water Sample"); 
         $sheet->setCellValue('C1', "Lab Tech"); 
         $sheet->setCellValue('D1', "Sample Type");
-        $sheet->setCellValue('E1', "Enterolert Barcode In");
+        $sheet->setCellValue('E1', "Colilert Barcode In");
         $sheet->setCellValue('F1', "Date Sample In");
         $sheet->setCellValue('G1', "Time Sample In");
-        $sheet->setCellValue('H1', "Wet Weight (g)");
-        $sheet->setCellValue('I1', "Elution Volume (mL)");
-        $sheet->setCellValue('J1', "Volume Bottle");
-        $sheet->setCellValue('K1', "Dilution");
-        $sheet->setCellValue('L1', "Id Enterolert Out");
-        $sheet->setCellValue('M1', "Enterolert Barcode Out");
-        $sheet->setCellValue('N1', "Date Sample Out");
-        $sheet->setCellValue('O1', "Time Sample Out");
-        $sheet->setCellValue('P1', "Enterococcus Large Wells");
-        $sheet->setCellValue('Q1', "Enterococcus Small Wells");
-        $sheet->setCellValue('R1', "Enterococcus (RAW MPN)");
-        $sheet->setCellValue('S1', "Remarks");
+        $sheet->setCellValue('H1', "Volume Bottle");
+        $sheet->setCellValue('I1', "Dilution");
+        $sheet->setCellValue('J1', "Id Colilert Out");
+        $sheet->setCellValue('K1', "Colilert Barcode Out");
+        $sheet->setCellValue('L1', "Date Sample Out");
+        $sheet->setCellValue('M1', "Time Sample Out");
+        $sheet->setCellValue('N1', "E. Coli Large Wells");
+        $sheet->setCellValue('O1', "E. Coli Small Wells");
+        $sheet->setCellValue('P1', "Ecoli (MPN/100mL)");
+        $sheet->setCellValue('Q1', "Coliforms Large Wells");
+        $sheet->setCellValue('R1', "Coliforms Small Wells");
+        $sheet->setCellValue('S1', "Total Coliforms (MPN/100mL)");
+        $sheet->setCellValue('T1', "Remarks");
+        
 
 
         $moisture = $this->Colilert_idexx_water_model->get_all();
@@ -312,119 +315,126 @@ class Colilert_idexx_water extends CI_Controller
         $numrow = 2;
         foreach($moisture as $data){ 
 
-            if (property_exists($data, 'id_enterolert_bio_in')) {
-                $sheet->setCellValue('A'.$numrow, $data->id_enterolert_bio_in);
+            if (property_exists($data, 'id_colilert_in')) {
+                $sheet->setCellValue('A'.$numrow, $data->id_colilert_in);
             } else {
                 $sheet->setCellValue('A'.$numrow, '');
             }
-        
+
             if (property_exists($data, 'id_one_water_sample')) {
                 $sheet->setCellValue('B'.$numrow, $data->id_one_water_sample);
             } else {
                 $sheet->setCellValue('B'.$numrow, '');
             }
-        
+
             if (property_exists($data, 'initial')) {
                 $sheet->setCellValue('C'.$numrow, $data->initial);
             } else {
                 $sheet->setCellValue('C'.$numrow, '');
             }
-        
+
             if (property_exists($data, 'sampletype')) {
                 $sheet->setCellValue('D'.$numrow, $data->sampletype);
             } else {
                 $sheet->setCellValue('D'.$numrow, '');
             }
-        
-            if (property_exists($data, 'enterolert_barcode')) {
-                $sheet->setCellValue('E'.$numrow, $data->enterolert_barcode);
+
+            if (property_exists($data, 'colilert_barcode')) {
+                $sheet->setCellValue('E'.$numrow, $data->colilert_barcode);
             } else {
                 $sheet->setCellValue('E'.$numrow, '');
             }
-        
+
             if (property_exists($data, 'date_sample')) {
                 $sheet->setCellValue('F'.$numrow, $data->date_sample);
             } else {
                 $sheet->setCellValue('F'.$numrow, '');
             }
-        
+
             if (property_exists($data, 'time_sample')) {
                 $sheet->setCellValue('G'.$numrow, $data->time_sample);
             } else {
                 $sheet->setCellValue('G'.$numrow, '');
             }
-        
-            if (property_exists($data, 'wet_weight')) {
-                $sheet->setCellValue('H'.$numrow, $data->wet_weight);
+
+            if (property_exists($data, 'volume_bottle')) {
+                $sheet->setCellValue('H'.$numrow, $data->volume_bottle);
             } else {
                 $sheet->setCellValue('H'.$numrow, '');
             }
-        
-            if (property_exists($data, 'elution_volume')) {
-                $sheet->setCellValue('I'.$numrow, $data->elution_volume);
+
+            if (property_exists($data, 'dilution')) {
+                $sheet->setCellValue('I'.$numrow, $data->dilution);
             } else {
                 $sheet->setCellValue('I'.$numrow, '');
             }
-        
-            if (property_exists($data, 'volume_bottle')) {
-                $sheet->setCellValue('J'.$numrow, $data->volume_bottle);
+
+            if (property_exists($data, 'id_colilert_out')) {
+                $sheet->setCellValue('J'.$numrow, $data->id_colilert_out);
             } else {
                 $sheet->setCellValue('J'.$numrow, '');
             }
-        
-            if (property_exists($data, 'dilution')) {
-                $sheet->setCellValue('K'.$numrow, $data->dilution);
+
+            if (property_exists($data, 'colilert_barcode')) {
+                $sheet->setCellValue('K'.$numrow, $data->colilert_barcode);
             } else {
                 $sheet->setCellValue('K'.$numrow, '');
             }
-        
-            if (property_exists($data, 'id_enterolert_bio_out')) {
-                $sheet->setCellValue('L'.$numrow, $data->id_enterolert_bio_out);
+
+            if (property_exists($data, 'date_sample')) {
+                $sheet->setCellValue('L'.$numrow, $data->date_sample);
             } else {
                 $sheet->setCellValue('L'.$numrow, '');
             }
-        
-            if (property_exists($data, 'enterolert_barcode')) {
-                $sheet->setCellValue('M'.$numrow, $data->enterolert_barcode);
+
+            if (property_exists($data, 'time_sample')) {
+                $sheet->setCellValue('M'.$numrow, $data->time_sample);
             } else {
                 $sheet->setCellValue('M'.$numrow, '');
             }
-        
-            if (property_exists($data, 'date_sample')) {
-                $sheet->setCellValue('N'.$numrow, $data->date_sample);
+
+            if (property_exists($data, 'ecoli_largewells')) {
+                $sheet->setCellValue('N'.$numrow, $data->ecoli_largewells);
             } else {
                 $sheet->setCellValue('N'.$numrow, '');
             }
-        
-            if (property_exists($data, 'time_sample')) {
-                $sheet->setCellValue('O'.$numrow, $data->time_sample);
+
+            if (property_exists($data, 'ecoli_smallwells')) {
+                $sheet->setCellValue('O'.$numrow, $data->ecoli_smallwells);
             } else {
                 $sheet->setCellValue('O'.$numrow, '');
             }
-        
-            if (property_exists($data, 'enterococcus_largewells')) {
-                $sheet->setCellValue('P'.$numrow, $data->enterococcus_largewells);
+
+            if (property_exists($data, 'ecoli')) {
+                $sheet->setCellValue('P'.$numrow, $data->ecoli);
             } else {
                 $sheet->setCellValue('P'.$numrow, '');
             }
-        
-            if (property_exists($data, 'enterococcus_smallwells')) {
-                $sheet->setCellValue('Q'.$numrow, $data->enterococcus_smallwells);
+
+            if (property_exists($data, 'coliforms_largewells')) {
+                $sheet->setCellValue('Q'.$numrow, $data->coliforms_largewells);
             } else {
                 $sheet->setCellValue('Q'.$numrow, '');
             }
-        
-            if (property_exists($data, 'enterococcus')) {
-                $sheet->setCellValue('R'.$numrow, $data->enterococcus);
+
+            if (property_exists($data, 'coliforms_smallwells')) {
+                $sheet->setCellValue('R'.$numrow, $data->coliforms_smallwells);
             } else {
                 $sheet->setCellValue('R'.$numrow, '');
             }
-        
-            if (property_exists($data, 'remarks')) {
-                $sheet->setCellValue('S'.$numrow, $data->remarks);
+
+            if (property_exists($data, 'total_coliforms')) {
+                $sheet->setCellValue('S'.$numrow, $data->total_coliforms);
             } else {
                 $sheet->setCellValue('S'.$numrow, '');
             }
+
+            if (property_exists($data, 'remarks')) {
+                $sheet->setCellValue('T'.$numrow, $data->remarks);
+            } else {
+                $sheet->setCellValue('T'.$numrow, '');
+            }
+
         
             $numrow++;
         }
