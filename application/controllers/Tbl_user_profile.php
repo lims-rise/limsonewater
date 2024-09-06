@@ -102,7 +102,7 @@ class Tbl_user_profile extends CI_Controller
 
         $this->Tbl_user_profile_model->update($this->input->post('id_users', TRUE), $data);
         $this->session->set_flashdata('message', 'Update Record Success');
-        redirect(site_url('tbl_user_profile'));
+        redirect(site_url('welcome'));
     }
 
     function upload_foto(){
