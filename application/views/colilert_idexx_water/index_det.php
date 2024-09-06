@@ -6,7 +6,6 @@
 			</div>
 				<form role="form"  id="formKeg" method="post" class="form-horizontal">
 					<div class="box-body">
-						<!-- <input type="hidden" class="form-control " id="id_req" name="id_req" value="<?php// echo $id_req ?>"> -->
 						<input id="id_colilert_in" name="id_colilert_in" type="hidden" class="form-control input-sm" value="<?php echo $id_colilert_in ?>">
 
 						<div class="form-group">
@@ -47,17 +46,6 @@
 
 						</div>
 
-                        <!-- <div class="form-group">
-							<label for="wet_weight" class="col-sm-2 control-label">Wet Weight (g)</label>
-							<div class="col-sm-4">
-								<input class="form-control " id="wet_weight" name="wet_weight" value="<?php echo $wet_weight ?>"  disabled>
-							</div>
-
-                            <label for="elution_volume" class="col-sm-2 control-label">Elution Volume (mL)</label>
-							<div class="col-sm-4">
-								<input class="form-control " id="elution_volume" name="elution_volume" value="<?php echo $elution_volume ?>"  disabled>
-							</div>
-						</div> -->
 
 						<div class="form-group">
 							<label for="volume_bottle" class="col-sm-2 control-label">Volume in Bottle (mL)</label>
@@ -71,7 +59,7 @@
 							</div>
 						</div>
 
-					</div><!-- /.box-body -->
+					</div>
 				</form>
 			<div class="box-footer">
                 <!-- <div class="row"> -->
@@ -90,12 +78,15 @@
 								<table id="example2" class="table display table-bordered table-striped" width="100%">
 									<thead>
 										<tr>
-											<th>Enterolert Barcode</th>
+											<th>Colilert Barcode</th>
 											<th>Date Sample</th>
                                             <th>Time Sample</th>
-                                            <th>Enterococcus large wells</th>
-                                            <th>Enterococcus small wells</th>
-                                            <th>Enterococcus (Raw MPN)</th>
+                                            <th>E. Coli large wells</th>
+                                            <th>E. Coli small wells</th>
+                                            <th>E. Coli (MPN/100mL)</th>
+                                            <th>Coliforms large wells</th>
+                                            <th>Coliforms small wells</th>
+                                            <th>Total Coliforms (MPN/100mL)</th>
                                             <th>Remarks</th>
                                             <th>Action</th>
 										</tr>
@@ -113,7 +104,7 @@
 						</button>
 					</div>
 				</div>
-			</div> <!--footer -->
+			</div>
 		</div>
 	</section>
 </div>
@@ -127,21 +118,21 @@
                         <h4 class="modal-title" id="modal-title-detail">
 							<span id="my-another-cool-loader"></span></h4>
                     </div>
-                        <form id="formDetail" action=<?php echo site_url('Enterolert_idexx_biosolids/savedetail') ?> method="post" class="form-horizontal">
+                        <form id="formDetail" action=<?php echo site_url('Colilert_idexx_water/savedetail') ?> method="post" class="form-horizontal">
                             <div class="modal-body">
                                 <div class="form-group">
                                         <div class="col-sm-9">
                                             <input id="mode_det" name="mode_det" type="hidden" class="form-control input-sm">
-                                            <input id="idx_enterolert_bio_in" name="idx_enterolert_bio_in" type="hidden" class="form-control input-sm">
-                                            <input id="id_enterolert_bio_in" name="id_enterolert_bio_in" type="hidden" class="form-control input-sm">
-                                            <input id="id_enterolert_bio_out" name="id_enterolert_bio_out" type="hidden" class="form-control input-sm">
+                                            <input id="idx_colilert_in" name="idx_colilert_in" type="hidden" class="form-control input-sm">
+                                            <input id="id_colilert_in" name="id_colilert_in" type="hidden" class="form-control input-sm">
+                                            <input id="id_colilert_out" name="id_colilert_out" type="hidden" class="form-control input-sm">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="enterolert_barcodex" class="col-sm-4 control-label">Enterolert Barcode</label>
+                                        <label for="colilert_barcodex" class="col-sm-4 control-label">Colilert Barcode</label>
                                         <div class="col-sm-8">
-                                            <input id="enterolert_barcodex" name="enterolert_barcodex" placeholder="Enterolert Barcode" type="text" class="form-control">
+                                            <input id="colilert_barcodex" name="colilert_barcodex" placeholder="Colilert Barcode" type="text" class="form-control">
                                             <div class="val1tip"></div>
                                         </div>
                                     </div>
@@ -169,23 +160,45 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="enterococcus_largewells" class="col-sm-4 control-label">Enterococcus large wells</label>
+                                        <label for="ecoli_largewells" class="col-sm-4 control-label">E. Coli large wells</label>
                                         <div class="col-sm-8">
-                                            <input id="enterococcus_largewells" name="enterococcus_largewells" type="number" step="1" min="0" max="49" class="form-control" placeholder="Enterococcus large wells" required>
+                                            <input id="ecoli_largewells" name="ecoli_largewells" type="number" step="1" min="0" max="49" class="form-control" placeholder="E. Coli large wells" required>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="enterococcus_smallwells" class="col-sm-4 control-label">Enterococcus small wells</label>
+                                        <label for="ecoli_smallwells" class="col-sm-4 control-label">E. Coli small wells</label>
                                         <div class="col-sm-8">
-                                            <input id="enterococcus_smallwells" name="enterococcus_smallwells" type="number" step="1" min="0" max="48" class="form-control" placeholder="Enterococcus small wells" required>
+                                            <input id="ecoli_smallwells" name="ecoli_smallwells" type="number" step="1" min="0" max="48" class="form-control" placeholder="E. Coli small wells" required>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="enterococcus" class="col-sm-4 control-label">Enterococcus (Raw MPN)</label>
+                                        <label for="ecoli" class="col-sm-4 control-label">E. Coli (MPN/100mL)</label>
                                         <div class="col-sm-8">
-                                            <input id="enterococcus" name="enterococcus" type="text"  placeholder="Enterococcus (Raw MPN)" class="form-control">
+                                            <input id="ecoli" name="ecoli" type="text"  placeholder="E. Coli (MPN/100mL)" class="form-control">
+                                            <!-- <div class="val1tip"></div> -->
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="coliforms_largewells" class="col-sm-4 control-label">Coliforms large wells</label>
+                                        <div class="col-sm-8">
+                                            <input id="coliforms_largewells" name="coliforms_largewells" type="number" step="1" min="0" max="49" class="form-control" placeholder="Coliforms large wells" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="coliforms_smallwells" class="col-sm-4 control-label">Coliforms small wells</label>
+                                        <div class="col-sm-8">
+                                            <input id="coliforms_smallwells" name="coliforms_smallwells" type="number" step="1" min="0" max="48" class="form-control" placeholder="Coliforms small wells" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="total_coliforms" class="col-sm-4 control-label">Total Coliforms (MPN/100mL)</label>
+                                        <div class="col-sm-8">
+                                            <input id="total_coliforms" name="total_coliforms" type="text"  placeholder="Total Coliforms (MPN/100mL)" class="form-control">
                                             <!-- <div class="val1tip"></div> -->
                                         </div>
                                     </div>
@@ -203,9 +216,9 @@
                                 <button type="button" id='cancelButton' class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
                             </div>
                         </form>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+                </div>
+            </div>
+        </div>
 
 
 <!-- MODAL CONFIRMATION DELETE -->
@@ -239,8 +252,9 @@
 
     let table;
     // let table1;
-    let enterolertBarcode = $('#enterolert_barcode').val();
-    let idEnterolertIn = $('#id_enterolert_bio_in').val();
+    let colilertBarcode = $('#colilert_barcode').val();
+    let idColilertIn = $('#id_colilert_in').val();
+    console.log(idColilertIn);
     let dilution = $('#dilution').val();
     const BASE_URL = '/limsonewater/index.php';
     let result;
@@ -250,7 +264,7 @@
         function datachart(valueLargeWells, valueSmallWells) {
             $.ajax({
                 type: "GET",
-                url: `${BASE_URL}/Enterolert_idexx_biosolids/data_chart?valueLargeWells=`+valueLargeWells+"&valueSmallWells="+valueSmallWells,
+                url: `${BASE_URL}/Colilert_idexx_water/data_chart?valueLargeWells=`+valueLargeWells+"&valueSmallWells="+valueSmallWells,
                 dataType: "json",
                 success: function(data) {
                     console.log('data mpm '+ data);
@@ -273,30 +287,58 @@
             return result; 
         }
 
-        $('#enterococcus_largewells').on('change keypress keyup keydown', function(event) {        
-            let empn = datachart($('#enterococcus_largewells').val(), $('#enterococcus_smallwells').val());
+        $('#ecoli_largewells').on('change keypress keyup keydown', function(event) {        
+            let empn = datachart($('#ecoli_largewells').val(), $('#ecoli_smallwells').val());
             if (empn == 'Invalid'){
-                $('#enterococcus').css({'background-color' : '#FFE6E7'});
-                $('#enterococcus_largewells').val('0');
-                $('#enterococcus_smallwells').val('0');
+                $('#ecoli').css({'background-color' : '#FFE6E7'});
+                $('#ecoli_largewells').val('0');
+                $('#ecoli_smallwells').val('0');
             }
             else {
-                $('#enterococcus').css({'background-color' : '#EEEEEE'});
+                $('#ecoli').css({'background-color' : '#EEEEEE'});
             }
-            $("#enterococcus").val(empn);
+            $("#ecoli").val(empn);
         });
 
-        $('#enterococcus_smallwells').on('change keypress keyup keydown', function(event) {        
-            let empn = datachart($('#enterococcus_largewells').val(), $('#enterococcus_smallwells').val());
+        $('#ecoli_smallwells').on('change keypress keyup keydown', function(event) {        
+            let empn = datachart($('#ecoli_largewells').val(), $('#ecoli_smallwells').val());
             if (empn == 'Invalid'){
-                $('#enterococcus').css({'background-color' : '#FFE6E7'});
-                $('#enterococcus_largewells').val('0');
-                $('#enterococcus_smallwells').val('0');
+                $('#ecoli').css({'background-color' : '#FFE6E7'});
+                $('#ecoli_largewells').val('0');
+                $('#ecoli_smallwells').val('0');
             }
             else {
-                $('#enterococcus').css({'background-color' : '#EEEEEE'});
+                $('#ecoli').css({'background-color' : '#EEEEEE'});
             }
-            $("#enterococcus").val(empn);
+            $("#ecoli").val(empn);
+        });
+
+
+
+        $('#coliforms_largewells').on('change keypress keyup keydown', function(event) {        
+            let empn = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
+            if (empn == 'Invalid'){
+                $('#total_coliforms').css({'background-color' : '#FFE6E7'});
+                $('#coliforms_largewells').val('0');
+                $('#coliforms_smallwells').val('0');
+            }
+            else {
+                $('#total_coliforms').css({'background-color' : '#EEEEEE'});
+            }
+            $("#total_coliforms").val(empn);
+        });
+
+        $('#coliforms_smallwells').on('change keypress keyup keydown', function(event) {        
+            let empn = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
+            if (empn == 'Invalid'){
+                $('#total_coliforms').css({'background-color' : '#FFE6E7'});
+                $('#coliforms_largewells').val('0');
+                $('#coliforms_smallwells').val('0');
+            }
+            else {
+                $('#total_coliforms').css({'background-color' : '#EEEEEE'});
+            }
+            $("#total_coliforms").val(empn);
         });
 
         function showConfirmationDelete(url) {
@@ -309,7 +351,7 @@
             let id = $(this).data('id');
             let url;
             if ($(this).hasClass('btn_delete')) {
-                url = '<?php echo site_url('Enterolert_idexx_biosolids/delete_detail'); ?>/' + id;
+                url = '<?php echo site_url('Colilert_idexx_water/delete_detail'); ?>/' + id;
                 $('.modal-title').html('<i class="fa fa-trash"></i> Enterolert Out | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
             } else if ($(this).hasClass('btn_delete72')) {
@@ -432,14 +474,17 @@
             paging: false,
             info: false,
             bFilter: false,
-            ajax: {"url": "../../Enterolert_idexx_biosolids/subjson?id="+idEnterolertIn, "type": "POST"},
+            ajax: {"url": "../../Colilert_idexx_water/subjson?id="+idColilertIn, "type": "POST"},
             columns: [
-                {"data": "enterolert_barcode"},
+                {"data": "colilert_barcode"},
                 {"data": "date_sample"}, 
                 {"data": "time_sample"}, 
-                {"data": "enterococcus_largewells"}, 
-                {"data": "enterococcus_smallwells"},
-                {"data": "enterococcus"},
+                {"data": "ecoli_largewells"}, 
+                {"data": "ecoli_smallwells"},
+                {"data": "ecoli"},
+                {"data": "coliforms_largewells"}, 
+                {"data": "coliforms_smallwells"},
+                {"data": "total_coliforms"},
                 {"data": "remarks"},
                 {
                     "data" : "action",
@@ -470,12 +515,15 @@
         $('#addtombol_det').click(function() {
             $('#mode_det').val('insert');
             $('#modal-title-detail').html('<i class="fa fa-wpforms"></i> Colilert Idexx Out | New <span id="my-another-cool-loader"></span>');
-            $('#enterolert_barcodex').val(enterolertBarcode);
-            $('#enterolert_barcodex').attr('readonly', true);
-            $('#idx_enterolert_bio_in').val(idEnterolertIn);
-            $('#enterococcus_largewells').val('0');
-            $('#enterococcus_smallwells').val('0');
-            $('#enterococcus').val('0');
+            $('#colilert_barcodex').val(colilertBarcode);
+            $('#colilert_barcodex').attr('readonly', true);
+            $('#idx_colilert_in').val(idColilertIn);
+            $('#ecoli_largewells').val('0');
+            $('#ecoli_smallwells').val('0');
+            $('#ecoli').val('0');
+            $('#coliforms_largewells').val('0');
+            $('#coliforms_smallwells').val('0');
+            $('#total_coliforms').val('0');
             $('#remarks').val('');
             $('#compose-modal').modal('show');
         });
@@ -486,15 +534,18 @@
             console.log(data);
             $('#mode_det').val('edit');
             $('#modal-title-detail').html('<i class="fa fa-pencil-square"></i> Colilert Idexx Out | Update <span id="my-another-cool-loader"></span>');
-            $('#idx_enterolert_bio_in').val(idEnterolertIn);
-            $('#id_enterolert_bio_out').val(data.id_enterolert_bio_out);
-            $('#enterolert_barcodex').val(data.enterolert_barcode);
-            $('#enterolert_barcodex').attr('readonly', true);
+            $('#idx_colilert_in').val(idColilertIn);
+            $('#id_colilert_out').val(data.id_colilert_out);
+            $('#colilert_barcodex').val(data.colilert_barcode);
+            $('#colilert_barcodex').attr('readonly', true);
             $('#date_sample').val(data.date_sample);
             $('#time_sample').val(data.time_sample);
-            $('#enterococcus_largewells').val(data.enterococcus_largewells);
-            $('#enterococcus_smallwells').val(data.enterococcus_smallwells);
-            $('#enterococcus').val(data.enterococcus);
+            $('#ecoli_largewells').val(data.ecoli_largewells);
+            $('#ecoli_smallwells').val(data.ecoli_smallwells);
+            $('#ecoli').val(data.ecoli);
+            $('#coliforms_largewells').val(data.coliforms_largewells);
+            $('#coliforms_smallwells').val(data.coliforms_smallwells);
+            $('#total_coliforms').val(data.total_coliforms);
             $('#remarks').val(data.remarks);
             $('#compose-modal').modal('show');
         });

@@ -23,7 +23,7 @@
                                             <th>ID One Water Sample</th>
                                             <th>Lab Tech</th>
                                             <th>Sample Type</th>
-                                            <th>Enterolert Barcode</th>
+                                            <th>Colilert Barcode</th>
                                             <th>Date Sample</th>
                                             <th>Time Sample</th>
                                             <!-- <th>Wet Weight (g)</th>
