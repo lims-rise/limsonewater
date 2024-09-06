@@ -65,8 +65,8 @@ Class Auth extends CI_Controller{
             'charset'   => 'utf-8',
             'protocol'  => 'smtp',
             'smtp_host' => 'smtp.gmail.com',
-            'smtp_user' => 'lims.rise@gmail.com',  // Email gmail
-            'smtp_pass'   => 'ipeoqfgjxnifbymp',  // Password gmail
+            'smtp_user' => 'onewater.lims@gmail.com',  // Email gmail
+            'smtp_pass'   => 'xinfxyvtrsmzinhb',  // Password gmail
             'smtp_crypto' => 'tls',
             'smtp_port'   => 587,
             'crlf'    => "\r\n",
