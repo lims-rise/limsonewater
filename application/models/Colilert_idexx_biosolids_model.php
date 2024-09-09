@@ -3,13 +3,13 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Colilert_idexx_water_model extends CI_Model
+class Colilert_idexx_biosolids_model extends CI_Model
 {
 
-    public $table = 'colilert_water_in';
-    public $id = 'id_colilert_in';
-    public $tableOut = 'colilert_water_out';
-    public $idOut = 'id_colilert_out';
+    public $table = 'colilert_biosolids_in';
+    public $id = 'id_colilert_bio_in';
+    public $tableOut = 'colilert_biosolids_out';
+    public $idOut = 'id_colilert_bio_out';
     public $order = 'DESC';
 
     function __construct()
@@ -19,58 +19,58 @@ class Colilert_idexx_water_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('cwi.id_colilert_in, cwi.id_one_water_sample, cwi.id_person, rp.initial,
-        cwi.id_sampletype, rs.sampletype, cwi.colilert_barcode, cwi.date_sample, cwi.time_sample,
-        cwi.volume_bottle, cwi.dilution');
-        $this->datatables->from('colilert_water_in AS cwi');
-        $this->datatables->join('ref_person AS rp', 'cwi.id_person = rp.id_person', 'left');
-        $this->datatables->join('ref_sampletype AS rs', 'cwi.id_sampletype = rs.id_sampletype', 'left');
+        $this->datatables->select('cbi.id_colilert_bio_in, cbi.id_one_water_sample, cbi.id_person, rp.initial,
+        cbi.id_sampletype, rs.sampletype, cbi.colilert_barcode, cbi.date_sample, cbi.time_sample, cbi.wet_weight, cbi.elution_volume,
+        cbi.volume_bottle, cbi.dilution');
+        $this->datatables->from('colilert_biosolids_in AS cbi');
+        $this->datatables->join('ref_person AS rp', 'cbi.id_person = rp.id_person', 'left');
+        $this->datatables->join('ref_sampletype AS rs', 'cbi.id_sampletype = rs.id_sampletype', 'left');
         $this->datatables->where('lab', $this->session->userdata('lab'));
-        $this->datatables->where('cwi.flag', '0');
+        $this->datatables->where('cbi.flag', '0');
 
         $lvl = $this->session->userdata('id_user_level');
 
         if ($lvl == 4){
-            // $this->datatables->add_column('action', anchor(site_url('Enterolert_idexx_water/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_colilert_in');
-            $this->datatables->add_column('action', '', 'id_colilert_in');
+            // $this->datatables->add_column('action', anchor(site_url('Enterolert_idexx_water/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_colilert_bio_in');
+            $this->datatables->add_column('action', '', 'id_colilert_bio_in');
         }
         else if ($lvl == 3){
             // $this->datatables->add_column('action', anchor(site_url('Enterolert_idexx_water/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
-            //     ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_colilert_in');
+            //     ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_colilert_bio_in');
             $this->datatables->add_column('action', 
             '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 
-            'id_colilert_in');
+            'id_colilert_bio_in');
         }
         else {
-            $this->datatables->add_column('action', anchor(site_url('Colilert_idexx_water/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
+            $this->datatables->add_column('action', anchor(site_url('Colilert_idexx_biosolids/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
             ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-            ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_colilert_in');
+            ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_colilert_bio_in');
         }
         return $this->datatables->generate();
     }
 
     function subjson($id) {
-        $this->datatables->select('cwo.id_colilert_out, cwo.colilert_barcode, cwo.date_sample, cwo.time_sample, cwo.ecoli_largewells, cwo.ecoli_smallwells, 
-        cwo.ecoli, cwo.coliforms_largewells, cwo.coliforms_smallwells, cwo.total_coliforms, cwo.remarks, cwo.flag');
-        $this->datatables->from('colilert_water_out AS cwo');
+        $this->datatables->select('cbo.id_colilert_bio_out, cbo.colilert_barcode, cbo.date_sample, cbo.time_sample, cbo.ecoli_largewells, cbo.ecoli_smallwells, 
+        cbo.ecoli, cbo.coliforms_largewells, cbo.coliforms_smallwells, cbo.total_coliforms, cbo.remarks, cbo.flag');
+        $this->datatables->from('colilert_biosolids_out AS cbo');
         // $this->datatables->join('ref_testing b', 'FIND_IN_SET(b.id_testing_type, a.id_testing_type)', 'left');
         // $this->datatables->join('ref_barcode c', 'a.sample_id = c.testing_type_id', 'left');
-        $this->datatables->where('cwo.flag', '0');
-        $this->datatables->where('cwo.id_colilert_in', $id);
-        $this->datatables->group_by('cwo.id_colilert_out');
+        $this->datatables->where('cbo.flag', '0');
+        $this->datatables->where('cbo.id_colilert_bio_in', $id);
+        $this->datatables->group_by('cbo.id_colilert_bio_out');
 
         $lvl = $this->session->userdata('id_user_level');
 
         if ($lvl == 4){
-            $this->datatables->add_column('action', anchor(site_url('Colilert_idexx_water/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_colilert_out');
+            $this->datatables->add_column('action', anchor(site_url('Colilert_idexx_biosolids/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_colilert_bio_out');
         }
         else if ($lvl == 3){
-            $this->datatables->add_column('action', anchor(site_url('Colilert_idexx_water/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
-                ".'<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_colilert_out');
+            $this->datatables->add_column('action', anchor(site_url('Colilert_idexx_biosolids/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
+                ".'<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_colilert_bio_out');
         }
         else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_colilert_out');
+                ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_colilert_bio_out');
         }
         return $this->datatables->generate();
     }
@@ -85,23 +85,23 @@ class Colilert_idexx_water_model extends CI_Model
 
     function get_by_id_detail($id)
     {
-        $this->db->where('id_colilert_out', $id);
+        $this->db->where('id_colilert_bio_out', $id);
         $this->db->where('flag', '0');
         // $this->db->where('lab', $this->session->userdata('lab'));
-        return $this->db->get('colilert_water_out')->row();
+        return $this->db->get('colilert_biosolids_out')->row();
     }
 
     function get_detail($id)
     {
       $response = array();
-      $this->db->select('cwi.id_colilert_in, cwi.id_one_water_sample, cwi.id_person, rp.initial,
-        cwi.id_sampletype, rs.sampletype, cwi.colilert_barcode, cwi.date_sample, cwi.time_sample,
-        cwi.volume_bottle, cwi.dilution');
-      $this->db->from('colilert_water_in AS cwi');
-      $this->db->join('ref_sampletype AS rs', 'cwi.id_sampletype = rs.id_sampletype', 'left');
-      $this->db->join('ref_person AS rp',  'cwi.id_person = rp.id_person', 'left');
-      $this->db->where('cwi.id_colilert_in', $id);
-      $this->db->where('cwi.flag', '0');
+      $this->db->select('cbi.id_colilert_bio_in, cbi.id_one_water_sample, cbi.id_person, rp.initial,
+        cbi.id_sampletype, rs.sampletype, cbi.colilert_barcode, cbi.date_sample, cbi.time_sample, cbi.wet_weight, cbi.elution_volume,
+        cbi.volume_bottle, cbi.dilution');
+      $this->db->from('colilert_biosolids_in AS cbi');
+      $this->db->join('ref_sampletype AS rs', 'cbi.id_sampletype = rs.id_sampletype', 'left');
+      $this->db->join('ref_person AS rp',  'cbi.id_person = rp.id_person', 'left');
+      $this->db->where('cbi.id_colilert_bio_in', $id);
+      $this->db->where('cbi.flag', '0');
       $q = $this->db->get();
 
       if ($q->num_rows() > 0) {
@@ -119,7 +119,7 @@ class Colilert_idexx_water_model extends CI_Model
     // Function update data
     function update($id, $data)
     {
-        $this->db->where('id_colilert_in', $id);
+        $this->db->where('id_colilert_bio_in', $id);
         $this->db->update($this->table, $data);
     }
 
@@ -129,8 +129,8 @@ class Colilert_idexx_water_model extends CI_Model
     }
 
     function update_det($id, $data) {
-        $this->db->where('id_colilert_out', $id);
-        $this->db->update('colilert_water_out', $data);
+        $this->db->where('id_colilert_bio_out', $id);
+        $this->db->update('colilert_biosolids_out', $data);
     }
 
     // delete data
@@ -170,7 +170,7 @@ class Colilert_idexx_water_model extends CI_Model
     function getID_one(){
         $q = $this->db->query('
         SELECT id_one_water_sample FROM sample_reception
-        WHERE id_one_water_sample NOT IN (SELECT id_one_water_sample FROM colilert_water_in)
+        WHERE id_one_water_sample NOT IN (SELECT id_one_water_sample FROM colilert_biosolids_in)
         AND flag = 0');       
         $response = $q->result_array();
         return $response;
@@ -198,23 +198,22 @@ class Colilert_idexx_water_model extends CI_Model
 
     function get_all()
     {
-        $this->db->select('cwi.id_colilert_in, cwi.id_one_water_sample, rp.initial, rs.sampletype, cwi.colilert_barcode, cwi.date_sample,
-            cwi.time_sample, cwi.volume_bottle,cwi.dilution, cwo.id_colilert_out, cwo.colilert_barcode, cwo.date_sample, cwo.time_sample, 
-            cwo.ecoli_largewells, cwo.ecoli_smallwells,
-            cwo.ecoli, cwo.coliforms_largewells, cwo.coliforms_smallwells, cwo.total_coliforms, cwo.remarks');
-        $this->db->from('colilert_water_in AS cwi');
-        $this->db->join('ref_person AS rp', 'cwi.id_person = rp.id_person');
-        $this->db->join('ref_sampletype AS rs', 'cwi.id_sampletype = rs.id_sampletype');
-        $this->db->join('colilert_water_out AS cwo', 'cwi.id_colilert_in = cwo.id_colilert_in');
-        $this->db->where('cwi.flag', '0');
-        $this->db->order_by('cwi.id_colilert_in', 'ASC');
+        $this->db->select('cbi.id_colilert_bio_in, cbi.id_one_water_sample, rp.initial, rs.sampletype, cbi.colilert_barcode, cbi.date_sample,
+        cbi.time_sample, cbi.wet_weight, cbi.elution_volume, cbi.volume_bottle, cbi.dilution, cbo.id_colilert_bio_out, cbo.colilert_barcode, cbo.date_sample, cbo.time_sample,
+        cbo.ecoli_largewells, cbo.ecoli_smallwells, cbo.ecoli, cbo.coliforms_largewells, cbo.coliforms_smallwells, cbo.total_coliforms, cbo.remarks');
+        $this->db->from('colilert_biosolids_in AS cbi');
+        $this->db->join('ref_person AS rp', 'cbi.id_person = rp.id_person');
+        $this->db->join('ref_sampletype AS rs', 'cbi.id_sampletype = rs.id_sampletype');
+        $this->db->join('colilert_biosolids_out AS cbo', 'cbi.id_colilert_bio_in = cbo.id_colilert_bio_in');
+        $this->db->where('cbi.flag', '0');
+        $this->db->order_by('cbi.id_colilert_bio_in', 'ASC');
 
         return $this->db->get()->result();
     }
 
     function validateColilertBarcode($id){
         $q = $this->db->query('
-        SELECT colilert_barcode FROM colilert_water_in
+        SELECT colilert_barcode FROM colilert_biosolids_in
         WHERE colilert_barcode = "'.$id.'"
         AND flag = 0 
         ');        

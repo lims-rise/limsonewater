@@ -4,17 +4,17 @@
             <div class="col-xs-12">
                 <div class="box box-black box-solid">
                     <div class="box-header">
-                        <h3 class="box-title">Processing | Colilert Idexx Water | In </h3>
+                        <h3 class="box-title">Processing | Colilert Idexx Biosolids | In </h3>
                     </div>
                     <div class="box-body">
                         <div style="padding-bottom: 10px;">
                             <?php
                                     $lvl = $this->session->userdata('id_user_level');
                                     if ($lvl != 7){
-                                        echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Colilert Idexx - Water</button>";
+                                        echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Colilert Idexx - Biosolids</button>";
                                     }
                             ?>        
-                            <?php echo anchor(site_url('Colilert_idexx_water/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
+                            <?php echo anchor(site_url('Colilert_idexx_biosolids/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
                         </div>
                             <div class="table-responsive">
                                 <table class="table ho table-bordered table-striped tbody" id="mytable" style="width:100%">
@@ -26,8 +26,8 @@
                                             <th>Colilert Barcode</th>
                                             <th>Date Sample</th>
                                             <th>Time Sample</th>
-                                            <!-- <th>Wet Weight (g)</th>
-                                            <th>Elution Volume (mL)</th> -->
+                                            <th>Wet Weight (g)</th>
+                                            <th>Elution Volume (mL)</th>
                                             <th>Volume in Bottle (mL)</th>
                                             <th>Dilution</th>
                                             <th width="120px">Action</th>
@@ -58,10 +58,10 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
                         <h4 class="modal-title" id="modal-title">Moisture Content | New</h4>
                     </div>
-                    <form id="formSample"  action= <?php echo site_url('Colilert_idexx_water/save') ?> method="post" class="form-horizontal">
+                    <form id="formSample"  action= <?php echo site_url('Colilert_idexx_biosolids/save') ?> method="post" class="form-horizontal">
                         <div class="modal-body">
                             <input id="mode" name="mode" type="hidden" class="form-control input-sm">
-                            <input id="idx_colilert_water_in" name="idx_colilert_water_in" type="hidden" class="form-control input-sm">
+                            <input id="idx_colilert_bio_in" name="idx_colilert_bio_in" type="hidden" class="form-control input-sm">
                             
                             <div class="form-group">
                                 <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
@@ -138,7 +138,7 @@
                                 </div>
                             </div>
 
-                            <!-- <div class="form-group">
+                            <div class="form-group">
                                 <label for="wet_weight" class="col-sm-4 control-label">Wet Weight (g)</label>
                                 <div class="col-sm-8">
                                     <input id="wet_weight" name="wet_weight" type="number" step="0.001"  class="form-control" placeholder="Wet Weight (g)">
@@ -150,7 +150,7 @@
                                 <div class="col-sm-8">
                                     <input id="elution_volume" name="elution_volume" type="text" class="form-control" placeholder="Elution Volume (mL)">
                                 </div>
-                            </div> -->
+                            </div>
 
                             <div class="form-group">
                                 <label for="volume_bottle" class="col-sm-4 control-label">Volume in bottle (mL) added</label>
@@ -242,7 +242,7 @@
         // Handle the delete button click
         $(document).on('click', '.btn_delete', function() {
             let id = $(this).data('id');
-            let url = '<?php echo site_url('Colilert_idexx_water/delete'); ?>/' + id;
+            let url = '<?php echo site_url('Colilert_idexx_biosolids/delete'); ?>/' + id;
             $('#confirm-modal #id').text(id);
             console.log(id);
             showConfirmation(url);
@@ -348,7 +348,7 @@
             let colilertBarcode = $('#colilert_barcode').val();
             $.ajax({
                 type: "GET",
-                url: "Colilert_idexx_water/validateColilertBarcode",
+                url: "Colilert_idexx_biosolids/validateColilertBarcode",
                 data: { id: colilertBarcode },
                 dataType: "json",
                 success: function(data) {
@@ -404,7 +404,7 @@
             // select: true;
             processing: true,
             serverSide: true,
-            ajax: {"url": "Colilert_idexx_water/json", "type": "POST"},
+            ajax: {"url": "Colilert_idexx_biosolids/json", "type": "POST"},
             columns: [
                 {"data": "id_one_water_sample"},
                 {"data": "initial"},
@@ -412,8 +412,8 @@
                 {"data": "colilert_barcode"},
                 {"data": "date_sample"},
                 {"data": "time_sample"},
-                // {"data": "wet_weight"},
-                // {"data": "elution_volume"},
+                {"data": "wet_weight"},
+                {"data": "elution_volume"},
                 {"data": "volume_bottle"},
                 {"data": "dilution"},
                 {
@@ -441,15 +441,15 @@
         $('#addtombol').click(function() {
             handleSampleTypeInput('#sampletype');
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> Colilert Idexx Water | New<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Colilert Idexx Biosolids | New<span id="my-another-cool-loader"></span>');
             $('#id_one_water_sample').val('');
             $('#id_one_water_sample').show();
             $('#idx_one_water_sample').hide();
             $('#id_person').val('');
             $('#sampletype').val('');
             $('#sampletype').attr('readonly', true);
-            // $('#wet_weight').val('');
-            // $('#elution_volume').val('');
+            $('#wet_weight').val('');
+            $('#elution_volume').val('');
             $('#colilert_barcode').val('');
             $('#volume_bottle').val('');
             $('#dilution').val('');
@@ -462,8 +462,8 @@
             let data = table.row(tr).data();
             console.log(data);
             $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Colilert Idexx Water | Update<span id="my-another-cool-loader"></span>');
-            $('#idx_colilert_water_in').val(data.id_colilert_in);
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Colilert Idexx Biosolids | Update<span id="my-another-cool-loader"></span>');
+            $('#idx_colilert_bio_in').val(data.id_colilert_bio_in);
             $('#id_one_water_sample').hide();
             $('#idx_one_water_sample').show();
             $('#idx_one_water_sample').attr('readonly', true);
@@ -475,8 +475,8 @@
             $('#colilert_barcode').val(data.colilert_barcode);
             $('#date_sample').val(data.date_sample);
             $('#time_sample').val(data.time_sample);
-            // $('#wet_weight').val(data.wet_weight);
-            // $('#elution_volume').val(data.elution_volume);
+            $('#wet_weight').val(data.wet_weight);
+            $('#elution_volume').val(data.elution_volume);
             $('#volume_bottle').val(data.volume_bottle);
             $('#dilution').val(data.dilution);
             $('#compose-modal').modal('show');

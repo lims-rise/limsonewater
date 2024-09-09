@@ -2,11 +2,11 @@
 	<section class="content">
 		<div class="box box-black box-solid">
 			<div class="box-header with-border">
-				<h3 class="box-title">Processing |  Colilert Idexx Water | Out</h3>
+				<h3 class="box-title">Processing |  Colilert Idexx Biosolids | Out</h3>
 			</div>
 				<form role="form"  id="formKeg" method="post" class="form-horizontal">
 					<div class="box-body">
-						<input id="id_colilert_in" name="id_colilert_in" type="hidden" class="form-control input-sm" value="<?php echo $id_colilert_in ?>">
+						<input id="id_colilert_bio_in" name="id_colilert_bio_in" type="hidden" class="form-control input-sm" value="<?php echo $id_colilert_bio_in ?>">
 
 						<div class="form-group">
 							<label for="id_one_water_sample" class="col-sm-2 control-label">One Water Sample ID</label>
@@ -46,6 +46,18 @@
 
 						</div>
 
+                        <div class="form-group">
+							<label for="wet_weight" class="col-sm-2 control-label">Wet Weight (g)</label>
+							<div class="col-sm-4">
+								<input class="form-control " id="wet_weight" name="wet_weight" value="<?php echo $wet_weight ?>"  disabled>
+							</div>
+
+                            <label for="elution_volume" class="col-sm-2 control-label">Elution Volume (mL)</label>
+							<div class="col-sm-4">
+								<input class="form-control " id="elution_volume" name="elution_volume" value="<?php echo $elution_volume ?>"  disabled>
+							</div>
+						</div>
+
 
 						<div class="form-group">
 							<label for="volume_bottle" class="col-sm-2 control-label">Volume in Bottle (mL)</label>
@@ -81,12 +93,12 @@
 											<th>Colilert Barcode</th>
 											<th>Date Sample</th>
                                             <th>Time Sample</th>
-                                            <th>E. Coli large wells</th>
-                                            <th>E. Coli small wells</th>
-                                            <th>E. Coli (MPN/100mL)</th>
+                                            <th>E.Coli large wells</th>
+                                            <th>E.Coli small wells</th>
+                                            <th>E.Coli (raw MPN)</th>
                                             <th>Coliforms large wells</th>
                                             <th>Coliforms small wells</th>
-                                            <th>Total Coliforms (MPN/100mL)</th>
+                                            <th>Total Coliforms (raw MPN)</th>
                                             <th>Remarks</th>
                                             <th>Action</th>
 										</tr>
@@ -99,7 +111,7 @@
 
 				<div class="form-group">
 					<div class="modal-footer clearfix">
-						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('Colilert_idexx_water'); ?>';">
+						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('Colilert_idexx_biosolids'); ?>';">
 							<i class="fa fa-times"></i> Close
 						</button>
 					</div>
@@ -118,14 +130,14 @@
                         <h4 class="modal-title" id="modal-title-detail">
 							<span id="my-another-cool-loader"></span></h4>
                     </div>
-                        <form id="formDetail" action=<?php echo site_url('Colilert_idexx_water/savedetail') ?> method="post" class="form-horizontal">
+                        <form id="formDetail" action=<?php echo site_url('Colilert_idexx_biosolids/savedetail') ?> method="post" class="form-horizontal">
                             <div class="modal-body">
                                 <div class="form-group">
                                         <div class="col-sm-9">
                                             <input id="mode_det" name="mode_det" type="hidden" class="form-control input-sm">
-                                            <input id="idx_colilert_in" name="idx_colilert_in" type="hidden" class="form-control input-sm">
-                                            <input id="id_colilert_in" name="id_colilert_in" type="hidden" class="form-control input-sm">
-                                            <input id="id_colilert_out" name="id_colilert_out" type="hidden" class="form-control input-sm">
+                                            <input id="idx_colilert_bio_in" name="idx_colilert_bio_in" type="hidden" class="form-control input-sm">
+                                            <input id="id_colilert_bio_in" name="id_colilert_bio_in" type="hidden" class="form-control input-sm">
+                                            <input id="id_colilert_bio_out" name="id_colilert_bio_out" type="hidden" class="form-control input-sm">
                                         </div>
                                     </div>
 
@@ -174,9 +186,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="ecoli" class="col-sm-4 control-label">E. Coli (MPN/100mL)</label>
+                                        <label for="ecoli" class="col-sm-4 control-label">E. Coli (raw MPN)</label>
                                         <div class="col-sm-8">
-                                            <input id="ecoli" name="ecoli" type="text"  placeholder="E. Coli (MPN/100mL)" class="form-control">
+                                            <input id="ecoli" name="ecoli" type="text"  placeholder="E. Coli (raw MPN)" class="form-control">
                                             <!-- <div class="val1tip"></div> -->
                                         </div>
                                     </div>
@@ -196,9 +208,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="total_coliforms" class="col-sm-4 control-label">Total Coliforms (MPN/100mL)</label>
+                                        <label for="total_coliforms" class="col-sm-4 control-label">Total Coliforms (raw MPN)</label>
                                         <div class="col-sm-8">
-                                            <input id="total_coliforms" name="total_coliforms" type="text"  placeholder="Total Coliforms (MPN/100mL)" class="form-control">
+                                            <input id="total_coliforms" name="total_coliforms" type="text"  placeholder="Total Coliforms (raw MPN)" class="form-control">
                                             <!-- <div class="val1tip"></div> -->
                                         </div>
                                     </div>
@@ -253,8 +265,8 @@
     let table;
     // let table1;
     let colilertBarcode = $('#colilert_barcode').val();
-    let idColilertIn = $('#id_colilert_in').val();
-    console.log(idColilertIn);
+    let idColilertBioIn = $('#id_colilert_bio_in').val();
+    console.log(idColilertBioIn);
     let dilution = $('#dilution').val();
     const BASE_URL = '/limsonewater/index.php';
     let result;
@@ -264,7 +276,7 @@
         function datachart(valueLargeWells, valueSmallWells) {
             $.ajax({
                 type: "GET",
-                url: `${BASE_URL}/Colilert_idexx_water/data_chart?valueLargeWells=`+valueLargeWells+"&valueSmallWells="+valueSmallWells,
+                url: `${BASE_URL}/Colilert_idexx_biosolids/data_chart?valueLargeWells=`+valueLargeWells+"&valueSmallWells="+valueSmallWells,
                 dataType: "json",
                 success: function(data) {
                     console.log('data mpm '+ data);
@@ -351,7 +363,7 @@
             let id = $(this).data('id');
             let url;
             if ($(this).hasClass('btn_delete')) {
-                url = '<?php echo site_url('Colilert_idexx_water/delete_detail'); ?>/' + id;
+                url = '<?php echo site_url('Colilert_idexx_biosolids/delete_detail'); ?>/' + id;
                 $('.modal-title').html('<i class="fa fa-trash"></i> Enterolert Out | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
             } else if ($(this).hasClass('btn_delete72')) {
@@ -474,7 +486,7 @@
             paging: false,
             info: false,
             bFilter: false,
-            ajax: {"url": "../../Colilert_idexx_water/subjson?id="+idColilertIn, "type": "POST"},
+            ajax: {"url": "../../Colilert_idexx_biosolids/subjson?id="+idColilertBioIn, "type": "POST"},
             columns: [
                 {"data": "colilert_barcode"},
                 {"data": "date_sample"}, 
@@ -514,10 +526,10 @@
 
         $('#addtombol_det').click(function() {
             $('#mode_det').val('insert');
-            $('#modal-title-detail').html('<i class="fa fa-wpforms"></i> Colilert Idexx Out | New <span id="my-another-cool-loader"></span>');
+            $('#modal-title-detail').html('<i class="fa fa-wpforms"></i> Colilert Biosolids Out | New <span id="my-another-cool-loader"></span>');
             $('#colilert_barcodex').val(colilertBarcode);
             $('#colilert_barcodex').attr('readonly', true);
-            $('#idx_colilert_in').val(idColilertIn);
+            $('#idx_colilert_bio_in').val(idColilertBioIn);
             $('#ecoli_largewells').val('0');
             $('#ecoli_smallwells').val('0');
             $('#ecoli').val('0');
@@ -533,9 +545,9 @@
             let data = table.row(tr).data();
             console.log(data);
             $('#mode_det').val('edit');
-            $('#modal-title-detail').html('<i class="fa fa-pencil-square"></i> Colilert Idexx Out | Update <span id="my-another-cool-loader"></span>');
-            $('#idx_colilert_in').val(idColilertIn);
-            $('#id_colilert_out').val(data.id_colilert_out);
+            $('#modal-title-detail').html('<i class="fa fa-pencil-square"></i> Colilert Biosolids Out | Update <span id="my-another-cool-loader"></span>');
+            $('#idx_colilert_bio_in').val(idColilertBioIn);
+            $('#id_colilert_bio_out').val(data.id_colilert_bio_out);
             $('#colilert_barcodex').val(data.colilert_barcode);
             $('#colilert_barcodex').attr('readonly', true);
             $('#date_sample').val(data.date_sample);
