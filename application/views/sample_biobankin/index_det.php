@@ -91,7 +91,7 @@
 
 				<div class="form-group">
 					<div class="modal-footer clearfix">
-						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('Sample_biobankin'); ?>';">
+						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('sample_biobankin'); ?>';">
 							<i class="fa fa-times"></i> Close
 						</button>
 					</div>
@@ -287,6 +287,29 @@
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 
+	<!-- MODAL CONFIRMATION DELETE -->
+	<div class="modal fade" id="confirm-modal-delete" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #dd4b39; color: white;">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
+					<h4 class="modal-title"><i class="fa fa-trash"></i> Sample Biobank - Replicates | Delete <span id="my-another-cool-loader"></span></h4>
+				</div>
+				<div class="modal-body">
+					<div id="confirmation-content">
+						<div class="modal-body">
+							<p class="text-center" style="font-size: 15px;">Are you sure you want to delete ID <span id="id" style="font-weight: bold;"></span> ?</p>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer clearfix">
+					<button type="button" id="confirm-delete" class="btn btn-danger"><i class="fa fa-trash"></i> Yes</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> No</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
 
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
@@ -298,6 +321,40 @@
 	let base_url = location.hostname;
 
 	$(document).ready(function() {
+
+		function showConfirmationDelete(url) {
+            deleteUrl = url; // Set the URL to the variable
+            $('#confirm-modal-delete').modal('show');
+        }
+
+        // Handle the delete button click
+        $(document).on('click', '.btn_delete', function() {
+            let id = $(this).data('id');
+            let url = '<?php echo site_url('Sample_biobankin/delete_detail'); ?>/' + id;
+            $('#confirm-modal-delete #id').text(id);
+            console.log(id);
+            showConfirmationDelete(url);
+        });
+
+        // When the confirm-delete button is clicked
+        $('#confirm-delete').click(function() {
+            $.ajax({
+                url: deleteUrl,
+                type: 'POST',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        alert(response.message);
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                complete: function() {
+                    $('#confirm-modal-delete').modal('hide');
+                    location.reload();
+                }
+            });
+        });
 
 		// The function to show the congfirmation with testing type data 
 		function showConfirmation() {

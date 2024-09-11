@@ -36,7 +36,7 @@ class Sample_extraction extends CI_Controller
         $data['shelf1'] = $this->Sample_extraction_model->getFreezer2();
         $data['rack1'] = $this->Sample_extraction_model->getFreezer3();
         $data['tray1'] = $this->Sample_extraction_model->getFreezer4();
-        $this->template->load('template','Sample_extraction/index', $data);
+        $this->template->load('template','sample_extraction/index', $data);
     } 
     
     public function json() {
@@ -132,7 +132,7 @@ class Sample_extraction extends CI_Controller
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
-        redirect(site_url("Sample_extraction"));
+        redirect(site_url("sample_extraction"));
     }
     
     public function barcode_check() 
@@ -172,10 +172,10 @@ class Sample_extraction extends CI_Controller
         if ($row) {
             $this->Sample_extraction_model->update($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
-            redirect(site_url('Sample_extraction'));
+            redirect(site_url('sample_extraction'));
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
-            redirect(site_url('Sample_extraction'));
+            redirect(site_url('sample_extraction'));
         }
     }
 
@@ -195,7 +195,7 @@ class Sample_extraction extends CI_Controller
             $this->session->set_flashdata('message', 'Record Not Found');
         }
     
-        redirect(site_url('Sample_extraction/read/'.$id_parent));
+        redirect(site_url('sample_extraction/read/'.$id_parent));
     }
 
     // Function delete detail 2
@@ -213,7 +213,7 @@ class Sample_extraction extends CI_Controller
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
-        redirect(site_url('Sample_extraction/read2/'.$id_parent));
+        redirect(site_url('sample_extraction/read2/'.$id_parent));
     }
 
 
