@@ -34,7 +34,7 @@ class Sample_biobankin extends CI_Controller
         // $data['id_project'] = $this->Sample_biobankin_model->generate_project_id();
         // $data['client'] = $this->Sample_biobankin_model->generate_client();
         // $data['id_one_water_sample'] = $this->Sample_biobankin_model->generate_one_water_sample_id();
-        $this->template->load('template','Sample_biobankin/index', $data);
+        $this->template->load('template','sample_biobankin/index', $data);
     } 
     
     public function json() {
@@ -85,7 +85,7 @@ class Sample_biobankin extends CI_Controller
                 // 'barcode' => $this->Water_Sample_biobankin_model->getBarcode(),
             );
                 
-            $this->template->load('template','Sample_biobankin/index_det', $data);
+            $this->template->load('template','sample_biobankin/index_det', $data);
 
         }
         else {
@@ -156,7 +156,7 @@ class Sample_biobankin extends CI_Controller
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
-        redirect(site_url("Sample_biobankin"));
+        redirect(site_url("sample_biobankin"));
     }
 
     public function savedetail() {
@@ -233,7 +233,7 @@ class Sample_biobankin extends CI_Controller
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
-        redirect(site_url("Sample_biobankin/read/" . $id_one_water_sample));
+        redirect(site_url("sample_biobankin/read/" . $id_one_water_sample));
     }
 
 
@@ -247,10 +247,10 @@ class Sample_biobankin extends CI_Controller
         if ($row) {
             $this->Sample_biobankin_model->update($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
-            redirect(site_url('Sample_biobankin'));
+            redirect(site_url('sample_biobankin'));
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
-            redirect(site_url('Sample_biobankin'));
+            redirect(site_url('sample_biobankin'));
         }
     }
 
@@ -259,7 +259,7 @@ class Sample_biobankin extends CI_Controller
         $row = $this->Sample_biobankin_model->get_by_id_detail($id);
 
         if ($row) {
-            $id_parent = $row->id_project; // Retrieve project_id before updating the record
+            $id_parent = $row->id_one_water_sample; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
@@ -270,7 +270,7 @@ class Sample_biobankin extends CI_Controller
             $this->session->set_flashdata('message', 'Record Not Found');
         }
     
-        redirect(site_url('Sample_biobankin/read/'.$id_parent));
+        redirect(site_url('sample_biobankin/read/'.$id_parent));
     }
 
     public function samplecheck() 

@@ -31,18 +31,18 @@ class Enterolert_idexx_biosolids_model extends CI_Model
         $lvl = $this->session->userdata('id_user_level');
 
         if ($lvl == 4){
-            // $this->datatables->add_column('action', anchor(site_url('Enterolert_idexx_water/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_enterolert_bio_in');
+            // $this->datatables->add_column('action', anchor(site_url('enterolert_idexx_water/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_enterolert_bio_in');
             $this->datatables->add_column('action', '', 'id_enterolert_bio_in');
         }
         else if ($lvl == 3){
-            // $this->datatables->add_column('action', anchor(site_url('Enterolert_idexx_water/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
+            // $this->datatables->add_column('action', anchor(site_url('enterolert_idexx_water/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
             //     ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_enterolert_bio_in');
             $this->datatables->add_column('action', 
             '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 
             'id_enterolert_bio_in');
         }
         else {
-            $this->datatables->add_column('action', anchor(site_url('Enterolert_idexx_biosolids/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
+            $this->datatables->add_column('action', anchor(site_url('enterolert_idexx_biosolids/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
             ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
             ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_enterolert_bio_in');
         }
@@ -61,10 +61,10 @@ class Enterolert_idexx_biosolids_model extends CI_Model
         $lvl = $this->session->userdata('id_user_level');
 
         if ($lvl == 4){
-            $this->datatables->add_column('action', anchor(site_url('Enterolert_idexx_biosolids/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_enterolert_bio_out');
+            $this->datatables->add_column('action', anchor(site_url('enterolert_idexx_biosolids/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_enterolert_bio_out');
         }
         else if ($lvl == 3){
-            $this->datatables->add_column('action', anchor(site_url('Enterolert_idexx_biosolids/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
+            $this->datatables->add_column('action', anchor(site_url('enterolert_idexx_biosolids/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
                 ".'<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_enterolert_bio_out');
         }
         else {

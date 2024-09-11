@@ -34,7 +34,7 @@ class Enterolert_idexx_biosolids extends CI_Controller
         // $data['id_project'] = $this->Moisture_content_model->generate_project_id();
         // $data['client'] = $this->Moisture_content_model->generate_client();
         // $data['id_one_water_sample'] = $this->Moisture_content_model->generate_one_water_sample_id();
-        $this->template->load('template','Enterolert_idexx_biosolids/index', $data);
+        $this->template->load('template','enterolert_idexx_biosolids/index', $data);
     } 
     
     public function json() {
@@ -78,7 +78,7 @@ class Enterolert_idexx_biosolids extends CI_Controller
 
 
                 
-            $this->template->load('template','Enterolert_idexx_biosolids/index_det', $data);
+            $this->template->load('template','enterolert_idexx_biosolids/index_det', $data);
 
         }
         else {
@@ -158,7 +158,7 @@ class Enterolert_idexx_biosolids extends CI_Controller
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
-        redirect(site_url("Enterolert_idexx_biosolids"));
+        redirect(site_url("enterolert_idexx_biosolids"));
     }
 
     
@@ -228,7 +228,7 @@ class Enterolert_idexx_biosolids extends CI_Controller
                 }
             }
         
-            redirect(site_url("Enterolert_idexx_biosolids/read/" . $idx_enterolert_bio_in));
+            redirect(site_url("enterolert_idexx_biosolids/read/" . $idx_enterolert_bio_in));
     }
 
 
@@ -242,10 +242,10 @@ class Enterolert_idexx_biosolids extends CI_Controller
         if ($row) {
             $this->Enterolert_idexx_biosolids_model->update($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
-            redirect(site_url('Enterolert_idexx_biosolids'));
+            redirect(site_url('enterolert_idexx_biosolids'));
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
-            redirect(site_url('Enterolert_idexx_biosolids'));
+            redirect(site_url('enterolert_idexx_biosolids'));
         }
     }
 
@@ -264,7 +264,7 @@ class Enterolert_idexx_biosolids extends CI_Controller
             $this->session->set_flashdata('message', 'Record Not Found');
         }
     
-        redirect(site_url('Enterolert_idexx_biosolids/read/'.$id_parent));
+        redirect(site_url('enterolert_idexx_biosolids/read/'.$id_parent));
     }
 
 
