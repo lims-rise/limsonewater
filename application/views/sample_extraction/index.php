@@ -537,10 +537,18 @@
                 // var index = page * length + (iDisplayIndex + 1);
                 // $('td:eq(0)', row).html(index);
             },
-            initComplete: function() {
+            // initComplete: function() {
+            //     let api = this.api();
+            //     let firstRow = api.row(0).node();
+            //     $(firstRow).addClass('highlight');
+            // }
+            drawCallback: function(settings) {
                 let api = this.api();
-                let firstRow = api.row(0).node();
-                $(firstRow).addClass('highlight');
+                let pageInfo = api.page.info();
+                if (pageInfo.page === 0) {
+                    let firstRow = api.row(0).node();
+                    $(firstRow).addClass('highlight');
+                }
             }
         });
 
