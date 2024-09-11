@@ -269,6 +269,13 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<style>
+    .highlight {
+        background-color: rgba(0, 255, 0, 0.1) !important;
+        font-weight: bold !important;
+    }
+</style>
+
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
@@ -529,6 +536,11 @@
                 var length = info.iLength;
                 // var index = page * length + (iDisplayIndex + 1);
                 // $('td:eq(0)', row).html(index);
+            },
+            initComplete: function() {
+                let api = this.api();
+                let firstRow = api.row(0).node();
+                $(firstRow).addClass('highlight');
             }
         });
 
