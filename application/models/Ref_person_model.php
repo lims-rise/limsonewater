@@ -22,7 +22,7 @@ class Ref_person_model extends CI_Model
         // $this->datatables->where('lab', $this->session->userdata('lab'));
         $this->datatables->where('flag', '0');
         $lvl = $this->session->userdata('id_user_level');
-        if ($lvl == 7){
+        if ($lvl == 4){
             $this->datatables->add_column('action', '', 'id_person');
         }
         else if (($lvl == 2) | ($lvl == 3)){

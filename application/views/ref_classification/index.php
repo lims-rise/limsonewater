@@ -11,10 +11,10 @@
         <div class="box-body">
         <div style="padding-bottom: 10px;">
             <?php
-                    $lvl = $this->session->userdata('id_user_level');
-                    if ($lvl != 7){
-                        echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Classification </button>";
-                    }
+                $lvl = $this->session->userdata('id_user_level');
+                if ($lvl != 4){
+                    echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Classification </button>";
+                }
             ?>
             
             <!-- <?php echo anchor(site_url('Ref_person/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to CSV', 'class="btn btn-success"'); ?> -->

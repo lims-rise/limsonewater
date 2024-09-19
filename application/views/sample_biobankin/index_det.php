@@ -52,7 +52,7 @@
 							<div class="box-body pad table-responsive">
 								<?php
 									$lvl = $this->session->userdata('id_user_level');
-									if ($lvl != 7){
+									if ($lvl != 4){
 										$q = $this->db->query('
 										SELECT a.replicates, COUNT(b.barcode_water) as cb_detail
 										FROM sample_biobank a
