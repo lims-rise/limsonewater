@@ -58,7 +58,7 @@ class Enterolert_idexx_water_model extends CI_Model
         $this->datatables->where('ewo.id_enterolert_in', $id);
         $this->datatables->group_by('ewo.id_enterolert_out');
         $lvl = $this->session->userdata('id_user_level');
-        if ($lvl == 7){
+        if ($lvl == 4){
             $this->datatables->add_column('action', anchor(site_url('Enterolert_idexx_water/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_enterolert_out');
         }
         else if ($lvl == 3){
