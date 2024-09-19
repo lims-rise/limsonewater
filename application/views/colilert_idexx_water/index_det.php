@@ -99,7 +99,7 @@
 
 				<div class="form-group">
 					<div class="modal-footer clearfix">
-						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('Colilert_idexx_water'); ?>';">
+						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('colilert_idexx_water'); ?>';">
 							<i class="fa fa-times"></i> Close
 						</button>
 					</div>

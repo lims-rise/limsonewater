@@ -107,7 +107,7 @@
 
 				<div class="form-group">
 					<div class="modal-footer clearfix">
-						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('Enterolert_idexx_biosolids'); ?>';">
+						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('enterolert_idexx_biosolids'); ?>';">
 							<i class="fa fa-times"></i> Close
 						</button>
 					</div>

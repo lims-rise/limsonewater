@@ -235,6 +235,14 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<style>
+    .highlight {
+        background-color: rgba(0, 255, 0, 0.1) !important;
+        font-weight: bold !important;
+    }
+</style>
+
+
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
@@ -371,29 +379,67 @@
             };
         };
 
+        // table = $("#mytable").DataTable({
+        //     // initComplete: function() {
+        //     //     var api = this.api();
+        //     //     $('#mytable_filter input')
+        //     //             .off('.DT')
+        //     //             .on('keyup.DT', function(e) {
+        //     //                 if (e.keyCode == 13) {
+        //     //                     api.search(this.value).draw();
+        //     //                 }
+        //     //     });
+        //     // },
+        //     oLanguage: {
+        //         sProcessing: "loading..."
+        //     },
+        //     // select: true;
+        //     processing: true,
+        //     serverSide: true,
+        //     ajax: {"url": "Sample_reception/json", "type": "POST"},
+        //     columns: [
+        //         // {
+        //         //     "data": "barcode_sample",
+        //         //     "orderable": false
+        //         // },
+        //         {"data": "id_project"},
+        //         {"data": "client"},
+        //         {"data": "id_client_sample"},
+        //         {"data": "id_one_water_sample"},
+        //         {"data": "sampletype"},
+        //         {"data": "initial"},
+        //         {"data": "date_arrival"},
+        //         {"data": "time_arrival"},
+        //         {
+        //             "data" : "action",
+        //             "orderable": false,
+        //             "className" : "text-center"
+        //         }
+        //     ],
+		// 	columnDefs: [
+		// 		{
+		// 			targets: [5], // Index of the 'estimate_price' column
+		// 			className: 'text-right' // Apply right alignment to this column
+		// 		}
+		// 	],
+        //     order: [[0, 'asc']],
+        //     rowCallback: function(row, data, iDisplayIndex) {
+        //         let info = this.fnPagingInfo();
+        //         let page = info.iPage;
+        //         let length = info.iLength;
+        //         // var index = page * length + (iDisplayIndex + 1);
+        //         // $('td:eq(0)', row).html(index);
+        //     }
+        // });
+
         table = $("#mytable").DataTable({
-            // initComplete: function() {
-            //     var api = this.api();
-            //     $('#mytable_filter input')
-            //             .off('.DT')
-            //             .on('keyup.DT', function(e) {
-            //                 if (e.keyCode == 13) {
-            //                     api.search(this.value).draw();
-            //                 }
-            //     });
-            // },
             oLanguage: {
                 sProcessing: "loading..."
             },
-            // select: true;
             processing: true,
             serverSide: true,
             ajax: {"url": "Sample_reception/json", "type": "POST"},
             columns: [
-                // {
-                //     "data": "barcode_sample",
-                //     "orderable": false
-                // },
                 {"data": "id_project"},
                 {"data": "client"},
                 {"data": "id_client_sample"},
@@ -403,26 +449,41 @@
                 {"data": "date_arrival"},
                 {"data": "time_arrival"},
                 {
-                    "data" : "action",
+                    "data": "action",
                     "orderable": false,
-                    "className" : "text-center"
+                    "className": "text-center"
                 }
             ],
-			columnDefs: [
-				{
-					targets: [5], // Index of the 'estimate_price' column
-					className: 'text-right' // Apply right alignment to this column
-				}
-			],
-            order: [[0, 'asc']],
+            columnDefs: [
+                {
+                    targets: [5], // Kolom yang ingin diberi kelas
+                    className: 'text-right'
+                }
+            ],
+            order: [[0, 'desc']],
             rowCallback: function(row, data, iDisplayIndex) {
-                let info = this.fnPagingInfo();
-                let page = info.iPage;
-                let length = info.iLength;
+                var info = this.fnPagingInfo();
+                var page = info.iPage;
+                var length = info.iLength;
                 // var index = page * length + (iDisplayIndex + 1);
                 // $('td:eq(0)', row).html(index);
+            },
+            // initComplete: function() {
+            //     let api = this.api();
+            //     let firstRow = api.row(0).node();
+            //     $(firstRow).addClass('highlight');
+            // }
+            drawCallback: function(settings) {
+                let api = this.api();
+                let pageInfo = api.page.info();
+                if (pageInfo.page === 0) {
+                    let firstRow = api.row(0).node();
+                    $(firstRow).addClass('highlight');
+                }
             }
         });
+
+
 
         $('#addtombol').click(function() {
             $('#mode').val('insert');

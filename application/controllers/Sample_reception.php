@@ -33,7 +33,7 @@ class Sample_reception extends CI_Controller
         $data['id_project'] = $this->Sample_reception_model->generate_project_id();
         $data['client'] = $this->Sample_reception_model->generate_client();
         $data['id_one_water_sample'] = $this->Sample_reception_model->generate_one_water_sample_id();
-        $this->template->load('template','Sample_reception/index', $data);
+        $this->template->load('template','sample_reception/index', $data);
     } 
     
     public function json() {
@@ -76,7 +76,7 @@ class Sample_reception extends CI_Controller
                 // 'barcode' => $this->Water_sample_reception_model->getBarcode(),
             );
                 
-            $this->template->load('template','Sample_reception/index_det', $data);
+            $this->template->load('template','sample_reception/index_det', $data);
 
         }
         else {
@@ -96,7 +96,7 @@ class Sample_reception extends CI_Controller
                 'sample_description' => $row->sample_description,
                 'test' => $this->Sample_reception_model->getTest(),
                 );
-                $this->template->load('template','Sample_reception/index_det2', $data);
+                $this->template->load('template','sample_reception/index_det2', $data);
         }
         else {
             // $this->template->load('template','Water_sample_reception/index_det');
@@ -157,7 +157,7 @@ class Sample_reception extends CI_Controller
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
-        redirect(site_url("Sample_reception"));
+        redirect(site_url("sample_reception"));
     }
 
         public function savedetail() {
@@ -261,7 +261,7 @@ class Sample_reception extends CI_Controller
                     $this->session->set_flashdata('message', 'No Testing Types Selected');
                 }
             }
-            redirect(site_url("Sample_reception/read/" . $id2_project));
+            redirect(site_url("sample_reception/read/" . $id2_project));
         }
   
 
@@ -275,10 +275,10 @@ class Sample_reception extends CI_Controller
         if ($row) {
             $this->Sample_reception_model->update($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
-            redirect(site_url('Sample_reception'));
+            redirect(site_url('sample_reception'));
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
-            redirect(site_url('Sample_reception'));
+            redirect(site_url('sample_reception'));
         }
     }
 
@@ -298,7 +298,7 @@ class Sample_reception extends CI_Controller
             $this->session->set_flashdata('message', 'Record Not Found');
         }
     
-        redirect(site_url('Sample_reception/read/'.$id_parent));
+        redirect(site_url('sample_reception/read/'.$id_parent));
     }
 
 
