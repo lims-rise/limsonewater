@@ -213,6 +213,26 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<!-- MODAL INFORMATION -->
+<div class="modal fade" id="confirm-modal-information" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #3c8dbc; color: white;">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
+					<h4 class="modal-title">Information Your Selection</h4>
+				</div>
+				<div class="modal-body">
+					<div id="information-content">
+						<!-- Content will be loaded here dynamically -->
+					</div>
+				</div>
+				<div class="modal-footer clearfix">
+					<button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Ok</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
 
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
@@ -269,7 +289,12 @@
 			});
 
 			if (selectedTestingTypes.length === 0) {
-				alert('No Testing Types Checked');
+				let informationContent = '<ul style="list-style-type:none; font-size: 16px">';
+						informationContent += '<li style="font-weight: bold;"> No testing type selected</li>';
+					informationContent += '</ul>';
+
+					$('#information-content').html(informationContent);
+				$('#confirm-modal-information').modal('show');
 				return;
 			}
 

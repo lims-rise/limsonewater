@@ -25,7 +25,7 @@
                         <div style="padding-bottom: 10px;">
                             <?php
                                     $lvl = $this->session->userdata('id_user_level');
-                                    if ($lvl != 4){
+                                    if ($lvl != 7){
                                         echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Sample Reception</button>";
                                     }
                             ?>        
@@ -101,7 +101,7 @@
                             <div class="form-group">
                                 <label for="id_client_sample" class="col-sm-4 control-label">Client Sample</label>
                                 <div class="col-sm-8">
-                                    <input id="id_client_sample" name="id_client_sample" placeholder="Client Sample" type="text" class="form-control">
+                                    <input id="id_client_sample" name="id_client_sample" placeholder="Client Sample" type="text" class="form-control" required>
                                     <div class="val1tip"></div>
                                 </div>
                             </div>
@@ -116,8 +116,8 @@
                             <div class="form-group">
                                 <label for="id_sampletype" class="col-sm-4 control-label">Sample Type</label>
                                 <div class="col-sm-8" >
-                                <select id='id_sampletype' name="id_sampletype" class="form-control" >
-                                    <option>-- Select Sample Type --</option>
+                                <select id='id_sampletype' name="id_sampletype" class="form-control" required>
+                                    <option value="" disabled>-- Select Sample Type --</option>
                                     <?php
                                     foreach($sampletype as $row){
                                         if ($id_sampletype == $row['id_sampletype']) {
@@ -153,9 +153,13 @@
                             <div class="form-group">
                                 <label for="date_arrival" class="col-sm-4 control-label">Date Arrive</label>
                                 <div class="col-sm-8">
-                                    <input id="date_arrival" name="date_arrival" type="date" class="form-control" placeholder="Date arrival" value="<?php echo date("Y-m-d"); ?>">
+                                    <input id="date_arrival" name="date_arrival" type="date" class="form-control" 
+                                        placeholder="Date arrival" 
+                                        value="<?php echo date('Y-m-d'); ?>" 
+                                        max="<?php echo date('Y-m-d'); ?>">
                                 </div>
                             </div>
+
 
                             <div class="form-group">
                                 <label for="time_arrival" class="col-sm-4 control-label">Time Arrive</label>
@@ -175,7 +179,7 @@
                             <div class="form-group">
                                 <label for="date_collected" class="col-sm-4 control-label">Date collected</label>
                                 <div class="col-sm-8">
-                                    <input id="date_collected" name="date_collected" type="date" class="form-control" placeholder="Date collected" value="<?php echo date("Y-m-d"); ?>">
+                                    <input id="date_collected" name="date_collected" type="date" class="form-control" placeholder="Date collected" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
                                 </div>
                             </div>
 
@@ -366,43 +370,31 @@
         // });
 
 
-        $('#id_client_sample').on("blur", function() {
-            let idClientSample = $('#id_client_sample').val();
-            if (idClientSample.trim() === '') {
-                let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Input tidak boleh kosong !</span>');
-                $('.val1tip').tooltipster('content', tip);
-                $('.val1tip').tooltipster('show');
-                $('#id_client_sample').css({'background-color' : '#FFE6E7'});
-                setTimeout(function(){
-                    $('#id_client_sample').css({'background-color' : '#FFFFFF'});
-                    setTimeout(function(){
-                        $('#id_client_sample').css({'background-color' : '#FFE6E7'});
-                        setTimeout(function(){
-                            $('#id_client_sample').css({'background-color' : '#FFFFFF'});
-                        }, 300);                            
-                    }, 300);
-                }, 300);
-            }
-        });
+        // $('#id_client_sample').on("blur", function() {
+        //     let idClientSample = $('#id_client_sample').val();
+        //     if (idClientSample.trim() === '') {
+        //         let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Input tidak boleh kosong !</span>');
+        //         $('.val1tip').tooltipster('content', tip);
+        //         $('.val1tip').tooltipster('show');
+        //         $('#id_client_sample').css({'background-color' : '#FFE6E7'});
+        //         setTimeout(function(){
+        //             $('#id_client_sample').css({'background-color' : '#FFFFFF'});
+        //             setTimeout(function(){
+        //                 $('#id_client_sample').css({'background-color' : '#FFE6E7'});
+        //                 setTimeout(function(){
+        //                     $('#id_client_sample').css({'background-color' : '#FFFFFF'});
+        //                 }, 300);                            
+        //             }, 300);
+        //         }, 300);
+        //     }
+        //     // Tambahkan atribut required pada input field
+        //     $('#id_client_sample').attr('required', 'required');
 
-        $('#id_sampletype').on("change", function() {
-            let selectedSampleType = $('#id_sampletype').val();
-            if (selectedSampleType === '-- Select Sample Type --') {
-                let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Pilihan tidak boleh kosong!</span>');
-                $('.val1tip').tooltipster('content', tip);
-                $('.val1tip').tooltipster('show');
-                $('#id_sampletype').css({'background-color' : '#FFE6E7'});
-                setTimeout(function(){
-                    $('#id_sampletype').css({'background-color' : '#FFFFFF'});
-                    setTimeout(function(){
-                        $('#id_sampletype').css({'background-color' : '#FFE6E7'});
-                        setTimeout(function(){
-                            $('#id_sampletype').css({'background-color' : '#FFFFFF'});
-                        }, 300);                            
-                    }, 300);
-                }, 300);
-            }
-        });
+        //     // Hide default notifnya yang muncul dari browser
+        //     $('#id_client_sample').on('invalid', function(event) {
+        //         event.preventDefault();
+        //     });
+        // });
 
 
         $('#id_client_sample').on("change", function() {
@@ -430,7 +422,7 @@
                             }, 300);
                         }, 300);
                     } else if (/[^a-zA-Z0-9]/.test(idClientSample)) {
-                        let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Input tidak boleh mengandung simbol !</span>');
+                        let tip = $('<span><i class="fa fa-exclamation-triangle"></i>  Wrong type <strong>' + idClientSample +'</strong> Input must not contain symbols !</span>');
                         $('.val1tip').tooltipster('content', tip);
                         $('.val1tip').tooltipster('show');
                         $('#id_client_sample').focus();

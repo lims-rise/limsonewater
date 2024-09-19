@@ -84,8 +84,8 @@
                                 <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
                                 <div class="col-sm-8">
                                     <input id="idx_one_water_sample" name="idx_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control">
-                                    <select id="id_one_water_sample" name="id_one_water_sample" class="form-control idOneWaterSampleSelect">
-                                        <option>-- Select Sample ID --</option>
+                                    <select id="id_one_water_sample" name="id_one_water_sample" class="form-control idOneWaterSampleSelect" required>
+                                        <option value="" disabled>-- Select Sample ID --</option>
                                         <?php
                                             foreach($id_one as $row) {
                                                 if ($id_one_water_sample == $row['id_one_water_sample']) {
@@ -102,8 +102,8 @@
                             <div class="form-group">
                                 <label for="id_person" class="col-sm-4 control-label">Lab Tech</label>
                                 <div class="col-sm-8">
-                                    <select id="id_person" name="id_person" class="form-control">
-                                        <option>-- Select Lab Tech --</option>
+                                    <select id="id_person" name="id_person" class="form-control" required>
+                                        <option value="" disabled>-- Select Lab Tech --</option>
                                         <?php
                                             foreach($labtech as $row) {
                                                 if ($id_person == $row['id_person']) {
@@ -120,7 +120,7 @@
                             <div class="form-group">
                                 <label for="date_start" class="col-sm-4 control-label">Date Assay Start</label>
                                 <div class="col-sm-8">
-                                    <input id="date_start" name="date_start" type="date" class="form-control" placeholder="Date Assay Start" value="<?php echo date("Y-m-d"); ?>">
+                                    <input id="date_start" name="date_start" type="date" class="form-control" placeholder="Date Assay Start" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
                                 </div>
                             </div>
 
@@ -135,7 +135,7 @@
                             <div class="form-group">
                                 <label for="barcode_moisture_content" class="col-sm-4 control-label">Barcode Moisture Content</label>
                                 <div class="col-sm-8">
-                                    <input id="barcode_moisture_content" name="barcode_moisture_content" placeholder="Barcode Moisture Content" type="text" class="form-control">
+                                    <input id="barcode_moisture_content" name="barcode_moisture_content" placeholder="Barcode Moisture Content" type="text" class="form-control" required>
                                     <div class="val1tip"></div>
                                 </div>
                             </div>
@@ -164,7 +164,7 @@
                             <div class="form-group">
                                 <label for="time_incubator" class="col-sm-4 control-label">Time in Incubator</label>
                                 <div class="col-sm-8">
-                                    <input id="time_incubator" name="time_incubator" type="date" class="form-control" placeholder="Time in Incubator" value="<?php echo date("Y-m-d"); ?>">
+                                    <input id="time_incubator" name="time_incubator" type="date" class="form-control" placeholder="Time in Incubator" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
                                 </div>
                             </div>
 
@@ -384,6 +384,22 @@
                         $('.val1tip').tooltipster('show');
                         $('#barcode_moisture_content').focus();
                         $('#barcode_moisture_content').val('');       
+                        $('#barcode_moisture_content').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#barcode_moisture_content').css({'background-color' : '#FFFFFF'});
+                            setTimeout(function(){
+                                $('#barcode_moisture_content').css({'background-color' : '#FFE6E7'});
+                                setTimeout(function(){
+                                    $('#barcode_moisture_content').css({'background-color' : '#FFFFFF'});
+                                }, 300);                            
+                            }, 300);
+                        }, 300);
+                    } else if (/[^a-zA-Z0-9]/.test(barcodeMoistureContent)) {
+                        let tip = $('<span><i class="fa fa-exclamation-triangle"></i>  Wrong type <strong>' + barcodeMoistureContent +'</strong> Input must not contain symbols !</span>');
+                        $('.val1tip').tooltipster('content', tip);
+                        $('.val1tip').tooltipster('show');
+                        $('#barcode_moisture_content').focus();
+                        $('#barcode_moisture_content').val('');
                         $('#barcode_moisture_content').css({'background-color' : '#FFE6E7'});
                         setTimeout(function(){
                             $('#barcode_moisture_content').css({'background-color' : '#FFFFFF'});

@@ -104,7 +104,7 @@
                         <div class="form-group">
                             <label for="barcode_sample" class="col-sm-4 control-label">Barcode Sample</label>
                             <div class="col-sm-8">
-                                <input id="barcode_sample" name="barcode_sample" placeholder="Barcode Sample" type="text" class="form-control">
+                                <input id="barcode_sample" name="barcode_sample" placeholder="Barcode Sample" type="text" class="form-control" required>
                                 <div class="val1tip"></div>
                             </div>
                         </div>
@@ -119,7 +119,7 @@
                         <div class="form-group">
                             <label for="date_extraction" class="col-sm-4 control-label">Date Extraction</label>
                             <div class="col-sm-8">
-                                <input id="date_extraction" name="date_extraction" type="date" class="form-control" placeholder="Date Extraction" value="<?php echo date("Y-m-d"); ?>">
+                                <input id="date_extraction" name="date_extraction" type="date" class="form-control" placeholder="Date Extraction" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
                             </div>
                         </div>
 
