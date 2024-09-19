@@ -136,7 +136,7 @@
                                     <div class="form-group">
                                         <label for="date_sample" class="col-sm-4 control-label">Date Sample</label>
                                         <div class="col-sm-8">
-                                            <input id="date_sample" name="date_sample" type="date" class="form-control" placeholder="Date Sample" value="<?php echo date("Y-m-d"); ?>">
+                                            <input id="date_sample" name="date_sample" type="date" class="form-control" placeholder="Date Sample" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
                                         </div>
                                     </div>
 
