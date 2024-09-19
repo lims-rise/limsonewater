@@ -70,19 +70,6 @@ class Sample_extraction_model extends CI_Model
         return $this->db->get('sample_reception_testing')->row();
     }
 
-    // function get_detail($id)
-    // {
-    //   $response = array();
-    //   $this->db->select('*');
-    //   $this->db->join('ref_classification', 'sample_reception.classification_id=ref_classification.classification_id', 'left');
-    //   $this->db->join('ref_person', 'sample_reception.id_person=ref_person.id_person', 'left');
-    //   $this->db->where('sample_reception.project_id', $id);
-    //   $this->db->where('sample_reception.flag', '0');
-    //   $q = $this->db->get('sample_reception');
-    //   $response = $q->row();
-    //   return $response;
-    // }
-
     function get_detail2($id)
     {
       $response = array();
@@ -94,92 +81,13 @@ class Sample_extraction_model extends CI_Model
       return $response;
     }
    
-    // Function to get the latest project_id
-    // public function generate_project_id() {
-    //     $latest_id = $this->get_latest_project_id();
-    //     if ($latest_id) {
-    //         $parts = explode('-', $latest_id);
-    //         $number = intval($parts[1]) + 1;
-    //         $new_id = sprintf('%s-%05d', '24', $number);
-    //         return $new_id;
-    //     } else {
-    //         // If there is no previous project_id, start from '24-00001'
-    //         return '24-00001';
-    //     }
-    // }
-    // public function get_latest_project_id() {
-    //     $this->db->select('project_id');
-    //     $this->db->order_by('project_id', 'DESC');
-    //     $this->db->limit(1);
-    //     $query = $this->db->get('sample_reception');
-
-    //     // Check if there is a previous project_id
-    //     if ($query->num_rows() > 0) {
-    //         return $query->row()->project_id;
-    //     } else {
-    //         return null;
-    //     }
-    // }
-
-    // // Function to generate the next project_id
-    // public function generate_project_id() {
-    //     $latest_id = $this->get_latest_project_id();
-    //     $current_year = date('y'); // Get two last digits of current year
-    //     $prefix = 'MU' . $current_year; // Prefix consist of MU and two last digits of current year
-    
-    //     if ($latest_id) {
-    //         if (strpos($latest_id, $prefix) === 0) {
-    //             $number = intval(substr($latest_id, strlen($prefix))) + 1;
-    //         } else {
-    //             $number = 1;
-    //         }
-    //     } else {
-    //         $number = 1;
-    //     }
-    //     $new_id = sprintf('%s%05d', $prefix, $number);
-    //     return $new_id;
-    // }
-
-    // // Function to get the latest client
-    // public function get_latest_client() {
-    //     $this->db->select('client');
-    //     $this->db->order_by('project_id', 'DESC');
-    //     $this->db->limit(1);
-    //     $query = $this->db->get('sample_reception');
-
-    //     // Check if there is a previous client
-    //     if ($query->num_rows() > 0) {
-    //         return $query->row()->client;
-    //     } else {
-    //         return null;
-    //     }
-    // }
-
-    // // Function to generate the next client
-    // public function generate_client() {
-    //     $latest_id = $this->get_latest_client();
-    //     $prefix = 'CLT'; // Prefix consist of CLT
-
-    //     if ($latest_id) {
-    //         if (strpos($latest_id, $prefix) === 0) {
-    //             $number = intval(substr($latest_id, strlen($prefix))) + 1;
-    //         } else {
-    //             $number = 1;
-    //         }
-    //     } else {
-    //         $number = 1;
-    //     }
-    //     $new_id = sprintf('%s%05d', $prefix, $number);
-    //     return $new_id;
-
-    // }
-
     // Fuction insert data
     public function insert($data) {
-        // $data['project_id'] = $this->generate_project_id();
-        // $data['client'] = $this->generate_client();
-        // $data['id_one_water_sample'] = $this->generate_id_one_water_sample();
         $this->db->insert('sample_extraction', $data);
+    }
+
+    public function insert_freez($data_freez) {
+        $this->db->insert('freezer_in', $data_freez);
     }
     
 
@@ -189,6 +97,13 @@ class Sample_extraction_model extends CI_Model
         $this->db->where('barcode_sample', $id);
         $this->db->update('sample_extraction', $data);
     }
+
+    function update_freez($id, $data_freez)
+    {
+        $this->db->where('barcode_sample', $id);
+        $this->db->update('freezer_in', $data_freez);
+    }
+
 
     function insert_det($data) {
         $this->db->insert('sample_reception_sample', $data);

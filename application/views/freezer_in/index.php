@@ -22,14 +22,14 @@
             <thead>
                 <tr>
                     <!-- <th width="30px">No</th> -->
-		    <th>Barcode Sample</th>
-		    <th>Date IN</th>
-		    <th>Initial</th>
-		    <th>Vessel</th>
-		    <th>Cryobox</th>
-		    <th>Location</th>
-		    <th>Comments</th>
-		    <th>Action</th>
+                    <th>Barcode Tube</th>
+                    <th>Date IN</th>
+                    <th>Time IN</th>
+                    <th>Lab Tech</th>
+                    <th>Cryobox</th>
+                    <th>Location</th>
+                    <th>Comments</th>
+                    <th>Action</th>
                 </tr>
             </thead>
 	    
@@ -60,7 +60,6 @@
                     <div class="modal-body">
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
                         <input id="id" name="id" type="hidden" class="form-control input-sm">
-                        <input id="idfrez" name="idfrez" type="hidden" class="form-control input-sm">
 
                         <div class="form-group">
                             <label for="date_in" class="col-sm-4 control-label">Date IN to freezer</label>
@@ -279,20 +278,6 @@
         };
 
         table = $("#mytable").DataTable({
-            // initComplete: function() {
-            //     var api = this.api();
-            //     $('#mytable_filter input')
-            //             .off('.DT')
-            //             .on('keyup.DT', function(e) {
-            //                 if (e.keyCode == 13) {
-            //                     api.search(this.value).draw();
-            //                 }
-            //     });
-            // },
-            // oLanguage: {
-            //     sProcessing: "loading..."
-            // },
-            // select: true;
             processing: true,
             serverSide: true,
             ajax: {"url": "Freezer_in/json", "type": "POST"},
@@ -301,10 +286,10 @@
                 //     "data": "barcode_sample",
                 //     "orderable": false
                 // },
-                {"data": "barcode_sample"},
+                {"data": "barcode_tube"},
                 {"data": "date_in"},
+                {"data": "time_in"},
                 {"data": "initial"},
-                {"data": "vessel"},
                 {"data": "cryobox"},
                 {"data": "location"},
                 {"data": "comments"},

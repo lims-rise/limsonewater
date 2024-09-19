@@ -107,6 +107,23 @@ class Sample_extraction extends CI_Controller
             );
     
             $this->Sample_extraction_model->insert($data);
+
+            $data_freez = array(
+                'date_in' => $this->input->post('date_extraction', TRUE),
+                'time_in' => $dt->format('H:i:s'),
+                'id_person' => $this->input->post('id_person', TRUE),
+                'barcode_sample' => $this->input->post('barcode_sample', TRUE),
+                'barcode_tube' => $this->input->post('barcode_tube', TRUE),
+                'cryobox' => $this->input->post('cryobox', TRUE),
+                'id_location' => $this->input->post('id_loc', TRUE),
+                'comments' => $this->input->post('comments', TRUE),
+                'uuid' => $this->uuid->v4(),
+                'user_created' => $this->session->userdata('id_users'),
+                'date_created' => $dt->format('Y-m-d H:i:s'),
+                'flag' => '0',
+            );
+    
+            $this->Sample_extraction_model->insert_freez($data_freez);            
             $this->session->set_flashdata('message', 'Create Record Success');
 
         } else if ($mode == "edit") {
@@ -129,6 +146,21 @@ class Sample_extraction extends CI_Controller
             );
 
             $this->Sample_extraction_model->update($barcode_sample, $data);
+
+            $data_freez = array(
+                'date_in' => $this->input->post('date_extraction', TRUE),
+                'time_in' => $dt->format('H:i:s'),
+                'id_person' => $this->input->post('id_person', TRUE),
+                'barcode_tube' => $this->input->post('barcode_tube', TRUE),
+                'cryobox' => $this->input->post('cryobox', TRUE),
+                'id_location' => $this->input->post('id_loc', TRUE),
+                'comments' => $this->input->post('comments', TRUE),
+                'user_updated' => $this->session->userdata('id_users'),
+                'date_updated' => $dt->format('Y-m-d H:i:s'),
+            );
+    
+            $this->Sample_extraction_model->update_freez($barcode_sample, $data_freez);       
+
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     

@@ -12,7 +12,7 @@ class Freezer_in extends CI_Controller
     {
         parent::__construct();
         is_login();
-        $this->load->model(['Freezer_in_model', 'O3_filter_paper_model']);
+        $this->load->model(['Freezer_in_model']);
         $this->load->library('form_validation');        
 	    $this->load->library('datatables');
 	    $this->load->library('uuid');
@@ -22,11 +22,10 @@ class Freezer_in extends CI_Controller
     {
         // $this->load->model('Freezer_in_model');
         $data['person'] = $this->Freezer_in_model->getLabtech();
-        $data['vessel'] = $this->Freezer_in_model->getVesselType();
-        $data['freezer'] = $this->O3_filter_paper_model->getFreezer();
-        $data['shelf'] = $this->O3_filter_paper_model->getShelf();
-        $data['rack'] = $this->O3_filter_paper_model->getRack();
-        $data['rack_level'] = $this->O3_filter_paper_model->getDrawer();
+        $data['freezer'] = $this->Freezer_in_model->getFreezer();
+        $data['shelf'] = $this->Freezer_in_model->getShelf();
+        $data['rack'] = $this->Freezer_in_model->getRack();
+        $data['rack_level'] = $this->Freezer_in_model->getDrawer();
         // $data['type'] = $this->Freezer_in_model->getSampleType();
         $this->template->load('template','Freezer_in/index', $data);
     } 
@@ -131,7 +130,6 @@ class Freezer_in extends CI_Controller
         header('Content-Type: application/json');
         echo json_encode($data);
         // return $this->response->setJSON($data);
-        // $data['location'] = $this->O3_filter_paper_model->find_loc($id);
     }
 
 
