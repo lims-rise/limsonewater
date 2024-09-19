@@ -43,18 +43,6 @@ class Sample_extraction_model extends CI_Model
                   ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'barcode_sample');
         }
 
-        // if ($lvl == 7){
-        //     $this->datatables->add_column('action', anchor(site_url('Sample_extraction/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'barcode_sample');
-        // }
-        // else if (($lvl == 2) | ($lvl == 3)){
-        //     $this->datatables->add_column('action', anchor(site_url('Sample_extraction/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
-        //         ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'barcode_sample');
-        // }
-        // else {
-        //     $this->datatables->add_column('action', anchor(site_url('Sample_extraction/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
-        //         ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-        //         ".anchor(site_url('Sample_extraction/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting project ID : $1 ?\')"'), 'barcode_sample');
-        // }
         return $this->datatables->generate();
     }
 

@@ -29,7 +29,7 @@ class Dictionary_model extends CI_Model
         $this->datatables->from('dictionary');
 
         $lvl = $this->session->userdata('id_user_level');
-        if ($lvl == 7){
+        if ($lvl == 4){
             $this->datatables->add_column('action', anchor(site_url('dictionary/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"> Detail</i>', array('class' => 'btn btn-info btn-sm')), 'id');
         }
         else if (($lvl == 2) | ($lvl == 3)){

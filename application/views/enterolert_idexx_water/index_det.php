@@ -70,7 +70,7 @@
 							<div class="box-body pad table-responsive">
 								<?php
 									$lvl = $this->session->userdata('id_user_level');
-									if ($lvl != 7){
+									if ($lvl != 4){
 										echo "<button class='btn btn-primary' id='addtombol_det'><i class='fa fa-wpforms' aria-hidden='true'></i> New Data</button>";
 									}
 								?>

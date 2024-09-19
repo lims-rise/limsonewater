@@ -19,7 +19,7 @@
             $this->datatables->from('ref_classification');
             $this->datatables->where('flag', '0');
             $lvl = $this->session->userdata('id_user_level');
-            if ($lvl == 7){
+            if ($lvl == 4){
                 $this->datatables->add_column('action', '', 'classification_id');
             }
             else if (($lvl == 2) | ($lvl == 3)){

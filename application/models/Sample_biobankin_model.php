@@ -81,27 +81,6 @@ class Sample_biobankin_model extends CI_Model
         return $this->datatables->generate();
     }
 
-    // function subjson2($id2) {
-    //     $this->datatables->select('a.testing_id, b.testing_type, a.date_collected, a.time_collected, a.no_submitted, a.flag');
-    //     $this->datatables->from('sample_reception_testing a');
-    //     $this->datatables->join('ref_testing b', 'a.testing_type_id = b.testing_type_id', 'left');
-    //     $this->datatables->where('a.sample_id', $id2);
-    //     $this->datatables->where('a.flag', '0');
-
-    //     $lvl = $this->session->userdata('id_user_level');
-    //     if ($lvl == 7){
-    //         $this->datatables->add_column('action', '', 'testing_id');
-    //     }
-    //     else if (($lvl == 2) | ($lvl == 3)){
-    //         $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Update</button>', 'testing_id');
-    //     }
-    //     else {
-    //         $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-    //             ".anchor(site_url('Sample_reception/delete_detail2/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Confirm deleting this sample testing ID : $1?\')"'), 'testing_id');
-    //         }
-    //     return $this->datatables->generate();
-    // }
-
     function get_by_id($id)
     {
         $this->db->where($this->id, $id);

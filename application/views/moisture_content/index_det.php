@@ -75,7 +75,7 @@
 							<div class="box-body pad table-responsive">
 								<?php
 									$lvl = $this->session->userdata('id_user_level');
-									if ($lvl != 7){
+									if ($lvl != 4){
 										echo "<button class='btn btn-primary' id='addtombol_det24'><i class='fa fa-wpforms' aria-hidden='true'></i> New Data</button>";
 									}
 								?>
@@ -103,7 +103,7 @@
 							<div class="box-body pad table-responsive">
 								<?php
 									$lvl = $this->session->userdata('id_user_level');
-									if ($lvl != 7){
+									if ($lvl != 4){
 										echo "<button class='btn btn-primary' id='addtombol_det72'><i class='fa fa-wpforms' aria-hidden='true'></i> New Data</button>";
 									}
 								?>

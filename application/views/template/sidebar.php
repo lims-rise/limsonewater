@@ -26,34 +26,7 @@ if ($this->session->userdata('id_user_level') == "") {
 <!-- </ul> -->
 
 <section class="sidebar">
-<!-- <div class="sidebar-form" style="text-align: center;">
-    <select id='id_country' name="id_country" class="form-control">
-        <?php
-        // $lvl = $this->session->userdata('id_user_level');  
-        // if (($lvl == 1) | 
-        //     ($lvl == 4) | 
-        //     ($lvl == 7)) {
-        //     if ($this->session->userdata('lab') == 1) {
-        //         echo "<option value='1' selected='selected'>Indonesia</option>";
-        //         echo "<option value='2'>Fiji</option>";
-        //     }
-        //     else {
-        //         echo "<option value='1'>Indonesia</option>";
-        //         echo "<option value='2' selected='selected'>Fiji</option>";
-        //     }
-        // }
-        // else if (($lvl == 2) | 
-        //     ($lvl == 5)) {
-        //     echo "<option value='1' selected='selected'>Indonesia</option>";
-        // }
-        // else if (($lvl == 3) | 
-        //     ($lvl == 6)) {
-        //     echo "<option value='2' selected='selected'>Fiji</option>";
-        // }
-            ?>
-    </select>
-    <input type="hidden" id="id_user" value="<?php echo $this->session->userdata('id_users')?>">
-</div> -->
+
 
 
 <!-- <h4 class="box-title" id="box-title"> CLOUDSHEAVEN.ID <span id="my-cool-loader"></span></h4> -->

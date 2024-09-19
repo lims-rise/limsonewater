@@ -34,7 +34,7 @@ class Freezer_in_model extends CI_Model
         $this->datatables->where('a.flag', '0');
 
         $lvl = $this->session->userdata('id_user_level');
-        if ($lvl == 7){
+        if ($lvl == 4){
             $this->datatables->add_column('action', '', 'id');
         }
         else if (($lvl == 2) | ($lvl == 3)){

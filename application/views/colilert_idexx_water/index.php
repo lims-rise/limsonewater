@@ -10,7 +10,7 @@
                         <div style="padding-bottom: 10px;">
                             <?php
                                     $lvl = $this->session->userdata('id_user_level');
-                                    if ($lvl != 7){
+                                    if ($lvl != 4){
                                         echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Colilert Idexx - Water</button>";
                                     }
                             ?>        
