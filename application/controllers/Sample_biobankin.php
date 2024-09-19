@@ -57,14 +57,6 @@ class Sample_biobankin extends CI_Controller
 
     public function read($id)
     {
-        // $data['culture'] = $this->Sample_biobankin_model->getCulture();
-        // $data['barcode'] = $this->Water_Sample_biobankin_model->getBarcode();
-        // $data['freez1'] = $this->Sample_biobankin_model->getFreezer1();
-        // $data['shelf1'] = $this->Sample_biobankin_model->getFreezer2();
-        // $data['rack1'] = $this->Sample_biobankin_model->getFreezer3();
-        // $data['tray1'] = $this->Sample_biobankin_model->getFreezer4();
-        // $data['row1'] = $this->Sample_biobankin_model->getFreezer5();
-        // $data['column1'] = $this->Sample_biobankin_model->getFreezer6();
         $row = $this->Sample_biobankin_model->get_detail($id);
         if ($row) {
             $data = array(
@@ -72,6 +64,7 @@ class Sample_biobankin extends CI_Controller
                 'date_conduct' => $row->date_conduct,
                 'replicates' => $row->replicates,
                 'initial' => $row->initial,
+                'id_person' => $row->id_person,
                 'realname' => $row->realname,
                 'comments' => $row->comments,
                 'culture' => $this->Sample_biobankin_model->getCulture(),
@@ -93,24 +86,6 @@ class Sample_biobankin extends CI_Controller
         }
 
     } 
-
-    // public function read2($id)
-    // {
-    //     $data['test'] = $this->Sample_biobankin_model->getTest();
-    //     $row = $this->Sample_biobankin_model->get_detail2($id);
-    //     if ($row) {
-    //         $data = array(
-    //             'id_project' => $row->id_project,
-    //             'id_sample' => $row->id_sample,
-    //             'sample_description' => $row->sample_description,
-    //             'test' => $this->Sample_biobankin_model->getTest(),
-    //             );
-    //             $this->template->load('template','Sample_biobankin/index_det2', $data);
-    //     }
-    //     else {
-    //         // $this->template->load('template','Water_Sample_biobankin/index_det');
-    //     }
-    // }     
 
     public function save() {
         $mode = $this->input->post('mode', TRUE);
@@ -160,6 +135,10 @@ class Sample_biobankin extends CI_Controller
     }
 
     public function savedetail() {
+
+        $date_conduct = $this->input->post('date_conduct2', TRUE);
+        $id_person = $this->input->post('id_person', TRUE);
+
         $mode = $this->input->post('mode_det', TRUE);
         $id_one_water_sample = $this->input->post('id_one_water_sample', TRUE);
         $dt = new DateTime();
@@ -206,8 +185,24 @@ class Sample_biobankin extends CI_Controller
                 'user_created' => $this->session->userdata('id_users'),
                 'date_created' => $dt->format('Y-m-d H:i:s'),
             );
-    
             $this->Sample_biobankin_model->insert_det($data);
+
+            $data_freez = array(
+                'date_in' => $date_conduct,
+                'time_in' => $dt->format('H:i:s'),
+                'id_person' => $id_person,
+                'barcode_sample' => $barcode_water,
+                'barcode_tube' => $barcode_tube,
+                'cryobox' => $cryobox,
+                'id_location' => $id_loc,
+                'comments' => $comments . ' POS: ' . $id_row . $id_col,
+                'uuid' => $this->uuid->v4(),
+                'user_created' => $this->session->userdata('id_users'),
+                'date_created' => $dt->format('Y-m-d H:i:s'),
+                'flag' => '0',
+            );
+            $this->Sample_biobankin_model->insert_freez($data_freez);               
+
             $this->session->set_flashdata('message', 'Create Record Success');
 
         } else if ($mode == "edit") {
@@ -228,8 +223,22 @@ class Sample_biobankin extends CI_Controller
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
-
             $this->Sample_biobankin_model->update_det($barcode_water, $data);
+
+            $data_freez = array(
+                'date_in' => $date_conduct,
+                'time_in' => $dt->format('H:i:s'),
+                'id_person' => $id_person,
+                'barcode_tube' => $barcode_tube,
+                'cryobox' => $cryobox,
+                'id_location' => $id_loc,
+                'comments' => $comments . ' POS: ' . $id_row . $id_col,
+                'uuid' => $this->uuid->v4(),
+                'user_created' => $this->session->userdata('id_users'),
+                'date_created' => $dt->format('Y-m-d H:i:s'),
+                'flag' => '0',
+            );
+            $this->Sample_biobankin_model->update_freez($barcode_water, $data_freez);                
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     

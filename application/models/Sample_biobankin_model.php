@@ -56,7 +56,7 @@ class Sample_biobankin_model extends CI_Model
         $this->datatables->select('a.barcode_water, a.id_one_water_sample, a.weight,
                              a.concentration_dna, a.volume, b.culture, 
                              a.barcode_tube, a.cryobox, 
-                             concat("F",c.freezer,"-","S",c.shelf,"-","R",c.rack,"-","DRW",c.tray) AS location,
+                             concat("F",c.freezer,"-","S",c.shelf,"-","R",c.rack,"-","T",c.tray) AS location,
                              a.comments, a.id_culture, a.id_location, a.id_pos, 
                              c.freezer,c.shelf,c.rack,c.tray, d.rows1, d.columns1
                              ');
@@ -119,23 +119,6 @@ class Sample_biobankin_model extends CI_Model
       return $response;
     }
 
-    // function get_detail($id)
-    // {
-    //   $response = array();
-    //   $this->db->select('sample_biobank_detail.barcode_water, sample_biobank_detail.id_one_water_sample, sample_biobank_detail.weight,
-    //                         sample_biobank_detail.concentration_dna, sample_biobank_detail.volume, ref_culture.culture, 
-    //                         sample_biobank_detail.barcode_tube, sample_biobank_detail.cryobox, 
-    //                         concat("F",ref_location.freezer,"-","S",ref_location.shelf,"-","R",ref_location.rack,"-","DRW",ref_location.rack_level) AS location,
-    //                         sample_biobank_detail.id_culture, sample_biobank_detail.id_location');
-    //   $this->db->join('ref_culture', 'sample_biobank_detail.id_culture=ref_culture.id_culture', 'left');
-    //   $this->db->join('ref_location', 'sample_biobank_detail.id_location=ref_location.id_location', 'left');
-    //   $this->db->where('sample_biobank_detail.id_one_water_sample', $id);
-    //   $this->db->where('sample_biobank_detail.flag', '0');
-    //   $q = $this->db->get('sample_biobank_detail');
-    //   $response = $q->row();
-    //   return $response;
-    // }
-
     function get_detail2($id)
     {
       $response = array();
@@ -146,20 +129,6 @@ class Sample_biobankin_model extends CI_Model
       $response = $q->row();
       return $response;
     }
-   
-    // Function to get the latest project_id
-    // public function generate_project_id() {
-    //     $latest_id = $this->get_latest_project_id();
-    //     if ($latest_id) {
-    //         $parts = explode('-', $latest_id);
-    //         $number = intval($parts[1]) + 1;
-    //         $new_id = sprintf('%s-%05d', '24', $number);
-    //         return $new_id;
-    //     } else {
-    //         // If there is no previous project_id, start from '24-00001'
-    //         return '24-00001';
-    //     }
-    // }
 
     function getID_one(){
         $q = $this->db->query('
@@ -189,12 +158,23 @@ class Sample_biobankin_model extends CI_Model
         $this->db->insert($this->table, $data);
     }
 
+    public function insert_freez($data_freez) {
+        $this->db->insert('freezer_in', $data_freez);
+    }    
+
     // Function update data
     function update($id, $data)
     {
         $this->db->where($this->id_table, $id);
         $this->db->update($this->table, $data);
     }
+
+    function update_freez($id, $data_freez)
+    {
+        $this->db->where('barcode_sample', $id);
+        $this->db->update('freezer_in', $data_freez);
+    }
+
 
     function insert_det($data)
     {

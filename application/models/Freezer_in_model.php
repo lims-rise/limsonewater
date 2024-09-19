@@ -17,20 +17,12 @@ class Freezer_in_model extends CI_Model
 
     // datatables
     function json() {
-        // $this->datatables->select('id, date_in, time_in, initial, vessel, barcode_sample, location, 
-        //         comments, id_person, id_vessel, id_location_80, need_cryobox, cryobox, lab, flag');
-        // $this->datatables->from('v_freez_in');
-        // $this->datatables->where('lab', $this->session->userdata('lab'));
-        // $this->datatables->where('flag', '0');
-
-        $this->datatables->select('a.id, a.date_in, DATE_FORMAT(a.time_in, "%H:%i") AS time_in, b.initial, c.vessel, a.barcode_sample, 
-        concat("F",d.freezer,"-","S",d.shelf,"-","R",d.rack,"-","DRW",d.rack_level) AS location, a.comments,
-        a.id_person, a.id_vessel, a.id_location_80, a.need_cryobox, a.cryobox, a.lab, a.flag');
+        $this->datatables->select('a.barcode_tube, a.id, a.date_in, DATE_FORMAT(a.time_in, "%H:%i") AS time_in, b.initial,  
+        a.cryobox, concat("F",d.freezer,"-","S",d.shelf,"-","R",d.rack,"-","T",d.tray) AS location, a.comments,
+        a.id_person, a.id_location, a.flag');
         $this->datatables->from('freezer_in a');
         $this->datatables->join('ref_person b', 'a.id_person=b.id_person', 'left');
-        $this->datatables->join('ref_vessel c', 'a.id_vessel=c.id_vessel', 'left');
-        $this->datatables->join('ref_location_80 d', 'a.id_location_80=d.id_location_80 AND d.lab = '.$this->session->userdata('lab') , 'left');
-        $this->datatables->where('a.lab', $this->session->userdata('lab'));
+        $this->datatables->join('ref_location d', 'a.id_location=d.id_location', 'left');
         $this->datatables->where('a.flag', '0');
 
         $lvl = $this->session->userdata('id_user_level');
@@ -77,39 +69,6 @@ class Freezer_in_model extends CI_Model
         return $this->db->get($this->table)->row();
     }
 
-    // function get_by_id_detail($id)
-    // {
-    //     $this->db->where('id_delivery_det', $id);
-    //     return $this->db->get('tbl_delivery_det')->row();
-    // }
-
-    // get total rows
-    // function total_rows($q = NULL) {
-    //     $this->db->like('id_delivery', $q);
-	// $this->db->or_like('date_delivery', $q);
-	// $this->db->or_like('delivery_number', $q);
-	// $this->db->or_like('customer_name', $q);
-	// $this->db->or_like('city', $q);
-	// $this->db->or_like('phone', $q);
-	// $this->db->or_like('notes', $q);
-	// $this->db->from($this->table);
-    //     return $this->db->count_all_results();
-    // }
-
-    // get data with limit and search
-    // function get_limit_data($limit, $start = 0, $q = NULL) {
-    //     $this->db->order_by($this->id, $this->order);
-    //     $this->db->like('id_delivery', $q);
-	// $this->db->or_like('date_delivery', $q);
-	// $this->db->or_like('delivery_number', $q);
-	// $this->db->or_like('customer_name', $q);
-	// $this->db->or_like('city', $q);
-	// $this->db->or_like('phone', $q);
-	// $this->db->or_like('notes', $q);
-	// $this->db->limit($limit, $start);
-    //     return $this->db->get($this->table)->result();
-    // }
-
     // insert data
     function insert($data)
     {
@@ -123,18 +82,6 @@ class Freezer_in_model extends CI_Model
         $this->db->update($this->table, $data);
     }
 
-    // delete data
-    // function delete($id_user, $data)
-    // {
-    //     $this->db->where($this->id, $id);
-    //     $this->db->update($this->table, $data);
-    // }
-
-    // function delete($id)
-    // {
-        // $this->db->where($this->id, $id);
-        // $this->db->delete($this->table);
-    // }
 
     function getLabtech(){
         $response = array();
@@ -146,25 +93,12 @@ class Freezer_in_model extends CI_Model
         return $response;
       }
 
-      function getVesselType(){
-        $response = array();
-        // Select record
-        $this->db->select('id_vessel, vessel');
-        // $this->db->where('barcode_dna', $id);
-        $q = $this->db->get('ref_vessel');
-        $response = $q->result_array();
-    
-        return $response;
-      }
-
-
       function getFreezer(){
         $response = array();
         $this->db->select('freezer');
         $this->db->distinct();
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
-        $q = $this->db->get('ref_location_80');
+        $q = $this->db->get('ref_location');
         $response = $q->result_array();
         return $response;
       }
@@ -173,9 +107,8 @@ class Freezer_in_model extends CI_Model
         $response = array();
         $this->db->select('shelf');
         $this->db->distinct();
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
-        $q = $this->db->get('ref_location_80');
+        $q = $this->db->get('ref_location');
         $response = $q->result_array();
         return $response;
       }
@@ -184,20 +117,18 @@ class Freezer_in_model extends CI_Model
         $response = array();
         $this->db->select('rack');
         $this->db->distinct();
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
-        $q = $this->db->get('ref_location_80');
+        $q = $this->db->get('ref_location');
         $response = $q->result_array();
         return $response;
       }
       
       function getDrawer(){
         $response = array();
-        $this->db->select('rack_level');
+        $this->db->select('tray');
         $this->db->distinct();
-        $this->db->where('lab', $this->session->userdata('lab'));
         $this->db->where('flag', '0');
-        $q = $this->db->get('ref_location_80');
+        $q = $this->db->get('ref_location');
         $response = $q->result_array();
         return $response;
       }

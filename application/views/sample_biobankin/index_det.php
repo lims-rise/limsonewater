@@ -115,6 +115,8 @@
 				<div class="modal-body">
 					<input id="mode_det" name="mode_det" type="hidden" class="form-control input-sm">
 					<input id="id_one_water_sample" name="id_one_water_sample" type="hidden" class="form-control">
+					<input id="date_conduct2" type="hidden" name="date_conduct2" value="<?php echo $date_conduct ?>">
+					<input id="id_person" type="hidden" name="id_person" value="<?php echo $id_person ?>">
 					<!-- <input id="id_req" name="id_req" type="hidden" class="form-control input-sm"> -->
 
 
