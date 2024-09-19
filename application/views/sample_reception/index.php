@@ -116,7 +116,7 @@
                             <div class="form-group">
                                 <label for="id_sampletype" class="col-sm-4 control-label">Sample Type</label>
                                 <div class="col-sm-8" >
-                                <select id='id_sampletype' name="id_sampletype" class="form-control">
+                                <select id='id_sampletype' name="id_sampletype" class="form-control" >
                                     <option>-- Select Sample Type --</option>
                                     <?php
                                     foreach($sampletype as $row){
@@ -135,8 +135,8 @@
                             <div class="form-group">
                                 <label for="id_person" class="col-sm-4 control-label">Lab Tech</label>
                                 <div class="col-sm-8">
-                                    <select id="id_person" name="id_person" class="form-control">
-                                        <option>-- Select Lab Tech --</option>
+                                    <select id="id_person" name="id_person" class="form-control" required>
+                                        <option value="" disabled>-- Select Lab Tech --</option>
                                         <?php
                                             foreach($labtech as $row) {
                                                 if ($id_person == $row['id_person']) {
@@ -336,6 +336,75 @@
             $('.val1tip').tooltipster('hide');   
         });
 
+        // $('#id_client_sample').on("change", function() {
+        //     let idClientSample = $('#id_client_sample').val();
+        //     $.ajax({
+        //         type: "GET",
+        //         url: "Sample_reception/validateIdClientSample",
+        //         data: { id: idClientSample },
+        //         dataType: "json",
+        //         success: function(data) {
+        //             if (data.length == 1) {
+        //                 let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Client Sample <strong> ' + idClientSample +'</strong> is already in the system !</span>');
+        //                 $('.val1tip').tooltipster('content', tip);
+        //                 $('.val1tip').tooltipster('show');
+        //                 $('#id_client_sample').focus();
+        //                 $('#id_client_sample').val('');       
+        //                 $('#id_client_sample').css({'background-color' : '#FFE6E7'});
+        //                 setTimeout(function(){
+        //                     $('#id_client_sample').css({'background-color' : '#FFFFFF'});
+        //                     setTimeout(function(){
+        //                         $('#id_client_sample').css({'background-color' : '#FFE6E7'});
+        //                         setTimeout(function(){
+        //                             $('#id_client_sample').css({'background-color' : '#FFFFFF'});
+        //                         }, 300);                            
+        //                     }, 300);
+        //                 }, 300);
+        //             }
+        //         }
+        //     });
+        // });
+
+
+        $('#id_client_sample').on("blur", function() {
+            let idClientSample = $('#id_client_sample').val();
+            if (idClientSample.trim() === '') {
+                let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Input tidak boleh kosong !</span>');
+                $('.val1tip').tooltipster('content', tip);
+                $('.val1tip').tooltipster('show');
+                $('#id_client_sample').css({'background-color' : '#FFE6E7'});
+                setTimeout(function(){
+                    $('#id_client_sample').css({'background-color' : '#FFFFFF'});
+                    setTimeout(function(){
+                        $('#id_client_sample').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#id_client_sample').css({'background-color' : '#FFFFFF'});
+                        }, 300);                            
+                    }, 300);
+                }, 300);
+            }
+        });
+
+        $('#id_sampletype').on("change", function() {
+            let selectedSampleType = $('#id_sampletype').val();
+            if (selectedSampleType === '-- Select Sample Type --') {
+                let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Pilihan tidak boleh kosong!</span>');
+                $('.val1tip').tooltipster('content', tip);
+                $('.val1tip').tooltipster('show');
+                $('#id_sampletype').css({'background-color' : '#FFE6E7'});
+                setTimeout(function(){
+                    $('#id_sampletype').css({'background-color' : '#FFFFFF'});
+                    setTimeout(function(){
+                        $('#id_sampletype').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#id_sampletype').css({'background-color' : '#FFFFFF'});
+                        }, 300);                            
+                    }, 300);
+                }, 300);
+            }
+        });
+
+
         $('#id_client_sample').on("change", function() {
             let idClientSample = $('#id_client_sample').val();
             $.ajax({
@@ -350,6 +419,22 @@
                         $('.val1tip').tooltipster('show');
                         $('#id_client_sample').focus();
                         $('#id_client_sample').val('');       
+                        $('#id_client_sample').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#id_client_sample').css({'background-color' : '#FFFFFF'});
+                            setTimeout(function(){
+                                $('#id_client_sample').css({'background-color' : '#FFE6E7'});
+                                setTimeout(function(){
+                                    $('#id_client_sample').css({'background-color' : '#FFFFFF'});
+                                }, 300);                            
+                            }, 300);
+                        }, 300);
+                    } else if (/[^a-zA-Z0-9]/.test(idClientSample)) {
+                        let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Input tidak boleh mengandung simbol !</span>');
+                        $('.val1tip').tooltipster('content', tip);
+                        $('.val1tip').tooltipster('show');
+                        $('#id_client_sample').focus();
+                        $('#id_client_sample').val('');
                         $('#id_client_sample').css({'background-color' : '#FFE6E7'});
                         setTimeout(function(){
                             $('#id_client_sample').css({'background-color' : '#FFFFFF'});
