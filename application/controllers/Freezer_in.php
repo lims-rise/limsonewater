@@ -25,7 +25,7 @@ class Freezer_in extends CI_Controller
         $data['freezer'] = $this->Freezer_in_model->getFreezer();
         $data['shelf'] = $this->Freezer_in_model->getShelf();
         $data['rack'] = $this->Freezer_in_model->getRack();
-        $data['rack_level'] = $this->Freezer_in_model->getDrawer();
+        $data['tray'] = $this->Freezer_in_model->getTray();
         // $data['type'] = $this->Freezer_in_model->getSampleType();
         $this->template->load('template','Freezer_in/index', $data);
     } 
@@ -42,7 +42,8 @@ class Freezer_in extends CI_Controller
         $f = $this->input->post('freezer',TRUE);
         $s = $this->input->post('shelf',TRUE);
         $r = $this->input->post('rack',TRUE);
-        $rl = $this->input->post('rack_level',TRUE);
+        $rl = $this->input->post('tray',TRUE);
+        $barcode_sample = strtoupper($this->input->post('barcode_sample',TRUE));
 
         $freezerloc = $this->Freezer_in_model->getFreezLoc($f,$s,$r,$rl);
         $dt = new DateTime();
@@ -52,14 +53,12 @@ class Freezer_in extends CI_Controller
                 'date_in' => $this->input->post('date_in',TRUE),
                 'time_in' => $this->input->post('time_in',TRUE),
                 'id_person' => $this->input->post('id_person',TRUE),
-                'id_vessel' => $this->input->post('id_vessel',TRUE),
-                'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
-                'id_location_80' => $freezerloc->id_location_80,
-                'need_cryobox' => $this->input->post('need_cryobox',TRUE),
+                'barcode_sample' => $barcode_sample,
+                'barcode_tube' => strtoupper($this->input->post('barcode_tube',TRUE)),
                 'cryobox' => strtoupper($this->input->post('cryobox',TRUE)),
+                'id_location' => $freezerloc->id_location,
                 'comments' => trim($this->input->post('comments',TRUE)),
                 'uuid' => $this->uuid->v4(),
-                'lab' => $this->session->userdata('lab'),
                 'user_created' => $this->session->userdata('id_users'),
                 'date_created' => $dt->format('Y-m-d H:i:s'),
             );
@@ -72,19 +71,15 @@ class Freezer_in extends CI_Controller
                 'date_in' => $this->input->post('date_in',TRUE),
                 'time_in' => $this->input->post('time_in',TRUE),
                 'id_person' => $this->input->post('id_person',TRUE),
-                'id_vessel' => $this->input->post('id_vessel',TRUE),
-                'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
-                'id_location_80' => $freezerloc->id_location_80,
-                'need_cryobox' => $this->input->post('need_cryobox',TRUE),
+                'barcode_tube' => strtoupper($this->input->post('barcode_tube',TRUE)),
                 'cryobox' => strtoupper($this->input->post('cryobox',TRUE)),
+                'id_location' => $freezerloc->id_location,
                 'comments' => trim($this->input->post('comments',TRUE)),
-                // 'uuid' => $this->uuid->v4(),
-                'lab' => $this->session->userdata('lab'),
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
 
-            $this->Freezer_in_model->update($id, $data);
+            $this->Freezer_in_model->update($barcode_sample, $data);
             $this->session->set_flashdata('message', 'Create Record Success');    
         }
 
@@ -102,13 +97,22 @@ class Freezer_in extends CI_Controller
 
         if ($row) {
             // $this->Freezer_in_model->delete($id);
-            $this->Freezer_in_model->update($id, $data);
+            $this->Freezer_in_model->update_delete($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
             redirect(site_url('Freezer_in'));
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('Freezer_in'));
         }
+    }
+
+    public function barcode_check() 
+    {
+        $id = $this->input->get('id1');
+        $id2 = $this->input->get('id2');
+        $data = $this->Freezer_in_model->barcode_check($id, $id2);
+        header('Content-Type: application/json');
+        echo json_encode($data);
     }
 
     public function load_frez() 

@@ -22,10 +22,6 @@ class Freezer_out extends CI_Controller
     {
         // $this->load->model('Freezer_out_model');
         $data['person'] = $this->Freezer_out_model->getLabtech();
-        $data['type'] = $this->Freezer_out_model->getSampleType();
-        $data['vessel'] = $this->Freezer_out_model->getVessel();
-        $data['destination'] = $this->Freezer_out_model->getDestination();
-        $data['shipping'] = $this->Freezer_out_model->getShipping();
         $this->template->load('template','Freezer_out/index', $data);
     } 
     
@@ -43,16 +39,12 @@ class Freezer_out extends CI_Controller
         if ($mode=="insert"){
             $data = array(
             'date_out' => $this->input->post('date_out',TRUE),
+            'time_out' => $this->input->post('time_out',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),
-            'id_sample' => $this->input->post('id_sample',TRUE),
-            'id_vessel' => $this->input->post('id_vessel',TRUE),
             'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
-            'id_destination' => $this->input->post('id_destination',TRUE),
-            'id_shipping' => $this->input->post('id_shipping',TRUE),
-            'tracking_number' => $this->input->post('tracking_number',TRUE),
+            'barcode_tube' => strtoupper($this->input->post('barcode_tube',TRUE)),
             'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
-            'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
             'date_created' => $dt->format('Y-m-d H:i:s'),
             );
@@ -63,16 +55,11 @@ class Freezer_out extends CI_Controller
         else if ($mode=="edit"){
             $data = array(
             'date_out' => $this->input->post('date_out',TRUE),
+            'time_out' => $this->input->post('time_out',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),
-            'id_sample' => $this->input->post('id_sample',TRUE),
-            'id_vessel' => $this->input->post('id_vessel',TRUE),
             'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
-            'id_destination' => $this->input->post('id_destination',TRUE),
-            'id_shipping' => $this->input->post('id_shipping',TRUE),
-            'tracking_number' => $this->input->post('tracking_number',TRUE),
+            'barcode_tube' => strtoupper($this->input->post('barcode_tube',TRUE)),
             'comments' => trim($this->input->post('comments',TRUE)),
-            // 'uuid' => $this->uuid->v4(),
-            'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
@@ -119,7 +106,6 @@ class Freezer_out extends CI_Controller
     public function valid_bs() 
     {
         $id = $this->input->get('id1');
-        // echo $id;
         $data = $this->Freezer_out_model->validate1($id);
 
         header('Content-Type: application/json');

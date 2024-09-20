@@ -62,17 +62,17 @@
                         <input id="id" name="id" type="hidden" class="form-control input-sm">
 
                         <div class="form-group">
-                            <label for="date_in" class="col-sm-4 control-label">Date IN to freezer</label>
+                            <label for="date_in" class="col-sm-4 control-label">Date IN</label>
                             <div class="col-sm-8">
-                                <input id="date_in" name="date_in" type="date" class="form-control" placeholder="Date IN to freezer" value="<?php echo date("Y-m-d"); ?>">
+                                <input id="date_in" name="date_in" type="date" class="form-control" placeholder="Date IN" value="<?php echo date("Y-m-d"); ?>">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="time_in" class="col-sm-4 control-label">Time IN to freezer</label>
+                            <label for="time_in" class="col-sm-4 control-label">Time IN</label>
                             <div class="col-sm-8">
                                 <div class="input-group clockpicker">
-                                    <input id="time_in" name="time_in" class="form-control" placeholder="Time IN to freezer" value="<?php 
+                                    <input id="time_in" name="time_in" class="form-control" placeholder="Time IN" value="<?php 
                                     $datetime = new DateTime( "now", new DateTimeZone( "Asia/Makassar" ) );
                                     echo $datetime->format( 'H:i' );
                                     ?>">
@@ -103,46 +103,16 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="id_vessel" class="col-sm-4 control-label">Vessel type</label>
+                            <label for="barcode_tube" class="col-sm-4 control-label">Barcode tube</label>
                             <div class="col-sm-8">
-                            <select id='id_vessel' name="id_vessel" class="form-control">
-                                <option>-- Select vessel type --</option>
-                                <?php
-                                foreach($vessel as $row){
-									if ($id_vessel == $row['id_vessel']) {
-										echo "<option value='".$row['id_vessel']."' selected='selected'>".$row['vessel']."</option>";
-									}
-									else {
-                                        echo "<option value='".$row['id_vessel']."'>".$row['vessel']."</option>";
-                                    }
-                                }
-                                    ?>
-                            </select>
+                            <input id="barcode_tube" name="barcode_tube" type="text" class="form-control" placeholder="Barcode tube" required>
+                            <input id="barcode_sample" name="barcode_sample" type="hidden" class="form-control" placeholder="Barcode sample" required>
+                                <div class="val1tip"></div>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="barcode_sample" class="col-sm-4 control-label">Barcode vessel</label>
-                            <div class="col-sm-8">
-                                <input id="barcode_sample" name="barcode_sample" type="text" class="form-control" placeholder="Barcode Vessel" required>
-                                <!-- <div class="val1tip"></div> -->
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="need_cryobox" class="col-sm-4 control-label">Associated cryobox</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" id="need_cryobox" name="need_cryobox" required>
-                                    <?php
-                                    echo "<option value='1' >Yes</option>
-                                        <option value='0' >No</option> ";
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="cryobox" class="col-sm-4 control-label">Barcode cryobox</label>
+                            <label for="cryobox" class="col-sm-4 control-label">Cryobox</label>
                             <div class="col-sm-8">
                                 <input id="cryobox" name="cryobox" type="text" class="form-control" placeholder="Barcode cryobox">
                                 <!-- <div class="val1tip"></div> -->
@@ -187,11 +157,11 @@
                             </div>
 
                             <div class="col-sm-2">
-                            <select id='rack_level' name="rack_level" class="form-control">
-                                <option>Drawer</option>
+                            <select id='tray' name="tray" class="form-control">
+                                <option>Tray</option>
                                 <?php
-                                foreach($rack_level as $row){
-                                    echo "<option value='".$row['rack_level']."'>".$row['rack_level']."</option>";
+                                foreach($tray as $row){
+                                    echo "<option value='".$row['tray']."'>".$row['tray']."</option>";
                                 }
                                     ?>
                             </select>
@@ -233,27 +203,16 @@
         vibrate: true        // vibrate the device when dragging clock hand
         });                
 
-        // $('.val1tip').tooltipster({
-        //     animation: 'swing',
-        //     delay: 1,
-        //     theme: 'tooltipster-default',
-        //     autoClose: true,
-        //     position: 'bottom',
-        // });
-
-        $('#need_cryobox').on('change', function (){
-            if ($('#need_cryobox').val() == 1 ) {
-                $('#cryobox').val('');
-                $('#cryobox').attr('readonly', false);
-            }
-            else {
-                $('#cryobox').val('');
-                $('#cryobox').attr('readonly', true);
-            }
+        $('.val1tip').tooltipster({
+            animation: 'swing',
+            delay: 1,
+            theme: 'tooltipster-default',
+            autoClose: true,
+            position: 'bottom',
         });
 
         $("#compose-modal").on('hide.bs.modal', function(){
-            // $('.val1tip').tooltipster('hide');   
+            $('.val1tip').tooltipster('hide');   
             // $('#barcode_sample').val('');     
         });
 
@@ -263,6 +222,47 @@
             $('#date_in').focus();
         });        
                 
+        $('#barcode_tube').on("change", function() {
+            $('.val1tip').tooltipster('hide');   
+            data1 = $('#barcode_tube').val();
+            data2 = $('#barcode_sample').val();
+            // // ckbar = data1.substring(0,5).toUpperCase();
+            // // ckarray = ["N-S2-", "F-S2-", "N-F0-", "F-F0-"];
+            // // ck = $.inArray(ckbar, ckarray);
+            // if (ck == -1) {
+            $.ajax({
+                type: "GET",
+                url: "Freezer_in/barcode_check?id1="+data1+"&id2="+data2,
+                // data:data1,
+                dataType: "json",
+                success: function(data) {
+                    // var barcode = '';
+                    if (data.length == 0) {
+                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode tube <strong> ' + data1 +'</strong> is not found or has already in the Freezer!</span>');
+                        $('.val1tip').tooltipster('content', tip);
+                        $('.val1tip').tooltipster('show');
+                        $('#barcode_tube').focus();
+                        $('#barcode_tube').val('');     
+                        $('#sampletype').val('');    
+                        $('#barcode_tube').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#barcode_tube').css({'background-color' : '#FFFFFF'});
+                            setTimeout(function(){
+                                $('#barcode_tube').css({'background-color' : '#FFE6E7'});
+                                setTimeout(function(){
+                                    $('#barcode_tube').css({'background-color' : '#FFFFFF'});
+                                }, 300);                            
+                            }, 300);
+                        }, 300);
+                    }
+                    else {
+                        $('#barcode_sample').val(data[0].barcode_sample);    
+                    }
+                }
+            });
+        // }
+        });
+
         var base_url = location.hostname;
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
         {
@@ -320,26 +320,26 @@
                     var freez = '';
                     var shelf = '';
                     var rack = '';
-                    var rack_level = '';
+                    var tray = '';
                     $("#freezer").val('');
                     $("#shelf").val('');
                     $("#rack").val('');
-                    $("#rack_level").val('');                    
+                    $("#tray").val('');                    
                     if (data) {
                         id_location_80 = data[0].id_location_80;
                         freez = data[0].freezer;
                         shelf = data[0].shelf;
                         rack = data[0].rack;
-                        rack_level = data[0].rack_level;
+                        tray = data[0].tray;
                         // console.log(data);
-                        // $("#comments").val(data[0].rack_level);
+                        // $("#comments").val(data[0].tray);
                     }
 
                     $("#idfrez").val(id_location_80);
                     $("#freezer").val(freez);
                     $("#shelf").val(shelf);
                     $("#rack").val(rack);
-                    $("#rack_level").val(rack_level);                    
+                    $("#tray").val(tray);                    
                 }
             });
         }
@@ -349,15 +349,14 @@
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Freezer Management - New Sample IN<span id="my-another-cool-loader"></span>');
             $('#id').val('');
             $('#id_person').val('');
-            $('#id_vessel').val('');
             $('#barcode_sample').val('');
-            $('#need_cryobox').val('');
-            $('#cryobox').attr('readonly', false);
+            $('#barcode_tube').val('');
+            // $('#cryobox').attr('readonly', false);
             $('#cryobox').val('');
             $('#freezer').val('');
             $('#shelf').val('');
             $('#rack').val('');
-            $('#rack_level').val('');
+            $('#tray').val('');
             $('#comments').val('');
             $('#idfrez').val('');
             $('#compose-modal').modal('show');
@@ -376,13 +375,12 @@
             $('#date_in').val(data.date_in);
             $('#time_in').val(data.time_in);
             $('#id_person').val(data.id_person).trigger('change');
-            $('#id_vessel').val(data.id_vessel).trigger('change');
             $('#barcode_sample').val(data.barcode_sample);
-            $('#need_cryobox').val(data.need_cryobox).trigger('change');
+            $('#barcode_tube').val(data.barcode_tube);
             $('#cryobox').val(data.cryobox);
-            $('#idfrez').val(data.id_location_80);
+            $('#idfrez').val(data.id_location);
             $('#comments').val(data.comments);
-            findfreez(data.id_location_80);
+            findfreez(data.id_location);
             $('#compose-modal').modal('show');
         });  
 
