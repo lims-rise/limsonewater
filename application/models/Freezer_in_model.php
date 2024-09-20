@@ -42,9 +42,9 @@ class Freezer_in_model extends CI_Model
     function get_all()
     {
       $q = $this->db->query('SELECT 
-      a.id, a.date_in, DATE_FORMAT(a.time_in, "%H:%i") AS time_in, b.initial, a.barcode_sample, a.barcode_tube, 
-      concat("F",d.freezer,"-","S",d.shelf,"-","R",d.rack,"-","DRW",d.tray) AS location, a.comments,
-      a.id_person, a.id_location, a.cryobox, a.flag
+      a.id, a.date_in, DATE_FORMAT(a.time_in, "%H:%i") AS time_in, b.initial, a.barcode_tube, 
+      a.cryobox, concat("F",d.freezer,"-","S",d.shelf,"-","R",d.rack,"-","T",d.tray) AS location, a.comments,
+      a.id_person, a.id_location, a.flag
       FROM freezer_in a
       LEFT JOIN ref_person b ON a.id_person=b.id_person
       LEFT JOIN ref_location d ON a.id_location=d.id_location

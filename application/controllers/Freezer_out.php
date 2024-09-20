@@ -139,14 +139,10 @@ class Freezer_out extends CI_Controller
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setCellValue('A1', "ID"); 
         $sheet->setCellValue('B1', "Date_out"); 
-        $sheet->setCellValue('C1', "Lab_tech");
-        $sheet->setCellValue('D1', "Sample_type");
-        $sheet->setCellValue('E1', "Vessel_type");
-        $sheet->setCellValue('F1', "Barcode_vessel");
-        $sheet->setCellValue('G1', "Destination");
-        $sheet->setCellValue('H1', "Shipping_method");
-        $sheet->setCellValue('I1', "Tracking_number");
-        $sheet->setCellValue('J1', "Comments");
+        $sheet->setCellValue('C1', "Time_out"); 
+        $sheet->setCellValue('D1', "Lab_tech");
+        $sheet->setCellValue('E1', "Barcode_tube");
+        $sheet->setCellValue('F1', "Comments");
         // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
 
         // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
@@ -157,14 +153,10 @@ class Freezer_out extends CI_Controller
         foreach($rdeliver as $data){ // Lakukan looping pada variabel siswa
           $sheet->setCellValue('A'.$numrow, $data->id);
           $sheet->setCellValue('B'.$numrow, $data->date_out);
-          $sheet->setCellValue('C'.$numrow, $data->initial);
-          $sheet->setCellValue('D'.$numrow, $data->sample);
-          $sheet->setCellValue('E'.$numrow, $data->vessel);
-          $sheet->setCellValue('F'.$numrow, $data->barcode_sample);
-          $sheet->setCellValue('G'.$numrow, $data->destination);
-          $sheet->setCellValue('H'.$numrow, $data->shipping_method);
-          $sheet->setCellValue('I'.$numrow, $data->tracking_number);
-          $sheet->setCellValue('J'.$numrow, trim($data->comments));
+          $sheet->setCellValue('C'.$numrow, $data->time_out);
+          $sheet->setCellValue('D'.$numrow, $data->initial);
+          $sheet->setCellValue('E'.$numrow, $data->barcode_tube);
+          $sheet->setCellValue('F'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

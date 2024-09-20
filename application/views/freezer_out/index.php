@@ -104,6 +104,7 @@
                             <label for="barcode_tube" class="col-sm-4 control-label">Barcode tube</label>
                             <div class="col-sm-8">
                                 <input id="barcode_tube" name="barcode_tube" type="text" class="form-control" placeholder="Barcode tube" required>
+                                <input id="barcode_sample" name="barcode_sample" type="hidden" class="form-control">
                                 <div class="val1tip"></div>
                             </div>
                         </div>
@@ -243,6 +244,9 @@
 
                         // barcode = data[0].barcode_sample;
                         // console.log(data);
+                    }
+                    else {
+                        $('#barcode_sample').val(data[0].barcode_sample);    
                     }
                 }
             });

@@ -39,10 +39,9 @@ class Freezer_out_model extends CI_Model
 
     function get_all()
     {
-      $this->db->select('freezer_out.id, freezer_out.date_out, ref_person.initial, freezer_out.barcode_sample, 
-            freezer_out.barcode_tube, freezer_out.comments, 
-            freezer_out.id_person');
-      // $this->db->from('freezer_out');
+      $this->db->select('freezer_out.id, freezer_out.date_out, freezer_out.time_out, ref_person.initial, freezer_out.barcode_sample, 
+            freezer_out.barcode_tube, freezer_out.comments, freezer_out.id_person');
+    //   $this->db->from('freezer_out');
       $this->db->join('ref_person', 'freezer_out.id_person=ref_person.id_person', 'left');
       $this->db->where('freezer_out.flag', '0');
       $this->db->order_by('freezer_out.date_out, freezer_out.id', 'ASC');
