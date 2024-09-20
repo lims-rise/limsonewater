@@ -68,8 +68,8 @@
                         <div class="form-group">
                             <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID list</label>
                             <div class="col-sm-8"> -->
-                                <select id="id_one_water_sample_list" name="id_one_water_sample_list" class="form-control">
-                                    <option>-- Select Sample ID --</option>
+                                <select id="id_one_water_sample_list" name="id_one_water_sample_list" class="form-control" required>
+                                    <option value="" disabled>-- Select Sample ID --</option>
                                     <?php
                                         foreach($id_one as $row) {
                                             if ($id_one_water_sample == $row['id_one_water_sample']) {
@@ -86,8 +86,8 @@
                         <div class="form-group">
                             <label for="id_person" class="col-sm-4 control-label">Lab Tech</label>
                             <div class="col-sm-8">
-                                <select id="id_person" name="id_person" class="form-control">
-                                    <option>-- Select Lab Tech --</option>
+                                <select id="id_person" name="id_person" class="form-control" required>
+                                    <option value="" disabled>-- Select Lab Tech --</option>
                                     <?php
                                         foreach($labtech as $row) {
                                             if ($id_person == $row['id_person']) {
@@ -104,7 +104,7 @@
                         <div class="form-group">
                             <label for="barcode_sample" class="col-sm-4 control-label">Barcode Sample</label>
                             <div class="col-sm-8">
-                                <input id="barcode_sample" name="barcode_sample" placeholder="Barcode Sample" type="text" class="form-control">
+                                <input id="barcode_sample" name="barcode_sample" placeholder="Barcode Sample" type="text" class="form-control" required>
                                 <div class="val1tip"></div>
                             </div>
                         </div>
@@ -119,7 +119,7 @@
                         <div class="form-group">
                             <label for="date_extraction" class="col-sm-4 control-label">Date Extraction</label>
                             <div class="col-sm-8">
-                                <input id="date_extraction" name="date_extraction" type="date" class="form-control" placeholder="Date Extraction" value="<?php echo date("Y-m-d"); ?>">
+                                <input id="date_extraction" name="date_extraction" type="date" class="form-control" placeholder="Date Extraction" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
                             </div>
                         </div>
 

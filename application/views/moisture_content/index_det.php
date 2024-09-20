@@ -159,7 +159,7 @@
                                     <div class="form-group">
                                         <label for="date_moisture24" class="col-sm-4 control-label">Date Moisture</label>
                                         <div class="col-sm-8">
-                                            <input id="date_moisture24" name="date_moisture24"type="date" class="form-control" placeholder="Date Moisture" value="<?php echo date("Y-m-d"); ?>">
+                                            <input id="date_moisture24" name="date_moisture24"type="date" class="form-control" placeholder="Date Moisture" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
                                         </div>
                                     </div>
 

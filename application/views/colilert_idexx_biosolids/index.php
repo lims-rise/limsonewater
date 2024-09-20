@@ -67,8 +67,8 @@
                                 <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
                                 <div class="col-sm-8">
                                     <input id="idx_one_water_sample" name="idx_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control">
-                                    <select id="id_one_water_sample" name="id_one_water_sample" class="form-control idOneWaterSampleSelect">
-                                        <option>-- Select Sample ID --</option>
+                                    <select id="id_one_water_sample" name="id_one_water_sample" class="form-control idOneWaterSampleSelect" required>
+                                        <option value="" disabled>-- Select Sample ID --</option>
                                         <?php
                                             foreach($id_one as $row) {
                                                 if ($id_one_water_sample == $row['id_one_water_sample']) {
@@ -85,8 +85,8 @@
                             <div class="form-group">
                                 <label for="id_person" class="col-sm-4 control-label">Lab Tech</label>
                                 <div class="col-sm-8">
-                                    <select id="id_person" name="id_person" class="form-control">
-                                        <option>-- Select Lab Tech --</option>
+                                    <select id="id_person" name="id_person" class="form-control" required>
+                                        <option value="" disabled>-- Select Lab Tech --</option>
                                         <?php
                                             foreach($labtech as $row) {
                                                 if ($id_person == $row['id_person']) {
@@ -111,7 +111,7 @@
                             <div class="form-group">
                                 <label for="colilert_barcode" class="col-sm-4 control-label">Coliloert Barcode</label>
                                 <div class="col-sm-8">
-                                    <input id="colilert_barcode" name="colilert_barcode" placeholder="Coliloert Barcode" type="text" class="form-control">
+                                    <input id="colilert_barcode" name="colilert_barcode" placeholder="Coliloert Barcode" type="text" class="form-control" required>
                                     <div class="val1tip"></div>
                                 </div>
                             </div>
@@ -119,7 +119,7 @@
                             <div class="form-group">
                                 <label for="date_sample" class="col-sm-4 control-label">Date Sample</label>
                                 <div class="col-sm-8">
-                                    <input id="date_sample" name="date_sample" type="date" class="form-control" placeholder="Date Sample" value="<?php echo date("Y-m-d"); ?>">
+                                    <input id="date_sample" name="date_sample" type="date" class="form-control" placeholder="Date Sample" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
                                 </div>
                             </div>
 
@@ -141,21 +141,21 @@
                             <div class="form-group">
                                 <label for="wet_weight" class="col-sm-4 control-label">Wet Weight (g)</label>
                                 <div class="col-sm-8">
-                                    <input id="wet_weight" name="wet_weight" type="number" step="0.001"  class="form-control" placeholder="Wet Weight (g)">
+                                    <input id="wet_weight" name="wet_weight" type="number" step="0.001"  class="form-control" placeholder="Wet Weight (g)" required>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="elution_volume" class="col-sm-4 control-label">Elution Volume (mL)</label>
                                 <div class="col-sm-8">
-                                    <input id="elution_volume" name="elution_volume" type="text" class="form-control" placeholder="Elution Volume (mL)">
+                                    <input id="elution_volume" name="elution_volume" type="text" class="form-control" placeholder="Elution Volume (mL)" required>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="volume_bottle" class="col-sm-4 control-label">Volume in bottle (mL) added</label>
                                 <div class="col-sm-8">
-                                    <input id="volume_bottle" name="volume_bottle" type="number" step="0.001"  class="form-control" placeholder="Volume in bottle (mL) added">
+                                    <input id="volume_bottle" name="volume_bottle" type="number" step="0.001"  class="form-control" placeholder="Volume in bottle (mL) added" required>
                                 </div>
                             </div>
 
@@ -358,6 +358,22 @@
                         $('.val1tip').tooltipster('show');
                         $('#colilert_barcode').focus();
                         $('#colilert_barcode').val('');       
+                        $('#colilert_barcode').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#colilert_barcode').css({'background-color' : '#FFFFFF'});
+                            setTimeout(function(){
+                                $('#colilert_barcode').css({'background-color' : '#FFE6E7'});
+                                setTimeout(function(){
+                                    $('#colilert_barcode').css({'background-color' : '#FFFFFF'});
+                                }, 300);                            
+                            }, 300);
+                        }, 300);
+                    } else if (/[^a-zA-Z0-9]/.test(colilertBarcode)) {
+                        let tip = $('<span><i class="fa fa-exclamation-triangle"></i>  Wrong type <strong>' + colilertBarcode +'</strong> Input must not contain symbols !</span>');
+                        $('.val1tip').tooltipster('content', tip);
+                        $('.val1tip').tooltipster('show');
+                        $('#colilert_barcode').focus();
+                        $('#colilert_barcode').val('');
                         $('#colilert_barcode').css({'background-color' : '#FFE6E7'});
                         setTimeout(function(){
                             $('#colilert_barcode').css({'background-color' : '#FFFFFF'});
