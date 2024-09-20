@@ -64,7 +64,7 @@
                         <div class="form-group">
                             <label for="date_in" class="col-sm-4 control-label">Date IN</label>
                             <div class="col-sm-8">
-                                <input id="date_in" name="date_in" type="date" class="form-control" placeholder="Date IN" value="<?php echo date("Y-m-d"); ?>">
+                                <input id="date_in" name="date_in" type="date" class="form-control" placeholder="Date IN" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
                             </div>
                         </div>
 
@@ -73,7 +73,7 @@
                             <div class="col-sm-8">
                                 <div class="input-group clockpicker">
                                     <input id="time_in" name="time_in" class="form-control" placeholder="Time IN" value="<?php 
-                                    $datetime = new DateTime( "now", new DateTimeZone( "Asia/Makassar" ) );
+                                    $datetime = new DateTime();
                                     echo $datetime->format( 'H:i' );
                                     ?>">
                                     <span class="input-group-addon">

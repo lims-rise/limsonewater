@@ -62,7 +62,7 @@
                         <div class="form-group">
                             <label for="date_out" class="col-sm-4 control-label">Date OUT</label>
                             <div class="col-sm-8">
-                                <input id="date_out" name="date_out" type="date" class="form-control" placeholder="Date OUT" value="<?php echo date("Y-m-d"); ?>">
+                                <input id="date_out" name="date_out" type="date" class="form-control" placeholder="Date OUT" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
                             </div>
                         </div>
 

@@ -275,25 +275,6 @@
         // }
         });
 
-        $('#id_one_water_sample').on("change", function() {
-            // $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
-            let data1 = $('#id_one_water_sample').val();
-            $.ajax({
-                type: "GET",
-                url: "Sample_biobankin/samplecheck?id1="+data1,
-                // data:data1,
-                dataType: "json",
-                success: function(data) {
-                    // var barcode = '';
-                    if (data.length != 0) {
-                        $('#sampletype').val(data[0].sampletype);    
-                    }
-                }
-            });
-        // }
-        });
-
-
         var base_url = location.hostname;
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
         {
