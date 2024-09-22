@@ -25,7 +25,7 @@
                         <div style="padding-bottom: 10px;">
                             <?php
                                     $lvl = $this->session->userdata('id_user_level');
-                                    if ($lvl != 7){
+                                    if ($lvl != 4){
                                         echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Sample Reception</button>";
                                     }
                             ?>        
@@ -43,6 +43,8 @@
                                             <th>Lab Tech</th>
                                             <th>Date Arrive</th>
                                             <th>Time Arrive</th>
+                                            <!-- <th>Date Created</th>
+                                            <th>Date Updated</th> -->
                                             <th width="120px">Action</th>
                                         </tr>
                                     </thead>
@@ -161,7 +163,7 @@
                             </div>
 
 
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="time_arrival" class="col-sm-4 control-label">Time Arrive</label>
                                 <div class="col-sm-8">
                                     <div class="input-group clockpicker">
@@ -174,6 +176,20 @@
                                     </span>
                                     </div>
                                 </div>
+                            </div> -->
+                            <div class="form-group">
+                                <label for="time_arrival" class="col-sm-4 control-label">Time Arrive</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group clockpicker">
+                                        <input id="time_arrival" name="time_arrival" class="form-control" placeholder="Time arrival" value="<?php 
+                                        $datetime = new DateTime();
+                                        echo $datetime->format('H:i');
+                                        ?>">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-time"></span>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="form-group">
@@ -183,7 +199,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="time_collected" class="col-sm-4 control-label">Time collected</label>
                                 <div class="col-sm-8">
                                     <div class="input-group clockpicker">
@@ -195,6 +211,22 @@
                                     <span class="glyphicon glyphicon-time"></span>
                                     </span>
                                     </div>
+                                </div>
+                            </div> -->
+
+                            <div class="form-group">
+                                <label for="time_collected" class="col-sm-4 control-label">Time Collected</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group clockpicker">
+                                        <input id="time_collected" name="time_collected" class="form-control" placeholder="Time collected" value="<?php 
+                                        $datetime = new DateTime();
+                                        echo $datetime->format('H:i');
+                                        ?>">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-time"></span>
+                                        </span>
+                                    </div>
+                                    <span id="time_collected_error" class="text-danger" style="display:none;">Time collected cannot be greater than or equal to time arrive.</span>
                                 </div>
                             </div>
 
@@ -258,6 +290,54 @@
     let id_one_water_sample = $('#id_one_water_sample').val();
 
     $(document).ready(function() {
+
+        $('#time_collected').on('change', function() {
+            validateTimeCollected();
+        });
+
+        $('form').on('submit', function(e) {
+            if (!validateTimeCollected()) {
+                e.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+
+        function validateTimeCollected() {
+            let timeArrival = $('#time_arrival').val();
+            let timeCollected = $('#time_collected').val();
+            let isValid = true;
+
+            $('#time_collected_error').hide();
+                // Check if time collected is empty
+                if (!timeCollected) {
+                    $('#time_collected_error').text('Time collected cannot be empty.').show();
+                    isValid = false;
+                } else {
+                    // Convert to Date object for comparison
+                    let arrivalParts = timeArrival.split(':');
+                    let collectedParts = timeCollected.split(':');
+
+                    let arrivalDate = new Date();
+                    arrivalDate.setHours(arrivalParts[0], arrivalParts[1]);
+
+                    let collectedDate = new Date();
+                    collectedDate.setHours(collectedParts[0], collectedParts[1]);
+
+                    // Check if time collected is greater than or equal to time arrival
+                    if (collectedDate >= arrivalDate) {
+                        $('#time_collected_error').text('Time collected cannot be greater than or equal to time arrive.').show();
+                        isValid = false;
+                    }
+                }
+
+                // If valid, update the input value to prevent the default time from being sent
+                if (isValid) {
+                    $('#time_collected').val(timeCollected);
+                } else {
+                    $('#time_collected').val('');
+                }
+
+                return isValid;
+            }
 
         function showConfirmation(url) {
             deleteUrl = url; // Set the URL to the variable
@@ -456,29 +536,25 @@
             };
         };
 
+        // // Setelah data baru ditambahkan atau diperbarui
+        // function reloadData() {
+        //     table.ajax.reload(null, false); // false untuk tidak mengatur ulang posisi paging
+        // }
+
+        // Fungsi ini harus dipanggil setelah proses tambah atau update berhasil
+        // function onUpdateSuccess() {
+        //     reloadData(); // Panggil kembali DataTable untuk memperbarui data
+        // }
+
+
         // table = $("#mytable").DataTable({
-        //     // initComplete: function() {
-        //     //     var api = this.api();
-        //     //     $('#mytable_filter input')
-        //     //             .off('.DT')
-        //     //             .on('keyup.DT', function(e) {
-        //     //                 if (e.keyCode == 13) {
-        //     //                     api.search(this.value).draw();
-        //     //                 }
-        //     //     });
-        //     // },
         //     oLanguage: {
         //         sProcessing: "loading..."
         //     },
-        //     // select: true;
         //     processing: true,
         //     serverSide: true,
         //     ajax: {"url": "Sample_reception/json", "type": "POST"},
         //     columns: [
-        //         // {
-        //         //     "data": "barcode_sample",
-        //         //     "orderable": false
-        //         // },
         //         {"data": "id_project"},
         //         {"data": "client"},
         //         {"data": "id_client_sample"},
@@ -487,28 +563,83 @@
         //         {"data": "initial"},
         //         {"data": "date_arrival"},
         //         {"data": "time_arrival"},
+        //         // {"data": "date_created"},
+        //         // {"data": "date_updated"},
         //         {
-        //             "data" : "action",
+        //             "data": "action",
         //             "orderable": false,
-        //             "className" : "text-center"
+        //             "className": "text-center"
         //         }
         //     ],
-		// 	columnDefs: [
-		// 		{
-		// 			targets: [5], // Index of the 'estimate_price' column
-		// 			className: 'text-right' // Apply right alignment to this column
-		// 		}
-		// 	],
-        //     order: [[0, 'asc']],
+        //     columnDefs: [
+        //         {
+        //             targets: [5],
+        //             className: 'text-right'
+        //         }
+        //     ],
+        //     order: [[0, 'desc']],
         //     rowCallback: function(row, data, iDisplayIndex) {
-        //         let info = this.fnPagingInfo();
-        //         let page = info.iPage;
-        //         let length = info.iLength;
-        //         // var index = page * length + (iDisplayIndex + 1);
-        //         // $('td:eq(0)', row).html(index);
+        //         var info = this.fnPagingInfo();
+        //         var page = info.iPage;
+        //         var length = info.iLength;
+
+        //     },
+        //     // drawCallback: function(settings) {
+        //     //     let api = this.api();
+        //     //     let pageInfo = api.page.info();
+        //     //     if (pageInfo.page === 0) {
+        //     //         let firstRow = api.row(0).node();
+        //     //         $(firstRow).addClass('highlight');
+        //     //     }
+        //     // }
+        //     // drawCallback: function(settings) {
+        //     //     let api = this.api();
+        //     //     let pageInfo = api.page.info();
+                
+        //     //     // Highlight the first row based on creation or update time
+        //     //     api.rows().every(function() {
+        //     //         let data = this.data();
+        //     //         let createdDate = new Date(data.date_created);
+        //     //         let updatedDate = new Date(data.date_updated);
+        //     //         let now = new Date();
+
+        //     //         // Assuming you want to highlight if it's created or updated in the last minute
+        //     //         if ((now - createdDate < 60 * 1000) || (now - updatedDate < 60 * 1000)) {
+        //     //             $(this.node()).addClass('highlight');
+        //     //         }
+        //     //     });
+                
+        //     //     // Optional: Highlight the first row if the table is empty
+        //     //     if (pageInfo.page === 0) {
+        //     //         let firstRow = api.row(0).node();
+        //     //         $(firstRow).addClass('highlight');
+        //     //     }
+        //     // }
+
+        //     drawCallback: function(settings) {
+        //         let api = this.api();
+        //         let pageInfo = api.page.info();
+                
+        //         // Highlight baris yang baru saja ditambahkan atau diperbarui
+        //         api.rows().every(function() {
+        //             let data = this.data();
+        //             let createdDate = new Date(data.date_created);
+        //             let updatedDate = new Date(data.date_updated);
+        //             let now = new Date();
+
+        //             // Highlight jika baru ditambahkan atau diperbarui dalam 5 detik terakhir
+        //             if ((now - createdDate < 5 * 1000) || (now - updatedDate < 5 * 1000)) {
+        //                 $(this.node()).addClass('highlight');
+        //             }
+        //         });
+
+        //         // Pastikan baris pertama di-highlight jika tabel tidak kosong
+        //         if (pageInfo.page === 0 && api.rows().count() > 0) {
+        //             let firstRow = api.row(0).node();
+        //             $(firstRow).addClass('highlight');
+        //         }
         //     }
         // });
-
         table = $("#mytable").DataTable({
             oLanguage: {
                 sProcessing: "loading..."
@@ -533,31 +664,40 @@
             ],
             columnDefs: [
                 {
-                    targets: [5], // Kolom yang ingin diberi kelas
+                    targets: [5],
                     className: 'text-right'
                 }
             ],
-            order: [[0, 'desc']],
-            rowCallback: function(row, data, iDisplayIndex) {
-                var info = this.fnPagingInfo();
-                var page = info.iPage;
-                var length = info.iLength;
-                // var index = page * length + (iDisplayIndex + 1);
-                // $('td:eq(0)', row).html(index);
-            },
-            // initComplete: function() {
-            //     let api = this.api();
-            //     let firstRow = api.row(0).node();
-            //     $(firstRow).addClass('highlight');
-            // }
             drawCallback: function(settings) {
                 let api = this.api();
                 let pageInfo = api.page.info();
-                if (pageInfo.page === 0) {
+                
+                // Highlight baris yang baru saja ditambahkan atau diperbarui
+                api.rows().every(function() {
+                    let data = this.data();
+                    let createdDate = new Date(data.date_created);
+                    let updatedDate = new Date(data.date_updated);
+                    let now = new Date();
+
+                    // Highlight jika baru ditambahkan atau diperbarui dalam 10 detik terakhir
+                    if ((now - createdDate < 10 * 1000) || (now - updatedDate < 10 * 1000)) {
+                        $(this.node()).addClass('highlight');
+                    }
+                });
+                
+                // Pastikan baris pertama di-highlight jika tabel tidak kosong
+                if (pageInfo.page === 0 && api.rows().count() > 0) {
                     let firstRow = api.row(0).node();
                     $(firstRow).addClass('highlight');
                 }
             }
+        });
+
+        // Event handler untuk klik pada baris
+        $('#mytable tbody').on('click', 'tr', function() {
+            let rowData = table.row(this).data();
+            let rowId = rowData.id_project;
+            $(this).removeClass('highlight');
         });
 
 
@@ -575,6 +715,7 @@
             $('#id_person').val('');
             $('#id_client_sample').val('');
             $('#id_sampletype').val('');
+            $('#time_collected').val('');
             $('#comments').val('');
             $('#compose-modal').modal('show');
         });
@@ -594,6 +735,8 @@
             $('#id_person').val(data.id_person);
             $('#date_arrival').val(data.date_arrival).trigger('change');
             $('#time_arrival').val(data.time_arrival).trigger('change');
+            $('#date_collected').val(data.date_collected).trigger('change');
+            $('#time_collected').val(data.time_collected).trigger('change');
             $('#id_client_sample').val(data.id_client_sample);
             $('#id_sampletype').val(data.id_sampletype);
             $('#comments').val(data.comments);

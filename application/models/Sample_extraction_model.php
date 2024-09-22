@@ -20,8 +20,8 @@ class Sample_extraction_model extends CI_Model
         $this->datatables->select('sample_extraction.barcode_sample, sample_extraction.id_one_water_sample, ref_person.initial,
         ref_sampletype.sampletype, sample_extraction.date_extraction, sample_extraction.weight, sample_extraction.volume, 
         ref_kit.kit, sample_extraction.kit_lot, sample_extraction.barcode_tube, sample_extraction.dna_concentration, 
-        sample_extraction.cryobox, sample_extraction.id_location, sample_extraction.comments, sample_extraction.flag, 
-        sample_extraction.id_person, sample_extraction.id_kit, sample_extraction.id_location');
+        sample_extraction.cryobox, sample_extraction.id_location, sample_extraction.comments, sample_extraction.flag, sample_extraction.date_created, sample_extraction.date_updated,
+        sample_extraction.id_person, sample_extraction.id_kit, sample_extraction.id_location, GREATEST(sample_extraction.date_created, sample_extraction.date_updated) AS latest_date');
         $this->datatables->from('sample_extraction');
         $this->datatables->join('ref_person', 'sample_extraction.id_person = ref_person.id_person', 'left');
         $this->datatables->join('ref_barcode', 'ref_barcode.barcode = sample_extraction.barcode_sample', 'left');
@@ -42,6 +42,9 @@ class Sample_extraction_model extends CI_Model
             $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
                   ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'barcode_sample');
         }
+
+        // Mengatur pengurutan berdasarkan tanggal terbaru
+        $this->db->order_by('latest_date', 'DESC');
 
         return $this->datatables->generate();
     }
