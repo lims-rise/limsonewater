@@ -17,7 +17,7 @@ class Freezer_in_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('a.barcode_tube, a.id, a.date_in, DATE_FORMAT(a.time_in, "%H:%i") AS time_in, b.initial,  
+        $this->datatables->select('a.barcode_tube, a.barcode_sample, a.id, a.date_in, DATE_FORMAT(a.time_in, "%H:%i") AS time_in, b.initial,  
         a.cryobox, concat("F",d.freezer,"-","S",d.shelf,"-","R",d.rack,"-","T",d.tray) AS location, a.comments,
         a.id_person, a.id_location, a.flag');
         $this->datatables->from('freezer_in a');
@@ -42,15 +42,13 @@ class Freezer_in_model extends CI_Model
     function get_all()
     {
       $q = $this->db->query('SELECT 
-      a.id, a.date_in, DATE_FORMAT(a.time_in, "%H:%i") AS time_in, b.initial, c.vessel, a.barcode_sample, 
-      concat("F",d.freezer,"-","S",d.shelf,"-","R",d.rack,"-","DRW",d.rack_level) AS location, a.comments,
-      a.id_person, a.id_vessel, a.id_location_80, a.need_cryobox, a.cryobox, a.lab, a.flag
+      a.id, a.date_in, DATE_FORMAT(a.time_in, "%H:%i") AS time_in, b.initial, a.barcode_tube, 
+      a.cryobox, concat("F",d.freezer,"-","S",d.shelf,"-","R",d.rack,"-","T",d.tray) AS location, a.comments,
+      a.id_person, a.id_location, a.flag
       FROM freezer_in a
       LEFT JOIN ref_person b ON a.id_person=b.id_person
-      LEFT JOIN ref_vessel c ON a.id_vessel=c.id_vessel
-      LEFT JOIN ref_location_80 d ON a.id_location_80=d.id_location_80 AND d.lab = "'.$this->session->userdata('lab').'" 
-      WHERE a.lab = "'.$this->session->userdata('lab').'" 
-      AND a.flag = 0
+      LEFT JOIN ref_location d ON a.id_location=d.id_location
+      WHERE a.flag = 0
       ORDER BY a.id
       ');
       $response = $q->result();
@@ -78,15 +76,33 @@ class Freezer_in_model extends CI_Model
     // update data
     function update($id, $data)
     {
+        $this->db->where('barcode_sample', $id);
+        $this->db->update($this->table, $data);
+    }
+
+    function update_delete($id, $data)
+    {
         $this->db->where($this->id, $id);
         $this->db->update($this->table, $data);
     }
 
+    function barcode_check($id, $id2){
+      $q = $this->db->query('
+      SELECT * FROM
+      (SELECT barcode_tube, barcode_sample FROM sample_extraction
+      UNION ALL
+      SELECT barcode_tube, barcode_water AS barcode_sample
+      FROM sample_biobank_detail) x
+      WHERE barcode_tube = "'.$id.'"
+      AND barcode_tube NOT IN (SELECT barcode_tube FROM freezer_in WHERE barcode_sample <> "'.$id2.'")
+      ');        
+      $response = $q->result_array();
+      return $response;
+    }        
 
     function getLabtech(){
         $response = array();
         $this->db->select('*');
-        $this->db->where('position', 'Lab Tech');
         $q = $this->db->get('ref_person');
         $response = $q->result_array();
     
@@ -123,7 +139,7 @@ class Freezer_in_model extends CI_Model
         return $response;
       }
       
-      function getDrawer(){
+      function getTray(){
         $response = array();
         $this->db->select('tray');
         $this->db->distinct();
@@ -135,27 +151,21 @@ class Freezer_in_model extends CI_Model
 
       function find_freez($id){
         $q = $this->db->query('
-        SELECT id_location_80, freezer, shelf, rack, rack_level
-        FROM ref_location_80
-        WHERE lab = "'.$this->session->userdata('lab').'" 
-        AND id_location_80 = '.$id);
+        SELECT id_location, freezer, shelf, rack, tray
+        FROM ref_location
+        WHERE id_location = '.$id);
         $response = $q->result_array();
         return $response;    
       }
 
       function getFreezLoc($f,$s,$r,$rl){
-        $this->db->select('id_location_80');
+        $this->db->select('id_location');
         $this->db->where('freezer', $f);
         $this->db->where('shelf', $s);
         $this->db->where('rack', $r);
-        $this->db->where('rack_level', $rl);
-        $this->db->where('lab', $this->session->userdata('lab'));
+        $this->db->where('tray', $rl);
         $this->db->where('flag', '0');
-        // $this->db->where('lab', $this->session->userdata('lab'));
-        // return $this->db->get('ref_location_80');
-        // $response = $q->result_array();
-        // return $response;
-        return $this->db->get('ref_location_80')->row();
+        return $this->db->get('ref_location')->row();
       }
 
     //   function validate1($id){

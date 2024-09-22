@@ -35,16 +35,16 @@ class Ref_location extends CI_Controller
     public function save() 
     {
         $mode = $this->input->post('mode',TRUE);
-        $id = $this->input->post('id_location_80',TRUE);
+        $id = $this->input->post('id_location',TRUE);
         $dt = new DateTime();
 
         if ($mode=="insert"){
             $data = array(
-            'id_location_80' => $this->input->post('id_location_80',TRUE),
+            'id_location' => $this->input->post('id_location',TRUE),
             'freezer' => $this->input->post('freezer',TRUE),
             'shelf' => $this->input->post('shelf',TRUE),
             'rack' => $this->input->post('rack',TRUE),
-            'rack_level' => $this->input->post('rack_level',TRUE),
+            'tray' => $this->input->post('tray',TRUE),
             'uuid' => $this->uuid->v4(),
             'user_created' => $this->session->userdata('id_users'),
             'date_created' => $dt->format('Y-m-d H:i:s'),
@@ -55,11 +55,11 @@ class Ref_location extends CI_Controller
         }
         else if ($mode=="edit"){
             $data = array(
-            'id_location_80' => $this->input->post('id_location_80',TRUE),
+            'id_location' => $this->input->post('id_location',TRUE),
             'freezer' => $this->input->post('freezer',TRUE),
             'shelf' => $this->input->post('shelf',TRUE),
             'rack' => $this->input->post('rack',TRUE),
-            'rack_level' => $this->input->post('rack_level',TRUE),
+            'tray' => $this->input->post('tray',TRUE),
             // 'uuid' => $this->uuid->v4(),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),
@@ -140,11 +140,11 @@ class Ref_location extends CI_Controller
         // $no = 1; // Untuk penomoran tabel, di awal set dengan 1
         $numrow = 2; // Set baris pertama untuk isi tabel adalah baris ke 4
         foreach($rdeliver as $data){ // Lakukan looping pada variabel siswa
-          $sheet->setCellValue('A'.$numrow, $data->id_location_80);
+          $sheet->setCellValue('A'.$numrow, $data->id_location);
           $sheet->setCellValue('B'.$numrow, $data->freezer);
           $sheet->setCellValue('C'.$numrow, $data->shelf);
           $sheet->setCellValue('D'.$numrow, $data->rack);
-          $sheet->setCellValue('E'.$numrow, $data->rack_level);
+          $sheet->setCellValue('E'.$numrow, $data->tray);
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }

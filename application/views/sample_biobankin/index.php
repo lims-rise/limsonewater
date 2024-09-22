@@ -259,7 +259,7 @@
 
         $('#id_one_water_sample_list').on("change", function() {
             // $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
-            data1 = $('#id_one_water_sample_list').val();
+            let data1 = $('#id_one_water_sample_list').val();
             $.ajax({
                 type: "GET",
                 url: "Sample_biobankin/samplecheck?id1="+data1,
@@ -352,7 +352,8 @@
             $('#id_one_water_sample').show();
             $('#id_one_water_sample_list').hide();
             $('#id_one_water_sample').val(data.id_one_water_sample);
-            $('#id_one_water_sample_list').val(data.id_one_water_sample).trigger('change');
+            $('#id_one_water_sample_list').val(data.id_one_water_sample);
+            // $('#id_one_water_sample_list').val(data.id_one_water_sample).trigger('change');
             $('#id_person').val(data.id_person).trigger('change');
             $('#sampletype').attr('readonly', true);
             $('#sampletype').val(data.sampletype);

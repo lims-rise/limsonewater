@@ -26,7 +26,7 @@
 		    <th>Freezer</th>
 		    <th>Shelf</th>
 		    <th>Rack</th>
-		    <th>Drawer</th>
+		    <th>Tray</th>
 		    <th>Action</th>
                 </tr>
             </thead>
@@ -57,40 +57,33 @@
                 <form id="formSample"  action= <?php echo site_url('Ref_location/save') ?> method="post" class="form-horizontal">
                     <div class="modal-body">
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
-                        <input id="id_location_80" name="id_location_80" type="hidden" class="form-control input-sm">
-                        <!-- <div class="form-group">
-                            <label for="barcode_sample" class="col-sm-4 control-label">ID</label>
-                            <div class="col-sm-8">
-                                <input id="barcode_sample" name="barcode_sample" type="hidden" class="form-control" placeholder="Barcode Sample" required>
-                                <div class="val1tip"></div>
-                            </div>
-                        </div> -->
-
+                        <input id="id_location" name="id_location" type="hidden" class="form-control input-sm">
+                        
                         <div class="form-group">
                             <label for="freezer" class="col-sm-4 control-label">Freezer</label>
                             <div class="col-sm-8">
-                                <input id="freezer" name="freezer" type="text" class="form-control" placeholder="Freezer" value="<?php echo date("Y-m-d"); ?>">
+                                <input id="freezer" name="freezer" type="text" class="form-control" placeholder="Freezer" >
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="shelf" class="col-sm-4 control-label">Shelf</label>
                             <div class="col-sm-8">
-                                <input id="shelf" name="shelf" type="text" class="form-control" placeholder="Shelf" value="<?php echo date("Y-m-d"); ?>">
+                                <input id="shelf" name="shelf" type="text" class="form-control" placeholder="Shelf" >
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="rack" class="col-sm-4 control-label">Rack</label>
                             <div class="col-sm-8">
-                                <input id="rack" name="rack" type="text" class="form-control" placeholder="Rack" value="<?php echo date("Y-m-d"); ?>">
+                                <input id="rack" name="rack" type="text" class="form-control" placeholder="Rack" >
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="rack_level" class="col-sm-4 control-label">Drawer</label>
+                            <label for="tray" class="col-sm-4 control-label">Tray</label>
                             <div class="col-sm-8">
-                                <input id="rack_level" name="rack_level" type="text" class="form-control" placeholder="Drawer" value="<?php echo date("Y-m-d"); ?>">
+                                <input id="tray" name="tray" type="text" class="form-control" placeholder="Tray" >
                             </div>
                         </div>
 
@@ -155,68 +148,6 @@
         });
 
 
-        // $('#barcode_sample').on("change", function() {
-        //     data1 = $('#barcode_sample').val();
-        //     ckbar = data1.substring(0,5);
-        //     ckarray = ["N-B0-", "N-F0-", "N-P1-", "F-B0-", "F-F0-", "F-P1-",];
-        //     // ckarray = [10, 11, 12];
-        //     ck = $.inArray(ckbar, ckarray);
-        //     if (ck == -1) {
-        //         tip = $('<span><i class="fa fa-exclamation-triangle"></i> Wrong barcode format !! <strong></br> ex.(N-B0-XXXXXX / F-B0-XXXXXX) </br> (N-F0-XXXXXX / F-F0-XXXXXX) </br> (N-P1-XXXXXX / F-P1-XXXXXX) </strong> </span>');
-        //         $('.val1tip').tooltipster('content', tip);
-        //         $('.val1tip').tooltipster('show');
-        //         $('#barcode_sample').val('');     
-        //         $('#barcode_sample').css({'background-color' : '#FFE6E7'});
-        //         setTimeout(function(){
-        //             $('#barcode_sample').css({'background-color' : '#FFFFFF'});
-        //             setTimeout(function(){
-        //                 $('#barcode_sample').css({'background-color' : '#FFE6E7'});
-        //                 setTimeout(function(){
-        //                     $('#barcode_sample').css({'background-color' : '#FFFFFF'});
-        //                     $('#barcode_sample').focus();
-        //                 }, 300);                            
-        //             }, 300);
-        //         }, 300);
-        //     }
-        //     else {
-        //     $.ajax({
-        //         type: "GET",
-        //         url: "Ref_location/valid_bs?id1="+data1,
-        //         data:data1,
-        //         dataType: "json",
-        //         success: function(data) {
-        //             if (data.length > 0) {
-        //                 tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> is already in the system !</span>');
-        //                 $('.val1tip').tooltipster('content', tip);
-        //                 $('.val1tip').tooltipster('show');
-        //                 $('#barcode_sample').focus();
-        //                 $('#barcode_sample').val('');     
-        //                 $('#barcode_sample').css({'background-color' : '#FFE6E7'});
-        //                 setTimeout(function(){
-        //                     $('#barcode_sample').css({'background-color' : '#FFFFFF'});
-        //                     setTimeout(function(){
-        //                         $('#barcode_sample').css({'background-color' : '#FFE6E7'});
-        //                         setTimeout(function(){
-        //                             $('#barcode_sample').css({'background-color' : '#FFFFFF'});
-        //                         }, 300);                            
-        //                     }, 300);
-        //                 }, 300);
-        //             }
-        //         }
-        //     });
-        //     }
-        // });
-
-        // $("input").focusout(function(){
-        //     if ($('#barcode_sample').val() == ""){
-        //         tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode sample <strong> is required !</strong></span>');
-        //         $('.val1tip').tooltipster('content', tip);
-        //         $('.val1tip').tooltipster('show');
-        //         $('#barcode_sample').focus();
-        //         // $('.val1tip').tooltipster('hide');   
-        //     }
-        // });
-
         $("input").keypress(function(){
             // $('#barcode_sample').val('');     
             $('.val1tip').tooltipster('hide');   
@@ -264,11 +195,11 @@
                 //     "data": "barcode_sample",
                 //     "orderable": false
                 // },
-                {"data": "id_location_80"},
+                {"data": "id_location"},
                 {"data": "freezer"},
                 {"data": "shelf"},
                 {"data": "rack"},
-                {"data": "rack_level"},
+                {"data": "tray"},
                 {
                     "data" : "action",
                     "orderable": false,
@@ -290,7 +221,7 @@
             $('.val1tip').tooltipster('hide');   
             $('#mode').val('insert');
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Master Data - New freezer location<span id="my-another-cool-loader"></span>');
-            $('#id_location_80').val('');
+            $('#id_location').val('');
             // $("#date_ended").datepicker("setDate",'now');
             $('#freezer').val('');
             $('#shelf').val('');
@@ -307,7 +238,7 @@
             // var data = this.parents('tr').data();
             $('#mode').val('edit');
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Master Data - Update freezer location<span id="my-another-cool-loader"></span>');
-            $('#id_location_80').val(data.id_location_80);
+            $('#id_location').val(data.id_location);
             $('#freezer').val(data.freezer);
             $('#shelf').val(data.shelf);
             $('#rack').val(data.rack);

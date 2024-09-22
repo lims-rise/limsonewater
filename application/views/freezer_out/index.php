@@ -22,15 +22,10 @@
             <thead>
                 <tr>
                     <!-- <th width="30px">No</th> -->
-                    <th>ID</th>
+                    <th>Barcode Tube</th>
                     <th>Date OUT</th>
+                    <th>Time OUT</th>
                     <th>Lab tech</th>
-                    <th>Sample type</th>
-                    <th>Vessel type</th>
-                    <th>Barcode vessel</th>
-                    <th>Destination</th>
-                    <!-- <th>Shipping method</th> -->
-                    <!-- <th>Tracking number</th> -->
                     <th>Comments</th>
                     <th>Action</th>
                 </tr>
@@ -65,9 +60,24 @@
                         <input id="id_freez" name="id_freez" type="hidden" class="form-control input-sm">
 
                         <div class="form-group">
-                            <label for="date_out" class="col-sm-4 control-label">Date out</label>
+                            <label for="date_out" class="col-sm-4 control-label">Date OUT</label>
                             <div class="col-sm-8">
-                                <input id="date_out" name="date_out" type="date" class="form-control" placeholder="Date Out" value="<?php echo date("Y-m-d"); ?>">
+                                <input id="date_out" name="date_out" type="date" class="form-control" placeholder="Date OUT" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="time_out" class="col-sm-4 control-label">Time OUT</label>
+                            <div class="col-sm-8">
+                                <div class="input-group clockpicker">
+                                    <input id="time_out" name="time_out" class="form-control" placeholder="Time OUT" value="<?php 
+                                    $datetime = new DateTime( "now", new DateTimeZone( "Asia/Makassar" ) );
+                                    echo $datetime->format( 'H:i' );
+                                    ?>">
+                                    <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                    </span>
+                                </div>
                             </div>
                         </div>
 
@@ -91,112 +101,13 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="id_sample" class="col-sm-4 control-label">Sample type</label>
+                            <label for="barcode_tube" class="col-sm-4 control-label">Barcode tube</label>
                             <div class="col-sm-8">
-                            <select id='id_sample' name="id_sample" class="form-control">
-                                <option>-- Select sample type --</option>
-                                <?php
-                                foreach($type as $row){
-									if ($id_sample == $row['id_sample']) {
-										echo "<option value='".$row['id_sample']."' selected='selected'>".$row['sample']."</option>";
-									}
-									else {
-                                        echo "<option value='".$row['id_sample']."'>".$row['sample']."</option>";
-                                    }
-                                }
-                                    ?>
-                            </select>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="id_vessel" class="col-sm-4 control-label">Vessel type</label>
-                            <div class="col-sm-8">
-                            <select id='id_vessel' name="id_vessel" class="form-control">
-                                <option>-- Select Vessel --</option>
-                                <?php
-                                foreach($vessel as $row){
-									if ($id_vessel == $row['id_vessel']) {
-										echo "<option value='".$row['id_vessel']."' selected='selected'>".$row['vessel']."</option>";
-									}
-									else {
-                                        echo "<option value='".$row['id_vessel']."'>".$row['vessel']."</option>";
-                                    }
-                                }
-                                    ?>
-                            </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="barcode_sample" class="col-sm-4 control-label">Barcode vessel</label>
-                            <div class="col-sm-8">
-                                <input id="barcode_sample" name="barcode_sample" type="text" class="form-control" placeholder="Barcode vessel" required>
+                                <input id="barcode_tube" name="barcode_tube" type="text" class="form-control" placeholder="Barcode tube" required>
+                                <input id="barcode_sample" name="barcode_sample" type="hidden" class="form-control">
                                 <div class="val1tip"></div>
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            <label for="id_destination" class="col-sm-4 control-label">Destination</label>
-                            <div class="col-sm-8">
-                            <select id='id_destination' name="id_destination" class="form-control">
-                                <option>-- Select Destination --</option>
-                                <?php
-                                foreach($destination as $row){
-									if ($id_destination == $row['id_destination']) {
-										echo "<option value='".$row['id_destination']."' selected='selected'>".$row['destination']."</option>";
-									}
-									else {
-                                        echo "<option value='".$row['id_destination']."'>".$row['destination']."</option>";
-                                    }
-                                }
-                                    ?>
-                            </select>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label for="id_shipping" class="col-sm-4 control-label">Shipping method</label>
-                            <div class="col-sm-8">
-                            <select id='id_shipping' name="id_shipping" class="form-control">
-                                <option>-- Select Shipping Method --</option>
-                                <?php
-                                foreach($shipping as $row){
-									if ($id_shipping == $row['id_shipping']) {
-										echo "<option value='".$row['id_shipping']."' selected='selected'>".$row['shipping_method']."</option>";
-									}
-									else {
-                                        echo "<option value='".$row['id_shipping']."'>".$row['shipping_method']."</option>";
-                                    }
-                                }
-                                    ?>
-                            </select>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label for="tracking_number" class="col-sm-4 control-label">Tracking number</label>
-                            <div class="col-sm-8">
-                                <input id="tracking_number" name="tracking_number" class="form-control" placeholder="Tracking number" required>
-                            </div>
-                        </div>
-
-                        <!-- <div class="form-group">
-                            <label for="id_type" class="col-sm-4 control-label">Sample Type</label>
-                            <div class="col-sm-8">
-                            <select id='sample_type' name="sample_type" class="form-control">
-                                <option>-- Select answer --</option>
-                                <option value='Human Stool (Control)' >Human Stool (Control)</option>
-                                <option value='MacConkey (Control)' >MacConkey (Control)</option>
-                                <option value='Water (Control)' >Water (Control)</option>
-                                <option value='Bootsocks (Control)' >Bootsocks (Control)</option>
-                                <option value='Soil (Control)' >Soil (Control)</option>
-                                <option value='Animal Stool (Control)' >Animal Stool (Control)</option>                            
-                            </select>
-                            </div>
-                        </div> -->
 
                         <div class="form-group">
                                 <label for="comments" class="col-sm-4 control-label">Comments</label>
@@ -254,8 +165,8 @@
         // // $('#barcode_sample').val('');     
         // });
 
-        $('barcode_sample').click(function() {
-            // $('.val1tip').tooltipster('hide');   
+        $('barcode_tube').click(function() {
+            $('.val1tip').tooltipster('hide');   
             // $('#barcode_sample').val('');     
         });
 
@@ -303,8 +214,9 @@
         //     data1 = $('#barcode_dna').val();
         // });
 
-        $('#barcode_sample').on("change", function() {
-            data1 = $('#barcode_sample').val();
+        $('#barcode_tube').on("change", function() {
+            $('.val1tip').tooltipster('hide');   
+            data1 = $('#barcode_tube').val();
             // loadSType(data1);
             $.ajax({
                 type: "GET",
@@ -313,19 +225,19 @@
                 dataType: "json",
                 success: function(data) {
                     // var barcode = '';
-                    if (data.length > 0) {
-                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode Vessel <strong> ' + data1 +'</strong> is not found in the Freezer IN module !</span>');
+                    if (data.length == 0) {
+                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode tube <strong> ' + data1 +'</strong> is not found in the Freezer IN module !</span>');
                         $('.val1tip').tooltipster('content', tip);
                         $('.val1tip').tooltipster('show');
-                        $('#barcode_sample').focus();
-                        $('#barcode_sample').val('');     
-                        $('#barcode_sample').css({'background-color' : '#FFE6E7'});
+                        $('#barcode_tube').focus();
+                        $('#barcode_tube').val('');     
+                        $('#barcode_tube').css({'background-color' : '#FFE6E7'});
                         setTimeout(function(){
-                            $('#barcode_sample').css({'background-color' : '#FFFFFF'});
+                            $('#barcode_tube').css({'background-color' : '#FFFFFF'});
                             setTimeout(function(){
-                                $('#barcode_sample').css({'background-color' : '#FFE6E7'});
+                                $('#barcode_tube').css({'background-color' : '#FFE6E7'});
                                 setTimeout(function(){
-                                    $('#barcode_sample').css({'background-color' : '#FFFFFF'});
+                                    $('#barcode_tube').css({'background-color' : '#FFFFFF'});
                                 }, 300);                            
                             }, 300);
                         }, 300);
@@ -333,12 +245,15 @@
                         // barcode = data[0].barcode_sample;
                         // console.log(data);
                     }
+                    else {
+                        $('#barcode_sample').val(data[0].barcode_sample);    
+                    }
                 }
             });
             // $('.val1tip').tooltipster('content', 'Barcode :' + $(this).val()+' salah input, seharusnya memakai kode bla bla bla');
-            // setTimeout(function(){
-            //     $('.val1tip').tooltipster('hide');        
-            // }, 5000);
+            setTimeout(function(){
+                $('.val1tip').tooltipster('hide');        
+            }, 3000);
         });
 
         // $("input").focusout(function(){
@@ -351,10 +266,10 @@
         //     }
         // });
 
-        // $("input").keypress(function(){
-        //     // $('#barcode_sample').val('');     
-        //     $('.val1tip').tooltipster('hide');   
-        // });
+        $("input").keypress(function(){
+            // $('#barcode_sample').val('');     
+            $('.val1tip').tooltipster('hide');   
+        });
 
         $('#compose-modal').on('shown.bs.modal', function () {
             // $('#barcode_sample').val('');     
@@ -398,15 +313,10 @@
                 //     "data": "barcode_sample",
                 //     "orderable": false
                 // },
-                {"data": "id"},
+                {"data": "barcode_tube"},
                 {"data": "date_out"},
+                {"data": "time_out"},
                 {"data": "initial"},
-                {"data": "sample"},
-                {"data": "vessel"},
-                {"data": "barcode_sample"},
-                {"data": "destination"},
-                // {"data": "shipping_method"},
-                // {"data": "tracking_number"},
                 {"data": "comments"},
                 {
                     "data" : "action",
@@ -429,18 +339,10 @@
             $('.val1tip').tooltipster('hide');   
             $('#mode').val('insert');
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Freezer Management - New sample out<span id="my-another-cool-loader"></span>');
-            // $('#barcode_dna').attr('readonly', false);
             $('#id_freez').val('');
-            // $('#date_out').val('');
-            // $('#stype').attr('readonly', true);
             $('#id_person').val('');
-            $('#id_sample').val('');
-            $('#id_vessel').val('');
             $('#barcode_sample').val('');
-            $('#id_destination').val('');
-            $('#id_shipping').val('');
-            $('#tracking_number').val('');
-            // $("#date_out").datepicker("setDate",'now');
+            $('#barcode_tube').val('');
             $('#comments').val('');
             $('#compose-modal').modal('show');
         });
@@ -455,23 +357,12 @@
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Freezer Management - Update sample out<span id="my-another-cool-loader"></span>');
             // $('#barcode_dna').attr('readonly', true);
             $('#id_freez').val(data.id);
-            // $('#date_out').val('');
+            $('#date_out').val(data.date_out);
+            $('#time_out').val(data.time_out);
+            $('#id_person').val(data.id_person).trigger('change');
             // $('#stype').attr('readonly', true);
-            $('#id_person').val(data.id_person);
-            $('#id_sample').val(data.id_sample);
-            $('#id_vessel').val(data.id_vessel);
             $('#barcode_sample').val(data.barcode_sample);
-            $('#id_destination').val(data.id_destination);
-            $('#id_shipping').val(data.id_shipping);
-            $('#tracking_number').val(data.tracking_number);
-
-            // $('#barcode_dna').val(data.barcode_dna);
-            // $('#date_out').val(data.date_out);
-            // $('#id_person').val(data.id_person).trigger('change');
-            // $('#stype').attr('readonly', true);
-            // loadSType(data.barcode_dna);
-            // // $('#stype').val(data.sample_type).trigger('change');
-            // $('#freezer_sample_in').val(data.freezer_sample_in);
+            $('#barcode_tube').val(data.barcode_tube);
             $('#comments').val(data.comments);
             $('#compose-modal').modal('show');
         });  

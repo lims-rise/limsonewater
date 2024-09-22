@@ -1,19 +1,41 @@
 <html>
     <head>
-        <title>Blokir Akses</title>
+        <title>Under construction</title>
         <style type="text/css">
-            .box{
+            .box {
                 width: 600px;
-                border: 1px black dashed;
-                padding: 20px;
+                border: 2px solid #3498db;
+                padding: 40px;
+                margin: 100px auto;
                 text-align: center;
+                background-color: #f0f8ff;
+                font-family: Arial, sans-serif;
+                color: #333;
+                border-radius: 10px;
+            }
+            .box p {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+            .back-button {
+                padding: 10px 20px;
+                font-size: 18px;
+                color: white;
+                background-color: #3498db;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            .back-button:hover {
+                background-color: #2980b9;
             }
         </style>
     </head>
-    <body style="text-align: center">
+    <body>
         <div class="box">
-            <p>Anda Tidak Boleh Mengakses Halaman Ini</p>
-            <p>Silahkan Hubungi Administrator</p>
+            <p>We're building something amazing for you!</p>
+            <p>Hang tight, it's coming soon!</p>
+            <button class="back-button" onclick="window.history.back();">Go Back</button>
         </div>
     </body>
 </html>

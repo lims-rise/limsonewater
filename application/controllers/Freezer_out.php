@@ -22,10 +22,6 @@ class Freezer_out extends CI_Controller
     {
         // $this->load->model('Freezer_out_model');
         $data['person'] = $this->Freezer_out_model->getLabtech();
-        $data['type'] = $this->Freezer_out_model->getSampleType();
-        $data['vessel'] = $this->Freezer_out_model->getVessel();
-        $data['destination'] = $this->Freezer_out_model->getDestination();
-        $data['shipping'] = $this->Freezer_out_model->getShipping();
         $this->template->load('template','Freezer_out/index', $data);
     } 
     
@@ -43,16 +39,12 @@ class Freezer_out extends CI_Controller
         if ($mode=="insert"){
             $data = array(
             'date_out' => $this->input->post('date_out',TRUE),
+            'time_out' => $this->input->post('time_out',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),
-            'id_sample' => $this->input->post('id_sample',TRUE),
-            'id_vessel' => $this->input->post('id_vessel',TRUE),
             'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
-            'id_destination' => $this->input->post('id_destination',TRUE),
-            'id_shipping' => $this->input->post('id_shipping',TRUE),
-            'tracking_number' => $this->input->post('tracking_number',TRUE),
+            'barcode_tube' => strtoupper($this->input->post('barcode_tube',TRUE)),
             'comments' => trim($this->input->post('comments',TRUE)),
             'uuid' => $this->uuid->v4(),
-            'lab' => $this->session->userdata('lab'),
             'user_created' => $this->session->userdata('id_users'),
             'date_created' => $dt->format('Y-m-d H:i:s'),
             );
@@ -63,16 +55,11 @@ class Freezer_out extends CI_Controller
         else if ($mode=="edit"){
             $data = array(
             'date_out' => $this->input->post('date_out',TRUE),
+            'time_out' => $this->input->post('time_out',TRUE),
             'id_person' => $this->input->post('id_person',TRUE),
-            'id_sample' => $this->input->post('id_sample',TRUE),
-            'id_vessel' => $this->input->post('id_vessel',TRUE),
             'barcode_sample' => strtoupper($this->input->post('barcode_sample',TRUE)),
-            'id_destination' => $this->input->post('id_destination',TRUE),
-            'id_shipping' => $this->input->post('id_shipping',TRUE),
-            'tracking_number' => $this->input->post('tracking_number',TRUE),
+            'barcode_tube' => strtoupper($this->input->post('barcode_tube',TRUE)),
             'comments' => trim($this->input->post('comments',TRUE)),
-            // 'uuid' => $this->uuid->v4(),
-            'lab' => $this->session->userdata('lab'),
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
@@ -119,7 +106,6 @@ class Freezer_out extends CI_Controller
     public function valid_bs() 
     {
         $id = $this->input->get('id1');
-        // echo $id;
         $data = $this->Freezer_out_model->validate1($id);
 
         header('Content-Type: application/json');
@@ -153,14 +139,10 @@ class Freezer_out extends CI_Controller
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setCellValue('A1', "ID"); 
         $sheet->setCellValue('B1', "Date_out"); 
-        $sheet->setCellValue('C1', "Lab_tech");
-        $sheet->setCellValue('D1', "Sample_type");
-        $sheet->setCellValue('E1', "Vessel_type");
-        $sheet->setCellValue('F1', "Barcode_vessel");
-        $sheet->setCellValue('G1', "Destination");
-        $sheet->setCellValue('H1', "Shipping_method");
-        $sheet->setCellValue('I1', "Tracking_number");
-        $sheet->setCellValue('J1', "Comments");
+        $sheet->setCellValue('C1', "Time_out"); 
+        $sheet->setCellValue('D1', "Lab_tech");
+        $sheet->setCellValue('E1', "Barcode_tube");
+        $sheet->setCellValue('F1', "Comments");
         // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
 
         // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
@@ -171,14 +153,10 @@ class Freezer_out extends CI_Controller
         foreach($rdeliver as $data){ // Lakukan looping pada variabel siswa
           $sheet->setCellValue('A'.$numrow, $data->id);
           $sheet->setCellValue('B'.$numrow, $data->date_out);
-          $sheet->setCellValue('C'.$numrow, $data->initial);
-          $sheet->setCellValue('D'.$numrow, $data->sample);
-          $sheet->setCellValue('E'.$numrow, $data->vessel);
-          $sheet->setCellValue('F'.$numrow, $data->barcode_sample);
-          $sheet->setCellValue('G'.$numrow, $data->destination);
-          $sheet->setCellValue('H'.$numrow, $data->shipping_method);
-          $sheet->setCellValue('I'.$numrow, $data->tracking_number);
-          $sheet->setCellValue('J'.$numrow, trim($data->comments));
+          $sheet->setCellValue('C'.$numrow, $data->time_out);
+          $sheet->setCellValue('D'.$numrow, $data->initial);
+          $sheet->setCellValue('E'.$numrow, $data->barcode_tube);
+          $sheet->setCellValue('F'.$numrow, trim($data->comments));
         //   $no++; // Tambah 1 setiap kali looping
           $numrow++; // Tambah 1 setiap kali looping
         }
