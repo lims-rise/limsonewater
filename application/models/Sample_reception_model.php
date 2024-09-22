@@ -17,29 +17,39 @@ class Sample_reception_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('sample_reception.id_project, sample_reception.client, sample_reception.id_one_water_sample, sample_reception.id_person, ref_person.initial,
-        sample_reception.date_arrival, sample_reception.time_arrival,sample_reception.date_collected, sample_reception.time_collected, sample_reception.id_client_sample, ref_sampletype.sampletype, sample_reception.id_sampletype, 
-        sample_reception.comments, sample_reception.flag');
-        $this->datatables->from('sample_reception');
-        $this->datatables->join('ref_sampletype', 'sample_reception.id_sampletype = ref_sampletype.id_sampletype', 'left');
-        $this->datatables->join('ref_person', 'sample_reception.id_person = ref_person.id_person', 'left');
-        // $this->datatables->where('Water_sample_reception.id_country', $this->session->userdata('lab'));
-        $this->datatables->where('sample_reception.flag', '0');
+        $this->datatables->select('sr.id_project, sr.client, sr.id_one_water_sample, sr.id_person, rp.initial,
+        sr.date_arrival, sr.time_arrival, sr.date_collected, sr.time_collected, sr.date_created, sr.date_updated, sr.id_client_sample, rst.sampletype, sr.id_sampletype, 
+        sr.comments, sr.flag, GREATEST(sr.date_created, sr.date_updated) AS latest_date');
+    
+        
+        // Subquery untuk mendapatkan date_created dan date_updated
+        $this->datatables->from('sample_reception sr');
+        $this->datatables->join('ref_sampletype rst', 'sr.id_sampletype = rst.id_sampletype', 'left');
+        $this->datatables->join('ref_person rp', 'sr.id_person = rp.id_person', 'left');
+        
+        // Menambahkan kondisi untuk mengambil data yang flag-nya 0
+        $this->datatables->where('sr.flag', '0');
+        
+        // Tambahkan kondisi untuk level user
         $lvl = $this->session->userdata('id_user_level');
-        if ($lvl == 4){
-            $this->datatables->add_column('action', anchor(site_url('sample_reception/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')), 'id_project');
+        if ($lvl == 4) {
+            $this->datatables->add_column('action', anchor(site_url('sample_reception/read/$1'), '<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')), 'id_project');
+        } else if ($lvl == 3) {
+            $this->datatables->add_column('action', anchor(site_url('sample_reception/read/$1'), '<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) . "
+                " . '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_project');
+        } else {
+            $this->datatables->add_column('action', anchor(site_url('sample_reception/read/$1'), '<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) . "
+                " . '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>' . " 
+                " . '<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_project');
         }
-        else if ($lvl == 3){
-            $this->datatables->add_column('action', anchor(site_url('sample_reception/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
-                ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_project');
-        }
-        else {
-            $this->datatables->add_column('action', anchor(site_url('sample_reception/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
-                ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_project');
-        }
+    
+        // Mengatur pengurutan berdasarkan tanggal terbaru
+        $this->db->order_by('latest_date', 'DESC');
+
+    
         return $this->datatables->generate();
     }
+    
 
     function subjson($id) {
         // $this->datatables->select('a.sample_id, a.project_id, b.testing_type, a.testing_type_id, a.date_collected, a.time_collected, a.sample_barcode, a.flag');

@@ -528,8 +528,8 @@
 					className: 'text-right' // Apply right alignment to this column
 				}
 			],
-            order: [[1, 'desc']],
-            order: [[0, 'desc']],
+            // order: [[1, 'desc']],
+            // order: [[0, 'desc']],
             rowCallback: function(row, data, iDisplayIndex) {
                 var info = this.fnPagingInfo();
                 var page = info.iPage;
@@ -545,11 +545,33 @@
             drawCallback: function(settings) {
                 let api = this.api();
                 let pageInfo = api.page.info();
-                if (pageInfo.page === 0) {
+                
+                // Highlight baris yang baru saja ditambahkan atau diperbarui
+                api.rows().every(function() {
+                    let data = this.data();
+                    let createdDate = new Date(data.date_created);
+                    let updatedDate = new Date(data.date_updated);
+                    let now = new Date();
+
+                    // Highlight jika baru ditambahkan atau diperbarui dalam 10 detik terakhir
+                    if ((now - createdDate < 10 * 1000) || (now - updatedDate < 10 * 1000)) {
+                        $(this.node()).addClass('highlight');
+                    }
+                });
+                
+                // Pastikan baris pertama di-highlight jika tabel tidak kosong
+                if (pageInfo.page === 0 && api.rows().count() > 0) {
                     let firstRow = api.row(0).node();
                     $(firstRow).addClass('highlight');
                 }
             }
+        });
+
+        // Event handler untuk klik pada baris
+        $('#mytable tbody').on('click', 'tr', function() {
+            let rowData = table.row(this).data();
+            let rowId = rowData.id_project;
+            $(this).removeClass('highlight');
         });
 
         $('#addtombol').click(function() {
