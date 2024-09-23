@@ -274,6 +274,10 @@
         background-color: rgba(0, 255, 0, 0.1) !important;
         font-weight: bold !important;
     }
+    .highlight-edit {
+        background-color: rgba(0, 0, 255, 0.1) !important;
+        font-weight: bold !important;
+    }
 </style>
 
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
@@ -554,8 +558,10 @@
                     let now = new Date();
 
                     // Highlight jika baru ditambahkan atau diperbarui dalam 10 detik terakhir
-                    if ((now - createdDate < 10 * 1000) || (now - updatedDate < 10 * 1000)) {
+                    if (now - createdDate < 10 * 1000) {
                         $(this.node()).addClass('highlight');
+                    } else if (now - updatedDate < 10 * 1000) {
+                        $(this.node()).addClass('highlight-edit');
                     }
                 });
                 
@@ -570,8 +576,9 @@
         // Event handler untuk klik pada baris
         $('#mytable tbody').on('click', 'tr', function() {
             let rowData = table.row(this).data();
-            let rowId = rowData.id_project;
+            let rowId = rowData.barcode_sample;
             $(this).removeClass('highlight');
+            $(this).removeClass('highlight-edit');
         });
 
         $('#addtombol').click(function() {
