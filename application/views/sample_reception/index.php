@@ -276,6 +276,10 @@
         background-color: rgba(0, 255, 0, 0.1) !important;
         font-weight: bold !important;
     }
+    .highlight-edit {
+        background-color: rgba(0, 0, 255, 0.1) !important;
+        font-weight: bold !important;
+    }
 </style>
 
 
@@ -536,110 +540,6 @@
             };
         };
 
-        // // Setelah data baru ditambahkan atau diperbarui
-        // function reloadData() {
-        //     table.ajax.reload(null, false); // false untuk tidak mengatur ulang posisi paging
-        // }
-
-        // Fungsi ini harus dipanggil setelah proses tambah atau update berhasil
-        // function onUpdateSuccess() {
-        //     reloadData(); // Panggil kembali DataTable untuk memperbarui data
-        // }
-
-
-        // table = $("#mytable").DataTable({
-        //     oLanguage: {
-        //         sProcessing: "loading..."
-        //     },
-        //     processing: true,
-        //     serverSide: true,
-        //     ajax: {"url": "Sample_reception/json", "type": "POST"},
-        //     columns: [
-        //         {"data": "id_project"},
-        //         {"data": "client"},
-        //         {"data": "id_client_sample"},
-        //         {"data": "id_one_water_sample"},
-        //         {"data": "sampletype"},
-        //         {"data": "initial"},
-        //         {"data": "date_arrival"},
-        //         {"data": "time_arrival"},
-        //         // {"data": "date_created"},
-        //         // {"data": "date_updated"},
-        //         {
-        //             "data": "action",
-        //             "orderable": false,
-        //             "className": "text-center"
-        //         }
-        //     ],
-        //     columnDefs: [
-        //         {
-        //             targets: [5],
-        //             className: 'text-right'
-        //         }
-        //     ],
-        //     order: [[0, 'desc']],
-        //     rowCallback: function(row, data, iDisplayIndex) {
-        //         var info = this.fnPagingInfo();
-        //         var page = info.iPage;
-        //         var length = info.iLength;
-
-        //     },
-        //     // drawCallback: function(settings) {
-        //     //     let api = this.api();
-        //     //     let pageInfo = api.page.info();
-        //     //     if (pageInfo.page === 0) {
-        //     //         let firstRow = api.row(0).node();
-        //     //         $(firstRow).addClass('highlight');
-        //     //     }
-        //     // }
-        //     // drawCallback: function(settings) {
-        //     //     let api = this.api();
-        //     //     let pageInfo = api.page.info();
-                
-        //     //     // Highlight the first row based on creation or update time
-        //     //     api.rows().every(function() {
-        //     //         let data = this.data();
-        //     //         let createdDate = new Date(data.date_created);
-        //     //         let updatedDate = new Date(data.date_updated);
-        //     //         let now = new Date();
-
-        //     //         // Assuming you want to highlight if it's created or updated in the last minute
-        //     //         if ((now - createdDate < 60 * 1000) || (now - updatedDate < 60 * 1000)) {
-        //     //             $(this.node()).addClass('highlight');
-        //     //         }
-        //     //     });
-                
-        //     //     // Optional: Highlight the first row if the table is empty
-        //     //     if (pageInfo.page === 0) {
-        //     //         let firstRow = api.row(0).node();
-        //     //         $(firstRow).addClass('highlight');
-        //     //     }
-        //     // }
-
-        //     drawCallback: function(settings) {
-        //         let api = this.api();
-        //         let pageInfo = api.page.info();
-                
-        //         // Highlight baris yang baru saja ditambahkan atau diperbarui
-        //         api.rows().every(function() {
-        //             let data = this.data();
-        //             let createdDate = new Date(data.date_created);
-        //             let updatedDate = new Date(data.date_updated);
-        //             let now = new Date();
-
-        //             // Highlight jika baru ditambahkan atau diperbarui dalam 5 detik terakhir
-        //             if ((now - createdDate < 5 * 1000) || (now - updatedDate < 5 * 1000)) {
-        //                 $(this.node()).addClass('highlight');
-        //             }
-        //         });
-
-        //         // Pastikan baris pertama di-highlight jika tabel tidak kosong
-        //         if (pageInfo.page === 0 && api.rows().count() > 0) {
-        //             let firstRow = api.row(0).node();
-        //             $(firstRow).addClass('highlight');
-        //         }
-        //     }
-        // });
         table = $("#mytable").DataTable({
             oLanguage: {
                 sProcessing: "loading..."
@@ -680,8 +580,10 @@
                     let now = new Date();
 
                     // Highlight jika baru ditambahkan atau diperbarui dalam 10 detik terakhir
-                    if ((now - createdDate < 10 * 1000) || (now - updatedDate < 10 * 1000)) {
+                    if (now - createdDate < 10 * 1000) {
                         $(this.node()).addClass('highlight');
+                    } else if (now - updatedDate < 10 * 1000) {
+                        $(this.node()).addClass('highlight-edit');
                     }
                 });
                 
@@ -698,6 +600,7 @@
             let rowData = table.row(this).data();
             let rowId = rowData.id_project;
             $(this).removeClass('highlight');
+            $(this).removeClass('highlight-edit');
         });
 
 
