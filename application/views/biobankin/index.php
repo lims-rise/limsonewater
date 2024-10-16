@@ -14,7 +14,7 @@
                                         echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Biobank-IN</button>";
                                     }
                             ?>        
-                            <!-- <?php echo anchor(site_url('Sample_biobankin/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?> -->
+                            <!-- <?php echo anchor(site_url('Biobankin/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?> -->
                         </div>
                             <div class="table-responsive">
                                 <table class="table ho table-bordered table-striped tbody" id="mytable" style="width:100%">
@@ -62,7 +62,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal-title">Biobank-IN | New</h4>
                     </div>
-                    <form id="formSample"  action= <?php echo site_url('Sample_biobankin/save') ?> method="post" class="form-horizontal">
+                    <form id="formSample"  action= <?php echo site_url('Biobankin/save') ?> method="post" class="form-horizontal">
                         <div class="modal-body">
                             <input id="mode" name="mode" type="hidden" class="form-control input-sm">
                             <!-- <input id="id_req" name="id_req" type="hidden" class="form-control input-sm"> -->
@@ -96,7 +96,7 @@
                             <div class="form-group">
                                 <label for="sampletype" class="col-sm-4 control-label">Sample Type</label>
                                 <div class="col-sm-8">
-                                    <input id="sampletype" name="sampletype" placeholder="Sample Type" type="text" class="form-control" disabled>
+                                    <input id="sampletype" name="sampletype" placeholder="Sample Type" type="text" class="form-control">
                                 </div>
                             </div>
 
@@ -128,7 +128,12 @@
                             <div class="form-group">
                                 <label for="replicates" class="col-sm-4 control-label">Replicates</label>
                                 <div class="col-sm-8">
-                                    <input id="replicates" name="replicates" placeholder="Replicates" type="number" step="1" min="1" max="3" class="form-control" required>
+                                    <select id="replicates" name="replicates" class="form-control" required>
+                                        <option value="" disabled selected='selected'>-- Select Replication --</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                    </select>
                                 </div>
                             </div>
                             
@@ -193,7 +198,7 @@
         // Handle the delete button click
         $(document).on('click', '.btn_delete', function() {
             let id = $(this).data('id');
-            let url = '<?php echo site_url('Sample_biobankin/delete'); ?>/' + id;
+            let url = '<?php echo site_url('Biobankin/delete'); ?>/' + id;
             $('#confirm-modal #id').text(id);
             console.log(id);
             showConfirmation(url);
@@ -262,7 +267,7 @@
             let data1 = $('#id_one_water_sample_list').val();
             $.ajax({
                 type: "GET",
-                url: "Sample_biobankin/samplecheck?id1="+data1,
+                url: "Biobankin/samplecheck?id1="+data1,
                 // data:data1,
                 dataType: "json",
                 success: function(data) {
@@ -295,7 +300,7 @@
             },
             processing: true,
             serverSide: true,
-            ajax: {"url": "Sample_biobankin/json", "type": "POST"},
+            ajax: {"url": "Biobankin/json", "type": "POST"},
             columns: [
                 {"data": "id_one_water_sample"},
                 {"data": "date_conduct"},
@@ -358,7 +363,7 @@
             $('#sampletype').attr('readonly', true);
             $('#sampletype').val(data.sampletype);
             $('#date_conduct').val(data.date_conduct).trigger('change');
-            $('#replicates').val(data.replicates);
+            $('#replicates').val(data.replicates).trigger('change');
             $('#comments').val(data.comments);
             $('#compose-modal').modal('show');
         });  

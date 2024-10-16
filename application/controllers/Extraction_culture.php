@@ -14,13 +14,13 @@ if (!defined('BASEPATH'))
 // use PhpOffice\PhpSpreadsheet\Spreadsheet;
 // use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
     
-class Sample_extraction extends CI_Controller
+class Extraction_culture extends CI_Controller
 {
     function __construct()
     {
         parent::__construct();
         is_login();
-        $this->load->model('Sample_extraction_model');
+        $this->load->model('Extraction_culture_model');
         $this->load->library('form_validation');        
 	    $this->load->library('datatables');
 	    $this->load->library('uuid');
@@ -28,39 +28,42 @@ class Sample_extraction extends CI_Controller
 
     public function index()
     {
-        $data['id_one'] = $this->Sample_extraction_model->getID_one();
-        $data['labtech'] = $this->Sample_extraction_model->getLabTech();
-        $data['kit'] = $this->Sample_extraction_model->getKit();
+        $data['id_one'] = $this->Extraction_culture_model->getID_one();
+        $data['labtech'] = $this->Extraction_culture_model->getLabTech();
+        $data['kit'] = $this->Extraction_culture_model->getKit();
 
-        $data['freez1'] = $this->Sample_extraction_model->getFreezer1();
-        $data['shelf1'] = $this->Sample_extraction_model->getFreezer2();
-        $data['rack1'] = $this->Sample_extraction_model->getFreezer3();
-        $data['tray1'] = $this->Sample_extraction_model->getFreezer4();
-        $this->template->load('template','sample_extraction/index', $data);
+        $data['freez1'] = $this->Extraction_culture_model->getFreezer1();
+        $data['shelf1'] = $this->Extraction_culture_model->getFreezer2();
+        $data['rack1'] = $this->Extraction_culture_model->getFreezer3();
+        $data['tray1'] = $this->Extraction_culture_model->getFreezer4();
+        $data['row1'] = $this->Extraction_culture_model->getPos1();
+        $data['col1'] = $this->Extraction_culture_model->getPos2();
+
+        $this->template->load('template','Extraction_culture/index', $data);
     } 
     
     public function json() {
         header('Content-Type: application/json');
-        echo $this->Sample_extraction_model->json();
+        echo $this->Extraction_culture_model->json();
     }
 
     public function subjson() {
         $id = $this->input->get('id',TRUE);
         header('Content-Type: application/json');
-        echo $this->Sample_extraction_model->subjson($id);
+        echo $this->Extraction_culture_model->subjson($id);
     }
 
     public function subjson2() {
         $id2 = $this->input->get('id2',TRUE);
 
         header('Content-Type: application/json');
-        echo $this->Sample_extraction_model->subjson2($id2);
+        echo $this->Extraction_culture_model->subjson2($id2);
     }
 
     // public function read($id)
     // {
-    //     $data['testing_type'] = $this->Sample_extraction_model->getTest();
-    //     $row = $this->Sample_extraction_model->get_detail($id);
+    //     $data['testing_type'] = $this->Extraction_culture_model->getTest();
+    //     $row = $this->Extraction_culture_model->get_detail($id);
     //     if ($row) {
     //         $data = array(
     //             'project_id' => $row->project_id,
@@ -71,106 +74,136 @@ class Sample_extraction extends CI_Controller
     //             'client_sample_id' => $row->client_sample_id,
     //             'classification_name' => $row->classification_name,
     //             'comments' => $row->comments,
-    //             'testing_type' => $this->Sample_extraction_model->getTest(),
+    //             'testing_type' => $this->Extraction_culture_model->getTest(),
     //             );
-    //             $this->template->load('template','Sample_extraction/index_det', $data);
+    //             $this->template->load('template','Extraction_culture/index_det', $data);
     //     }
     //     else {
-    //         // $this->template->load('template','Sample_extraction/index_det');
+    //         // $this->template->load('template','Extraction_culture/index_det');
     //     }
     // }  
 
     public function save() {
         $mode = $this->input->post('mode', TRUE);
-        $barcode_sample = $this->input->post('barcode_sample', TRUE);
         $dt = new DateTime();
-    
+
+        $id_one_water_sample = $this->input->post('id_one_water_sample_list', TRUE);
+        $barcode_sample = $this->input->post('barcode_sample', TRUE);
+        $id_person = $this->input->post('id_person', TRUE);
+        $date_extraction = $this->input->post('date_extraction', TRUE);
+        $fin_volume = $this->input->post('fin_volume', TRUE);
+        $culture_media = $this->input->post('culture_media', TRUE);
+        $id_kit = $this->input->post('id_kit', TRUE);
+        $kit_lot = $this->input->post('kit_lot', TRUE);
+        $comments = $this->input->post('comments', TRUE);
+        $barcode_tube = $this->input->post('barcode_tube', TRUE);
+        $dna_concentration = $this->input->post('dna_concentration', TRUE);
+        $cryobox = $this->input->post('cryobox', TRUE);
+
+        $id_freez = $this->input->post('id_freez', TRUE);
+        $id_shelf = $this->input->post('id_shelf', TRUE);
+        $id_rack = $this->input->post('id_rack', TRUE);
+        $id_tray = $this->input->post('id_tray', TRUE);
+
+        $id_row = $this->input->post('id_row', TRUE);
+        $id_col = $this->input->post('id_col', TRUE);
+
+        $loc_obj = $this->Extraction_culture_model->get_freezx($id_freez, $id_shelf, $id_rack, $id_tray);
+        $pos_obj = $this->Extraction_culture_model->get_posx($id_row, $id_col);
+        $id_loc = $loc_obj->id_location;
+        $id_pos = $pos_obj->id_pos;        
+
         if ($mode == "insert") {
             $data = array(
-                'barcode_sample' => $this->input->post('barcode_sample', TRUE),
-                'id_one_water_sample' => $this->input->post('id_one_water_sample_list', TRUE),
-                'id_person' => $this->input->post('id_person', TRUE),
-                'date_extraction' => $this->input->post('date_extraction', TRUE),
-                'weight' => $this->input->post('weight', TRUE),
-                'volume' => $this->input->post('volume', TRUE),
-                'id_kit' => $this->input->post('id_kit', TRUE),
-                'kit_lot' => $this->input->post('kit_lot', TRUE),
-                'barcode_tube' => $this->input->post('barcode_tube', TRUE),
-                'dna_concentration' => $this->input->post('dna_concentration', TRUE),
-                'cryobox' => $this->input->post('cryobox', TRUE),
-                'id_location' => $this->input->post('id_loc', TRUE),
-                'comments' => $this->input->post('comments', TRUE),
+                'barcode_sample' => $barcode_sample,
+                'id_one_water_sample' => $id_one_water_sample,
+                'id_person' => $id_person,
+                'date_extraction' => $date_extraction,
+                'culture_media' => $culture_media,
+                'id_kit' => $id_kit,
+                'kit_lot' => $kit_lot,
+                'comments' => $comments,
+                'barcode_tube' => $barcode_tube,
+                'fin_volume' => $fin_volume,
+                'dna_concentration' => $dna_concentration,
+                'cryobox' => $cryobox,
+                'id_location' => $id_loc,
+                'id_pos' => $id_pos,
                 'uuid' => $this->uuid->v4(),
                 'user_created' => $this->session->userdata('id_users'),
                 'date_created' => $dt->format('Y-m-d H:i:s'),
                 'flag' => '0',
             );
     
-            $this->Sample_extraction_model->insert($data);
+            $this->Extraction_culture_model->insert($data);
 
             $data_freez = array(
-                'date_in' => $this->input->post('date_extraction', TRUE),
+                'date_in' => $date_extraction,
                 'time_in' => $dt->format('H:i:s'),
-                'id_person' => $this->input->post('id_person', TRUE),
-                'barcode_sample' => $this->input->post('barcode_sample', TRUE),
-                'barcode_tube' => $this->input->post('barcode_tube', TRUE),
-                'cryobox' => $this->input->post('cryobox', TRUE),
-                'id_location' => $this->input->post('id_loc', TRUE),
-                'comments' => $this->input->post('comments', TRUE),
+                'id_person' => $id_person,
+                'barcode_sample' => $barcode_sample,
+                'barcode_tube' => $barcode_tube,
+                'cryobox' => $cryobox,
+                'id_location' => $id_loc,
+                'id_pos' => $id_pos,
+                'comments' => $comments,
                 'uuid' => $this->uuid->v4(),
                 'user_created' => $this->session->userdata('id_users'),
                 'date_created' => $dt->format('Y-m-d H:i:s'),
                 'flag' => '0',
             );
     
-            $this->Sample_extraction_model->insert_freez($data_freez);            
+            $this->Extraction_culture_model->insert_freez($data_freez);            
             $this->session->set_flashdata('message', 'Create Record Success');
 
         } else if ($mode == "edit") {
             $data = array(
-                // 'client_id' => $this->input->post('client_id', TRUE),
-                'id_one_water_sample' => $this->input->post('id_one_water_sample', TRUE),
-                'id_person' => $this->input->post('id_person', TRUE),
-                'date_extraction' => $this->input->post('date_extraction', TRUE),
-                'weight' => $this->input->post('weight', TRUE),
-                'volume' => $this->input->post('volume', TRUE),
-                'id_kit' => $this->input->post('id_kit', TRUE),
-                'kit_lot' => $this->input->post('kit_lot', TRUE),
-                'barcode_tube' => $this->input->post('barcode_tube', TRUE),
-                'dna_concentration' => $this->input->post('dna_concentration', TRUE),
-                'cryobox' => $this->input->post('cryobox', TRUE),
-                'id_location' => $this->input->post('id_loc', TRUE),
-                'comments' => $this->input->post('comments', TRUE),
+                'barcode_sample' => $barcode_sample,
+                'id_one_water_sample' => $id_one_water_sample,
+                'id_person' => $id_person,
+                'date_extraction' => $date_extraction,
+                'culture_media' => $culture_media,
+                'id_kit' => $id_kit,
+                'kit_lot' => $kit_lot,
+                'comments' => $comments,
+                'barcode_tube' => $barcode_tube,
+                'fin_volume' => $fin_volume,
+                'dna_concentration' => $dna_concentration,
+                'cryobox' => $cryobox,
+                'id_location' => $id_loc,
+                'id_pos' => $id_pos,
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
 
-            $this->Sample_extraction_model->update($barcode_sample, $data);
+            $this->Extraction_culture_model->update($barcode_sample, $data);
 
             $data_freez = array(
-                'date_in' => $this->input->post('date_extraction', TRUE),
+                'date_in' => $date_extraction,
                 'time_in' => $dt->format('H:i:s'),
-                'id_person' => $this->input->post('id_person', TRUE),
-                'barcode_tube' => $this->input->post('barcode_tube', TRUE),
-                'cryobox' => $this->input->post('cryobox', TRUE),
-                'id_location' => $this->input->post('id_loc', TRUE),
-                'comments' => $this->input->post('comments', TRUE),
+                'id_person' => $id_person,
+                'barcode_sample' => $barcode_sample,
+                'barcode_tube' => $barcode_tube,
+                'cryobox' => $cryobox,
+                'id_location' => $id_loc,
+                'id_pos' => $id_pos,
+                'comments' => $comments,
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
     
-            $this->Sample_extraction_model->update_freez($barcode_sample, $data_freez);       
+            $this->Extraction_culture_model->update_freez($barcode_sample, $data_freez);       
 
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
-        redirect(site_url("sample_extraction"));
+        redirect(site_url("Extraction_culture"));
     }
     
     public function barcode_check() 
     {
         $id = $this->input->get('id1');
-        $data = $this->Sample_extraction_model->barcode_check($id);
+        $data = $this->Extraction_culture_model->barcode_check($id);
         header('Content-Type: application/json');
         echo json_encode($data);
     }
@@ -178,7 +211,7 @@ class Sample_extraction extends CI_Controller
     public function load_freez() 
     {
         $id = $this->input->get('id1');
-        $data = $this->Sample_extraction_model->load_freez($id);
+        $data = $this->Extraction_culture_model->load_freez($id);
         header('Content-Type: application/json');
         echo json_encode($data);
     }
@@ -189,31 +222,31 @@ class Sample_extraction extends CI_Controller
         $id2 = $this->input->get('id2');
         $id3 = $this->input->get('id3');
         $id4 = $this->input->get('id4');
-        $data = $this->Sample_extraction_model->get_freez($id1, $id2, $id3, $id4);
+        $data = $this->Extraction_culture_model->get_freez($id1, $id2, $id3, $id4);
         header('Content-Type: application/json');
         echo json_encode($data);
     }
 
     public function delete($id) 
     {
-        $row = $this->Sample_extraction_model->get_by_id($id);
+        $row = $this->Extraction_culture_model->get_by_id($id);
         $data = array(
             'flag' => 1,
             );
 
         if ($row) {
-            $this->Sample_extraction_model->update($id, $data);
+            $this->Extraction_culture_model->update($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
-            redirect(site_url('sample_extraction'));
+            redirect(site_url('Extraction_culture'));
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
-            redirect(site_url('sample_extraction'));
+            redirect(site_url('Extraction_culture'));
         }
     }
 
     public function delete_detail($id) 
     {
-        $row = $this->Sample_extraction_model->get_by_id_detail($id);
+        $row = $this->Extraction_culture_model->get_by_id_detail($id);
 
         if ($row) {
             $id_parent = $row->project_id; // Retrieve project_id before updating the record
@@ -221,31 +254,31 @@ class Sample_extraction extends CI_Controller
                 'flag' => 1,
             );
     
-            $this->Sample_extraction_model->update_det($id, $data);
+            $this->Extraction_culture_model->update_det($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
     
-        redirect(site_url('sample_extraction/read/'.$id_parent));
+        redirect(site_url('Extraction_culture/read/'.$id_parent));
     }
 
     // Function delete detail 2
     public function delete_detail2($id)
     {
-        $row = $this->Sample_extraction_model->get_by_id_detail2($id);
+        $row = $this->Extraction_culture_model->get_by_id_detail2($id);
         if ($row) {
             $id_parent = $row->sample_id;
             $data = array(
                 'flag' => 1,
             );
 
-            $this->Sample_extraction_model->update_det2($id, $data);
+            $this->Extraction_culture_model->update_det2($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
-        redirect(site_url('sample_extraction/read2/'.$id_parent));
+        redirect(site_url('Extraction_culture/read2/'.$id_parent));
     }
 
 
@@ -271,7 +304,7 @@ class Sample_extraction extends CI_Controller
 
         $sheets = array(
             // array(
-            //     'Sample_extraction',
+            //     'Extraction_culture',
             //     'SELECT a.id_req AS ID_Request, a.date_req AS Date_Request, c.objective AS Objective, 
             //     a.title AS Title, b.realname AS Requested, a.budget_req AS Budget_req, a.comments AS Comments
             //     FROM sample_reception a
@@ -285,11 +318,11 @@ class Sample_extraction extends CI_Controller
             //     'Budget_req', 'Comments'), // Columns for Sheet1
             // ),
             // array(
-            //     'Sample_extraction_detail',
+            //     'Extraction_culture_detail',
             //     'SELECT a.id_req AS ID_Request, a.id_reqdetail AS ID_Request_Det, a.items AS Descriptions, 
             //     a.qty AS Qty, b.unit AS Unit, a.estimate_price AS Estimate_price, a.remarks AS Remarks 
-            //     FROM Sample_extraction_detail a
-            //     LEFT JOIN Sample_extraction c ON a.id_req=c.id_req
+            //     FROM Extraction_culture_detail a
+            //     LEFT JOIN Extraction_culture c ON a.id_req=c.id_req
             //     LEFT JOIN ref_unit b ON a.id_unit=b.id_unit
             //     WHERE 
             //     c.id_country = "'.$this->session->userdata('lab').'" 
@@ -343,7 +376,7 @@ class Sample_extraction extends CI_Controller
         
         // Set the HTTP headers to download the Excel file
         $datenow=date("Ymd");
-        $filename = 'Sample_extraction_'.$datenow.'.xlsx';
+        $filename = 'Extraction_culture_'.$datenow.'.xlsx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="' . $filename . '"');
         header('Cache-Control: max-age=0');
@@ -355,7 +388,7 @@ class Sample_extraction extends CI_Controller
     public function excel_print($id)
 	{
         /* Data */
-        $data = $this->Sample_extraction_model->get_all_with_detail_excel($id);
+        $data = $this->Extraction_culture_model->get_all_with_detail_excel($id);
 
         /* Spreadsheet Init */
         $spreadsheet = new Spreadsheet();
@@ -483,7 +516,7 @@ class Sample_extraction extends CI_Controller
         /* Excel File Format */
         $writer = new Xlsx($spreadsheet);
         ob_clean();
-        $filename = 'Sample_extraction_'. $obj .'_'. date('Ymd');
+        $filename = 'Extraction_culture_'. $obj .'_'. date('Ymd');
         
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
@@ -495,8 +528,8 @@ class Sample_extraction extends CI_Controller
 
 }
 
-/* End of file Sample_extraction.php */
-/* Location: ./application/controllers/Sample_extraction.php */
+/* End of file Extraction_culture.php */
+/* Location: ./application/controllers/Extraction_culture.php */
 /* Please DO NOT modify this information : */
 /* Generated by Harviacode Codeigniter CRUD Generator 2022-12-14 03:38:42 */
 /* http://harviacode.com */

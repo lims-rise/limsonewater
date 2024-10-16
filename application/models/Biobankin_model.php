@@ -3,10 +3,10 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Sample_biobankin_model extends CI_Model
+class Biobankin_model extends CI_Model
 {
 
-    public $table = 'sample_biobank';
+    public $table = 'biobank_in';
     public $id_table = 'id_one_water_sample';
     public $order = 'DESC';
 
@@ -17,24 +17,24 @@ class Sample_biobankin_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('sample_biobank.id_one_water_sample, sample_biobank.date_conduct, ref_sampletype.sampletype, ref_person.initial,
-        sample_biobank.replicates, sample_biobank.comments, sample_biobank.id_person, sample_biobank.flag');
-        $this->datatables->from('sample_biobank');
-        $this->datatables->join('sample_reception', 'sample_biobank.id_one_water_sample = sample_reception.id_one_water_sample', 'left');
+        $this->datatables->select('biobank_in.id_one_water_sample, biobank_in.date_conduct, ref_sampletype.sampletype, ref_person.initial,
+        biobank_in.replicates, biobank_in.comments, biobank_in.id_person, biobank_in.flag');
+        $this->datatables->from('biobank_in');
+        $this->datatables->join('sample_reception', 'biobank_in.id_one_water_sample = sample_reception.id_one_water_sample', 'left');
         $this->datatables->join('ref_sampletype', 'sample_reception.id_sampletype = ref_sampletype.id_sampletype', 'left');
-        $this->datatables->join('ref_person', 'sample_biobank.id_person = ref_person.id_person', 'left');
+        $this->datatables->join('ref_person', 'biobank_in.id_person = ref_person.id_person', 'left');
         // $this->datatables->where('Water_sample_reception.id_country', $this->session->userdata('lab'));
-        $this->datatables->where('sample_biobank.flag', '0');
+        $this->datatables->where('biobank_in.flag', '0');
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 4){
-            $this->datatables->add_column('action', anchor(site_url('sample_biobankin/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')), 'id_one_water_sample');
+            $this->datatables->add_column('action', anchor(site_url('Biobankin/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')), 'id_one_water_sample');
         }
         else if ($lvl == 3){
-            $this->datatables->add_column('action', anchor(site_url('sample_biobankin/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
+            $this->datatables->add_column('action', anchor(site_url('Biobankin/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
                 ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
         }
         else {
-            $this->datatables->add_column('action', anchor(site_url('sample_biobankin/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
+            $this->datatables->add_column('action', anchor(site_url('Biobankin/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
                 ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
                 ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
         }
@@ -46,11 +46,11 @@ class Sample_biobankin_model extends CI_Model
     //                         a.barcode_tube, a.cryobox, 
     //                         concat("F",c.freezer,"-","S",c.shelf,"-","R",c.rack,"-","DRW",c.rack_level) AS location,
     //                         a.id_culture, a.id_location');
-    //   $this->db->join('ref_culture', 'sample_biobank_detail.id_culture=ref_culture.id_culture', 'left');
-    //   $this->db->join('ref_location', 'sample_biobank_detail.id_location=ref_location.id_location', 'left');
-    //   $this->db->where('sample_biobank_detail.id_one_water_sample', $id);
-    //   $this->db->where('sample_biobank_detail.flag', '0');
-    //   $q = $this->db->get('sample_biobank_detail');
+    //   $this->db->join('ref_culture', 'biobank_in_detail.id_culture=ref_culture.id_culture', 'left');
+    //   $this->db->join('ref_location', 'biobank_in_detail.id_location=ref_location.id_location', 'left');
+    //   $this->db->where('biobank_in_detail.id_one_water_sample', $id);
+    //   $this->db->where('biobank_in_detail.flag', '0');
+    //   $q = $this->db->get('biobank_in_detail');
 
     function subjson($id) {
         $this->datatables->select('a.barcode_water, a.id_one_water_sample, a.weight,
@@ -60,7 +60,7 @@ class Sample_biobankin_model extends CI_Model
                              a.comments, a.id_culture, a.id_location, a.id_pos, 
                              c.freezer,c.shelf,c.rack,c.tray, d.rows1, d.columns1
                              ');
-        $this->datatables->from('sample_biobank_detail a');
+        $this->datatables->from('biobank_in_detail a');
         $this->datatables->join('ref_culture b', 'a.id_culture=b.id_culture', 'left');
         $this->datatables->join('ref_location c', 'a.id_location=c.id_location', 'left');
         $this->datatables->join('ref_position d', 'a.id_pos=d.id_pos', 'left');
@@ -94,7 +94,7 @@ class Sample_biobankin_model extends CI_Model
         $this->db->where('barcode_water', $id);
         $this->db->where('flag', '0');
         // $this->db->where('lab', $this->session->userdata('lab'));
-        return $this->db->get('sample_biobank_detail')->row();
+        return $this->db->get('biobank_in_detail')->row();
     }
 
     // Function get detail2 by id
@@ -108,13 +108,13 @@ class Sample_biobankin_model extends CI_Model
     function get_detail($id)
     {
       $response = array();
-      $this->db->select('sample_biobank.id_one_water_sample, sample_biobank.date_conduct,
-                            sample_biobank.replicates, ref_person.initial, ref_person.realname, sample_biobank.comments, 
-                            sample_biobank.id_person, sample_biobank.flag');
-      $this->db->join('ref_person', 'sample_biobank.id_person=ref_person.id_person', 'left');
-      $this->db->where('sample_biobank.id_one_water_sample', $id);
-      $this->db->where('sample_biobank.flag', '0');
-      $q = $this->db->get('sample_biobank');
+      $this->db->select('biobank_in.id_one_water_sample, biobank_in.sampletype, biobank_in.date_conduct,
+                            biobank_in.replicates, ref_person.initial, ref_person.realname, biobank_in.comments, 
+                            biobank_in.id_person, biobank_in.flag');
+      $this->db->join('ref_person', 'biobank_in.id_person=ref_person.id_person', 'left');
+      $this->db->where('biobank_in.id_one_water_sample', $id);
+      $this->db->where('biobank_in.flag', '0');
+      $q = $this->db->get('biobank_in');
       $response = $q->row();
       return $response;
     }
@@ -133,7 +133,7 @@ class Sample_biobankin_model extends CI_Model
     function getID_one(){
         $q = $this->db->query('
         SELECT id_one_water_sample FROM sample_reception
-        WHERE id_one_water_sample NOT IN (SELECT id_one_water_sample FROM sample_biobank)
+        WHERE id_one_water_sample NOT IN (SELECT id_one_water_sample FROM biobank_in)
         AND flag = 0
         ORDER BY id_one_water_sample');        
         $response = $q->result_array();
@@ -178,13 +178,13 @@ class Sample_biobankin_model extends CI_Model
 
     function insert_det($data)
     {
-        $this->db->insert('sample_biobank_detail', $data);
+        $this->db->insert('biobank_in_detail', $data);
     }
     
     function update_det($id, $data)
     {
         $this->db->where('barcode_water', $id);
-        $this->db->update('sample_biobank_detail', $data);
+        $this->db->update('biobank_in_detail', $data);
     }
 
     // function update_barcode($id, $data)
