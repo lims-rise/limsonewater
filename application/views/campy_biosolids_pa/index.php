@@ -4,17 +4,17 @@
             <div class="col-xs-12">
                 <div class="box box-black box-solid">
                     <div class="box-header">
-                        <h3 class="box-title">Processing | Campy Biosolids </h3>
+                        <h3 class="box-title">Processing | Campy Biosolids PA </h3>
                     </div>
                     <div class="box-body">
                         <div style="padding-bottom: 10px;">
                             <?php
                                     $lvl = $this->session->userdata('id_user_level');
                                     if ($lvl != 4){
-                                        echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Campy Biosolids</button>";
+                                        echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Campy Biosolids PA</button>";
                                     }
                             ?>        
-                            <?php echo anchor(site_url('Campy_biosolids/excel_all'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
+                            <?php echo anchor(site_url('Campy_biosolids_pa/excel_all'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
                         </div>
                             <div class="table-responsive">
                                 <table class="table ho table-bordered table-striped tbody" id="mytable" style="width:100%">
@@ -60,10 +60,10 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
                     <h4 class="modal-title" id="modal-title">Moisture Content | New</h4>
                 </div>
-                <form id="formSample" action="<?php echo site_url('Campy_biosolids/save') ?>" method="post" class="form-horizontal">
+                <form id="formSample" action="<?php echo site_url('Campy_biosolids_pa/save') ?>" method="post" class="form-horizontal">
                     <div class="modal-body">
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
-                        <input id="id_campy_biosolids" name="id_campy_biosolids" type="hidden" class="form-control input-sm">
+                        <input id="id_campy_biosolids_pa" name="id_campy_biosolids_pa" type="hidden" class="form-control input-sm">
                         
                         <div class="form-group">
                             <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
@@ -282,7 +282,7 @@
         // Handle the delete button click
         $(document).on('click', '.btn_deleteCampyBiosolids', function() {
             let id = $(this).data('id');
-            let url = '<?php echo site_url('Campy_biosolids/delete_campyBiosolids'); ?>/' + id;
+            let url = '<?php echo site_url('Campy_biosolids_pa/delete_campyBiosolids'); ?>/' + id;
             $('#confirm-modal #id').text(id);
             console.log(id);
             showConfirmation(url);
@@ -390,7 +390,7 @@
             console.log(campyAssayBarcode);
             $.ajax({
                 type: "GET",
-                url: "Campy_biosolids/validateCampyAssayBarcode",
+                url: "Campy_biosolids_pa/validateCampyAssayBarcode",
                 data: { id: campyAssayBarcode },
                 dataType: "json",
                 success: function(data) {
@@ -452,7 +452,7 @@
             // select: true;
             processing: true,
             serverSide: true,
-            ajax: {"url": "Campy_biosolids/json", "type": "POST"},
+            ajax: {"url": "Campy_biosolids_pa/json", "type": "POST"},
             columns: [
                 // {
                 //     "data": "barcode_sample",
@@ -495,7 +495,7 @@
 
         $('#addtombol').click(function() {
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> Campy Biosolids | New<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Campy Biosolids PA | New<span id="my-another-cool-loader"></span>');
             $('#id_one_water_sample').val('');
             $('#id_one_water_sample').show();
             $('#idx_one_water_sample').hide();
@@ -524,8 +524,8 @@
             let data = table.row(tr).data();
             console.log(data);
             $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Campy Biosolids | Update<span id="my-another-cool-loader"></span>');
-            $('#id_campy_biosolids').val(data.id_campy_biosolids);
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Campy Biosolids PA | Update<span id="my-another-cool-loader"></span>');
+            $('#id_campy_biosolids_pa').val(data.id_campy_biosolids_pa);
             $('#id_one_water_sample').hide();
             $('#idx_one_water_sample').show();
             $('#idx_one_water_sample').attr('readonly', true);

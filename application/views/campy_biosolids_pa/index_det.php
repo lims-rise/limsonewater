@@ -7,7 +7,7 @@
 				<form role="form"  id="formKeg" method="post" class="form-horizontal">
 					<div class="box-body">
 						<!-- <input type="hidden" class="form-control " id="id_req" name="id_req" value="<?php// echo $id_req ?>"> -->
-						<input id="id_campy_biosolids" name="id_campy_biosolids" type="hidden" class="form-control input-sm" value="<?php echo $id_campy_biosolids ?>">
+						<input id="id_campy_biosolids_pa" name="id_campy_biosolids_pa" type="hidden" class="form-control input-sm" value="<?php echo $id_campy_biosolids_pa ?>">
 						<div class="form-group">
 							<label for="id_one_water_sample" class="col-sm-2 control-label">One Water Sample ID</label>
 							<div class="col-sm-4">
@@ -246,7 +246,7 @@
                     <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS
                 </button>
             </div>
-            <input id="id_campy_biosolids" name="id_campy_biosolids" type="hidden" class="form-control input-sm" value="<?php echo $id_campy_biosolids ?>">
+            <input id="id_campy_biosolids_pa" name="id_campy_biosolids_pa" type="hidden" class="form-control input-sm" value="<?php echo $id_campy_biosolids_pa ?>">
 
             <div id="content-final-concentration" class="table-responsive">
                 <table id="exampleFinalConcentration" class="table display table-bordered table-striped" width="100%">
@@ -332,7 +332,7 @@
 
 				<div class="form-group">
 					<div class="modal-footer clearfix">
-						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('campy_biosolids'); ?>';">
+						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('Campy_biosolids_pa'); ?>';">
 							<i class="fa fa-times"></i> Close
 						</button>
 					</div>
@@ -351,16 +351,16 @@
                         <h4 class="modal-title" id="modal-title-detail">
 							<span id="my-another-cool-loader"></span></h4>
                     </div>
-                        <form id="formDetail24" action=<?php echo site_url('Campy_biosolids/saveResultsCharcoal') ?> method="post" class="form-horizontal">
+                        <form id="formDetail24" action=<?php echo site_url('Campy_biosolids_pa/saveResultsCharcoal') ?> method="post" class="form-horizontal">
                             <div class="modal-body">
                                 <div class="form-group">
                                         <div class="col-sm-9">
                                             <input id="mode_detResultsCharcoal" name="mode_detResultsCharcoal" type="hidden" class="form-control input-sm">
                                             <!-- <input id="idx_moisture24" name="idx_moisture24" type="hidden" class="form-control input-sm">
                                             <input id="id_moisture24" name="id_moisture24" type="hidden" class="form-control input-sm"> -->
-                                            <input id="id_campy_biosolids1" name="id_campy_biosolids1" type="hidden" class="form-control input-sm">
+                                            <input id="id_campy_biosolids_pa1" name="id_campy_biosolids_pa1" type="hidden" class="form-control input-sm">
                                             <input id="number_of_tubes1" name="number_of_tubes1" type="hidden" class="form-control input-sm">
-                                            <input id="id_result_charcoal" name="id_result_charcoal" type="hidden" class="form-control input-sm">
+                                            <input id="id_result_charcoal_pa" name="id_result_charcoal_pa" type="hidden" class="form-control input-sm">
                                         </div>
                                     </div>
 
@@ -418,16 +418,16 @@
                         <h4 class="modal-title" id="modal-title-HBA">
 							<span id="my-another-cool-loader"></span></h4>
                     </div>
-                        <form id="formDetail24" action=<?php echo site_url('Campy_biosolids/saveResultsHBA') ?> method="post" class="form-horizontal">
+                        <form id="formDetail24" action=<?php echo site_url('Campy_biosolids_pa/saveResultsHBA') ?> method="post" class="form-horizontal">
                             <div class="modal-body">
                                 <div class="form-group">
                                         <div class="col-sm-9">
                                             <input id="mode_detResultsHBA" name="mode_detResultsHBA" type="hidden" class="form-control input-sm">
                                             <!-- <input id="idx_moisture24" name="idx_moisture24" type="hidden" class="form-control input-sm">
                                             <input id="id_moisture24" name="id_moisture24" type="hidden" class="form-control input-sm"> -->
-                                            <input id="id_campy_biosolidsHBA" name="id_campy_biosolidsHBA" type="hidden" class="form-control input-sm">
+                                            <input id="id_campy_biosolids_paHBA" name="id_campy_biosolids_paHBA" type="hidden" class="form-control input-sm">
                                             <input id="number_of_tubesHba" name="number_of_tubesHba" type="hidden" class="form-control input-sm">
-                                            <input id="id_result_hba" name="id_result_hba" type="hidden" class="form-control input-sm">
+                                            <input id="id_result_hba_pa" name="id_result_hba_pa" type="hidden" class="form-control input-sm">
                                         </div>
                                     </div>
 
@@ -485,13 +485,13 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
                 <h4 class="modal-title" id="modal-title-biochemical">Biochemical Tube | New</h4>
             </div>
-            <form id="formBiochemical" action="<?php echo site_url('Campy_biosolids/saveBiochemical') ?>" method="post" class="form-horizontal">
+            <form id="formBiochemical" action="<?php echo site_url('Campy_biosolids_pa/saveBiochemical') ?>" method="post" class="form-horizontal">
                 <div class="modal-body">
                     <input id="mode_detResultsBiochemical" name="mode_detResultsBiochemical" type="hidden" class="form-control input-sm">
-                    <input id="id_campy_biosolidsBiochemical" name="id_campy_biosolidsBiochemical" type="hidden" class="form-control input-sm">
-                    <input id="id_result_biochemical" name="id_result_biochemical" type="hidden" class="form-control input-sm">
+                    <input id="id_campy_biosolids_paBiochemical" name="id_campy_biosolids_paBiochemical" type="hidden" class="form-control input-sm">
+                    <input id="id_result_biochemical_pa" name="id_result_biochemical_pa" type="hidden" class="form-control input-sm">
                     <input id="biochemical_tube" name="biochemical_tube" type="hidden" class="form-control input-sm">
-                    <input id="id_result_hba1" name="id_result_hba1" type="hidden" class="form-control input-sm">
+                    <input id="id_result_hba_pa1" name="id_result_hba_pa1" type="hidden" class="form-control input-sm">
                     
 
                     <!-- Oxidase Result -->
@@ -615,8 +615,8 @@
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
 <script>
     document.getElementById('exportBtn').addEventListener('click', function() {
-        let id_campy_biosolids = document.getElementById('id_campy_biosolids').value;
-        window.location.href = '<?php echo site_url('Campy_biosolids/excel') ?>/' + id_campy_biosolids;
+        let id_campy_biosolids_pa = document.getElementById('id_campy_biosolids_pa').value;
+        window.location.href = '<?php echo site_url('Campy_biosolids_pa/excel') ?>/' + id_campy_biosolids_pa;
     });
 </script>
 <script type="text/javascript">
@@ -626,7 +626,7 @@
     let table2;
     let id_moisture = $('#id_moisture').val();
     let campy_assay_barcode = $('#campy_assay_barcode').val();
-    let id_campy_biosolids = $('#id_campy_biosolids').val();
+    let id_campy_biosolids_pa = $('#id_campy_biosolids_pa').val();
     let number_of_tubes = $('#number_of_tubes').val();
     // let volSampletube = $('#vol_sampletube').val();
     // let tubeNumberString = $('#tube_number').val();
@@ -762,15 +762,15 @@
             let id = $(this).data('id');
             let url;
             if ($(this).hasClass('btn_deleteCharcoal')) {
-                url = '<?php echo site_url('Campy_biosolids/delete_detailCharcoal'); ?>/' + id;
+                url = '<?php echo site_url('Campy_biosolids_pa/delete_detailCharcoal'); ?>/' + id;
                 $('.modal-title').html('<i class="fa fa-trash"></i> Result Charcoal | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
             } else if ($(this).hasClass('btn_deleteHba')) {
-                url = '<?php echo site_url('Campy_biosolids/delete_detailHba'); ?>/' + id;
+                url = '<?php echo site_url('Campy_biosolids_pa/delete_detailHba'); ?>/' + id;
                 $('.modal-title').html('<i class="fa fa-trash"></i> Result HBA | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
             } else if ($(this).hasClass('btn_deleteBiochemical')) {
-                url = '<?php echo site_url('Campy_biosolids/delete_detailBiochemical'); ?>/' + id;
+                url = '<?php echo site_url('Campy_biosolids_pa/delete_detailBiochemical'); ?>/' + id;
                 $('.modal-title').html('<i class="fa fa-trash"></i> Result Biochemical | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
             }
@@ -959,7 +959,7 @@
             paging: false,
             info: false,
             bFilter: false,
-            ajax: {"url": "../../Campy_biosolids/subjsonCharcoal?idCharcoal="+id_campy_biosolids, "type": "POST"},
+            ajax: {"url": "../../Campy_biosolids_pa/subjsonCharcoal?idCharcoal="+id_campy_biosolids_pa, "type": "POST"},
             columns: [
                 {"data": "campy_assay_barcode"},
                 {"data": "date_sample_processed"},
@@ -1000,7 +1000,7 @@
             paging: false,
             info: false,
             bFilter: false,
-            ajax: {"url": "../../Campy_biosolids/subjsonHba?idHba="+id_campy_biosolids, "type": "POST"},
+            ajax: {"url": "../../Campy_biosolids_pa/subjsonHba?idHba="+id_campy_biosolids_pa, "type": "POST"},
             columns: [
                 {"data": "campy_assay_barcode"},
                 {"data": "date_sample_processed"},
@@ -1032,73 +1032,6 @@
             }
         });
 
-
-        // Reload DataTable dan ambil data 
-        // table1.ajax.reload(function() {
-        //     let td = $('#exampleHba td:first');
-        //     let data = table1.row(td).data();
-        //     console.log(data);
-
-        //     if (data) {
-        //         console.log(data);
-        //         const growthPlateArray = data.growth_plate.split(', ');
-        //         const plateNumberArray = data.plate_number.split(', ');
-                
-        //         // Hitung jumlah "Yes" pada growthPlateArray
-        //         const yesCount = growthPlateArray.filter(val => val === 'Yes').length;
-
-        //         if (yesCount > 0) {
-        //             // Hasilkan tabel berdasarkan jumlah plate yang "Yes"
-        //             generateResultBiochemical($('#content-result-biochemical'), yesCount, data.id_campy_biosolids, plateNumberArray);
-        //         } else {
-        //             // Tampilkan pesan jika tidak ada plate "Yes"
-        //             $('#content-result-biochemical').empty().append('<p>Tidak ada plate yang valid.</p>');
-        //         }
-        //     } else {
-        //         console.log('Data belum tersedia');
-        //         $('#content-result-biochemical').empty().append('<p class="text-center">No data available</p>');
-        //     }
-        // });
-
-
-        // function generateResultBiochemical(container, numberOfPlates, id_campy_biosolids, plateNumberArray) {
-        //     container.empty(); // Clear existing content
-
-        //     // Iterate through the plateNumberArray instead of using numberOfPlates
-        //     for (let i = 0; i < numberOfPlates; i++) {
-        //         const tableId = `exampleBiochemical_${i}`; // Unique table ID
-        //         const plateNumber = plateNumberArray[i]; // Get the corresponding plate number
-        //         const buttonId = `addtombol_detResultsBiochemical_${plateNumber}`; // Unique button ID
-
-        //         // Append the table and button for each plate
-        //         container.append(`
-        //             <div class="box-body pad table-responsive">
-        //                 <?php
-        //                 $lvl = $this->session->userdata('id_user_level');
-        //                 if ($lvl != 4) {
-        //                     echo '<button class="btn btn-primary" id="${buttonId}" data-index="${plateNumber}"><i class="fa fa-wpforms" aria-hidden="true"></i> Biochemical Tube ${plateNumber}</button>';
-        //                 }
-        //                 ?>
-        //                 <table id="${tableId}" class="table display table-bordered table-striped" width="100%">
-        //                     <thead>
-        //                         <tr>
-        //                             <th>Oxidase Result</th>
-        //                             <th>Catalase Result</th>
-        //                             <th>Confirmation</th>
-        //                             <th>Sample Store in Biobank</th>
-        //                             <th>Biochemical Tube</th>
-        //                             <th>Action</th>
-        //                         </tr>
-        //                     </thead>
-        //                 </table>
-        //             </div>
-        //         `);
-
-        //         // Initialize DataTable for the newly created table, passing the plate number
-        //         initializeDataTable(tableId, id_campy_biosolids, plateNumber); // Pass the actual plate number
-        //     }
-        // }
-
         table1.ajax.reload(function() {
             let td = $('#exampleHba td:first');
             let data = table1.row(td).data();
@@ -1109,7 +1042,7 @@
                 const plateNumberArray = data.plate_number.split(', ');
 
                 // Generate the biochemical results for all plate numbers
-                generateResultBiochemical($('#content-result-biochemical'), plateNumberArray.length, data.id_campy_biosolids, plateNumberArray, growthPlateArray);
+                generateResultBiochemical($('#content-result-biochemical'), plateNumberArray.length, data.id_campy_biosolids_pa, plateNumberArray, growthPlateArray);
             } else {
                 console.log('Data belum tersedia');
                 $('#content-result-biochemical').empty().append('<p class="text-center">No data available</p>');
@@ -1117,7 +1050,7 @@
         });
 
         // Improved generateResultBiochemical function
-        function generateResultBiochemical(container, numberOfPlates, id_campy_biosolids, plateNumberArray, growthPlateArray) {
+        function generateResultBiochemical(container, numberOfPlates, id_campy_biosolids_pa, plateNumberArray, growthPlateArray) {
             container.empty(); // Clear existing content
 
             // Iterate through the plateNumberArray
@@ -1149,13 +1082,13 @@
                 `);
 
                 // Initialize DataTable for the newly created table, passing the plate number
-                initializeDataTable(tableId, id_campy_biosolids, plateNumber); // Pass the actual plate number
+                initializeDataTable(tableId, id_campy_biosolids_pa, plateNumber); // Pass the actual plate number
             }
         }
 
 
         // Fungsi untuk menginisialisasi DataTable
-        function initializeDataTable(tableId, id_campy_biosolids, tubeIndex) {
+        function initializeDataTable(tableId, id_campy_biosolids_pa, tubeIndex) {
             console.log(`Tube index: ${tubeIndex}`);
             $(`#${tableId}`).DataTable({
                 oLanguage: {
@@ -1167,7 +1100,7 @@
                 info: false,
                 bFilter: false,
                 ajax: {
-                    url: `../../Campy_biosolids/subjsonBiochemical?idBiochemical=${id_campy_biosolids}&biochemical_tube=${tubeIndex}`,
+                    url: `../../Campy_biosolids_pa/subjsonBiochemical?idBiochemical=${id_campy_biosolids_pa}&biochemical_tube=${tubeIndex}`,
                     type: "POST"
                 },
                 columns: [
@@ -1201,12 +1134,12 @@
             const plateNumber = $(this).data('index'); // Get the plate number directly
             let td = $('#exampleHba td:first');
             let data = table1.row(td).data();
-            console.log('datanya', data.id_result_hba);
+            console.log('datanya', data.id_result_hba_pa);
 
             $('#mode_detResultsBiochemical').val('insert');
             $('#modal-title-biochemical').html(`<i class="fa fa-wpforms"></i> Insert | Biochemical Tube ${plateNumber} <span id="my-another-cool-loader"></span>`);
-            $('#id_campy_biosolidsBiochemical').val(id_campy_biosolids);
-            $('#id_result_hba1').val(data.id_result_hba);
+            $('#id_campy_biosolids_paBiochemical').val(id_campy_biosolids_pa);
+            $('#id_result_hba_pa1').val(data.id_result_hba_pa);
             $('#oxidase').val('');
             $('#catalase').val('');
             // $('#confirmation').val('');
@@ -1227,9 +1160,9 @@
             // Set nilai-nilai di dalam modal sesuai data yang didapat
             $('#mode_detResultsBiochemical').val('edit');
             $('#modal-title-biochemical').html('<i class="fa fa-pencil-square"></i> Update | Biochemical Tube ' + data.biochemical_tube + ' <span id="my-another-cool-loader"></span>');
-            $('#id_result_biochemical').val(data.id_result_biochemical);
-            $('#id_campy_biosolidsBiochemical').val(data.id_campy_biosolids);
-            $('#id_result_hba1').val(data.id_result_hba);
+            $('#id_result_biochemical_pa').val(data.id_result_biochemical_pa);
+            $('#id_campy_biosolids_paBiochemical').val(data.id_campy_biosolids_pa);
+            $('#id_result_hba_pa1').val(data.id_result_hba_pa);
             // Set radio button untuk oxidase
             $('input[name="oxidase"][value="' + data.oxidase + '"]').prop('checked', true);
             
@@ -1255,7 +1188,7 @@
             // $('#dry_weight24').val('');
             $('#campy_assay_barcode1').val(campy_assay_barcode);
             $('#campy_assay_barcode1').attr('readonly', true);
-            $('#id_campy_biosolids1').val(id_campy_biosolids);
+            $('#id_campy_biosolids_pa1').val(id_campy_biosolids_pa);
             $('#number_of_tubes1').val(number_of_tubes);
             // $('#dry_weight24').val('');
             // $('#comments24').val('');
@@ -1268,10 +1201,10 @@
             console.log(data);
             $('#mode_detResultsCharcoal').val('edit');
             $('#modal-title-detail').html('<i class="fa fa-pencil-square"></i> Update | Results Charcoal <span id="my-another-cool-loader"></span>');
-            $('#id_result_charcoal').val(data.id_result_charcoal);
+            $('#id_result_charcoal_pa').val(data.id_result_charcoal_pa);
             $('#campy_assay_barcode1').val(data.campy_assay_barcode);
             $('#campy_assay_barcode1').attr('readonly', true);
-            $('#id_campy_biosolids1').val(data.id_campy_biosolids);
+            $('#id_campy_biosolids_pa1').val(data.id_campy_biosolids_pa);
             $('#date_sample_processed1').val(data.date_sample_processed);
             $('#time_sample_processed1').val(data.time_sample_processed);
             $('#number_of_tubes1').val(number_of_tubes);
@@ -1323,7 +1256,7 @@
 
                 // Parsing data ke komponen
                 $('#campy_assay_barcodeHBA').val(campy_assay_barcode);
-                $('#id_campy_biosolidsHBA').val(id_campy_biosolids);
+                $('#id_campy_biosolids_paHBA').val(id_campy_biosolids_pa);
                 $('#campy_assay_barcodeHBA').attr('readonly', true);
                 $('#number_of_tubesHba').val(number_of_tubes);
 
@@ -1379,10 +1312,10 @@
             console.log(data);
             $('#mode_detResultsHBA').val('edit');
             $('#modal-title-HBA').html('<i class="fa fa-pencil-square"></i> Update | Results HBA <span id="my-another-cool-loader"></span>');
-            $('#id_result_hba').val(data.id_result_hba);
+            $('#id_result_hba_pa').val(data.id_result_hba_pa);
             $('#campy_assay_barcodeHBA').val(data.campy_assay_barcode);
             $('#campy_assay_barcodeHBA').attr('readonly', true);
-            $('#id_campy_biosolidsHBA').val(data.id_campy_biosolids);
+            $('#id_campy_biosolids_paHBA').val(data.id_campy_biosolids_pa);
             $('#date_sample_processedHBA').val(data.date_sample_processed);
             $('#time_sample_processedHBA').val(data.time_sample_processed);
             $('#number_of_tubesHba').val(number_of_tubes);
