@@ -4,30 +4,29 @@
             <div class="col-xs-12">
                 <div class="box box-black box-solid">
                     <div class="box-header">
-                        <h3 class="box-title">Processing | Sample Extraction </h3>
+                        <h3 class="box-title">Processing | Hemoflow </h3>
                     </div>
                     <div class="box-body">
                         <div style="padding-bottom: 10px;">
                             <?php
                                 $lvl = $this->session->userdata('id_user_level');
                                     if ($lvl != 4){
-                                         echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Sample Reception</button>";
+                                         echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Extraction Biosolid</button>";
                                     }
                             ?>        
-                            <?php echo anchor(site_url('Sample_extraction/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
+                            <?php echo anchor(site_url('Hemoflow/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped tbody" id="mytable" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>Barcode sample</th>
                                         <th>ID Onewater Sample</th>
                                         <th>Lab Tech</th>
                                         <th>Sample type</th>
-                                        <th>Date extraction</th>
-                                        <th>Weight</th>
-                                        <th>Volume</th>
-                                        <th>Comments</th>
+                                        <th>Date Processed</th>
+                                        <th>Time Processed</th>
+                                        <th>Volume filtered (L)</th>
+                                        <th>Volume eluted (mL)</th>
                                         <th width="120px">Action</th>
                                     </tr>
                                 </thead>
@@ -51,9 +50,9 @@
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #3c8dbc; color: white;">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
-                    <h4 class="modal-title" id="modal-title">Sample Extraction | New</h4>
+                    <h4 class="modal-title" id="modal-title">Hemoflow | New</h4>
                 </div>
-                <form id="formSample"  action= <?php echo site_url('Sample_extraction/save') ?> method="post" class="form-horizontal">
+                <form id="formSample"  action= <?php echo site_url('Hemoflow/save') ?> method="post" class="form-horizontal">
                     <div class="modal-body">
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
                         <!-- <input id="id_req" name="id_req" type="hidden" class="form-control input-sm"> -->
@@ -102,52 +101,47 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="barcode_sample" class="col-sm-4 control-label">Barcode Sample</label>
-                            <div class="col-sm-8">
-                                <input id="barcode_sample" name="barcode_sample" placeholder="Barcode Sample" type="text" class="form-control" required>
-                                <div class="val1tip"></div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
                             <label for="sampletype" class="col-sm-4 control-label">Sample Type</label>
                             <div class="col-sm-8">
                                 <input id="sampletype" name="sampletype" placeholder="Sample Type" type="text" class="form-control">
                             </div>
                         </div>
 
+                        <hr>
+
                         <div class="form-group">
-                            <label for="date_extraction" class="col-sm-4 control-label">Date Extraction</label>
+                            <label for="date_processed" class="col-sm-4 control-label">Date Processed</label>
                             <div class="col-sm-8">
-                                <input id="date_extraction" name="date_extraction" type="date" class="form-control" placeholder="Date Extraction" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
+                                <input id="date_processed" name="date_processed" type="date" class="form-control" placeholder="Date Processed" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="weight" class="col-sm-4 control-label">Weight</label>
+                            <label for="time_processed" class="col-sm-4 control-label">Time Processed</label>
                             <div class="col-sm-8">
-                                <input id="weight" name="weight" placeholder="Weight" type="number" step="0.1" class="form-control">
+                                <div class="input-group clockpicker">
+                                    <input id="time_processed" name="time_processed" class="form-control" placeholder="Time Processed" value="<?php 
+                                    $datetime = new DateTime();
+                                    echo $datetime->format('H:i');
+                                    ?>">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-time"></span>
+                                    </span>
+                                </div>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="volume" class="col-sm-4 control-label">Volume</label>
+                            <label for="id_person_proc" class="col-sm-4 control-label">Lab Tech Processed</label>
                             <div class="col-sm-8">
-                                <input id="volume" name="volume" placeholder="Volume" type="number" step="1" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="id_kit" class="col-sm-4 control-label">Kit Used</label>
-                            <div class="col-sm-8">
-                                <select id="id_kit" name="id_kit" class="form-control">
-                                    <option>-- Select Kit --</option>
+                                <select id="id_person_proc" name="id_person_proc" class="form-control" required>
+                                    <option value="" disabled>-- Select Lab Tech Processed --</option>
                                     <?php
-                                        foreach($kit as $row) {
-                                            if ($id_kit == $row['id_kit']) {
-                                                echo "<option value='".$row['id_kit']."' selected='selected'>".$row['kit']."</option>";
+                                        foreach($labtech as $row) {
+                                            if ($id_person == $row['id_person']) {
+                                                echo "<option value='".$row['id_person']."' selected='selected'>".$row['realname']."</option>";
                                             } else {
-                                                echo "<option value='".$row['id_kit']."'>".$row['kit']."</option>";
+                                                echo "<option value='".$row['id_person']."'>".$row['realname']."</option>";
                                             }
                                         }
                                     ?>
@@ -156,75 +150,16 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="kit_lot" class="col-sm-4 control-label">Kit Lot no.</label>
+                            <label for="volume_filter" class="col-sm-4 control-label">Volume Filter (L)</label>
                             <div class="col-sm-8">
-                                <input id="kit_lot" name="kit_lot" placeholder="Kit Lot no." type="text" class="form-control">
+                                <input id="volume_filter" name="volume_filter" type="number" step="1" class="form-control">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="barcode_tube" class="col-sm-4 control-label">Barcode Tube</label>
+                            <label for="volume_eluted" class="col-sm-4 control-label">Volume Eluted (mL)</label>
                             <div class="col-sm-8">
-                                <input id="barcode_tube" name="barcode_tube" placeholder="Barcode Tube" type="text" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="dna_concentration" class="col-sm-4 control-label">DNA Concentration</label>
-                            <div class="col-sm-8">
-                                <input id="dna_concentration" name="dna_concentration" placeholder="DNA Concentration" type="number" step="0.1" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="cryobox" class="col-sm-4 control-label">Cryobox</label>
-                            <div class="col-sm-8">
-                                <input id="cryobox" name="cryobox" placeholder="Cryobox" type="text" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="id_location" class="col-sm-4 control-label">Freezer Location</label>
-                            <input id="id_loc" name="id_loc" type="hidden" class="form-control" required>
-                            <div class="col-sm-2">
-                            <select id='id_freez' name="id_freez" class="form-control" required>
-                                <option>Freezer</option>
-                                    <?php
-                                    foreach($freez1 as $row){
-                                        echo "<option value='".$row['freezer']."'>".$row['freezer']."</option>";
-                                    }
-                                    ?>
-                            </select>
-                            </div>
-                            <div class="col-sm-2">
-                            <select id='id_shelf' name="id_shelf" class="form-control" required>
-                                <option>Shelf</option>
-                                    <?php
-                                    foreach($shelf1 as $row){
-                                        echo "<option value='".$row['shelf']."'>".$row['shelf']."</option>";
-                                    }
-                                    ?>
-                            </select>
-                            </div>
-                            <div class="col-sm-2">
-                            <select id='id_rack' name="id_rack" class="form-control" required>
-                                <option>Rack</option>
-                                    <?php
-                                    foreach($rack1 as $row){
-                                        echo "<option value='".$row['rack']."'>".$row['rack']."</option>";
-                                    }
-                                    ?>
-                            </select>
-                            </div>
-                            <div class="col-sm-2">
-                            <select id='id_tray' name="id_tray" class="form-control" required>
-                                <option>Tray</option>
-                                    <?php
-                                    foreach($tray1 as $row){
-                                        echo "<option value='".$row['tray']."'>".$row['tray']."</option>";
-                                    }
-                                    ?>
-                            </select>
+                                <input id="volume_eluted" name="volume_eluted" type="number" step="0.1" class="form-control">
                             </div>
                         </div>
 
@@ -234,7 +169,7 @@
                                     <textarea id="comments" name="comments" class="form-control" placeholder="Comments"> </textarea>
                                 </div>
                         </div>
-
+            
                     </div>
                     <div class="modal-footer clearfix">
                         <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
@@ -252,12 +187,12 @@
         <div class="modal-content">
             <div class="modal-header" style="background-color: #dd4b39; color: white;">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
-                <h4 class="modal-title"><i class="fa fa-trash"></i> Sample Extraction | Delete <span id="my-another-cool-loader"></span></h4>
+                <h4 class="modal-title"><i class="fa fa-trash"></i> Extraction biosolid | Delete <span id="my-another-cool-loader"></span></h4>
             </div>
             <div class="modal-body">
                 <div id="confirmation-content">
                     <div class="modal-body">
-                        <p class="text-center" style="font-size: 15px;">Are you sure you want to delete ID <span id="id" style="font-weight: bold;"></span> ?</p>
+                        <p class="text-center" style="font-size: 15px;">Are you sure you want to delete ID <span id="id" style="font-volume_filter: bold;"></span> ?</p>
                     </div>
                 </div>
             </div>
@@ -272,11 +207,7 @@
 <style>
     .highlight {
         background-color: rgba(0, 255, 0, 0.1) !important;
-        font-weight: bold !important;
-    }
-    .highlight-edit {
-        background-color: rgba(0, 0, 255, 0.1) !important;
-        font-weight: bold !important;
+        font-volume_filter: bold !important;
     }
 </style>
 
@@ -299,7 +230,7 @@
         // Handle the delete button click
         $(document).on('click', '.btn_delete', function() {
             let id = $(this).data('id');
-            let url = '<?php echo site_url('Sample_extraction/delete'); ?>/' + id;
+            let url = '<?php echo site_url('Hemoflow/delete'); ?>/' + id;
             $('#confirm-modal #id').text(id);
             console.log(id);
             showConfirmation(url);
@@ -373,16 +304,16 @@
         });
 
 
-        $('#barcode_sample').on("change", function() {
+        $('#id_one_water_sample_list').on("change", function() {
             $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
-            data1 = $('#barcode_sample').val();
+            data1 = $('#id_one_water_sample_list').val();
             // // ckbar = data1.substring(0,5).toUpperCase();
             // // ckarray = ["N-S2-", "F-S2-", "N-F0-", "F-F0-"];
             // // ck = $.inArray(ckbar, ckarray);
             // if (ck == -1) {
             $.ajax({
                 type: "GET",
-                url: "Sample_extraction/barcode_check?id1="+data1,
+                url: "Hemoflow/barcode_check?id1="+data1,
                 // data:data1,
                 dataType: "json",
                 success: function(data) {
@@ -391,30 +322,22 @@
                         tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> is not on reception or is already in the system !</span>');
                         $('.val1tip').tooltipster('content', tip);
                         $('.val1tip').tooltipster('show');
-                        $('#barcode_sample').focus();
-                        $('#barcode_sample').val('');     
+                        $('#id_one_water_sample_list').focus();
+                        $('#id_one_water_sample_list').val('');     
                         $('#sampletype').val('');    
-                        $('#barcode_sample').css({'background-color' : '#FFE6E7'});
+                        $('#id_one_water_sample_list').css({'background-color' : '#FFE6E7'});
                         setTimeout(function(){
-                            $('#barcode_sample').css({'background-color' : '#FFFFFF'});
+                            $('#id_one_water_sample_list').css({'background-color' : '#FFFFFF'});
                             setTimeout(function(){
-                                $('#barcode_sample').css({'background-color' : '#FFE6E7'});
+                                $('#id_one_water_sample_list').css({'background-color' : '#FFE6E7'});
                                 setTimeout(function(){
-                                    $('#barcode_sample').css({'background-color' : '#FFFFFF'});
+                                    $('#id_one_water_sample_list').css({'background-color' : '#FFFFFF'});
                                 }, 300);                            
                             }, 300);
                         }, 300);
-                        // barcode = data[0].barcode_sample;
-                        // console.log(data);
                     }
                     else {
                         $('#sampletype').val(data[0].sampletype);    
-                        // $('#volume_filtered').val(data[0].vol);     
-                        // if (data[0].stype == 'Bootsocks') {
-                        //     $('#barcode_falcon2').attr('readonly', false);
-                        // } else {
-                        //     $('#barcode_falcon2').attr('readonly', true);
-                        // }
                     }
                 }
             });
@@ -435,60 +358,6 @@
             };
         };
 
-        function load_freez(data1) {
-            $.ajax({
-                type: "GET",
-                url: "Sample_extraction/load_freez?id1="+data1,
-                dataType: "json",
-                success: function(data) {
-                    if (data.length > 0) {
-                        console.log();
-                        $('#id_freez').val(data[0].freezer);    
-                        $('#id_shelf').val(data[0].shelf);    
-                        $('#id_rack').val(data[0].rack);    
-                        $('#id_tray').val(data[0].tray);    
-                    }
-                    else {
-                        $('#id_freez').val('');    
-                        $('#id_shelf').val('');    
-                        $('#id_rack').val('');    
-                        $('#id_tray').val('');    
-                    }
-                }
-            });
-        }
-
-        function get_freez(data1, data2, data3, data4) {
-            $.ajax({
-                type: "GET",
-                url: "Sample_extraction/get_freez?id1="+data1+"&id2="+data2+"&id3="+data3+"&id4="+data4,
-                dataType: "json",
-                success: function(data) {
-                    if (data.length > 0) {
-                        // console.log();
-                        $('#id_loc').val(data[0].id_location);    
-                    }
-                    else {
-                        $('#id_loc').val('');    
-                    }
-                }
-            });
-        }
-
-        $('#id_freez').on('change', function (){
-            get_freez($('#id_freez').val(), $('#id_shelf').val(), $('#id_rack').val(), $('#id_tray').val())
-        });
-        $('#id_shelf').on('change', function (){
-            get_freez($('#id_freez').val(), $('#id_shelf').val(), $('#id_rack').val(), $('#id_tray').val())
-        });
-        $('#id_rack').on('change', function (){
-            get_freez($('#id_freez').val(), $('#id_shelf').val(), $('#id_rack').val(), $('#id_tray').val())
-        });
-        $('#id_tray').on('change', function (){
-            get_freez($('#id_freez').val(), $('#id_shelf').val(), $('#id_rack').val(), $('#id_tray').val())
-        });
-
-
         table = $("#mytable").DataTable({
             // initComplete: function() {
             //     var api = this.api();
@@ -506,20 +375,19 @@
             // select: true;
             processing: true,
             serverSide: true,
-            ajax: {"url": "Sample_extraction/json", "type": "POST"},
+            ajax: {"url": "Hemoflow/json", "type": "POST"},
             columns: [
                 // {
                 //     "data": "barcode_sample",
                 //     "orderable": false
                 // },
-                {"data": "barcode_sample"},
                 {"data": "id_one_water_sample"},
                 {"data": "initial"},
                 {"data": "sampletype"},
-                {"data": "date_extraction"},
-                {"data": "weight"},
-                {"data": "volume"},
-                {"data": "comments"},
+                {"data": "date_processed"},
+                {"data": "time_processed"},
+                {"data": "volume_filter"},
+                {"data": "volume_eluted"},
                 {
                     "data" : "action",
                     "orderable": false,
@@ -528,12 +396,12 @@
             ],
 			columnDefs: [
 				{
-					targets: [5], // Index of the 'estimate_price' column
+					targets: [-1], // Index of the 'estimate_price' column
 					className: 'text-right' // Apply right alignment to this column
 				}
 			],
-            // order: [[1, 'desc']],
-            // order: [[0, 'desc']],
+            order: [[1, 'desc']],
+            order: [[0, 'desc']],
             rowCallback: function(row, data, iDisplayIndex) {
                 var info = this.fnPagingInfo();
                 var page = info.iPage;
@@ -549,41 +417,16 @@
             drawCallback: function(settings) {
                 let api = this.api();
                 let pageInfo = api.page.info();
-                
-                // Highlight baris yang baru saja ditambahkan atau diperbarui
-                api.rows().every(function() {
-                    let data = this.data();
-                    let createdDate = new Date(data.date_created);
-                    let updatedDate = new Date(data.date_updated);
-                    let now = new Date();
-
-                    // Highlight jika baru ditambahkan atau diperbarui dalam 10 detik terakhir
-                    if (now - createdDate < 10 * 1000) {
-                        $(this.node()).addClass('highlight');
-                    } else if (now - updatedDate < 10 * 1000) {
-                        $(this.node()).addClass('highlight-edit');
-                    }
-                });
-                
-                // Pastikan baris pertama di-highlight jika tabel tidak kosong
-                if (pageInfo.page === 0 && api.rows().count() > 0) {
+                if (pageInfo.page === 0) {
                     let firstRow = api.row(0).node();
                     $(firstRow).addClass('highlight');
                 }
             }
         });
 
-        // Event handler untuk klik pada baris
-        $('#mytable tbody').on('click', 'tr', function() {
-            let rowData = table.row(this).data();
-            let rowId = rowData.barcode_sample;
-            $(this).removeClass('highlight');
-            $(this).removeClass('highlight-edit');
-        });
-
         $('#addtombol').click(function() {
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> Sample Extraction | New<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Hemoflow | New<span id="my-another-cool-loader"></span>');
             // $('#project_idx').hide();
             $('#id_one_water_sample').attr('readonly', false);
             $('#id_one_water_sample').val('');
@@ -591,23 +434,13 @@
             $('#id_one_water_sample').hide();
             $('#id_one_water_sample_list').show();
             $('#id_person').val('');
-            $('#barcode_sample').attr('readonly', false);
-            $('#barcode_sample').val('');
             $('#sampletype').attr('readonly', true);
             $('#sampletype').val('');
-            // $('#date_extraction').val('');
-            $('#weight').val('');
-            $('#volume').val('');
-            $('#id_kit').val('');
-            $('#kit_lot').val('');
-            $('#barcode_tube').val('');
-            $('#dna_concentration').val('');
-            $('#cryobox').val('');
-            $('#id_freez').val('');
-            $('#id_shelf').val('');
-            $('#id_rack').val('');
-            $('#id_tray').val('');
-            // $('#comments').val('');
+            $('#id_person_proc').val('');
+            // $('#date_processed').val('');
+            $('#volume_filter').val('');
+            $('#volume_eluted').val('');
+            $('#comments').val('');
             $('#compose-modal').modal('show');
         });
 
@@ -617,7 +450,7 @@
             console.log(data);
             // var data = this.parents('tr').data();
             $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Sample Extraction | Update<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-pencil-square-o"></i> Hemoflow | Update<span id="my-another-cool-loader"></span>');
             // $('#project_idx').show();
             $('#id_one_water_sample').attr('readonly', true);
             $('#id_one_water_sample').show();
@@ -625,19 +458,13 @@
             $('#id_one_water_sample').val(data.id_one_water_sample);
             $('#id_one_water_sample_list').val(data.id_one_water_sample).trigger('change');
             $('#id_person').val(data.id_person).trigger('change');
-            $('#barcode_sample').attr('readonly', true);
-            $('#barcode_sample').val(data.barcode_sample);
             $('#sampletype').attr('readonly', true);
             $('#sampletype').val(data.sampletype);
-            $('#date_extraction').val(data.date_extraction).trigger('change');
-            $('#weight').val(data.weight);
-            $('#volume').val(data.volume);
-            $('#id_kit').val(data.id_kit).trigger('change');
-            $('#kit_lot').val(data.kit_lot);
-            $('#barcode_tube').val(data.barcode_tube);
-            $('#dna_concentration').val(data.dna_concentration);
-            $('#cryobox').val(data.cryobox);
-            load_freez(data.id_location);
+            $('#date_processed').val(data.date_processed).trigger('change');
+            $('#time_processed').val(data.time_processed).trigger('change');
+            $('#id_person_proc').val(data.id_person_proc).trigger('change');
+            $('#volume_filter').val(data.volume_filter);
+            $('#volume_eluted').val(data.volume_eluted);
             $('#comments').val(data.comments);
             $('#compose-modal').modal('show');
         });  

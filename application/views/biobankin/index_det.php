@@ -14,27 +14,32 @@
 								<input class="form-control " id="id_one_water_sample1" name="id_one_water_sample1" value="<?php echo $id_one_water_sample ?>"  disabled>
 							</div>
 
+							<label for="sampletype" class="col-sm-2 control-label">Sample type</label>
+							<div class="col-sm-4">
+								<input class="form-control " id="sampletype" name="sampletype" value="<?php echo $sampletype ?>"  disabled>
+							</div>
+						</div>
+
+						<div class="form-group">
 							<label for="date_conduct" class="col-sm-2 control-label">Date conduct</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="date_conduct" name="date_conduct" value="<?php echo $date_conduct ?>"  disabled>
 							</div>
-						</div>
 
-						<div class="form-group">
 							<label for="replicates" class="col-sm-2 control-label">Replicates</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="replicates" name="replicates" value="<?php echo $replicates ?>"  disabled>
 							</div>
-
-							<label for="realname" class="col-sm-2 control-label">Lab tech</label>
-							<div class="col-sm-4">
-								<input class="form-control " id="realname" name="realname" value="<?php echo $realname ?>"  disabled>
-							</div>
 						</div>
 
 						<div class="form-group">
+							<label for="realname" class="col-sm-2 control-label">Lab tech</label>
+								<div class="col-sm-4">
+									<input class="form-control " id="realname" name="realname" value="<?php echo $realname ?>"  disabled>
+								</div>
+
 							<label for="comments1" class="col-sm-2 control-label">Comments</label>
-							<div class="col-sm-10">
+							<div class="col-sm-4">
 								<!-- <input class="form-control " id="comments" name="comments" value="<?php echo $comments ?>"  disabled> -->
 								<textarea id="comments1" name="comments1" class="form-control" disabled> <?php echo $comments ?> </textarea>
 								</div>
@@ -55,8 +60,8 @@
 									if ($lvl != 4){
 										$q = $this->db->query('
 										SELECT a.replicates, COUNT(b.barcode_water) as cb_detail
-										FROM sample_biobank a
-										LEFT JOIN sample_biobank_detail b ON a.id_one_water_sample = b.id_one_water_sample
+										FROM biobank_in a
+										LEFT JOIN biobank_in_detail b ON a.id_one_water_sample = b.id_one_water_sample
 										WHERE a.id_one_water_sample = "' . $id_one_water_sample .'"');        
 										$response = $q->row();
 										if ($response) {
@@ -91,7 +96,7 @@
 
 				<div class="form-group">
 					<div class="modal-footer clearfix">
-						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('sample_biobankin'); ?>';">
+						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('Biobankin'); ?>';">
 							<i class="fa fa-times"></i> Close
 						</button>
 					</div>
@@ -111,21 +116,13 @@
 				<!-- <input id="id_one_water_sample" name="id_one_water_sample" type="text" disabled>  -->
 				</h4>
 			</div>
-			<form id="formSample"  action= <?php echo site_url('Sample_biobankin/savedetail') ?> method="post" class="form-horizontal">
+			<form id="formSample"  action= <?php echo site_url('Biobankin/savedetail') ?> method="post" class="form-horizontal">
 				<div class="modal-body">
 					<input id="mode_det" name="mode_det" type="hidden" class="form-control input-sm">
 					<input id="id_one_water_sample" name="id_one_water_sample" type="hidden" class="form-control">
 					<input id="date_conduct2" type="hidden" name="date_conduct2" value="<?php echo $date_conduct ?>">
 					<input id="id_person" type="hidden" name="id_person" value="<?php echo $id_person ?>">
 					<!-- <input id="id_req" name="id_req" type="hidden" class="form-control input-sm"> -->
-
-
-					<div class="form-group">
-						<label for="barcode_water" class="col-sm-4 control-label">Barcode Water</label>
-						<div class="col-sm-8">
-							<input id="barcode_water" name="barcode_water" placeholder="Barcode Water" type="text" class="form-control">
-						</div>
-					</div>
 				
 					<div class="form-group">
 						<label for="weight" class="col-sm-4 control-label">Weight (g)</label>
@@ -138,6 +135,13 @@
 						<label for="concentration_dna" class="col-sm-4 control-label">Concentration DNA (ng/uL)</label>
 						<div class="col-sm-8">
 							<input id="concentration_dna" name="concentration_dna" placeholder="Concentration DNA (ng/uL)" type="number" step="0.1" class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="barcode_water" class="col-sm-4 control-label">Barcode Water</label>
+						<div class="col-sm-8">
+							<input id="barcode_water" name="barcode_water" placeholder="Barcode Water" type="text" class="form-control">
 						</div>
 					</div>
 
@@ -332,7 +336,7 @@
         // Handle the delete button click
         $(document).on('click', '.btn_delete', function() {
             let id = $(this).data('id');
-            let url = '<?php echo site_url('Sample_biobankin/delete_detail'); ?>/' + id;
+            let url = '<?php echo site_url('Biobankin/delete_detail'); ?>/' + id;
             $('#confirm-modal-delete #id').text(id);
             console.log(id);
             showConfirmationDelete(url);
@@ -373,7 +377,7 @@
 			}
 
 			$.ajax({
-				url: '<?php echo site_url('Sample_biobankin/get_confirmation_data'); ?>',
+				url: '<?php echo site_url('Biobankin/get_confirmation_data'); ?>',
 				type: 'POST',
 				data: { id_testing_type: selectedTestingTypes },
 				dataType: 'json',
@@ -434,8 +438,10 @@
 						
         $('#compose-modal').on('shown.bs.modal', function () {
 			$('#barcode_water').focus();
-            });
+		});
 		
+		// $('#sampletype').on("change", function() {
+        // });
 
 		$.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
 		{
@@ -477,7 +483,7 @@
 			// ordering: false,
 			info: false,
 			bFilter: false,
-			ajax: {"url": "../../Sample_biobankin/subjson?id="+id_one_water_sample, "type": "POST"},
+			ajax: {"url": "../../Biobankin/subjson?id="+id_one_water_sample, "type": "POST"},
 			columns: [
 				{"data": "barcode_water"}, 
 				{"data": "weight"}, 
@@ -518,6 +524,30 @@
 
 
 		$('#addtombol_det').click(function() {
+			let data1 = $('#sampletype').val();
+			if (data1 === 'Sediment' || data1 === 'Faeces' || data1 === 'Soil') {
+				$('#weight').closest('.form-group').show();
+			} else {
+				$('#weight').closest('.form-group').hide();
+			}
+			if (data1 === 'DNA') {
+				$('#concentration_dna').closest('.form-group').show();
+			} else {
+				$('#concentration_dna').closest('.form-group').hide();
+			}
+			if (data1 === 'Water' || data1 === 'Sewage' || data1 === 'Other Liquid') {
+				$('#barcode_water').closest('.form-group').show();
+				$('#volume').closest('.form-group').show();
+			} else {
+				$('#barcode_water').closest('.form-group').hide();
+				$('#volume').closest('.form-group').hide();
+			}
+			if (data1 === 'Culture' || data1 === 'Culture Plate' || data1 === 'Sediment' || data1 === 'Faeces' || data1 === 'Soil' || data1 === 'Nucleic Acids') {
+				$('#id_culture').closest('.form-group').show();
+			} else {
+				$('#id_culture').closest('.form-group').hide();
+			}
+
 			$('#mode_det').val('insert');
 			$('#modal-title-detail').html('<i class="fa fa-wpforms"></i> New Replication<span id="my-another-cool-loader"></span>');
             $('#barcode_water').attr('readonly', false);
@@ -548,7 +578,32 @@
             let tr = $(this).parent().parent();
             let data = table.row(tr).data();
             console.log(data);
-            // var data = this.parents('tr').data();
+
+			let data1 = $('#sampletype').val();
+			if (data1 === 'Sediment' || data1 === 'Faeces' || data1 === 'Soil') {
+				$('#weight').closest('.form-group').show();
+			} else {
+				$('#weight').closest('.form-group').hide();
+			}
+			if (data1 === 'DNA') {
+				$('#concentration_dna').closest('.form-group').show();
+			} else {
+				$('#concentration_dna').closest('.form-group').hide();
+			}
+			if (data1 === 'Water' || data1 === 'Sewage' || data1 === 'Other Liquid') {
+				$('#barcode_water').closest('.form-group').show();
+				$('#volume').closest('.form-group').show();
+			} else {
+				$('#barcode_water').closest('.form-group').hide();
+				$('#volume').closest('.form-group').hide();
+			}
+			if (data1 === 'Culture' || data1 === 'Culture Plate' || data1 === 'Sediment' || data1 === 'Faeces' || data1 === 'Soil' || data1 === 'Nucleic Acids') {
+				$('#id_culture').closest('.form-group').show();
+			} else {
+				$('#id_culture').closest('.form-group').hide();
+			}
+
+			// var data = this.parents('tr').data();
             $('#mode_det').val('edit');
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Update Replication<span id="my-another-cool-loader"></span>');
             $('#barcode_water').attr('readonly', true);

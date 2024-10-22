@@ -3,10 +3,10 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Sample_extraction_model extends CI_Model
+class Extraction_liquid_model extends CI_Model
 {
 
-    public $table = 'sample_extraction';
+    public $table = 'extraction_liquid';
     public $id = 'barcode_sample';
     public $order = 'DESC';
 
@@ -17,20 +17,26 @@ class Sample_extraction_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('sample_extraction.barcode_sample, sample_extraction.id_one_water_sample, ref_person.initial,
-        ref_sampletype.sampletype, sample_extraction.date_extraction, sample_extraction.weight, sample_extraction.volume, 
-        ref_kit.kit, sample_extraction.kit_lot, sample_extraction.barcode_tube, sample_extraction.dna_concentration, 
-        sample_extraction.cryobox, sample_extraction.id_location, sample_extraction.comments, sample_extraction.flag, sample_extraction.date_created, sample_extraction.date_updated,
-        sample_extraction.id_person, sample_extraction.id_kit, sample_extraction.id_location, GREATEST(sample_extraction.date_created, sample_extraction.date_updated) AS latest_date');
-        $this->datatables->from('sample_extraction');
-        $this->datatables->join('ref_person', 'sample_extraction.id_person = ref_person.id_person', 'left');
-        $this->datatables->join('ref_barcode', 'ref_barcode.barcode = sample_extraction.barcode_sample', 'left');
+        $this->datatables->select('extraction_liquid.barcode_sample, extraction_liquid.id_one_water_sample, ref_person.initial,
+        ref_sampletype.sampletype, extraction_liquid.date_extraction, extraction_liquid.filtration_volume, extraction_liquid.membrane_filter,
+        extraction_liquid.dilution, extraction_liquid.culture_plate, extraction_liquid.culture_media,
+        ref_kit.kit, extraction_liquid.kit_lot, extraction_liquid.barcode_tube, extraction_liquid.fin_volume, extraction_liquid.dna_concentration, 
+        extraction_liquid.cryobox, extraction_liquid.id_location, extraction_liquid.comments, extraction_liquid.flag, 
+        extraction_liquid.id_person, extraction_liquid.id_kit, extraction_liquid.id_location,
+        ref_location.freezer,ref_location.shelf,ref_location.rack,ref_location.tray, 
+        ref_position.rows1, ref_position.columns1
+        ');
+        $this->datatables->from('extraction_liquid');
+        $this->datatables->join('ref_person', 'extraction_liquid.id_person = ref_person.id_person', 'left');
+        $this->datatables->join('ref_barcode', 'ref_barcode.barcode = extraction_liquid.barcode_sample', 'left');
         $this->datatables->join('sample_reception_sample', 'ref_barcode.id_sample = sample_reception_sample.id_sample', 'left');
         $this->datatables->join('sample_reception', 'sample_reception_sample.id_project = sample_reception.id_project', 'left');
         $this->datatables->join('ref_sampletype', 'sample_reception.id_sampletype = ref_sampletype.id_sampletype', 'left');
-        $this->datatables->join('ref_kit', 'sample_extraction.id_kit = ref_kit.id_kit', 'left');
-        // $this->datatables->where('Sample_extraction.id_country', $this->session->userdata('lab'));
-        $this->datatables->where('sample_extraction.flag', '0');
+        $this->datatables->join('ref_kit', 'extraction_liquid.id_kit = ref_kit.id_kit', 'left');
+        $this->datatables->join('ref_location', 'extraction_liquid.id_location = ref_location.id_location', 'left');
+        $this->datatables->join('ref_position', 'extraction_liquid.id_pos = ref_position.id_pos', 'left');
+        // $this->datatables->where('extraction_liquid.id_country', $this->session->userdata('lab'));
+        $this->datatables->where('extraction_liquid.flag', '0');
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 4){
             $this->datatables->add_column('action', 'barcode_sample');
@@ -42,9 +48,6 @@ class Sample_extraction_model extends CI_Model
             $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
                   ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'barcode_sample');
         }
-
-        // Mengatur pengurutan berdasarkan tanggal terbaru
-        $this->db->order_by('latest_date', 'DESC');
 
         return $this->datatables->generate();
     }
@@ -86,7 +89,7 @@ class Sample_extraction_model extends CI_Model
    
     // Fuction insert data
     public function insert($data) {
-        $this->db->insert('sample_extraction', $data);
+        $this->db->insert('extraction_liquid', $data);
     }
 
     public function insert_freez($data_freez) {
@@ -98,7 +101,7 @@ class Sample_extraction_model extends CI_Model
     function update($id, $data)
     {
         $this->db->where('barcode_sample', $id);
-        $this->db->update('sample_extraction', $data);
+        $this->db->update('extraction_liquid', $data);
     }
 
     function update_freez($id, $data_freez)
@@ -154,7 +157,7 @@ class Sample_extraction_model extends CI_Model
         left join sample_reception on sample_reception_sample.id_project = sample_reception.id_project
         left join ref_sampletype on sample_reception.id_sampletype = ref_sampletype.id_sampletype
         WHERE ref_barcode.barcode = "'.$id.'"
-        AND ref_barcode.barcode NOT IN (SELECT barcode_sample FROM sample_extraction)
+        AND ref_barcode.barcode NOT IN (SELECT barcode_sample FROM extraction_liquid)
         ');        
         $response = $q->result_array();
         return $response;
@@ -185,7 +188,7 @@ class Sample_extraction_model extends CI_Model
       function getID_one(){
         $q = $this->db->query('
         SELECT id_one_water_sample FROM sample_reception
-        WHERE id_one_water_sample NOT IN (SELECT id_one_water_sample FROM sample_extraction)
+        WHERE id_one_water_sample NOT IN (SELECT id_one_water_sample FROM extraction_liquid)
         AND flag = 0
         ORDER BY id_one_water_sample');        
         $response = $q->result_array();
@@ -219,17 +222,31 @@ class Sample_extraction_model extends CI_Model
         $q = $this->db->get('ref_testing');
         $response = $q->result_array();
         return $response; 
-
-        // $response = array();
-        // $this->db->select('rt.testing_type_id, rt.testing_type');
-        // $this->db->from('ref_testing rt');
-        // $this->db->join('sample_reception_sample srs', 'rt.testing_type_id = srs.testing_type_id', 'left');
-        // $this->db->where('rt.flag', '0');
-        // // $this->db->where('srs.testing_type_id IS NULL');
-        // $q = $this->db->get();
-        // $response = $q->result_array();
-        // return $response;
       }
+
+      function get_freezx($id1, $id2, $id3, $id4) {
+        $sql = 'SELECT id_location FROM ref_location
+                WHERE freezer = ? 
+                AND shelf = ? 
+                AND rack = ? 
+                AND tray = ?
+                AND flag = 0';
+        
+        $q = $this->db->query($sql, array($id1, $id2, $id3, $id4));        
+        $response = $q->row();
+        return $response;
+    }      
+
+    function get_posx($id1, $id2) {
+        $sql = 'SELECT id_pos FROM ref_position
+                WHERE rows1 = ? 
+                AND columns1 = ? 
+                AND flag = 0';
+        
+        $q = $this->db->query($sql, array($id1, $id2));        
+        $response = $q->row();
+        return $response;
+    }       
 
       function getFreezer1(){
         $response = array();
@@ -270,6 +287,27 @@ class Sample_extraction_model extends CI_Model
         $response = $q->result_array();    
         return $response;
       }
+
+      function getPos1(){
+        $response = array();
+        $q = $this->db->query('
+            SELECT DISTINCT rows1 FROM ref_position
+            WHERE flag = 0 
+        ');
+        $response = $q->result_array();    
+        return $response;
+      }
+
+      function getPos2(){
+        $response = array();
+        $q = $this->db->query('
+            SELECT DISTINCT columns1 FROM ref_position
+            WHERE flag = 0 
+        ');
+
+        $response = $q->result_array();    
+        return $response;
+      }      
 
     public function get_last_barcode($testing_type) {
         // Get prefix and format from database
