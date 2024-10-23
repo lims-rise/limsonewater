@@ -23,7 +23,7 @@ class Moisture_content_model extends CI_Model
     function json() {
         $this->datatables->select('moisture_content.id_moisture, moisture_content.id_one_water_sample, moisture_content.id_person, ref_person.initial, moisture_content.date_start,
         moisture_content.id_sampletype, ref_sampletype.sampletype, moisture_content.barcode_moisture_content, moisture_content.tray_weight, moisture_content.traysample_wetweight,
-        moisture_content.time_incubator, moisture_content.comments');
+        moisture_content.time_incubator, moisture_content.comments, moisture_content.date_created, moisture_content.date_updated, GREATEST(moisture_content.date_created, moisture_content.date_updated) AS latest_date');
         $this->datatables->from($this->table);
         $this->datatables->join('ref_person', 'moisture_content.id_person = ref_person.id_person', 'left');
         $this->datatables->join('ref_sampletype', 'moisture_content.id_sampletype = ref_sampletype.id_sampletype', 'left');
@@ -42,6 +42,7 @@ class Moisture_content_model extends CI_Model
             ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
             ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_moisture');
         }
+        $this->db->order_by('latest_date', 'DESC');
         return $this->datatables->generate();
     }
 

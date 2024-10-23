@@ -17,7 +17,8 @@ class Campy_biosolids_pa_model extends CI_Model
     function json() {
         $this->datatables->select('cbp.id_campy_biosolids_pa, cbp.id_one_water_sample, cbp.id_person, cbp.number_of_tubes, cbp.mpn_pcr_conducted, cbp.campy_assay_barcode, 
         rp.initial, cbp.date_sample_processed, cbp.time_sample_processed, cbp.sample_wetweight, cbp.elution_volume,
-        cbp.id_sampletype, rs.sampletype, GROUP_CONCAT(svp.vol_sampletube ORDER BY svp.tube_number SEPARATOR ", ") AS vol_sampletube, GROUP_CONCAT(svp.tube_number ORDER BY svp.tube_number SEPARATOR ", ") AS tube_number, cbp.flag');
+        cbp.id_sampletype, rs.sampletype, GROUP_CONCAT(svp.vol_sampletube ORDER BY svp.tube_number SEPARATOR ", ") AS vol_sampletube, GROUP_CONCAT(svp.tube_number ORDER BY svp.tube_number SEPARATOR ", ") AS tube_number, cbp.flag,
+        cbp.date_created, cbp.date_updated, GREATEST(cbp.date_created, cbp.date_updated) AS latest_date');
         $this->datatables->from('campy_biosolids_pa AS cbp');
         $this->datatables->join('ref_person AS rp', 'cbp.id_person = rp.id_person', 'left');
         $this->datatables->join('ref_sampletype AS rs', 'cbp.id_sampletype = rs.id_sampletype', 'left');
@@ -39,6 +40,7 @@ class Campy_biosolids_pa_model extends CI_Model
             ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
             ".'<button type="button" class="btn_deleteCampyBiosolids btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_campy_biosolids_pa');
         }
+        $this->db->order_by('latest_date', 'DESC');
         return $this->datatables->generate();
     }
 

@@ -21,7 +21,7 @@ class Colilert_idexx_biosolids_model extends CI_Model
     function json() {
         $this->datatables->select('cbi.id_colilert_bio_in, cbi.id_one_water_sample, cbi.id_person, rp.initial,
         cbi.id_sampletype, rs.sampletype, cbi.colilert_barcode, cbi.date_sample, cbi.time_sample, cbi.wet_weight, cbi.elution_volume,
-        cbi.volume_bottle, cbi.dilution');
+        cbi.volume_bottle, cbi.dilution, cbi.date_created, cbi.date_updated, GREATEST(cbi.date_created, cbi.date_updated) AS latest_date');
         $this->datatables->from('colilert_biosolids_in AS cbi');
         $this->datatables->join('ref_person AS rp', 'cbi.id_person = rp.id_person', 'left');
         $this->datatables->join('ref_sampletype AS rs', 'cbi.id_sampletype = rs.id_sampletype', 'left');
@@ -46,6 +46,7 @@ class Colilert_idexx_biosolids_model extends CI_Model
             ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
             ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_colilert_bio_in');
         }
+        $this->db->order_by('latest_date', 'DESC');
         return $this->datatables->generate();
     }
 
