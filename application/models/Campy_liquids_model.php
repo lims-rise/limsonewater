@@ -24,7 +24,8 @@ class Campy_liquids_model extends CI_Model
     function json() {
         $this->datatables->select('cl.id_campy_liquids, cl.id_one_water_sample, cl.id_person, cl.number_of_tubes, cl.mpn_pcr_conducted, cl.campy_assay_barcode, 
         rp.initial, cl.date_sample_processed, cl.time_sample_processed, cl.sample_wetweight, cl.elution_volume,
-        cl.id_sampletype, rs.sampletype, GROUP_CONCAT(svl.vol_sampletube ORDER BY svl.tube_number SEPARATOR ", ") AS vol_sampletube, GROUP_CONCAT(svl.tube_number ORDER BY svl.tube_number SEPARATOR ", ") AS tube_number, cl.flag');
+        cl.id_sampletype, rs.sampletype, GROUP_CONCAT(svl.vol_sampletube ORDER BY svl.tube_number SEPARATOR ", ") AS vol_sampletube, GROUP_CONCAT(svl.tube_number ORDER BY svl.tube_number SEPARATOR ", ") AS tube_number, cl.flag,
+        cl.date_created, cl.date_updated, GREATEST(cl.date_created, cl.date_updated) AS latest_date');
         $this->datatables->from('campy_liquids AS cl');
         $this->datatables->join('ref_person AS rp', 'cl.id_person = rp.id_person', 'left');
         $this->datatables->join('ref_sampletype AS rs', 'cl.id_sampletype = rs.id_sampletype', 'left');
@@ -46,6 +47,7 @@ class Campy_liquids_model extends CI_Model
             ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
             ".'<button type="button" class="btn_deleteCampyBiosolids btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_campy_liquids');
         }
+        $this->db->order_by('latest_date', 'DESC');
         return $this->datatables->generate();
     }
 

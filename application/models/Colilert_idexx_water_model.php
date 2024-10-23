@@ -21,7 +21,7 @@ class Colilert_idexx_water_model extends CI_Model
     function json() {
         $this->datatables->select('cwi.id_colilert_in, cwi.id_one_water_sample, cwi.id_person, rp.initial,
         cwi.id_sampletype, rs.sampletype, cwi.colilert_barcode, cwi.date_sample, cwi.time_sample,
-        cwi.volume_bottle, cwi.dilution');
+        cwi.volume_bottle, cwi.dilution, cwi.date_created, cwi.date_updated, GREATEST(cwi.date_created, cwi.date_updated) AS latest_date');
         $this->datatables->from('colilert_water_in AS cwi');
         $this->datatables->join('ref_person AS rp', 'cwi.id_person = rp.id_person', 'left');
         $this->datatables->join('ref_sampletype AS rs', 'cwi.id_sampletype = rs.id_sampletype', 'left');
@@ -46,6 +46,7 @@ class Colilert_idexx_water_model extends CI_Model
             ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
             ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_colilert_in');
         }
+        $this->db->order_by('latest_date', 'DESC');
         return $this->datatables->generate();
     }
 

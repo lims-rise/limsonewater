@@ -21,7 +21,7 @@ class Enterolert_idexx_water_model extends CI_Model
     function json() {
         $this->datatables->select('enterolert_water_in.id_enterolert_in, enterolert_water_in.id_one_water_sample, enterolert_water_in.id_person, ref_person.initial,
         enterolert_water_in.id_sampletype, ref_sampletype.sampletype, enterolert_water_in.enterolert_barcode, enterolert_water_in.date_sample, enterolert_water_in.time_sample,
-        enterolert_water_in.volume_bottle, enterolert_water_in.dilution');
+        enterolert_water_in.volume_bottle, enterolert_water_in.dilution, enterolert_water_in.date_created, enterolert_water_in.date_updated, GREATEST(enterolert_water_in.date_created, enterolert_water_in.date_updated) AS latest_date');
         $this->datatables->from($this->table);
         $this->datatables->join('ref_person', 'enterolert_water_in.id_person = ref_person.id_person', 'left');
         $this->datatables->join('ref_sampletype', 'enterolert_water_in.id_sampletype = ref_sampletype.id_sampletype', 'left');
@@ -46,6 +46,7 @@ class Enterolert_idexx_water_model extends CI_Model
             ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
             ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_enterolert_in');
         }
+        $this->db->order_by('latest_date', 'DESC');
         return $this->datatables->generate();
     }
 

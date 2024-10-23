@@ -48,6 +48,14 @@
         color: white !important;
         background-color: #9CDCFE !important;
     }
+    .highlight {
+        background-color: rgba(0, 255, 0, 0.1) !important;
+        font-weight: bold !important;
+    }
+    .highlight-edit {
+        background-color: rgba(0, 0, 255, 0.1) !important;
+        font-weight: bold !important;
+    }
 </style>
 
 <!-- MODAL FORM -->
@@ -444,16 +452,48 @@
 					className: 'text-right' // Apply right alignment to this column
 				}
 			],
-            order: [[0, 'asc']],
-            rowCallback: function(row, data, iDisplayIndex) {
-                var info = this.fnPagingInfo();
-                var page = info.iPage;
-                var length = info.iLength;
-                // var index = page * length + (iDisplayIndex + 1);
-                // $('td:eq(0)', row).html(index);
+            // order: [[0, 'asc']],
+            // rowCallback: function(row, data, iDisplayIndex) {
+            //     var info = this.fnPagingInfo();
+            //     var page = info.iPage;
+            //     var length = info.iLength;
+            //     // var index = page * length + (iDisplayIndex + 1);
+            //     // $('td:eq(0)', row).html(index);
+            // },
+            drawCallback: function(settings) {
+                let api = this.api();
+                let pageInfo = api.page.info();
+                
+                // Highlight baris yang baru saja ditambahkan atau diperbarui
+                api.rows().every(function() {
+                    let data = this.data();
+                    let createdDate = new Date(data.date_created);
+                    let updatedDate = new Date(data.date_updated);
+                    let now = new Date();
+
+                    // Highlight jika baru ditambahkan atau diperbarui dalam 10 detik terakhir
+                    if (now - createdDate < 10 * 1000) {
+                        $(this.node()).addClass('highlight');
+                    } else if (now - updatedDate < 10 * 1000) {
+                        $(this.node()).addClass('highlight-edit');
+                    }
+                });
+                
+                // Pastikan baris pertama di-highlight jika tabel tidak kosong
+                if (pageInfo.page === 0 && api.rows().count() > 0) {
+                    let firstRow = api.row(0).node();
+                    $(firstRow).addClass('highlight');
+                }
             }
         });
 
+        // Event handler untuk klik pada baris
+        $('#mytable tbody').on('click', 'tr', function() {
+            let rowData = table.row(this).data();
+            let rowId = rowData.id_colilert_in;
+            $(this).removeClass('highlight');
+            $(this).removeClass('highlight-edit');
+        });
         $('#addtombol').click(function() {
             handleSampleTypeInput('#sampletype');
             $('#mode').val('insert');

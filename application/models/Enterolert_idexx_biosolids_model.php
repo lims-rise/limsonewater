@@ -21,7 +21,8 @@ class Enterolert_idexx_biosolids_model extends CI_Model
     function json() {
         $this->datatables->select('enterolert_biosolids_in.id_enterolert_bio_in, enterolert_biosolids_in.id_one_water_sample, enterolert_biosolids_in.id_person, ref_person.initial,
         enterolert_biosolids_in.id_sampletype, ref_sampletype.sampletype, enterolert_biosolids_in.enterolert_barcode, enterolert_biosolids_in.date_sample, enterolert_biosolids_in.time_sample,
-        enterolert_biosolids_in.wet_weight, enterolert_biosolids_in.elution_volume, enterolert_biosolids_in.volume_bottle, enterolert_biosolids_in.dilution');
+        enterolert_biosolids_in.wet_weight, enterolert_biosolids_in.elution_volume, enterolert_biosolids_in.volume_bottle, enterolert_biosolids_in.dilution,
+        enterolert_biosolids_in.date_created, enterolert_biosolids_in.date_updated, GREATEST(enterolert_biosolids_in.date_created, enterolert_biosolids_in.date_updated) AS latest_date');
         $this->datatables->from($this->table);
         $this->datatables->join('ref_person', 'enterolert_biosolids_in.id_person = ref_person.id_person', 'left');
         $this->datatables->join('ref_sampletype', 'enterolert_biosolids_in.id_sampletype = ref_sampletype.id_sampletype', 'left');
@@ -46,6 +47,7 @@ class Enterolert_idexx_biosolids_model extends CI_Model
             ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
             ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_enterolert_bio_in');
         }
+        $this->db->order_by('latest_date', 'DESC');
         return $this->datatables->generate();
     }
 
