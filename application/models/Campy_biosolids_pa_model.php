@@ -316,6 +316,7 @@ class Campy_biosolids_pa_model extends CI_Model
     
         // Conditions
         $this->db->where('rbp.flag', '0');
+        $this->db->where('svp1.flag', '0');
         $this->db->group_by('rhp.id_result_hba_pa');
     
         $q = $this->db->get();

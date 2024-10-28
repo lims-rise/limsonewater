@@ -145,6 +145,7 @@ class Campy_liquids_model extends CI_Model
         $this->db->distinct();
         $this->db->from('sample_volumes_liquids');
         $this->db->where('id_campy_liquids', $id);
+        $this->db->order_by('tube_number', 'ASC');
         $tube_numbers = $this->db->get()->result_array();
     
         // Check if tube numbers are empty
@@ -193,9 +194,11 @@ class Campy_liquids_model extends CI_Model
                 // Inisialisasi confirmation array untuk tiap plate_number
                 // $confirmation_array = array_fill_keys($plate_numbers, '');
     
-                foreach ($biochemical_tubes as $tube) {
-                    $index = array_search($tube, $biochemical_tubes);
-                    $confirmation_array[$tube] = explode(':', $confirmations[$index])[1] ?? 'No Growth Plate'; // Menyediakan default
+                $confirmation_array = []; // Inisialisasi array konfirmasi
+
+                // Membuat array asosiasi untuk konfirmasi
+                foreach ($biochemical_tubes as $index => $tube) {
+                    $confirmation_array[$tube] = explode(':', $confirmations[$index] ?? 'No Growth Plate')[1] ?? 'No Growth Plate'; // Menyediakan default
                 }
                 $value->confirmation = $confirmation_array; // Assign confirmation yang sudah diproses
             }
@@ -214,6 +217,7 @@ class Campy_liquids_model extends CI_Model
         $this->db->distinct();
         $this->db->from('sample_volumes_liquids');
         $this->db->where('id_campy_liquids', $id);
+        $this->db->order_by('tube_number', 'ASC');
         $tube_numbers = $this->db->get()->result_array();
     
         // Check if tube numbers are empty
@@ -267,7 +271,7 @@ class Campy_liquids_model extends CI_Model
                 foreach ($biochemical_tubes as $tube) {
                     $index = array_search($tube, $biochemical_tubes);
                     if ($index !== false) {
-                        $confirmation_value = explode(':', $confirmations[$index])[1] ?? 'No Growth'; // Default if not set
+                        $confirmation_value = explode(':', $confirmations[$index] ?? 'No Growth')[1] ?? 'No Growth'; // Default if not set
                         $confirmation_array[$tube] = $confirmation_value;
                     }
                 }
@@ -287,6 +291,7 @@ class Campy_liquids_model extends CI_Model
         $this->db->distinct();
         $this->db->from('sample_volumes_liquids');
         $this->db->where('id_campy_liquids IS NOT NULL');
+        $this->db->order_by('tube_number', 'ASC');
         $tube_numbers = $this->db->get()->result_array();
     
         // Debugging: Cek apakah tube numbers ditemukan
@@ -321,6 +326,7 @@ class Campy_liquids_model extends CI_Model
     
         // Conditions
         $this->db->where('rbl.flag', '0');
+        $this->db->where('svl1.flag', '0');
         $this->db->group_by('rhl.id_result_hba_liquids');
     
         $q = $this->db->get();
@@ -334,11 +340,11 @@ class Campy_liquids_model extends CI_Model
                 $plate_numbers = explode(',', $value->plate_numbers);
     
                 // Inisialisasi array konfirmasi dengan kunci sesuai dengan jumlah tabung
-                $confirmation_array = array_fill_keys(range(1, count($biochemical_tubes)), 'No Growth'); // Default ke "No Growth"
+                $confirmation_array = array_fill_keys($tube_numbers_list, 'No Growth'); // Default ke "No Growth"
     
                 // Mengisi nilai konfirmasi berdasarkan indeks tabung
                 foreach ($biochemical_tubes as $index => $tube) {
-                    $confirmation_value = explode(':', $confirmations[$index])[1] ?? 'No Growth';
+                    $confirmation_value = explode(':', $confirmations[$index] ?? 'No Growth')[1] ?? 'No Growth';
                     $confirmation_array[(int)$tube] = $confirmation_value; // Gunakan kunci tabung sebagai index
                 }
     

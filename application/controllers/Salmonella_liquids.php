@@ -10,13 +10,13 @@ if (!defined('BASEPATH'))
     use Google\Client as google_client;
     use Google\Service\Drive as google_drive;
     
-class Salmonella_biosolids extends CI_Controller
+class Salmonella_liquids extends CI_Controller
 {
     function __construct()
     {
         parent::__construct();
         is_login();
-        $this->load->model('Salmonella_biosolids_model');
+        $this->load->model('Salmonella_liquids_model');
         $this->load->library('form_validation');        
 	    $this->load->library('datatables');
 	    $this->load->library('uuid');
@@ -24,45 +24,45 @@ class Salmonella_biosolids extends CI_Controller
 
     public function index()
     {
-        $data['id_one'] = $this->Salmonella_biosolids_model->getID_one();
-        $data['sampletype'] = $this->Salmonella_biosolids_model->getSampleType();
-        $data['labtech'] = $this->Salmonella_biosolids_model->getLabTech();
-        $data['tubes'] = $this->Salmonella_biosolids_model->getTubes();
-        $this->template->load('template','salmonella_biosolids/index', $data);
+        $data['id_one'] = $this->Salmonella_liquids_model->getID_one();
+        $data['sampletype'] = $this->Salmonella_liquids_model->getSampleType();
+        $data['labtech'] = $this->Salmonella_liquids_model->getLabTech();
+        $data['tubes'] = $this->Salmonella_liquids_model->getTubes();
+        $this->template->load('template','salmonella_liquids/index', $data);
     } 
     
     public function json() {
         header('Content-Type: application/json');
-        echo $this->Salmonella_biosolids_model->json();
+        echo $this->Salmonella_liquids_model->json();
     }
 
     public function subjsonCharcoal() {
         $id = $this->input->get('idCharcoal',TRUE);
         header('Content-Type: application/json');
-        echo $this->Salmonella_biosolids_model->subjsonCharcoal($id);
+        echo $this->Salmonella_liquids_model->subjsonCharcoal($id);
     }
 
     public function subjsonHba() {
         $id = $this->input->get('idHba',TRUE);
         header('Content-Type: application/json');
-        echo $this->Salmonella_biosolids_model->subjsonHba($id);
+        echo $this->Salmonella_liquids_model->subjsonHba($id);
     }
 
     public function subjsonBiochemical() {
         $id = $this->input->get('idBiochemical',TRUE);
         $biochemical_tube = $this->input->get('biochemical_tube', TRUE);
         header('Content-Type: application/json');
-        echo $this->Salmonella_biosolids_model->subjsonBiochemical($id, $biochemical_tube);
+        echo $this->Salmonella_liquids_model->subjsonBiochemical($id, $biochemical_tube);
     }
 
     public function read($id)
     {
-        $row = $this->Salmonella_biosolids_model->get_detail($id);
+        $row = $this->Salmonella_liquids_model->get_detail($id);
 
         if ($row) {
             $data = array(
 
-                'id_salmonella_biosolids' => $row->id_salmonella_biosolids,
+                'id_salmonella_liquids' => $row->id_salmonella_liquids,
                 'id_one_water_sample' => $row->id_one_water_sample,
                 'initial' => $row->initial,
                 'sampletype' => $row->sampletype,
@@ -79,7 +79,7 @@ class Salmonella_biosolids extends CI_Controller
             );
             
             // Mendapatkan final concentration
-            $finalConcentration = $this->Salmonella_biosolids_model->subjsonFinalConcentration($id);
+            $finalConcentration = $this->Salmonella_liquids_model->subjsonFinalConcentration($id);
             if ($finalConcentration) {
                 $data['finalConcentration'] = $finalConcentration;
             } else {
@@ -87,7 +87,7 @@ class Salmonella_biosolids extends CI_Controller
             }
             // var_dump($data);
             // die();
-            $this->template->load('template','salmonella_biosolids/index_det', $data);
+            $this->template->load('template','salmonella_liquids/index_det', $data);
 
         }
         else {
@@ -98,16 +98,16 @@ class Salmonella_biosolids extends CI_Controller
 
     public function read2($id)
     {
-        $data['test'] = $this->Salmonella_biosolids_model->getTest();
-        $row = $this->Salmonella_biosolids_model->get_detail2($id);
+        $data['test'] = $this->Salmonella_liquids_model->getTest();
+        $row = $this->Salmonella_liquids_model->get_detail2($id);
         if ($row) {
             $data = array(
                 'id_project' => $row->id_project,
                 'id_sample' => $row->id_sample,
                 'sample_description' => $row->sample_description,
-                'test' => $this->Salmonella_biosolids_model->getTest(),
+                'test' => $this->Salmonella_liquids_model->getTest(),
                 );
-                $this->template->load('template','salmonella_biosolids/index_det2', $data);
+                $this->template->load('template','salmonella_liquids/index_det2', $data);
         }
         else {
             // $this->template->load('template','Water_sample_reception/index_det');
@@ -117,7 +117,7 @@ class Salmonella_biosolids extends CI_Controller
 
     public function save() {
         $mode = $this->input->post('mode', TRUE);
-        $id_salmonella_biosolids = $this->input->post('id_salmonella_biosolids', TRUE);
+        $id_salmonella_liquids = $this->input->post('id_salmonella_liquids', TRUE);
         $dt = new DateTime();
     
         $id_one_water_sample = $this->input->post('id_one_water_sample', TRUE);
@@ -156,15 +156,15 @@ class Salmonella_biosolids extends CI_Controller
             // var_dump($data);
             // die();
     
-            $assay_id = $this->Salmonella_biosolids_model->insert($data);
+            $assay_id = $this->Salmonella_liquids_model->insert($data);
     
             // Insert sample volumes
             $number_of_tubes = $this->input->post('number_of_tubes', TRUE);
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $volume = $this->input->post("vol_sampletube{$i}", TRUE);
                 if ($volume) {
-                    $this->Salmonella_biosolids_model->insert_sample_volume(array(
-                        'id_salmonella_biosolids' => $assay_id,
+                    $this->Salmonella_liquids_model->insert_sample_volume(array(
+                        'id_salmonella_liquids' => $assay_id,
                         'tube_number' => $i,
                         'vol_sampletube' => $volume,
                         'flag' => '0',
@@ -201,13 +201,13 @@ class Salmonella_biosolids extends CI_Controller
             // var_dump($data);
             // die();
     
-            $this->Salmonella_biosolids_model->updateSalmonellaBiosolids($id_salmonella_biosolids, $data);
+            $this->Salmonella_liquids_model->updateSalmonellaBiosolids($id_salmonella_liquids, $data);
     
             // Update sample volumes
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
             // var_dump($number_of_tubes); // var dump jumlah tube
             // die();
-            $this->Salmonella_biosolids_model->delete_sample_volumes($id_salmonella_biosolids); // Hapus volume yang ada
+            $this->Salmonella_liquids_model->delete_sample_volumes($id_salmonella_liquids); // Hapus volume yang ada
 
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $volume = $this->input->post("vol_sampletube{$i}", TRUE);
@@ -215,7 +215,7 @@ class Salmonella_biosolids extends CI_Controller
 
                 if ($volume) {
                     $data_volume = array(
-                        'id_salmonella_biosolids' => $id_salmonella_biosolids,
+                        'id_salmonella_liquids' => $id_salmonella_liquids,
                         'tube_number' => $i,
                         'vol_sampletube' => $volume,
                         'flag' => '0',
@@ -226,19 +226,19 @@ class Salmonella_biosolids extends CI_Controller
                     );
                     // var_dump($data_volume); // var dump data volume sebelum diinsert
                     // die();
-                    $this->Salmonella_biosolids_model->insert_sample_volume($data_volume);
+                    $this->Salmonella_liquids_model->insert_sample_volume($data_volume);
                 }
             }
     
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
-        redirect(site_url("salmonella_biosolids"));
+        redirect(site_url("salmonella_liquids"));
     }
 
     public function saveResultsCharcoal() {
         $mode = $this->input->post('mode_detResultsCharcoal', TRUE);
-        $id_salmonella_biosolids = $this->input->post('id_salmonella_biosolids1', TRUE);
+        $id_salmonella_liquids = $this->input->post('id_salmonella_liquids1', TRUE);
         $id_result_charcoal = $this->input->post('id_result_charcoal', TRUE);
         $dt = new DateTime();
         $date_sample_processed = $this->input->post('date_sample_processed1', TRUE);
@@ -247,7 +247,7 @@ class Salmonella_biosolids extends CI_Controller
         if ($mode == "insert") {
             // Insert data into assays table
             $data = array(
-                'id_salmonella_biosolids' => $id_salmonella_biosolids,
+                'id_salmonella_liquids' => $id_salmonella_liquids,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
                 'flag' => '0',
@@ -260,14 +260,14 @@ class Salmonella_biosolids extends CI_Controller
             // var_dump($data);
             // die();
     
-            $assay_id = $this->Salmonella_biosolids_model->insertResultsCharcoal($data);
+            $assay_id = $this->Salmonella_liquids_model->insertResultsCharcoal($data);
     
             // Insert sample volumes
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $plate = $this->input->post("growth_plate{$i}", TRUE);
                 if ($plate) {
-                    $this->Salmonella_biosolids_model->insert_growth_plate(array(
+                    $this->Salmonella_liquids_model->insert_growth_plate(array(
                         'id_result_charcoal' => $assay_id,
                         'plate_number' => $i,
                         'growth_plate' => $plate,
@@ -285,7 +285,7 @@ class Salmonella_biosolids extends CI_Controller
         } else if ($mode == "edit") {
             // Update data in assays table
             $data = array(
-                'id_salmonella_biosolids' => $id_salmonella_biosolids,
+                'id_salmonella_liquids' => $id_salmonella_liquids,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
                 'flag' => '0',
@@ -298,11 +298,11 @@ class Salmonella_biosolids extends CI_Controller
             // var_dump($data);
             // die();
     
-            $this->Salmonella_biosolids_model->updateResultsCharcoal($id_result_charcoal, $data);
+            $this->Salmonella_liquids_model->updateResultsCharcoal($id_result_charcoal, $data);
 
             // Update sample volumes
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
-            $this->Salmonella_biosolids_model->delete_growth_plates($id_result_charcoal); // Hapus volume yang ada
+            $this->Salmonella_liquids_model->delete_growth_plates($id_result_charcoal); // Hapus volume yang ada
 
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $plate = $this->input->post("growth_plate{$i}", TRUE);
@@ -317,19 +317,19 @@ class Salmonella_biosolids extends CI_Controller
                         'user_created' => $this->session->userdata('id_users'),
                         'date_created' => $dt->format('Y-m-d H:i:s'),
                     );
-                    $this->Salmonella_biosolids_model->insert_growth_plate($data_plate);
+                    $this->Salmonella_liquids_model->insert_growth_plate($data_plate);
                 }
             }
     
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
-        redirect(site_url("salmonella_biosolids/read/" . $id_salmonella_biosolids));
+        redirect(site_url("salmonella_liquids/read/" . $id_salmonella_liquids));
     }
 
     public function saveResultsHBA() {
         $mode = $this->input->post('mode_detResultsHBA', TRUE);
-        $id_salmonella_biosolids = $this->input->post('id_salmonella_biosolidsHBA', TRUE);
+        $id_salmonella_liquids = $this->input->post('id_salmonella_liquidsHBA', TRUE);
         $id_result_hba = $this->input->post('id_result_hba', TRUE);
 
         $dt = new DateTime();
@@ -339,7 +339,7 @@ class Salmonella_biosolids extends CI_Controller
         if ($mode == "insert") {
             // Insert data into assays table
             $data = array(
-                'id_salmonella_biosolids' => $id_salmonella_biosolids,
+                'id_salmonella_liquids' => $id_salmonella_liquids,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
                 'flag' => '0',
@@ -352,7 +352,7 @@ class Salmonella_biosolids extends CI_Controller
             // var_dump($data);
             // die();
     
-            $assay_id = $this->Salmonella_biosolids_model->insertResultsHba($data);
+            $assay_id = $this->Salmonella_liquids_model->insertResultsHba($data);
     
             // Insert sample volumes
             $number_of_tubes = $this->input->post('number_of_tubesHba', TRUE);
@@ -360,7 +360,7 @@ class Salmonella_biosolids extends CI_Controller
                 $plate = $this->input->post("growth_plate{$i}", TRUE);
 
                 if ($plate) {
-                    $this->Salmonella_biosolids_model->insert_growth_plate_hba(array(
+                    $this->Salmonella_liquids_model->insert_growth_plate_hba(array(
                         'id_result_hba' => $assay_id,
                         'plate_number' => $i,
                         'growth_plate' => $plate,
@@ -379,7 +379,7 @@ class Salmonella_biosolids extends CI_Controller
         } else if ($mode == "edit") {
             // Update data in assays table
             $data = array(
-                'id_salmonella_biosolids' => $id_salmonella_biosolids,
+                'id_salmonella_liquids' => $id_salmonella_liquids,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
                 'flag' => '0',
@@ -389,11 +389,11 @@ class Salmonella_biosolids extends CI_Controller
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
     
-            $this->Salmonella_biosolids_model->updateResultsHba($id_result_hba, $data);
+            $this->Salmonella_liquids_model->updateResultsHba($id_result_hba, $data);
     
             // Update sample volumes
             $number_of_tubes = $this->input->post('number_of_tubesHba', TRUE);
-            $this->Salmonella_biosolids_model->delete_growth_plates_hba($id_result_hba); // Hapus volume yang ada
+            $this->Salmonella_liquids_model->delete_growth_plates_hba($id_result_hba); // Hapus volume yang ada
     
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $plate = $this->input->post("growth_plate{$i}", TRUE);
@@ -408,14 +408,14 @@ class Salmonella_biosolids extends CI_Controller
                         'user_created' => $this->session->userdata('id_users'),
                         'date_created' => $dt->format('Y-m-d H:i:s'),
                     );
-                    $this->Salmonella_biosolids_model->insert_growth_plate_hba($data_plate);
+                    $this->Salmonella_liquids_model->insert_growth_plate_hba($data_plate);
                 }
             }
     
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
-        redirect(site_url("salmonella_biosolids/read/" . $id_salmonella_biosolids));
+        redirect(site_url("salmonella_liquids/read/" . $id_salmonella_liquids));
     }
 
 
@@ -423,7 +423,7 @@ class Salmonella_biosolids extends CI_Controller
         $mode = $this->input->post('mode_detResultsBiochemical', TRUE);
         $id_result_biochemical = $this->input->post('id_result_biochemical', TRUE);
         $id_result_hba = $this->input->post('id_result_hba1', TRUE);
-        $id_salmonella_biosolids = $this->input->post('id_salmonella_biosolidsBiochemical', TRUE);
+        $id_salmonella_liquids = $this->input->post('id_salmonella_liquidsBiochemical', TRUE);
         $oxidase = $this->input->post('oxidase', TRUE);
         $catalase = $this->input->post('catalase', TRUE);
         $confirmation = $this->input->post('confirmation', TRUE);
@@ -432,7 +432,7 @@ class Salmonella_biosolids extends CI_Controller
 
         if ($mode == "insert") {
             $data = array(
-                'id_salmonella_biosolids' => $id_salmonella_biosolids,
+                'id_salmonella_liquids' => $id_salmonella_liquids,
                 'id_result_hba' => $id_result_hba,
                 'oxidase' => $oxidase,
                 'catalase' => $catalase,
@@ -447,10 +447,10 @@ class Salmonella_biosolids extends CI_Controller
             );
             // var_dump($data);
             // die();
-            $this->Salmonella_biosolids_model->insertResultsBiochemical($data);
+            $this->Salmonella_liquids_model->insertResultsBiochemical($data);
         } else if ($mode == "edit") {
             $data = array(
-                'id_salmonella_biosolids' => $id_salmonella_biosolids,
+                'id_salmonella_liquids' => $id_salmonella_liquids,
                 'id_result_hba' => $id_result_hba,
                 'oxidase' => $oxidase,
                 'catalase' => $catalase,
@@ -465,88 +465,88 @@ class Salmonella_biosolids extends CI_Controller
 
             // var_dump($data);
             // die();
-            $this->Salmonella_biosolids_model->updateResultsBiochemical($id_result_biochemical, $data);
+            $this->Salmonella_liquids_model->updateResultsBiochemical($id_result_biochemical, $data);
         }
 
-        redirect(site_url("salmonella_biosolids/read/" . $id_salmonella_biosolids));
+        redirect(site_url("salmonella_liquids/read/" . $id_salmonella_liquids));
     }
 
 
-    public function delete_salmonellaBiosolids($id) {
-        $row = $this->Salmonella_biosolids_model->get_by_id_salmonella_biosolids($id);
+    public function delete_salmonellaLiquids($id) {
+        $row = $this->Salmonella_liquids_model->get_by_id_salmonella_liquids($id);
         if ($row) {
             $id_parent = $row->id_result_charcoal; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
     
-            $this->Salmonella_biosolids_model->updateSalmonellaBiosolids($id, $data);
-            $this->Salmonella_biosolids_model->updateSampleVolume($id, $data);
+            $this->Salmonella_liquids_model->updateSalmonellaBiosolids($id, $data);
+            $this->Salmonella_liquids_model->updateSampleVolume($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
     
-        redirect(site_url('salmonella_biosolids/read/'.$id_parent));
+        redirect(site_url('salmonella_liquids/read/'.$id_parent));
     }
     
     public function delete_detailCharcoal($id) {
-        $row = $this->Salmonella_biosolids_model->get_by_id_charcoal($id);
+        $row = $this->Salmonella_liquids_model->get_by_id_charcoal($id);
         if ($row) {
             $id_parent = $row->id_result_charcoal; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
     
-            $this->Salmonella_biosolids_model->updateResultsCharcoal($id, $data);
-            $this->Salmonella_biosolids_model->updateResultsGrowthPlate($id, $data);
+            $this->Salmonella_liquids_model->updateResultsCharcoal($id, $data);
+            $this->Salmonella_liquids_model->updateResultsGrowthPlate($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
     
-        redirect(site_url('salmonella_biosolids/read/'.$id_parent));
+        redirect(site_url('salmonella_liquids/read/'.$id_parent));
     }
 
     public function delete_detailHba($id) {
-        $row = $this->Salmonella_biosolids_model->get_by_id_hba($id);
+        $row = $this->Salmonella_liquids_model->get_by_id_hba($id);
         if ($row) {
             $id_parent = $row->id_result_charcoal; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
     
-            $this->Salmonella_biosolids_model->updateResultsHba($id, $data);
-            $this->Salmonella_biosolids_model->updateResultsGrowthPlateHba($id, $data);
+            $this->Salmonella_liquids_model->updateResultsHba($id, $data);
+            $this->Salmonella_liquids_model->updateResultsGrowthPlateHba($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
     
-        redirect(site_url('salmonella_biosolids/read/'.$id_parent));
+        redirect(site_url('salmonella_liquids/read/'.$id_parent));
     }
 
     public function delete_detailBiochemical($id) {
-        $row = $this->Salmonella_biosolids_model->get_by_id_biochemical($id);
+        $row = $this->Salmonella_liquids_model->get_by_id_biochemical($id);
         if ($row) {
             $id_parent = $row->id_result_charcoal; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
     
-            $this->Salmonella_biosolids_model->updateResultsBiochemical($id, $data);
+            $this->Salmonella_liquids_model->updateResultsBiochemical($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
     
-        redirect(site_url('salmonella_biosolids/read/'.$id_parent));
+        redirect(site_url('salmonella_liquids/read/'.$id_parent));
     }
 
     public function getIdOneWaterDetails()
     {
         $idOneWaterSample = $this->input->post('id_one_water_sample');
-        $oneWaterSample = $this->Salmonella_biosolids_model->getOneWaterSampleById($idOneWaterSample);
+        $oneWaterSample = $this->Salmonella_liquids_model->getOneWaterSampleById($idOneWaterSample);
         echo json_encode($oneWaterSample);
     }
 
@@ -568,7 +568,7 @@ class Salmonella_biosolids extends CI_Controller
         $sheet->setCellValue('J1', "Elution Volume");
     
         // Fetch the concentration data
-        $finalConcentration = $this->Salmonella_biosolids_model->get_export($id);
+        $finalConcentration = $this->Salmonella_liquids_model->get_export($id);
     
         if (!empty($finalConcentration)) {
             // Initialize tube index for volumes
@@ -634,7 +634,7 @@ class Salmonella_biosolids extends CI_Controller
     
         // Set header for the Excel file
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="Report_Salmonella_Biosolids_Final_Concentrations.xlsx"');
+        header('Content-Disposition: attachment;filename="Report_Salmonella_Liquids_Final_Concentrations.xlsx"');
         header('Cache-Control: max-age=0');
     
         // Output the Excel file
@@ -644,7 +644,7 @@ class Salmonella_biosolids extends CI_Controller
 
     public function excel_all() {
         $spreadsheet = new Spreadsheet();
-        $finalConcentration = $this->Salmonella_biosolids_model->get_all_export();
+        $finalConcentration = $this->Salmonella_liquids_model->get_all_export();
         // var_dump($finalConcentration);
         // die();
         // Array untuk menyimpan data berdasarkan jumlah tabung
@@ -669,7 +669,7 @@ class Salmonella_biosolids extends CI_Controller
     
         // Set header untuk file Excel
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="Report_All_Salmonella_Biosolids_Final_Concentrations.xlsx"');
+        header('Content-Disposition: attachment;filename="Report_All_Salmonella_Liquids_Final_Concentrations.xlsx"');
         header('Cache-Control: max-age=0');
     
         ob_clean();
@@ -756,7 +756,7 @@ class Salmonella_biosolids extends CI_Controller
 
     public function validateSalmonellaAssayBarcode() {
         $id = $this->input->get('id');
-        $data = $this->Salmonella_biosolids_model->validateSalmonellaAssayBarcode($id);
+        $data = $this->Salmonella_liquids_model->validateSalmonellaAssayBarcode($id);
         header('Content-Type: application/json');
         echo json_encode($data);
     }

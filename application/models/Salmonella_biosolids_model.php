@@ -128,22 +128,91 @@ class Salmonella_biosolids_model extends CI_Model
         return $this->datatables->generate();
     }
 
+    // function subjsonFinalConcentration($id)
+    // {
+    //     $response = array();
+    
+    //     // Step 1: Get unique tube_number
+    //     $this->db->select('tube_number');
+    //     $this->db->distinct();
+    //     $this->db->from('salmonella_sample_volumes');
+    //     $this->db->where('id_salmonella_biosolids', $id);
+    //     $tube_numbers = $this->db->get()->result_array();
+    
+    //     // Check if tube numbers are empty
+    //     if (empty($tube_numbers)) {
+    //         return []; // Handle case where no tube numbers found
+    //     }
+    
+    //     // Step 2: Create case query for pivot
+    //     $case_statements = [];
+    //     foreach ($tube_numbers as $row) {
+    //         $tube_number = $row['tube_number'];
+    //         $case_statements[] = "MAX(CASE WHEN ssv1.tube_number = {$tube_number} THEN ssv1.vol_sampletube END) AS `Tube {$tube_number}`";
+    //     }
+    //     $case_query = implode(', ', $case_statements);
+    
+    //     // Final query
+    //     $this->db->select("sb.id_one_water_sample, sb.id_person, rp.initial, sb.mpn_pcr_conducted, sb.number_of_tubes, sb.salmonella_assay_barcode, sb.date_sample_processed, sb.time_sample_processed, sb.sample_wetweight, sb.elution_volume, rs.sampletype,
+    //                        $case_query,
+    //                        GROUP_CONCAT(DISTINCT srb.biochemical_tube ORDER BY srb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
+    //                        GROUP_CONCAT(DISTINCT CONCAT(srb.biochemical_tube, ':', srb.confirmation) ORDER BY srb.biochemical_tube SEPARATOR ', ') AS confirmation,
+    //                        GROUP_CONCAT(DISTINCT ssgph.plate_number ORDER BY ssgph.plate_number SEPARATOR ', ') AS plate_numbers");
+    //     $this->db->from('salmonella_biosolids AS sb');
+    //     $this->db->join('salmonella_result_hba AS srh', 'sb.id_salmonella_biosolids = srh.id_salmonella_biosolids', 'left');
+    //     $this->db->join('salmonella_sample_growth_plate_hba AS ssgph', 'srh.id_result_hba = ssgph.id_result_hba', 'left');
+    //     $this->db->join('salmonella_sample_volumes AS ssv1', 'srh.id_salmonella_biosolids = ssv1.id_salmonella_biosolids', 'left');
+    //     $this->db->join('salmonella_result_biochemical AS srb', 'ssgph.id_result_hba = srb.id_result_hba', 'left');
+    //     $this->db->join('ref_sampletype AS rs', 'sb.id_sampletype = rs.id_sampletype', 'left');
+    //     $this->db->join('ref_person AS rp',  'sb.id_person = rp.id_person', 'left');
+    
+    //     // Conditions
+    //     $this->db->where('srb.flag', '0');
+    //     $this->db->where('srh.id_salmonella_biosolids', $id);
+    //     $this->db->group_by('srh.id_result_hba');
+    
+    //     $q = $this->db->get();
+    
+    //     if ($q->num_rows() > 0) {
+    //         $response = $q->result(); // Fetch all results if available
+    //         foreach ($response as $key => $value) {
+    //             $confirmations = explode(',', $value->confirmation);
+    //             $biochemical_tubes = explode(',', $value->biochemical_tube);
+    //             // $plate_numbers = explode(',', $value->plate_numbers);
+    //             // var_dump($plate_numbers);
+    //             // die();
+    
+    //             // Inisialisasi confirmation array untuk tiap plate_number
+    //             // $confirmation_array = array_fill_keys($plate_numbers, '');
+    
+    //             foreach ($biochemical_tubes as $tube) {
+    //                 $index = array_search($tube, $biochemical_tubes);
+    //                 $confirmation_array[$tube] = explode(':', $confirmations[$index])[1] ?? 'No Growth Plate'; // Menyediakan default
+    //             }
+    //             $value->confirmation = $confirmation_array; // Assign confirmation yang sudah diproses
+    //         }
+    //     }
+    
+    //     return $response;
+    // }
+
     function subjsonFinalConcentration($id)
     {
         $response = array();
-    
+
         // Step 1: Get unique tube_number
         $this->db->select('tube_number');
         $this->db->distinct();
         $this->db->from('salmonella_sample_volumes');
         $this->db->where('id_salmonella_biosolids', $id);
+        $this->db->order_by('tube_number', 'ASC'); // Tambahkan pengurutan
         $tube_numbers = $this->db->get()->result_array();
-    
+
         // Check if tube numbers are empty
         if (empty($tube_numbers)) {
             return []; // Handle case where no tube numbers found
         }
-    
+
         // Step 2: Create case query for pivot
         $case_statements = [];
         foreach ($tube_numbers as $row) {
@@ -151,13 +220,13 @@ class Salmonella_biosolids_model extends CI_Model
             $case_statements[] = "MAX(CASE WHEN ssv1.tube_number = {$tube_number} THEN ssv1.vol_sampletube END) AS `Tube {$tube_number}`";
         }
         $case_query = implode(', ', $case_statements);
-    
+
         // Final query
         $this->db->select("sb.id_one_water_sample, sb.id_person, rp.initial, sb.mpn_pcr_conducted, sb.number_of_tubes, sb.salmonella_assay_barcode, sb.date_sample_processed, sb.time_sample_processed, sb.sample_wetweight, sb.elution_volume, rs.sampletype,
-                           $case_query, 
-                           GROUP_CONCAT(DISTINCT srb.biochemical_tube ORDER BY srb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
-                           GROUP_CONCAT(DISTINCT CONCAT(srb.biochemical_tube, ':', srb.confirmation) ORDER BY srb.biochemical_tube SEPARATOR ', ') AS confirmation,
-                           GROUP_CONCAT(DISTINCT ssgph.plate_number ORDER BY ssgph.plate_number SEPARATOR ', ') AS plate_numbers");
+                        $case_query,
+                        GROUP_CONCAT(DISTINCT srb.biochemical_tube ORDER BY srb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
+                        GROUP_CONCAT(DISTINCT CONCAT(srb.biochemical_tube, ':', srb.confirmation) ORDER BY srb.biochemical_tube SEPARATOR ', ') AS confirmation,
+                        GROUP_CONCAT(DISTINCT ssgph.plate_number ORDER BY ssgph.plate_number SEPARATOR ', ') AS plate_numbers");
         $this->db->from('salmonella_biosolids AS sb');
         $this->db->join('salmonella_result_hba AS srh', 'sb.id_salmonella_biosolids = srh.id_salmonella_biosolids', 'left');
         $this->db->join('salmonella_sample_growth_plate_hba AS ssgph', 'srh.id_result_hba = ssgph.id_result_hba', 'left');
@@ -165,38 +234,108 @@ class Salmonella_biosolids_model extends CI_Model
         $this->db->join('salmonella_result_biochemical AS srb', 'ssgph.id_result_hba = srb.id_result_hba', 'left');
         $this->db->join('ref_sampletype AS rs', 'sb.id_sampletype = rs.id_sampletype', 'left');
         $this->db->join('ref_person AS rp',  'sb.id_person = rp.id_person', 'left');
-    
+
         // Conditions
         $this->db->where('srb.flag', '0');
         $this->db->where('srh.id_salmonella_biosolids', $id);
         $this->db->group_by('srh.id_result_hba');
-    
+
         $q = $this->db->get();
-    
+
         if ($q->num_rows() > 0) {
             $response = $q->result(); // Fetch all results if available
             foreach ($response as $key => $value) {
                 $confirmations = explode(',', $value->confirmation);
                 $biochemical_tubes = explode(',', $value->biochemical_tube);
-                // $plate_numbers = explode(',', $value->plate_numbers);
-                // var_dump($plate_numbers);
-                // die();
-    
-                // Inisialisasi confirmation array untuk tiap plate_number
-                // $confirmation_array = array_fill_keys($plate_numbers, '');
-    
-                foreach ($biochemical_tubes as $tube) {
-                    $index = array_search($tube, $biochemical_tubes);
-                    $confirmation_array[$tube] = explode(':', $confirmations[$index])[1] ?? 'No Growth Plate'; // Menyediakan default
+                $confirmation_array = []; // Inisialisasi array konfirmasi
+
+                // Membuat array asosiasi untuk konfirmasi
+                foreach ($biochemical_tubes as $index => $tube) {
+                    $confirmation_array[$tube] = explode(':', $confirmations[$index] ?? 'No Growth Plate')[1] ?? 'No Growth Plate'; // Menyediakan default
                 }
+
                 $value->confirmation = $confirmation_array; // Assign confirmation yang sudah diproses
             }
         }
-    
+
         return $response;
     }
 
 
+
+
+    // function get_export($id) {
+    //     $response = array();
+    
+    //     // Step 1: Get unique tube_number
+    //     $this->db->select('tube_number');
+    //     $this->db->distinct();
+    //     $this->db->from('salmonella_sample_volumes');
+    //     $this->db->where('id_salmonella_biosolids', $id);
+    //     $tube_numbers = $this->db->get()->result_array();
+    
+    //     // Check if tube numbers are empty
+    //     if (empty($tube_numbers)) {
+    //         return []; // Handle case where no tube numbers found
+    //     }
+    
+    //     // Store unique tube numbers for further processing
+    //     $tube_numbers_list = array_column($tube_numbers, 'tube_number');
+    
+    //     // Step 2: Create case query for pivot
+    //     $case_statements = [];
+    //     foreach ($tube_numbers as $row) {
+    //         $tube_number = $row['tube_number'];
+    //         $case_statements[] = "MAX(CASE WHEN ssv1.tube_number = {$tube_number} THEN ssv1.vol_sampletube END) AS `Tube {$tube_number}`";
+    //     }
+    //     $case_query = implode(', ', $case_statements);
+    
+    //     // Final query
+    //     $this->db->select("sb.id_one_water_sample, sb.id_person, rp.initial, sb.mpn_pcr_conducted, sb.number_of_tubes, sb.salmonella_assay_barcode, sb.date_sample_processed, sb.time_sample_processed, sb.sample_wetweight, sb.elution_volume, rs.sampletype,
+    //                        $case_query, 
+    //                        GROUP_CONCAT(DISTINCT srb.biochemical_tube ORDER BY srb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
+    //                        GROUP_CONCAT(DISTINCT CONCAT(srb.biochemical_tube, ':', srb.confirmation) ORDER BY srb.biochemical_tube SEPARATOR ', ') AS confirmation,
+    //                        GROUP_CONCAT(DISTINCT ssgph.plate_number ORDER BY ssgph.plate_number SEPARATOR ', ') AS plate_numbers");
+    //     $this->db->from('salmonella_biosolids AS sb');
+    //     $this->db->join('salmonella_result_hba AS srh', 'sb.id_salmonella_biosolids = srh.id_salmonella_biosolids', 'left');
+    //     $this->db->join('salmonella_sample_growth_plate_hba AS ssgph', 'srh.id_result_hba = ssgph.id_result_hba', 'left');
+    //     $this->db->join('salmonella_sample_volumes AS ssv1', 'srh.id_salmonella_biosolids = ssv1.id_salmonella_biosolids', 'left');
+    //     $this->db->join('salmonella_result_biochemical AS srb', 'ssgph.id_result_hba = srb.id_result_hba', 'left');
+    //     $this->db->join('ref_sampletype AS rs', 'sb.id_sampletype = rs.id_sampletype', 'left');
+    //     $this->db->join('ref_person AS rp',  'sb.id_person = rp.id_person', 'left');
+    
+    //     // Conditions
+    //     $this->db->where('srb.flag', '0');
+    //     $this->db->where('srh.id_salmonella_biosolids', $id);
+    //     $this->db->group_by('srh.id_result_hba');
+    
+    //     $q = $this->db->get();
+    
+    //     if ($q->num_rows() > 0) {
+    //         $response = $q->result(); // Fetch all results if available
+    //         foreach ($response as $key => $value) {
+    //             $confirmations = explode(',', $value->confirmation);
+    //             $biochemical_tubes = explode(',', $value->biochemical_tube);
+    //             $plate_numbers = explode(',', $value->plate_numbers);
+    
+    //             // Initialize confirmation array for each plate_number
+    //             $confirmation_array = array_fill_keys($plate_numbers, 'No Growth'); // Default to "No Growth"
+    
+    //             // Fill in confirmation values from biochemical_tubes
+    //             foreach ($biochemical_tubes as $tube) {
+    //                 $index = array_search($tube, $biochemical_tubes);
+    //                 if ($index !== false) {
+    //                     $confirmation_value = explode(':', $confirmations[$index])[1] ?? 'No Growth'; // Default if not set
+    //                     $confirmation_array[$tube] = $confirmation_value;
+    //                 }
+    //             }
+    
+    //             $value->confirmation = $confirmation_array; // Assign processed confirmation
+    //         }
+    //     }
+    
+    //     return $response;
+    // }
 
     function get_export($id) {
         $response = array();
@@ -206,6 +345,7 @@ class Salmonella_biosolids_model extends CI_Model
         $this->db->distinct();
         $this->db->from('salmonella_sample_volumes');
         $this->db->where('id_salmonella_biosolids', $id);
+        $this->db->order_by('tube_number', 'ASC'); // Tambahkan pengurutan
         $tube_numbers = $this->db->get()->result_array();
     
         // Check if tube numbers are empty
@@ -259,7 +399,7 @@ class Salmonella_biosolids_model extends CI_Model
                 foreach ($biochemical_tubes as $tube) {
                     $index = array_search($tube, $biochemical_tubes);
                     if ($index !== false) {
-                        $confirmation_value = explode(':', $confirmations[$index])[1] ?? 'No Growth'; // Default if not set
+                        $confirmation_value = explode(':', $confirmations[$index] ?? 'No Growth')[1] ?? 'No Growth'; // Default if not set
                         $confirmation_array[$tube] = $confirmation_value;
                     }
                 }
@@ -271,6 +411,80 @@ class Salmonella_biosolids_model extends CI_Model
         return $response;
     }
     
+    
+    // function get_all_export() {
+    //     $response = array();
+    
+    //     // Step 1: Get unique tube_number
+    //     $this->db->select('tube_number');
+    //     $this->db->distinct();
+    //     $this->db->from('salmonella_sample_volumes');
+    //     $this->db->where('id_salmonella_biosolids IS NOT NULL');
+    //     $tube_numbers = $this->db->get()->result_array();
+    
+    //     // Debugging: Cek apakah tube numbers ditemukan
+    //     if (empty($tube_numbers)) {
+    //         echo "No tube numbers found.";
+    //         return []; // Handle case where no tube numbers found
+    //     }
+    
+    //     // Store unique tube numbers for further processing
+    //     $tube_numbers_list = array_column($tube_numbers, 'tube_number');
+    
+    //     // Step 2: Create case query for pivot
+    //     $case_statements = [];
+    //     foreach ($tube_numbers_list as $tube_number) {
+    //         $case_statements[] = "MAX(CASE WHEN ssv1.tube_number = {$tube_number} THEN ssv1.vol_sampletube END) AS `Tube {$tube_number}`";
+    //     }
+    //     $case_query = implode(', ', $case_statements);
+    
+    //     // Final query
+    //     $this->db->select("sb.id_one_water_sample, sb.id_person, rp.initial, sb.mpn_pcr_conducted, sb.number_of_tubes, sb.salmonella_assay_barcode, sb.date_sample_processed, sb.time_sample_processed, sb.sample_wetweight, sb.elution_volume, rs.sampletype,
+    //                        $case_query, 
+    //                        GROUP_CONCAT(DISTINCT srb.biochemical_tube ORDER BY srb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
+    //                        GROUP_CONCAT(DISTINCT CONCAT(srb.biochemical_tube, ':', srb.confirmation) ORDER BY srb.biochemical_tube SEPARATOR ', ') AS confirmation,
+    //                        GROUP_CONCAT(DISTINCT ssgph.plate_number ORDER BY ssgph.plate_number SEPARATOR ', ') AS plate_numbers");
+    //     $this->db->from('salmonella_biosolids AS sb');
+    //     $this->db->join('salmonella_result_hba AS srh', 'sb.id_salmonella_biosolids = srh.id_salmonella_biosolids', 'left');
+    //     $this->db->join('salmonella_sample_growth_plate_hba AS ssgph', 'srh.id_result_hba = ssgph.id_result_hba', 'left');
+    //     $this->db->join('salmonella_sample_volumes AS ssv1', 'srh.id_salmonella_biosolids = ssv1.id_salmonella_biosolids', 'left');
+    //     $this->db->join('salmonella_result_biochemical AS srb', 'ssgph.id_result_hba = srb.id_result_hba', 'left');
+    //     $this->db->join('ref_sampletype AS rs', 'sb.id_sampletype = rs.id_sampletype', 'left');
+    //     $this->db->join('ref_person AS rp', 'sb.id_person = rp.id_person', 'left');
+    
+    //     // Conditions
+    //     $this->db->where('srb.flag', '0');
+    //     $this->db->group_by('srh.id_result_hba');
+    
+    //     $q = $this->db->get();
+    
+    //     if ($q->num_rows() > 0) {
+    //         $response = $q->result();
+    //         foreach ($response as $value) {
+    //             // Memproses konfirmasi
+    //             $confirmations = explode(',', $value->confirmation);
+    //             $biochemical_tubes = explode(',', $value->biochemical_tube);
+    //             $plate_numbers = explode(',', $value->plate_numbers);
+    
+    //             // Inisialisasi array konfirmasi dengan kunci sesuai dengan jumlah tabung
+    //             $confirmation_array = array_fill_keys(range(1, count($biochemical_tubes)), 'No Growth'); // Default ke "No Growth"
+    
+    //             // Mengisi nilai konfirmasi berdasarkan indeks tabung
+    //             foreach ($biochemical_tubes as $index => $tube) {
+    //                 $confirmation_value = explode(':', $confirmations[$index])[1] ?? 'No Growth';
+    //                 $confirmation_array[(int)$tube] = $confirmation_value; // Gunakan kunci tabung sebagai index
+    //             }
+    
+    //             // Assign konfirmasi yang sudah diproses
+    //             $value->confirmation = $confirmation_array;
+    //         }
+    //     } else {
+    //         echo "No data found for the given query.";
+    //     }
+    
+    //     return $response;
+    // }
+
     function get_all_export() {
         $response = array();
     
@@ -279,6 +493,7 @@ class Salmonella_biosolids_model extends CI_Model
         $this->db->distinct();
         $this->db->from('salmonella_sample_volumes');
         $this->db->where('id_salmonella_biosolids IS NOT NULL');
+        $this->db->order_by('tube_number', 'ASC'); // Tambahkan pengurutan
         $tube_numbers = $this->db->get()->result_array();
     
         // Debugging: Cek apakah tube numbers ditemukan
@@ -313,6 +528,7 @@ class Salmonella_biosolids_model extends CI_Model
     
         // Conditions
         $this->db->where('srb.flag', '0');
+        $this->db->where('ssv1.flag', '0');
         $this->db->group_by('srh.id_result_hba');
     
         $q = $this->db->get();
@@ -326,11 +542,11 @@ class Salmonella_biosolids_model extends CI_Model
                 $plate_numbers = explode(',', $value->plate_numbers);
     
                 // Inisialisasi array konfirmasi dengan kunci sesuai dengan jumlah tabung
-                $confirmation_array = array_fill_keys(range(1, count($biochemical_tubes)), 'No Growth'); // Default ke "No Growth"
+                $confirmation_array = array_fill_keys($tube_numbers_list, 'No Growth'); // Default ke "No Growth"
     
                 // Mengisi nilai konfirmasi berdasarkan indeks tabung
                 foreach ($biochemical_tubes as $index => $tube) {
-                    $confirmation_value = explode(':', $confirmations[$index])[1] ?? 'No Growth';
+                    $confirmation_value = explode(':', $confirmations[$index] ?? 'No Growth')[1] ?? 'No Growth';
                     $confirmation_array[(int)$tube] = $confirmation_value; // Gunakan kunci tabung sebagai index
                 }
     
@@ -343,6 +559,7 @@ class Salmonella_biosolids_model extends CI_Model
     
         return $response;
     }
+    
     
     
     
