@@ -647,6 +647,7 @@ class Salmonella_liquids extends CI_Controller
         $finalConcentration = $this->Salmonella_liquids_model->get_all_export();
         // var_dump($finalConcentration);
         // die();
+        
         // Array untuk menyimpan data berdasarkan jumlah tabung
         $dataTubes = [];
     

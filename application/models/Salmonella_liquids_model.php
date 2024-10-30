@@ -12,7 +12,6 @@ class Salmonella_liquids_model extends CI_Model
     }
 
     // datatables
-// datatables
     function json() {
         $this->datatables->select('sl.id_salmonella_liquids, sl.id_one_water_sample, sl.id_person, sl.number_of_tubes, sl.mpn_pcr_conducted, sl.salmonella_assay_barcode, 
         rp.initial, sl.date_sample_processed, sl.time_sample_processed, sl.sample_wetweight, sl.elution_volume,
@@ -111,7 +110,7 @@ class Salmonella_liquids_model extends CI_Model
         $this->datatables->where('srbl.flag', '0');
         $this->datatables->where('srbl.id_salmonella_liquids', $id);
         
-        // Tambahkan kondisi untuk biochemical_tube jika ada
+       // Add condition for biochemical_tube if it exists
         if (!empty($biochemical_tube)) {
             $this->datatables->where('srbl.biochemical_tube', $biochemical_tube);
         }
@@ -352,7 +351,6 @@ class Salmonella_liquids_model extends CI_Model
     {
         $this->db->where($this->id, $id);
         $this->db->where('flag', '0');
-        // $this->db->where('lab', $this->session->userdata('lab'));
         return $this->db->get($this->table)->row();
     }
 
@@ -497,7 +495,6 @@ class Salmonella_liquids_model extends CI_Model
     {
         $this->db->where('id_result_charcoal', $id);
         $this->db->where('flag', '0');
-        // $this->db->where('lab', $this->session->userdata('lab'));
         return $this->db->get('salmonella_result_charcoal_liquids')->row();
     }
 
@@ -510,7 +507,6 @@ class Salmonella_liquids_model extends CI_Model
     {
         $this->db->where('id_salmonella_liquids', $id);
         $this->db->where('flag', '0');
-        // $this->db->where('lab', $this->session->userdata('lab'));
         return $this->db->get('salmonella_liquids')->row();
     }
 
@@ -542,7 +538,6 @@ class Salmonella_liquids_model extends CI_Model
     {
         $this->db->where('id_result_hba', $id);
         $this->db->where('flag', '0');
-        // $this->db->where('lab', $this->session->userdata('lab'));
         return $this->db->get('salmonella_result_hba_liquids')->row();
     }
 
@@ -560,7 +555,6 @@ class Salmonella_liquids_model extends CI_Model
     {
         $this->db->where('id_result_biochemical', $id);
         $this->db->where('flag', '0');
-        // $this->db->where('lab', $this->session->userdata('lab'));
         return $this->db->get('salmonella_result_biochemical_liquids')->row();
     }
 

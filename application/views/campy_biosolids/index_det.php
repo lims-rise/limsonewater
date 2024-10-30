@@ -68,18 +68,6 @@
 							</div>
 						</div>
 
-                        <!-- <div class="form-group">
-							<label for="vol_sampletube" class="col-sm-2 control-label">Vol Sample Tube</label>
-							<div class="col-sm-4">
-								<input class="form-control " id="vol_sampletube" name="vol_sampletube" value="<?php echo $vol_sampletube ?>"  disabled>
-							</div>
-
-                            <label for="tube_number" class="col-sm-2 control-label">Tube Number</label>
-							<div class="col-sm-4">
-								<input class="form-control " id="tube_number" name="tube_number" value="<?php echo $tube_number ?>"  disabled>
-							</div>
-						</div> -->
-
 					</div>
 				</form>
 			<div class="box-footer">
@@ -148,15 +136,20 @@
                         </div>
                     </div>
                     
-                    <!-- <div class="col-xs-12">
+
+                    <div class="col-xs-12">
                         <div class="box box-primary box-solid">
                             <div class="box-header">
                                 <h3 class="box-title">Final Concentration</h3>
                             </div>
                             <div class="box-body pad">
-                            <div style="padding-bottom: 10px;">    
-                                <?php echo anchor(site_url('Moisture_content/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
-                            </div>
+                                <div style="padding-bottom: 10px;">
+                                    <button class="btn btn-success" id="exportBtn">
+                                        <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS
+                                    </button>
+                                </div>
+                                <input id="id_campy_biosolids" name="id_campy_biosolids" type="hidden" class="form-control input-sm" value="<?php echo $id_campy_biosolids ?>">
+
                                 <div id="content-final-concentration" class="table-responsive">
                                     <table id="exampleFinalConcentration" class="table display table-bordered table-striped" width="100%">
                                         <thead>
@@ -180,7 +173,6 @@
                                                     <?php 
                                                     // Ambil plate_numbers dari data pertama
                                                     $plate_numbers = explode(',', $finalConcentration[0]->plate_numbers);
-                                                    // Generate Tube Result berdasarkan jumlah plate_numbers
                                                     foreach ($plate_numbers as $plate_number): ?>
                                                         <th>Tube <?= htmlspecialchars($plate_number) ?> Result</th>
                                                     <?php endforeach; ?>
@@ -233,101 +225,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div> -->
-
-                    <div class="col-xs-12">
-    <div class="box box-primary box-solid">
-        <div class="box-header">
-            <h3 class="box-title">Final Concentration</h3>
-        </div>
-        <div class="box-body pad">
-            <div style="padding-bottom: 10px;">
-                <button class="btn btn-success" id="exportBtn">
-                    <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS
-                </button>
-            </div>
-            <input id="id_campy_biosolids" name="id_campy_biosolids" type="hidden" class="form-control input-sm" value="<?php echo $id_campy_biosolids ?>">
-
-            <div id="content-final-concentration" class="table-responsive">
-                <table id="exampleFinalConcentration" class="table display table-bordered table-striped" width="100%">
-                    <thead>
-                        <tr>
-                            <th>ID One Water Sample</th>
-                            <th>Campy Assay Barcode</th>
-                            <th>Initial</th>
-                            <th>Sample Type</th>
-                            <th>Number of Tubes</th>
-                            <th>MPN PCR Conducted</th>
-                            <th>Date Sample Processed</th>
-                            <th>Time Sample Processed</th>
-                            <th>Sample Wet Weight</th>
-                            <th>Elution Volume</th>
-                            <?php if (!empty($finalConcentration)): ?>
-                                <?php foreach ($finalConcentration[0] as $key => $value): ?>
-                                    <?php if (strpos($key, 'Tube') === 0): ?>
-                                        <th><?= htmlspecialchars($key) ?> Volume</th>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                                <?php 
-                                // Ambil plate_numbers dari data pertama
-                                $plate_numbers = explode(',', $finalConcentration[0]->plate_numbers);
-                                foreach ($plate_numbers as $plate_number): ?>
-                                    <th>Tube <?= htmlspecialchars($plate_number) ?> Result</th>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <th colspan="100%" style="text-align: center">No data available</th>
-                            <?php endif; ?>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (!empty($finalConcentration)): ?>
-                            <?php foreach ($finalConcentration as $concentration): ?>
-                                <tr>
-                                    <td><?= htmlspecialchars($concentration->id_one_water_sample) ?></td>
-                                    <td><?= htmlspecialchars($concentration->campy_assay_barcode) ?></td>
-                                    <td><?= htmlspecialchars($concentration->initial) ?></td>
-                                    <td><?= htmlspecialchars($concentration->sampletype) ?></td>
-                                    <td><?= htmlspecialchars($concentration->number_of_tubes) ?></td>
-                                    <td><?= htmlspecialchars($concentration->mpn_pcr_conducted) ?></td>
-                                    <td><?= htmlspecialchars($concentration->date_sample_processed) ?></td>
-                                    <td><?= htmlspecialchars($concentration->time_sample_processed) ?></td>
-                                    <td><?= htmlspecialchars($concentration->sample_wetweight) ?></td>
-                                    <td><?= htmlspecialchars($concentration->elution_volume) ?></td>
-
-                                    <?php foreach ($concentration as $key => $value): ?>
-                                        <?php if (strpos($key, 'Tube') === 0): ?>
-                                            <td><?= htmlspecialchars($value) ?></td>
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
-                                    
-                                    <?php 
-                                    // Ambil plate_numbers dari data
-                                    $plate_numbers = explode(',', $concentration->plate_numbers);
-                                    
-                                    // Loop untuk setiap plate_number
-                                    foreach ($plate_numbers as $plate_number): 
-                                        // Cek jika confirmation untuk plate_number ada
-                                        $confirmation_value = isset($concentration->confirmation[$plate_number]) ? $concentration->confirmation[$plate_number] : 'No Available'; 
-                                    ?>
-                                        <td><?= htmlspecialchars($confirmation_value) ?></td>
-                                    <?php endforeach; ?>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <tr>
-                                <td colspan="100%" style="text-align: center">No data available</td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
+                    </div>
                 </div>
 
 				<div class="form-group">
@@ -628,38 +526,9 @@
     let campy_assay_barcode = $('#campy_assay_barcode').val();
     let id_campy_biosolids = $('#id_campy_biosolids').val();
     let number_of_tubes = $('#number_of_tubes').val();
-    // let volSampletube = $('#vol_sampletube').val();
-    // let tubeNumberString = $('#tube_number').val();
-    // let confirmation = $('#confirmation').val();
-    // let biochemicalTube = $('#biochemical_tube').val();
     const BASE_URL = '/limsonewater/index.php';
 
     $(document).ready(function() {
-    // // Get the tube number value from the input field
-    // let tubeNumbers = tubeNumberString.split(',').map(num => num.trim()); // Split and trim whitespace
-
-    // // Clear previous headers
-    // $('#volume-header').empty();
-    // $('#result-header').empty();
-    // // Generate headers based on tube numbers
-    // tubeNumbers.forEach((tube, index) => {
-    //     $('#volume-header').append(`<th style="padding: 10px;">Tube ${tube} Volume (uL)</th>`);
-    // });
-    // tubeNumbers.forEach((tube, index) => {
-    //     $('#volume-header').append(`<th style="padding: 10px;">Tube ${tube} Volume (uL)</th>`);
-    // });
-    // $('#result-header').append(`<th style="padding: 10px;">Tube  Result</th>`);
-
-
-    // // Populate the table body
-    // const rowData = `
-    //     <tr>
-    //         ${tubeNumbers.map(() => `<td>${volSampletube}</td>`).join('')}
-    //         ${tubeNumbers.map(() => `<td>${confirmation}</td>`).join('')}
-    //     </tr>
-    // `;
-
-    // $('#final-concentration-body').append(rowData);
 
 
     // Event listener untuk radio button Oxidase
@@ -715,41 +584,6 @@
             generateGrowthPlateInputs($('#growthPlateInputs'), numberOfTubes);
             generateGrowthPlateInputs($('#growthPlateInputsHBA'), numberOfTubes);
         }).trigger('change');
-
-        // function generateResultBiochemical(container, numberOfPlates) {
-        //     container.empty(); // Clear existing inputs
-
-        //     // Create the required number of inputs and labels
-        //     for (let i = 1; i <= numberOfPlates; i++) {
-        //         container.append(
-        //             `<div class="box-body pad table-responsive">
-		// 						<?php
-		// 							$lvl = $this->session->userdata('id_user_level');
-		// 							if ($lvl != 4){
-		// 								echo "<button class='btn btn-primary' id='addtombol_detResultsHBA'><i class='fa fa-wpforms' aria-hidden='true'></i> New Data</button>";
-		// 							}
-		// 						?>
-		// 						<table id="exampleHba" class="table display table-bordered table-striped" width="100%">
-		// 							<thead>
-		// 								<tr>
-        //                                     <th>Campy Assay Barcode</th>
-        //                                     <th>Date of Sample</th>
-        //                                     <th>Time of Sample</th>
-        //                                     <th>Growth Plate</th>
-        //                                     <th>Action</th>
-		// 								</tr>
-		// 							</thead>
-		// 						</table>
-		// 				</div>`
-        //         );
-        //     }
-        // }
-
-        // $('#number_of_plates').change(function() {
-        //     let numberOfPlates = parseInt($(this).val()); // Get the selected value as an integer
-        //     generateResultBiochemical($('#content-result-biochemical'), numberOfPlates);
-        // }).trigger('change');
-
 
 
         function showConfirmationDelete(url) {
@@ -938,17 +772,6 @@
             };
         };
 
-        // $('#example2').on('draw.dt', function() {
-        //     let data = table.data();
-        //     if (data.length > 0) {
-        //         // Tampilkan tombol jika tabel example2 memiliki data
-        //         $('#addtombol_det72').show();
-        //     } else {
-        //         // Sembunyikan tombol jika tabel example2 tidak memiliki data
-        //         $('#addtombol_det72').hide();
-        //     }
-        // });
-
 
         table = $("#example2").DataTable({
             oLanguage: {
@@ -1032,73 +855,6 @@
             }
         });
 
-
-        // Reload DataTable dan ambil data 
-        // table1.ajax.reload(function() {
-        //     let td = $('#exampleHba td:first');
-        //     let data = table1.row(td).data();
-        //     console.log(data);
-
-        //     if (data) {
-        //         console.log(data);
-        //         const growthPlateArray = data.growth_plate.split(', ');
-        //         const plateNumberArray = data.plate_number.split(', ');
-                
-        //         // Hitung jumlah "Yes" pada growthPlateArray
-        //         const yesCount = growthPlateArray.filter(val => val === 'Yes').length;
-
-        //         if (yesCount > 0) {
-        //             // Hasilkan tabel berdasarkan jumlah plate yang "Yes"
-        //             generateResultBiochemical($('#content-result-biochemical'), yesCount, data.id_campy_biosolids, plateNumberArray);
-        //         } else {
-        //             // Tampilkan pesan jika tidak ada plate "Yes"
-        //             $('#content-result-biochemical').empty().append('<p>Tidak ada plate yang valid.</p>');
-        //         }
-        //     } else {
-        //         console.log('Data belum tersedia');
-        //         $('#content-result-biochemical').empty().append('<p class="text-center">No data available</p>');
-        //     }
-        // });
-
-
-        // function generateResultBiochemical(container, numberOfPlates, id_campy_biosolids, plateNumberArray) {
-        //     container.empty(); // Clear existing content
-
-        //     // Iterate through the plateNumberArray instead of using numberOfPlates
-        //     for (let i = 0; i < numberOfPlates; i++) {
-        //         const tableId = `exampleBiochemical_${i}`; // Unique table ID
-        //         const plateNumber = plateNumberArray[i]; // Get the corresponding plate number
-        //         const buttonId = `addtombol_detResultsBiochemical_${plateNumber}`; // Unique button ID
-
-        //         // Append the table and button for each plate
-        //         container.append(`
-        //             <div class="box-body pad table-responsive">
-        //                 <?php
-        //                 $lvl = $this->session->userdata('id_user_level');
-        //                 if ($lvl != 4) {
-        //                     echo '<button class="btn btn-primary" id="${buttonId}" data-index="${plateNumber}"><i class="fa fa-wpforms" aria-hidden="true"></i> Biochemical Tube ${plateNumber}</button>';
-        //                 }
-        //                 ?>
-        //                 <table id="${tableId}" class="table display table-bordered table-striped" width="100%">
-        //                     <thead>
-        //                         <tr>
-        //                             <th>Oxidase Result</th>
-        //                             <th>Catalase Result</th>
-        //                             <th>Confirmation</th>
-        //                             <th>Sample Store in Biobank</th>
-        //                             <th>Biochemical Tube</th>
-        //                             <th>Action</th>
-        //                         </tr>
-        //                     </thead>
-        //                 </table>
-        //             </div>
-        //         `);
-
-        //         // Initialize DataTable for the newly created table, passing the plate number
-        //         initializeDataTable(tableId, id_campy_biosolids, plateNumber); // Pass the actual plate number
-        //     }
-        // }
-
         table1.ajax.reload(function() {
             let td = $('#exampleHba td:first');
             let data = table1.row(td).data();
@@ -1175,7 +931,6 @@
                     {"data": "catalase"},
                     {"data": "confirmation"},
                     {"data": "sample_store"},
-                    // {"data": "biochemical_tube"},
                     {
                         "data": "action",
                         "orderable": false,
@@ -1193,8 +948,6 @@
                 });
         }
 
-        
-  
      
         // Event listener untuk tombol "New Data"
         $(document).on('click', '[id^=addtombol_detResultsBiochemical_]', function() {
@@ -1250,15 +1003,10 @@
         $('#addtombol_detResultsCharcoal').click(function() {
             $('#mode_detResultsCharcoal').val('insert');
             $('#modal-title-detail').html('<i class="fa fa-wpforms"></i> Insert | Results Charcoal <span id="my-another-cool-loader"></span>');
-            // $('#barcode_tray24').val('');
-            // $('#barcode_tray24').attr('readonly', false);
-            // $('#dry_weight24').val('');
             $('#campy_assay_barcode1').val(campy_assay_barcode);
             $('#campy_assay_barcode1').attr('readonly', true);
             $('#id_campy_biosolids1').val(id_campy_biosolids);
             $('#number_of_tubes1').val(number_of_tubes);
-            // $('#dry_weight24').val('');
-            // $('#comments24').val('');
             $('#compose-modal').modal('show');
         });
 

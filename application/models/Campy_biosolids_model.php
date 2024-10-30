@@ -5,13 +5,6 @@ if (!defined('BASEPATH'))
 
 class Campy_biosolids_model extends CI_Model
 {
-
-    public $table = 'moisture_content';
-    public $table24 = 'moisture24';
-    public $table72 = 'moisture72';
-    public $id = 'id_moisture';
-    public $id24 = 'id_moisture24';
-    public $id72 = 'id_moisture72';
     public $order = 'DESC';
 
     function __construct()
@@ -20,7 +13,6 @@ class Campy_biosolids_model extends CI_Model
     }
 
     // datatables
-// datatables
     function json() {
         $this->datatables->select('cb.id_campy_biosolids, cb.id_one_water_sample, cb.id_person, cb.number_of_tubes, cb.mpn_pcr_conducted, cb.campy_assay_barcode, 
         rp.initial, cb.date_sample_processed, cb.time_sample_processed, cb.sample_wetweight, cb.elution_volume,
@@ -57,8 +49,6 @@ class Campy_biosolids_model extends CI_Model
         $this->datatables->from('result_charcoal AS rc');
         $this->datatables->join('campy_biosolids AS cb', 'rc.id_campy_biosolids = cb.id_campy_biosolids', 'left');
         $this->datatables->join('sample_growth_plate AS sgp', 'rc.id_result_charcoal = sgp.id_result_charcoal', 'left');
-        // $this->datatables->join('ref_testing b', 'FIND_IN_SET(b.id_testing_type, a.id_testing_type)', 'left');
-        // $this->datatables->join('ref_barcode c', 'a.sample_id = c.testing_type_id', 'left');
         $this->datatables->where('rc.flag', '0');
         $this->datatables->where('rc.id_campy_biosolids', $id);
         $this->datatables->group_by('
@@ -89,8 +79,6 @@ class Campy_biosolids_model extends CI_Model
         $this->datatables->from('result_hba AS rh');
         $this->datatables->join('campy_biosolids AS cb', 'rh.id_campy_biosolids = cb.id_campy_biosolids', 'left');
         $this->datatables->join('sample_growth_plate_hba AS sgph', 'rh.id_result_hba = sgph.id_result_hba', 'left');
-        // $this->datatables->join('ref_testing b', 'FIND_IN_SET(b.id_testing_type, a.id_testing_type)', 'left');
-        // $this->datatables->join('ref_barcode c', 'a.sample_id = c.testing_type_id', 'left');
         $this->datatables->where('rh.flag', '0');
         $this->datatables->where('rh.id_campy_biosolids', $id);
         $this->datatables->group_by('
@@ -123,7 +111,7 @@ class Campy_biosolids_model extends CI_Model
         $this->datatables->where('rb.flag', '0');
         $this->datatables->where('rb.id_campy_biosolids', $id);
         
-        // Tambahkan kondisi untuk biochemical_tube jika ada
+       // Add condition for biochemical_tube if it exists
         if (!empty($biochemical_tube)) {
             $this->datatables->where('rb.biochemical_tube', $biochemical_tube);
         }
@@ -191,12 +179,6 @@ class Campy_biosolids_model extends CI_Model
             foreach ($response as $key => $value) {
                 $confirmations = explode(',', $value->confirmation);
                 $biochemical_tubes = explode(',', $value->biochemical_tube);
-                // $plate_numbers = explode(',', $value->plate_numbers);
-                // var_dump($plate_numbers);
-                // die();
-    
-                // Inisialisasi confirmation array untuk tiap plate_number
-                // $confirmation_array = array_fill_keys($plate_numbers, '');
     
                 $confirmation_array = []; // Inisialisasi array konfirmasi
 
@@ -368,24 +350,7 @@ class Campy_biosolids_model extends CI_Model
     {
         $this->db->where($this->id, $id);
         $this->db->where('flag', '0');
-        // $this->db->where('lab', $this->session->userdata('lab'));
         return $this->db->get($this->table)->row();
-    }
-
-    function get_by_id_detail24($id)
-    {
-        $this->db->where('id_moisture24', $id);
-        $this->db->where('flag', '0');
-        // $this->db->where('lab', $this->session->userdata('lab'));
-        return $this->db->get('moisture24')->row();
-    }
-
-    function get_by_id_detail72($id)
-    {
-        $this->db->where('id_moisture72', $id);
-        $this->db->where('flag', '0');
-        // $this->db->where('lab', $this->session->userdata('lab'));
-        return $this->db->get('moisture72')->row();
     }
 
     function get_detail($id)
@@ -410,61 +375,6 @@ class Campy_biosolids_model extends CI_Model
     
       return $response;
     }
-    
-
-    function get_detail2($id)
-    {
-      $response = array();
-      $this->db->select('*');
-      $this->db->where('sample_reception_sample.id_sample', $id);
-      $this->db->where('sample_reception_sample.flag', '0');
-      $q = $this->db->get('sample_reception_sample');
-      $response = $q->row();
-      return $response;
-    }
-
-    // Fuction insert data
-    // public function insert($data) {
-    //     $this->db->insert($this->table,  $data);
-    // }
-
-    // // Function update data
-    // function update($id, $data)
-    // {
-    //     $this->db->where('id_moisture', $id);
-    //     $this->db->update($this->table, $data);
-    // }
-
-    // function insert_det24($data) {
-    //     $this->db->insert($this->table24, $data);
-    //     return $this->db->insert_id(); // Return the ID of the newly inserted row
-    // }
-
-    // function update_det24($id, $data) {
-    //     $this->db->where('id_moisture24', $id);
-    //     $this->db->update('moisture24', $data);
-    // }
-
-    // function insert_det72($data) {
-    //     $this->db->insert($this->table72, $data);
-    //     return $this->db->insert_id(); // Return the ID of the newly inserted row
-    // }
-
-    // function update_det72($id, $data) {
-    //     $this->db->where('id_moisture72', $id);
-    //     $this->db->update('moisture72', $data);
-    // }
-
-    // delete data
-    // function delete($id) {
-    //     $this->db->where($this->id, $id);
-    //     $this->db->delete($this->table);
-    // }
-
-    // function delete_detail($id) {
-    //     $this->db->where($this->id, $id);
-    //     $this->db->delete($this->table);
-    // }
     
 
     function getSampleType(){
@@ -504,42 +414,6 @@ class Campy_biosolids_model extends CI_Model
         $this->db->where('sr.id_one_water_sample', $idOneWaterSample);
         $query = $this->db->get();
         return $query->row_array();
-    }
-
-    function validate24($id){
-        $q = $this->db->query('
-        SELECT barcode_moisture_content FROM moisture_content
-        WHERE barcode_moisture_content = "'.$id.'"
-        AND barcode_moisture_content NOT IN (SELECT barcode_tray FROM moisture24 WHERE flag IN (0))
-        ');        
-        $response = $q->result_array();
-        return $response;
-    }
-
-    function validate72($id){
-        $q = $this->db->query('
-        SELECT barcode_tray FROM moisture24
-        WHERE barcode_tray = "'.$id.'"
-        AND flag = 0 
-        ');        
-        $response = $q->result_array();
-        return $response;
-    }
-
-    function get_all()
-    {
-        $this->db->select('mc.id_one_water_sample, rp.initial, mc.date_start, rs.sampletype, mc.barcode_moisture_content, mc.tray_weight,
-        mc.traysample_wetweight, mc.time_incubator,mc.comments, m24.date_moisture24, m24.time_moisture24, m24.dry_weight24, m24.comments24,
-        m72.date_moisture72, m72.time_moisture72, m72.dry_weight72, m72.dry_weight_persen, m72.comments72');
-        $this->db->from('moisture_content AS mc');
-        $this->db->join('ref_person AS rp', 'mc.id_person = rp.id_person');
-        $this->db->join('ref_sampletype AS rs', 'mc.id_sampletype = rs.id_sampletype');
-        $this->db->join('moisture24 AS m24', 'mc.id_moisture = m24.id_moisture');
-        $this->db->join('moisture72 AS m72', 'mc.id_moisture = m72.id_moisture');
-        $this->db->where('mc.flag', '0');
-        $this->db->order_by('mc.date_start', 'ASC');
-
-        return $this->db->get()->result();
     }
 
     function validateCampyAssayBarcode($id){
@@ -607,7 +481,6 @@ class Campy_biosolids_model extends CI_Model
     {
         $this->db->where('id_result_charcoal', $id);
         $this->db->where('flag', '0');
-        // $this->db->where('lab', $this->session->userdata('lab'));
         return $this->db->get('result_charcoal')->row();
     }
 
@@ -620,7 +493,6 @@ class Campy_biosolids_model extends CI_Model
     {
         $this->db->where('id_campy_biosolids', $id);
         $this->db->where('flag', '0');
-        // $this->db->where('lab', $this->session->userdata('lab'));
         return $this->db->get('campy_biosolids')->row();
     }
 
@@ -652,7 +524,6 @@ class Campy_biosolids_model extends CI_Model
     {
         $this->db->where('id_result_hba', $id);
         $this->db->where('flag', '0');
-        // $this->db->where('lab', $this->session->userdata('lab'));
         return $this->db->get('result_hba')->row();
     }
 
@@ -670,7 +541,6 @@ class Campy_biosolids_model extends CI_Model
     {
         $this->db->where('id_result_biochemical', $id);
         $this->db->where('flag', '0');
-        // $this->db->where('lab', $this->session->userdata('lab'));
         return $this->db->get('result_biochemical')->row();
     }
 

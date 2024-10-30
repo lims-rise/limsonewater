@@ -457,15 +457,10 @@
             oLanguage: {
                 sProcessing: "loading..."
             },
-            // select: true;
             processing: true,
             serverSide: true,
             ajax: {"url": "Campy_biosolids_pa/json", "type": "POST"},
             columns: [
-                // {
-                //     "data": "barcode_sample",
-                //     "orderable": false
-                // },
                 {"data": "id_one_water_sample"},
                 {"data": "initial"},
                 {"data": "sampletype"},
@@ -477,8 +472,6 @@
                 {"data": "sample_wetweight"},
                 {"data": "elution_volume"},
                 {"data": "vol_sampletube"},
-                // {"data": "date_collected"},
-                // {"data": "time_collected"},
                 {
                     "data" : "action",
                     "orderable": false,
@@ -491,14 +484,6 @@
 					className: 'text-right' // Apply right alignment to this column
 				}
 			],
-            // order: [[0, 'asc']],
-            // rowCallback: function(row, data, iDisplayIndex) {
-            //     var info = this.fnPagingInfo();
-            //     var page = info.iPage;
-            //     var length = info.iLength;
-            //     // var index = page * length + (iDisplayIndex + 1);
-            //     // $('td:eq(0)', row).html(index);
-            // },
             drawCallback: function(settings) {
                 let api = this.api();
                 let pageInfo = api.page.info();
