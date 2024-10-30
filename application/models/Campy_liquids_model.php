@@ -6,20 +6,11 @@ if (!defined('BASEPATH'))
 class Campy_liquids_model extends CI_Model
 {
 
-    // public $table = 'moisture_content';
-    // public $table24 = 'moisture24';
-    // public $table72 = 'moisture72';
-    // public $id = 'id_moisture';
-    // public $id24 = 'id_moisture24';
-    // public $id72 = 'id_moisture72';
-    // public $order = 'DESC';
-
     function __construct()
     {
         parent::__construct();
     }
 
-    // datatables
 // datatables
     function json() {
         $this->datatables->select('cl.id_campy_liquids, cl.id_one_water_sample, cl.id_person, cl.number_of_tubes, cl.mpn_pcr_conducted, cl.campy_assay_barcode, 
@@ -119,7 +110,7 @@ class Campy_liquids_model extends CI_Model
         $this->datatables->where('rbl.flag', '0');
         $this->datatables->where('rbl.id_campy_liquids', $id);
         
-        // Tambahkan kondisi untuk biochemical_tube jika ada
+        // Add condition for biochemical_tube if it exists
         if (!empty($biochemical_tube)) {
             $this->datatables->where('rbl.biochemical_tube', $biochemical_tube);
         }
@@ -187,18 +178,12 @@ class Campy_liquids_model extends CI_Model
             foreach ($response as $key => $value) {
                 $confirmations = explode(',', $value->confirmation);
                 $biochemical_tubes = explode(',', $value->biochemical_tube);
-                // $plate_numbers = explode(',', $value->plate_numbers);
-                // var_dump($plate_numbers);
-                // die();
-    
-                // Inisialisasi confirmation array untuk tiap plate_number
-                // $confirmation_array = array_fill_keys($plate_numbers, '');
     
                 $confirmation_array = []; // Inisialisasi array konfirmasi
 
-                // Membuat array asosiasi untuk konfirmasi
+                // Creating an associative array for confirmation
                 foreach ($biochemical_tubes as $index => $tube) {
-                    $confirmation_array[$tube] = explode(':', $confirmations[$index] ?? 'No Growth Plate')[1] ?? 'No Growth Plate'; // Menyediakan default
+                    $confirmation_array[$tube] = explode(':', $confirmations[$index] ?? 'No Growth Plate')[1] ?? 'No Growth Plate'; // Default to "No Growth"
                 }
                 $value->confirmation = $confirmation_array; // Assign confirmation yang sudah diproses
             }
@@ -509,7 +494,6 @@ class Campy_liquids_model extends CI_Model
     {
         $this->db->where('id_result_charcoal', $id);
         $this->db->where('flag', '0');
-        // $this->db->where('lab', $this->session->userdata('lab'));
         return $this->db->get('result_charcoal')->row();
     }
 
@@ -522,7 +506,6 @@ class Campy_liquids_model extends CI_Model
     {
         $this->db->where('id_campy_liquids', $id);
         $this->db->where('flag', '0');
-        // $this->db->where('lab', $this->session->userdata('lab'));
         return $this->db->get('campy_biosolids')->row();
     }
 
@@ -554,7 +537,6 @@ class Campy_liquids_model extends CI_Model
     {
         $this->db->where('id_result_hba', $id);
         $this->db->where('flag', '0');
-        // $this->db->where('lab', $this->session->userdata('lab'));
         return $this->db->get('result_hba')->row();
     }
 
@@ -572,7 +554,6 @@ class Campy_liquids_model extends CI_Model
     {
         $this->db->where('id_result_biochemical', $id);
         $this->db->where('flag', '0');
-        // $this->db->where('lab', $this->session->userdata('lab'));
         return $this->db->get('result_biochemical')->row();
     }
 

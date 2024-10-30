@@ -13,7 +13,6 @@ class Campy_biosolids_pa_model extends CI_Model
     }
 
     // datatables
-// datatables
     function json() {
         $this->datatables->select('cbp.id_campy_biosolids_pa, cbp.id_one_water_sample, cbp.id_person, cbp.number_of_tubes, cbp.mpn_pcr_conducted, cbp.campy_assay_barcode, 
         rp.initial, cbp.date_sample_processed, cbp.time_sample_processed, cbp.sample_wetweight, cbp.elution_volume,
@@ -50,8 +49,6 @@ class Campy_biosolids_pa_model extends CI_Model
         $this->datatables->from('result_charcoal_pa AS rcp');
         $this->datatables->join('campy_biosolids_pa AS cbp', 'rcp.id_campy_biosolids_pa = cbp.id_campy_biosolids_pa', 'left');
         $this->datatables->join('sample_growth_plate_pa AS sgpp', 'rcp.id_result_charcoal_pa = sgpp.id_result_charcoal_pa', 'left');
-        // $this->datatables->join('ref_testing b', 'FIND_IN_SET(b.id_testing_type, a.id_testing_type)', 'left');
-        // $this->datatables->join('ref_barcode c', 'a.sample_id = c.testing_type_id', 'left');
         $this->datatables->where('rcp.flag', '0');
         $this->datatables->where('rcp.id_campy_biosolids_pa', $id);
         $this->datatables->group_by('
@@ -114,7 +111,7 @@ class Campy_biosolids_pa_model extends CI_Model
         $this->datatables->where('rbp.flag', '0');
         $this->datatables->where('rbp.id_campy_biosolids_pa', $id);
         
-        // Tambahkan kondisi untuk biochemical_tube jika ada
+        // Add condition for biochemical_tube if it exists
         if (!empty($biochemical_tube)) {
             $this->datatables->where('rbp.biochemical_tube', $biochemical_tube);
         }
@@ -181,12 +178,6 @@ class Campy_biosolids_pa_model extends CI_Model
             foreach ($response as $key => $value) {
                 $confirmations = explode(',', $value->confirmation);
                 $biochemical_tubes = explode(',', $value->biochemical_tube);
-                // $plate_numbers = explode(',', $value->plate_numbers);
-                // var_dump($plate_numbers);
-                // die();
-    
-                // Inisialisasi confirmation array untuk tiap plate_number
-                // $confirmation_array = array_fill_keys($plate_numbers, '');
     
                 foreach ($biochemical_tubes as $tube) {
                     $index = array_search($tube, $biochemical_tubes);
@@ -355,7 +346,6 @@ class Campy_biosolids_pa_model extends CI_Model
     {
         $this->db->where($this->id, $id);
         $this->db->where('flag', '0');
-        // $this->db->where('lab', $this->session->userdata('lab'));
         return $this->db->get($this->table)->row();
     }
 
@@ -498,7 +488,6 @@ class Campy_biosolids_pa_model extends CI_Model
     {
         $this->db->where('id_result_charcoal_pa', $id);
         $this->db->where('flag', '0');
-        // $this->db->where('lab', $this->session->userdata('lab'));
         return $this->db->get('result_charcoal_pa')->row();
     }
 
@@ -511,7 +500,6 @@ class Campy_biosolids_pa_model extends CI_Model
     {
         $this->db->where('id_campy_biosolids_pa', $id);
         $this->db->where('flag', '0');
-        // $this->db->where('lab', $this->session->userdata('lab'));
         return $this->db->get('campy_biosolids_pa')->row();
     }
 
@@ -543,7 +531,6 @@ class Campy_biosolids_pa_model extends CI_Model
     {
         $this->db->where('id_result_hba_pa', $id);
         $this->db->where('flag', '0');
-        // $this->db->where('lab', $this->session->userdata('lab'));
         return $this->db->get('result_hba_pa')->row();
     }
 
@@ -561,7 +548,6 @@ class Campy_biosolids_pa_model extends CI_Model
     {
         $this->db->where('id_result_biochemical_pa', $id);
         $this->db->where('flag', '0');
-        // $this->db->where('lab', $this->session->userdata('lab'));
         return $this->db->get('result_biochemical_pa')->row();
     }
 

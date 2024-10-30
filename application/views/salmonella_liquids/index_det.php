@@ -68,18 +68,6 @@
 							</div>
 						</div>
 
-                        <!-- <div class="form-group">
-							<label for="vol_sampletube" class="col-sm-2 control-label">Vol Sample Tube</label>
-							<div class="col-sm-4">
-								<input class="form-control " id="vol_sampletube" name="vol_sampletube" value="<?php echo $vol_sampletube ?>"  disabled>
-							</div>
-
-                            <label for="tube_number" class="col-sm-2 control-label">Tube Number</label>
-							<div class="col-sm-4">
-								<input class="form-control " id="tube_number" name="tube_number" value="<?php echo $tube_number ?>"  disabled>
-							</div>
-						</div> -->
-
 					</div>
 				</form>
 			<div class="box-footer">
@@ -147,22 +135,26 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- <div class="col-xs-12">
+
+                    <div class="col-xs-12">
                         <div class="box box-primary box-solid">
                             <div class="box-header">
                                 <h3 class="box-title">Final Concentration</h3>
                             </div>
                             <div class="box-body pad">
-                            <div style="padding-bottom: 10px;">    
-                                <?php echo anchor(site_url('Moisture_content/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
-                            </div>
+                                <div style="padding-bottom: 10px;">
+                                    <button class="btn btn-success" id="exportBtn">
+                                        <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS
+                                    </button>
+                                </div>
+                                <input id="id_salmonella_liquids" name="id_salmonella_liquids" type="hidden" class="form-control input-sm" value="<?php echo $id_salmonella_liquids ?>">
+
                                 <div id="content-final-concentration" class="table-responsive">
                                     <table id="exampleFinalConcentration" class="table display table-bordered table-striped" width="100%">
                                         <thead>
                                             <tr>
                                                 <th>ID One Water Sample</th>
-                                                <th>Campy Assay Barcode</th>
+                                                <th>Salmonella Assay Barcode</th>
                                                 <th>Initial</th>
                                                 <th>Sample Type</th>
                                                 <th>Number of Tubes</th>
@@ -180,7 +172,6 @@
                                                     <?php 
                                                     // Ambil plate_numbers dari data pertama
                                                     $plate_numbers = explode(',', $finalConcentration[0]->plate_numbers);
-                                                    // Generate Tube Result berdasarkan jumlah plate_numbers
                                                     foreach ($plate_numbers as $plate_number): ?>
                                                         <th>Tube <?= htmlspecialchars($plate_number) ?> Result</th>
                                                     <?php endforeach; ?>
@@ -233,101 +224,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div> -->
-
-                    <div class="col-xs-12">
-    <div class="box box-primary box-solid">
-        <div class="box-header">
-            <h3 class="box-title">Final Concentration</h3>
-        </div>
-        <div class="box-body pad">
-            <div style="padding-bottom: 10px;">
-                <button class="btn btn-success" id="exportBtn">
-                    <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS
-                </button>
-            </div>
-            <input id="id_salmonella_liquids" name="id_salmonella_liquids" type="hidden" class="form-control input-sm" value="<?php echo $id_salmonella_liquids ?>">
-
-            <div id="content-final-concentration" class="table-responsive">
-                <table id="exampleFinalConcentration" class="table display table-bordered table-striped" width="100%">
-                    <thead>
-                        <tr>
-                            <th>ID One Water Sample</th>
-                            <th>Salmonella Assay Barcode</th>
-                            <th>Initial</th>
-                            <th>Sample Type</th>
-                            <th>Number of Tubes</th>
-                            <th>MPN PCR Conducted</th>
-                            <th>Date Sample Processed</th>
-                            <th>Time Sample Processed</th>
-                            <th>Sample Wet Weight</th>
-                            <th>Elution Volume</th>
-                            <?php if (!empty($finalConcentration)): ?>
-                                <?php foreach ($finalConcentration[0] as $key => $value): ?>
-                                    <?php if (strpos($key, 'Tube') === 0): ?>
-                                        <th><?= htmlspecialchars($key) ?> Volume</th>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                                <?php 
-                                // Ambil plate_numbers dari data pertama
-                                $plate_numbers = explode(',', $finalConcentration[0]->plate_numbers);
-                                foreach ($plate_numbers as $plate_number): ?>
-                                    <th>Tube <?= htmlspecialchars($plate_number) ?> Result</th>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <th colspan="100%" style="text-align: center">No data available</th>
-                            <?php endif; ?>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (!empty($finalConcentration)): ?>
-                            <?php foreach ($finalConcentration as $concentration): ?>
-                                <tr>
-                                    <td><?= htmlspecialchars($concentration->id_one_water_sample) ?></td>
-                                    <td><?= htmlspecialchars($concentration->salmonella_assay_barcode) ?></td>
-                                    <td><?= htmlspecialchars($concentration->initial) ?></td>
-                                    <td><?= htmlspecialchars($concentration->sampletype) ?></td>
-                                    <td><?= htmlspecialchars($concentration->number_of_tubes) ?></td>
-                                    <td><?= htmlspecialchars($concentration->mpn_pcr_conducted) ?></td>
-                                    <td><?= htmlspecialchars($concentration->date_sample_processed) ?></td>
-                                    <td><?= htmlspecialchars($concentration->time_sample_processed) ?></td>
-                                    <td><?= htmlspecialchars($concentration->sample_wetweight) ?></td>
-                                    <td><?= htmlspecialchars($concentration->elution_volume) ?></td>
-
-                                    <?php foreach ($concentration as $key => $value): ?>
-                                        <?php if (strpos($key, 'Tube') === 0): ?>
-                                            <td><?= htmlspecialchars($value) ?></td>
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
-                                    
-                                    <?php 
-                                    // Ambil plate_numbers dari data
-                                    $plate_numbers = explode(',', $concentration->plate_numbers);
-                                    
-                                    // Loop untuk setiap plate_number
-                                    foreach ($plate_numbers as $plate_number): 
-                                        // Cek jika confirmation untuk plate_number ada
-                                        $confirmation_value = isset($concentration->confirmation[$plate_number]) ? $concentration->confirmation[$plate_number] : 'No Available'; 
-                                    ?>
-                                        <td><?= htmlspecialchars($confirmation_value) ?></td>
-                                    <?php endforeach; ?>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <tr>
-                                <td colspan="100%" style="text-align: center">No data available</td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
+                    </div>
                 </div>
 
 				<div class="form-group">
@@ -356,8 +253,6 @@
                                 <div class="form-group">
                                         <div class="col-sm-9">
                                             <input id="mode_detResultsCharcoal" name="mode_detResultsCharcoal" type="hidden" class="form-control input-sm">
-                                            <!-- <input id="idx_moisture24" name="idx_moisture24" type="hidden" class="form-control input-sm">
-                                            <input id="id_moisture24" name="id_moisture24" type="hidden" class="form-control input-sm"> -->
                                             <input id="id_salmonella_liquids1" name="id_salmonella_liquids1" type="hidden" class="form-control input-sm">
                                             <input id="number_of_tubes1" name="number_of_tubes1" type="hidden" class="form-control input-sm">
                                             <input id="id_result_charcoal" name="id_result_charcoal" type="hidden" class="form-control input-sm">
@@ -423,8 +318,6 @@
                                 <div class="form-group">
                                         <div class="col-sm-9">
                                             <input id="mode_detResultsHBA" name="mode_detResultsHBA" type="hidden" class="form-control input-sm">
-                                            <!-- <input id="idx_moisture24" name="idx_moisture24" type="hidden" class="form-control input-sm">
-                                            <input id="id_moisture24" name="id_moisture24" type="hidden" class="form-control input-sm"> -->
                                             <input id="id_salmonella_liquidsHBA" name="id_salmonella_liquidsHBA" type="hidden" class="form-control input-sm">
                                             <input id="number_of_tubesHba" name="number_of_tubesHba" type="hidden" class="form-control input-sm">
                                             <input id="id_result_hba" name="id_result_hba" type="hidden" class="form-control input-sm">
@@ -628,39 +521,9 @@
     let salmonella_assay_barcode = $('#salmonella_assay_barcode').val();
     let id_salmonella_liquids = $('#id_salmonella_liquids').val();
     let number_of_tubes = $('#number_of_tubes').val();
-    // let volSampletube = $('#vol_sampletube').val();
-    // let tubeNumberString = $('#tube_number').val();
-    // let confirmation = $('#confirmation').val();
-    // let biochemicalTube = $('#biochemical_tube').val();
     const BASE_URL = '/limsonewater/index.php';
 
     $(document).ready(function() {
-    // // Get the tube number value from the input field
-    // let tubeNumbers = tubeNumberString.split(',').map(num => num.trim()); // Split and trim whitespace
-
-    // // Clear previous headers
-    // $('#volume-header').empty();
-    // $('#result-header').empty();
-    // // Generate headers based on tube numbers
-    // tubeNumbers.forEach((tube, index) => {
-    //     $('#volume-header').append(`<th style="padding: 10px;">Tube ${tube} Volume (uL)</th>`);
-    // });
-    // tubeNumbers.forEach((tube, index) => {
-    //     $('#volume-header').append(`<th style="padding: 10px;">Tube ${tube} Volume (uL)</th>`);
-    // });
-    // $('#result-header').append(`<th style="padding: 10px;">Tube  Result</th>`);
-
-
-    // // Populate the table body
-    // const rowData = `
-    //     <tr>
-    //         ${tubeNumbers.map(() => `<td>${volSampletube}</td>`).join('')}
-    //         ${tubeNumbers.map(() => `<td>${confirmation}</td>`).join('')}
-    //     </tr>
-    // `;
-
-    // $('#final-concentration-body').append(rowData);
-
 
     // Event listener untuk radio button Oxidase
     $('input[name="oxidase"]').on('change', updateConfirmation);
@@ -1035,7 +898,6 @@
                     {"data": "catalase"},
                     {"data": "confirmation"},
                     {"data": "sample_store"},
-                    // {"data": "biochemical_tube"},
                     {
                         "data": "action",
                         "orderable": false,
@@ -1110,15 +972,10 @@
         $('#addtombol_detResultsCharcoal').click(function() {
             $('#mode_detResultsCharcoal').val('insert');
             $('#modal-title-detail').html('<i class="fa fa-wpforms"></i> Insert | Results Charcoal <span id="my-another-cool-loader"></span>');
-            // $('#barcode_tray24').val('');
-            // $('#barcode_tray24').attr('readonly', false);
-            // $('#dry_weight24').val('');
             $('#salmonella_assay_barcode1').val(salmonella_assay_barcode);
             $('#salmonella_assay_barcode1').attr('readonly', true);
             $('#id_salmonella_liquids1').val(id_salmonella_liquids);
             $('#number_of_tubes1').val(number_of_tubes);
-            // $('#dry_weight24').val('');
-            // $('#comments24').val('');
             $('#compose-modal').modal('show');
         });
 
