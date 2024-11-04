@@ -68,19 +68,26 @@
 							</div>
 						</div>
 
+                        <div class="form-group">
+							<label for="enrichment_media" class="col-sm-2 control-label">Enrichment media</label>
+							<div class="col-sm-4">
+								<input class="form-control " id="enrichment_media" name="enrichment_media" value="<?php echo $enrichment_media ?>"  disabled>
+							</div>
+						</div>
+
 					</div>
 				</form>
 			<div class="box-footer">
-                    <div class="col-xs-12"> 
+                <div class="col-xs-12"> 
                         <div class="box box-primary box-solid">
                             <div class="box-header">
-                                <h3 class="box-title">Results Charcoal</h3>
+                                <h3 class="box-title">Results XLD</h3>
                             </div>
 							<div class="box-body pad table-responsive">
 								<?php
 									$lvl = $this->session->userdata('id_user_level');
 									if ($lvl != 4){
-										echo "<button class='btn btn-primary' id='addtombol_detResultsCharcoal'><i class='fa fa-wpforms' aria-hidden='true'></i> New Data</button>";
+										echo "<button class='btn btn-primary' id='addtombol_detResultsXld'><i class='fa fa-wpforms' aria-hidden='true'></i> New Data</button>";
 									}
 								?>
 								<table id="example2" class="table display table-bordered table-striped" width="100%">
@@ -89,7 +96,7 @@
                                             <th>Salmonella Assay Barcode</th>
                                             <th>Date of Sample</th>
                                             <th>Time of Sample</th>
-                                            <th>Growth Plate</th>
+                                            <th>Purple Colony Plate</th>
                                             <th>Action</th>
 										</tr>
 									</thead>
@@ -101,22 +108,22 @@
                     <div class="col-xs-12"> 
                         <div class="box box-primary box-solid">
                             <div class="box-header">
-                                <h3 class="box-title">Results HBA</h3>
+                                <h3 class="box-title">Results ChroMagar</h3>
                             </div>
 							<div class="box-body pad table-responsive">
 								<?php
 									$lvl = $this->session->userdata('id_user_level');
 									if ($lvl != 4){
-										echo "<button class='btn btn-primary' id='addtombol_detResultsHBA'><i class='fa fa-wpforms' aria-hidden='true'></i> New Data</button>";
+										echo "<button class='btn btn-primary' id='addtombol_detResultsChromagar'><i class='fa fa-wpforms' aria-hidden='true'></i> New Data</button>";
 									}
 								?>
-								<table id="exampleHba" class="table display table-bordered table-striped" width="100%">
+								<table id="exampleChromagar" class="table display table-bordered table-striped" width="100%">
 									<thead>
 										<tr>
                                             <th>Salmonella Assay Barcode</th>
                                             <th>Date of Sample</th>
                                             <th>Time of Sample</th>
-                                            <th>Growth Plate</th>
+                                            <th>Black Colony Plate</th>
                                             <th>Action</th>
 										</tr>
 									</thead>
@@ -128,7 +135,7 @@
                     <div class="col-xs-12"> 
                         <div class="box box-primary box-solid" role="dialog" aria-hidden="true" data-bs-scrollable="true">
                             <div class="box-header">
-                                <h3 class="box-title">Results Biochemical</h3>
+                                <h3 class="box-title">Results</h3>
                             </div>
                             <div id="content-result-biochemical">
 
@@ -163,6 +170,7 @@
                                                 <th>Time Sample Processed</th>
                                                 <th>Sample Wet Weight</th>
                                                 <th>Elution Volume</th>
+                                                <th>Enrichment Media</th>
                                                 <?php if (!empty($finalConcentration)): ?>
                                                     <?php foreach ($finalConcentration[0] as $key => $value): ?>
                                                         <?php if (strpos($key, 'Tube') === 0): ?>
@@ -194,6 +202,7 @@
                                                         <td><?= htmlspecialchars($concentration->time_sample_processed) ?></td>
                                                         <td><?= htmlspecialchars($concentration->sample_wetweight) ?></td>
                                                         <td><?= htmlspecialchars($concentration->elution_volume) ?></td>
+                                                        <td><?= htmlspecialchars($concentration->enrichment_media) ?></td>
 
                                                         <?php foreach ($concentration as $key => $value): ?>
                                                             <?php if (strpos($key, 'Tube') === 0): ?>
@@ -239,23 +248,23 @@
 	</section>
 </div>
 
-<!-- MODAL FORM Results Charcoal -->
+<!-- MODAL FORM Results XLD -->
         <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true" data-bs-scrollable="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color: #3c8dbc; color: white;">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
-                        <h4 class="modal-title" id="modal-title-detail">
+                        <h4 class="modal-title" id="modal-title-Xld">
 							<span id="my-another-cool-loader"></span></h4>
                     </div>
-                        <form id="formDetail24" action=<?php echo site_url('Salmonella_biosolids/saveResultsCharcoal') ?> method="post" class="form-horizontal">
+                        <form id="formDetail24" action=<?php echo site_url('Salmonella_biosolids/saveResultsXld') ?> method="post" class="form-horizontal">
                             <div class="modal-body">
                                 <div class="form-group">
                                         <div class="col-sm-9">
-                                            <input id="mode_detResultsCharcoal" name="mode_detResultsCharcoal" type="hidden" class="form-control input-sm">
+                                            <input id="mode_detResultsXld" name="mode_detResultsXld" type="hidden" class="form-control input-sm">
                                             <input id="id_salmonella_biosolids1" name="id_salmonella_biosolids1" type="hidden" class="form-control input-sm">
                                             <input id="number_of_tubes1" name="number_of_tubes1" type="hidden" class="form-control input-sm">
-                                            <input id="id_result_charcoal" name="id_result_charcoal" type="hidden" class="form-control input-sm">
+                                            <input id="id_result_xld" name="id_result_xld" type="hidden" class="form-control input-sm">
                                         </div>
                                     </div>
 
@@ -286,9 +295,9 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group" id="growth_plate">
-                                        <label class="col-sm-4 control-label">Growth Plate</label>
-                                        <div class="col-sm-8" id="growthPlateInputs">
+                                    <div class="form-group" id="purple_colony_plate">
+                                        <label class="col-sm-4 control-label"> Purple Colony Plate</label>
+                                        <div class="col-sm-8" id="purpleColonyPlateInputs">
                                             <!-- Radio buttons akan dihasilkan di sini -->
                                         </div>
                                     </div>
@@ -304,46 +313,46 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-<!-- MODAL FORM Results HBA -->
-<div class="modal fade" id="compose-modalHBA" tabindex="-1" role="dialog" aria-hidden="true" data-bs-scrollable="true">
+<!-- MODAL FORM Results CHROMagar -->
+<div class="modal fade" id="compose-modalChroMagar" tabindex="-1" role="dialog" aria-hidden="true" data-bs-scrollable="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color: #3c8dbc; color: white;">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
-                        <h4 class="modal-title" id="modal-title-HBA">
+                        <h4 class="modal-title" id="modal-title-Chromagar">
 							<span id="my-another-cool-loader"></span></h4>
                     </div>
-                        <form id="formDetail24" action=<?php echo site_url('Salmonella_biosolids/saveResultsHBA') ?> method="post" class="form-horizontal">
+                        <form id="formDetail24" action=<?php echo site_url('Salmonella_biosolids/saveResultsChromagar') ?> method="post" class="form-horizontal">
                             <div class="modal-body">
                                 <div class="form-group">
                                         <div class="col-sm-9">
-                                            <input id="mode_detResultsHBA" name="mode_detResultsHBA" type="hidden" class="form-control input-sm">
-                                            <input id="id_salmonella_biosolidsHBA" name="id_salmonella_biosolidsHBA" type="hidden" class="form-control input-sm">
-                                            <input id="number_of_tubesHba" name="number_of_tubesHba" type="hidden" class="form-control input-sm">
-                                            <input id="id_result_hba" name="id_result_hba" type="hidden" class="form-control input-sm">
+                                            <input id="mode_detResultsChromagar" name="mode_detResultsChromagar" type="hidden" class="form-control input-sm">
+                                            <input id="id_salmonella_biosolidsChromagar" name="id_salmonella_biosolidsChromagar" type="hidden" class="form-control input-sm">
+                                            <input id="number_of_tubesChromagar" name="number_of_tubesChromagar" type="hidden" class="form-control input-sm">
+                                            <input id="id_result_chromagar" name="id_result_chromagar" type="hidden" class="form-control input-sm">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="salmonella_assay_barcodeHBA" class="col-sm-4 control-label">Salmonella Assay Barcode</label>
+                                        <label for="salmonella_assay_barcodeChromagar" class="col-sm-4 control-label">Salmonella Assay Barcode</label>
                                         <div class="col-sm-8">
-                                            <input id="salmonella_assay_barcodeHBA" name="salmonella_assay_barcodeHBA" type="text"  placeholder="Salmonella Assay Barcode" class="form-control">
+                                            <input id="salmonella_assay_barcodeChromagar" name="salmonella_assay_barcodeChromagar" type="text"  placeholder="Salmonella Assay Barcode" class="form-control">
                                             <div class="val1tip"></div>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="date_sample_processedHBA" class="col-sm-4 control-label">Date Sample Processed</label>
+                                        <label for="date_sample_processedChromagar" class="col-sm-4 control-label">Date Sample Processed</label>
                                         <div class="col-sm-8">
-                                            <input id="date_sample_processedHBA" name="date_sample_processedHBA" type="date" class="form-control" placeholder="Date Sample Processed" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
+                                            <input id="date_sample_processedChromagar" name="date_sample_processedChromagar" type="date" class="form-control" placeholder="Date Sample Processed" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="time_sample_processedHBA" class="col-sm-4 control-label">Time Sample Processed</label>
+                                        <label for="time_sample_processedChromagar" class="col-sm-4 control-label">Time Sample Processed</label>
                                         <div class="col-sm-8">
                                             <div class="input-group clockpicker">
-                                                <input id="time_sample_processedHBA" name="time_sample_processedHBA" class="form-control" placeholder="Time Sample Processed" value="<?php echo (new DateTime())->format('H:i'); ?>">
+                                                <input id="time_sample_processedChromagar" name="time_sample_processedChromagar" class="form-control" placeholder="Time Sample Processed" value="<?php echo (new DateTime())->format('H:i'); ?>">
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-time"></span>
                                                 </span>
@@ -351,9 +360,9 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group" id="growth_plateHBA">
-                                        <label class="col-sm-4 control-label">Growth Plate</label>
-                                        <div class="col-sm-8" id="growthPlateInputsHBA">
+                                    <div class="form-group" id="black_colony_plate_chromagar">
+                                        <label class="col-sm-4 control-label">Black Colony Plate</label>
+                                        <div class="col-sm-8" id="blackColonyPlateInputsChromagar">
                                             <!-- Radio buttons akan dihasilkan di sini -->
                                         </div>
                                     </div>
@@ -376,7 +385,7 @@
         <div class="modal-content">
             <div class="modal-header" style="background-color: #3c8dbc; color: white;">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
-                <h4 class="modal-title" id="modal-title-biochemical">Biochemical Tube | New</h4>
+                <h4 class="modal-title" id="modal-title-biochemical">Tube | New</h4>
             </div>
             <form id="formBiochemical" action="<?php echo site_url('Salmonella_biosolids/saveBiochemical') ?>" method="post" class="form-horizontal">
                 <div class="modal-body">
@@ -384,7 +393,7 @@
                     <input id="id_salmonella_biosolidsBiochemical" name="id_salmonella_biosolidsBiochemical" type="hidden" class="form-control input-sm">
                     <input id="id_result_biochemical" name="id_result_biochemical" type="hidden" class="form-control input-sm">
                     <input id="biochemical_tube" name="biochemical_tube" type="hidden" class="form-control input-sm">
-                    <input id="id_result_hba1" name="id_result_hba1" type="hidden" class="form-control input-sm">
+                    <input id="id_result_chromagar1" name="id_result_chromagar1" type="hidden" class="form-control input-sm">
                     
 
                     <!-- Oxidase Result -->
@@ -538,13 +547,13 @@
         let confirmationText = '';
 
         if (oxidaseValue === 'Positive' && catalaseValue === 'Positive') {
-            confirmationText = 'Campylobacter';
+            confirmationText = 'Salmonella';
         } else if (oxidaseValue === 'Negative' && catalaseValue === 'Negative') {
-            confirmationText = 'Not Campylobacter';
+            confirmationText = 'Not Salmonella';
         } else if (oxidaseValue === 'Positive' && catalaseValue === 'Negative') {
-            confirmationText = 'Not Campylobacter';
+            confirmationText = 'Not Salmonella';
         } else if (oxidaseValue === 'Negative' && catalaseValue === 'Positive') {
-            confirmationText = 'Not Campylobacter';
+            confirmationText = 'Not Salmonella';
         } else {
             confirmationText = '';
         }
@@ -552,20 +561,20 @@
         $('#confirmation').val(confirmationText);
     }
 
-        function generateGrowthPlateInputs(container, numberOfTubes) {
+    function generateColonyPlateInputs(container, numberOfTubes) {
             container.empty(); // Clear existing inputs
 
             // Create the required number of inputs and labels
             for (let i = 1; i <= numberOfTubes; i++) {
                 container.append(
                     `<div class="d-flex align-items-center mb-2">
-                        <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Growth Plate ${i}:</label>
+                        <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Purple Colony Plate ${i}:</label>
                         <div class="d-flex align-items-center">
                             <label class="radio-inline me-2" style="margin-bottom: 0;">
-                                <input type="radio" name="growth_plate${i}" value="Yes" required> Yes
+                                <input type="radio" name="colony_plate${i}" value="Yes" required> Yes
                             </label>
                             <label class="radio-inline" style="margin-bottom: 0;">
-                                <input type="radio" name="growth_plate${i}" value="No" required> No
+                                <input type="radio" name="colony_plate${i}" value="No" required> No
                             </label>
                         </div>
                     </div>`
@@ -575,8 +584,8 @@
 
         $('#number_of_tubes').change(function() {
             let numberOfTubes = parseInt($(this).val()); // Get the selected value as an integer
-            generateGrowthPlateInputs($('#growthPlateInputs'), numberOfTubes);
-            generateGrowthPlateInputs($('#growthPlateInputsHBA'), numberOfTubes);
+            generateColonyPlateInputs($('#purpleColonyPlateInputs'), numberOfTubes);
+            generateColonyPlateInputs($('#blackColonyPlateInputsChromagar'), numberOfTubes);
         }).trigger('change');
 
 
@@ -586,20 +595,20 @@
         }
 
         // Handle the delete button click
-        $(document).on('click', '.btn_deleteCharcoal, .btn_deleteHba, .btn_deleteBiochemical', function() {
+        $(document).on('click', '.btn_deleteXld, .btn_deleteChromagar, .btn_deleteBiochemical', function() {
             let id = $(this).data('id');
             let url;
-            if ($(this).hasClass('btn_deleteCharcoal')) {
-                url = '<?php echo site_url('Salmonella_biosolids/delete_detailCharcoal'); ?>/' + id;
-                $('.modal-title').html('<i class="fa fa-trash"></i> Result Charcoal | Delete <span id="my-another-cool-loader"></span>');
+            if ($(this).hasClass('btn_deleteXld')) {
+                url = '<?php echo site_url('Salmonella_biosolids/delete_detailXld'); ?>/' + id;
+                $('.modal-title').html('<i class="fa fa-trash"></i> Result XLD | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
-            } else if ($(this).hasClass('btn_deleteHba')) {
-                url = '<?php echo site_url('Salmonella_biosolids/delete_detailHba'); ?>/' + id;
-                $('.modal-title').html('<i class="fa fa-trash"></i> Result HBA | Delete <span id="my-another-cool-loader"></span>');
+            } else if ($(this).hasClass('btn_deleteChromagar')) {
+                url = '<?php echo site_url('Salmonella_biosolids/delete_detailChromagar'); ?>/' + id;
+                $('.modal-title').html('<i class="fa fa-trash"></i> Result Chromagar | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
             } else if ($(this).hasClass('btn_deleteBiochemical')) {
                 url = '<?php echo site_url('Salmonella_biosolids/delete_detailBiochemical'); ?>/' + id;
-                $('.modal-title').html('<i class="fa fa-trash"></i> Result Biochemical | Delete <span id="my-another-cool-loader"></span>');
+                $('.modal-title').html('<i class="fa fa-trash"></i> Result | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
             }
 
@@ -660,7 +669,7 @@
             $('.val1tip').tooltipster('hide'); 
         });
 
-        $('#compose-modalHBA').on('shown.bs.modal', function () {
+        $('#compose-modalCharomagar').on('shown.bs.modal', function () {
             $('.val2tip').tooltipster('hide'); 
         });
 
@@ -676,7 +685,7 @@
             $('#barcode_tray24').focus();
         });
 
-        $('#compose-modalHBA').on('shown.bs.modal', function () {
+        $('#compose-modalCharomagar').on('shown.bs.modal', function () {
             $('#dry_weight72').focus();
         });
 
@@ -747,12 +756,12 @@
             paging: false,
             info: false,
             bFilter: false,
-            ajax: {"url": "../../Salmonella_biosolids/subjsonCharcoal?idCharcoal="+id_salmonella_biosolids, "type": "POST"},
+            ajax: {"url": "../../Salmonella_biosolids/subjsonXld?idXld="+id_salmonella_biosolids, "type": "POST"},
             columns: [
                 {"data": "salmonella_assay_barcode"},
                 {"data": "date_sample_processed"},
                 {"data": "time_sample_processed"},
-                {"data": "growth_plate"},
+                {"data": "purple_colony_plate"},
                 {
                     "data" : "action",
                     "orderable": false,
@@ -763,9 +772,9 @@
             rowCallback: function(row, data, iDisplayIndex) {
                 let info = this.fnPagingInfo();
                 if (info.iTotal > 0) {
-                    $('#addtombol_detResultsCharcoal').prop("disabled", true);
+                    $('#addtombol_detResultsXld').prop("disabled", true);
                 } else {
-                    $('#addtombol_detResultsCharcoal').show();
+                    $('#addtombol_detResultsXld').show();
                 }
             }
         });
@@ -779,7 +788,7 @@
             }
         });
 
-        table1 = $("#exampleHba").DataTable({
+        table1 = $("#exampleChromagar").DataTable({
             oLanguage: {
                 sProcessing: "Loading data, please wait..."
             },
@@ -788,12 +797,12 @@
             paging: false,
             info: false,
             bFilter: false,
-            ajax: {"url": "../../Salmonella_biosolids/subjsonHba?idHba="+id_salmonella_biosolids, "type": "POST"},
+            ajax: {"url": "../../Salmonella_biosolids/subjsonChromagar?idChromagar="+id_salmonella_biosolids, "type": "POST"},
             columns: [
                 {"data": "salmonella_assay_barcode"},
                 {"data": "date_sample_processed"},
                 {"data": "time_sample_processed"},
-                {"data": "growth_plate"},
+                {"data": "black_colony_plate"},
                 {
                     "data" : "action",
                     "orderable": false,
@@ -804,14 +813,14 @@
             rowCallback: function(row, data, iDisplayIndex) {
                 let info = this.fnPagingInfo();
                 if (info.iTotal > 0) {
-                    $('#addtombol_detResultsHBA').prop("disabled", true);
+                    $('#addtombol_detResultsChromagar').prop("disabled", true);
                 } else {
-                    $('#addtombol_detResultsHBA').show();
+                    $('#addtombol_detResultsChromagar').show();
                 }
             }
         });
 
-        $('#exampleHba tbody').on('click', 'tr', function () {
+        $('#exampleChromagar tbody').on('click', 'tr', function () {
             if ($(this).hasClass('active')) {
                 $(this).removeClass('active');
             } else {
@@ -822,16 +831,16 @@
 
 
         table1.ajax.reload(function() {
-            let td = $('#exampleHba td:first');
+            let td = $('#exampleChromagar td:first');
             let data = table1.row(td).data();
             console.log(data);
 
             if (data) {
-                const growthPlateArray = data.growth_plate.split(', ');
+                const blackColonyPlateArray = data.black_colony_plate.split(', ');
                 const plateNumberArray = data.plate_number.split(', ');
 
                 // Generate the biochemical results for all plate numbers
-                generateResultBiochemical($('#content-result-biochemical'), plateNumberArray.length, data.id_salmonella_biosolids, plateNumberArray, growthPlateArray);
+                generateResultBiochemical($('#content-result-biochemical'), plateNumberArray.length, data.id_salmonella_biosolids, plateNumberArray, blackColonyPlateArray);
             } else {
                 console.log('Data belum tersedia');
                 $('#content-result-biochemical').empty().append('<p class="text-center">No data available</p>');
@@ -839,7 +848,7 @@
         });
 
         // Improved generateResultBiochemical function
-        function generateResultBiochemical(container, numberOfPlates, id_salmonella_biosolids, plateNumberArray, growthPlateArray) {
+        function generateResultBiochemical(container, numberOfPlates, id_salmonella_biosolids, plateNumberArray, blackColonyPlateArray) {
             container.empty(); // Clear existing content
 
             // Iterate through the plateNumberArray
@@ -847,14 +856,14 @@
                 const plateNumber = plateNumberArray[i]; // Get the corresponding plate number
                 const tableId = `exampleBiochemical_${i}`; // Unique table ID
                 const buttonId = `addtombol_detResultsBiochemical_${plateNumber}`; // Unique button ID
-                const isDisabled = growthPlateArray[i] === 'No' ? 'disabled' : ''; // Determine if button should be disabled
+                const isDisabled = blackColonyPlateArray[i] === 'No' ? 'disabled' : ''; // Determine if button should be disabled
                 console.log('button biochemical tube', isDisabled);
 
                 // Append the table and button for each plate
                 container.append(`
                     <div class="box-body pad table-responsive">
                         <button class="btn btn-primary" id="${buttonId}" data-index="${plateNumber}" ${isDisabled}>
-                            <i class="fa fa-wpforms" aria-hidden="true"></i> Biochemical Tube ${plateNumber}
+                            <i class="fa fa-wpforms" aria-hidden="true"></i> Tube ${plateNumber}
                         </button>
                         <table id="${tableId}" class="table display table-bordered table-striped" width="100%">
                             <thead>
@@ -920,14 +929,14 @@
         // Event listener untuk tombol "New Data"
         $(document).on('click', '[id^=addtombol_detResultsBiochemical_]', function() {
             const plateNumber = $(this).data('index'); // Get the plate number directly
-            let td = $('#exampleHba td:first');
+            let td = $('#exampleChromagar td:first');
             let data = table1.row(td).data();
-            console.log('datanya', data.id_result_hba);
+            console.log('datanya', data.id_result_chromagar);
 
             $('#mode_detResultsBiochemical').val('insert');
-            $('#modal-title-biochemical').html(`<i class="fa fa-wpforms"></i> Insert | Biochemical Tube ${plateNumber} <span id="my-another-cool-loader"></span>`);
+            $('#modal-title-biochemical').html(`<i class="fa fa-wpforms"></i> Insert | Tube ${plateNumber} <span id="my-another-cool-loader"></span>`);
             $('#id_salmonella_biosolidsBiochemical').val(id_salmonella_biosolids);
-            $('#id_result_hba1').val(data.id_result_hba);
+            $('#id_result_chromagar1').val(data.id_result_chromagar);
             $('#oxidase').val('');
             $('#catalase').val('');
             // $('#confirmation').val('');
@@ -947,10 +956,10 @@
 
             // Set nilai-nilai di dalam modal sesuai data yang didapat
             $('#mode_detResultsBiochemical').val('edit');
-            $('#modal-title-biochemical').html('<i class="fa fa-pencil-square"></i> Update | Biochemical Tube ' + data.biochemical_tube + ' <span id="my-another-cool-loader"></span>');
+            $('#modal-title-biochemical').html('<i class="fa fa-pencil-square"></i> Update | Tube ' + data.biochemical_tube + ' <span id="my-another-cool-loader"></span>');
             $('#id_result_biochemical').val(data.id_result_biochemical);
             $('#id_salmonella_biosolidsBiochemical').val(data.id_salmonella_biosolids);
-            $('#id_result_hba1').val(data.id_result_hba);
+            $('#id_result_chromagar1').val(data.id_result_chromagar);
             // Set radio button untuk oxidase
             $('input[name="oxidase"][value="' + data.oxidase + '"]').prop('checked', true);
             
@@ -968,9 +977,9 @@
 
 
 
-        $('#addtombol_detResultsCharcoal').click(function() {
-            $('#mode_detResultsCharcoal').val('insert');
-            $('#modal-title-detail').html('<i class="fa fa-wpforms"></i> Insert | Results Charcoal <span id="my-another-cool-loader"></span>');
+        $('#addtombol_detResultsXld').click(function() {
+            $('#mode_detResultsXld').val('insert');
+            $('#modal-title-Xld').html('<i class="fa fa-wpforms"></i> Insert | Results XLD <span id="my-another-cool-loader"></span>');
             $('#salmonella_assay_barcode1').val(salmonella_assay_barcode);
             $('#salmonella_assay_barcode1').attr('readonly', true);
             $('#id_salmonella_biosolids1').val(id_salmonella_biosolids);
@@ -978,13 +987,13 @@
             $('#compose-modal').modal('show');
         });
 
-        $('#example2').on('click', '.btn_edit_detResultsCharcoal', function() {
+        $('#example2').on('click', '.btn_edit_detResultsXld', function() {
             let tr = $(this).closest('tr');
             let data = table.row(tr).data();
             console.log(data);
-            $('#mode_detResultsCharcoal').val('edit');
-            $('#modal-title-detail').html('<i class="fa fa-pencil-square"></i> Update | Results Charcoal <span id="my-another-cool-loader"></span>');
-            $('#id_result_charcoal').val(data.id_result_charcoal);
+            $('#mode_detResultsXld').val('edit');
+            $('#modal-title-Xld').html('<i class="fa fa-pencil-square"></i> Update | Results XLD <span id="my-another-cool-loader"></span>');
+            $('#id_result_xld').val(data.id_result_xld);
             $('#salmonella_assay_barcode1').val(data.salmonella_assay_barcode);
             $('#salmonella_assay_barcode1').attr('readonly', true);
             $('#id_salmonella_biosolids1').val(data.id_salmonella_biosolids);
@@ -992,31 +1001,31 @@
             $('#time_sample_processed1').val(data.time_sample_processed);
             $('#number_of_tubes1').val(number_of_tubes);
 
-            // Clear existing growthPlateInputs
-            let growthPlateInputs = $('#growthPlateInputs');
-            growthPlateInputs.empty();
+            // Clear existing purpleColonyPlateInputs
+            let purpleColonyPlateInputs = $('#purpleColonyPlateInputs');
+            purpleColonyPlateInputs.empty();
 
             // split the string into an array
-            const growthPlateArray = data.growth_plate.split(', ');
+            const purpleColonyPlateArray = data.purple_colony_plate.split(', ');
             const plateNumberArray = data.plate_number.split(', ');
 
             // making the input base on the plate number
             plateNumberArray.forEach((plateNumber, index) => {
-                const plate = growthPlateArray[index] || '';
+                const plate = purpleColonyPlateArray[index] || '';
 
                 // decide the value radio selected
                 const checkedYes = plate === 'Yes' ? 'checked' : '';
                 const checkedNo = plate === 'No' ? 'checked' : '';
 
-                growthPlateInputs.append(
+                purpleColonyPlateInputs.append(
                     `<div class="d-flex align-items-center mb-2">
-                        <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Growth Plate ${plateNumber}:</label>
+                        <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Purple Colony Plate ${plateNumber}:</label>
                         <div class="d-flex align-items-center">
                             <label class="radio-inline me-2" style="margin-bottom: 0;">
-                                <input type="radio" id="growth_plate${plateNumber}" name="growth_plate${plateNumber}" value="Yes" ${checkedYes}> Yes
+                                <input type="radio" id="purple_colony_plate${plateNumber}" name="purple_colony_plate${plateNumber}" value="Yes" ${checkedYes}> Yes
                             </label>
                             <label class="radio-inline" style="margin-bottom: 0;">
-                                <input type="radio" id="growth_plate${plateNumber}"  name="growth_plate${plateNumber}" value="No" ${checkedNo}> No
+                                <input type="radio" id="purple_colony_plate${plateNumber}"  name="purple_colony_plate${plateNumber}" value="No" ${checkedNo}> No
                             </label>
                         </div>
                     </div>`
@@ -1026,9 +1035,9 @@
             $('#compose-modal').modal('show');
         });
 
-        $('#addtombol_detResultsHBA').on('click', function() {
-            $('#mode_detResultsHBA').val('insert');
-            $('#modal-title-HBA').html('<i class="fa fa-wpforms"></i> Insert | Results HBA <span id="my-another-cool-loader"></span>');
+        $('#addtombol_detResultsChromagar').on('click', function() {
+            $('#mode_detResultsChromagar').val('insert');
+            $('#modal-title-Chromagar').html('<i class="fa fa-wpforms"></i> Insert | Results Chromagar <span id="my-another-cool-loader"></span>');
 
             let td = $('#example2 td:first');
             let data = table.row(td).data();
@@ -1036,106 +1045,107 @@
             
             if (data && data.salmonella_assay_barcode) {
                 let salmonella_assay_barcode = data.salmonella_assay_barcode;
+                console.log(salmonella_assay_barcode);
 
                 // Parsing data ke komponen
-                $('#salmonella_assay_barcodeHBA').val(salmonella_assay_barcode);
-                $('#id_salmonella_biosolidsHBA').val(id_salmonella_biosolids);
-                $('#salmonella_assay_barcodeHBA').attr('readonly', true);
-                $('#number_of_tubesHba').val(number_of_tubes);
+                $('#salmonella_assay_barcodeChromagar').val(salmonella_assay_barcode);
+                $('#id_salmonella_biosolidsChromagar').val(id_salmonella_biosolids);
+                $('#salmonella_assay_barcodeChromagar').attr('readonly', true);
+                $('#number_of_tubesChromagar').val(number_of_tubes);
 
-                // Clear existing growthPlateInputs
-                let growthPlateInputsHba = $('#growthPlateInputsHBA');
-                growthPlateInputsHba.empty();
+                // Clear existing purpleColonyPlateInputs
+                let blackColonyPlateInputsChromagar = $('#blackColonyPlateInputsChromagar');
+                blackColonyPlateInputsChromagar.empty();
 
                 // split the string into an array
-                const growthPlateArray = data.growth_plate.split(', ');
+                const purpleColonyPlateArray = data.purple_colony_plate.split(', ');
                 const plateNumberArray = data.plate_number.split(', ');
 
-                console.log('growthPlateArray:', growthPlateArray);
+                console.log('purpleColonyPlateArray:', purpleColonyPlateArray);
                 console.log('plateNumberArray:', plateNumberArray);
 
                 // making the input base on the plate number
                 plateNumberArray.forEach((plateNumber, index) => {
-                    const plate = growthPlateArray[index] || '';
+                    const plate = purpleColonyPlateArray[index] || '';
 
                     // decide the value radio selected
                     const checkedYes = plate === 'Yes' ? 'checked' : '';
                     const checkedNo = plate === 'No' ? 'checked' : '';
                     const disabled = plate === 'No' ? 'disabled' : '';
 
-                    growthPlateInputsHba.append(
+                    blackColonyPlateInputsChromagar.append(
                         `<div class="d-flex align-items-center mb-2">
-                            <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Growth Plate ${plateNumber}:</label>
+                            <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Black Colony Plate ${plateNumber}:</label>
                             <div class="d-flex align-items-center">
-                                <input type="hidden" name="growth_plate${plateNumber}" value="${plate}">
+                                <input type="hidden" name="black_colony_plate${plateNumber}" value="${plate}">
                                 <label class="radio-inline me-2" style="margin-bottom: 0;">
-                                    <input type="radio" id="growth_plate${plateNumber}" name="growth_plate${plateNumber}" value="Yes" ${disabled}> Yes
+                                    <input type="radio" id="black_colony_plate${plateNumber}" name="black_colony_plate${plateNumber}" value="Yes" ${disabled}> Yes
                                 </label>
                                 <label class="radio-inline" style="margin-bottom: 0;">
-                                    <input type="radio" id="growth_plate${plateNumber}"  name="growth_plate${plateNumber}" value="No" ${disabled}> No
+                                    <input type="radio" id="black_colony_plate${plateNumber}"  name="black_colony_plate${plateNumber}" value="No" ${disabled}> No
                                 </label>
                             </div>
                         </div>`
                     );
                 });
 
-                $('#compose-modalHBA').modal('show');
+                $('#compose-modalChroMagar').modal('show');
             } else {
                 // Tampilkan modal konfirmasi
                 $('#confirm-modal').modal('show');
                 // Tambahkan pesan ke modal
-                $('#confirm-modal .modal-body').html('<p class="text-center" style="font-size: 15px;">You have not filled in the Result Charcoal. Please fill in that data first.</p>');
+                $('#confirm-modal .modal-body').html('<p class="text-center" style="font-size: 15px;">You have not filled in the Result XLD. Please fill in that data first.</p>');
             }
         });
         
 
-        $('#exampleHba').on('click', '.btn_edit_detResultsHba', function() {
+        $('#exampleChromagar').on('click', '.btn_edit_detResultsChromagar', function() {
             let tr = $(this).closest('tr');
             let data = table1.row(tr).data();
             console.log(data);
-            $('#mode_detResultsHBA').val('edit');
-            $('#modal-title-HBA').html('<i class="fa fa-pencil-square"></i> Update | Results HBA <span id="my-another-cool-loader"></span>');
-            $('#id_result_hba').val(data.id_result_hba);
-            $('#salmonella_assay_barcodeHBA').val(data.salmonella_assay_barcode);
-            $('#salmonella_assay_barcodeHBA').attr('readonly', true);
-            $('#id_salmonella_biosolidsHBA').val(data.id_salmonella_biosolids);
-            $('#date_sample_processedHBA').val(data.date_sample_processed);
-            $('#time_sample_processedHBA').val(data.time_sample_processed);
-            $('#number_of_tubesHba').val(number_of_tubes);
+            $('#mode_detResultsChromagar').val('edit');
+            $('#modal-title-Chromagar').html('<i class="fa fa-pencil-square"></i> Update | Results Chromagar <span id="my-another-cool-loader"></span>');
+            $('#id_result_chromagar').val(data.id_result_chromagar);
+            $('#salmonella_assay_barcodeChromagar').val(data.salmonella_assay_barcode);
+            $('#salmonella_assay_barcodeChromagar').attr('readonly', true);
+            $('#id_salmonella_biosolidsChromagar').val(data.id_salmonella_biosolids);
+            $('#date_sample_processedChromagar').val(data.date_sample_processed);
+            $('#time_sample_processedChromagar').val(data.time_sample_processed);
+            $('#number_of_tubesChromagar').val(number_of_tubes);
 
             // Clear existing growthPlateInputs
-            let growthPlateInputsHba = $('#growthPlateInputsHBA');
-            growthPlateInputsHba.empty();
+            let blackColonyPlateInputsChromagar = $('#blackColonyPlateInputsChromagar');
+            blackColonyPlateInputsChromagar.empty();
 
             // split the string into an array
-            const growthPlateArray = data.growth_plate.split(', ');
+            const blackColonyPlateArray = data.black_colony_plate.split(', ');
             const plateNumberArray = data.plate_number.split(', ');
 
             // making the input base on the plate number
             plateNumberArray.forEach((plateNumber, index) => {
-                const plate = growthPlateArray[index] || '';
+                const plate = blackColonyPlateArray[index] || '';
 
                 // decide the value radio selected
                 const checkedYes = plate === 'Yes' ? 'checked' : '';
                 const checkedNo = plate === 'No' ? 'checked' : '';
                 const disabled = plate === 'No' ? 'disabled' : '';
 
-                growthPlateInputsHba.append(
+                blackColonyPlateInputsChromagar.append(
                     `<div class="d-flex align-items-center mb-2">
-                        <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Growth Plate ${plateNumber}:</label>
+                        <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Black Colony Plate ${plateNumber}:</label>
                         <div class="d-flex align-items-center">
-                            <input type="hidden" name="growth_plate${plateNumber}" value="${plate}">
+                            <input type="hidden" name="black_colony_plate${plateNumber}" value="${plate}">
                             <label class="radio-inline me-2" style="margin-bottom: 0;">
-                                <input type="radio" id="growth_plate${plateNumber}" name="growth_plate${plateNumber}" value="Yes" ${checkedYes}> Yes
+                                <input type="radio" id="black_colony_plate${plateNumber}" name="black_colony_plate${plateNumber}" value="Yes" ${checkedYes}> Yes
                             </label>
                             <label class="radio-inline" style="margin-bottom: 0;">
-                                <input type="radio" id="growth_plate${plateNumber}"  name="growth_plate${plateNumber}" value="No" ${checkedNo}> No
+                                <input type="radio" id="black_colony_plate${plateNumber}"  name="black_colony_plate${plateNumber}" value="No" ${checkedNo}> No
                             </label>
                         </div>
                     </div>`
                 );
             });
-            $('#compose-modalHBA').modal('show');
+            $('#compose-modalChroMagar').modal('show');
         });
 
     });
