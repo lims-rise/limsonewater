@@ -36,16 +36,16 @@ class Salmonella_liquids extends CI_Controller
         echo $this->Salmonella_liquids_model->json();
     }
 
-    public function subjsonCharcoal() {
-        $id = $this->input->get('idCharcoal',TRUE);
+    public function subjsonXld() {
+        $id = $this->input->get('idXld',TRUE);
         header('Content-Type: application/json');
-        echo $this->Salmonella_liquids_model->subjsonCharcoal($id);
+        echo $this->Salmonella_liquids_model->subjsonXld($id);
     }
 
-    public function subjsonHba() {
-        $id = $this->input->get('idHba',TRUE);
+    public function subjsonChromagar() {
+        $id = $this->input->get('idChromagar',TRUE);
         header('Content-Type: application/json');
-        echo $this->Salmonella_liquids_model->subjsonHba($id);
+        echo $this->Salmonella_liquids_model->subjsonChromagar($id);
     }
 
     public function subjsonBiochemical() {
@@ -73,6 +73,7 @@ class Salmonella_liquids extends CI_Controller
                 'time_sample_processed' => $row->time_sample_processed,
                 'sample_wetweight' => $row->sample_wetweight,
                 'elution_volume' => $row->elution_volume,
+                'enrichment_media' => $row->enrichment_media,
                 'vol_sampletube' => $row->vol_sampletube,
                 'tube_number' => $row->tube_number,
                 
@@ -132,6 +133,7 @@ class Salmonella_liquids extends CI_Controller
         $time_sample_processed = $this->input->post('time_sample_processed', TRUE);
         $sample_wetweight = $this->input->post('sample_wetweight', TRUE);
         $elution_volume = $this->input->post('elution_volume', TRUE);
+        $enrichment_media = $this->input->post('enrichment_media', TRUE);
     
         if ($mode == "insert") {
             // Insert data into assays table
@@ -146,6 +148,7 @@ class Salmonella_liquids extends CI_Controller
                 'time_sample_processed' => $time_sample_processed,
                 'sample_wetweight' => $sample_wetweight,
                 'elution_volume' => $elution_volume,
+                'enrichment_media' => $enrichment_media,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
@@ -191,6 +194,7 @@ class Salmonella_liquids extends CI_Controller
                 'time_sample_processed' => $time_sample_processed,
                 'sample_wetweight' => $sample_wetweight,
                 'elution_volume' => $elution_volume,
+                'enrichment_media' => $enrichment_media,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
@@ -201,7 +205,7 @@ class Salmonella_liquids extends CI_Controller
             // var_dump($data);
             // die();
     
-            $this->Salmonella_liquids_model->updateSalmonellaBiosolids($id_salmonella_liquids, $data);
+            $this->Salmonella_liquids_model->updateSalmonellaLiquids($id_salmonella_liquids, $data);
     
             // Update sample volumes
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
@@ -236,10 +240,10 @@ class Salmonella_liquids extends CI_Controller
         redirect(site_url("salmonella_liquids"));
     }
 
-    public function saveResultsCharcoal() {
-        $mode = $this->input->post('mode_detResultsCharcoal', TRUE);
+    public function saveResultsXld() {
+        $mode = $this->input->post('mode_detResultsXld', TRUE);
         $id_salmonella_liquids = $this->input->post('id_salmonella_liquids1', TRUE);
-        $id_result_charcoal = $this->input->post('id_result_charcoal', TRUE);
+        $id_result_xld = $this->input->post('id_result_xld', TRUE);
         $dt = new DateTime();
         $date_sample_processed = $this->input->post('date_sample_processed1', TRUE);
         $time_sample_processed = $this->input->post('time_sample_processed1', TRUE);
@@ -260,17 +264,17 @@ class Salmonella_liquids extends CI_Controller
             // var_dump($data);
             // die();
     
-            $assay_id = $this->Salmonella_liquids_model->insertResultsCharcoal($data);
+            $assay_id = $this->Salmonella_liquids_model->insertResultsXld($data);
     
             // Insert sample volumes
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
             for ($i = 1; $i <= $number_of_tubes; $i++) {
-                $plate = $this->input->post("growth_plate{$i}", TRUE);
+                $plate = $this->input->post("colony_plate{$i}", TRUE);
                 if ($plate) {
-                    $this->Salmonella_liquids_model->insert_growth_plate(array(
-                        'id_result_charcoal' => $assay_id,
+                    $this->Salmonella_liquids_model->insert_purple_colony_plate(array(
+                        'id_result_xld' => $assay_id,
                         'plate_number' => $i,
-                        'growth_plate' => $plate,
+                        'purple_colony_plate' => $plate,
                         'flag' => '0',
                         'lab' => $this->session->userdata('lab'),
                         'uuid' => $this->uuid->v4(),
@@ -298,26 +302,26 @@ class Salmonella_liquids extends CI_Controller
             // var_dump($data);
             // die();
     
-            $this->Salmonella_liquids_model->updateResultsCharcoal($id_result_charcoal, $data);
+            $this->Salmonella_liquids_model->updateResultsXld($id_result_xld, $data);
 
             // Update sample volumes
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
-            $this->Salmonella_liquids_model->delete_growth_plates($id_result_charcoal); // Hapus volume yang ada
+            $this->Salmonella_liquids_model->delete_purple_colony_plates($id_result_xld); // Hapus volume yang ada
 
             for ($i = 1; $i <= $number_of_tubes; $i++) {
-                $plate = $this->input->post("growth_plate{$i}", TRUE);
+                $plate = $this->input->post("purple_colony_plate{$i}", TRUE);
                 if ($plate) {
                     $data_plate = array(
-                        'id_result_charcoal' => $id_result_charcoal,
+                        'id_result_xld' => $id_result_xld,
                         'plate_number' => $i,
-                        'growth_plate' => $plate,
+                        'purple_colony_plate' => $plate,
                         'flag' => '0',
                         'lab' => $this->session->userdata('lab'),
                         'uuid' => $this->uuid->v4(),
                         'user_created' => $this->session->userdata('id_users'),
                         'date_created' => $dt->format('Y-m-d H:i:s'),
                     );
-                    $this->Salmonella_liquids_model->insert_growth_plate($data_plate);
+                    $this->Salmonella_liquids_model->insert_purple_colony_plate($data_plate);
                 }
             }
     
@@ -327,14 +331,14 @@ class Salmonella_liquids extends CI_Controller
         redirect(site_url("salmonella_liquids/read/" . $id_salmonella_liquids));
     }
 
-    public function saveResultsHBA() {
-        $mode = $this->input->post('mode_detResultsHBA', TRUE);
-        $id_salmonella_liquids = $this->input->post('id_salmonella_liquidsHBA', TRUE);
-        $id_result_hba = $this->input->post('id_result_hba', TRUE);
+    public function saveResultsChromagar() {
+        $mode = $this->input->post('mode_detResultsChromagar', TRUE);
+        $id_salmonella_liquids = $this->input->post('id_salmonella_liquidsChromagar', TRUE);
+        $id_result_chromagar = $this->input->post('id_result_chromagar', TRUE);
 
         $dt = new DateTime();
-        $date_sample_processed = $this->input->post('date_sample_processedHBA', TRUE);
-        $time_sample_processed = $this->input->post('time_sample_processedHBA', TRUE);
+        $date_sample_processed = $this->input->post('date_sample_processedChromagar', TRUE);
+        $time_sample_processed = $this->input->post('time_sample_processedChromagar', TRUE);
     
         if ($mode == "insert") {
             // Insert data into assays table
@@ -352,18 +356,18 @@ class Salmonella_liquids extends CI_Controller
             // var_dump($data);
             // die();
     
-            $assay_id = $this->Salmonella_liquids_model->insertResultsHba($data);
+            $assay_id = $this->Salmonella_liquids_model->insertResultsChromagar($data);
     
             // Insert sample volumes
-            $number_of_tubes = $this->input->post('number_of_tubesHba', TRUE);
+            $number_of_tubes = $this->input->post('number_of_tubesChromagar', TRUE);
             for ($i = 1; $i <= $number_of_tubes; $i++) {
-                $plate = $this->input->post("growth_plate{$i}", TRUE);
+                $plate = $this->input->post("black_colony_plate{$i}", TRUE);
 
                 if ($plate) {
-                    $this->Salmonella_liquids_model->insert_growth_plate_hba(array(
-                        'id_result_hba' => $assay_id,
+                    $this->Salmonella_liquids_model->insert_black_colony_plate_chromagar(array(
+                        'id_result_chromagar' => $assay_id,
                         'plate_number' => $i,
-                        'growth_plate' => $plate,
+                        'black_colony_plate' => $plate,
                         'flag' => '0',
                         'lab' => $this->session->userdata('lab'),
                         'uuid' => $this->uuid->v4(),
@@ -389,26 +393,26 @@ class Salmonella_liquids extends CI_Controller
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
     
-            $this->Salmonella_liquids_model->updateResultsHba($id_result_hba, $data);
+            $this->Salmonella_liquids_model->updateResultsChromagar($id_result_chromagar, $data);
     
             // Update sample volumes
-            $number_of_tubes = $this->input->post('number_of_tubesHba', TRUE);
-            $this->Salmonella_liquids_model->delete_growth_plates_hba($id_result_hba); // Hapus volume yang ada
+            $number_of_tubes = $this->input->post('number_of_tubesChromagar', TRUE);
+            $this->Salmonella_liquids_model->delete_black_colony_plates_chromagar($id_result_chromagar); // Hapus volume yang ada
     
             for ($i = 1; $i <= $number_of_tubes; $i++) {
-                $plate = $this->input->post("growth_plate{$i}", TRUE);
+                $plate = $this->input->post("black_colony_plate{$i}", TRUE);
                 if ($plate) {
                     $data_plate = array(
-                        'id_result_hba' => $id_result_hba,
+                        'id_result_chromagar' => $id_result_chromagar,
                         'plate_number' => $i,
-                        'growth_plate' => $plate,
+                        'black_colony_plate' => $plate,
                         'flag' => '0',
                         'lab' => $this->session->userdata('lab'),
                         'uuid' => $this->uuid->v4(),
                         'user_created' => $this->session->userdata('id_users'),
                         'date_created' => $dt->format('Y-m-d H:i:s'),
                     );
-                    $this->Salmonella_liquids_model->insert_growth_plate_hba($data_plate);
+                    $this->Salmonella_liquids_model->insert_black_colony_plate_Chromagar($data_plate);
                 }
             }
     
@@ -422,7 +426,7 @@ class Salmonella_liquids extends CI_Controller
     public function saveBiochemical() {
         $mode = $this->input->post('mode_detResultsBiochemical', TRUE);
         $id_result_biochemical = $this->input->post('id_result_biochemical', TRUE);
-        $id_result_hba = $this->input->post('id_result_hba1', TRUE);
+        $id_result_chromagar = $this->input->post('id_result_chromagar1', TRUE);
         $id_salmonella_liquids = $this->input->post('id_salmonella_liquidsBiochemical', TRUE);
         $oxidase = $this->input->post('oxidase', TRUE);
         $catalase = $this->input->post('catalase', TRUE);
@@ -433,7 +437,7 @@ class Salmonella_liquids extends CI_Controller
         if ($mode == "insert") {
             $data = array(
                 'id_salmonella_liquids' => $id_salmonella_liquids,
-                'id_result_hba' => $id_result_hba,
+                'id_result_chromagar' => $id_result_chromagar,
                 'oxidase' => $oxidase,
                 'catalase' => $catalase,
                 'confirmation' => $confirmation,
@@ -451,7 +455,7 @@ class Salmonella_liquids extends CI_Controller
         } else if ($mode == "edit") {
             $data = array(
                 'id_salmonella_liquids' => $id_salmonella_liquids,
-                'id_result_hba' => $id_result_hba,
+                'id_result_chromagar' => $id_result_chromagar,
                 'oxidase' => $oxidase,
                 'catalase' => $catalase,
                 'confirmation' => $confirmation,
@@ -475,12 +479,12 @@ class Salmonella_liquids extends CI_Controller
     public function delete_salmonellaLiquids($id) {
         $row = $this->Salmonella_liquids_model->get_by_id_salmonella_liquids($id);
         if ($row) {
-            $id_parent = $row->id_result_charcoal; // Retrieve project_id before updating the record
+            $id_parent = $row->id_result_xld; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
     
-            $this->Salmonella_liquids_model->updateSalmonellaBiosolids($id, $data);
+            $this->Salmonella_liquids_model->updateSalmonellaLiquids($id, $data);
             $this->Salmonella_liquids_model->updateSampleVolume($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
@@ -490,15 +494,15 @@ class Salmonella_liquids extends CI_Controller
         redirect(site_url('salmonella_liquids/read/'.$id_parent));
     }
     
-    public function delete_detailCharcoal($id) {
-        $row = $this->Salmonella_liquids_model->get_by_id_charcoal($id);
+    public function delete_detailXld($id) {
+        $row = $this->Salmonella_liquids_model->get_by_id_xld($id);
         if ($row) {
-            $id_parent = $row->id_result_charcoal; // Retrieve project_id before updating the record
+            $id_parent = $row->id_result_xld; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
     
-            $this->Salmonella_liquids_model->updateResultsCharcoal($id, $data);
+            $this->Salmonella_liquids_model->updateResultsXld($id, $data);
             $this->Salmonella_liquids_model->updateResultsGrowthPlate($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
@@ -508,16 +512,16 @@ class Salmonella_liquids extends CI_Controller
         redirect(site_url('salmonella_liquids/read/'.$id_parent));
     }
 
-    public function delete_detailHba($id) {
-        $row = $this->Salmonella_liquids_model->get_by_id_hba($id);
+    public function delete_detailChromagar($id) {
+        $row = $this->Salmonella_liquids_model->get_by_id_chromagar($id);
         if ($row) {
-            $id_parent = $row->id_result_charcoal; // Retrieve project_id before updating the record
+            $id_parent = $row->id_result_xld; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
     
-            $this->Salmonella_liquids_model->updateResultsHba($id, $data);
-            $this->Salmonella_liquids_model->updateResultsGrowthPlateHba($id, $data);
+            $this->Salmonella_liquids_model->updateResultsChromagar($id, $data);
+            $this->Salmonella_liquids_model->updateResultsBlackColonyPlateChromagar($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
@@ -529,7 +533,7 @@ class Salmonella_liquids extends CI_Controller
     public function delete_detailBiochemical($id) {
         $row = $this->Salmonella_liquids_model->get_by_id_biochemical($id);
         if ($row) {
-            $id_parent = $row->id_result_charcoal; // Retrieve project_id before updating the record
+            $id_parent = $row->id_result_xld; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
@@ -566,6 +570,7 @@ class Salmonella_liquids extends CI_Controller
         $sheet->setCellValue('H1', "Time Sample Processed");
         $sheet->setCellValue('I1', "Sample Wet Weight");
         $sheet->setCellValue('J1', "Elution Volume");
+        $sheet->setCellValue('K1', "Enrichment Media");
     
         // Fetch the concentration data
         $finalConcentration = $this->Salmonella_liquids_model->get_export($id);
@@ -577,7 +582,7 @@ class Salmonella_liquids extends CI_Controller
             // Add Tube Volume headers
             foreach ($finalConcentration[0] as $key => $value) {
                 if (strpos($key, 'Tube') === 0) {
-                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(12 + $tubeIndex);
                     $sheet->setCellValue($columnLetter . '1', "$key Volume");
                     $tubeIndex++;
                 }
@@ -586,7 +591,7 @@ class Salmonella_liquids extends CI_Controller
             // Add Tube Result headers
             $plate_numbers = explode(',', $finalConcentration[0]->plate_numbers);
             foreach ($plate_numbers as $plate_number) {
-                $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+                $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(12 + $tubeIndex);
                 $sheet->setCellValue($columnLetter . '1', "Tube $plate_number Result");
                 $tubeIndex++;
             }
@@ -606,12 +611,13 @@ class Salmonella_liquids extends CI_Controller
             $sheet->setCellValue('H' . $numrow, $concentration->time_sample_processed ?? '');
             $sheet->setCellValue('I' . $numrow, $concentration->sample_wetweight ?? '');
             $sheet->setCellValue('J' . $numrow, $concentration->elution_volume ?? '');
+            $sheet->setCellValue('K' . $numrow, $concentration->enrichment_media ?? '');
     
             // Fill tube volumes
             $tubeIndex = 0;
             foreach ($concentration as $key => $value) {
                 if (strpos($key, 'Tube') === 0) {
-                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(12 + $tubeIndex);
                     $sheet->setCellValue($columnLetter . $numrow, $value ?? '');
                     $tubeIndex++;
                 }
@@ -621,10 +627,10 @@ class Salmonella_liquids extends CI_Controller
             $plate_numbers = explode(',', $concentration->plate_numbers);
             foreach ($plate_numbers as $plate_number) {
                 // Set default value for confirmation
-                $confirmation_value = isset($concentration->confirmation[$plate_number]) ? $concentration->confirmation[$plate_number] : 'No Growth'; 
+                $confirmation_value = isset($concentration->confirmation[$plate_number]) ? $concentration->confirmation[$plate_number] : 'No Colony Plate'; 
                 
                 // Calculate the column letter dynamically
-                $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+                $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(12 + $tubeIndex);
                 $sheet->setCellValue($columnLetter . $numrow, $confirmation_value);
                 $tubeIndex++;
             }
@@ -647,7 +653,6 @@ class Salmonella_liquids extends CI_Controller
         $finalConcentration = $this->Salmonella_liquids_model->get_all_export();
         // var_dump($finalConcentration);
         // die();
-        
         // Array untuk menyimpan data berdasarkan jumlah tabung
         $dataTubes = [];
     
@@ -698,16 +703,17 @@ class Salmonella_liquids extends CI_Controller
         $sheet->setCellValue('H1', "Time Sample Processed");
         $sheet->setCellValue('I1', "Sample Wet Weight");
         $sheet->setCellValue('J1', "Elution Volume");
+        $sheet->setCellValue('K1', "Enrichment Media");
     
         // Add Tube Volume headers
         for ($i = 1; $i <= $numberOfTubes; $i++) {
-            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $i);
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $i);
             $sheet->setCellValue($columnLetter . '1', "Tube $i Volume");
         }
     
         // Add Tube Result headers
         for ($i = 1; $i <= $numberOfTubes; $i++) {
-            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $numberOfTubes + $i);
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $numberOfTubes + $i);
             $sheet->setCellValue($columnLetter . '1', "Tube $i Result");
         }
     }
@@ -727,12 +733,13 @@ class Salmonella_liquids extends CI_Controller
             $sheet->setCellValue('H' . $numrow, $concentration->time_sample_processed ?? '');
             $sheet->setCellValue('I' . $numrow, $concentration->sample_wetweight ?? '');
             $sheet->setCellValue('J' . $numrow, $concentration->elution_volume ?? '');
+            $sheet->setCellValue('K' . $numrow, $concentration->enrichment_media ?? '');
     
             // Mengisi volume tabung
             $tubeIndex = 0;
             foreach ($concentration as $key => $value) {
                 if (strpos($key, 'Tube') === 0) {
-                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(12 + $tubeIndex);
                     $sheet->setCellValue($columnLetter . $numrow, $value ?? '');
                     $tubeIndex++;
                 }
@@ -740,10 +747,10 @@ class Salmonella_liquids extends CI_Controller
     
         // Mengisi hasil tabung
         for ($i = 1; $i <= $numberOfTubes; $i++) {
-            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $numberOfTubes + ($i - 1));
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(12 + $numberOfTubes + ($i - 1));
 
             // Mengakses nilai konfirmasi dengan indeks tabung
-            $confirmation_value = $concentration->confirmation[$i] ?? 'No Growth'; // Nilai default jika tidak ada konfirmasi
+            $confirmation_value = $concentration->confirmation[$i] ?? 'No Colony Plate'; // Nilai default jika tidak ada konfirmasi
             
             // Debugging: Cek nilai konfirmasi sebelum diset ke sel
             error_log("Confirmation for Tube {$i}: " . $confirmation_value);
