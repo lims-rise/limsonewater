@@ -69,6 +69,14 @@ class Ref_objective_model extends CI_Model
         return $response;
       }
 
+      function get_ref_objective()
+      {
+          $this->db->select('rc.id_objective, rc.objective');
+          $this->db->from('ref_objective AS rc');
+          $this->db->where('rc.flag', '0');
+          return $this->db->get()->result();
+      }
+
 }
 
 /* End of file Tbl_delivery_model.php */

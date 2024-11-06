@@ -30,6 +30,7 @@
                                             <th>Time of Sample</th>
                                             <th>Sample Wet Weight</th>
                                             <th>Elution Volume</th>
+                                            <th>Enrichment media</th>
                                             <th>Volume of Sample</th>
                                             <th width="120px">Action</th>
                                         </tr>
@@ -66,7 +67,7 @@
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #3c8dbc; color: white;">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
-                    <h4 class="modal-title" id="modal-title">Salmonella Content | New</h4>
+                    <h4 class="modal-title" id="modal-title">Moisture Content | New</h4>
                 </div>
                 <form id="formSample" action="<?php echo site_url('Salmonella_liquids/save') ?>" method="post" class="form-horizontal">
                     <div class="modal-body">
@@ -184,6 +185,14 @@
                             <label for="elution_volume" class="col-sm-4 control-label">Elution Volume(mL)</label>
                             <div class="col-sm-8">
                                 <input id="elution_volume" name="elution_volume" type="number" step="0.01" class="form-control" placeholder="Elution Volume(mL)" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="enrichment_media" class="col-sm-4 control-label">Enrichment media</label>
+                            <div class="col-sm-8">
+                                <input id="enrichment_media" name="enrichment_media" placeholder="Enrichment media" type="text" class="form-control" required>
+                                <div class="val1tip"></div>
                             </div>
                         </div>
 
@@ -472,6 +481,7 @@
                 {"data": "time_sample_processed"},
                 {"data": "sample_wetweight"},
                 {"data": "elution_volume"},
+                {"data": "enrichment_media"},
                 {"data": "vol_sampletube"},
                 {
                     "data" : "action",
@@ -535,6 +545,7 @@
             $('#sampletype').attr('readonly', true);
             $('#sample_wetweight').val('');
             $('#elution_volume').val('');
+            $('#enrichment_media').val('');
             $('#tray_weight').val('');
             $('#traysample_wetweight').val('');
             $('#comments').val('');
@@ -583,6 +594,7 @@
             $('#time_sample_processed').val(data.time_sample_processed);
             $('#sample_wetweight').val(data.sample_wetweight);
             $('#elution_volume').val(data.elution_volume);
+            $('#enrichment_media').val(data.enrichment_media);
             $('#number_of_tubes').val(data.number_of_tubes);
             $('#number_of_tubes').prop('disabled', true);
             $('#number_of_tubes1').val(data.number_of_tubes);
@@ -607,7 +619,7 @@
             $('#comments').val(data.comments);
             $('#barcode_moisture_content').val(data.barcode_moisture_content);
             $('#compose-modal').modal('show');
-        });   
+        });    
                             
     });
 </script>
