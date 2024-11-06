@@ -95,6 +95,17 @@ class Ref_consumables_model extends CI_Model
           return $response;
       }
 
+
+      function get_ref_consumables()
+      {
+          $this->db->select('rc.id_consumables, ro.objective, cs.product_name');
+          $this->db->from('ref_consumables AS rc');
+          $this->db->join('ref_objective AS ro', 'ro.id_objective = rc.id_objective', 'left');
+          $this->db->join('consumables_stock AS cs', 'cs.id_stock = rc.id_stock', 'left');
+          $this->db->where('rc.flag', '0');
+          return $this->db->get()->result();
+      }
+
 }
 
 /* End of file Tbl_delivery_model.php */

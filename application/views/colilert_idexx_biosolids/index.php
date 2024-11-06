@@ -156,7 +156,7 @@
                             <div class="form-group">
                                 <label for="elution_volume" class="col-sm-4 control-label">Elution Volume (mL)</label>
                                 <div class="col-sm-8">
-                                    <input id="elution_volume" name="elution_volume" type="text" class="form-control" placeholder="Elution Volume (mL)" required>
+                                    <input id="elution_volume" name="elution_volume" type="number" step="0.001" class="form-control" placeholder="Elution Volume (mL)" required>
                                 </div>
                             </div>
 

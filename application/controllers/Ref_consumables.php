@@ -101,38 +101,46 @@ class Ref_consumables extends CI_Controller
     }
 
 
-    public function excel()
-    {
-        // $date1=$this->input->get('date1');
-        // $date2=$this->input->get('date2');
-
+    public function excel() {
+    
         $spreadsheet = new Spreadsheet();    
         $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1', "ID_destination"); 
-        $sheet->setCellValue('B1', "Destination");
-        // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
+        $sheet->setCellValue('A1', "ID"); 
+        $sheet->setCellValue('B1', "Product Name"); 
+        $sheet->setCellValue('C1', "Objective"); 
 
-        // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
-        $rdeliver = $this->Ref_consumables_model->get_all();
+        $ref_consumables = $this->Ref_consumables_model->get_ref_consumables();
     
-        // $no = 1; // Untuk penomoran tabel, di awal set dengan 1
-        $numrow = 2; // Set baris pertama untuk isi tabel adalah baris ke 4
-        foreach($rdeliver as $data){ // Lakukan looping pada variabel siswa
-          $sheet->setCellValue('A'.$numrow, $data->id_objective);
-          $sheet->setCellValue('B'.$numrow, $data->objective);
-        //   $no++; // Tambah 1 setiap kali looping
-          $numrow++; // Tambah 1 setiap kali looping
+        $numrow = 2;
+        foreach($ref_consumables as $data){ 
+            if (property_exists($data, 'id_consumables')) {
+                $sheet->setCellValue('A'.$numrow, $data->id_consumables);
+            } else {
+                $sheet->setCellValue('A'.$numrow, '');
+            }
+            if (property_exists($data, 'product_name')) {
+                $sheet->setCellValue('B'.$numrow, $data->product_name);
+            } else {
+                $sheet->setCellValue('B'.$numrow, '');
+            }
+    
+            if (property_exists($data, 'objective')) {
+                $sheet->setCellValue('C'.$numrow, $data->objective);
+            } else {
+                $sheet->setCellValue('C'.$numrow, '');
+            }
+
+            $numrow++;
         }
-    $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
-    $datenow=date("Ymd");
-    $fileName = 'MASTER_objective_'.$datenow.'.csv';
 
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header("Content-Disposition: attachment; filename=$fileName"); // Set nama file excel nya
-    header('Cache-Control: max-age=0');
+        // Set header untuk file excel
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="Report_ref_consumables.xlsx"');
+        header('Cache-Control: max-age=0');
 
-    $writer->save('php://output');
-           
+        // Tampilkan file excel
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
     }
 }
 
