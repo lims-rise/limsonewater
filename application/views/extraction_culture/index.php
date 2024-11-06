@@ -403,53 +403,53 @@
         });
 
 
-        // $('#barcode_sample').on("change", function() {
-        //     $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
-        //     data1 = $('#barcode_sample').val();
-        //     // // ckbar = data1.substring(0,5).toUpperCase();
-        //     // // ckarray = ["N-S2-", "F-S2-", "N-F0-", "F-F0-"];
-        //     // // ck = $.inArray(ckbar, ckarray);
-        //     // if (ck == -1) {
-        //     $.ajax({
-        //         type: "GET",
-        //         url: "Extraction_culture/barcode_check?id1="+data1,
-        //         // data:data1,
-        //         dataType: "json",
-        //         success: function(data) {
-        //             // var barcode = '';
-        //             if (data.length == 0) {
-        //                 tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> is not on reception or is already in the system !</span>');
-        //                 $('.val1tip').tooltipster('content', tip);
-        //                 $('.val1tip').tooltipster('show');
-        //                 $('#barcode_sample').focus();
-        //                 $('#barcode_sample').val('');     
-        //                 $('#sampletype').val('');    
-        //                 $('#barcode_sample').css({'background-color' : '#FFE6E7'});
-        //                 setTimeout(function(){
-        //                     $('#barcode_sample').css({'background-color' : '#FFFFFF'});
-        //                     setTimeout(function(){
-        //                         $('#barcode_sample').css({'background-color' : '#FFE6E7'});
-        //                         setTimeout(function(){
-        //                             $('#barcode_sample').css({'background-color' : '#FFFFFF'});
-        //                         }, 300);                            
-        //                     }, 300);
-        //                 }, 300);
-        //                 // barcode = data[0].barcode_sample;
-        //                 // console.log(data);
-        //             }
-        //             else {
-        //                 $('#sampletype').val(data[0].sampletype);    
-        //                 // $('#volume_filtered').val(data[0].vol);     
-        //                 // if (data[0].stype == 'Bootsocks') {
-        //                 //     $('#barcode_falcon2').attr('readonly', false);
-        //                 // } else {
-        //                 //     $('#barcode_falcon2').attr('readonly', true);
-        //                 // }
-        //             }
-        //         }
-        //     });
-        // // }
-        // });
+        $('#barcode_sample').on("change", function() {
+            $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
+            data1 = $('#barcode_sample').val();
+            // // ckbar = data1.substring(0,5).toUpperCase();
+            // // ckarray = ["N-S2-", "F-S2-", "N-F0-", "F-F0-"];
+            // // ck = $.inArray(ckbar, ckarray);
+            // if (ck == -1) {
+            $.ajax({
+                type: "GET",
+                url: "Extraction_culture/barcode_check?id1="+data1,
+                // data:data1,
+                dataType: "json",
+                success: function(data) {
+                    // var barcode = '';
+                    if (data.length == 0) {
+                        // tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> is not on reception or is already in the system !</span>');
+                        // $('.val1tip').tooltipster('content', tip);
+                        // $('.val1tip').tooltipster('show');
+                        // $('#barcode_sample').focus();
+                        // $('#barcode_sample').val('');     
+                        $('#sampletype').val('Biobank Sample');    
+                        // $('#barcode_sample').css({'background-color' : '#FFE6E7'});
+                        // setTimeout(function(){
+                        //     $('#barcode_sample').css({'background-color' : '#FFFFFF'});
+                        //     setTimeout(function(){
+                        //         $('#barcode_sample').css({'background-color' : '#FFE6E7'});
+                        //         setTimeout(function(){
+                        //             $('#barcode_sample').css({'background-color' : '#FFFFFF'});
+                        //         }, 300);                            
+                        //     }, 300);
+                        // }, 300);
+                        // barcode = data[0].barcode_sample;
+                        // console.log(data);
+                    }
+                    else {
+                        $('#sampletype').val(data[0].sampletype);    
+                        // $('#volume_filtered').val(data[0].vol);     
+                        // if (data[0].stype == 'Bootsocks') {
+                        //     $('#barcode_falcon2').attr('readonly', false);
+                        // } else {
+                        //     $('#barcode_falcon2').attr('readonly', true);
+                        // }
+                    }
+                }
+            });
+        // }
+        });
 
         var base_url = location.hostname;
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
