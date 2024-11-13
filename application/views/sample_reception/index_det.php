@@ -144,7 +144,7 @@
 
 							<div class="form-group">
 								<label for="id_testing_type" class="col-sm-4 control-label">Testing Type</label>
-								<div class="col-sm-4">
+								<div class="col-sm-4" id="conf">
 									<?php foreach ($testing_type as $row): ?>
 										<div class="checkbox">
 											<label>
@@ -177,8 +177,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
                 <h4 class="modal-title">Confirm Your Selection</h4>
             </div>
-            <div class="modal-body">
-                <div id="confirmation-content">
+			<div class="modal-body">
+                <div id="confirmation-content" >
                     <!-- Content will be loaded here dynamically -->
                 </div>
             </div>
@@ -263,6 +263,24 @@
 	font-style: italic;
 }
 
+/* Menambahkan scroll pada modal-body */
+.modal-body {
+    max-height: 400px; /* Tentukan tinggi maksimum sesuai kebutuhan */
+    overflow-y: auto;  /* Menambahkan scrollbar vertikal */
+
+}
+
+/* Optional: Menambahkan beberapa gaya agar tampilan lebih rapi */
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+#conf {
+	width: 50%;
+}
+
+
 </style>
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
@@ -334,10 +352,10 @@
 				data: { id_testing_type: selectedTestingTypes },
 				dataType: 'json',
 				success: function(response) {
-					let confirmationContent = '<ul style="list-style-type:none; font-size: 16px">';
+					let confirmationContent = '<ul style="list-style-type:none; font-size: 16px;">';
 					$.each(response, function(index, item) {
 						let barcode = item.barcode || "No Generate";
-						confirmationContent += '<li style="font-weight: bold;">' + (index + 1) + '. ' + '<span style="font-weight: normal;">Testing Type: </span>' + item.testing_type_name + ' - ' + '<span style="font-weight: normal;">"Auto generate barcode : </span>' + barcode + '</li>';
+						confirmationContent += '<li style="font-weight: bold;">' + (index + 1) + '. ' + '<span style="font-weight: normal;">Testing Type: </span>' + item.testing_type_name + ' - ' + '<span style="font-weight: normal;">"generate barcode : </span>' + barcode + '</li>';
 					});
 					confirmationContent += '</ul>';
 
@@ -346,6 +364,7 @@
 				}
 			});
 		}
+
 
 		//  When the save button is clicked in modal detail
 		$('#formDetail').on('submit', function(e) {
