@@ -189,23 +189,23 @@ class Sample_reception_model extends CI_Model
     }
 
     // Function to generate the next client
-    public function generate_client() {
-        $latest_id = $this->get_latest_client();
-        $prefix = 'CLT'; // Prefix consist of CLT
+    // public function generate_client() {
+    //     $latest_id = $this->get_latest_client();
+    //     $prefix = 'CLT'; // Prefix consist of CLT
 
-        if ($latest_id) {
-            if (strpos($latest_id, $prefix) === 0) {
-                $number = intval(substr($latest_id, strlen($prefix))) + 1;
-            } else {
-                $number = 1;
-            }
-        } else {
-            $number = 1;
-        }
-        $new_id = sprintf('%s%05d', $prefix, $number);
-        return $new_id;
+    //     if ($latest_id) {
+    //         if (strpos($latest_id, $prefix) === 0) {
+    //             $number = intval(substr($latest_id, strlen($prefix))) + 1;
+    //         } else {
+    //             $number = 1;
+    //         }
+    //     } else {
+    //         $number = 1;
+    //     }
+    //     $new_id = sprintf('%s%05d', $prefix, $number);
+    //     return $new_id;
 
-    }
+    // }
 
     // Function to get the latest id_one_water_sample
     public function get_latest_one_water_sample_id() {
@@ -246,7 +246,7 @@ class Sample_reception_model extends CI_Model
     // Fuction insert data
     public function insert($data) {
         $data['id_project'] = $this->generate_project_id();
-        $data['client'] = $this->generate_client();
+        // $data['client'] = $this->generate_client();
         $data['id_one_water_sample'] = $this->generate_one_water_sample_id();
         $this->db->insert('sample_reception',  $data);
     }
