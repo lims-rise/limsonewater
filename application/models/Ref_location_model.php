@@ -6,8 +6,8 @@ if (!defined('BASEPATH'))
 class Ref_location_model extends CI_Model
 {
 
-    public $table = 'ref_location_80';
-    public $id = 'id_location_80';
+    public $table = 'ref_location';
+    public $id = 'id_location';
     public $order = 'DESC';
 
     function __construct()
@@ -38,7 +38,7 @@ class Ref_location_model extends CI_Model
     {
         $this->db->order_by($this->id, 'ASC');
         $this->db->where('flag', '0');
-        return $this->db->get('ref_location_80')->result(); 
+        return $this->db->get('ref_location')->result(); 
     }
 
     function get_by_id($id)

@@ -25,8 +25,8 @@
                                         <th>Lab Tech</th>
                                         <th>Sample type</th>
                                         <th>Date extraction</th>
-                                        <th>Filtration volume</th>
-                                        <th>Membrane filter</th>
+                                        <th>Filtration volume (ml)</th>
+                                        <th>Membrane filter (µM)</th>
                                         <th>Comments</th>
                                         <th width="120px">Action</th>
                                     </tr>
@@ -119,16 +119,16 @@
                         <hr>
 
                         <div class="form-group">
-                            <label for="filtration_volume" class="col-sm-4 control-label">Filtration volume</label>
+                            <label for="filtration_volume" class="col-sm-4 control-label">Filtration volume (ml)</label>
                             <div class="col-sm-8">
-                                <input id="filtration_volume" name="filtration_volume" placeholder="Filtration volume" type="number" step="1" class="form-control">
+                                <input id="filtration_volume" name="filtration_volume" placeholder="Filtration volume (ml)" type="number" step="1" class="form-control">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="membrane_filter" class="col-sm-4 control-label">Membrane filter</label>
+                            <label for="membrane_filter" class="col-sm-4 control-label">Membrane filter (µM)</label>
                             <div class="col-sm-8">
-                                <input id="membrane_filter" name="membrane_filter" placeholder="Membrane filter" type="number" step="0.1" class="form-control">
+                                <input id="membrane_filter" name="membrane_filter" placeholder="Membrane filter (µM)" type="number" step="0.1" class="form-control">
                             </div>
                         </div>
 
@@ -229,16 +229,16 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="fin_volume" class="col-sm-4 control-label">Final Volume</label>
+                            <label for="fin_volume" class="col-sm-4 control-label">Final Volume (uL)</label>
                             <div class="col-sm-8">
-                                <input id="fin_volume" name="fin_volume" placeholder="Final Volume" type="number" step="1" class="form-control">
+                                <input id="fin_volume" name="fin_volume" placeholder="Final Volume (uL)" type="number" step="1" class="form-control">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="dna_concentration" class="col-sm-4 control-label">DNA Concentration</label>
+                            <label for="dna_concentration" class="col-sm-4 control-label">DNA Concentration (ng/ul)</label>
                             <div class="col-sm-8">
-                                <input id="dna_concentration" name="dna_concentration" placeholder="DNA Concentration" type="number" step="0.1" class="form-control">
+                                <input id="dna_concentration" name="dna_concentration" placeholder="DNA Concentration (ng/ul)" type="number" step="0.1" class="form-control">
                             </div>
                         </div>
 
@@ -295,7 +295,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="id_position" class="col-sm-4 control-label">Position on Cryobox</label>
+                            <label for="id_position" class="col-sm-4 control-label">Position in Cryobox</label>
                             <!-- <input id="id_pos" name="id_pos" type="hidden" class="form-control" required>						 -->
                             <div class="col-sm-2">
                             <select id='id_row' name="id_row" class="form-control" required>
@@ -468,22 +468,22 @@
                 success: function(data) {
                     // var barcode = '';
                     if (data.length == 0) {
-                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> is not on reception or is already in the system !</span>');
-                        $('.val1tip').tooltipster('content', tip);
-                        $('.val1tip').tooltipster('show');
-                        $('#barcode_sample').focus();
-                        $('#barcode_sample').val('');     
-                        $('#sampletype').val('');    
-                        $('#barcode_sample').css({'background-color' : '#FFE6E7'});
-                        setTimeout(function(){
-                            $('#barcode_sample').css({'background-color' : '#FFFFFF'});
-                            setTimeout(function(){
-                                $('#barcode_sample').css({'background-color' : '#FFE6E7'});
-                                setTimeout(function(){
-                                    $('#barcode_sample').css({'background-color' : '#FFFFFF'});
-                                }, 300);                            
-                            }, 300);
-                        }, 300);
+                        // tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> is not on reception or is already in the system !</span>');
+                        // $('.val1tip').tooltipster('content', tip);
+                        // $('.val1tip').tooltipster('show');
+                        // $('#barcode_sample').focus();
+                        // $('#barcode_sample').val('');     
+                        $('#sampletype').val('Biobank Sample');    
+                        // $('#barcode_sample').css({'background-color' : '#FFE6E7'});
+                        // setTimeout(function(){
+                        //     $('#barcode_sample').css({'background-color' : '#FFFFFF'});
+                        //     setTimeout(function(){
+                        //         $('#barcode_sample').css({'background-color' : '#FFE6E7'});
+                        //         setTimeout(function(){
+                        //             $('#barcode_sample').css({'background-color' : '#FFFFFF'});
+                        //         }, 300);                            
+                        //     }, 300);
+                        // }, 300);
                         // barcode = data[0].barcode_sample;
                         // console.log(data);
                     }
