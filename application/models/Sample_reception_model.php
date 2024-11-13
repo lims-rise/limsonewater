@@ -425,8 +425,6 @@ class Sample_reception_model extends CI_Model
         $this->db->order_by('sr.id_project', 'ASC');
         return $this->db->get()->result();
     }
-
-
       
 }
 
