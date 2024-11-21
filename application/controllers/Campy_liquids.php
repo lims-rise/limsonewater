@@ -80,7 +80,6 @@ class Campy_liquids extends CI_Controller
                 'campy_assay_barcode' => $row->campy_assay_barcode,
                 'date_sample_processed' => $row->date_sample_processed,
                 'time_sample_processed' => $row->time_sample_processed,
-                'sample_wetweight' => $row->sample_wetweight,
                 'elution_volume' => $row->elution_volume,
                 'vol_sampletube' => $row->vol_sampletube,
                 'tube_number' => $row->tube_number,
@@ -121,7 +120,6 @@ class Campy_liquids extends CI_Controller
         $campy_assay_barcode = $this->input->post('campy_assay_barcode', TRUE);
         $date_sample_processed = $this->input->post('date_sample_processed', TRUE);
         $time_sample_processed = $this->input->post('time_sample_processed', TRUE);
-        $sample_wetweight = $this->input->post('sample_wetweight', TRUE);
         $elution_volume = $this->input->post('elution_volume', TRUE);
     
         if ($mode == "insert") {
@@ -135,7 +133,6 @@ class Campy_liquids extends CI_Controller
                 'campy_assay_barcode' => $campy_assay_barcode,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
-                'sample_wetweight' => $sample_wetweight,
                 'elution_volume' => $elution_volume,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
@@ -180,7 +177,6 @@ class Campy_liquids extends CI_Controller
                 'campy_assay_barcode' => $campy_assay_barcode,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
-                'sample_wetweight' => $sample_wetweight,
                 'elution_volume' => $elution_volume,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
@@ -571,8 +567,7 @@ class Campy_liquids extends CI_Controller
         $sheet->setCellValue('F1', "MPN PCR Conducted");
         $sheet->setCellValue('G1', "Date Sample Processed");
         $sheet->setCellValue('H1', "Time Sample Processed");
-        $sheet->setCellValue('I1', "Sample Wet Weight");
-        $sheet->setCellValue('J1', "Elution Volume");
+        $sheet->setCellValue('I1', "Elution Volume");
     
         // Fetch the concentration data
         $finalConcentration = $this->Campy_liquids_model->get_export($id);
@@ -584,7 +579,7 @@ class Campy_liquids extends CI_Controller
             // Add Tube Volume headers
             foreach ($finalConcentration[0] as $key => $value) {
                 if (strpos($key, 'Tube') === 0) {
-                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
                     $sheet->setCellValue($columnLetter . '1', "$key Volume");
                     $tubeIndex++;
                 }
@@ -593,7 +588,7 @@ class Campy_liquids extends CI_Controller
             // Add Tube Result headers
             $plate_numbers = explode(',', $finalConcentration[0]->plate_numbers);
             foreach ($plate_numbers as $plate_number) {
-                $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+                $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
                 $sheet->setCellValue($columnLetter . '1', "Tube $plate_number Result");
                 $tubeIndex++;
             }
@@ -611,14 +606,13 @@ class Campy_liquids extends CI_Controller
             $sheet->setCellValue('F' . $numrow, $concentration->mpn_pcr_conducted ?? '');
             $sheet->setCellValue('G' . $numrow, $concentration->date_sample_processed ?? '');
             $sheet->setCellValue('H' . $numrow, $concentration->time_sample_processed ?? '');
-            $sheet->setCellValue('I' . $numrow, $concentration->sample_wetweight ?? '');
-            $sheet->setCellValue('J' . $numrow, $concentration->elution_volume ?? '');
+            $sheet->setCellValue('I' . $numrow, $concentration->elution_volume ?? '');
     
             // Fill tube volumes
             $tubeIndex = 0;
             foreach ($concentration as $key => $value) {
                 if (strpos($key, 'Tube') === 0) {
-                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
                     $sheet->setCellValue($columnLetter . $numrow, $value ?? '');
                     $tubeIndex++;
                 }
@@ -631,7 +625,7 @@ class Campy_liquids extends CI_Controller
                 $confirmation_value = isset($concentration->confirmation[$plate_number]) ? $concentration->confirmation[$plate_number] : 'No Growth'; 
                 
                 // Calculate the column letter dynamically
-                $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+                $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
                 $sheet->setCellValue($columnLetter . $numrow, $confirmation_value);
                 $tubeIndex++;
             }
@@ -702,18 +696,17 @@ class Campy_liquids extends CI_Controller
         $sheet->setCellValue('F1', "MPN PCR Conducted");
         $sheet->setCellValue('G1', "Date Sample Processed");
         $sheet->setCellValue('H1', "Time Sample Processed");
-        $sheet->setCellValue('I1', "Sample Wet Weight");
-        $sheet->setCellValue('J1', "Elution Volume");
+        $sheet->setCellValue('I1', "Elution Volume");
     
         // Add Tube Volume headers
         for ($i = 1; $i <= $numberOfTubes; $i++) {
-            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $i);
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(9 + $i);
             $sheet->setCellValue($columnLetter . '1', "Tube $i Volume");
         }
     
         // Add Tube Result headers
         for ($i = 1; $i <= $numberOfTubes; $i++) {
-            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $numberOfTubes + $i);
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(9 + $numberOfTubes + $i);
             $sheet->setCellValue($columnLetter . '1', "Tube $i Result");
         }
     }
@@ -731,14 +724,13 @@ class Campy_liquids extends CI_Controller
             $sheet->setCellValue('F' . $numrow, $concentration->mpn_pcr_conducted ?? '');
             $sheet->setCellValue('G' . $numrow, $concentration->date_sample_processed ?? '');
             $sheet->setCellValue('H' . $numrow, $concentration->time_sample_processed ?? '');
-            $sheet->setCellValue('I' . $numrow, $concentration->sample_wetweight ?? '');
-            $sheet->setCellValue('J' . $numrow, $concentration->elution_volume ?? '');
+            $sheet->setCellValue('I' . $numrow, $concentration->elution_volume ?? '');
     
             // Mengisi volume tabung
             $tubeIndex = 0;
             foreach ($concentration as $key => $value) {
                 if (strpos($key, 'Tube') === 0) {
-                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
                     $sheet->setCellValue($columnLetter . $numrow, $value ?? '');
                     $tubeIndex++;
                 }
@@ -746,7 +738,7 @@ class Campy_liquids extends CI_Controller
     
         // Mengisi hasil tabung
         for ($i = 1; $i <= $numberOfTubes; $i++) {
-            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $numberOfTubes + ($i - 1));
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $numberOfTubes + ($i - 1));
 
             // Mengakses nilai konfirmasi dengan indeks tabung
             $confirmation_value = $concentration->confirmation[$i] ?? 'No Growth'; // Nilai default jika tidak ada konfirmasi

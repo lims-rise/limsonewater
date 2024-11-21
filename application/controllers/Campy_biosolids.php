@@ -453,16 +453,23 @@ class Campy_biosolids extends CI_Controller
         $id_result_biochemical = $this->input->post('id_result_biochemical', TRUE);
         $id_result_hba = $this->input->post('id_result_hba1', TRUE);
         $id_campy_biosolids = $this->input->post('id_campy_biosolidsBiochemical', TRUE);
+        $gramlysis = $this->input->post('gramlysis', TRUE);
         $oxidase = $this->input->post('oxidase', TRUE);
         $catalase = $this->input->post('catalase', TRUE);
         $confirmation = $this->input->post('confirmation', TRUE);
         $sample_store = $this->input->post('sample_store', TRUE);
         $biochemical_tube = $this->input->post('biochemical_tube', TRUE);
-
+    
+        // Defaukt value if the attribute is null
+        if ($gramlysis === null) $gramlysis = '-';
+        if ($oxidase === null) $oxidase = '-';
+        if ($catalase === null) $catalase = '-';
+    
         if ($mode == "insert") {
             $data = array(
                 'id_campy_biosolids' => $id_campy_biosolids,
                 'id_result_hba' => $id_result_hba,
+                'gramlysis' => $gramlysis,
                 'oxidase' => $oxidase,
                 'catalase' => $catalase,
                 'confirmation' => $confirmation,
@@ -474,13 +481,12 @@ class Campy_biosolids extends CI_Controller
                 'user_created' => $this->session->userdata('id_users'),
                 'date_created' => date('Y-m-d H:i:s'),
             );
-            // var_dump($data);
-            // die();
             $this->Campy_biosolids_model->insertResultsBiochemical($data);
         } else if ($mode == "edit") {
             $data = array(
                 'id_campy_biosolids' => $id_campy_biosolids,
                 'id_result_hba' => $id_result_hba,
+                'gramlysis' => $gramlysis,
                 'oxidase' => $oxidase,
                 'catalase' => $catalase,
                 'confirmation' => $confirmation,
@@ -491,14 +497,12 @@ class Campy_biosolids extends CI_Controller
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => date('Y-m-d H:i:s'),
             );
-
-            // var_dump($data);
-            // die();
             $this->Campy_biosolids_model->updateResultsBiochemical($id_result_biochemical, $data);
         }
-
+    
         redirect(site_url("campy_biosolids/read/" . $id_campy_biosolids));
     }
+    
     
 
     
