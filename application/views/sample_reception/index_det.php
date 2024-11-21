@@ -144,7 +144,7 @@
 
 							<div class="form-group">
 								<label for="id_testing_type" class="col-sm-4 control-label">Testing Type</label>
-								<div class="col-sm-4">
+								<div class="col-sm-4" id="conf">
 									<?php foreach ($testing_type as $row): ?>
 										<div class="checkbox">
 											<label>
@@ -170,25 +170,32 @@
         </div><!-- /.modal -->
 
 <!-- MODAL CONFIRMATION -->
-	<div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header" style="background-color: #3c8dbc; color: white;">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
-					<h4 class="modal-title">Confirm Your Selection</h4>
-				</div>
-				<div class="modal-body">
-					<div id="confirmation-content">
-						<!-- Content will be loaded here dynamically -->
-					</div>
-				</div>
-				<div class="modal-footer clearfix">
-					<button type="button" id="confirm-save" class="btn btn-primary"><i class="fa fa-save"></i> Ok</button>
-					<button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> No</button>
-				</div>
-			</div><!-- /.modal-content -->
-		</div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
+<div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #3c8dbc; color: white;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
+                <h4 class="modal-title">Confirm Your Selection</h4>
+            </div>
+			<div class="modal-body">
+                <div id="confirmation-content" >
+                    <!-- Content will be loaded here dynamically -->
+                </div>
+            </div>
+            <div class="modal-footer clearfix">
+                <!-- Wrap this container to align it properly -->
+                <div class="modal-footer-content">
+                    <h5 class="modal-title">You have selected the following assays - is this correct ?</h5>
+                    <div class="modal-buttons">
+                        <button type="button" id="confirm-save" class="btn btn-primary"><i class="fa fa-save"></i> Ok</button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> No</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 
 <!-- MODAL CONFIRMATION DELETE -->
 <div class="modal fade" id="confirm-modal-delete" tabindex="-1" role="dialog" aria-hidden="true">
@@ -233,7 +240,48 @@
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 
+<style>
+	/* Flexbox untuk memastikan elemen berada di dalam satu baris */
+.modal-footer-content {
+    display: flex;
+    justify-content: space-between; /* Space between title and buttons */
+    align-items: center; /* Vertically center */
+    width: 100%;
+}
 
+/* Mengatur lebar tombol agar posisinya tetap ke kanan */
+.modal-buttons {
+    display: flex;
+    gap: 10px; /* Memberikan jarak antar tombol */
+}
+
+/* Jika diperlukan, memberi margin atau padding khusus pada judul modal */
+.modal-footer-content h5 {
+    margin: 0; /* Menghapus margin default */
+    font-weight: bold;
+	margin-left: 40px;
+	font-style: italic;
+}
+
+/* Menambahkan scroll pada modal-body */
+.modal-body {
+    max-height: 400px; /* Tentukan tinggi maksimum sesuai kebutuhan */
+    overflow-y: auto;  /* Menambahkan scrollbar vertikal */
+
+}
+
+/* Optional: Menambahkan beberapa gaya agar tampilan lebih rapi */
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+#conf {
+	width: 50%;
+}
+
+
+</style>
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
@@ -304,10 +352,10 @@
 				data: { id_testing_type: selectedTestingTypes },
 				dataType: 'json',
 				success: function(response) {
-					let confirmationContent = '<ul style="list-style-type:none; font-size: 16px">';
+					let confirmationContent = '<ul style="list-style-type:none; font-size: 16px;">';
 					$.each(response, function(index, item) {
 						let barcode = item.barcode || "No Generate";
-						confirmationContent += '<li style="font-weight: bold;">' + (index + 1) + '. ' + '<span style="font-weight: normal;">Testing Type: </span>' + item.testing_type_name + ' - ' + '<span style="font-weight: normal;">Barcode: </span>' + barcode + '</li>';
+						confirmationContent += '<li style="font-weight: bold;">' + (index + 1) + '. ' + '<span style="font-weight: normal;">Testing Type: </span>' + item.testing_type_name + ' - ' + '<span style="font-weight: normal;">"generate barcode : </span>' + barcode + '</li>';
 					});
 					confirmationContent += '</ul>';
 
@@ -316,6 +364,7 @@
 				}
 			});
 		}
+
 
 		//  When the save button is clicked in modal detail
 		$('#formDetail').on('submit', function(e) {

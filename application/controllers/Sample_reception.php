@@ -31,7 +31,7 @@ class Sample_reception extends CI_Controller
         $data['sampletype'] = $this->Sample_reception_model->getSampleType();
         $data['labtech'] = $this->Sample_reception_model->getLabTech();
         $data['id_project'] = $this->Sample_reception_model->generate_project_id();
-        $data['client'] = $this->Sample_reception_model->generate_client();
+        // $data['client'] = $this->Sample_reception_model->generate_client();
         $data['id_one_water_sample'] = $this->Sample_reception_model->generate_one_water_sample_id();
         $this->template->load('template','sample_reception/index', $data);
     } 
@@ -109,6 +109,8 @@ class Sample_reception extends CI_Controller
         $dt = new DateTime();
 
         $id_person = $this->input->post('id_person', TRUE);
+        $client = $this->input->post('client', TRUE);
+        $clientx = $this->input->post('clientx', TRUE);
         $date_arrival = $this->input->post('date_arrival', TRUE);
         $time_arrival = $this->input->post('time_arrival', TRUE);
         $id_client_sample = $this->input->post('id_client_sample', TRUE);
@@ -121,6 +123,7 @@ class Sample_reception extends CI_Controller
         if ($mode == "insert") {
             $data = array(
                 'id_person' => $id_person,
+                'client' => $client,
                 'date_arrival' => $date_arrival,
                 'time_arrival' => $time_arrival,
                 'id_client_sample' => $id_client_sample,
@@ -140,6 +143,7 @@ class Sample_reception extends CI_Controller
         } else if ($mode == "edit") {
             $data = array(
                 'id_person' => $id_person,
+                'client' => $clientx,
                 'date_arrival' => $date_arrival,
                 'time_arrival' => $time_arrival,
                 'id_client_sample' => $id_client_sample,

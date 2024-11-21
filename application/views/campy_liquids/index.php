@@ -28,7 +28,6 @@
                                             <th>Campy Assay Barcode</th>
                                             <th>Date of Sample</th>
                                             <th>Time of Sample</th>
-                                            <th>Sample Wet Weight</th>
                                             <th>Elution Volume</th>
                                             <th>Volume of Sample</th>
                                             <th width="120px">Action</th>
@@ -170,13 +169,6 @@
                                         <span class="glyphicon glyphicon-time"></span>
                                     </span>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="sample_wetweight" class="col-sm-4 control-label">Sample Wet Weight(g)</label>
-                            <div class="col-sm-8">
-                                <input id="sample_wetweight" name="sample_wetweight" type="number" step="0.01" class="form-control" placeholder="Sample Wet Weight(g)" required>
                             </div>
                         </div>
 
@@ -470,7 +462,6 @@
                 {"data": "campy_assay_barcode"},
                 {"data": "date_sample_processed"},
                 {"data": "time_sample_processed"},
-                {"data": "sample_wetweight"},
                 {"data": "elution_volume"},
                 {"data": "vol_sampletube"},
                 {
@@ -533,7 +524,6 @@
             $('#sampletype').val('');
             $('#sampletype').attr('readonly', true);
             $('#tray_weight').val('');
-            $('#traysample_wetweight').val('');
             $('#comments').val('');
             $('#mpn_pcr_conducted').val('');
             let sampleVolumeInputs = $('#sampleVolumeInputs');
@@ -578,7 +568,6 @@
             $('#campy_assay_barcode').attr('readonly', true);
             $('#date_sample_processed').val(data.date_sample_processed);
             $('#time_sample_processed').val(data.time_sample_processed);
-            $('#sample_wetweight').val(data.sample_wetweight);
             $('#elution_volume').val(data.elution_volume);
             $('#number_of_tubes').val(data.number_of_tubes);
             $('#number_of_tubes').prop('disabled', true);

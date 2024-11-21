@@ -12,9 +12,9 @@
                                 <div class="col-sm-4">
                                     <input class="form-control " id="id_project" type="hidden"  value="<?php echo $id_project ?>"  disabled>
                                 </div>
-                                <div class="col-sm-4">
+                                <!-- <div class="col-sm-4">
                                     <input class="form-control " id="client" type="hidden"  value="<?php echo $client ?>"  disabled>
-                                </div>
+                                </div> -->
                                 <div class="col-sm-4">
                                     <input class="form-control " id="id_one_water_sample" type="hidden"  value="<?php echo $id_one_water_sample ?>"  disabled>
                                 </div>
@@ -93,12 +93,33 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="clientx" class="col-sm-4 control-label">ID Client</label>
                                 <div class="col-sm-8">
                                     <input id="clientx" name="clientx" placeholder="Client (as on CoC)" type="text" class="form-control">
                                 </div>
-                            </div>
+                            </div> -->
+
+                            
+                            <div class="form-group">
+    <label for="client" class="col-sm-4 control-label">ID Client</label>
+    <div class="col-sm-8">
+        <input id="clientx" name="clientx" placeholder="Client (as on CoC)" type="text" class="form-control" style="display:none;">
+        <select id="client" name="client" class="form-control" tabindex="text">
+            <option value="" selected disabled>-- Client (as on CoC) --</option>
+            <option value="CLT00001">CLT00001</option>
+            <option value="CLT00002">CLT00002</option>
+            <option value="CLT00003">CLT00003</option>
+            <option value="CLT00004">CLT00004</option>
+            <option value="CLT00005">CLT00005</option>
+            <option value="CLT00006">CLT00006</option>
+            <option value="CLT00007">CLT00007</option>
+            <option value="CLT00008">CLT00008</option>
+            <option value="CLT00009">CLT00009</option>
+            <option value="CLT00010">CLT00010</option>
+        </select>
+    </div>
+</div>
 
                             <div class="form-group">
                                 <label for="id_client_sample" class="col-sm-4 control-label">Client Sample</label>
@@ -192,12 +213,25 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="date_collected" class="col-sm-4 control-label">Date collected</label>
                                 <div class="col-sm-8">
                                     <input id="date_collected" name="date_collected" type="date" class="form-control" placeholder="Date collected" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
                                 </div>
-                            </div>
+                            </div> -->
+                            <div class="form-group">
+    <label for="date_collected" class="col-sm-4 control-label">Date collected</label>
+    <div class="col-sm-8">
+        <!-- Dropdown untuk memilih antara tanggal atau NA -->
+        <select id="date_selector" name="date_collected" class="form-control" onchange="toggleDateInput()">
+            <option value="date">Select Date</option>
+            <option value="NA">NA</option>
+        </select>
+
+        <!-- Input tanggal yang hanya bisa dipilih jika bukan 'NA' -->
+        <input id="date_collected" name="date_collected" type="date" class="form-control" placeholder="Date collected" value="<?php echo date('Y-m-d'); ?>" max="<?php echo date('Y-m-d'); ?>" />
+    </div>
+</div>
 
                             <!-- <div class="form-group">
                                 <label for="time_collected" class="col-sm-4 control-label">Time collected</label>
@@ -286,6 +320,20 @@
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
+<script>
+function toggleDateInput() {
+    var dateSelector = $('#date_selector').val();
+    var dateInput = $('#date_collected');
+
+    if (dateSelector === 'NA') {
+        dateInput.val(''); // Clear date input if 'NA' is selected
+        dateInput.prop('disabled', true); // Disable the date input
+    } else {
+        dateInput.prop('disabled', false); // Enable the date input if 'Select Date' is selected
+    }
+}
+
+</script>
 <script type="text/javascript">
 
     let table;
@@ -610,15 +658,19 @@
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Sample reception | New <span id="my-another-cool-loader"></span>');
             $('#idx_project').val(id_project);
             $('#idx_project').attr('readonly', true);
-            $('#clientx').val(client);
-            $('#clientx').attr('readonly', true);
+            // $('#clientx').val(client);
+            // $('#clientx').attr('readonly', true);
+            $('#client').val('');
+            // $('#client').attr('readonly', true);
+            $('#clientx').hide();
+            $('#client').show();
             $('#idx_one_water_sample').val(id_one_water_sample);
             $('#idx_one_water_sample').attr('readonly', true);
             $('#initial').val('');
             $('#id_person').val('');
             $('#id_client_sample').val('');
             $('#id_sampletype').val('');
-            $('#time_collected').val('');
+            // $('#time_collected').val('');
             $('#comments').val('');
             $('#compose-modal').modal('show');
         });
@@ -631,6 +683,10 @@
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Sample reception | Update<span id="my-another-cool-loader"></span>');
             $('#idx_project').attr('readonly', true);
             $('#idx_project').val(data.id_project);
+            // $('#clientx').val(data.client);
+            // $('#clientx').attr('readonly', true);
+            $('#client').hide();
+            $('#clientx').show();
             $('#clientx').val(data.client);
             $('#clientx').attr('readonly', true);
             $('#idx_one_water_sample').val(data.id_one_water_sample);
@@ -638,7 +694,18 @@
             $('#id_person').val(data.id_person);
             $('#date_arrival').val(data.date_arrival).trigger('change');
             $('#time_arrival').val(data.time_arrival).trigger('change');
-            $('#date_collected').val(data.date_collected).trigger('change');
+            // $('#date_collected').val(data.date_collected).trigger('change');
+                // Handling the date_collected logic
+    let dateCollected = data.date_collected;
+    if (dateCollected === '0000-00-00') {
+        $('#date_selector').val('NA'); // Set dropdown to "NA"
+        $('#date_collected').val(''); // Clear date picker
+        $('#date_collected').prop('disabled', true); // Disable the date picker
+    } else {
+        $('#date_selector').val('date'); // Set dropdown to "Select Date"
+        $('#date_collected').val(dateCollected); // Set the actual date value
+        $('#date_collected').prop('disabled', false); // Enable the date picker
+    }
             $('#time_collected').val(data.time_collected).trigger('change');
             $('#id_client_sample').val(data.id_client_sample);
             $('#id_sampletype').val(data.id_sampletype);

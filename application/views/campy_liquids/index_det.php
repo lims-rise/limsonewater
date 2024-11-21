@@ -57,11 +57,6 @@
 						</div>
 
 						<div class="form-group">
-							<label for="sample_wetweight" class="col-sm-2 control-label">Sample Wet Weight</label>
-							<div class="col-sm-4">
-								<input class="form-control " id="sample_wetweight" name="sample_wetweight" value="<?php echo $sample_wetweight ?>"  disabled>
-							</div>
-
                             <label for="elution_volume" class="col-sm-2 control-label">Elution Volume</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="elution_volume" name="elution_volume" value="<?php echo $elution_volume ?>"  disabled>
@@ -161,7 +156,6 @@
                                                 <th>MPN PCR Conducted</th>
                                                 <th>Date Sample Processed</th>
                                                 <th>Time Sample Processed</th>
-                                                <th>Sample Wet Weight</th>
                                                 <th>Elution Volume</th>
                                                 <?php if (!empty($finalConcentration)): ?>
                                                     <?php foreach ($finalConcentration[0] as $key => $value): ?>
@@ -192,7 +186,6 @@
                                                         <td><?= htmlspecialchars($concentration->mpn_pcr_conducted) ?></td>
                                                         <td><?= htmlspecialchars($concentration->date_sample_processed) ?></td>
                                                         <td><?= htmlspecialchars($concentration->time_sample_processed) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->sample_wetweight) ?></td>
                                                         <td><?= htmlspecialchars($concentration->elution_volume) ?></td>
 
                                                         <?php foreach ($concentration as $key => $value): ?>
