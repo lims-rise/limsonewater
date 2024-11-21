@@ -94,7 +94,6 @@ class Extraction_liquid extends CI_Controller
         $filtration_volume = $this->input->post('filtration_volume', TRUE);
         $membrane_filter = $this->input->post('membrane_filter', TRUE);
         $dilution = $this->input->post('dilution', TRUE);
-        $culture_plate = $this->input->post('culture_plate', TRUE);
         $culture_media = $this->input->post('culture_media', TRUE);
         $id_kit = $this->input->post('id_kit', TRUE);
         $kit_lot = $this->input->post('kit_lot', TRUE);
@@ -126,7 +125,6 @@ class Extraction_liquid extends CI_Controller
                 'filtration_volume' => $filtration_volume,
                 'membrane_filter' => $membrane_filter,
                 'dilution' => $dilution,
-                'culture_plate' => $culture_plate,
                 'culture_media' => $culture_media,
                 'id_kit' => $id_kit,
                 'kit_lot' => $kit_lot,
@@ -173,7 +171,6 @@ class Extraction_liquid extends CI_Controller
                 'filtration_volume' => $filtration_volume,
                 'membrane_filter' => $membrane_filter,
                 'dilution' => $dilution,
-                'culture_plate' => $culture_plate,
                 'culture_media' => $culture_media,
                 'id_kit' => $id_kit,
                 'kit_lot' => $kit_lot,
@@ -320,7 +317,7 @@ class Extraction_liquid extends CI_Controller
                 'SELECT a.id_one_water_sample AS ID_one_water_sample, a.barcode_sample AS Barcode_sample, b.realname AS Lab_tech, 
                         a.date_extraction AS Date_extraction, a.filtration_volume AS `Filtration_volume_(ml)`, a.membrane_filter AS `Membrane_filter_(µM)`, 
                         a.dilution AS `Dilution_(ul)`, 
-                        a.culture_plate AS Culture_plate, a.culture_media AS Culture_media, d.kit AS Kit, a.kit_lot AS Kit_lot, 
+                        a.culture_media AS Culture_media, d.kit AS Kit, a.kit_lot AS Kit_lot, 
                         a.comments AS Comments, a.barcode_tube AS Barcode_tube, a.fin_volume AS `Final_volume_(uL)`, a.dna_concentration AS `DNA_concentration_(ng/ul)`, 
                         a.cryobox AS Cryobox, 
                         CONCAT("F",e.freezer,"-S",e.shelf,"-R",e.rack,"-T",e.tray) AS Freezer_location,
@@ -333,7 +330,7 @@ class Extraction_liquid extends CI_Controller
                         LEFT JOIN ref_position f ON a.id_pos=f.id_pos
                 ',
                 array('ID_one_water_sample', 'Barcode_sample', 'Lab_tech', 'Date_extraction', 'Filtration_volume_(ml)', 'Membrane_filter_(µM)',
-                'Dilution_(ul)', 'Culture_plate', 'Culture_media', 'Kit', 'Kit_lot', 'Comments', 'Barcode_tube', 'Final_volume_(uL)', 'DNA_concentration_(ng/ul)',
+                'Dilution_(ul)', 'Culture_media', 'Kit', 'Kit_lot', 'Comments', 'Barcode_tube', 'Final_volume_(uL)', 'DNA_concentration_(ng/ul)',
                 'Cryobox', 'Freezer_location', 'Position_in_box'), // Columns for Sheet1
             ),
             // array(

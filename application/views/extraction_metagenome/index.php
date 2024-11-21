@@ -25,7 +25,6 @@
                                         <th>Lab Tech</th>
                                         <th>Sample type</th>
                                         <th>Date extraction</th>
-                                        <th>Sample Name</th>
                                         <th>Comments</th>
                                         <th width="120px">Action</th>
                                     </tr>
@@ -116,19 +115,6 @@
                         </div>
 
                         <hr>
-
-                        <div class="form-group">
-                            <label for="sample_name" class="col-sm-4 control-label">Sample Name</label>
-                            <div class="col-sm-8">
-                                <select id="sample_name" name="sample_name" class="form-control" required>
-                                    <option value="" disabled selected='selected'>-- Select Sample name --</option>
-                                    <option value="CA">CA</option>
-                                    <option value="HBA">HBA</option>
-                                    <option value="LB">LB</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
-                        </div>
 
                         <div class="form-group">
                             <label for="date_extraction" class="col-sm-4 control-label">Date Extraction</label>
@@ -396,9 +382,9 @@
         });
 
 
-        $('#barcode_sample').on("change", function() {
+        $('#id_one_water_sample_list').on("change", function() {
             $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
-            data1 = $('#barcode_sample').val();
+            data1 = $('#id_one_water_sample_list').val();
             // // ckbar = data1.substring(0,5).toUpperCase();
             // // ckarray = ["N-S2-", "F-S2-", "N-F0-", "F-F0-"];
             // // ck = $.inArray(ckbar, ckarray);
@@ -540,7 +526,6 @@
                 {"data": "initial"},
                 {"data": "sampletype"},
                 {"data": "date_extraction"},
-                {"data": "sample_name"},
                 {"data": "comments"},
                 {
                     "data" : "action",
@@ -593,7 +578,6 @@
             $('#sampletype').attr('readonly', true);
             $('#sampletype').val('');
             // $('#date_extraction').val('');
-            $('#sample_name').val('');
             $('#id_kit').val('');
             $('#kit_lot').val('');
             $('#barcode_tube').val('');
@@ -628,7 +612,6 @@
             $('#sampletype').attr('readonly', true);
             $('#sampletype').val(data.sampletype);
             $('#date_extraction').val(data.date_extraction).trigger('change');
-            $('#sample_name').val(data.sample_name).trigger('change');
             $('#id_kit').val(data.id_kit).trigger('change');
             $('#kit_lot').val(data.kit_lot);
             $('#barcode_tube').val(data.barcode_tube);

@@ -19,7 +19,7 @@ class Extraction_liquid_model extends CI_Model
     function json() {
         $this->datatables->select('extraction_liquid.barcode_sample, extraction_liquid.id_one_water_sample, ref_person.initial,
         ref_sampletype.sampletype, extraction_liquid.date_extraction, extraction_liquid.filtration_volume, extraction_liquid.membrane_filter,
-        extraction_liquid.dilution, extraction_liquid.culture_plate, extraction_liquid.culture_media,
+        extraction_liquid.dilution, extraction_liquid.culture_media,
         ref_kit.kit, extraction_liquid.kit_lot, extraction_liquid.barcode_tube, extraction_liquid.fin_volume, extraction_liquid.dna_concentration, 
         extraction_liquid.cryobox, extraction_liquid.id_location, extraction_liquid.comments, extraction_liquid.flag, 
         extraction_liquid.id_person, extraction_liquid.id_kit, extraction_liquid.id_location,
@@ -150,15 +150,19 @@ class Extraction_liquid_model extends CI_Model
     }
 
     function barcode_check($id){
+        // select ref_barcode.barcode, ref_sampletype.sampletype
+        // from ref_barcode 
+        // left join sample_reception_sample on ref_barcode.id_sample = sample_reception_sample.id_sample
+        // left join sample_reception on sample_reception_sample.id_project = sample_reception.id_project
+        // left join ref_sampletype on sample_reception.id_sampletype = ref_sampletype.id_sampletype
+        // WHERE ref_barcode.barcode = "'.$id.'"
+        // AND ref_barcode.barcode NOT IN (SELECT barcode_sample FROM extraction_liquid)
+
         $q = $this->db->query('
-        select ref_barcode.barcode, ref_sampletype.sampletype
-        from ref_barcode 
-        left join sample_reception_sample on ref_barcode.id_sample = sample_reception_sample.id_sample
-        left join sample_reception on sample_reception_sample.id_project = sample_reception.id_project
+        select ref_sampletype.sampletype
+        from sample_reception 
         left join ref_sampletype on sample_reception.id_sampletype = ref_sampletype.id_sampletype
-        WHERE ref_barcode.barcode = "'.$id.'"
-        AND ref_barcode.barcode NOT IN (SELECT barcode_sample FROM extraction_liquid)
-        ');        
+        WHERE sample_reception.id_one_water_sample = "'.$id.'"');        
         $response = $q->result_array();
         return $response;
       }    

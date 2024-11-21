@@ -161,26 +161,6 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="culture_plate" class="col-sm-4 control-label">Culture plate</label>
-                            <div class="col-sm-8">
-                                <select id="culture_plate" name="culture_plate" class="form-control" required>
-                                    <option value="" disabled selected='selected'>-- Select Culture plate --</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
                             <label for="date_extraction" class="col-sm-4 control-label">Date Extraction</label>
                             <div class="col-sm-8">
                                 <input id="date_extraction" name="date_extraction" type="date" class="form-control" placeholder="Date Extraction" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
@@ -453,9 +433,9 @@
         });
 
 
-        $('#barcode_sample').on("change", function() {
+        $('#id_one_water_sample_list').on("change", function() {
             $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
-            data1 = $('#barcode_sample').val();
+            data1 = $('#id_one_water_sample_list').val();
             // // ckbar = data1.substring(0,5).toUpperCase();
             // // ckarray = ["N-S2-", "F-S2-", "N-F0-", "F-F0-"];
             // // ck = $.inArray(ckbar, ckarray);
@@ -654,7 +634,6 @@
             $('#filtration_volume').val('');
             $('#membrane_filter').val('');
             $('#dilution').val('');
-            $('#culture_plate').val('');
             $('#culture_media').val('');
             $('#id_kit').val('');
             $('#kit_lot').val('');
@@ -694,7 +673,6 @@
             $('#filtration_volume').val(data.filtration_volume);
             $('#membrane_filter').val(data.membrane_filter);
             $('#dilution').val(data.dilution).trigger('change');
-            $('#culture_plate').val(data.culture_plate).trigger('change');
             $('#culture_media').val(data.culture_media).trigger('change');
             $('#id_kit').val(data.id_kit).trigger('change');
             $('#kit_lot').val(data.kit_lot);

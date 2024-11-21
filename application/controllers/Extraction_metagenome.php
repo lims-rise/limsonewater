@@ -91,7 +91,6 @@ class Extraction_metagenome extends CI_Controller
         $barcode_sample = $this->input->post('barcode_sample', TRUE);
         $id_person = $this->input->post('id_person', TRUE);
         $date_extraction = $this->input->post('date_extraction', TRUE);
-        $sample_name = $this->input->post('sample_name', TRUE);
         $id_kit = $this->input->post('id_kit', TRUE);
         $kit_lot = $this->input->post('kit_lot', TRUE);
         $comments = $this->input->post('comments', TRUE);
@@ -118,7 +117,6 @@ class Extraction_metagenome extends CI_Controller
                 'id_one_water_sample' => $id_one_water_sample,
                 'id_person' => $id_person,
                 'date_extraction' => $date_extraction,
-                'sample_name' => $sample_name,
                 'id_kit' => $id_kit,
                 'kit_lot' => $kit_lot,
                 'comments' => $comments,
@@ -160,7 +158,6 @@ class Extraction_metagenome extends CI_Controller
                 'id_one_water_sample' => $id_one_water_sample,
                 'id_person' => $id_person,
                 'date_extraction' => $date_extraction,
-                'sample_name' => $sample_name,
                 'id_kit' => $id_kit,
                 'kit_lot' => $kit_lot,
                 'comments' => $comments,
@@ -303,7 +300,7 @@ class Extraction_metagenome extends CI_Controller
             array(
                 'Extraction_metagenome',
                 'SELECT a.id_one_water_sample AS ID_one_water_sample, a.barcode_sample AS Barcode_sample, b.realname AS Lab_tech, 
-                        a.date_extraction AS Date_extraction, a.sample_name AS Sample_name, d.kit AS Kit, a.kit_lot AS Kit_lot, 
+                        a.date_extraction AS Date_extraction, d.kit AS Kit, a.kit_lot AS Kit_lot, 
                         a.comments AS Comments, a.barcode_tube AS Barcode_tube, a.dna_concentration AS `DNA_concentration_(ng/ul)`, 
                         a.cryobox AS Cryobox, 
                         CONCAT("F",e.freezer,"-S",e.shelf,"-R",e.rack,"-T",e.tray) AS Freezer_location,
@@ -315,7 +312,7 @@ class Extraction_metagenome extends CI_Controller
                     LEFT JOIN ref_location e ON a.id_location = e.id_location
                     LEFT JOIN ref_position f ON a.id_pos=f.id_pos
                 ',
-                array('ID_one_water_sample', 'Barcode_sample', 'Lab_tech', 'Date_extraction', 'Sample_name',
+                array('ID_one_water_sample', 'Barcode_sample', 'Lab_tech', 'Date_extraction',
                 'Kit', 'Kit_lot', 'Comments', 'Barcode_tube', 'DNA_concentration_(ng/ul)',
                 'Cryobox', 'Freezer_location', 'Position_in_box'),  // Columns for Sheet1
             ),

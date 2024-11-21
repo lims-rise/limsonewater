@@ -446,9 +446,11 @@
         });
 
 
-        $('#barcode_sample').on("change", function() {
+        $('#id_one_water_sample_list').on("change", function() {
             $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
-            data1 = $('#barcode_sample').val();
+            
+            data1 = $('#id_one_water_sample_list').val();
+            // data1 = $('#barcode_sample').val();
             // // ckbar = data1.substring(0,5).toUpperCase();
             // // ckarray = ["N-S2-", "F-S2-", "N-F0-", "F-F0-"];
             // // ck = $.inArray(ckbar, ckarray);

@@ -71,7 +71,7 @@
                             <div class="col-sm-8">
                                 <div class="input-group clockpicker">
                                     <input id="time_out" name="time_out" class="form-control" placeholder="Time OUT" value="<?php 
-                                    $datetime = new DateTime( "now", new DateTimeZone( "Asia/Makassar" ) );
+                                    $datetime = new DateTime;
                                     echo $datetime->format( 'H:i' );
                                     ?>">
                                     <span class="input-group-addon">

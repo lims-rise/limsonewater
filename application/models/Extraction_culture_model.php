@@ -150,15 +150,19 @@ class Extraction_culture_model extends CI_Model
     }
 
     function barcode_check($id){
+        // select ref_barcode.barcode, ref_sampletype.sampletype
+        // from ref_barcode 
+        // left join sample_reception_sample on ref_barcode.id_sample = sample_reception_sample.id_sample
+        // left join sample_reception on sample_reception_sample.id_project = sample_reception.id_project
+        // left join ref_sampletype on sample_reception.id_sampletype = ref_sampletype.id_sampletype
+        // WHERE ref_barcode.barcode = "'.$id.'"
+        // AND ref_barcode.barcode NOT IN (SELECT barcode_sample FROM extraction_culture)
+
         $q = $this->db->query('
-        select ref_barcode.barcode, ref_sampletype.sampletype
-        from ref_barcode 
-        left join sample_reception_sample on ref_barcode.id_sample = sample_reception_sample.id_sample
-        left join sample_reception on sample_reception_sample.id_project = sample_reception.id_project
+        select ref_sampletype.sampletype
+        from sample_reception 
         left join ref_sampletype on sample_reception.id_sampletype = ref_sampletype.id_sampletype
-        WHERE ref_barcode.barcode = "'.$id.'"
-        AND ref_barcode.barcode NOT IN (SELECT barcode_sample FROM extraction_culture)
-        ');        
+        WHERE sample_reception.id_one_water_sample = "'.$id.'"');        
         $response = $q->result_array();
         return $response;
       }    
