@@ -14,7 +14,7 @@ class Campy_liquids_model extends CI_Model
 // datatables
     function json() {
         $this->datatables->select('cl.id_campy_liquids, cl.id_one_water_sample, cl.id_person, cl.number_of_tubes, cl.mpn_pcr_conducted, cl.campy_assay_barcode, 
-        rp.initial, cl.date_sample_processed, cl.time_sample_processed, cl.sample_wetweight, cl.elution_volume,
+        rp.initial, cl.date_sample_processed, cl.time_sample_processed, cl.elution_volume,
         cl.id_sampletype, rs.sampletype, GROUP_CONCAT(svl.vol_sampletube ORDER BY svl.tube_number SEPARATOR ", ") AS vol_sampletube, GROUP_CONCAT(svl.tube_number ORDER BY svl.tube_number SEPARATOR ", ") AS tube_number, cl.flag,
         cl.date_created, cl.date_updated, GREATEST(cl.date_created, cl.date_updated) AS latest_date');
         $this->datatables->from('campy_liquids AS cl');
@@ -153,7 +153,7 @@ class Campy_liquids_model extends CI_Model
         $case_query = implode(', ', $case_statements);
     
         // Final query
-        $this->db->select("cl.id_one_water_sample, cl.id_person, rp.initial, cl.mpn_pcr_conducted, cl.number_of_tubes, cl.campy_assay_barcode, cl.date_sample_processed, cl.time_sample_processed, cl.sample_wetweight, cl.elution_volume, rs.sampletype,
+        $this->db->select("cl.id_one_water_sample, cl.id_person, rp.initial, cl.mpn_pcr_conducted, cl.number_of_tubes, cl.campy_assay_barcode, cl.date_sample_processed, cl.time_sample_processed, cl.elution_volume, rs.sampletype,
                            $case_query, 
                            GROUP_CONCAT(DISTINCT rbl.biochemical_tube ORDER BY rbl.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
                            GROUP_CONCAT(DISTINCT CONCAT(rbl.biochemical_tube, ':', rbl.confirmation) ORDER BY rbl.biochemical_tube SEPARATOR ', ') AS confirmation,
@@ -222,7 +222,7 @@ class Campy_liquids_model extends CI_Model
         $case_query = implode(', ', $case_statements);
     
         // Final query
-        $this->db->select("cl.id_one_water_sample, cl.id_person, rp.initial, cl.mpn_pcr_conducted, cl.number_of_tubes, cl.campy_assay_barcode, cl.date_sample_processed, cl.time_sample_processed, cl.sample_wetweight, cl.elution_volume, rs.sampletype,
+        $this->db->select("cl.id_one_water_sample, cl.id_person, rp.initial, cl.mpn_pcr_conducted, cl.number_of_tubes, cl.campy_assay_barcode, cl.date_sample_processed, cl.time_sample_processed, cl.elution_volume, rs.sampletype,
                            $case_query, 
                            GROUP_CONCAT(DISTINCT rbl.biochemical_tube ORDER BY rbl.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
                            GROUP_CONCAT(DISTINCT CONCAT(rbl.biochemical_tube, ':', rbl.confirmation) ORDER BY rbl.biochemical_tube SEPARATOR ', ') AS confirmation,
@@ -296,7 +296,7 @@ class Campy_liquids_model extends CI_Model
         $case_query = implode(', ', $case_statements);
     
         // Final query
-        $this->db->select("cl.id_one_water_sample, cl.id_person, rp.initial, cl.mpn_pcr_conducted, cl.number_of_tubes, cl.campy_assay_barcode, cl.date_sample_processed, cl.time_sample_processed, cl.sample_wetweight, cl.elution_volume, rs.sampletype,
+        $this->db->select("cl.id_one_water_sample, cl.id_person, rp.initial, cl.mpn_pcr_conducted, cl.number_of_tubes, cl.campy_assay_barcode, cl.date_sample_processed, cl.time_sample_processed, cl.elution_volume, rs.sampletype,
                            $case_query, 
                            GROUP_CONCAT(DISTINCT rbl.biochemical_tube ORDER BY rbl.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
                            GROUP_CONCAT(DISTINCT CONCAT(rbl.biochemical_tube, ':', rbl.confirmation) ORDER BY rbl.biochemical_tube SEPARATOR ', ') AS confirmation,
@@ -359,7 +359,7 @@ class Campy_liquids_model extends CI_Model
       $response = array();
       $this->db->select('cl.id_campy_liquids, cl.id_one_water_sample, cl.id_person, rp.initial, cl.number_of_tubes,
         cl.id_sampletype, rs.sampletype, cl.mpn_pcr_conducted, cl.campy_assay_barcode, cl.date_sample_processed,
-        cl.time_sample_processed, cl.time_sample_processed, cl.sample_wetweight, cl.elution_volume,
+        cl.time_sample_processed, cl.time_sample_processed, cl.elution_volume,
         GROUP_CONCAT(svl.vol_sampletube ORDER BY svl.tube_number SEPARATOR ", ") AS vol_sampletube, 
         GROUP_CONCAT(svl.tube_number ORDER BY svl.tube_number SEPARATOR ", ") AS tube_number');
       $this->db->from('campy_liquids AS cl');

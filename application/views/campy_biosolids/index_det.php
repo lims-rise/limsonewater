@@ -390,14 +390,26 @@
                     <input id="id_result_biochemical" name="id_result_biochemical" type="hidden" class="form-control input-sm">
                     <input id="biochemical_tube" name="biochemical_tube" type="hidden" class="form-control input-sm">
                     <input id="id_result_hba1" name="id_result_hba1" type="hidden" class="form-control input-sm">
-                    
+                 
+                    <!-- Gramlysis Result -->
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Gramlysis Result</label>
+                        <div class="col-sm-8">
+                            <label class="radio-inline">
+                                <input type="radio" name="gramlysis" value="Positive" > Positive
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="gramlysis" value="Negative"> Negative
+                            </label>
+                        </div>
+                    </div>
 
                     <!-- Oxidase Result -->
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Oxidase Result</label>
                         <div class="col-sm-8">
                             <label class="radio-inline">
-                                <input type="radio" name="oxidase"  value="Positive" required> Positive
+                                <input type="radio" name="oxidase"  value="Positive" > Positive
                             </label>
                             <label class="radio-inline">
                                 <input type="radio" name="oxidase"  value="Negative"> Negative
@@ -410,7 +422,7 @@
                         <label class="col-sm-4 control-label">Catalase Result</label>
                         <div class="col-sm-8">
                             <label class="radio-inline">
-                                <input type="radio" name="catalase"  value="Positive" required> Positive
+                                <input type="radio" name="catalase"  value="Positive" > Positive
                             </label>
                             <label class="radio-inline">
                                 <input type="radio" name="catalase" value="Negative"> Negative
@@ -530,19 +542,31 @@
 
     $(document).ready(function() {
 
+// Event handler untuk mengatur nilai null saat klik pada radio button yang sudah dipilih
+$('input[name="gramlysis"], input[name="oxidase"], input[name="catalase"]').on('click', function() {
+    // Mengecek apakah radio button yang diklik sudah dipilih
+    if ($(this).prop('checked') && $(this).data('clicked')) {
+        $(this).prop('checked', false);  // Hapus pilihan
+        $(this).data('clicked', false);  // Reset data clicked
+    } else {
+        $(this).data('clicked', true);  // Tandai radio button sudah diklik
+    }
+    updateConfirmation(); // Update konfirmasi setelah perubahan
+});
 
-    // Event listener untuk radio button Oxidase
-    $('input[name="oxidase"]').on('change', updateConfirmation);
+function updateConfirmation() { 
+    const oxidaseValue = $('input[name="oxidase"]:checked').val();
+    const catalaseValue = $('input[name="catalase"]:checked').val();
+    const gramLysisValue = $('input[name="gramlysis"]:checked').val();
     
-    // Event listener untuk radio button Catalase
-    $('input[name="catalase"]').on('change', updateConfirmation);
-    
-    function updateConfirmation() {
-        const oxidaseValue = $('input[name="oxidase"]:checked').val();
-        const catalaseValue = $('input[name="catalase"]:checked').val();
-        
-        let confirmationText = '';
+    let confirmationText = '';
 
+    // Jika Gram-Lysis positif
+    if (gramLysisValue === 'Positive') {
+        confirmationText = 'Not Campylobacter';
+    } 
+    // Jika Gram-Lysis negatif, baru cek Oxidase dan Catalase
+    else {
         if (oxidaseValue === 'Positive' && catalaseValue === 'Positive') {
             confirmationText = 'Campylobacter';
         } else if (oxidaseValue === 'Negative' && catalaseValue === 'Negative') {
@@ -554,9 +578,15 @@
         } else {
             confirmationText = '';
         }
-
-        $('#confirmation').val(confirmationText);
     }
+
+    // Menampilkan hasil ke kolom confirmation
+    $('#confirmation').val(confirmationText);
+}
+
+
+
+
 
         function generateGrowthPlateInputs(container, numberOfTubes) {
             container.empty(); // Clear existing inputs
@@ -893,6 +923,7 @@
                         <table id="${tableId}" class="table display table-bordered table-striped" width="100%">
                             <thead>
                                 <tr>
+                                    <th>Gram-lysis Result</th>
                                     <th>Oxidase Result</th>
                                     <th>Catalase Result</th>
                                     <th>Confirmation</th>
@@ -927,6 +958,7 @@
                     type: "POST"
                 },
                 columns: [
+                    {"data": "gramlysis"},
                     {"data": "oxidase"},
                     {"data": "catalase"},
                     {"data": "confirmation"},
@@ -960,6 +992,7 @@
             $('#modal-title-biochemical').html(`<i class="fa fa-wpforms"></i> Insert | Biochemical Tube ${plateNumber} <span id="my-another-cool-loader"></span>`);
             $('#id_campy_biosolidsBiochemical').val(id_campy_biosolids);
             $('#id_result_hba1').val(data.id_result_hba);
+            $('#gramlysis').val('');
             $('#oxidase').val('');
             $('#catalase').val('');
             // $('#confirmation').val('');
@@ -983,6 +1016,9 @@
             $('#id_result_biochemical').val(data.id_result_biochemical);
             $('#id_campy_biosolidsBiochemical').val(data.id_campy_biosolids);
             $('#id_result_hba1').val(data.id_result_hba);
+            // Set radio button untuk gramlysis
+            $('input[name="gramlysis"][value="' + data.gramlysis + '"]').prop('checked', true); 
+
             // Set radio button untuk oxidase
             $('input[name="oxidase"][value="' + data.oxidase + '"]').prop('checked', true);
             

@@ -105,7 +105,7 @@ class Campy_biosolids_model extends CI_Model
 
     function subjsonBiochemical($id, $biochemical_tube) {
 
-        $this->datatables->select('rb.id_result_biochemical, rb.id_campy_biosolids, rb.id_result_hba, cb.campy_assay_barcode, rb.oxidase, rb.catalase, rb.confirmation, rb.sample_store, rb.biochemical_tube, rb.flag');
+        $this->datatables->select('rb.id_result_biochemical, rb.id_campy_biosolids, rb.id_result_hba, cb.campy_assay_barcode, rb.gramlysis, rb.oxidase, rb.catalase, rb.confirmation, rb.sample_store, rb.biochemical_tube, rb.flag');
         $this->datatables->from('result_biochemical AS rb');
         $this->datatables->join('campy_biosolids AS cb', 'rb.id_campy_biosolids = cb.id_campy_biosolids', 'left');
         $this->datatables->where('rb.flag', '0');
