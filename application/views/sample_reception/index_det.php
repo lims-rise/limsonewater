@@ -26,7 +26,7 @@
 								<input class="form-control " id="client" name="client" value="<?php echo $client ?>"  disabled>
 							</div>
 
-							<label for="id_one_water_sample" class="col-sm-2 control-label">ID Sample</label>
+							<label for="id_one_water_sample" class="col-sm-2 control-label">One Water Sample ID</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="id_one_water_sample" name="id_one_water_sample" value="<?php echo $id_one_water_sample ?>"  disabled>
 							</div>

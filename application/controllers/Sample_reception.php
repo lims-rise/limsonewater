@@ -62,6 +62,7 @@ class Sample_reception extends CI_Controller
         if ($row) {
             $data = array(
                 'id_project' => $row->id_project,
+                'client_quote_number' => $row->client_quote_number,
                 'client' => $row->client,
                 'id_one_water_sample' => $row->id_one_water_sample,
                 'initial' => $row->initial,
@@ -71,6 +72,7 @@ class Sample_reception extends CI_Controller
                 'time_collected' => $row->time_collected,
                 'id_client_sample' => $row->id_client_sample,
                 'sampletype' => $row->sampletype,
+                'quality_check' => $row->quality_check,
                 'comments' => $row->comments,
                 'testing_type' => $this->Sample_reception_model->getTest(),
                 // 'barcode' => $this->Water_sample_reception_model->getBarcode(),
@@ -109,12 +111,14 @@ class Sample_reception extends CI_Controller
         $dt = new DateTime();
 
         $id_person = $this->input->post('id_person', TRUE);
+        $client_quote_number = $this->input->post('client_quote_number', TRUE);
         $client = $this->input->post('client', TRUE);
         $clientx = $this->input->post('clientx', TRUE);
         $date_arrival = $this->input->post('date_arrival', TRUE);
         $time_arrival = $this->input->post('time_arrival', TRUE);
         $id_client_sample = $this->input->post('id_client_sample', TRUE);
         $id_sampletype = $this->input->post('id_sampletype', TRUE);
+        $quality_check = $this->input->post('quality_check', TRUE);
         $comments = $this->input->post('comments', TRUE);
         $date_collected = $this->input->post('date_collected',TRUE);
         $time_collected = $this->input->post('time_collected',TRUE);
@@ -122,15 +126,17 @@ class Sample_reception extends CI_Controller
     
         if ($mode == "insert") {
             $data = array(
-                'id_person' => $id_person,
+                'client_quote_number' => $client_quote_number,
                 'client' => $client,
-                'date_arrival' => $date_arrival,
-                'time_arrival' => $time_arrival,
                 'id_client_sample' => $id_client_sample,
                 'id_sampletype' => $id_sampletype,
-                'comments' => $comments,
+                'id_person' => $id_person,
+                'date_arrival' => $date_arrival,
+                'time_arrival' => $time_arrival,
                 'date_collected' => $date_collected,
                 'time_collected' => $time_collected,
+                'quality_check' => $quality_check,
+                'comments' => $comments,
                 'flag' => '0',
                 'uuid' => $this->uuid->v4(),
                 'user_created' => $this->session->userdata('id_users'),
@@ -142,15 +148,17 @@ class Sample_reception extends CI_Controller
 
         } else if ($mode == "edit") {
             $data = array(
-                'id_person' => $id_person,
-                'client' => $clientx,
-                'date_arrival' => $date_arrival,
-                'time_arrival' => $time_arrival,
+                'client_quote_number' => $client_quote_number,
+                'client' => $client,
                 'id_client_sample' => $id_client_sample,
                 'id_sampletype' => $id_sampletype,
-                'comments' => $comments,
+                'id_person' => $id_person,
+                'date_arrival' => $date_arrival,
+                'time_arrival' => $time_arrival,
                 'date_collected' => $date_collected,
                 'time_collected' => $time_collected,
+                'quality_check' => $quality_check,
+                'comments' => $comments,
                 'flag' => '0',
                 // 'uuid' => $this->uuid->v4(),
                 'user_updated' => $this->session->userdata('id_users'),

@@ -17,9 +17,9 @@ class Sample_reception_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('sr.id_project, sr.client, sr.id_one_water_sample, sr.id_person, rp.initial,
+        $this->datatables->select('sr.id_project, sr.client_quote_number, sr.client, sr.id_one_water_sample, sr.id_person, rp.initial,
         sr.date_arrival, sr.time_arrival, sr.date_collected, sr.time_collected, sr.date_created, sr.date_updated, sr.id_client_sample, rst.sampletype, sr.id_sampletype, 
-        sr.comments, sr.flag, GREATEST(sr.date_created, sr.date_updated) AS latest_date');
+        sr.quality_check, sr.comments, sr.flag, GREATEST(sr.date_created, sr.date_updated) AS latest_date');
     
         
         // Subquery untuk mendapatkan date_created dan date_updated
@@ -323,7 +323,7 @@ class Sample_reception_model extends CI_Model
         $response = array();
         $this->db->select('*');
         $this->db->where('flag', '0');
-        $this->db->order_by('sampletype', 'DESC');
+        $this->db->order_by('id_sampletype', 'ASC');
         $q = $this->db->get('ref_sampletype');
         $response = $q->result_array();
         return $response;
