@@ -71,6 +71,38 @@
         width: 100%;
         z-index: 1;
     }
+
+/* Example for styling the three states
+.checked {
+    color: green;
+}
+.crossed {
+    color: red;
+    text-decoration: line-through;
+}
+.unchecked {
+    color: gray;
+} */
+/* input.form-check-label */
+.unchecked {
+    color: gray !important;
+    border-color: gray !important;
+    box-shadow: none; /* Override Bootstrap box-shadow */
+}
+
+/* input.form-check-label. */
+.checked {
+    color: green !important;
+    border-color: green !important;
+}
+
+/* input.form-check-label */
+.crossed {
+    color: red !important;
+    border-color: red !important;
+    text-decoration: line-through !important; /* Bootstrap might override this */
+}
+
 </style>
 
 <!-- MODAL FORM -->
@@ -197,8 +229,8 @@
                                 <div class="col-sm-8">
                                     <div class="input-group clockpicker">
                                     <input id="time_arrival" name="time_arrival" class="form-control" placeholder="Time arrival" value="<?php 
-                                    $datetime = new DateTime();
-                                    echo $datetime->format( 'H:i' );
+                                    // $datetime = new DateTime();
+                                    // echo $datetime->format( 'H:i' );
                                     ?>">
                                     <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-time"></span>
@@ -271,14 +303,21 @@
                                     <span id="time_collected_error" class="text-danger" style="display:none;">Time collected cannot be greater than or equal to time arrive.</span>
                                 </div>
                             </div>
-         
+
                             <div class="form-group">
+                                <label for="quality_check" class="col-sm-4 control-label">Quality Check</label>
+                                <div class="col-sm-8">
+                                    <input id="quality_check" name="quality_check" type="checkbox" class="form-check-input">
+                                    <label id="quality_check_label" for="quality_check" class="form-check-label unchecked">Unchecked</label>
+                                </div>
+                            </div>                        
+                            <!-- <div class="form-group">
                                 <label for="quality_check" class="col-sm-4 control-label">Quality Check</label>
                                 <div class="col-sm-8">
                                     <input id="quality_check" name="quality_check" type="checkbox" value="1" class="form-check-input">
                                     <label for="quality_check" class="form-check-label">Checked</label>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="form-group">
                                     <label for="comments" class="col-sm-4 control-label">Comments</label>
@@ -359,6 +398,36 @@ function toggleDateInput() {
     let id_one_water_sample = $('#id_one_water_sample').val();
 
     $(document).ready(function() {
+
+        // Define the three states
+        const states = [
+            { value: 0, label: "Unchecked", class: "unchecked" },
+            { value: 1, label: "Checked", class: "checked" },
+            { value: 2, label: "Crossed", class: "crossed" }
+        ];
+
+        let currentState = 0; // Start with "Unchecked"
+
+        // Add event listener to toggle through states
+        document.getElementById('quality_check').addEventListener('click', function () {
+            // Cycle through the states
+            currentState = (currentState + 1) % states.length;
+
+            const checkbox = document.getElementById('quality_check');
+            const label = document.getElementById('quality_check_label');
+            
+            // Update the checkbox state
+            checkbox.checked = (states[currentState].value === 1); // Only true for "Checked"
+
+            // Update the label text
+            label.textContent = states[currentState].label;
+
+            // Apply styling to the label based on the state
+            label.className = `form-check-label ${states[currentState].class}`;
+
+            // (Optional) Update a hidden input or store the value somewhere for submission
+            checkbox.value = states[currentState].value; // Set the value to the current state
+        });
 
         $('#time_collected').on('change', function() {
             validateTimeCollected();
@@ -690,6 +759,9 @@ function toggleDateInput() {
             $('#id_sampletype').val('');
             // $('#time_collected').val('');
             $('#quality_check').prop('checked', false); // Uncheck the checkbox
+            const label = document.getElementById('quality_check_label');
+            label.textContent = 'Unchecked';
+            label.className = `form-check-label unchecked`;            
             $('#comments').val('');
             $('#compose-modal').modal('show');
         });
@@ -730,6 +802,23 @@ function toggleDateInput() {
             $('#id_client_sample').val(data.id_client_sample);
             $('#id_sampletype').val(data.id_sampletype);
             // Set the checkbox state
+            if (data.quality_check == 1) {
+                $('#quality_check').prop('checked', true); // Check the checkbox
+                const label = document.getElementById('quality_check_label');
+                label.textContent = 'Checked';
+                label.className = `form-check-label checked`;            
+            } else if (data.quality_check == 0) {
+                $('#quality_check').prop('checked', false); // Uncheck the checkbox
+                const label = document.getElementById('quality_check_label');
+                label.textContent = 'Unchecked';
+                label.className = `form-check-label unchecked`;            
+            }
+            else if (data.quality_check == 2) {
+                $('#quality_check').prop('checked', false); // Uncheck the checkbox
+                const label = document.getElementById('quality_check_label');
+                label.textContent = 'Crossed';
+                label.className = `form-check-label crossed`;
+            }
             if (data.quality_check == 1 || data.quality_check === true) {
                 $('#quality_check').prop('checked', true); // Check the checkbox
             } else {
