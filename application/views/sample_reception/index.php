@@ -307,10 +307,12 @@
                             <div class="form-group">
                                 <label for="quality_check" class="col-sm-4 control-label">Quality Check</label>
                                 <div class="col-sm-8">
-                                    <input id="quality_check" name="quality_check" type="checkbox" class="form-check-input">
-                                    <label id="quality_check_label" for="quality_check" class="form-check-label unchecked">Unchecked</label>
+                                    <input type="hidden" id="quality_check" name="quality_check" value="0">
+                                    <span id="quality_check_label" class="form-check-label unchecked" role="button">
+                                        Unchecked
+                                    </span>
                                 </div>
-                            </div>                        
+                            </div>               
                             <!-- <div class="form-group">
                                 <label for="quality_check" class="col-sm-4 control-label">Quality Check</label>
                                 <div class="col-sm-8">
@@ -370,6 +372,27 @@
         background-color: rgba(0, 0, 255, 0.1) !important;
         font-weight: bold !important;
     }
+        /* Basic button style for the span */
+        .form-check-label {
+        display: inline-block;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 12px;
+        cursor: pointer;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    /* Hover effect for the button */
+    .form-check-label:hover {
+        opacity: 0.8;
+    }
+
+    /* Focused effect to make it more accessible */
+    .form-check-label:focus {
+        outline: none;
+    }
 </style>
 
 
@@ -390,6 +413,7 @@ function toggleDateInput() {
 }
 
 </script>
+
 <script type="text/javascript">
 
     let table;
@@ -399,7 +423,7 @@ function toggleDateInput() {
 
     $(document).ready(function() {
 
-        // Define the three states
+        // Define the states with associated values and labels
         const states = [
             { value: 0, label: "Unchecked", class: "unchecked" },
             { value: 1, label: "Checked", class: "checked" },
@@ -409,15 +433,15 @@ function toggleDateInput() {
         let currentState = 0; // Start with "Unchecked"
 
         // Add event listener to toggle through states
-        document.getElementById('quality_check').addEventListener('click', function () {
+        document.getElementById('quality_check_label').addEventListener('click', function () {
             // Cycle through the states
             currentState = (currentState + 1) % states.length;
 
             const checkbox = document.getElementById('quality_check');
             const label = document.getElementById('quality_check_label');
             
-            // Update the checkbox state
-            checkbox.checked = (states[currentState].value === 1); // Only true for "Checked"
+            // // Update the checkbox state
+            // checkbox.checked = (states[currentState].value === 1); // Only true for "Checked"
 
             // Update the label text
             label.textContent = states[currentState].label;

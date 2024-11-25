@@ -149,7 +149,7 @@ class Sample_reception extends CI_Controller
         } else if ($mode == "edit") {
             $data = array(
                 'client_quote_number' => $client_quote_number,
-                'client' => $client,
+                'client' => $clientx,
                 'id_client_sample' => $id_client_sample,
                 'id_sampletype' => $id_sampletype,
                 'id_person' => $id_person,
