@@ -192,21 +192,22 @@ class Sample_reception extends CI_Controller
                             'id_client_sample' => $id_client_sample,
                             'id_project' => $id2_project,
                             'id_testing_type' => $id_testing_type,
+                            'barcode' => $barcode,
                             'uuid' => $this->uuid->v4(),
                             'user_created' => $this->session->userdata('id_users'),
                             'date_created' => $dt->format('Y-m-d H:i:s'),
                         ));
         
-                        $data_barcode = array(
-                            'id_sample' => $id_sample,
-                            'id_testing_type' => $id_testing_type,
-                            'barcode' => $barcode,
-                        );
+                        // $data_barcode = array(
+                        //     'id_sample' => $id_sample,
+                        //     'id_testing_type' => $id_testing_type,
+                        //     'barcode' => $barcode,
+                        // );
 
                         // var_dump($data_barcode);
                         // die();
         
-                        $this->Sample_reception_model->insert_barcode($data_barcode);
+                        // $this->Sample_reception_model->insert_barcode($data_barcode);
                     }
                     $this->session->set_flashdata('message', 'Create Records Success');
                 } else {
@@ -252,18 +253,19 @@ class Sample_reception extends CI_Controller
                                 'id_client_sample' => $id_client_sample,
                                 'id_project' => $id2_project,
                                 'id_testing_type' => $id_testing_type,
+                                'barcode' => $barcode,
                                 // 'uuid' => $this->uuid->v4(),
                                 'user_updated' => $this->session->userdata('id_users'),
                                 'date_updated' => $dt->format('Y-m-d H:i:s'),
                             ));
             
-                            $data_barcode = array(
-                                'id_sample' => $id_sample,
-                                'id_testing_type' => $id_testing_type,
-                                'barcode' => $barcode,
-                            );
+                            // $data_barcode = array(
+                            //     'id_sample' => $id_sample,
+                            //     'id_testing_type' => $id_testing_type,
+                            //     'barcode' => $barcode,
+                            // );
             
-                            $this->Sample_reception_model->insert_barcode($data_barcode);
+                            // $this->Sample_reception_model->insert_barcode($data_barcode);
                         }
                         $this->session->set_flashdata('message', 'Update Records Success');
                     } else {

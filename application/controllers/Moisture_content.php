@@ -160,7 +160,7 @@ class Moisture_content extends CI_Controller
                 'comments' => $comments,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
-                'uuid' => $this->uuid->v4(),
+                // 'uuid' => $this->uuid->v4(),
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );

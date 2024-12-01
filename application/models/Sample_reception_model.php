@@ -57,7 +57,7 @@ class Sample_reception_model extends CI_Model
         // $this->datatables->join('ref_testing b', 'a.testing_type_id = b.testing_type_id', 'right');
         // $this->datatables->where('a.flag', '0');
         // $this->datatables->where('a.project_id', $id);
-        $this->datatables->select('a.id_sample, a.id_project, a.id_client_sample,  a.id_testing_type, b.testing_type AS testing_type, a.flag');
+        $this->datatables->select('a.id_sample, a.id_project, a.id_client_sample,  a.id_testing_type, a.barcode, b.testing_type AS testing_type, b.url, a.flag');
         $this->datatables->from('sample_reception_sample a');
         $this->datatables->join('ref_testing b', 'FIND_IN_SET(b.id_testing_type, a.id_testing_type)', 'left');
         // $this->datatables->join('ref_barcode c', 'a.sample_id = c.testing_type_id', 'left');
@@ -375,7 +375,8 @@ class Sample_reception_model extends CI_Model
 
         $this->db->select_max('CAST(SUBSTR(barcode, ' . (strlen($prefix . $year) + 1) . ') AS UNSIGNED)', 'max_barcode');
         $this->db->like('barcode', $prefix . $year, 'after');
-        $query = $this->db->get('ref_barcode');
+        // $query = $this->db->get('ref_barcode');
+        $query = $this->db->get('sample_reception_sample');
         $result = $query->row();
     
         $next_number = $result->max_barcode + 1;
