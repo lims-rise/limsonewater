@@ -96,7 +96,6 @@
 										<tr>
 											<th>Testing Type</th>
 											<th>Barcode</th>
-											<th>Url</th>
 											<th>Action</th>
 										</tr>
 									</thead>
@@ -474,12 +473,11 @@
 			},
 			columns: [
 				{"data": "testing_type"},
-				{"data": "barcode"},
 				{
 					"data": "url",  // Kolom yang berisi bagian dinamis URL
 					"render": function(data, type, row) {
 						// Render URL sebagai link dinamis
-						return `<a href="javascript:void(0);" class="url-link" data-url="${data}" data-barcode="${row.barcode}">${data === null ? '-' : data}</a>`;
+						return `<a href="javascript:void(0);" class="url-link" data-url="${data}" data-barcode="${row.barcode}">${data === null ? '-' : row.barcode}</a>`;
 
 					}
 				},

@@ -92,7 +92,7 @@
                                 <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
                                 <div class="col-sm-8">
                                     <input id="idx_one_water_sample" name="idx_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control">
-                                    <select id="id_one_water_sample" name="id_one_water_sample" class="form-control idOneWaterSampleSelect">
+                                    <select id="id_one_water_sample" name="id_one_water_sample" class="form-control idOneWaterSampleSelect" required>
                                         <option value="" disabled>-- Select Sample ID --</option>
                                         <?php
                                             foreach($id_one as $row) {
@@ -261,7 +261,6 @@
             $('#comments').val('');
         } else {
             console.log('Barcode tidak ditemukan di URL');
-            // Optional: Tampilkan pesan atau lakukan aksi lain
         }
 
         function handleSampleTypeInput(selector) {
@@ -458,6 +457,16 @@
         };
 
         table = $("#mytable").DataTable({
+            // initComplete: function() {
+            //     var api = this.api();
+            //     $('#mytable_filter input')
+            //             .off('.DT')
+            //             .on('keyup.DT', function(e) {
+            //                 if (e.keyCode == 13) {
+            //                     api.search(this.value).draw();
+            //                 }
+            //     });
+            // },
             oLanguage: {
                 sProcessing: "loading..."
             },
@@ -466,6 +475,10 @@
             serverSide: true,
             ajax: {"url": "Moisture_content/json", "type": "POST"},
             columns: [
+                // {
+                //     "data": "barcode_sample",
+                //     "orderable": false
+                // },
                 {"data": "id_one_water_sample"},
                 {"data": "initial"},
                 {"data": "date_start"},
@@ -489,6 +502,14 @@
 					className: 'text-right' // Apply right alignment to this column
 				}
 			],
+            // order: [[0, 'asc']],
+            // rowCallback: function(row, data, iDisplayIndex) {
+            //     var info = this.fnPagingInfo();
+            //     var page = info.iPage;
+            //     var length = info.iLength;
+            //     // var index = page * length + (iDisplayIndex + 1);
+            //     // $('td:eq(0)', row).html(index);
+            // },
             drawCallback: function(settings) {
                 let api = this.api();
                 let pageInfo = api.page.info();

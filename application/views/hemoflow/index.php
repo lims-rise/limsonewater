@@ -218,8 +218,37 @@
 
 
 
-    var table
+    let table;
+    // Fungsi untuk mendapatkan parameter dari URL
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        console.log('Current URL:', window.location.search);  // Cek URL yang sedang diakses
+        return urlParams.get(param);
+    }
     $(document).ready(function() {
+        const params = new URLSearchParams(window.location.search);
+        const barcodeFromUrl = params.get('barcode');
+        if (barcodeFromUrl) {
+            $('#mode').val('insert');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Hemoflow | New<span id="my-another-cool-loader"></span>');
+            // $('#project_idx').hide();
+            $('#id_one_water_sample').attr('readonly', false);
+            $('#id_one_water_sample').val('');
+            $('#id_one_water_sample_list').val('');
+            $('#id_one_water_sample').hide();
+            $('#id_one_water_sample_list').show();
+            $('#id_person').val('');
+            $('#sampletype').attr('readonly', true);
+            $('#sampletype').val('');
+            $('#id_person_proc').val('');
+            // $('#date_processed').val('');
+            $('#volume_filter').val('');
+            $('#volume_eluted').val('');
+            $('#comments').val('');
+            $('#compose-modal').modal('show');
+        } else {
+            console.log('Barcode tidak ditemukan di URL');
+        }
 
 
         function showConfirmation(url) {
