@@ -95,6 +95,7 @@
 									<thead>
 										<tr>
 											<th>Testing Type</th>
+											<th>Barcode</th>
 											<th>Action</th>
 										</tr>
 									</thead>
@@ -280,6 +281,10 @@
 	width: 50%;
 }
 
+.url-link{
+	color: #FC8F54;
+}
+
 
 </style>
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
@@ -290,6 +295,13 @@
 	let id_project = $('#id_project').val();
 	let id_client_sample = $('#id_client_sample').val();
 	let base_url = location.hostname;
+
+	// Add event listener for clicks on URL column
+	// $(document).on('click', '.url-link', function() {
+	// 	var barcode = $(this).data('barcode');
+	// 	var url = 'http://localhost/limsonewater/index.php/moisture_content?barcode=' + barcode;
+	// 	window.location.href = url;
+	// });
 
 	$(document).ready(function() {
 
@@ -453,33 +465,49 @@
 			processing: true,
 			serverSide: true,
 			paging: false,
-			// ordering: false,
 			info: false,
 			bFilter: false,
-			ajax: {"url": "../../Sample_reception/subjson?id="+id_client_sample, "type": "POST"},
+			ajax: {
+				"url": "../../Sample_reception/subjson?id=" + id_client_sample, 
+				"type": "POST"
+			},
 			columns: [
-				{"data": "testing_type"}, 
+				{"data": "testing_type"},
 				{
-					"data" : "action",
+					"data": "url",  // Kolom yang berisi bagian dinamis URL
+					"render": function(data, type, row) {
+						// Render URL sebagai link dinamis
+						return `<a href="javascript:void(0);" class="url-link" data-url="${data}" data-barcode="${row.barcode}">${data === null ? '-' : row.barcode}</a>`;
+
+					}
+				},
+				{
+					"data": "action",
 					"orderable": false,
-					"className" : "text-center"
+					"className": "text-center"
 				}
 			],
-			// columnDefs: [
-			// 	{
-			// 		targets: [0], // Index of the 'estimate_price' column
-			// 		className: 'text-right' // Apply right alignment to this column
-			// 	}
-			// ],
 			order: [[0, 'asc']],
 			rowCallback: function(row, data, iDisplayIndex) {
-				let info = this.fnPagingInfo();
-				let page = info.iPage;
-				let length = info.iLength;
-				// var index = page * length + (iDisplayIndex + 1);
-				// $('td:eq(0)', row).html(index);
+				// Additional row callbacks if needed
 			}
 		});
+
+		// Event listener untuk klik pada kolom URL
+		$('#example2 tbody').on('click', 'a.url-link', function() {
+			var barcode = $(this).data('barcode');  // Ambil data barcode
+			var url = $(this).data('url');  // Ambil URL dinamis
+
+			// Memastikan URL yang valid ada
+			if (url) {
+				// Menggunakan URL dinamis dan menambahkan parameter barcode
+				var fullUrl = 'http://localhost/limsonewater/index.php/' + url + '?barcode=' + barcode;
+				window.location.href = fullUrl;  // Arahkan ke URL dinamis
+			} else {
+				console.error('URL tidak ditemukan untuk barcode: ' + barcode);
+			}
+		});
+
 
         $('#example2 tbody').on('click', 'tr', function () {
             if ($(this).hasClass('active')) {

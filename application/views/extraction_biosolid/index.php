@@ -8,12 +8,12 @@
                     </div>
                     <div class="box-body">
                         <div style="padding-bottom: 10px;">
-                            <?php
+                            <!-- <?php
                                 $lvl = $this->session->userdata('id_user_level');
                                     if ($lvl != 4){
                                          echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Extraction Biosolid</button>";
                                     }
-                            ?>        
+                            ?>         -->
                             <?php echo anchor(site_url('Extraction_biosolid/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
                         </div>
                         <div class="table-responsive">
@@ -360,9 +360,54 @@
 
 
 
-    var table
-    $(document).ready(function() {
+    var table;
+    // Fungsi untuk mendapatkan parameter dari URL
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        console.log('Current URL:', window.location.search);  // Cek URL yang sedang diakses
+        return urlParams.get(param);
+    }
 
+    $(document).ready(function() {
+        const params = new URLSearchParams(window.location.search);
+        const barcodeFromUrl = params.get('barcode');
+
+        if (barcodeFromUrl) {
+            $('#mode').val('insert');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Extraction biosolid | New<span id="my-another-cool-loader"></span>');
+            // $('#project_idx').hide();
+            $('#id_one_water_sample').attr('readonly', false);
+            $('#id_one_water_sample').val('');
+            $('#id_one_water_sample_list').val('');
+            $('#id_one_water_sample').hide();
+            $('#id_one_water_sample_list').show();
+            $('#id_person').val('');
+            $('#barcode_sample').attr('readonly', true);
+            $('#barcode_sample').val(barcodeFromUrl);
+            $('#sampletype').attr('readonly', true);
+            $('#sampletype').val('');
+            // $('#date_extraction').val('');
+            $('#weight').val('');
+            $('#volume').val('');
+            $('#dilution').val('');
+            $('#culture_plate').val('');
+            $('#culture_media').val('');
+            $('#id_kit').val('');
+            $('#kit_lot').val('');
+            $('#barcode_tube').val('');
+            $('#dna_concentration').val('');
+            $('#cryobox').val('');
+            $('#id_freez').val('');
+            $('#id_shelf').val('');
+            $('#id_rack').val('');
+            $('#id_tray').val('');
+            $('#id_row').val('');
+            $('#id_col').val('');
+            $('#comments').val('');
+            $('#compose-modal').modal('show');
+        } else {
+            console.log('Barcode tidak ditemukan di URL');
+        }
 
         function showConfirmation(url) {
             deleteUrl = url; // Set the URL to the variable
