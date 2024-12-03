@@ -209,6 +209,14 @@ class Extraction_liquid extends CI_Controller
         redirect(site_url("Extraction_liquid"));
     }
     
+    public function barcode_restrict() 
+    {
+        $id = $this->input->get('id1');
+        $data = $this->Extraction_liquid_model->barcode_restrict($id);
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
+        
     public function barcode_check() 
     {
         $id = $this->input->get('id1');
