@@ -80,7 +80,7 @@
 								<?php
 									$lvl = $this->session->userdata('id_user_level');
 									if ($lvl != 4){
-										echo "<button class='btn btn-primary' id='addtombol_detResultsCharcoal'><i class='fa fa-wpforms' aria-hidden='true'></i> New Data</button>";
+										echo "<button class='btn btn-primary' id='addtombol_detResultsQpcr'><i class='fa fa-wpforms' aria-hidden='true'></i> New Data</button>";
 									}
 								?>
 								<table id="example2" class="table display table-bordered table-striped" width="100%">
@@ -137,7 +137,7 @@
                     </div> -->
                     
 
-                    <div class="col-xs-12">
+                    <!-- <div class="col-xs-12">
                         <div class="box box-primary box-solid">
                             <div class="box-header">
                                 <h3 class="box-title">Final Result</h3>
@@ -225,12 +225,12 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
 				<div class="form-group">
 					<div class="modal-footer clearfix">
-						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('campy_biosolids'); ?>';">
+						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('campy_biosolids_qpcr'); ?>';">
 							<i class="fa fa-times"></i> Close
 						</button>
 					</div>
@@ -249,11 +249,11 @@
                         <h4 class="modal-title" id="modal-title-detail">
 							<span id="my-another-cool-loader"></span></h4>
                     </div>
-                        <form id="formDetail24" action=<?php echo site_url('Campy_biosolids_qpcr/saveResultsCharcoal') ?> method="post" class="form-horizontal">
+                        <form id="formDetail24" action=<?php echo site_url('Campy_biosolids_qpcr/saveResultsQpcr') ?> method="post" class="form-horizontal">
                             <div class="modal-body">
                                 <div class="form-group">
                                         <div class="col-sm-9">
-                                            <input id="mode_detResultsCharcoal" name="mode_detResultsCharcoal" type="hidden" class="form-control input-sm">
+                                            <input id="mode_detResultsQpcr" name="mode_detResultsQpcr" type="hidden" class="form-control input-sm">
                                             <!-- <input id="idx_moisture24" name="idx_moisture24" type="hidden" class="form-control input-sm">
                                             <input id="id_moisture24" name="id_moisture24" type="hidden" class="form-control input-sm"> -->
                                             <input id="id_campy_biosolids_qpcr1" name="id_campy_biosolids_qpcr1" type="hidden" class="form-control input-sm">
@@ -308,7 +308,7 @@
         </div><!-- /.modal -->
 
 <!-- MODAL FORM Results HBA -->
-<div class="modal fade" id="compose-modalHBA" tabindex="-1" role="dialog" aria-hidden="true" data-bs-scrollable="true">
+<!-- <div class="modal fade" id="compose-modalHBA" tabindex="-1" role="dialog" aria-hidden="true" data-bs-scrollable="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color: #3c8dbc; color: white;">
@@ -321,8 +321,6 @@
                                 <div class="form-group">
                                         <div class="col-sm-9">
                                             <input id="mode_detResultsHBA" name="mode_detResultsHBA" type="hidden" class="form-control input-sm">
-                                            <!-- <input id="idx_moisture24" name="idx_moisture24" type="hidden" class="form-control input-sm">
-                                            <input id="id_moisture24" name="id_moisture24" type="hidden" class="form-control input-sm"> -->
                                             <input id="id_campy_biosolids_qpcrHBA" name="id_campy_biosolids_qpcrHBA" type="hidden" class="form-control input-sm">
                                             <input id="number_of_tubesHba" name="number_of_tubesHba" type="hidden" class="form-control input-sm">
                                             <input id="id_result_hba" name="id_result_hba" type="hidden" class="form-control input-sm">
@@ -359,7 +357,6 @@
                                     <div class="form-group" id="growth_plateHBA">
                                         <label class="col-sm-4 control-label">Growth Plate</label>
                                         <div class="col-sm-8" id="growthPlateInputsHBA">
-                                            <!-- Radio buttons akan dihasilkan di sini -->
                                         </div>
                                     </div>
 
@@ -370,13 +367,13 @@
                                 <button type="button" id='cancelButton' class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
                             </div>
                         </form>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+                </div>
+            </div>
+</div> -->
 
 
 <!-- MODAL FORM Biochemical -->
-<div class="modal fade" id="compose-modalBiochemical" tabindex="-1" role="dialog" aria-hidden="true" data-bs-scrollable="true">
+<!-- <div class="modal fade" id="compose-modalBiochemical" tabindex="-1" role="dialog" aria-hidden="true" data-bs-scrollable="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color: #3c8dbc; color: white;">
@@ -391,7 +388,7 @@
                     <input id="biochemical_tube" name="biochemical_tube" type="hidden" class="form-control input-sm">
                     <input id="id_result_hba1" name="id_result_hba1" type="hidden" class="form-control input-sm">
                  
-                    <!-- Gramlysis Result -->
+                 
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Gramlysis Result</label>
                         <div class="col-sm-8">
@@ -404,7 +401,7 @@
                         </div>
                     </div>
 
-                    <!-- Oxidase Result -->
+                 
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Oxidase Result</label>
                         <div class="col-sm-8">
@@ -417,7 +414,7 @@
                         </div>
                     </div>
 
-                    <!-- Catalase Result -->
+                  
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Catalase Result</label>
                         <div class="col-sm-8">
@@ -430,7 +427,7 @@
                         </div>
                     </div>
 
-                    <!-- Confirmation -->
+               
                     <div class="form-group">
                         <label for="confirmation" class="col-sm-4 control-label">Confirmation</label>
                         <div class="col-sm-8">
@@ -438,7 +435,7 @@
                         </div>
                     </div>
 
-                    <!-- Sample Store in Biobank -->
+                
                     <div class="form-group">
                         <label for="sample_store" class="col-sm-4 control-label">Sample Store in Biobank</label>
                         <div class="col-sm-8">
@@ -456,9 +453,9 @@
                     <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
                 </div>
             </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+    </div>
+</div> -->
 
 
 
@@ -626,8 +623,8 @@ function generateGrowthPlateInputs(container, numberOfTubes) {
             let id = $(this).data('id');
             let url;
             if ($(this).hasClass('btn_deleteCharcoal')) {
-                url = '<?php echo site_url('Campy_biosolids_qpcr/delete_detailCharcoal'); ?>/' + id;
-                $('.modal-title').html('<i class="fa fa-trash"></i> Result Charcoal | Delete <span id="my-another-cool-loader"></span>');
+                url = '<?php echo site_url('Campy_biosolids_qpcr/delete_detailQpcr'); ?>/' + id;
+                $('.modal-title').html('<i class="fa fa-trash"></i> Result Qpcr | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
             } else if ($(this).hasClass('btn_deleteHba')) {
                 url = '<?php echo site_url('Campy_biosolids_qpcr/delete_detailHba'); ?>/' + id;
@@ -812,7 +809,7 @@ function generateGrowthPlateInputs(container, numberOfTubes) {
             paging: false,
             info: false,
             bFilter: false,
-            ajax: {"url": "../../Campy_biosolids_qpcr/subjsonCharcoal?idCharcoal="+id_campy_biosolids_qpcr, "type": "POST"},
+            ajax: {"url": "../../Campy_biosolids_qpcr/subjsonResultQpcr?idQpcr="+id_campy_biosolids_qpcr, "type": "POST"},
             columns: [
                 {"data": "campy_assay_barcode"},
                 {"data": "date_sample_processed"},
@@ -828,9 +825,9 @@ function generateGrowthPlateInputs(container, numberOfTubes) {
             rowCallback: function(row, data, iDisplayIndex) {
                 let info = this.fnPagingInfo();
                 if (info.iTotal > 0) {
-                    $('#addtombol_detResultsCharcoal').prop("disabled", true);
+                    $('#addtombol_detResultsQpcr').prop("disabled", true);
                 } else {
-                    $('#addtombol_detResultsCharcoal').show();
+                    $('#addtombol_detResultsQpcr').show();
                 }
             }
         });
@@ -844,141 +841,141 @@ function generateGrowthPlateInputs(container, numberOfTubes) {
             }
         });
 
-        table1 = $("#exampleHba").DataTable({
-            oLanguage: {
-                sProcessing: "Loading data, please wait..."
-            },
-            processing: true,
-            serverSide: true,
-            paging: false,
-            info: false,
-            bFilter: false,
-            ajax: {"url": "../../Campy_biosolids_qpcr/subjsonHba?idHba="+id_campy_biosolids_qpcr, "type": "POST"},
-            columns: [
-                {"data": "campy_assay_barcode"},
-                {"data": "date_sample_processed"},
-                {"data": "time_sample_processed"},
-                {"data": "growth_plate"},
-                {
-                    "data" : "action",
-                    "orderable": false,
-                    "className" : "text-center"
-                }
-            ],
-            order: [[0, 'asc']],
-            rowCallback: function(row, data, iDisplayIndex) {
-                let info = this.fnPagingInfo();
-                if (info.iTotal > 0) {
-                    $('#addtombol_detResultsHBA').prop("disabled", true);
-                } else {
-                    $('#addtombol_detResultsHBA').show();
-                }
-            }
-        });
+        // table1 = $("#exampleHba").DataTable({
+        //     oLanguage: {
+        //         sProcessing: "Loading data, please wait..."
+        //     },
+        //     processing: true,
+        //     serverSide: true,
+        //     paging: false,
+        //     info: false,
+        //     bFilter: false,
+        //     ajax: {"url": "../../Campy_biosolids_qpcr/subjsonHba?idHba="+id_campy_biosolids_qpcr, "type": "POST"},
+        //     columns: [
+        //         {"data": "campy_assay_barcode"},
+        //         {"data": "date_sample_processed"},
+        //         {"data": "time_sample_processed"},
+        //         {"data": "growth_plate"},
+        //         {
+        //             "data" : "action",
+        //             "orderable": false,
+        //             "className" : "text-center"
+        //         }
+        //     ],
+        //     order: [[0, 'asc']],
+        //     rowCallback: function(row, data, iDisplayIndex) {
+        //         let info = this.fnPagingInfo();
+        //         if (info.iTotal > 0) {
+        //             $('#addtombol_detResultsHBA').prop("disabled", true);
+        //         } else {
+        //             $('#addtombol_detResultsHBA').show();
+        //         }
+        //     }
+        // });
 
-        $('#exampleHba tbody').on('click', 'tr', function () {
-            if ($(this).hasClass('active')) {
-                $(this).removeClass('active');
-            } else {
-                table1.$('tr.active').removeClass('active');
-                $(this).addClass('active');
-            }
-        });
+        // $('#exampleHba tbody').on('click', 'tr', function () {
+        //     if ($(this).hasClass('active')) {
+        //         $(this).removeClass('active');
+        //     } else {
+        //         table1.$('tr.active').removeClass('active');
+        //         $(this).addClass('active');
+        //     }
+        // });
 
-        table1.ajax.reload(function() {
-            let td = $('#exampleHba td:first');
-            let data = table1.row(td).data();
-            console.log(data);
+        // table1.ajax.reload(function() {
+        //     let td = $('#exampleHba td:first');
+        //     let data = table1.row(td).data();
+        //     console.log(data);
 
-            if (data) {
-                const growthPlateArray = data.growth_plate.split(', ');
-                const plateNumberArray = data.plate_number.split(', ');
+        //     if (data) {
+        //         const growthPlateArray = data.growth_plate.split(', ');
+        //         const plateNumberArray = data.plate_number.split(', ');
 
-                // Generate the biochemical results for all plate numbers
-                generateResultBiochemical($('#content-result-biochemical'), plateNumberArray.length, data.id_campy_biosolids_qpcr, plateNumberArray, growthPlateArray);
-            } else {
-                console.log('Data belum tersedia');
-                $('#content-result-biochemical').empty().append('<p class="text-center">No data available</p>');
-            }
-        });
+        //         // Generate the biochemical results for all plate numbers
+        //         generateResultBiochemical($('#content-result-biochemical'), plateNumberArray.length, data.id_campy_biosolids_qpcr, plateNumberArray, growthPlateArray);
+        //     } else {
+        //         console.log('Data belum tersedia');
+        //         $('#content-result-biochemical').empty().append('<p class="text-center">No data available</p>');
+        //     }
+        // });
 
         // Improved generateResultBiochemical function
-        function generateResultBiochemical(container, numberOfPlates, id_campy_biosolids_qpcr, plateNumberArray, growthPlateArray) {
-            container.empty(); // Clear existing content
+        // function generateResultBiochemical(container, numberOfPlates, id_campy_biosolids_qpcr, plateNumberArray, growthPlateArray) {
+        //     container.empty(); // Clear existing content
 
-            // Iterate through the plateNumberArray
-            for (let i = 0; i < numberOfPlates; i++) {
-                const plateNumber = plateNumberArray[i]; // Get the corresponding plate number
-                const tableId = `exampleBiochemical_${i}`; // Unique table ID
-                const buttonId = `addtombol_detResultsBiochemical_${plateNumber}`; // Unique button ID
-                const isDisabled = growthPlateArray[i] === 'No' ? 'disabled' : ''; // Determine if button should be disabled
-                console.log('button biochemical tube', isDisabled);
+        //     // Iterate through the plateNumberArray
+        //     for (let i = 0; i < numberOfPlates; i++) {
+        //         const plateNumber = plateNumberArray[i]; // Get the corresponding plate number
+        //         const tableId = `exampleBiochemical_${i}`; // Unique table ID
+        //         const buttonId = `addtombol_detResultsBiochemical_${plateNumber}`; // Unique button ID
+        //         const isDisabled = growthPlateArray[i] === 'No' ? 'disabled' : ''; // Determine if button should be disabled
+        //         console.log('button biochemical tube', isDisabled);
 
-                // Append the table and button for each plate
-                container.append(`
-                    <div class="box-body pad table-responsive">
-                        <button class="btn btn-primary" id="${buttonId}" data-index="${plateNumber}" ${isDisabled}>
-                            <i class="fa fa-wpforms" aria-hidden="true"></i> Biochemical Tube ${plateNumber}
-                        </button>
-                        <table id="${tableId}" class="table display table-bordered table-striped" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>Gram-lysis Result</th>
-                                    <th>Oxidase Result</th>
-                                    <th>Catalase Result</th>
-                                    <th>Confirmation</th>
-                                    <th>Sample Store in Biobank</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                `);
+        //         // Append the table and button for each plate
+        //         container.append(`
+        //             <div class="box-body pad table-responsive">
+        //                 <button class="btn btn-primary" id="${buttonId}" data-index="${plateNumber}" ${isDisabled}>
+        //                     <i class="fa fa-wpforms" aria-hidden="true"></i> Biochemical Tube ${plateNumber}
+        //                 </button>
+        //                 <table id="${tableId}" class="table display table-bordered table-striped" width="100%">
+        //                     <thead>
+        //                         <tr>
+        //                             <th>Gram-lysis Result</th>
+        //                             <th>Oxidase Result</th>
+        //                             <th>Catalase Result</th>
+        //                             <th>Confirmation</th>
+        //                             <th>Sample Store in Biobank</th>
+        //                             <th>Action</th>
+        //                         </tr>
+        //                     </thead>
+        //                 </table>
+        //             </div>
+        //         `);
 
-                // Initialize DataTable for the newly created table, passing the plate number
-                initializeDataTable(tableId, id_campy_biosolids_qpcr, plateNumber); // Pass the actual plate number
-            }
-        }
+        //         // Initialize DataTable for the newly created table, passing the plate number
+        //         initializeDataTable(tableId, id_campy_biosolids_qpcr, plateNumber); // Pass the actual plate number
+        //     }
+        // }
 
 
         // Fungsi untuk menginisialisasi DataTable
-        function initializeDataTable(tableId, id_campy_biosolids_qpcr, tubeIndex) {
-            console.log(`Tube index: ${tubeIndex}`);
-            $(`#${tableId}`).DataTable({
-                oLanguage: {
-                    sProcessing: "Loading data, please wait..."
-                },
-                processing: true,
-                serverSide: true,
-                paging: false,
-                info: false,
-                bFilter: false,
-                ajax: {
-                    url: `../../Campy_biosolids_qpcr/subjsonBiochemical?idBiochemical=${id_campy_biosolids_qpcr}&biochemical_tube=${tubeIndex}`,
-                    type: "POST"
-                },
-                columns: [
-                    {"data": "gramlysis"},
-                    {"data": "oxidase"},
-                    {"data": "catalase"},
-                    {"data": "confirmation"},
-                    {"data": "sample_store"},
-                    {
-                        "data": "action",
-                        "orderable": false,
-                        "className": "text-center"
-                    }
-                ],
-                order: [[0, 'asc']],
-                // Tambahkan callback ini untuk menyimpan status tombol saat data dimuat
-                initComplete: function(settings, json) {
-                // Disable the button if there's data
-                if (json.data.length > 0) {
-                    $(`#addtombol_detResultsBiochemical_${tubeIndex}`).prop("disabled", true);
-                }
-                    }
-                });
-        }
+        // function initializeDataTable(tableId, id_campy_biosolids_qpcr, tubeIndex) {
+        //     console.log(`Tube index: ${tubeIndex}`);
+        //     $(`#${tableId}`).DataTable({
+        //         oLanguage: {
+        //             sProcessing: "Loading data, please wait..."
+        //         },
+        //         processing: true,
+        //         serverSide: true,
+        //         paging: false,
+        //         info: false,
+        //         bFilter: false,
+        //         ajax: {
+        //             url: `../../Campy_biosolids_qpcr/subjsonBiochemical?idBiochemical=${id_campy_biosolids_qpcr}&biochemical_tube=${tubeIndex}`,
+        //             type: "POST"
+        //         },
+        //         columns: [
+        //             {"data": "gramlysis"},
+        //             {"data": "oxidase"},
+        //             {"data": "catalase"},
+        //             {"data": "confirmation"},
+        //             {"data": "sample_store"},
+        //             {
+        //                 "data": "action",
+        //                 "orderable": false,
+        //                 "className": "text-center"
+        //             }
+        //         ],
+        //         order: [[0, 'asc']],
+        //         // Tambahkan callback ini untuk menyimpan status tombol saat data dimuat
+        //         initComplete: function(settings, json) {
+        //         // Disable the button if there's data
+        //         if (json.data.length > 0) {
+        //             $(`#addtombol_detResultsBiochemical_${tubeIndex}`).prop("disabled", true);
+        //         }
+        //             }
+        //         });
+        // }
 
      
         // Event listener untuk tombol "New Data"
@@ -1036,8 +1033,8 @@ function generateGrowthPlateInputs(container, numberOfTubes) {
 
 
 
-        $('#addtombol_detResultsCharcoal').click(function() {
-            $('#mode_detResultsCharcoal').val('insert');
+        $('#addtombol_detResultsQpcr').click(function() {
+            $('#mode_detResultsQpcr').val('insert');
             $('#modal-title-detail').html('<i class="fa fa-wpforms"></i> Insert | Results Charcoal <span id="my-another-cool-loader"></span>');
             $('#campy_assay_barcode1').val(campy_assay_barcode);
             $('#campy_assay_barcode1').attr('readonly', true);
@@ -1050,7 +1047,7 @@ function generateGrowthPlateInputs(container, numberOfTubes) {
             let tr = $(this).closest('tr');
             let data = table.row(tr).data();
             console.log(data);
-            $('#mode_detResultsCharcoal').val('edit');
+            $('#mode_detResultsQpcr').val('edit');
             $('#modal-title-detail').html('<i class="fa fa-pencil-square"></i> Update | Results Charcoal <span id="my-another-cool-loader"></span>');
             $('#id_result_qpcr').val(data.id_result_qpcr);
             $('#campy_assay_barcode1').val(data.campy_assay_barcode);
@@ -1096,117 +1093,117 @@ function generateGrowthPlateInputs(container, numberOfTubes) {
             $('#compose-modal').modal('show');
         });
 
-        $('#addtombol_detResultsHBA').on('click', function() {
-            $('#mode_detResultsHBA').val('insert');
-            $('#modal-title-HBA').html('<i class="fa fa-wpforms"></i> Insert | Results HBA <span id="my-another-cool-loader"></span>');
+        // $('#addtombol_detResultsHBA').on('click', function() {
+        //     $('#mode_detResultsHBA').val('insert');
+        //     $('#modal-title-HBA').html('<i class="fa fa-wpforms"></i> Insert | Results HBA <span id="my-another-cool-loader"></span>');
 
-            let td = $('#example2 td:first');
-            let data = table.row(td).data();
-            console.log(data);
+        //     let td = $('#example2 td:first');
+        //     let data = table.row(td).data();
+        //     console.log(data);
             
-            if (data && data.campy_assay_barcode) {
-                let campy_assay_barcode = data.campy_assay_barcode;
+        //     if (data && data.campy_assay_barcode) {
+        //         let campy_assay_barcode = data.campy_assay_barcode;
 
-                // Parsing data ke komponen
-                $('#campy_assay_barcodeHBA').val(campy_assay_barcode);
-                $('#id_campy_biosolids_qpcrHBA').val(id_campy_biosolids_qpcr);
-                $('#campy_assay_barcodeHBA').attr('readonly', true);
-                $('#number_of_tubesHba').val(number_of_tubes);
+        //         // Parsing data ke komponen
+        //         $('#campy_assay_barcodeHBA').val(campy_assay_barcode);
+        //         $('#id_campy_biosolids_qpcrHBA').val(id_campy_biosolids_qpcr);
+        //         $('#campy_assay_barcodeHBA').attr('readonly', true);
+        //         $('#number_of_tubesHba').val(number_of_tubes);
 
-                // Clear existing growthPlateInputs
-                let growthPlateInputsHba = $('#growthPlateInputsHBA');
-                growthPlateInputsHba.empty();
+        //         // Clear existing growthPlateInputs
+        //         let growthPlateInputsHba = $('#growthPlateInputsHBA');
+        //         growthPlateInputsHba.empty();
 
-                // split the string into an array
-                const growthPlateArray = data.growth_plate.split(', ');
-                const plateNumberArray = data.plate_number.split(', ');
+        //         // split the string into an array
+        //         const growthPlateArray = data.growth_plate.split(', ');
+        //         const plateNumberArray = data.plate_number.split(', ');
 
-                console.log('growthPlateArray:', growthPlateArray);
-                console.log('plateNumberArray:', plateNumberArray);
+        //         console.log('growthPlateArray:', growthPlateArray);
+        //         console.log('plateNumberArray:', plateNumberArray);
 
-                // making the input base on the plate number
-                plateNumberArray.forEach((plateNumber, index) => {
-                    const plate = growthPlateArray[index] || '';
+        //         // making the input base on the plate number
+        //         plateNumberArray.forEach((plateNumber, index) => {
+        //             const plate = growthPlateArray[index] || '';
 
-                    // decide the value radio selected
-                    const checkedYes = plate === 'Yes' ? 'checked' : '';
-                    const checkedNo = plate === 'No' ? 'checked' : '';
-                    const disabled = plate === 'No' ? 'disabled' : '';
+        //             // decide the value radio selected
+        //             const checkedYes = plate === 'Yes' ? 'checked' : '';
+        //             const checkedNo = plate === 'No' ? 'checked' : '';
+        //             const disabled = plate === 'No' ? 'disabled' : '';
 
-                    growthPlateInputsHba.append(
-                        `<div class="d-flex align-items-center mb-2">
-                            <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Growth Plate ${plateNumber}:</label>
-                            <div class="d-flex align-items-center">
-                                <input type="hidden" name="growth_plate${plateNumber}" value="${plate}">
-                                <label class="radio-inline me-2" style="margin-bottom: 0;">
-                                    <input type="radio" id="growth_plate${plateNumber}" name="growth_plate${plateNumber}" value="Yes" ${disabled}> Yes
-                                </label>
-                                <label class="radio-inline" style="margin-bottom: 0;">
-                                    <input type="radio" id="growth_plate${plateNumber}"  name="growth_plate${plateNumber}" value="No" ${disabled}> No
-                                </label>
-                            </div>
-                        </div>`
-                    );
-                });
+        //             growthPlateInputsHba.append(
+        //                 `<div class="d-flex align-items-center mb-2">
+        //                     <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Growth Plate ${plateNumber}:</label>
+        //                     <div class="d-flex align-items-center">
+        //                         <input type="hidden" name="growth_plate${plateNumber}" value="${plate}">
+        //                         <label class="radio-inline me-2" style="margin-bottom: 0;">
+        //                             <input type="radio" id="growth_plate${plateNumber}" name="growth_plate${plateNumber}" value="Yes" ${disabled}> Yes
+        //                         </label>
+        //                         <label class="radio-inline" style="margin-bottom: 0;">
+        //                             <input type="radio" id="growth_plate${plateNumber}"  name="growth_plate${plateNumber}" value="No" ${disabled}> No
+        //                         </label>
+        //                     </div>
+        //                 </div>`
+        //             );
+        //         });
 
-                $('#compose-modalHBA').modal('show');
-            } else {
-                // Tampilkan modal konfirmasi
-                $('#confirm-modal').modal('show');
-                // Tambahkan pesan ke modal
-                $('#confirm-modal .modal-body').html('<p class="text-center" style="font-size: 15px;">You have not filled in the Result Charcoal. Please fill in that data first.</p>');
-            }
-        });
+        //         $('#compose-modalHBA').modal('show');
+        //     } else {
+        //         // Tampilkan modal konfirmasi
+        //         $('#confirm-modal').modal('show');
+        //         // Tambahkan pesan ke modal
+        //         $('#confirm-modal .modal-body').html('<p class="text-center" style="font-size: 15px;">You have not filled in the Result Charcoal. Please fill in that data first.</p>');
+        //     }
+        // });
         
 
-        $('#exampleHba').on('click', '.btn_edit_detResultsHba', function() {
-            let tr = $(this).closest('tr');
-            let data = table1.row(tr).data();
-            console.log(data);
-            $('#mode_detResultsHBA').val('edit');
-            $('#modal-title-HBA').html('<i class="fa fa-pencil-square"></i> Update | Results HBA <span id="my-another-cool-loader"></span>');
-            $('#id_result_hba').val(data.id_result_hba);
-            $('#campy_assay_barcodeHBA').val(data.campy_assay_barcode);
-            $('#campy_assay_barcodeHBA').attr('readonly', true);
-            $('#id_campy_biosolids_qpcrHBA').val(data.id_campy_biosolids_qpcr);
-            $('#date_sample_processedHBA').val(data.date_sample_processed);
-            $('#time_sample_processedHBA').val(data.time_sample_processed);
-            $('#number_of_tubesHba').val(number_of_tubes);
+        // $('#exampleHba').on('click', '.btn_edit_detResultsHba', function() {
+        //     let tr = $(this).closest('tr');
+        //     let data = table1.row(tr).data();
+        //     console.log(data);
+        //     $('#mode_detResultsHBA').val('edit');
+        //     $('#modal-title-HBA').html('<i class="fa fa-pencil-square"></i> Update | Results HBA <span id="my-another-cool-loader"></span>');
+        //     $('#id_result_hba').val(data.id_result_hba);
+        //     $('#campy_assay_barcodeHBA').val(data.campy_assay_barcode);
+        //     $('#campy_assay_barcodeHBA').attr('readonly', true);
+        //     $('#id_campy_biosolids_qpcrHBA').val(data.id_campy_biosolids_qpcr);
+        //     $('#date_sample_processedHBA').val(data.date_sample_processed);
+        //     $('#time_sample_processedHBA').val(data.time_sample_processed);
+        //     $('#number_of_tubesHba').val(number_of_tubes);
 
-            // Clear existing growthPlateInputs
-            let growthPlateInputsHba = $('#growthPlateInputsHBA');
-            growthPlateInputsHba.empty();
+        //     // Clear existing growthPlateInputs
+        //     let growthPlateInputsHba = $('#growthPlateInputsHBA');
+        //     growthPlateInputsHba.empty();
 
-            // split the string into an array
-            const growthPlateArray = data.growth_plate.split(', ');
-            const plateNumberArray = data.plate_number.split(', ');
+        //     // split the string into an array
+        //     const growthPlateArray = data.growth_plate.split(', ');
+        //     const plateNumberArray = data.plate_number.split(', ');
 
-            // making the input base on the plate number
-            plateNumberArray.forEach((plateNumber, index) => {
-                const plate = growthPlateArray[index] || '';
+        //     // making the input base on the plate number
+        //     plateNumberArray.forEach((plateNumber, index) => {
+        //         const plate = growthPlateArray[index] || '';
 
-                // decide the value radio selected
-                const checkedYes = plate === 'Yes' ? 'checked' : '';
-                const checkedNo = plate === 'No' ? 'checked' : '';
-                const disabled = plate === 'No' ? 'disabled' : '';
+        //         // decide the value radio selected
+        //         const checkedYes = plate === 'Yes' ? 'checked' : '';
+        //         const checkedNo = plate === 'No' ? 'checked' : '';
+        //         const disabled = plate === 'No' ? 'disabled' : '';
 
-                growthPlateInputsHba.append(
-                    `<div class="d-flex align-items-center mb-2">
-                        <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Growth Plate ${plateNumber}:</label>
-                        <div class="d-flex align-items-center">
-                            <input type="hidden" name="growth_plate${plateNumber}" value="${plate}">
-                            <label class="radio-inline me-2" style="margin-bottom: 0;">
-                                <input type="radio" id="growth_plate${plateNumber}" name="growth_plate${plateNumber}" value="Yes" ${checkedYes}> Yes
-                            </label>
-                            <label class="radio-inline" style="margin-bottom: 0;">
-                                <input type="radio" id="growth_plate${plateNumber}"  name="growth_plate${plateNumber}" value="No" ${checkedNo}> No
-                            </label>
-                        </div>
-                    </div>`
-                );
-            });
-            $('#compose-modalHBA').modal('show');
-        });
+        //         growthPlateInputsHba.append(
+        //             `<div class="d-flex align-items-center mb-2">
+        //                 <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Growth Plate ${plateNumber}:</label>
+        //                 <div class="d-flex align-items-center">
+        //                     <input type="hidden" name="growth_plate${plateNumber}" value="${plate}">
+        //                     <label class="radio-inline me-2" style="margin-bottom: 0;">
+        //                         <input type="radio" id="growth_plate${plateNumber}" name="growth_plate${plateNumber}" value="Yes" ${checkedYes}> Yes
+        //                     </label>
+        //                     <label class="radio-inline" style="margin-bottom: 0;">
+        //                         <input type="radio" id="growth_plate${plateNumber}"  name="growth_plate${plateNumber}" value="No" ${checkedNo}> No
+        //                     </label>
+        //                 </div>
+        //             </div>`
+        //         );
+        //     });
+        //     $('#compose-modalHBA').modal('show');
+        // });
 
     });
 </script>
