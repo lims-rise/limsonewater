@@ -20,7 +20,7 @@ class Campy_liquids_model extends CI_Model
         $this->datatables->from('campy_liquids AS cl');
         $this->datatables->join('ref_person AS rp', 'cl.id_person = rp.id_person', 'left');
         $this->datatables->join('ref_sampletype AS rs', 'cl.id_sampletype = rs.id_sampletype', 'left');
-        $this->datatables->join('sample_volumes_liquids AS svl', 'cl.id_campy_liquids = svl.id_campy_liquids', 'left');
+        $this->datatables->join('campy_sample_volumes_liquids AS svl', 'cl.id_campy_liquids = svl.id_campy_liquids', 'left');
         // $this->datatables->where('lab', $this->session->userdata('lab'));
         $this->datatables->where('cl.flag', '0');
         // GROUP BY
@@ -45,9 +45,9 @@ class Campy_liquids_model extends CI_Model
     function subjsonCharcoal($id) {
         $this->datatables->select('rcl.id_result_charcoal_liquids, cl.campy_assay_barcode, rcl.id_campy_liquids, rcl.date_sample_processed, rcl.time_sample_processed,
         GROUP_CONCAT(sgpl.growth_plate ORDER BY sgpl.plate_number SEPARATOR ", ") AS growth_plate, GROUP_CONCAT(sgpl.plate_number ORDER BY sgpl.plate_number SEPARATOR ", ") AS plate_number, rcl.flag');
-        $this->datatables->from('result_charcoal_liquids AS rcl');
+        $this->datatables->from('campy_result_charcoal_liquids AS rcl');
         $this->datatables->join('campy_liquids AS cl', 'rcl.id_campy_liquids = cl.id_campy_liquids', 'left');
-        $this->datatables->join('sample_growth_plate_liquids AS sgpl', 'rcl.id_result_charcoal_liquids = sgpl.id_result_charcoal_liquids', 'left');
+        $this->datatables->join('campy_sample_growth_plate_liquids AS sgpl', 'rcl.id_result_charcoal_liquids = sgpl.id_result_charcoal_liquids', 'left');
         $this->datatables->where('rcl.flag', '0');
         $this->datatables->where('rcl.id_campy_liquids', $id);
         $this->datatables->group_by('
@@ -75,9 +75,9 @@ class Campy_liquids_model extends CI_Model
     function subjsonHba($id) {
         $this->datatables->select('rhl.id_result_hba_liquids, cl.campy_assay_barcode, rhl.id_campy_liquids, rhl.date_sample_processed, rhl.time_sample_processed, 
         GROUP_CONCAT(sgphl.growth_plate ORDER BY sgphl.plate_number SEPARATOR ", ") AS growth_plate, GROUP_CONCAT(sgphl.plate_number ORDER BY sgphl.plate_number SEPARATOR ", ") AS plate_number, rhl.flag, sgphl.id_sample_plate_hba_liquids');
-        $this->datatables->from('result_hba_liquids AS rhl');
+        $this->datatables->from('campy_result_hba_liquids AS rhl');
         $this->datatables->join('campy_liquids AS cl', 'rhl.id_campy_liquids = cl.id_campy_liquids', 'left');
-        $this->datatables->join('sample_growth_plate_hba_liquids AS sgphl', 'rhl.id_result_hba_liquids = sgphl.id_result_hba_liquids', 'left');
+        $this->datatables->join('campy_sample_growth_plate_hba_liquids AS sgphl', 'rhl.id_result_hba_liquids = sgphl.id_result_hba_liquids', 'left');
         $this->datatables->where('rhl.flag', '0');
         $this->datatables->where('rhl.id_campy_liquids', $id);
         $this->datatables->group_by('
@@ -105,7 +105,7 @@ class Campy_liquids_model extends CI_Model
     function subjsonBiochemical($id, $biochemical_tube) {
 
         $this->datatables->select('rbl.id_result_biochemical_liquids, rbl.id_campy_liquids, rbl.id_result_hba_liquids, cl.campy_assay_barcode, rbl.oxidase, rbl.catalase, rbl.confirmation, rbl.sample_store, rbl.biochemical_tube, rbl.flag');
-        $this->datatables->from('result_biochemical_liquids AS rbl');
+        $this->datatables->from('campy_result_biochemical_liquids AS rbl');
         $this->datatables->join('campy_liquids AS cl', 'rbl.id_campy_liquids = cl.id_campy_liquids', 'left');
         $this->datatables->where('rbl.flag', '0');
         $this->datatables->where('rbl.id_campy_liquids', $id);
@@ -134,7 +134,7 @@ class Campy_liquids_model extends CI_Model
         // Step 1: Get unique tube_number
         $this->db->select('tube_number');
         $this->db->distinct();
-        $this->db->from('sample_volumes_liquids');
+        $this->db->from('campy_sample_volumes_liquids');
         $this->db->where('id_campy_liquids', $id);
         $this->db->order_by('tube_number', 'ASC');
         $tube_numbers = $this->db->get()->result_array();
@@ -159,10 +159,10 @@ class Campy_liquids_model extends CI_Model
                            GROUP_CONCAT(DISTINCT CONCAT(rbl.biochemical_tube, ':', rbl.confirmation) ORDER BY rbl.biochemical_tube SEPARATOR ', ') AS confirmation,
                            GROUP_CONCAT(DISTINCT sgphl.plate_number ORDER BY sgphl.plate_number SEPARATOR ', ') AS plate_numbers");
         $this->db->from('campy_liquids AS cl');
-        $this->db->join('result_hba_liquids AS rhl', 'cl.id_campy_liquids = rhl.id_campy_liquids', 'left');
-        $this->db->join('sample_growth_plate_hba_liquids AS sgphl', 'rhl.id_result_hba_liquids = sgphl.id_result_hba_liquids', 'left');
-        $this->db->join('sample_volumes_liquids AS svl1', 'rhl.id_campy_liquids = svl1.id_campy_liquids', 'left');
-        $this->db->join('result_biochemical_liquids AS rbl', 'sgphl.id_result_hba_liquids = rbl.id_result_hba_liquids', 'left');
+        $this->db->join('campy_result_hba_liquids AS rhl', 'cl.id_campy_liquids = rhl.id_campy_liquids', 'left');
+        $this->db->join('campy_sample_growth_plate_hba_liquids AS sgphl', 'rhl.id_result_hba_liquids = sgphl.id_result_hba_liquids', 'left');
+        $this->db->join('campy_sample_volumes_liquids AS svl1', 'rhl.id_campy_liquids = svl1.id_campy_liquids', 'left');
+        $this->db->join('campy_result_biochemical_liquids AS rbl', 'sgphl.id_result_hba_liquids = rbl.id_result_hba_liquids', 'left');
         $this->db->join('ref_sampletype AS rs', 'cl.id_sampletype = rs.id_sampletype', 'left');
         $this->db->join('ref_person AS rp',  'cl.id_person = rp.id_person', 'left');
     
@@ -200,7 +200,7 @@ class Campy_liquids_model extends CI_Model
         // Step 1: Get unique tube_number
         $this->db->select('tube_number');
         $this->db->distinct();
-        $this->db->from('sample_volumes_liquids');
+        $this->db->from('campy_sample_volumes_liquids');
         $this->db->where('id_campy_liquids', $id);
         $this->db->order_by('tube_number', 'ASC');
         $tube_numbers = $this->db->get()->result_array();
@@ -228,10 +228,10 @@ class Campy_liquids_model extends CI_Model
                            GROUP_CONCAT(DISTINCT CONCAT(rbl.biochemical_tube, ':', rbl.confirmation) ORDER BY rbl.biochemical_tube SEPARATOR ', ') AS confirmation,
                            GROUP_CONCAT(DISTINCT sgphl.plate_number ORDER BY sgphl.plate_number SEPARATOR ', ') AS plate_numbers");
         $this->db->from('campy_liquids AS cl');
-        $this->db->join('result_hba_liquids AS rhl', 'cl.id_campy_liquids = rhl.id_campy_liquids', 'left');
-        $this->db->join('sample_growth_plate_hba_liquids AS sgphl', 'rhl.id_result_hba_liquids = sgphl.id_result_hba_liquids', 'left');
-        $this->db->join('sample_volumes_liquids AS svl1', 'rhl.id_campy_liquids = svl1.id_campy_liquids', 'left');
-        $this->db->join('result_biochemical_liquids AS rbl', 'sgphl.id_result_hba_liquids = rbl.id_result_hba_liquids', 'left');
+        $this->db->join('campy_result_hba_liquids AS rhl', 'cl.id_campy_liquids = rhl.id_campy_liquids', 'left');
+        $this->db->join('campy_sample_growth_plate_hba_liquids AS sgphl', 'rhl.id_result_hba_liquids = sgphl.id_result_hba_liquids', 'left');
+        $this->db->join('campy_sample_volumes_liquids AS svl1', 'rhl.id_campy_liquids = svl1.id_campy_liquids', 'left');
+        $this->db->join('campy_result_biochemical_liquids AS rbl', 'sgphl.id_result_hba_liquids = rbl.id_result_hba_liquids', 'left');
         $this->db->join('ref_sampletype AS rs', 'cl.id_sampletype = rs.id_sampletype', 'left');
         $this->db->join('ref_person AS rp',  'cl.id_person = rp.id_person', 'left');
     
@@ -274,7 +274,7 @@ class Campy_liquids_model extends CI_Model
         // Step 1: Get unique tube_number
         $this->db->select('tube_number');
         $this->db->distinct();
-        $this->db->from('sample_volumes_liquids');
+        $this->db->from('campy_sample_volumes_liquids');
         $this->db->where('id_campy_liquids IS NOT NULL');
         $this->db->order_by('tube_number', 'ASC');
         $tube_numbers = $this->db->get()->result_array();
@@ -302,10 +302,10 @@ class Campy_liquids_model extends CI_Model
                            GROUP_CONCAT(DISTINCT CONCAT(rbl.biochemical_tube, ':', rbl.confirmation) ORDER BY rbl.biochemical_tube SEPARATOR ', ') AS confirmation,
                            GROUP_CONCAT(DISTINCT sgphl.plate_number ORDER BY sgphl.plate_number SEPARATOR ', ') AS plate_numbers");
         $this->db->from('campy_liquids AS cl');
-        $this->db->join('result_hba_liquids AS rhl', 'cl.id_campy_liquids = rhl.id_campy_liquids', 'left');
-        $this->db->join('sample_growth_plate_hba_liquids AS sgphl', 'rhl.id_result_hba_liquids = sgphl.id_result_hba_liquids', 'left');
-        $this->db->join('sample_volumes_liquids AS svl1', 'rhl.id_campy_liquids = svl1.id_campy_liquids', 'left');
-        $this->db->join('result_biochemical_liquids AS rbl', 'sgphl.id_result_hba_liquids = rbl.id_result_hba_liquids', 'left');
+        $this->db->join('campy_result_hba_liquids AS rhl', 'cl.id_campy_liquids = rhl.id_campy_liquids', 'left');
+        $this->db->join('campy_sample_growth_plate_hba_liquids AS sgphl', 'rhl.id_result_hba_liquids = sgphl.id_result_hba_liquids', 'left');
+        $this->db->join('campy_sample_volumes_liquids AS svl1', 'rhl.id_campy_liquids = svl1.id_campy_liquids', 'left');
+        $this->db->join('campy_result_biochemical_liquids AS rbl', 'sgphl.id_result_hba_liquids = rbl.id_result_hba_liquids', 'left');
         $this->db->join('ref_sampletype AS rs', 'cl.id_sampletype = rs.id_sampletype', 'left');
         $this->db->join('ref_person AS rp', 'cl.id_person = rp.id_person', 'left');
     
@@ -364,7 +364,7 @@ class Campy_liquids_model extends CI_Model
         GROUP_CONCAT(svl.tube_number ORDER BY svl.tube_number SEPARATOR ", ") AS tube_number');
       $this->db->from('campy_liquids AS cl');
       $this->db->join('ref_sampletype AS rs', 'cl.id_sampletype = rs.id_sampletype', 'left');
-      $this->db->join('sample_volumes_liquids AS svl', 'cl.id_campy_liquids = svl.id_campy_liquids', 'left');
+      $this->db->join('campy_sample_volumes_liquids AS svl', 'cl.id_campy_liquids = svl.id_campy_liquids', 'left');
       $this->db->join('ref_person AS rp', 'cl.id_person = rp.id_person', 'left');
       $this->db->where('cl.id_campy_liquids', $id);
       $this->db->where('cl.flag', 0);
@@ -458,7 +458,7 @@ class Campy_liquids_model extends CI_Model
     }
     
     public function insert_sample_volume_liquids($data) {
-        $this->db->insert('sample_volumes_liquids', $data);
+        $this->db->insert('campy_sample_volumes_liquids', $data);
     }
     
     function updateCampyLiquids($id, $data) {
@@ -468,26 +468,26 @@ class Campy_liquids_model extends CI_Model
 
     public function delete_sample_volumes_liquids($id_campy_liquids) {
         $this->db->where('id_campy_liquids', $id_campy_liquids);
-        $this->db->delete('sample_volumes_liquids');
+        $this->db->delete('campy_sample_volumes_liquids');
     }
 
     public function insertResultsCharcoal($data) {
-        $this->db->insert('result_charcoal_liquids', $data);
+        $this->db->insert('campy_result_charcoal_liquids', $data);
         return $this->db->insert_id(); // Return the last inserted ID
     }
 
     public function insert_growth_plate($data) {
-        $this->db->insert('sample_growth_plate_liquids', $data);
+        $this->db->insert('campy_sample_growth_plate_liquids', $data);
     }
 
     function updateResultsCharcoal($id, $data) {
         $this->db->where('id_result_charcoal_liquids', $id);
-        $this->db->update('result_charcoal_liquids', $data);
+        $this->db->update('campy_result_charcoal_liquids', $data);
     }
 
     public function delete_growth_plates($id_result_charcoal_liquids) {
         $this->db->where('id_result_charcoal_liquids', $id_result_charcoal_liquids);
-        $this->db->delete('sample_growth_plate_liquids');
+        $this->db->delete('campy_sample_growth_plate_liquids');
     }
 
     function get_by_id_charcoal($id)
@@ -515,22 +515,22 @@ class Campy_liquids_model extends CI_Model
     }
 
     function insertResultsHba($data) {
-        $this->db->insert('result_hba_liquids', $data);
+        $this->db->insert('campy_result_hba_liquids', $data);
         return $this->db->insert_id();
     }
 
     public function insert_growth_plate_hba($data) {
-        $this->db->insert('sample_growth_plate_hba_liquids', $data);
+        $this->db->insert('campy_sample_growth_plate_hba_liquids', $data);
     }
 
     function updateResultsHba($id_result_hba_liquids, $data) {
         $this->db->where('id_result_hba_liquids', $id_result_hba_liquids);
-        $this->db->update('result_hba_liquids', $data);
+        $this->db->update('campy_result_hba_liquids', $data);
     }
 
     public function delete_growth_plates_hba($id_result_hba_liquids) {
         $this->db->where('id_result_hba_liquids', $id_result_hba_liquids);
-        $this->db->delete('sample_growth_plate_hba_liquids');
+        $this->db->delete('campy_sample_growth_plate_hba_liquids');
     }
 
     function get_by_id_hba($id)
@@ -546,7 +546,7 @@ class Campy_liquids_model extends CI_Model
     }
 
     function insertResultsBiochemical($data) {
-        $this->db->insert('result_biochemical_liquids', $data);
+        $this->db->insert('campy_result_biochemical_liquids', $data);
         return $this->db->insert_id();
     }
     
@@ -559,7 +559,7 @@ class Campy_liquids_model extends CI_Model
 
     function updateResultsBiochemical($id_result_biochemical_liquids, $data) {
         $this->db->where('id_result_biochemical_liquids', $id_result_biochemical_liquids);
-        $this->db->update('result_biochemical_liquids', $data);
+        $this->db->update('campy_result_biochemical_liquids', $data);
     }
     
 
