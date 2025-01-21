@@ -40,24 +40,24 @@ class Campy_biosolids_qpcr extends CI_Controller
         echo $this->Campy_biosolids_qpcr_model->json();
     }
 
-    public function subjsonCharcoal() {
-        $id = $this->input->get('idCharcoal',TRUE);
+    public function subjsonResultQpcr() {
+        $id = $this->input->get('idQpcr',TRUE);
         header('Content-Type: application/json');
-        echo $this->Campy_biosolids_qpcr_model->subjsonCharcoal($id);
+        echo $this->Campy_biosolids_qpcr_model->subjsonResultQpcr($id);
     }
 
-    public function subjsonHba() {
-        $id = $this->input->get('idHba',TRUE);
-        header('Content-Type: application/json');
-        echo $this->Campy_biosolids_qpcr_model->subjsonHba($id);
-    }
+    // public function subjsonHba() {
+    //     $id = $this->input->get('idHba',TRUE);
+    //     header('Content-Type: application/json');
+    //     echo $this->Campy_biosolids_qpcr_model->subjsonHba($id);
+    // }
 
-    public function subjsonBiochemical() {
-        $id = $this->input->get('idBiochemical',TRUE);
-        $biochemical_tube = $this->input->get('biochemical_tube', TRUE);
-        header('Content-Type: application/json');
-        echo $this->Campy_biosolids_qpcr_model->subjsonBiochemical($id, $biochemical_tube);
-    }
+    // public function subjsonBiochemical() {
+    //     $id = $this->input->get('idBiochemical',TRUE);
+    //     $biochemical_tube = $this->input->get('biochemical_tube', TRUE);
+    //     header('Content-Type: application/json');
+    //     echo $this->Campy_biosolids_qpcr_model->subjsonBiochemical($id, $biochemical_tube);
+    // }
 
     public function read($id)
     {
@@ -83,12 +83,12 @@ class Campy_biosolids_qpcr extends CI_Controller
             );
             
             // Mendapatkan final concentration
-            $finalConcentration = $this->Campy_biosolids_qpcr_model->subjsonFinalConcentration($id);
-            if ($finalConcentration) {
-                $data['finalConcentration'] = $finalConcentration;
-            } else {
-                $data['finalConcentration'] = []; // Pastikan ini tidak null
-            }
+            // $finalConcentration = $this->Campy_biosolids_qpcr_model->subjsonFinalConcentration($id);
+            // if ($finalConcentration) {
+            //     $data['finalConcentration'] = $finalConcentration;
+            // } else {
+            //     $data['finalConcentration'] = []; // Pastikan ini tidak null
+            // }
             // var_dump($data);
             // die();
             $this->template->load('template','campy_biosolids_qpcr/index_det', $data);
@@ -331,8 +331,8 @@ class Campy_biosolids_qpcr extends CI_Controller
     //     redirect(site_url("campy_biosolids_qpcr/read/" . $id_campy_biosolids_qpcr));
     // }
 
-    public function saveResultsCharcoal() {
-        $mode = $this->input->post('mode_detResultsCharcoal', TRUE);
+    public function saveResultsQpcr() {
+        $mode = $this->input->post('mode_detResultsQpcr', TRUE);
         $id_campy_biosolids_qpcr = $this->input->post('id_campy_biosolids_qpcr1', TRUE);
         $id_result_qpcr = $this->input->post('id_result_qpcr', TRUE);
         $dt = new DateTime();
@@ -352,7 +352,7 @@ class Campy_biosolids_qpcr extends CI_Controller
                 'date_created' => $dt->format('Y-m-d H:i:s'),
             );
     
-            $assay_id = $this->Campy_biosolids_qpcr_model->insertResultsCharcoal($data);
+            $assay_id = $this->Campy_biosolids_qpcr_model->insertResultsQpcr($data);
     
             // Insert sample volumes
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
@@ -388,7 +388,7 @@ class Campy_biosolids_qpcr extends CI_Controller
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
     
-            $this->Campy_biosolids_qpcr_model->updateResultsCharcoal($id_result_qpcr, $data);
+            $this->Campy_biosolids_qpcr_model->updateResultsQpcr($id_result_qpcr, $data);
     
             // Update sample volumes
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
@@ -418,152 +418,152 @@ class Campy_biosolids_qpcr extends CI_Controller
     }
     
 
-    public function saveResultsHBA() {
-        $mode = $this->input->post('mode_detResultsHBA', TRUE);
-        $id_campy_biosolids_qpcr = $this->input->post('id_campy_biosolids_qpcrHBA', TRUE);
-        $id_result_hba_qpcr = $this->input->post('id_result_hba_qpcr', TRUE);
+    // public function saveResultsHBA() {
+    //     $mode = $this->input->post('mode_detResultsHBA', TRUE);
+    //     $id_campy_biosolids_qpcr = $this->input->post('id_campy_biosolids_qpcrHBA', TRUE);
+    //     $id_result_hba_qpcr = $this->input->post('id_result_hba_qpcr', TRUE);
 
-        $dt = new DateTime();
-        $date_sample_processed = $this->input->post('date_sample_processedHBA', TRUE);
-        $time_sample_processed = $this->input->post('time_sample_processedHBA', TRUE);
+    //     $dt = new DateTime();
+    //     $date_sample_processed = $this->input->post('date_sample_processedHBA', TRUE);
+    //     $time_sample_processed = $this->input->post('time_sample_processedHBA', TRUE);
     
-        if ($mode == "insert") {
-            // Insert data into assays table
-            $data = array(
-                'id_campy_biosolids_qpcr' => $id_campy_biosolids_qpcr,
-                'date_sample_processed' => $date_sample_processed,
-                'time_sample_processed' => $time_sample_processed,
-                'flag' => '0',
-                'lab' => $this->session->userdata('lab'),
-                'uuid' => $this->uuid->v4(),
-                'user_created' => $this->session->userdata('id_users'),
-                'date_created' => $dt->format('Y-m-d H:i:s'),
-            );
+    //     if ($mode == "insert") {
+    //         // Insert data into assays table
+    //         $data = array(
+    //             'id_campy_biosolids_qpcr' => $id_campy_biosolids_qpcr,
+    //             'date_sample_processed' => $date_sample_processed,
+    //             'time_sample_processed' => $time_sample_processed,
+    //             'flag' => '0',
+    //             'lab' => $this->session->userdata('lab'),
+    //             'uuid' => $this->uuid->v4(),
+    //             'user_created' => $this->session->userdata('id_users'),
+    //             'date_created' => $dt->format('Y-m-d H:i:s'),
+    //         );
 
-            // var_dump($data);
-            // die();
+    //         // var_dump($data);
+    //         // die();
     
-            $assay_id = $this->Campy_biosolids_qpcr_model->insertResultsHba($data);
+    //         $assay_id = $this->Campy_biosolids_qpcr_model->insertResultsHba($data);
     
-            // Insert sample volumes
-            $number_of_tubes = $this->input->post('number_of_tubesHba', TRUE);
-            for ($i = 1; $i <= $number_of_tubes; $i++) {
-                $plate = $this->input->post("growth_plate{$i}", TRUE);
+    //         // Insert sample volumes
+    //         $number_of_tubes = $this->input->post('number_of_tubesHba', TRUE);
+    //         for ($i = 1; $i <= $number_of_tubes; $i++) {
+    //             $plate = $this->input->post("growth_plate{$i}", TRUE);
 
-                if ($plate) {
-                    $this->Campy_biosolids_qpcr_model->insert_growth_plate_hba(array(
-                        'id_result_hba_qpcr' => $assay_id,
-                        'plate_number' => $i,
-                        'growth_plate' => $plate,
-                        'flag' => '0',
-                        'lab' => $this->session->userdata('lab'),
-                        'uuid' => $this->uuid->v4(),
-                        'user_created' => $this->session->userdata('id_users'),
-                        'date_created' => $dt->format('Y-m-d H:i:s'),
-                    ));
-                }
+    //             if ($plate) {
+    //                 $this->Campy_biosolids_qpcr_model->insert_growth_plate_hba(array(
+    //                     'id_result_hba_qpcr' => $assay_id,
+    //                     'plate_number' => $i,
+    //                     'growth_plate' => $plate,
+    //                     'flag' => '0',
+    //                     'lab' => $this->session->userdata('lab'),
+    //                     'uuid' => $this->uuid->v4(),
+    //                     'user_created' => $this->session->userdata('id_users'),
+    //                     'date_created' => $dt->format('Y-m-d H:i:s'),
+    //                 ));
+    //             }
 
-            }
+    //         }
     
-            $this->session->set_flashdata('message', 'Create Record Success');
+    //         $this->session->set_flashdata('message', 'Create Record Success');
     
-        } else if ($mode == "edit") {
-            // Update data in assays table
-            $data = array(
-                'id_campy_biosolids_qpcr' => $id_campy_biosolids_qpcr,
-                'date_sample_processed' => $date_sample_processed,
-                'time_sample_processed' => $time_sample_processed,
-                'flag' => '0',
-                'lab' => $this->session->userdata('lab'),
-                'uuid' => $this->uuid->v4(),
-                'user_updated' => $this->session->userdata('id_users'),
-                'date_updated' => $dt->format('Y-m-d H:i:s'),
-            );
+    //     } else if ($mode == "edit") {
+    //         // Update data in assays table
+    //         $data = array(
+    //             'id_campy_biosolids_qpcr' => $id_campy_biosolids_qpcr,
+    //             'date_sample_processed' => $date_sample_processed,
+    //             'time_sample_processed' => $time_sample_processed,
+    //             'flag' => '0',
+    //             'lab' => $this->session->userdata('lab'),
+    //             'uuid' => $this->uuid->v4(),
+    //             'user_updated' => $this->session->userdata('id_users'),
+    //             'date_updated' => $dt->format('Y-m-d H:i:s'),
+    //         );
     
-            $this->Campy_biosolids_qpcr_model->updateResultsHba($id_result_hba_qpcr, $data);
+    //         $this->Campy_biosolids_qpcr_model->updateResultsHba($id_result_hba_qpcr, $data);
     
-            // Update sample volumes
-            $number_of_tubes = $this->input->post('number_of_tubesHba', TRUE);
-            $this->Campy_biosolids_qpcr_model->delete_growth_plates_hba($id_result_hba_qpcr); // Hapus volume yang ada
+    //         // Update sample volumes
+    //         $number_of_tubes = $this->input->post('number_of_tubesHba', TRUE);
+    //         $this->Campy_biosolids_qpcr_model->delete_growth_plates_hba($id_result_hba_qpcr); // Hapus volume yang ada
     
-            for ($i = 1; $i <= $number_of_tubes; $i++) {
-                $plate = $this->input->post("growth_plate{$i}", TRUE);
-                if ($plate) {
-                    $data_plate = array(
-                        'id_result_hba_qpcr' => $id_result_hba_qpcr,
-                        'plate_number' => $i,
-                        'growth_plate' => $plate,
-                        'flag' => '0',
-                        'lab' => $this->session->userdata('lab'),
-                        'uuid' => $this->uuid->v4(),
-                        'user_created' => $this->session->userdata('id_users'),
-                        'date_created' => $dt->format('Y-m-d H:i:s'),
-                    );
-                    $this->Campy_biosolids_qpcr_model->insert_growth_plate_hba($data_plate);
-                }
-            }
+    //         for ($i = 1; $i <= $number_of_tubes; $i++) {
+    //             $plate = $this->input->post("growth_plate{$i}", TRUE);
+    //             if ($plate) {
+    //                 $data_plate = array(
+    //                     'id_result_hba_qpcr' => $id_result_hba_qpcr,
+    //                     'plate_number' => $i,
+    //                     'growth_plate' => $plate,
+    //                     'flag' => '0',
+    //                     'lab' => $this->session->userdata('lab'),
+    //                     'uuid' => $this->uuid->v4(),
+    //                     'user_created' => $this->session->userdata('id_users'),
+    //                     'date_created' => $dt->format('Y-m-d H:i:s'),
+    //                 );
+    //                 $this->Campy_biosolids_qpcr_model->insert_growth_plate_hba($data_plate);
+    //             }
+    //         }
     
-            $this->session->set_flashdata('message', 'Update Record Success');
-        }
+    //         $this->session->set_flashdata('message', 'Update Record Success');
+    //     }
     
-        redirect(site_url("campy_biosolids_qpcr/read/" . $id_campy_biosolids_qpcr));
-    }
+    //     redirect(site_url("campy_biosolids_qpcr/read/" . $id_campy_biosolids_qpcr));
+    // }
 
 
-    public function saveBiochemical() {
-        $mode = $this->input->post('mode_detResultsBiochemical', TRUE);
-        $id_result_biochemical_qpcr = $this->input->post('id_result_biochemical_qpcr', TRUE);
-        $id_result_hba_qpcr = $this->input->post('id_result_hba_qpcr1', TRUE);
-        $id_campy_biosolids_qpcr = $this->input->post('id_campy_biosolids_qpcrBiochemical', TRUE);
-        $gramlysis = $this->input->post('gramlysis', TRUE);
-        $oxidase = $this->input->post('oxidase', TRUE);
-        $catalase = $this->input->post('catalase', TRUE);
-        $confirmation = $this->input->post('confirmation', TRUE);
-        $sample_store = $this->input->post('sample_store', TRUE);
-        $biochemical_tube = $this->input->post('biochemical_tube', TRUE);
+    // public function saveBiochemical() {
+    //     $mode = $this->input->post('mode_detResultsBiochemical', TRUE);
+    //     $id_result_biochemical_qpcr = $this->input->post('id_result_biochemical_qpcr', TRUE);
+    //     $id_result_hba_qpcr = $this->input->post('id_result_hba_qpcr1', TRUE);
+    //     $id_campy_biosolids_qpcr = $this->input->post('id_campy_biosolids_qpcrBiochemical', TRUE);
+    //     $gramlysis = $this->input->post('gramlysis', TRUE);
+    //     $oxidase = $this->input->post('oxidase', TRUE);
+    //     $catalase = $this->input->post('catalase', TRUE);
+    //     $confirmation = $this->input->post('confirmation', TRUE);
+    //     $sample_store = $this->input->post('sample_store', TRUE);
+    //     $biochemical_tube = $this->input->post('biochemical_tube', TRUE);
     
-        // Defaukt value if the attribute is null
-        if ($gramlysis === null) $gramlysis = '-';
-        if ($oxidase === null) $oxidase = '-';
-        if ($catalase === null) $catalase = '-';
+    //     // Defaukt value if the attribute is null
+    //     if ($gramlysis === null) $gramlysis = '-';
+    //     if ($oxidase === null) $oxidase = '-';
+    //     if ($catalase === null) $catalase = '-';
     
-        if ($mode == "insert") {
-            $data = array(
-                'id_campy_biosolids_qpcr' => $id_campy_biosolids_qpcr,
-                'id_result_hba_qpcr' => $id_result_hba_qpcr,
-                'gramlysis' => $gramlysis,
-                'oxidase' => $oxidase,
-                'catalase' => $catalase,
-                'confirmation' => $confirmation,
-                'sample_store' => $sample_store,
-                'biochemical_tube' => $biochemical_tube,
-                'flag' => '0',
-                'lab' => $this->session->userdata('lab'),
-                'uuid' => $this->uuid->v4(),
-                'user_created' => $this->session->userdata('id_users'),
-                'date_created' => date('Y-m-d H:i:s'),
-            );
-            $this->Campy_biosolids_qpcr_model->insertResultsBiochemical($data);
-        } else if ($mode == "edit") {
-            $data = array(
-                'id_campy_biosolids_qpcr' => $id_campy_biosolids_qpcr,
-                'id_result_hba_qpcr' => $id_result_hba_qpcr,
-                'gramlysis' => $gramlysis,
-                'oxidase' => $oxidase,
-                'catalase' => $catalase,
-                'confirmation' => $confirmation,
-                'sample_store' => $sample_store,
-                'flag' => '0',
-                'lab' => $this->session->userdata('lab'),
-                'uuid' => $this->uuid->v4(),
-                'user_updated' => $this->session->userdata('id_users'),
-                'date_updated' => date('Y-m-d H:i:s'),
-            );
-            $this->Campy_biosolids_qpcr_model->updateResultsBiochemical($id_result_biochemical_qpcr, $data);
-        }
+    //     if ($mode == "insert") {
+    //         $data = array(
+    //             'id_campy_biosolids_qpcr' => $id_campy_biosolids_qpcr,
+    //             'id_result_hba_qpcr' => $id_result_hba_qpcr,
+    //             'gramlysis' => $gramlysis,
+    //             'oxidase' => $oxidase,
+    //             'catalase' => $catalase,
+    //             'confirmation' => $confirmation,
+    //             'sample_store' => $sample_store,
+    //             'biochemical_tube' => $biochemical_tube,
+    //             'flag' => '0',
+    //             'lab' => $this->session->userdata('lab'),
+    //             'uuid' => $this->uuid->v4(),
+    //             'user_created' => $this->session->userdata('id_users'),
+    //             'date_created' => date('Y-m-d H:i:s'),
+    //         );
+    //         $this->Campy_biosolids_qpcr_model->insertResultsBiochemical($data);
+    //     } else if ($mode == "edit") {
+    //         $data = array(
+    //             'id_campy_biosolids_qpcr' => $id_campy_biosolids_qpcr,
+    //             'id_result_hba_qpcr' => $id_result_hba_qpcr,
+    //             'gramlysis' => $gramlysis,
+    //             'oxidase' => $oxidase,
+    //             'catalase' => $catalase,
+    //             'confirmation' => $confirmation,
+    //             'sample_store' => $sample_store,
+    //             'flag' => '0',
+    //             'lab' => $this->session->userdata('lab'),
+    //             'uuid' => $this->uuid->v4(),
+    //             'user_updated' => $this->session->userdata('id_users'),
+    //             'date_updated' => date('Y-m-d H:i:s'),
+    //         );
+    //         $this->Campy_biosolids_qpcr_model->updateResultsBiochemical($id_result_biochemical_qpcr, $data);
+    //     }
     
-        redirect(site_url("campy_biosolids_qpcr/read/" . $id_campy_biosolids_qpcr));
-    }
+    //     redirect(site_url("campy_biosolids_qpcr/read/" . $id_campy_biosolids_qpcr));
+    // }
 
 
     public function delete_campyBiosolids($id) {
@@ -584,15 +584,16 @@ class Campy_biosolids_qpcr extends CI_Controller
         redirect(site_url('campy_biosolids_qpcr/read/'.$id_parent));
     }
     
-    public function delete_detailCharcoal($id) {
-        $row = $this->Campy_biosolids_qpcr_model->get_by_id_charcoal($id);
+
+    public function delete_detailQpcr($id) {
+        $row = $this->Campy_biosolids_qpcr_model->get_by_id_qpcr($id);
         if ($row) {
             $id_parent = $row->id_result_qpcr; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
     
-            $this->Campy_biosolids_qpcr_model->updateResultsCharcoal($id, $data);
+            $this->Campy_biosolids_qpcr_model->updateResultsQpcr($id, $data);
             $this->Campy_biosolids_qpcr_model->updateResultsGrowthPlate($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
@@ -602,40 +603,40 @@ class Campy_biosolids_qpcr extends CI_Controller
         redirect(site_url('campy_biosolids_qpcr/read/'.$id_parent));
     }
 
-    public function delete_detailHba($id) {
-        $row = $this->Campy_biosolids_qpcr_model->get_by_id_hba($id);
-        if ($row) {
-            $id_parent = $row->id_result_qpcr; // Retrieve project_id before updating the record
-            $data = array(
-                'flag' => 1,
-            );
+    // public function delete_detailHba($id) {
+    //     $row = $this->Campy_biosolids_qpcr_model->get_by_id_hba($id);
+    //     if ($row) {
+    //         $id_parent = $row->id_result_qpcr; // Retrieve project_id before updating the record
+    //         $data = array(
+    //             'flag' => 1,
+    //         );
     
-            $this->Campy_biosolids_qpcr_model->updateResultsHba($id, $data);
-            $this->Campy_biosolids_qpcr_model->updateResultsGrowthPlateHba($id, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
-        } else {
-            $this->session->set_flashdata('message', 'Record Not Found');
-        }
+    //         $this->Campy_biosolids_qpcr_model->updateResultsHba($id, $data);
+    //         $this->Campy_biosolids_qpcr_model->updateResultsGrowthPlateHba($id, $data);
+    //         $this->session->set_flashdata('message', 'Delete Record Success');
+    //     } else {
+    //         $this->session->set_flashdata('message', 'Record Not Found');
+    //     }
     
-        redirect(site_url('campy_biosolids_qpcr/read/'.$id_parent));
-    }
+    //     redirect(site_url('campy_biosolids_qpcr/read/'.$id_parent));
+    // }
 
-    public function delete_detailBiochemical($id) {
-        $row = $this->Campy_biosolids_qpcr_model->get_by_id_biochemical($id);
-        if ($row) {
-            $id_parent = $row->id_result_qpcr; // Retrieve project_id before updating the record
-            $data = array(
-                'flag' => 1,
-            );
+    // public function delete_detailBiochemical($id) {
+    //     $row = $this->Campy_biosolids_qpcr_model->get_by_id_biochemical($id);
+    //     if ($row) {
+    //         $id_parent = $row->id_result_qpcr; // Retrieve project_id before updating the record
+    //         $data = array(
+    //             'flag' => 1,
+    //         );
     
-            $this->Campy_biosolids_qpcr_model->updateResultsBiochemical($id, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
-        } else {
-            $this->session->set_flashdata('message', 'Record Not Found');
-        }
+    //         $this->Campy_biosolids_qpcr_model->updateResultsBiochemical($id, $data);
+    //         $this->session->set_flashdata('message', 'Delete Record Success');
+    //     } else {
+    //         $this->session->set_flashdata('message', 'Record Not Found');
+    //     }
     
-        redirect(site_url('campy_biosolids_qpcr/read/'.$id_parent));
-    }
+    //     redirect(site_url('campy_biosolids_qpcr/read/'.$id_parent));
+    // }
 
     public function getIdOneWaterDetails()
     {
@@ -644,221 +645,221 @@ class Campy_biosolids_qpcr extends CI_Controller
         echo json_encode($oneWaterSample);
     }
 
-    public function validate24() {
-        $id = $this->input->get('id24');
-        $data = $this->Campy_biosolids_qpcr_model->validate24($id);
-        header('Content-Type: application/json');
-        echo json_encode($data);
-    }
+    // public function validate24() {
+    //     $id = $this->input->get('id24');
+    //     $data = $this->Campy_biosolids_qpcr_model->validate24($id);
+    //     header('Content-Type: application/json');
+    //     echo json_encode($data);
+    // }
 
-    public function validate72() {
-        $id = $this->input->get('id72');
-        $data = $this->Campy_biosolids_qpcr_model->validate72($id);
-        header('Content-Type: application/json');
-        echo json_encode($data);
-    }
+    // public function validate72() {
+    //     $id = $this->input->get('id72');
+    //     $data = $this->Campy_biosolids_qpcr_model->validate72($id);
+    //     header('Content-Type: application/json');
+    //     echo json_encode($data);
+    // }
 
-    public function excel($id) {
-        $spreadsheet = new Spreadsheet();    
-        $sheet = $spreadsheet->getActiveSheet();
+    // public function excel($id) {
+    //     $spreadsheet = new Spreadsheet();    
+    //     $sheet = $spreadsheet->getActiveSheet();
     
-        // Set the headers
-        $sheet->setCellValue('A1', "ID One Water Sample");
-        $sheet->setCellValue('B1', "Campy Assay Barcode");
-        $sheet->setCellValue('C1', "Initial");
-        $sheet->setCellValue('D1', "Sample Type");
-        $sheet->setCellValue('E1', "Number of Tubes");
-        $sheet->setCellValue('F1', "MPN PCR Conducted");
-        $sheet->setCellValue('G1', "Date Sample Processed");
-        $sheet->setCellValue('H1', "Time Sample Processed");
-        $sheet->setCellValue('I1', "Sample Wet Weight");
-        $sheet->setCellValue('J1', "Elution Volume");
+    //     // Set the headers
+    //     $sheet->setCellValue('A1', "ID One Water Sample");
+    //     $sheet->setCellValue('B1', "Campy Assay Barcode");
+    //     $sheet->setCellValue('C1', "Initial");
+    //     $sheet->setCellValue('D1', "Sample Type");
+    //     $sheet->setCellValue('E1', "Number of Tubes");
+    //     $sheet->setCellValue('F1', "MPN PCR Conducted");
+    //     $sheet->setCellValue('G1', "Date Sample Processed");
+    //     $sheet->setCellValue('H1', "Time Sample Processed");
+    //     $sheet->setCellValue('I1', "Sample Wet Weight");
+    //     $sheet->setCellValue('J1', "Elution Volume");
     
-        // Fetch the concentration data
-        $finalConcentration = $this->Campy_biosolids_qpcr_model->get_export($id);
+    //     // Fetch the concentration data
+    //     $finalConcentration = $this->Campy_biosolids_qpcr_model->get_export($id);
     
-        if (!empty($finalConcentration)) {
-            // Initialize tube index for volumes
-            $tubeIndex = 0;
+    //     if (!empty($finalConcentration)) {
+    //         // Initialize tube index for volumes
+    //         $tubeIndex = 0;
     
-            // Add Tube Volume headers
-            foreach ($finalConcentration[0] as $key => $value) {
-                if (strpos($key, 'Tube') === 0) {
-                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
-                    $sheet->setCellValue($columnLetter . '1', "$key Volume");
-                    $tubeIndex++;
-                }
-            }
+    //         // Add Tube Volume headers
+    //         foreach ($finalConcentration[0] as $key => $value) {
+    //             if (strpos($key, 'Tube') === 0) {
+    //                 $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+    //                 $sheet->setCellValue($columnLetter . '1', "$key Volume");
+    //                 $tubeIndex++;
+    //             }
+    //         }
     
-            // Add Tube Result headers
-            $plate_numbers = explode(',', $finalConcentration[0]->plate_numbers);
-            foreach ($plate_numbers as $plate_number) {
-                $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
-                $sheet->setCellValue($columnLetter . '1', "Tube $plate_number Result");
-                $tubeIndex++;
-            }
-        }
+    //         // Add Tube Result headers
+    //         $plate_numbers = explode(',', $finalConcentration[0]->plate_numbers);
+    //         foreach ($plate_numbers as $plate_number) {
+    //             $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+    //             $sheet->setCellValue($columnLetter . '1', "Tube $plate_number Result");
+    //             $tubeIndex++;
+    //         }
+    //     }
     
-        // Start filling data from the second row
-        $numrow = 2;
-        foreach ($finalConcentration as $concentration) {
-            // Basic information
-            $sheet->setCellValue('A' . $numrow, $concentration->id_one_water_sample ?? '');
-            $sheet->setCellValue('B' . $numrow, $concentration->campy_assay_barcode ?? '');
-            $sheet->setCellValue('C' . $numrow, $concentration->initial ?? '');
-            $sheet->setCellValue('D' . $numrow, $concentration->sampletype ?? '');
-            $sheet->setCellValue('E' . $numrow, $concentration->number_of_tubes ?? '');
-            $sheet->setCellValue('F' . $numrow, $concentration->mpn_pcr_conducted ?? '');
-            $sheet->setCellValue('G' . $numrow, $concentration->date_sample_processed ?? '');
-            $sheet->setCellValue('H' . $numrow, $concentration->time_sample_processed ?? '');
-            $sheet->setCellValue('I' . $numrow, $concentration->sample_wetweight ?? '');
-            $sheet->setCellValue('J' . $numrow, $concentration->elution_volume ?? '');
+    //     // Start filling data from the second row
+    //     $numrow = 2;
+    //     foreach ($finalConcentration as $concentration) {
+    //         // Basic information
+    //         $sheet->setCellValue('A' . $numrow, $concentration->id_one_water_sample ?? '');
+    //         $sheet->setCellValue('B' . $numrow, $concentration->campy_assay_barcode ?? '');
+    //         $sheet->setCellValue('C' . $numrow, $concentration->initial ?? '');
+    //         $sheet->setCellValue('D' . $numrow, $concentration->sampletype ?? '');
+    //         $sheet->setCellValue('E' . $numrow, $concentration->number_of_tubes ?? '');
+    //         $sheet->setCellValue('F' . $numrow, $concentration->mpn_pcr_conducted ?? '');
+    //         $sheet->setCellValue('G' . $numrow, $concentration->date_sample_processed ?? '');
+    //         $sheet->setCellValue('H' . $numrow, $concentration->time_sample_processed ?? '');
+    //         $sheet->setCellValue('I' . $numrow, $concentration->sample_wetweight ?? '');
+    //         $sheet->setCellValue('J' . $numrow, $concentration->elution_volume ?? '');
     
-            // Fill tube volumes
-            $tubeIndex = 0;
-            foreach ($concentration as $key => $value) {
-                if (strpos($key, 'Tube') === 0) {
-                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
-                    $sheet->setCellValue($columnLetter . $numrow, $value ?? '');
-                    $tubeIndex++;
-                }
-            }
+    //         // Fill tube volumes
+    //         $tubeIndex = 0;
+    //         foreach ($concentration as $key => $value) {
+    //             if (strpos($key, 'Tube') === 0) {
+    //                 $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+    //                 $sheet->setCellValue($columnLetter . $numrow, $value ?? '');
+    //                 $tubeIndex++;
+    //             }
+    //         }
     
-            // Fill tube results
-            $plate_numbers = explode(',', $concentration->plate_numbers);
-            foreach ($plate_numbers as $plate_number) {
-                // Set default value for confirmation
-                $confirmation_value = isset($concentration->confirmation[$plate_number]) ? $concentration->confirmation[$plate_number] : 'No Growth'; 
+    //         // Fill tube results
+    //         $plate_numbers = explode(',', $concentration->plate_numbers);
+    //         foreach ($plate_numbers as $plate_number) {
+    //             // Set default value for confirmation
+    //             $confirmation_value = isset($concentration->confirmation[$plate_number]) ? $concentration->confirmation[$plate_number] : 'No Growth'; 
                 
-                // Calculate the column letter dynamically
-                $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
-                $sheet->setCellValue($columnLetter . $numrow, $confirmation_value);
-                $tubeIndex++;
-            }
+    //             // Calculate the column letter dynamically
+    //             $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+    //             $sheet->setCellValue($columnLetter . $numrow, $confirmation_value);
+    //             $tubeIndex++;
+    //         }
     
-            $numrow++;
-        }
+    //         $numrow++;
+    //     }
     
-        // Set header for the Excel file
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="Report_Biosolids_Final_Concentrations.xlsx"');
-        header('Cache-Control: max-age=0');
+    //     // Set header for the Excel file
+    //     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    //     header('Content-Disposition: attachment;filename="Report_Biosolids_Final_Concentrations.xlsx"');
+    //     header('Cache-Control: max-age=0');
     
-        // Output the Excel file
-        $writer = new Xlsx($spreadsheet);
-        $writer->save('php://output');
-    }
+    //     // Output the Excel file
+    //     $writer = new Xlsx($spreadsheet);
+    //     $writer->save('php://output');
+    // }
 
-    public function excel_all() {
-        $spreadsheet = new Spreadsheet();
-        $finalConcentration = $this->Campy_biosolids_qpcr_model->get_all_export();
-        // var_dump($finalConcentration);
-        // die();
-        // Array untuk menyimpan data berdasarkan jumlah tabung
-        $dataTubes = [];
+    // public function excel_all() {
+    //     $spreadsheet = new Spreadsheet();
+    //     $finalConcentration = $this->Campy_biosolids_qpcr_model->get_all_export();
+    //     // var_dump($finalConcentration);
+    //     // die();
+    //     // Array untuk menyimpan data berdasarkan jumlah tabung
+    //     $dataTubes = [];
     
-        // Mengelompokkan data berdasarkan number_of_tubes
-        foreach ($finalConcentration as $concentration) {
-            $numberOfTubes = $concentration->number_of_tubes;
-            if (!isset($dataTubes[$numberOfTubes])) {
-                $dataTubes[$numberOfTubes] = []; // Inisialisasi array untuk jumlah tabung ini
-            }
-            $dataTubes[$numberOfTubes][] = $concentration; // Tambahkan data ke array
-        }
+    //     // Mengelompokkan data berdasarkan number_of_tubes
+    //     foreach ($finalConcentration as $concentration) {
+    //         $numberOfTubes = $concentration->number_of_tubes;
+    //         if (!isset($dataTubes[$numberOfTubes])) {
+    //             $dataTubes[$numberOfTubes] = []; // Inisialisasi array untuk jumlah tabung ini
+    //         }
+    //         $dataTubes[$numberOfTubes][] = $concentration; // Tambahkan data ke array
+    //     }
     
-        // Buat sheet untuk setiap jumlah tabung yang ada
-        foreach ($dataTubes as $numberOfTubes => $data) {
-            $sheet = $spreadsheet->createSheet();
-            $sheet->setTitle("{$numberOfTubes} Tubes");
-            $this->setSheetHeaders($sheet, $data, $numberOfTubes);
-            $this->fillSheetData($sheet, $data, $numberOfTubes);
-        }
+    //     // Buat sheet untuk setiap jumlah tabung yang ada
+    //     foreach ($dataTubes as $numberOfTubes => $data) {
+    //         $sheet = $spreadsheet->createSheet();
+    //         $sheet->setTitle("{$numberOfTubes} Tubes");
+    //         $this->setSheetHeaders($sheet, $data, $numberOfTubes);
+    //         $this->fillSheetData($sheet, $data, $numberOfTubes);
+    //     }
     
-        // Set header untuk file Excel
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="Report_All_Biosolids_Final_Concentrations.xlsx"');
-        header('Cache-Control: max-age=0');
+    //     // Set header untuk file Excel
+    //     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    //     header('Content-Disposition: attachment;filename="Report_All_Biosolids_Final_Concentrations.xlsx"');
+    //     header('Cache-Control: max-age=0');
     
-        ob_clean();
-        flush();
+    //     ob_clean();
+    //     flush();
     
-        try {
-            $writer = new Xlsx($spreadsheet);
-            $writer->save('php://output');
-        } catch (Exception $e) {
-            echo 'Error generating file: ', $e->getMessage();
-            return;
-        }
-    }
+    //     try {
+    //         $writer = new Xlsx($spreadsheet);
+    //         $writer->save('php://output');
+    //     } catch (Exception $e) {
+    //         echo 'Error generating file: ', $e->getMessage();
+    //         return;
+    //     }
+    // }
     
     
-    private function setSheetHeaders($sheet, $data, $numberOfTubes) {
-        // Set the headers
-        $sheet->setCellValue('A1', "ID One Water Sample");
-        $sheet->setCellValue('B1', "Campy Assay Barcode");
-        $sheet->setCellValue('C1', "Initial");
-        $sheet->setCellValue('D1', "Sample Type");
-        $sheet->setCellValue('E1', "Number of Tubes");
-        $sheet->setCellValue('F1', "MPN PCR Conducted");
-        $sheet->setCellValue('G1', "Date Sample Processed");
-        $sheet->setCellValue('H1', "Time Sample Processed");
-        $sheet->setCellValue('I1', "Sample Wet Weight");
-        $sheet->setCellValue('J1', "Elution Volume");
+    // private function setSheetHeaders($sheet, $data, $numberOfTubes) {
+    //     // Set the headers
+    //     $sheet->setCellValue('A1', "ID One Water Sample");
+    //     $sheet->setCellValue('B1', "Campy Assay Barcode");
+    //     $sheet->setCellValue('C1', "Initial");
+    //     $sheet->setCellValue('D1', "Sample Type");
+    //     $sheet->setCellValue('E1', "Number of Tubes");
+    //     $sheet->setCellValue('F1', "MPN PCR Conducted");
+    //     $sheet->setCellValue('G1', "Date Sample Processed");
+    //     $sheet->setCellValue('H1', "Time Sample Processed");
+    //     $sheet->setCellValue('I1', "Sample Wet Weight");
+    //     $sheet->setCellValue('J1', "Elution Volume");
     
-        // Add Tube Volume headers
-        for ($i = 1; $i <= $numberOfTubes; $i++) {
-            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $i);
-            $sheet->setCellValue($columnLetter . '1', "Tube $i Volume");
-        }
+    //     // Add Tube Volume headers
+    //     for ($i = 1; $i <= $numberOfTubes; $i++) {
+    //         $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $i);
+    //         $sheet->setCellValue($columnLetter . '1', "Tube $i Volume");
+    //     }
     
-        // Add Tube Result headers
-        for ($i = 1; $i <= $numberOfTubes; $i++) {
-            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $numberOfTubes + $i);
-            $sheet->setCellValue($columnLetter . '1', "Tube $i Result");
-        }
-    }
+    //     // Add Tube Result headers
+    //     for ($i = 1; $i <= $numberOfTubes; $i++) {
+    //         $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $numberOfTubes + $i);
+    //         $sheet->setCellValue($columnLetter . '1', "Tube $i Result");
+    //     }
+    // }
     
-    private function fillSheetData($sheet, $data, $numberOfTubes) {
-        // Mulai mengisi data dari baris kedua
-        $numrow = 2;
-        foreach ($data as $concentration) {
-            // Informasi dasar
-            $sheet->setCellValue('A' . $numrow, $concentration->id_one_water_sample ?? '');
-            $sheet->setCellValue('B' . $numrow, $concentration->campy_assay_barcode ?? '');
-            $sheet->setCellValue('C' . $numrow, $concentration->initial ?? '');
-            $sheet->setCellValue('D' . $numrow, $concentration->sampletype ?? '');
-            $sheet->setCellValue('E' . $numrow, $concentration->number_of_tubes ?? '');
-            $sheet->setCellValue('F' . $numrow, $concentration->mpn_pcr_conducted ?? '');
-            $sheet->setCellValue('G' . $numrow, $concentration->date_sample_processed ?? '');
-            $sheet->setCellValue('H' . $numrow, $concentration->time_sample_processed ?? '');
-            $sheet->setCellValue('I' . $numrow, $concentration->sample_wetweight ?? '');
-            $sheet->setCellValue('J' . $numrow, $concentration->elution_volume ?? '');
+    // private function fillSheetData($sheet, $data, $numberOfTubes) {
+    //     // Mulai mengisi data dari baris kedua
+    //     $numrow = 2;
+    //     foreach ($data as $concentration) {
+    //         // Informasi dasar
+    //         $sheet->setCellValue('A' . $numrow, $concentration->id_one_water_sample ?? '');
+    //         $sheet->setCellValue('B' . $numrow, $concentration->campy_assay_barcode ?? '');
+    //         $sheet->setCellValue('C' . $numrow, $concentration->initial ?? '');
+    //         $sheet->setCellValue('D' . $numrow, $concentration->sampletype ?? '');
+    //         $sheet->setCellValue('E' . $numrow, $concentration->number_of_tubes ?? '');
+    //         $sheet->setCellValue('F' . $numrow, $concentration->mpn_pcr_conducted ?? '');
+    //         $sheet->setCellValue('G' . $numrow, $concentration->date_sample_processed ?? '');
+    //         $sheet->setCellValue('H' . $numrow, $concentration->time_sample_processed ?? '');
+    //         $sheet->setCellValue('I' . $numrow, $concentration->sample_wetweight ?? '');
+    //         $sheet->setCellValue('J' . $numrow, $concentration->elution_volume ?? '');
     
-            // Mengisi volume tabung
-            $tubeIndex = 0;
-            foreach ($concentration as $key => $value) {
-                if (strpos($key, 'Tube') === 0) {
-                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
-                    $sheet->setCellValue($columnLetter . $numrow, $value ?? '');
-                    $tubeIndex++;
-                }
-            }
+    //         // Mengisi volume tabung
+    //         $tubeIndex = 0;
+    //         foreach ($concentration as $key => $value) {
+    //             if (strpos($key, 'Tube') === 0) {
+    //                 $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+    //                 $sheet->setCellValue($columnLetter . $numrow, $value ?? '');
+    //                 $tubeIndex++;
+    //             }
+    //         }
     
-        // Mengisi hasil tabung
-        for ($i = 1; $i <= $numberOfTubes; $i++) {
-            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $numberOfTubes + ($i - 1));
+    //     // Mengisi hasil tabung
+    //     for ($i = 1; $i <= $numberOfTubes; $i++) {
+    //         $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $numberOfTubes + ($i - 1));
 
-            // Mengakses nilai konfirmasi dengan indeks tabung
-            $confirmation_value = $concentration->confirmation[$i] ?? 'No Growth'; // Nilai default jika tidak ada konfirmasi
+    //         // Mengakses nilai konfirmasi dengan indeks tabung
+    //         $confirmation_value = $concentration->confirmation[$i] ?? 'No Growth'; // Nilai default jika tidak ada konfirmasi
             
-            // Debugging: Cek nilai konfirmasi sebelum diset ke sel
-            error_log("Confirmation for Tube {$i}: " . $confirmation_value);
-            $sheet->setCellValue($columnLetter . $numrow, $confirmation_value);
-        }
+    //         // Debugging: Cek nilai konfirmasi sebelum diset ke sel
+    //         error_log("Confirmation for Tube {$i}: " . $confirmation_value);
+    //         $sheet->setCellValue($columnLetter . $numrow, $confirmation_value);
+    //     }
     
-            $numrow++;
-        }
-    }
+    //         $numrow++;
+    //     }
+    // }
 
     public function validateCampyAssayBarcode() {
         $id = $this->input->get('id');

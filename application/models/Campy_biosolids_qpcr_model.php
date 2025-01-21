@@ -43,7 +43,7 @@ class Campy_biosolids_qpcr_model extends CI_Model
         return $this->datatables->generate();
     }
 
-    function subjsonCharcoal($id) {
+    function subjsonResultQpcr($id) {
         $this->datatables->select('rc.id_result_qpcr, cb.campy_assay_barcode, rc.id_campy_biosolids_qpcr, rc.date_sample_processed, rc.time_sample_processed,
         GROUP_CONCAT(sgp.pcr_tube ORDER BY sgp.plate_number SEPARATOR ", ") AS pcr_tube, GROUP_CONCAT(sgp.plate_number ORDER BY sgp.plate_number SEPARATOR ", ") AS plate_number, rc.flag');
         $this->datatables->from('campy_result_qpcr AS rc');
@@ -73,275 +73,275 @@ class Campy_biosolids_qpcr_model extends CI_Model
         return $this->datatables->generate();
     }
 
-    function subjsonHba($id) {
-        $this->datatables->select('rh.id_result_hba_qpcr, cb.campy_assay_barcode, rh.id_campy_biosolids_qpcr, rh.date_sample_processed, rh.time_sample_processed, 
-        GROUP_CONCAT(sgph.growth_plate ORDER BY sgph.plate_number SEPARATOR ", ") AS growth_plate, GROUP_CONCAT(sgph.plate_number ORDER BY sgph.plate_number SEPARATOR ", ") AS plate_number, rh.flag, sgph.id_sample_plate_hba_qpcr');
-        $this->datatables->from('campy_result_hba_qpcr AS rh');
-        $this->datatables->join('campy_biosolids_qpcr AS cb', 'rh.id_campy_biosolids_qpcr = cb.id_campy_biosolids_qpcr', 'left');
-        $this->datatables->join('campy_sample_growth_plate_hba_qpcr AS sgph', 'rh.id_result_hba_qpcr = sgph.id_result_hba_qpcr', 'left');
-        $this->datatables->where('rh.flag', '0');
-        $this->datatables->where('rh.id_campy_biosolids_qpcr', $id);
-        $this->datatables->group_by('
-        rh.id_result_hba_qpcr, 
-        cb.campy_assay_barcode, 
-        rh.id_campy_biosolids_qpcr, 
-        rh.date_sample_processed, 
-        rh.time_sample_processed,
-        rh.flag
-        ');
-        $lvl = $this->session->userdata('id_user_level');
-        if ($lvl == 4){
-            $this->datatables->add_column('action', '', 'id_result_hba_qpcr');
-        }
-        else if ($lvl == 3){
-            $this->datatables->add_column('action', '<button type="button" class="btn_edit_detResultsHba btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_result_hba_qpcr');
-        }
-        else {
-            $this->datatables->add_column('action', '<button type="button" class="btn_edit_detResultsHba btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                ".'<button type="button" class="btn_deleteHba btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_result_hba_qpcr');
-        }
-        return $this->datatables->generate();
-    }
+    // function subjsonHba($id) {
+    //     $this->datatables->select('rh.id_result_hba_qpcr, cb.campy_assay_barcode, rh.id_campy_biosolids_qpcr, rh.date_sample_processed, rh.time_sample_processed, 
+    //     GROUP_CONCAT(sgph.growth_plate ORDER BY sgph.plate_number SEPARATOR ", ") AS growth_plate, GROUP_CONCAT(sgph.plate_number ORDER BY sgph.plate_number SEPARATOR ", ") AS plate_number, rh.flag, sgph.id_sample_plate_hba_qpcr');
+    //     $this->datatables->from('campy_result_hba_qpcr AS rh');
+    //     $this->datatables->join('campy_biosolids_qpcr AS cb', 'rh.id_campy_biosolids_qpcr = cb.id_campy_biosolids_qpcr', 'left');
+    //     $this->datatables->join('campy_sample_growth_plate_hba_qpcr AS sgph', 'rh.id_result_hba_qpcr = sgph.id_result_hba_qpcr', 'left');
+    //     $this->datatables->where('rh.flag', '0');
+    //     $this->datatables->where('rh.id_campy_biosolids_qpcr', $id);
+    //     $this->datatables->group_by('
+    //     rh.id_result_hba_qpcr, 
+    //     cb.campy_assay_barcode, 
+    //     rh.id_campy_biosolids_qpcr, 
+    //     rh.date_sample_processed, 
+    //     rh.time_sample_processed,
+    //     rh.flag
+    //     ');
+    //     $lvl = $this->session->userdata('id_user_level');
+    //     if ($lvl == 4){
+    //         $this->datatables->add_column('action', '', 'id_result_hba_qpcr');
+    //     }
+    //     else if ($lvl == 3){
+    //         $this->datatables->add_column('action', '<button type="button" class="btn_edit_detResultsHba btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_result_hba_qpcr');
+    //     }
+    //     else {
+    //         $this->datatables->add_column('action', '<button type="button" class="btn_edit_detResultsHba btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
+    //             ".'<button type="button" class="btn_deleteHba btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_result_hba_qpcr');
+    //     }
+    //     return $this->datatables->generate();
+    // }
 
-    function subjsonBiochemical($id, $biochemical_tube) {
+    // function subjsonBiochemical($id, $biochemical_tube) {
 
-        $this->datatables->select('rb.id_result_biochemical_qpcr, rb.id_campy_biosolids_qpcr, rb.id_result_hba_qpcr, cb.campy_assay_barcode, rb.gramlysis, rb.oxidase, rb.catalase, rb.confirmation, rb.sample_store, rb.biochemical_tube, rb.flag');
-        $this->datatables->from('campy_result_biochemical_qpcr AS rb');
-        $this->datatables->join('campy_biosolids_qpcr AS cb', 'rb.id_campy_biosolids_qpcr = cb.id_campy_biosolids_qpcr', 'left');
-        $this->datatables->where('rb.flag', '0');
-        $this->datatables->where('rb.id_campy_biosolids_qpcr', $id);
+    //     $this->datatables->select('rb.id_result_biochemical_qpcr, rb.id_campy_biosolids_qpcr, rb.id_result_hba_qpcr, cb.campy_assay_barcode, rb.gramlysis, rb.oxidase, rb.catalase, rb.confirmation, rb.sample_store, rb.biochemical_tube, rb.flag');
+    //     $this->datatables->from('campy_result_biochemical_qpcr AS rb');
+    //     $this->datatables->join('campy_biosolids_qpcr AS cb', 'rb.id_campy_biosolids_qpcr = cb.id_campy_biosolids_qpcr', 'left');
+    //     $this->datatables->where('rb.flag', '0');
+    //     $this->datatables->where('rb.id_campy_biosolids_qpcr', $id);
         
-       // Add condition for biochemical_tube if it exists
-        if (!empty($biochemical_tube)) {
-            $this->datatables->where('rb.biochemical_tube', $biochemical_tube);
-        }
+    //    // Add condition for biochemical_tube if it exists
+    //     if (!empty($biochemical_tube)) {
+    //         $this->datatables->where('rb.biochemical_tube', $biochemical_tube);
+    //     }
     
-        $lvl = $this->session->userdata('id_user_level');
-        if ($lvl == 4){
-            $this->datatables->add_column('action', '', 'id_result_biochemical_qpcr');
-        } else if ($lvl == 3){
-            $this->datatables->add_column('action', '<button type="button" class="btn_edit_detResultsBiochemical btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_result_biochemical_qpcr');
-        } else {
-            $this->datatables->add_column('action', '<button type="button" class="btn_edit_detResultsBiochemical btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                ".'<button type="button" class="btn_deleteBiochemical btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_result_biochemical_qpcr');
-        }
-        return $this->datatables->generate();
-    }
+    //     $lvl = $this->session->userdata('id_user_level');
+    //     if ($lvl == 4){
+    //         $this->datatables->add_column('action', '', 'id_result_biochemical_qpcr');
+    //     } else if ($lvl == 3){
+    //         $this->datatables->add_column('action', '<button type="button" class="btn_edit_detResultsBiochemical btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_result_biochemical_qpcr');
+    //     } else {
+    //         $this->datatables->add_column('action', '<button type="button" class="btn_edit_detResultsBiochemical btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
+    //             ".'<button type="button" class="btn_deleteBiochemical btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_result_biochemical_qpcr');
+    //     }
+    //     return $this->datatables->generate();
+    // }
 
-    function subjsonFinalConcentration($id)
-    {
-        $response = array();
+    // function subjsonFinalConcentration($id)
+    // {
+    //     $response = array();
     
-        // Step 1: Get unique tube_number
-        $this->db->select('tube_number');
-        $this->db->distinct();
-        $this->db->from('campy_sample_volumes_qpcr');
-        $this->db->where('id_campy_biosolids_qpcr', $id);
-        $this->db->order_by('tube_number', 'ASC'); // Tambahkan pengurutan
-        $tube_numbers = $this->db->get()->result_array();
+    //     // Step 1: Get unique tube_number
+    //     $this->db->select('tube_number');
+    //     $this->db->distinct();
+    //     $this->db->from('campy_sample_volumes_qpcr');
+    //     $this->db->where('id_campy_biosolids_qpcr', $id);
+    //     $this->db->order_by('tube_number', 'ASC'); // Tambahkan pengurutan
+    //     $tube_numbers = $this->db->get()->result_array();
     
-        // Check if tube numbers are empty
-        if (empty($tube_numbers)) {
-            return []; // Handle case where no tube numbers found
-        }
+    //     // Check if tube numbers are empty
+    //     if (empty($tube_numbers)) {
+    //         return []; // Handle case where no tube numbers found
+    //     }
     
-        // Step 2: Create case query for pivot
-        $case_statements = [];
-        foreach ($tube_numbers as $row) {
-            $tube_number = $row['tube_number'];
-            $case_statements[] = "MAX(CASE WHEN sv1.tube_number = {$tube_number} THEN sv1.vol_sampletube END) AS `Tube {$tube_number}`";
-        }
-        $case_query = implode(', ', $case_statements);
+    //     // Step 2: Create case query for pivot
+    //     $case_statements = [];
+    //     foreach ($tube_numbers as $row) {
+    //         $tube_number = $row['tube_number'];
+    //         $case_statements[] = "MAX(CASE WHEN sv1.tube_number = {$tube_number} THEN sv1.vol_sampletube END) AS `Tube {$tube_number}`";
+    //     }
+    //     $case_query = implode(', ', $case_statements);
     
-        // Final query
-        $this->db->select("cb.id_one_water_sample, cb.id_person, rp.initial, cb.mpn_pcr_conducted, cb.number_of_tubes, cb.campy_assay_barcode, cb.date_sample_processed, cb.time_sample_processed, cb.sample_wetweight, cb.elution_volume, rs.sampletype,
-                           $case_query, 
-                           GROUP_CONCAT(DISTINCT rb.biochemical_tube ORDER BY rb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
-                           GROUP_CONCAT(DISTINCT CONCAT(rb.biochemical_tube, ':', rb.confirmation) ORDER BY rb.biochemical_tube SEPARATOR ', ') AS confirmation,
-                           GROUP_CONCAT(DISTINCT sgph.plate_number ORDER BY sgph.plate_number SEPARATOR ', ') AS plate_numbers");
-        $this->db->from('campy_biosolids_qpcr AS cb');
-        $this->db->join('campy_result_hba_qpcr AS rh', 'cb.id_campy_biosolids_qpcr = rh.id_campy_biosolids_qpcr', 'left');
-        $this->db->join('campy_sample_growth_plate_hba_qpcr AS sgph', 'rh.id_result_hba_qpcr = sgph.id_result_hba_qpcr', 'left');
-        $this->db->join('campy_sample_volumes_qpcr AS sv1', 'rh.id_campy_biosolids_qpcr = sv1.id_campy_biosolids_qpcr', 'left');
-        $this->db->join('campy_result_biochemical_qpcr AS rb', 'sgph.id_result_hba_qpcr = rb.id_result_hba_qpcr', 'left');
-        $this->db->join('ref_sampletype AS rs', 'cb.id_sampletype = rs.id_sampletype', 'left');
-        $this->db->join('ref_person AS rp',  'cb.id_person = rp.id_person', 'left');
+    //     // Final query
+    //     $this->db->select("cb.id_one_water_sample, cb.id_person, rp.initial, cb.mpn_pcr_conducted, cb.number_of_tubes, cb.campy_assay_barcode, cb.date_sample_processed, cb.time_sample_processed, cb.sample_wetweight, cb.elution_volume, rs.sampletype,
+    //                        $case_query, 
+    //                        GROUP_CONCAT(DISTINCT rb.biochemical_tube ORDER BY rb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
+    //                        GROUP_CONCAT(DISTINCT CONCAT(rb.biochemical_tube, ':', rb.confirmation) ORDER BY rb.biochemical_tube SEPARATOR ', ') AS confirmation,
+    //                        GROUP_CONCAT(DISTINCT sgph.plate_number ORDER BY sgph.plate_number SEPARATOR ', ') AS plate_numbers");
+    //     $this->db->from('campy_biosolids_qpcr AS cb');
+    //     $this->db->join('campy_result_hba_qpcr AS rh', 'cb.id_campy_biosolids_qpcr = rh.id_campy_biosolids_qpcr', 'left');
+    //     $this->db->join('campy_sample_growth_plate_hba_qpcr AS sgph', 'rh.id_result_hba_qpcr = sgph.id_result_hba_qpcr', 'left');
+    //     $this->db->join('campy_sample_volumes_qpcr AS sv1', 'rh.id_campy_biosolids_qpcr = sv1.id_campy_biosolids_qpcr', 'left');
+    //     $this->db->join('campy_result_biochemical_qpcr AS rb', 'sgph.id_result_hba_qpcr = rb.id_result_hba_qpcr', 'left');
+    //     $this->db->join('ref_sampletype AS rs', 'cb.id_sampletype = rs.id_sampletype', 'left');
+    //     $this->db->join('ref_person AS rp',  'cb.id_person = rp.id_person', 'left');
     
-        // Conditions
-        $this->db->where('rb.flag', '0');
-        $this->db->where('rh.id_campy_biosolids_qpcr', $id);
-        $this->db->group_by('rh.id_result_hba_qpcr');
+    //     // Conditions
+    //     $this->db->where('rb.flag', '0');
+    //     $this->db->where('rh.id_campy_biosolids_qpcr', $id);
+    //     $this->db->group_by('rh.id_result_hba_qpcr');
     
-        $q = $this->db->get();
+    //     $q = $this->db->get();
     
-        if ($q->num_rows() > 0) {
-            $response = $q->result(); // Fetch all results if available
-            foreach ($response as $key => $value) {
-                $confirmations = explode(',', $value->confirmation);
-                $biochemical_tubes = explode(',', $value->biochemical_tube);
+    //     if ($q->num_rows() > 0) {
+    //         $response = $q->result(); // Fetch all results if available
+    //         foreach ($response as $key => $value) {
+    //             $confirmations = explode(',', $value->confirmation);
+    //             $biochemical_tubes = explode(',', $value->biochemical_tube);
     
-                $confirmation_array = []; // Inisialisasi array konfirmasi
+    //             $confirmation_array = []; // Inisialisasi array konfirmasi
 
-                // Membuat array asosiasi untuk konfirmasi
-                foreach ($biochemical_tubes as $index => $tube) {
-                    $confirmation_array[$tube] = explode(':', $confirmations[$index] ?? 'No Growth Plate')[1] ?? 'No Growth Plate'; // Menyediakan default
-                }
-                $value->confirmation = $confirmation_array; // Assign confirmation yang sudah diproses
-            }
-        }
+    //             // Membuat array asosiasi untuk konfirmasi
+    //             foreach ($biochemical_tubes as $index => $tube) {
+    //                 $confirmation_array[$tube] = explode(':', $confirmations[$index] ?? 'No Growth Plate')[1] ?? 'No Growth Plate'; // Menyediakan default
+    //             }
+    //             $value->confirmation = $confirmation_array; // Assign confirmation yang sudah diproses
+    //         }
+    //     }
     
-        return $response;
-    }
+    //     return $response;
+    // }
 
 
-    function get_export($id) {
-        $response = array();
+    // function get_export($id) {
+    //     $response = array();
     
-        // Step 1: Get unique tube_number
-        $this->db->select('tube_number');
-        $this->db->distinct();
-        $this->db->from('campy_sample_volumes_qpcr');
-        $this->db->where('id_campy_biosolids_qpcr', $id);
-        $this->db->order_by('tube_number', 'ASC');
-        $tube_numbers = $this->db->get()->result_array();
+    //     // Step 1: Get unique tube_number
+    //     $this->db->select('tube_number');
+    //     $this->db->distinct();
+    //     $this->db->from('campy_sample_volumes_qpcr');
+    //     $this->db->where('id_campy_biosolids_qpcr', $id);
+    //     $this->db->order_by('tube_number', 'ASC');
+    //     $tube_numbers = $this->db->get()->result_array();
     
-        // Check if tube numbers are empty
-        if (empty($tube_numbers)) {
-            return []; // Handle case where no tube numbers found
-        }
+    //     // Check if tube numbers are empty
+    //     if (empty($tube_numbers)) {
+    //         return []; // Handle case where no tube numbers found
+    //     }
     
-        // Store unique tube numbers for further processing
-        $tube_numbers_list = array_column($tube_numbers, 'tube_number');
+    //     // Store unique tube numbers for further processing
+    //     $tube_numbers_list = array_column($tube_numbers, 'tube_number');
     
-        // Step 2: Create case query for pivot
-        $case_statements = [];
-        foreach ($tube_numbers as $row) {
-            $tube_number = $row['tube_number'];
-            $case_statements[] = "MAX(CASE WHEN sv1.tube_number = {$tube_number} THEN sv1.vol_sampletube END) AS `Tube {$tube_number}`";
-        }
-        $case_query = implode(', ', $case_statements);
+    //     // Step 2: Create case query for pivot
+    //     $case_statements = [];
+    //     foreach ($tube_numbers as $row) {
+    //         $tube_number = $row['tube_number'];
+    //         $case_statements[] = "MAX(CASE WHEN sv1.tube_number = {$tube_number} THEN sv1.vol_sampletube END) AS `Tube {$tube_number}`";
+    //     }
+    //     $case_query = implode(', ', $case_statements);
     
-        // Final query
-        $this->db->select("cb.id_one_water_sample, cb.id_person, rp.initial, cb.mpn_pcr_conducted, cb.number_of_tubes, cb.campy_assay_barcode, cb.date_sample_processed, cb.time_sample_processed, cb.sample_wetweight, cb.elution_volume, rs.sampletype,
-                           $case_query, 
-                           GROUP_CONCAT(DISTINCT rb.biochemical_tube ORDER BY rb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
-                           GROUP_CONCAT(DISTINCT CONCAT(rb.biochemical_tube, ':', rb.confirmation) ORDER BY rb.biochemical_tube SEPARATOR ', ') AS confirmation,
-                           GROUP_CONCAT(DISTINCT sgph.plate_number ORDER BY sgph.plate_number SEPARATOR ', ') AS plate_numbers");
-        $this->db->from('campy_biosolids_qpcr AS cb');
-        $this->db->join('campy_result_hba_qpcr AS rh', 'cb.id_campy_biosolids_qpcr = rh.id_campy_biosolids_qpcr', 'left');
-        $this->db->join('campy_sample_growth_plate_hba_qpcr AS sgph', 'rh.id_result_hba_qpcr = sgph.id_result_hba_qpcr', 'left');
-        $this->db->join('campy_sample_volumes_qpcr AS sv1', 'rh.id_campy_biosolids_qpcr = sv1.id_campy_biosolids_qpcr', 'left');
-        $this->db->join('campy_result_biochemical_qpcr AS rb', 'sgph.id_result_hba_qpcr = rb.id_result_hba_qpcr', 'left');
-        $this->db->join('ref_sampletype AS rs', 'cb.id_sampletype = rs.id_sampletype', 'left');
-        $this->db->join('ref_person AS rp',  'cb.id_person = rp.id_person', 'left');
+    //     // Final query
+    //     $this->db->select("cb.id_one_water_sample, cb.id_person, rp.initial, cb.mpn_pcr_conducted, cb.number_of_tubes, cb.campy_assay_barcode, cb.date_sample_processed, cb.time_sample_processed, cb.sample_wetweight, cb.elution_volume, rs.sampletype,
+    //                        $case_query, 
+    //                        GROUP_CONCAT(DISTINCT rb.biochemical_tube ORDER BY rb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
+    //                        GROUP_CONCAT(DISTINCT CONCAT(rb.biochemical_tube, ':', rb.confirmation) ORDER BY rb.biochemical_tube SEPARATOR ', ') AS confirmation,
+    //                        GROUP_CONCAT(DISTINCT sgph.plate_number ORDER BY sgph.plate_number SEPARATOR ', ') AS plate_numbers");
+    //     $this->db->from('campy_biosolids_qpcr AS cb');
+    //     $this->db->join('campy_result_hba_qpcr AS rh', 'cb.id_campy_biosolids_qpcr = rh.id_campy_biosolids_qpcr', 'left');
+    //     $this->db->join('campy_sample_growth_plate_hba_qpcr AS sgph', 'rh.id_result_hba_qpcr = sgph.id_result_hba_qpcr', 'left');
+    //     $this->db->join('campy_sample_volumes_qpcr AS sv1', 'rh.id_campy_biosolids_qpcr = sv1.id_campy_biosolids_qpcr', 'left');
+    //     $this->db->join('campy_result_biochemical_qpcr AS rb', 'sgph.id_result_hba_qpcr = rb.id_result_hba_qpcr', 'left');
+    //     $this->db->join('ref_sampletype AS rs', 'cb.id_sampletype = rs.id_sampletype', 'left');
+    //     $this->db->join('ref_person AS rp',  'cb.id_person = rp.id_person', 'left');
     
-        // Conditions
-        $this->db->where('rb.flag', '0');
-        $this->db->where('rh.id_campy_biosolids_qpcr', $id);
-        $this->db->group_by('rh.id_result_hba_qpcr');
+    //     // Conditions
+    //     $this->db->where('rb.flag', '0');
+    //     $this->db->where('rh.id_campy_biosolids_qpcr', $id);
+    //     $this->db->group_by('rh.id_result_hba_qpcr');
     
-        $q = $this->db->get();
+    //     $q = $this->db->get();
     
-        if ($q->num_rows() > 0) {
-            $response = $q->result(); // Fetch all results if available
-            foreach ($response as $key => $value) {
-                $confirmations = explode(',', $value->confirmation);
-                $biochemical_tubes = explode(',', $value->biochemical_tube);
-                $plate_numbers = explode(',', $value->plate_numbers);
+    //     if ($q->num_rows() > 0) {
+    //         $response = $q->result(); // Fetch all results if available
+    //         foreach ($response as $key => $value) {
+    //             $confirmations = explode(',', $value->confirmation);
+    //             $biochemical_tubes = explode(',', $value->biochemical_tube);
+    //             $plate_numbers = explode(',', $value->plate_numbers);
     
-                // Initialize confirmation array for each plate_number
-                $confirmation_array = array_fill_keys($plate_numbers, 'No Growth'); // Default to "No Growth"
+    //             // Initialize confirmation array for each plate_number
+    //             $confirmation_array = array_fill_keys($plate_numbers, 'No Growth'); // Default to "No Growth"
     
-                // Fill in confirmation values from biochemical_tubes
-                foreach ($biochemical_tubes as $tube) {
-                    $index = array_search($tube, $biochemical_tubes);
-                    if ($index !== false) {
-                        $confirmation_value = explode(':', $confirmations[$index] ?? 'No Growth')[1] ?? 'No Growth'; // Default if not set
-                        $confirmation_array[$tube] = $confirmation_value;
-                    }
-                }
+    //             // Fill in confirmation values from biochemical_tubes
+    //             foreach ($biochemical_tubes as $tube) {
+    //                 $index = array_search($tube, $biochemical_tubes);
+    //                 if ($index !== false) {
+    //                     $confirmation_value = explode(':', $confirmations[$index] ?? 'No Growth')[1] ?? 'No Growth'; // Default if not set
+    //                     $confirmation_array[$tube] = $confirmation_value;
+    //                 }
+    //             }
     
-                $value->confirmation = $confirmation_array; // Assign processed confirmation
-            }
-        }
+    //             $value->confirmation = $confirmation_array; // Assign processed confirmation
+    //         }
+    //     }
     
-        return $response;
-    }
+    //     return $response;
+    // }
     
-    function get_all_export() {
-        $response = array();
+    // function get_all_export() {
+    //     $response = array();
     
-        // Step 1: Get unique tube_number
-        $this->db->select('tube_number');
-        $this->db->distinct();
-        $this->db->from('campy_sample_volumes_qpcr');
-        $this->db->where('id_campy_biosolids_qpcr IS NOT NULL');
-        $this->db->order_by('tube_number', 'ASC');
-        $tube_numbers = $this->db->get()->result_array();
+    //     // Step 1: Get unique tube_number
+    //     $this->db->select('tube_number');
+    //     $this->db->distinct();
+    //     $this->db->from('campy_sample_volumes_qpcr');
+    //     $this->db->where('id_campy_biosolids_qpcr IS NOT NULL');
+    //     $this->db->order_by('tube_number', 'ASC');
+    //     $tube_numbers = $this->db->get()->result_array();
     
-        // Debugging: Cek apakah tube numbers ditemukan
-        if (empty($tube_numbers)) {
-            echo "No tube numbers found.";
-            return []; // Handle case where no tube numbers found
-        }
+    //     // Debugging: Cek apakah tube numbers ditemukan
+    //     if (empty($tube_numbers)) {
+    //         echo "No tube numbers found.";
+    //         return []; // Handle case where no tube numbers found
+    //     }
     
-        // Store unique tube numbers for further processing
-        $tube_numbers_list = array_column($tube_numbers, 'tube_number');
+    //     // Store unique tube numbers for further processing
+    //     $tube_numbers_list = array_column($tube_numbers, 'tube_number');
     
-        // Step 2: Create case query for pivot
-        $case_statements = [];
-        foreach ($tube_numbers_list as $tube_number) {
-            $case_statements[] = "MAX(CASE WHEN sv1.tube_number = {$tube_number} THEN sv1.vol_sampletube END) AS `Tube {$tube_number}`";
-        }
-        $case_query = implode(', ', $case_statements);
+    //     // Step 2: Create case query for pivot
+    //     $case_statements = [];
+    //     foreach ($tube_numbers_list as $tube_number) {
+    //         $case_statements[] = "MAX(CASE WHEN sv1.tube_number = {$tube_number} THEN sv1.vol_sampletube END) AS `Tube {$tube_number}`";
+    //     }
+    //     $case_query = implode(', ', $case_statements);
     
-        // Final query
-        $this->db->select("cb.id_one_water_sample, cb.id_person, rp.initial, cb.mpn_pcr_conducted, cb.number_of_tubes, cb.campy_assay_barcode, cb.date_sample_processed, cb.time_sample_processed, cb.sample_wetweight, cb.elution_volume, rs.sampletype,
-                           $case_query, 
-                           GROUP_CONCAT(DISTINCT rb.biochemical_tube ORDER BY rb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
-                           GROUP_CONCAT(DISTINCT CONCAT(rb.biochemical_tube, ':', rb.confirmation) ORDER BY rb.biochemical_tube SEPARATOR ', ') AS confirmation,
-                           GROUP_CONCAT(DISTINCT sgph.plate_number ORDER BY sgph.plate_number SEPARATOR ', ') AS plate_numbers");
-        $this->db->from('campy_biosolids_qpcr AS cb');
-        $this->db->join('campy_result_hba_qpcr AS rh', 'cb.id_campy_biosolids_qpcr = rh.id_campy_biosolids_qpcr', 'left');
-        $this->db->join('campy_sample_growth_plate_hba_qpcr AS sgph', 'rh.id_result_hba_qpcr = sgph.id_result_hba_qpcr', 'left');
-        $this->db->join('campy_sample_volumes_qpcr AS sv1', 'rh.id_campy_biosolids_qpcr = sv1.id_campy_biosolids_qpcr', 'left');
-        $this->db->join('campy_result_biochemical_qpcr AS rb', 'sgph.id_result_hba_qpcr = rb.id_result_hba_qpcr', 'left');
-        $this->db->join('ref_sampletype AS rs', 'cb.id_sampletype = rs.id_sampletype', 'left');
-        $this->db->join('ref_person AS rp', 'cb.id_person = rp.id_person', 'left');
+    //     // Final query
+    //     $this->db->select("cb.id_one_water_sample, cb.id_person, rp.initial, cb.mpn_pcr_conducted, cb.number_of_tubes, cb.campy_assay_barcode, cb.date_sample_processed, cb.time_sample_processed, cb.sample_wetweight, cb.elution_volume, rs.sampletype,
+    //                        $case_query, 
+    //                        GROUP_CONCAT(DISTINCT rb.biochemical_tube ORDER BY rb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
+    //                        GROUP_CONCAT(DISTINCT CONCAT(rb.biochemical_tube, ':', rb.confirmation) ORDER BY rb.biochemical_tube SEPARATOR ', ') AS confirmation,
+    //                        GROUP_CONCAT(DISTINCT sgph.plate_number ORDER BY sgph.plate_number SEPARATOR ', ') AS plate_numbers");
+    //     $this->db->from('campy_biosolids_qpcr AS cb');
+    //     $this->db->join('campy_result_hba_qpcr AS rh', 'cb.id_campy_biosolids_qpcr = rh.id_campy_biosolids_qpcr', 'left');
+    //     $this->db->join('campy_sample_growth_plate_hba_qpcr AS sgph', 'rh.id_result_hba_qpcr = sgph.id_result_hba_qpcr', 'left');
+    //     $this->db->join('campy_sample_volumes_qpcr AS sv1', 'rh.id_campy_biosolids_qpcr = sv1.id_campy_biosolids_qpcr', 'left');
+    //     $this->db->join('campy_result_biochemical_qpcr AS rb', 'sgph.id_result_hba_qpcr = rb.id_result_hba_qpcr', 'left');
+    //     $this->db->join('ref_sampletype AS rs', 'cb.id_sampletype = rs.id_sampletype', 'left');
+    //     $this->db->join('ref_person AS rp', 'cb.id_person = rp.id_person', 'left');
     
-        // Conditions
-        $this->db->where('rb.flag', '0');
-        $this->db->where('sv1.flag', '0');
-        $this->db->group_by('rh.id_result_hba_qpcr');
+    //     // Conditions
+    //     $this->db->where('rb.flag', '0');
+    //     $this->db->where('sv1.flag', '0');
+    //     $this->db->group_by('rh.id_result_hba_qpcr');
     
-        $q = $this->db->get();
+    //     $q = $this->db->get();
     
-        if ($q->num_rows() > 0) {
-            $response = $q->result();
-            foreach ($response as $value) {
-                // Memproses konfirmasi
-                $confirmations = explode(',', $value->confirmation);
-                $biochemical_tubes = explode(',', $value->biochemical_tube);
-                $plate_numbers = explode(',', $value->plate_numbers);
+    //     if ($q->num_rows() > 0) {
+    //         $response = $q->result();
+    //         foreach ($response as $value) {
+    //             // Memproses konfirmasi
+    //             $confirmations = explode(',', $value->confirmation);
+    //             $biochemical_tubes = explode(',', $value->biochemical_tube);
+    //             $plate_numbers = explode(',', $value->plate_numbers);
     
-                // Inisialisasi array konfirmasi dengan kunci sesuai dengan jumlah tabung
-                $confirmation_array = array_fill_keys($tube_numbers_list, 'No Growth'); // Default ke "No Growth"
+    //             // Inisialisasi array konfirmasi dengan kunci sesuai dengan jumlah tabung
+    //             $confirmation_array = array_fill_keys($tube_numbers_list, 'No Growth'); // Default ke "No Growth"
     
-                // Mengisi nilai konfirmasi berdasarkan indeks tabung
-                foreach ($biochemical_tubes as $index => $tube) {
-                    $confirmation_value = explode(':', $confirmations[$index] ?? 'No Growth')[1] ?? 'No Growth';
-                    $confirmation_array[(int)$tube] = $confirmation_value; // Gunakan kunci tabung sebagai index
-                }
+    //             // Mengisi nilai konfirmasi berdasarkan indeks tabung
+    //             foreach ($biochemical_tubes as $index => $tube) {
+    //                 $confirmation_value = explode(':', $confirmations[$index] ?? 'No Growth')[1] ?? 'No Growth';
+    //                 $confirmation_array[(int)$tube] = $confirmation_value; // Gunakan kunci tabung sebagai index
+    //             }
     
-                // Assign konfirmasi yang sudah diproses
-                $value->confirmation = $confirmation_array;
-            }
-        } else {
-            echo "No data found for the given query.";
-        }
+    //             // Assign konfirmasi yang sudah diproses
+    //             $value->confirmation = $confirmation_array;
+    //         }
+    //     } else {
+    //         echo "No data found for the given query.";
+    //     }
     
-        return $response;
-    }
+    //     return $response;
+    // }
     
     
     
@@ -458,7 +458,7 @@ class Campy_biosolids_qpcr_model extends CI_Model
         $this->db->delete('campy_sample_volumes_qpcr');
     }
 
-    public function insertResultsCharcoal($data) {
+    public function insertResultsQpcr($data) {
         $this->db->insert('campy_result_qpcr', $data);
         return $this->db->insert_id(); // Return the last inserted ID
     }
@@ -469,7 +469,7 @@ class Campy_biosolids_qpcr_model extends CI_Model
         $this->db->insert('campy_sample_qpcr_tube', $data);
     }
 
-    function updateResultsCharcoal($id, $data) {
+    function updateResultsQpcr($id, $data) {
         $this->db->where('id_result_qpcr', $id);
         $this->db->update('campy_result_qpcr', $data);
     }
@@ -479,7 +479,7 @@ class Campy_biosolids_qpcr_model extends CI_Model
         $this->db->delete('campy_sample_qpcr_tube');
     }
 
-    function get_by_id_charcoal($id)
+    function get_by_id_qpcr($id)
     {
         $this->db->where('id_result_qpcr', $id);
         $this->db->where('flag', '0');
@@ -503,41 +503,41 @@ class Campy_biosolids_qpcr_model extends CI_Model
         $this->db->update('campy_sample_volumes_qpcr', $data);
     }
 
-    function insertResultsHba($data) {
-        $this->db->insert('campy_result_hba_qpcr', $data);
-        return $this->db->insert_id();
-    }
+    // function insertResultsHba($data) {
+    //     $this->db->insert('campy_result_hba_qpcr', $data);
+    //     return $this->db->insert_id();
+    // }
 
-    public function insert_growth_plate_hba($data) {
-        $this->db->insert('campy_sample_growth_plate_hba_qpcr', $data);
-    }
+    // public function insert_growth_plate_hba($data) {
+    //     $this->db->insert('campy_sample_growth_plate_hba_qpcr', $data);
+    // }
 
-    function updateResultsHba($id_result_hba_qpcr, $data) {
-        $this->db->where('id_result_hba_qpcr', $id_result_hba_qpcr);
-        $this->db->update('campy_result_hba_qpcr', $data);
-    }
+    // function updateResultsHba($id_result_hba_qpcr, $data) {
+    //     $this->db->where('id_result_hba_qpcr', $id_result_hba_qpcr);
+    //     $this->db->update('campy_result_hba_qpcr', $data);
+    // }
 
-    public function delete_growth_plates_hba($id_result_hba_qpcr) {
-        $this->db->where('id_result_hba_qpcr', $id_result_hba_qpcr);
-        $this->db->delete('campy_sample_growth_plate_hba_qpcr');
-    }
+    // public function delete_growth_plates_hba($id_result_hba_qpcr) {
+    //     $this->db->where('id_result_hba_qpcr', $id_result_hba_qpcr);
+    //     $this->db->delete('campy_sample_growth_plate_hba_qpcr');
+    // }
 
-    function get_by_id_hba($id)
-    {
-        $this->db->where('id_result_hba_qpcr', $id);
-        $this->db->where('flag', '0');
-        return $this->db->get('campy_result_hba_qpcr')->row();
-    }
+    // function get_by_id_hba($id)
+    // {
+    //     $this->db->where('id_result_hba_qpcr', $id);
+    //     $this->db->where('flag', '0');
+    //     return $this->db->get('campy_result_hba_qpcr')->row();
+    // }
 
-    function updateResultsGrowthPlateHba($id, $data) {
-        $this->db->where('id_result_hba_qpcr', $id);
-        $this->db->update('campy_sample_growth_plate_hba_qpcr', $data);
-    }
+    // function updateResultsGrowthPlateHba($id, $data) {
+    //     $this->db->where('id_result_hba_qpcr', $id);
+    //     $this->db->update('campy_sample_growth_plate_hba_qpcr', $data);
+    // }
 
-    function insertResultsBiochemical($data) {
-        $this->db->insert('campy_result_biochemical_qpcr', $data);
-        return $this->db->insert_id();
-    }
+    // function insertResultsBiochemical($data) {
+    //     $this->db->insert('campy_result_biochemical_qpcr', $data);
+    //     return $this->db->insert_id();
+    // }
     
     function get_by_id_biochemical($id)
     {
@@ -546,10 +546,10 @@ class Campy_biosolids_qpcr_model extends CI_Model
         return $this->db->get('campy_result_biochemical_qpcr')->row();
     }
 
-    function updateResultsBiochemical($id_result_biochemical_qpcr, $data) {
-        $this->db->where('id_result_biochemical_qpcr', $id_result_biochemical_qpcr);
-        $this->db->update('campy_result_biochemical_qpcr', $data);
-    }
+    // function updateResultsBiochemical($id_result_biochemical_qpcr, $data) {
+    //     $this->db->where('id_result_biochemical_qpcr', $id_result_biochemical_qpcr);
+    //     $this->db->update('campy_result_biochemical_qpcr', $data);
+    // }
     
 
       
