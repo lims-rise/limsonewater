@@ -21,7 +21,7 @@ class Campy_biosolids_pa_model extends CI_Model
         $this->datatables->from('campy_biosolids_pa AS cbp');
         $this->datatables->join('ref_person AS rp', 'cbp.id_person = rp.id_person', 'left');
         $this->datatables->join('ref_sampletype AS rs', 'cbp.id_sampletype = rs.id_sampletype', 'left');
-        $this->datatables->join('sample_volumes_pa AS svp', 'cbp.id_campy_biosolids_pa = svp.id_campy_biosolids_pa', 'left');
+        $this->datatables->join('campy_sample_volumes_pa AS svp', 'cbp.id_campy_biosolids_pa = svp.id_campy_biosolids_pa', 'left');
         // $this->datatables->where('lab', $this->session->userdata('lab'));
         $this->datatables->where('cbp.flag', '0');
         // GROUP BY
@@ -46,9 +46,9 @@ class Campy_biosolids_pa_model extends CI_Model
     function subjsonCharcoal($id) {
         $this->datatables->select('rcp.id_result_charcoal_pa, cbp.campy_assay_barcode, rcp.id_campy_biosolids_pa, rcp.date_sample_processed, rcp.time_sample_processed,
         GROUP_CONCAT(sgpp.growth_plate ORDER BY sgpp.plate_number SEPARATOR ", ") AS growth_plate, GROUP_CONCAT(sgpp.plate_number ORDER BY sgpp.plate_number SEPARATOR ", ") AS plate_number, rcp.flag');
-        $this->datatables->from('result_charcoal_pa AS rcp');
+        $this->datatables->from('campy_result_charcoal_pa AS rcp');
         $this->datatables->join('campy_biosolids_pa AS cbp', 'rcp.id_campy_biosolids_pa = cbp.id_campy_biosolids_pa', 'left');
-        $this->datatables->join('sample_growth_plate_pa AS sgpp', 'rcp.id_result_charcoal_pa = sgpp.id_result_charcoal_pa', 'left');
+        $this->datatables->join('campy_sample_growth_plate_pa AS sgpp', 'rcp.id_result_charcoal_pa = sgpp.id_result_charcoal_pa', 'left');
         $this->datatables->where('rcp.flag', '0');
         $this->datatables->where('rcp.id_campy_biosolids_pa', $id);
         $this->datatables->group_by('
@@ -76,9 +76,9 @@ class Campy_biosolids_pa_model extends CI_Model
     function subjsonHba($id) {
         $this->datatables->select('rhp.id_result_hba_pa, cbp.campy_assay_barcode, rhp.id_campy_biosolids_pa, rhp.date_sample_processed, rhp.time_sample_processed, 
         GROUP_CONCAT(sgphp.growth_plate ORDER BY sgphp.plate_number SEPARATOR ", ") AS growth_plate, GROUP_CONCAT(sgphp.plate_number ORDER BY sgphp.plate_number SEPARATOR ", ") AS plate_number, rhp.flag, sgphp.id_sample_plate_hba_pa');
-        $this->datatables->from('result_hba_pa AS rhp');
+        $this->datatables->from('campy_result_hba_pa AS rhp');
         $this->datatables->join('campy_biosolids_pa AS cbp', 'rhp.id_campy_biosolids_pa = cbp.id_campy_biosolids_pa', 'left');
-        $this->datatables->join('sample_growth_plate_hba_pa AS sgphp', 'rhp.id_result_hba_pa = sgphp.id_result_hba_pa', 'left');
+        $this->datatables->join('campy_sample_growth_plate_hba_pa AS sgphp', 'rhp.id_result_hba_pa = sgphp.id_result_hba_pa', 'left');
         $this->datatables->where('rhp.flag', '0');
         $this->datatables->where('rhp.id_campy_biosolids_pa', $id);
         $this->datatables->group_by('
@@ -106,7 +106,7 @@ class Campy_biosolids_pa_model extends CI_Model
     function subjsonBiochemical($id, $biochemical_tube) {
 
         $this->datatables->select('rbp.id_result_biochemical_pa, rbp.id_campy_biosolids_pa, rbp.id_result_hba_pa, cbp.campy_assay_barcode, rbp.oxidase, rbp.catalase, rbp.confirmation, rbp.sample_store, rbp.biochemical_tube, rbp.flag');
-        $this->datatables->from('result_biochemical_pa AS rbp');
+        $this->datatables->from('campy_result_biochemical_pa AS rbp');
         $this->datatables->join('campy_biosolids_pa AS cbp', 'rbp.id_campy_biosolids_pa = cbp.id_campy_biosolids_pa', 'left');
         $this->datatables->where('rbp.flag', '0');
         $this->datatables->where('rbp.id_campy_biosolids_pa', $id);
@@ -135,7 +135,7 @@ class Campy_biosolids_pa_model extends CI_Model
         // Step 1: Get unique tube_number
         $this->db->select('tube_number');
         $this->db->distinct();
-        $this->db->from('sample_volumes_pa');
+        $this->db->from('campy_sample_volumes_pa');
         $this->db->where('id_campy_biosolids_pa', $id);
         $tube_numbers = $this->db->get()->result_array();
     
@@ -159,10 +159,10 @@ class Campy_biosolids_pa_model extends CI_Model
                            GROUP_CONCAT(DISTINCT CONCAT(rbp.biochemical_tube, ':', rbp.confirmation) ORDER BY rbp.biochemical_tube SEPARATOR ', ') AS confirmation,
                            GROUP_CONCAT(DISTINCT sgphp.plate_number ORDER BY sgphp.plate_number SEPARATOR ', ') AS plate_numbers");
         $this->db->from('campy_biosolids_pa AS cbp');
-        $this->db->join('result_hba_pa AS rhp', 'cbp.id_campy_biosolids_pa = rhp.id_campy_biosolids_pa', 'left');
-        $this->db->join('sample_growth_plate_hba_pa AS sgphp', 'rhp.id_result_hba_pa = sgphp.id_result_hba_pa', 'left');
-        $this->db->join('sample_volumes_pa AS svp1', 'rhp.id_campy_biosolids_pa = svp1.id_campy_biosolids_pa', 'left');
-        $this->db->join('result_biochemical_pa AS rbp', 'sgphp.id_result_hba_pa = rbp.id_result_hba_pa', 'left');
+        $this->db->join('campy_result_hba_pa AS rhp', 'cbp.id_campy_biosolids_pa = rhp.id_campy_biosolids_pa', 'left');
+        $this->db->join('campy_sample_growth_plate_hba_pa AS sgphp', 'rhp.id_result_hba_pa = sgphp.id_result_hba_pa', 'left');
+        $this->db->join('campy_sample_volumes_pa AS svp1', 'rhp.id_campy_biosolids_pa = svp1.id_campy_biosolids_pa', 'left');
+        $this->db->join('campy_result_biochemical_pa AS rbp', 'sgphp.id_result_hba_pa = rbp.id_result_hba_pa', 'left');
         $this->db->join('ref_sampletype AS rs', 'cbp.id_sampletype = rs.id_sampletype', 'left');
         $this->db->join('ref_person AS rp',  'cbp.id_person = rp.id_person', 'left');
     
@@ -198,7 +198,7 @@ class Campy_biosolids_pa_model extends CI_Model
         // Step 1: Get unique tube_number
         $this->db->select('tube_number');
         $this->db->distinct();
-        $this->db->from('sample_volumes_pa');
+        $this->db->from('campy_sample_volumes_pa');
         $this->db->where('id_campy_biosolids_pa', $id);
         $tube_numbers = $this->db->get()->result_array();
     
@@ -225,10 +225,10 @@ class Campy_biosolids_pa_model extends CI_Model
                            GROUP_CONCAT(DISTINCT CONCAT(rbp.biochemical_tube, ':', rbp.confirmation) ORDER BY rbp.biochemical_tube SEPARATOR ', ') AS confirmation,
                            GROUP_CONCAT(DISTINCT sgphp.plate_number ORDER BY sgphp.plate_number SEPARATOR ', ') AS plate_numbers");
         $this->db->from('campy_biosolids_pa AS cbp');
-        $this->db->join('result_hba_pa AS rhp', 'cbp.id_campy_biosolids_pa = rhp.id_campy_biosolids_pa', 'left');
-        $this->db->join('sample_growth_plate_hba_pa AS sgphp', 'rhp.id_result_hba_pa = sgphp.id_result_hba_pa', 'left');
-        $this->db->join('sample_volumes_pa AS svp1', 'rhp.id_campy_biosolids_pa = svp1.id_campy_biosolids_pa', 'left');
-        $this->db->join('result_biochemical_pa AS rbp', 'sgphp.id_result_hba_pa = rbp.id_result_hba_pa', 'left');
+        $this->db->join('campy_result_hba_pa AS rhp', 'cbp.id_campy_biosolids_pa = rhp.id_campy_biosolids_pa', 'left');
+        $this->db->join('campy_sample_growth_plate_hba_pa AS sgphp', 'rhp.id_result_hba_pa = sgphp.id_result_hba_pa', 'left');
+        $this->db->join('campy_sample_volumes_pa AS svp1', 'rhp.id_campy_biosolids_pa = svp1.id_campy_biosolids_pa', 'left');
+        $this->db->join('campy_result_biochemical_pa AS rbp', 'sgphp.id_result_hba_pa = rbp.id_result_hba_pa', 'left');
         $this->db->join('ref_sampletype AS rs', 'cbp.id_sampletype = rs.id_sampletype', 'left');
         $this->db->join('ref_person AS rp',  'cbp.id_person = rp.id_person', 'left');
     
@@ -271,7 +271,7 @@ class Campy_biosolids_pa_model extends CI_Model
         // Step 1: Get unique tube_number
         $this->db->select('tube_number');
         $this->db->distinct();
-        $this->db->from('sample_volumes_pa');
+        $this->db->from('campy_sample_volumes_pa');
         $this->db->where('id_campy_biosolids_pa IS NOT NULL');
         $tube_numbers = $this->db->get()->result_array();
     
@@ -298,10 +298,10 @@ class Campy_biosolids_pa_model extends CI_Model
                            GROUP_CONCAT(DISTINCT CONCAT(rbp.biochemical_tube, ':', rbp.confirmation) ORDER BY rbp.biochemical_tube SEPARATOR ', ') AS confirmation,
                            GROUP_CONCAT(DISTINCT sgphp.plate_number ORDER BY sgphp.plate_number SEPARATOR ', ') AS plate_numbers");
         $this->db->from('campy_biosolids_pa AS cbp');
-        $this->db->join('result_hba_pa AS rhp', 'cbp.id_campy_biosolids_pa = rhp.id_campy_biosolids_pa', 'left');
-        $this->db->join('sample_growth_plate_hba_pa AS sgphp', 'rhp.id_result_hba_pa = sgphp.id_result_hba_pa', 'left');
-        $this->db->join('sample_volumes_pa AS svp1', 'rhp.id_campy_biosolids_pa = svp1.id_campy_biosolids_pa', 'left');
-        $this->db->join('result_biochemical_pa AS rbp', 'sgphp.id_result_hba_pa = rbp.id_result_hba_pa', 'left');
+        $this->db->join('campy_result_hba_pa AS rhp', 'cbp.id_campy_biosolids_pa = rhp.id_campy_biosolids_pa', 'left');
+        $this->db->join('campy_sample_growth_plate_hba_pa AS sgphp', 'rhp.id_result_hba_pa = sgphp.id_result_hba_pa', 'left');
+        $this->db->join('campy_sample_volumes_pa AS svp1', 'rhp.id_campy_biosolids_pa = svp1.id_campy_biosolids_pa', 'left');
+        $this->db->join('campy_result_biochemical_pa AS rbp', 'sgphp.id_result_hba_pa = rbp.id_result_hba_pa', 'left');
         $this->db->join('ref_sampletype AS rs', 'cbp.id_sampletype = rs.id_sampletype', 'left');
         $this->db->join('ref_person AS rp', 'cbp.id_person = rp.id_person', 'left');
     
@@ -359,7 +359,7 @@ class Campy_biosolids_pa_model extends CI_Model
         GROUP_CONCAT(svp.vol_sampletube ORDER BY svp.tube_number SEPARATOR ", ") AS vol_sampletube, GROUP_CONCAT(svp.tube_number ORDER BY svp.tube_number SEPARATOR ", ") AS tube_number');
       $this->db->from('campy_biosolids_pa AS cbp');
       $this->db->join('ref_sampletype AS rs', 'cbp.id_sampletype = rs.id_sampletype', 'left');
-      $this->datatables->join('sample_volumes_pa AS svp', 'cbp.id_campy_biosolids_pa = svp.id_campy_biosolids_pa', 'left');
+      $this->datatables->join('campy_sample_volumes_pa AS svp', 'cbp.id_campy_biosolids_pa = svp.id_campy_biosolids_pa', 'left');
       $this->db->join('ref_person AS rp',  'cbp.id_person = rp.id_person', 'left');
       $this->db->where('cbp.id_campy_biosolids_pa', $id);
       $this->db->where('cbp.flag', '0');
@@ -452,7 +452,7 @@ class Campy_biosolids_pa_model extends CI_Model
     }
     
     public function insert_sample_volume($data) {
-        $this->db->insert('sample_volumes_pa', $data);
+        $this->db->insert('campy_sample_volumes_pa', $data);
     }
     
     function updateCampyBiosolids($id, $data) {
@@ -462,38 +462,38 @@ class Campy_biosolids_pa_model extends CI_Model
 
     public function delete_sample_volumes($id_campy_biosolids_pa) {
         $this->db->where('id_campy_biosolids_pa', $id_campy_biosolids_pa);
-        $this->db->delete('sample_volumes_pa');
+        $this->db->delete('campy_sample_volumes_pa');
     }
 
     public function insertResultsCharcoal($data) {
-        $this->db->insert('result_charcoal_pa', $data);
+        $this->db->insert('campy_result_charcoal_pa', $data);
         return $this->db->insert_id(); // Return the last inserted ID
     }
 
     public function insert_growth_plate($data) {
-        $this->db->insert('sample_growth_plate_pa', $data);
+        $this->db->insert('campy_sample_growth_plate_pa', $data);
     }
 
     function updateResultsCharcoal($id, $data) {
         $this->db->where('id_result_charcoal_pa', $id);
-        $this->db->update('result_charcoal_pa', $data);
+        $this->db->update('campy_result_charcoal_pa', $data);
     }
 
     public function delete_growth_plates($id_result_charcoal_pa) {
         $this->db->where('id_result_charcoal_pa', $id_result_charcoal_pa);
-        $this->db->delete('sample_growth_plate_pa');
+        $this->db->delete('campy_sample_growth_plate_pa');
     }
 
     function get_by_id_charcoal($id)
     {
         $this->db->where('id_result_charcoal_pa', $id);
         $this->db->where('flag', '0');
-        return $this->db->get('result_charcoal_pa')->row();
+        return $this->db->get('campy_result_charcoal_pa')->row();
     }
 
     function updateResultsGrowthPlate($id, $data) {
         $this->db->where('id_result_charcoal_pa', $id);
-        $this->db->update('sample_growth_plate_pa', $data);
+        $this->db->update('campy_sample_growth_plate_pa', $data);
     }
 
     function get_by_id_campybiosolids($id)
@@ -505,42 +505,42 @@ class Campy_biosolids_pa_model extends CI_Model
 
     function updateSampleVolume($id, $data) {
         $this->db->where('id_campy_biosolids_pa', $id);
-        $this->db->update('sample_volumes_pa', $data);
+        $this->db->update('campy_sample_volumes_pa', $data);
     }
 
     function insertResultsHba($data) {
-        $this->db->insert('result_hba_pa', $data);
+        $this->db->insert('campy_result_hba_pa', $data);
         return $this->db->insert_id();
     }
 
     public function insert_growth_plate_hba($data) {
-        $this->db->insert('sample_growth_plate_hba_pa', $data);
+        $this->db->insert('campy_sample_growth_plate_hba_pa', $data);
     }
 
     function updateResultsHba($id_result_hba_pa, $data) {
         $this->db->where('id_result_hba_pa', $id_result_hba_pa);
-        $this->db->update('result_hba_pa', $data);
+        $this->db->update('campy_result_hba_pa', $data);
     }
 
     public function delete_growth_plates_hba($id_result_hba_pa) {
         $this->db->where('id_result_hba_pa', $id_result_hba_pa);
-        $this->db->delete('sample_growth_plate_hba_pa');
+        $this->db->delete('campy_sample_growth_plate_hba_pa');
     }
 
     function get_by_id_hba($id)
     {
         $this->db->where('id_result_hba_pa', $id);
         $this->db->where('flag', '0');
-        return $this->db->get('result_hba_pa')->row();
+        return $this->db->get('campy_result_hba_pa')->row();
     }
 
     function updateResultsGrowthPlateHba($id, $data) {
         $this->db->where('id_result_hba_pa', $id);
-        $this->db->update('sample_growth_plate_hba_pa', $data);
+        $this->db->update('campy_sample_growth_plate_hba_pa', $data);
     }
 
     function insertResultsBiochemical($data) {
-        $this->db->insert('result_biochemical_pa', $data);
+        $this->db->insert('campy_result_biochemical_pa', $data);
         return $this->db->insert_id();
     }
     
@@ -548,12 +548,12 @@ class Campy_biosolids_pa_model extends CI_Model
     {
         $this->db->where('id_result_biochemical_pa', $id);
         $this->db->where('flag', '0');
-        return $this->db->get('result_biochemical_pa')->row();
+        return $this->db->get('campy_result_biochemical_pa')->row();
     }
 
     function updateResultsBiochemical($id_result_biochemical_pa, $data) {
         $this->db->where('id_result_biochemical_pa', $id_result_biochemical_pa);
-        $this->db->update('result_biochemical_pa', $data);
+        $this->db->update('campy_result_biochemical_pa', $data);
     }
 
       
