@@ -551,38 +551,35 @@ $('input[name="gramlysis"], input[name="oxidase"], input[name="catalase"]').on('
     updateConfirmation(); // Update konfirmasi setelah perubahan
 });
 
-function updateConfirmation() { 
-    const oxidaseValue = $('input[name="oxidase"]:checked').val();
-    const catalaseValue = $('input[name="catalase"]:checked').val();
-    const gramLysisValue = $('input[name="gramlysis"]:checked').val();
+// function updateConfirmation() { 
+//     const oxidaseValue = $('input[name="oxidase"]:checked').val();
+//     const catalaseValue = $('input[name="catalase"]:checked').val();
+//     const gramLysisValue = $('input[name="gramlysis"]:checked').val();
     
-    let confirmationText = '';
+//     let confirmationText = '';
 
-    // Jika Gram-Lysis positif
-    if (gramLysisValue === 'Positive') {
-        confirmationText = 'Not Campylobacter';
-    } 
-    // Jika Gram-Lysis negatif, baru cek Oxidase dan Catalase
-    else {
-        if (oxidaseValue === 'Positive' && catalaseValue === 'Positive') {
-            confirmationText = 'Campylobacter';
-        } else if (oxidaseValue === 'Negative' && catalaseValue === 'Negative') {
-            confirmationText = 'Not Campylobacter';
-        } else if (oxidaseValue === 'Positive' && catalaseValue === 'Negative') {
-            confirmationText = 'Not Campylobacter';
-        } else if (oxidaseValue === 'Negative' && catalaseValue === 'Positive') {
-            confirmationText = 'Not Campylobacter';
-        } else {
-            confirmationText = '';
-        }
-    }
+//     // Jika Gram-Lysis positif
+//     if (gramLysisValue === 'Positive') {
+//         confirmationText = 'Not Campylobacter';
+//     } 
+//     // Jika Gram-Lysis negatif, baru cek Oxidase dan Catalase
+//     else {
+//         if (oxidaseValue === 'Positive' && catalaseValue === 'Positive') {
+//             confirmationText = 'Campylobacter';
+//         } else if (oxidaseValue === 'Negative' && catalaseValue === 'Negative') {
+//             confirmationText = 'Not Campylobacter';
+//         } else if (oxidaseValue === 'Positive' && catalaseValue === 'Negative') {
+//             confirmationText = 'Not Campylobacter';
+//         } else if (oxidaseValue === 'Negative' && catalaseValue === 'Positive') {
+//             confirmationText = 'Not Campylobacter';
+//         } else {
+//             confirmationText = '';
+//         }
+//     }
 
-    // Menampilkan hasil ke kolom confirmation
-    $('#confirmation').val(confirmationText);
-}
-
-
-
+//     // Menampilkan hasil ke kolom confirmation
+//     $('#confirmation').val(confirmationText);
+// }
 
 
 function generateGrowthPlateInputs(container, numberOfTubes) {
@@ -681,21 +678,21 @@ function generateGrowthPlateInputs(container, numberOfTubes) {
             position: 'bottom',
         });
 
-        $('#barcode_tray24').click(function() {
-            $('.val1tip').tooltipster('hide');   
-        });
+        // $('#barcode_tray24').click(function() {
+        //     $('.val1tip').tooltipster('hide');   
+        // });
 
-        $('#barcode_tray72').click(function() {
-            $('.val2tip').tooltipster('hide');   
-        });
+        // $('#barcode_tray72').click(function() {
+        //     $('.val2tip').tooltipster('hide');   
+        // });
 
         $('#compose-modal').on('shown.bs.modal', function () {
             $('.val1tip').tooltipster('hide'); 
         });
 
-        $('#compose-modalHBA').on('shown.bs.modal', function () {
-            $('.val2tip').tooltipster('hide'); 
-        });
+        // $('#compose-modalHBA').on('shown.bs.modal', function () {
+        //     $('.val2tip').tooltipster('hide'); 
+        // });
 
         $("input").keypress(function(){
             $('.val1tip').tooltipster('hide'); 
@@ -709,83 +706,83 @@ function generateGrowthPlateInputs(container, numberOfTubes) {
             $('#barcode_tray24').focus();
         });
 
-        $('#compose-modalHBA').on('shown.bs.modal', function () {
-            $('#dry_weight72').focus();
-        });
+        // $('#compose-modalHBA').on('shown.bs.modal', function () {
+        //     $('#dry_weight72').focus();
+        // });
 
-        $('#barcode_tray24').on("change", function() {
-            let barcode24 = $('#barcode_tray24').val();
-            $.ajax({
-                type: "GET",
-                url: `${BASE_URL}/Moisture_content/validate24`,
-                data: { id24: barcode24 },
-                dataType: "json",
-                success: function(data) {
-                    if (data.length == 0) {
-                        let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + barcode24 +'</strong> is not on moisture content or is not already in the system !</span>');
-                        $('.val1tip').tooltipster('content', tip);
-                        $('.val1tip').tooltipster('show');
-                        $('#barcode_tray24').focus();
-                        $('#barcode_tray24').val('');       
-                        $('#barcode_tray24').css({'background-color' : '#FFE6E7'});
-                        setTimeout(function(){
-                            $('#barcode_tray24').css({'background-color' : '#FFFFFF'});
-                            setTimeout(function(){
-                                $('#barcode_tray24').css({'background-color' : '#FFE6E7'});
-                                setTimeout(function(){
-                                    $('#barcode_tray24').css({'background-color' : '#FFFFFF'});
-                                }, 300);                            
-                            }, 300);
-                        }, 300);
-                    }
-                }
-            });
-        });
+        // $('#barcode_tray24').on("change", function() {
+        //     let barcode24 = $('#barcode_tray24').val();
+        //     $.ajax({
+        //         type: "GET",
+        //         url: `${BASE_URL}/Moisture_content/validate24`,
+        //         data: { id24: barcode24 },
+        //         dataType: "json",
+        //         success: function(data) {
+        //             if (data.length == 0) {
+        //                 let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + barcode24 +'</strong> is not on moisture content or is not already in the system !</span>');
+        //                 $('.val1tip').tooltipster('content', tip);
+        //                 $('.val1tip').tooltipster('show');
+        //                 $('#barcode_tray24').focus();
+        //                 $('#barcode_tray24').val('');       
+        //                 $('#barcode_tray24').css({'background-color' : '#FFE6E7'});
+        //                 setTimeout(function(){
+        //                     $('#barcode_tray24').css({'background-color' : '#FFFFFF'});
+        //                     setTimeout(function(){
+        //                         $('#barcode_tray24').css({'background-color' : '#FFE6E7'});
+        //                         setTimeout(function(){
+        //                             $('#barcode_tray24').css({'background-color' : '#FFFFFF'});
+        //                         }, 300);                            
+        //                     }, 300);
+        //                 }, 300);
+        //             }
+        //         }
+        //     });
+        // });
 
-        $('#barcode_tray72').on("change", function() {
-            let barcode72 = $('#barcode_tray72').val();
-            $.ajax({
-                type: "GET",
-                url: `${BASE_URL}/Moisture_content/validate72`,
-                data: { id72: barcode72 },
-                dataType: "json",
-                success: function(data) {
-                    if (data.length == 0) {
-                        let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + barcode72 +'</strong> is not on moisture content or is not already in the system !</span>');
-                        $('.val2tip').tooltipster('content', tip);
-                        $('.val2tip').tooltipster('show');
-                        $('#barcode_tray72').focus();
-                        $('#barcode_tray72').val('');       
-                        $('#barcode_tray72').css({'background-color' : '#FFE6E7'});
-                        setTimeout(function(){
-                            $('#barcode_tray72').css({'background-color' : '#FFFFFF'});
-                            setTimeout(function(){
-                                $('#barcode_tray72').css({'background-color' : '#FFE6E7'});
-                                setTimeout(function(){
-                                    $('#barcode_tray72').css({'background-color' : '#FFFFFF'});
-                                }, 300);                            
-                            }, 300);
-                        }, 300);
-                    }
-                }
-            });
-        });
+        // $('#barcode_tray72').on("change", function() {
+        //     let barcode72 = $('#barcode_tray72').val();
+        //     $.ajax({
+        //         type: "GET",
+        //         url: `${BASE_URL}/Moisture_content/validate72`,
+        //         data: { id72: barcode72 },
+        //         dataType: "json",
+        //         success: function(data) {
+        //             if (data.length == 0) {
+        //                 let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + barcode72 +'</strong> is not on moisture content or is not already in the system !</span>');
+        //                 $('.val2tip').tooltipster('content', tip);
+        //                 $('.val2tip').tooltipster('show');
+        //                 $('#barcode_tray72').focus();
+        //                 $('#barcode_tray72').val('');       
+        //                 $('#barcode_tray72').css({'background-color' : '#FFE6E7'});
+        //                 setTimeout(function(){
+        //                     $('#barcode_tray72').css({'background-color' : '#FFFFFF'});
+        //                     setTimeout(function(){
+        //                         $('#barcode_tray72').css({'background-color' : '#FFE6E7'});
+        //                         setTimeout(function(){
+        //                             $('#barcode_tray72').css({'background-color' : '#FFFFFF'});
+        //                         }, 300);                            
+        //                     }, 300);
+        //                 }, 300);
+        //             }
+        //         }
+        //     });
+        // });
 
         // Function to calculate the dry_weight_persen
-        function updateDryWeightPersen() {
-            let traysampleWetweight = parseFloat($('#traysample_wetweight').val()) || 0; // Get the traysample wet weight
-            let dryWeight72 = parseFloat($('#dry_weight72').val()) || 0; // Get the dry weight 72h
+        // function updateDryWeightPersen() {
+        //     let traysampleWetweight = parseFloat($('#traysample_wetweight').val()) || 0; // Get the traysample wet weight
+        //     let dryWeight72 = parseFloat($('#dry_weight72').val()) || 0; // Get the dry weight 72h
 
-            if (traysampleWetweight > 0) { // Ensure traysampleWetweight is not zero to avoid division by zero
-                let dryWeightPersen = (1-(((traysampleWetweight - dryWeight72) / dryWeight72) * 100)).toFixed(2); // Calculate percentage
-                $('#dry_weight_persen').val(dryWeightPersen); // Update the percentage field
-            } else {
-                $('#dry_weight_persen').val(''); // Clear the percentage field if traysampleWetweight is zero or invalid
-            }
-        }
+        //     if (traysampleWetweight > 0) { // Ensure traysampleWetweight is not zero to avoid division by zero
+        //         let dryWeightPersen = (1-(((traysampleWetweight - dryWeight72) / dryWeight72) * 100)).toFixed(2); // Calculate percentage
+        //         $('#dry_weight_persen').val(dryWeightPersen); // Update the percentage field
+        //     } else {
+        //         $('#dry_weight_persen').val(''); // Clear the percentage field if traysampleWetweight is zero or invalid
+        //     }
+        // }
 
         // Attach the function to the input event of dry_weight72
-        $('#dry_weight72').on('input', updateDryWeightPersen);
+        // $('#dry_weight72').on('input', updateDryWeightPersen);
 
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
             return {
@@ -979,58 +976,55 @@ function generateGrowthPlateInputs(container, numberOfTubes) {
 
      
         // Event listener untuk tombol "New Data"
-        $(document).on('click', '[id^=addtombol_detResultsBiochemical_]', function() {
-            const plateNumber = $(this).data('index'); // Get the plate number directly
-            let td = $('#exampleHba td:first');
-            let data = table1.row(td).data();
-            console.log('datanya', data.id_result_hba);
+        // $(document).on('click', '[id^=addtombol_detResultsBiochemical_]', function() {
+        //     const plateNumber = $(this).data('index'); // Get the plate number directly
+        //     let td = $('#exampleHba td:first');
+        //     let data = table1.row(td).data();
+        //     console.log('datanya', data.id_result_hba);
 
-            $('#mode_detResultsBiochemical').val('insert');
-            $('#modal-title-biochemical').html(`<i class="fa fa-wpforms"></i> Insert | Biochemical Tube ${plateNumber} <span id="my-another-cool-loader"></span>`);
-            $('#id_campy_biosolids_qpcrBiochemical').val(id_campy_biosolids_qpcr);
-            $('#id_result_hba1').val(data.id_result_hba);
-            $('#gramlysis').val('');
-            $('#oxidase').val('');
-            $('#catalase').val('');
-            // $('#confirmation').val('');
-            $('#sample_store').val('');
-            $('#biochemical_tube').val(plateNumber);
-            $('#compose-modalBiochemical').modal('show');
-            console.log(`Button for Biochemical Tube: ${plateNumber} clicked`);
-        });
+        //     $('#mode_detResultsBiochemical').val('insert');
+        //     $('#modal-title-biochemical').html(`<i class="fa fa-wpforms"></i> Insert | Biochemical Tube ${plateNumber} <span id="my-another-cool-loader"></span>`);
+        //     $('#id_campy_biosolids_qpcrBiochemical').val(id_campy_biosolids_qpcr);
+        //     $('#id_result_hba1').val(data.id_result_hba);
+        //     $('#gramlysis').val('');
+        //     $('#oxidase').val('');
+        //     $('#catalase').val('');
+        //     // $('#confirmation').val('');
+        //     $('#sample_store').val('');
+        //     $('#biochemical_tube').val(plateNumber);
+        //     $('#compose-modalBiochemical').modal('show');
+        //     console.log(`Button for Biochemical Tube: ${plateNumber} clicked`);
+        // });
 
 
         // Event listener untuk tombol edit
-        $(document).on('click', '.btn_edit_detResultsBiochemical', function() {
-            let tr = $(this).closest('tr'); // Dapatkan elemen baris
-            let tableId = $(this).closest('.box-body').find('table').attr('id'); // Dapatkan ID tabel dari konteks
-            let data = $(`#${tableId}`).DataTable().row(tr).data(); // Dapatkan data dari DataTable yang sesuai
-            console.log(data);
+        // $(document).on('click', '.btn_edit_detResultsBiochemical', function() {
+        //     let tr = $(this).closest('tr'); // Dapatkan elemen baris
+        //     let tableId = $(this).closest('.box-body').find('table').attr('id'); // Dapatkan ID tabel dari konteks
+        //     let data = $(`#${tableId}`).DataTable().row(tr).data(); // Dapatkan data dari DataTable yang sesuai
+        //     console.log(data);
 
-            // Set nilai-nilai di dalam modal sesuai data yang didapat
-            $('#mode_detResultsBiochemical').val('edit');
-            $('#modal-title-biochemical').html('<i class="fa fa-pencil-square"></i> Update | Biochemical Tube ' + data.biochemical_tube + ' <span id="my-another-cool-loader"></span>');
-            $('#id_result_biochemical').val(data.id_result_biochemical);
-            $('#id_campy_biosolids_qpcrBiochemical').val(data.id_campy_biosolids_qpcr);
-            $('#id_result_hba1').val(data.id_result_hba);
-            // Set radio button untuk gramlysis
-            $('input[name="gramlysis"][value="' + data.gramlysis + '"]').prop('checked', true); 
+        //     // Set nilai-nilai di dalam modal sesuai data yang didapat
+        //     $('#mode_detResultsBiochemical').val('edit');
+        //     $('#modal-title-biochemical').html('<i class="fa fa-pencil-square"></i> Update | Biochemical Tube ' + data.biochemical_tube + ' <span id="my-another-cool-loader"></span>');
+        //     $('#id_result_biochemical').val(data.id_result_biochemical);
+        //     $('#id_campy_biosolids_qpcrBiochemical').val(data.id_campy_biosolids_qpcr);
+        //     $('#id_result_hba1').val(data.id_result_hba);
+        //     // Set radio button untuk gramlysis
+        //     $('input[name="gramlysis"][value="' + data.gramlysis + '"]').prop('checked', true); 
 
-            // Set radio button untuk oxidase
-            $('input[name="oxidase"][value="' + data.oxidase + '"]').prop('checked', true);
+        //     // Set radio button untuk oxidase
+        //     $('input[name="oxidase"][value="' + data.oxidase + '"]').prop('checked', true);
             
-            // Set radio button untuk catalase
-            $('input[name="catalase"][value="' + data.catalase + '"]').prop('checked', true);
-            $('#confirmation').val(data.confirmation);
-            $('#sample_store').val(data.sample_store);
-            // Tambahkan nilai lain yang diperlukan sesuai data
+        //     // Set radio button untuk catalase
+        //     $('input[name="catalase"][value="' + data.catalase + '"]').prop('checked', true);
+        //     $('#confirmation').val(data.confirmation);
+        //     $('#sample_store').val(data.sample_store);
+        //     // Tambahkan nilai lain yang diperlukan sesuai data
 
-            // Tampilkan modal untuk edit
-            $('#compose-modalBiochemical').modal('show');
-        });
-
-
-
+        //     // Tampilkan modal untuk edit
+        //     $('#compose-modalBiochemical').modal('show');
+        // });
 
 
         $('#addtombol_detResultsQpcr').click(function() {
