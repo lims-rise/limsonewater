@@ -8,12 +8,12 @@
                     </div>
                     <div class="box-body">
                         <div style="padding-bottom: 10px;">
-                            <?php
+                            <!-- <?php
                                     $lvl = $this->session->userdata('id_user_level');
                                     if ($lvl != 4){
                                         echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Enterolert Idexx - Water</button>";
                                     }
-                            ?>        
+                            ?>         -->
                             <?php echo anchor(site_url('Enterolert_idexx_water/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
                         </div>
                             <div class="table-responsive">
@@ -161,7 +161,7 @@
                         </div>
                         <div class="modal-footer clearfix">
                             <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
-                            <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                            <button type="button" class="btn btn-warning" id="cancelButton" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
                         </div>
                     </form>
                 </div><!-- /.modal-content -->
@@ -209,7 +209,50 @@
 
     let table;
     let deleteUrl; // Variable to hold the delete URL
+    // Fungsi untuk mendapatkan parameter dari URL
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        console.log('Current URL:', window.location.search);  // Cek URL yang sedang diakses
+        return urlParams.get(param);
+    }
     $(document).ready(function() {
+        const params = new URLSearchParams(window.location.search);
+        const barcodeFromUrl = params.get('barcode');
+
+        if (barcodeFromUrl) {
+            $('#enterolert_barcode').val(barcodeFromUrl);
+            $('#enterolert_barcode').attr('readonly', true);
+            handleSampleTypeInput('#sampletype');
+            $('#mode').val('insert');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Enterolert Idexx Water | New<span id="my-another-cool-loader"></span>');
+            $('#id_one_water_sample').val('');
+            $('#id_one_water_sample').show();
+            $('#idx_one_water_sample').hide();
+            $('#id_person').val('');
+            $('#sampletype').val('');
+            $('#sampletype').attr('readonly', true);
+            // $('#enterolert_barcode').val('');
+            $('#volume_bottle').val('');
+            $('#dilution').val('');
+            $('#dilution').attr('readonly', true);
+            $('#compose-modal').modal('show');
+        } else {
+            console.log('Barcode tidak ditemukan di URL');
+        }
+
+        // Pembatalan dan kembali ke halaman sebelumnya
+        $(document).on('click', '#cancelButton', function() {
+            // Ambil URL asal dari document.referrer (halaman yang mengarah ke halaman ini)
+            var previousUrl = document.referrer;
+            
+            // Jika ada URL asal, arahkan kembali ke sana
+            if (previousUrl) {
+                window.location.href = previousUrl;
+            } 
+        });
+
+
+
 
         $('#volume_bottle').on("keyup change click", function() {
             $('#dilution').val($('#volume_bottle').val()/100);
@@ -478,6 +521,14 @@
         });
 
         $('#addtombol').click(function() {
+            const params = new URLSearchParams(window.location.search);
+            const barcodeFromUrl = params.get('barcode');
+
+            if (barcodeFromUrl) {
+                $('#enterolert_barcode').val(barcodeFromUrl).trigger('change');;
+            } else {
+                console.log('Barcode tidak ditemukan di URL');
+            }
             handleSampleTypeInput('#sampletype');
             $('#mode').val('insert');
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Enterolert Idexx Water | New<span id="my-another-cool-loader"></span>');
@@ -487,7 +538,7 @@
             $('#id_person').val('');
             $('#sampletype').val('');
             $('#sampletype').attr('readonly', true);
-            $('#enterolert_barcode').val('');
+            // $('#enterolert_barcode').val('');
             $('#volume_bottle').val('');
             $('#dilution').val('');
             $('#dilution').attr('readonly', true);
