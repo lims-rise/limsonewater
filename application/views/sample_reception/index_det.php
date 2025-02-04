@@ -468,30 +468,30 @@
 			info: false,
 			bFilter: false,
 			ajax: {
-				"url": "../../Sample_reception/subjson?id=" + id_client_sample, 
+				"url": "../../Sample_reception/subjson?id=" + encodeURIComponent(id_client_sample), 
 				"type": "POST"
 			},
 			columns: [
 				{"data": "testing_type"},
 				{
-					"data": "url",  // Kolom yang berisi bagian dinamis URL
-					"render": function(data, type, row) {
-						// Render URL sebagai link dinamis
-						return `<a href="javascript:void(0);" class="url-link" data-url="${data}" data-barcode="${row.barcode}">${data === null ? '-' : row.barcode}</a>`;
-
-					}
+				"data": "url",  // Kolom yang berisi bagian dinamis URL
+				"render": function(data, type, row) {
+					// Cek apakah barcode ada, jika tidak, tampilkan '-' sebagai gantinya
+					return `<a href="javascript:void(0);" class="url-link" data-url="${data}" data-barcode="${row.barcode || '-'}">${row.barcode || '-'}</a>`;
+				}
 				},
 				{
-					"data": "action",
-					"orderable": false,
-					"className": "text-center"
+				"data": "action",
+				"orderable": false,
+				"className": "text-center"
 				}
 			],
 			order: [[0, 'asc']],
 			rowCallback: function(row, data, iDisplayIndex) {
 				// Additional row callbacks if needed
 			}
-		});
+			});
+
 
 		// Event listener untuk klik pada kolom URL
 		$('#example2 tbody').on('click', 'a.url-link', function() {

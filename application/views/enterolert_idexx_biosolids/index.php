@@ -8,12 +8,12 @@
                     </div>
                     <div class="box-body">
                         <div style="padding-bottom: 10px;">
-                            <?php
+                            <!-- <?php
                                     $lvl = $this->session->userdata('id_user_level');
                                     if ($lvl != 4){
                                         echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Enterolert Idexx - Biosolids</button>";
                                     }
-                            ?>        
+                            ?>         -->
                             <?php echo anchor(site_url('Enterolert_idexx_biosolids/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
                         </div>
                             <div class="table-responsive">
