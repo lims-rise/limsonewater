@@ -500,13 +500,14 @@
 
 			// Memastikan URL yang valid ada
 			if (url) {
-				// Menggunakan URL dinamis dan menambahkan parameter barcode
-				var fullUrl = 'http://localhost/limsonewater/index.php/' + url + '?barcode=' + barcode;
+				// Menggunakan window.location.origin untuk membuat URL dinamis
+				var fullUrl = window.location.origin + '/limsonewater/index.php/' + url + '?barcode=' + barcode;
 				window.location.href = fullUrl;  // Arahkan ke URL dinamis
 			} else {
 				console.error('URL tidak ditemukan untuk barcode: ' + barcode);
 			}
 		});
+
 
 
         $('#example2 tbody').on('click', 'tr', function () {
