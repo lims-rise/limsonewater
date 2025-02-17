@@ -32,7 +32,7 @@ class Sample_reception extends CI_Controller
         $data['labtech'] = $this->Sample_reception_model->getLabTech();
         $data['id_project'] = $this->Sample_reception_model->generate_project_id();
         // $data['client'] = $this->Sample_reception_model->generate_client();
-        $data['id_one_water_sample'] = $this->Sample_reception_model->generate_one_water_sample_id();
+        // $data['id_one_water_sample'] = $this->Sample_reception_model->generate_one_water_sample_id();
         $this->template->load('template','sample_reception/index', $data);
     } 
     
@@ -61,16 +61,14 @@ class Sample_reception extends CI_Controller
         $row = $this->Sample_reception_model->get_detail($id);
         if ($row) {
             $data = array(
+                'id_sample' => $row->id_sample,
                 'id_project' => $row->id_project,
-                'client_quote_number' => $row->client_quote_number,
-                'client' => $row->client,
                 'id_one_water_sample' => $row->id_one_water_sample,
                 'initial' => $row->initial,
                 'date_arrival' => $row->date_arrival,
                 'time_arrival' => $row->time_arrival,
                 'date_collected' => $row->date_collected,
                 'time_collected' => $row->time_collected,
-                'id_client_sample' => $row->id_client_sample,
                 'sampletype' => $row->sampletype,
                 'quality_check' => $row->quality_check,
                 'comments' => $row->comments,
@@ -94,7 +92,7 @@ class Sample_reception extends CI_Controller
         if ($row) {
             $data = array(
                 'id_project' => $row->id_project,
-                'id_sample' => $row->id_sample,
+                'id_testing' => $row->id_testing,
                 'sample_description' => $row->sample_description,
                 'test' => $this->Sample_reception_model->getTest(),
                 );
@@ -105,37 +103,82 @@ class Sample_reception extends CI_Controller
         }
     }     
 
+    // public function save() {
+    //     $mode = $this->input->post('mode', TRUE);
+    //     $dt = new DateTime();
+    //     $id_project = $this->input->post('idx_project', TRUE);
+    //     $client_quote_number = $this->input->post('client_quote_number', TRUE);
+    //     $client = $this->input->post('client', TRUE);
+    //     $clientx = $this->input->post('clientx', TRUE);
+    //     $number_sample = $this->input->post('number_sample', TRUE);
+    //     $id_client_sample = $this->input->post('id_client_sample', TRUE);
+    //     $comments = $this->input->post('comments', TRUE);
+    //     $date_collected = $this->input->post('date_collected',TRUE);
+    //     $time_collected = $this->input->post('time_collected',TRUE);
+        
+    
+    //     if ($mode == "insert") {
+    //         $data = array(
+    //             'client_quote_number' => $client_quote_number,
+    //             'client' => $client,
+    //             'id_client_sample' => $id_client_sample,
+    //             'number_sample' => $number_sample,
+    //             'date_collected' => $date_collected,
+    //             'time_collected' => $time_collected,
+    //             'comments' => $comments,
+    //             'flag' => '0',
+    //             'uuid' => $this->uuid->v4(),
+    //             'user_created' => $this->session->userdata('id_users'),
+    //             'date_created' => $dt->format('Y-m-d H:i:s'),
+    //         );
+    
+    //         $this->Sample_reception_model->insert($data);
+    //         $this->session->set_flashdata('message', 'Create Record Success');
+
+    //     } else if ($mode == "edit") {
+    //         $data = array(
+    //             'client_quote_number' => $client_quote_number,
+    //             'client' => $client,
+    //             'id_client_sample' => $id_client_sample,
+    //             'number_sample' => $number_sample,
+    //             'date_collected' => $date_collected,
+    //             'time_collected' => $time_collected,
+    //             'comments' => $comments,
+    //             'flag' => '0',
+    //             // 'uuid' => $this->uuid->v4(),
+    //             'user_updated' => $this->session->userdata('id_users'),
+    //             'date_updated' => $dt->format('Y-m-d H:i:s'),
+    //         );
+
+    //         $this->Sample_reception_model->update($id_project, $data);
+    //         $this->session->set_flashdata('message', 'Update Record Success');
+    //     }
+    
+    //     redirect(site_url("sample_reception"));
+    // }
+
     public function save() {
         $mode = $this->input->post('mode', TRUE);
-        $id_project = $this->input->post('idx_project', TRUE);
         $dt = new DateTime();
-
-        $id_person = $this->input->post('id_person', TRUE);
+        $id_project = $this->input->post('idx_project', TRUE);
         $client_quote_number = $this->input->post('client_quote_number', TRUE);
         $client = $this->input->post('client', TRUE);
         $clientx = $this->input->post('clientx', TRUE);
-        $date_arrival = $this->input->post('date_arrival', TRUE);
-        $time_arrival = $this->input->post('time_arrival', TRUE);
+        $number_sample = (int) $this->input->post('number_sample', TRUE);
         $id_client_sample = $this->input->post('id_client_sample', TRUE);
-        $id_sampletype = $this->input->post('id_sampletype', TRUE);
-        $quality_check = $this->input->post('quality_check', TRUE);
         $comments = $this->input->post('comments', TRUE);
-        $date_collected = $this->input->post('date_collected',TRUE);
-        $time_collected = $this->input->post('time_collected',TRUE);
-        
+        $date_collected = $this->input->post('date_collected', TRUE);
+        $time_collected = $this->input->post('time_collected', TRUE);
     
         if ($mode == "insert") {
+            // Insert ke sample_reception
             $data = array(
                 'client_quote_number' => $client_quote_number,
                 'client' => $client,
                 'id_client_sample' => $id_client_sample,
-                'id_sampletype' => $id_sampletype,
-                'id_person' => $id_person,
-                'date_arrival' => $date_arrival,
-                'time_arrival' => $time_arrival,
+                'number_sample' => $number_sample,
                 'date_collected' => $date_collected,
                 'time_collected' => $time_collected,
-                'quality_check' => $quality_check,
                 'comments' => $comments,
                 'flag' => '0',
                 'uuid' => $this->uuid->v4(),
@@ -143,14 +186,67 @@ class Sample_reception extends CI_Controller
                 'date_created' => $dt->format('Y-m-d H:i:s'),
             );
     
-            $this->Sample_reception_model->insert($data);
+            $id_project = $this->Sample_reception_model->insert($data);
+    
+            // Generate dan insert ke sample_reception_sample sesuai number_sample
+            for ($i = 0; $i < $number_sample; $i++) {
+                $id_one_water_sample = $this->Sample_reception_model->generate_one_water_sample_id();
+                $sample_data = array(
+                    'id_project' => $id_project,
+                    'id_one_water_sample' => $id_one_water_sample,
+                    'flag' => '0',
+                    'uuid' => $this->uuid->v4(),
+                    'user_created' => $this->session->userdata('id_users'),
+                    'date_created' => $dt->format('Y-m-d H:i:s'),
+                );
+                $this->Sample_reception_model->insert_sample($sample_data);
+            }
+            
             $this->session->set_flashdata('message', 'Create Record Success');
+        } else if($mode == "edit") {
+            // Update ke sample_reception
+                $data = array(
+                            'client_quote_number' => $client_quote_number,
+                            'client' => $clientx,
+                            'id_client_sample' => $id_client_sample,
+                            'number_sample' => $number_sample,
+                            // 'date_collected' => $date_collected,
+                            // 'time_collected' => $time_collected,
+                            'comments' => $comments,
+                            'flag' => '0',
+                            'uuid' => $this->uuid->v4(),
+                            'user_updated' => $this->session->userdata('id_users'),
+                            'date_updated' => $dt->format('Y-m-d H:i:s'),
+                );
+                // var_dump($data);
+                // die();
+                $this->Sample_reception_model->update($id_project, $data);
+        }
+        
+        redirect(site_url("sample_reception"));
+    }
 
-        } else if ($mode == "edit") {
+    public function update_sample() {
+        $mode = $this->input->post('mode_sample', TRUE);
+        $id_project = $this->input->post('id_project', TRUE);
+        $id_one_water_sample = $this->input->post('id_one_water_sample', TRUE);
+        $id_person = $this->input->post('id_person', TRUE);
+        $id_sampletype = $this->input->post('id_sampletype', TRUE);
+        $date_arrival = $this->input->post('date_arrival_sample', TRUE);
+        $time_arrival = $this->input->post('time_arrival_sample', TRUE);
+        $date_collected = $this->input->post('date_collected_sample',TRUE);
+        $time_collected = $this->input->post('time_collected_sample',TRUE);
+        $quality_check = $this->input->post('quality_check', TRUE);
+        $comments = $this->input->post('comments_sample', TRUE);
+        $dt = new DateTime();
+    
+        if ($mode == "edit") {
+            if (!$id_one_water_sample) {
+                echo json_encode(["status" => "error", "message" => "Sample ID is missing."]);
+                return;
+            }
+        
             $data = array(
-                'client_quote_number' => $client_quote_number,
-                'client' => $clientx,
-                'id_client_sample' => $id_client_sample,
                 'id_sampletype' => $id_sampletype,
                 'id_person' => $id_person,
                 'date_arrival' => $date_arrival,
@@ -160,23 +256,43 @@ class Sample_reception extends CI_Controller
                 'quality_check' => $quality_check,
                 'comments' => $comments,
                 'flag' => '0',
-                // 'uuid' => $this->uuid->v4(),
-                'user_updated' => $this->session->userdata('id_users'),
-                'date_updated' => $dt->format('Y-m-d H:i:s'),
+                'user_created' => $this->session->userdata('id_users'),
+                'date_created' => $dt->format('Y-m-d H:i:s'),
             );
-
-            $this->Sample_reception_model->update($id_project, $data);
-            $this->session->set_flashdata('message', 'Update Record Success');
+        
+            // var_dump($data);
+            // die();
+            $this->load->model('Sample_reception_model');
+            $update = $this->Sample_reception_model->update_sample($id_one_water_sample, $data);
+        
+            if ($update) {
+                echo json_encode(["status" => "success", "message" => "Sample updated successfully."]);
+            } else {
+                echo json_encode(["status" => "error", "message" => "Failed to update sample."]);
+            }
         }
-    
+        
         redirect(site_url("sample_reception"));
+    }
+    
+    
+
+
+    public function get_samples_by_project($id_project) {
+        $samples = $this->Sample_reception_model->get_samples_by_project($id_project);
+        echo json_encode($samples);
+    }
+    
+    public function get_sample_detail($id_one_water_sample) {
+        $samples_detail = $this->Sample_reception_model->get_sample_detail($id_one_water_sample);
+        echo json_encode($samples_detail);
     }
 
         public function savedetail() {
             $mode = $this->input->post('mode_det', TRUE);
-            $id_sample = $this->input->post('id_sample', TRUE);
-            $id_client_sample = $this->input->post('idx_client_sample', TRUE);
-            $id2_project = $this->input->post('id2_project', TRUE);
+            $id_testing = $this->input->post('id_testing', TRUE);
+            $id_one_water_sample = $this->input->post('idx_one_water_sample', TRUE);
+            $id2_sample = $this->input->post('id2_sample', TRUE);
             $testing_types = $this->input->post('id_testing_type', TRUE);
             $dt = new DateTime();
         
@@ -188,9 +304,9 @@ class Sample_reception extends CI_Controller
                         $testing_type_name = $this->Sample_reception_model->get_name_by_id($id_testing_type);
                         $barcode = $this->Sample_reception_model->get_last_barcode($testing_type_name);
 
-                        $id_sample = $this->Sample_reception_model->insert_det(array(
-                            'id_client_sample' => $id_client_sample,
-                            'id_project' => $id2_project,
+                        $id_testing = $this->Sample_reception_model->insert_det(array(
+                            // 'id_client_sample' => $id_client_sample,
+                            'id_sample' => $id2_sample,
                             'id_testing_type' => $id_testing_type,
                             'barcode' => $barcode,
                             'uuid' => $this->uuid->v4(),
@@ -199,7 +315,7 @@ class Sample_reception extends CI_Controller
                         ));
         
                         // $data_barcode = array(
-                        //     'id_sample' => $id_sample,
+                        //     'id_testing' => $id_testing,
                         //     'id_testing_type' => $id_testing_type,
                         //     'barcode' => $barcode,
                         // );
@@ -217,7 +333,7 @@ class Sample_reception extends CI_Controller
                 if (is_array($testing_types)) {
             
                     // Get the old data
-                    $old_data = $this->Sample_reception_model->get_sample_testing($id_sample);
+                    $old_data = $this->Sample_reception_model->get_sample_testing($id_testing);
             
                     // Check if there are any changes
                     $changed = false;
@@ -242,16 +358,16 @@ class Sample_reception extends CI_Controller
             
                     if ($changed) {
                         // Remove old barcodes related to this sample_id
-                        $this->Sample_reception_model->delete_barcode($id_sample);
+                        $this->Sample_reception_model->delete_barcode($id_testing);
             
                         foreach ($testing_types as $id_testing_type) {
                             $testing_type_name = $this->Sample_reception_model->get_name_by_id($id_testing_type);
                             $barcode = $this->Sample_reception_model->get_last_barcode($testing_type_name);
             
                             // Update the sample_reception_sample with new data
-                            $this->Sample_reception_model->update_det($id_sample, array(
-                                'id_client_sample' => $id_client_sample,
-                                'id_project' => $id2_project,
+                            $this->Sample_reception_model->update_det($id_testing, array(
+                                // 'id_client_sample' => $id_client_sample,
+                                'id_sample' => $id2_sample,
                                 'id_testing_type' => $id_testing_type,
                                 'barcode' => $barcode,
                                 // 'uuid' => $this->uuid->v4(),
@@ -260,7 +376,7 @@ class Sample_reception extends CI_Controller
                             ));
             
                             // $data_barcode = array(
-                            //     'id_sample' => $id_sample,
+                            //     'id_testing' => $id_testing,
                             //     'id_testing_type' => $id_testing_type,
                             //     'barcode' => $barcode,
                             // );
@@ -275,7 +391,7 @@ class Sample_reception extends CI_Controller
                     $this->session->set_flashdata('message', 'No Testing Types Selected');
                 }
             }
-            redirect(site_url("sample_reception/read/" . $id2_project));
+            redirect(site_url("sample_reception/read/" . $id_one_water_sample));
         }
   
 
@@ -289,6 +405,22 @@ class Sample_reception extends CI_Controller
         if ($row) {
             $this->Sample_reception_model->update($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
+            redirect(site_url('sample_reception'));
+        } else {
+            $this->session->set_flashdata('message', 'Record Not Found');
+            redirect(site_url('sample_reception'));
+        }
+    }
+
+    public function delete_sample($id_one_water_sample) {
+        $row = $this->Sample_reception_model->get_by_id_sample($id_one_water_sample);
+        $data = array(
+            'flag' => 1,
+            );
+
+        if ($row) {
+            $this->Sample_reception_model->update_sample($id_one_water_sample, $data);
+            $this->session->set_flashdata('message', 'Delete Record Success');    
             redirect(site_url('sample_reception'));
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');

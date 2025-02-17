@@ -9,46 +9,56 @@ class Sample_reception_model extends CI_Model
     public $table = 'sample_reception';
     public $id = 'id_project';
     public $order = 'DESC';
-
     function __construct()
     {
         parent::__construct();
     }
 
     // datatables
-    function json() {
-        $this->datatables->select('sr.id_project, sr.client_quote_number, sr.client, sr.id_one_water_sample, sr.id_person, rp.initial,
-        sr.date_arrival, sr.time_arrival, sr.date_collected, sr.time_collected, sr.date_created, sr.date_updated, sr.id_client_sample, rst.sampletype, sr.id_sampletype, 
-        sr.quality_check, sr.comments, sr.flag, GREATEST(sr.date_created, sr.date_updated) AS latest_date');
+    public function json() {
+        $this->datatables->select('NULL AS toggle, sr.id_project, sr.client_quote_number, sr.client, sr.id_client_sample, sr.number_sample, sr.comments, 
+            sr.date_created, sr.date_updated, sr.flag, GREATEST(sr.date_created, sr.date_updated) AS latest_date', FALSE);
     
-        
-        // Subquery untuk mendapatkan date_created dan date_updated
         $this->datatables->from('sample_reception sr');
-        $this->datatables->join('ref_sampletype rst', 'sr.id_sampletype = rst.id_sampletype', 'left');
-        $this->datatables->join('ref_person rp', 'sr.id_person = rp.id_person', 'left');
-        
-        // Menambahkan kondisi untuk mengambil data yang flag-nya 0
         $this->datatables->where('sr.flag', '0');
-        
-        // Tambahkan kondisi untuk level user
+    
         $lvl = $this->session->userdata('id_user_level');
+    
+        // Kolom Toggle (Sisi Kiri)
+        $this->datatables->add_column('toggle', 
+            '<button type="button" class="btn btn-sm btn-primary toggle-child">
+                <i class="fa fa-plus-square"></i>
+            </button>', 
+        'id_project');
+    
+        // Kolom Action
         if ($lvl == 4) {
-            $this->datatables->add_column('action', anchor(site_url('sample_reception/read/$1'), '<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')), 'id_project');
+            $this->datatables->add_column('action', anchor(site_url('sample_reception/read/$1'), 
+                '<i class="fa fa-th-list" aria-hidden="true"></i>', 
+                array('class' => 'btn btn-warning btn-sm')), 'id_project');
         } else if ($lvl == 3) {
-            $this->datatables->add_column('action', anchor(site_url('sample_reception/read/$1'), '<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) . "
-                " . '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_project');
+            $this->datatables->add_column('action', anchor(site_url('sample_reception/read/$1'), 
+                '<i class="fa fa-th-list" aria-hidden="true"></i>', 
+                array('class' => 'btn btn-warning btn-sm')) . "
+                " . '<button type="button" class="btn_edit btn btn-info btn-sm">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </button>', 'id_project');
         } else {
-            $this->datatables->add_column('action', anchor(site_url('sample_reception/read/$1'), '<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) . "
-                " . '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>' . " 
-                " . '<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_project');
+            $this->datatables->add_column('action', "
+                " . '<button type="button" class="btn_edit btn btn-info btn-sm">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </button>' . " 
+                " . '<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </button>', 'id_project');
         }
     
-        // Mengatur pengurutan berdasarkan tanggal terbaru
         $this->db->order_by('latest_date', 'DESC');
-
     
         return $this->datatables->generate();
     }
+    
+    
     
 
     function subjson($id) {
@@ -57,23 +67,25 @@ class Sample_reception_model extends CI_Model
         // $this->datatables->join('ref_testing b', 'a.testing_type_id = b.testing_type_id', 'right');
         // $this->datatables->where('a.flag', '0');
         // $this->datatables->where('a.project_id', $id);
-        $this->datatables->select('a.id_sample, a.id_project, a.id_client_sample,  a.id_testing_type, a.barcode, b.testing_type AS testing_type, b.url, a.flag');
-        $this->datatables->from('sample_reception_sample a');
+        $this->datatables->select('a.id_testing, a.id_sample, a.id_testing_type, a.barcode, b.testing_type AS testing_type, b.url, a.flag');
+        $this->datatables->from('sample_reception_testing a');
         $this->datatables->join('ref_testing b', 'FIND_IN_SET(b.id_testing_type, a.id_testing_type)', 'left');
+        // $this->datatables->join('sample_reception_sample c', 'c.id_sample, a.id_sample', 'left');
         // $this->datatables->join('ref_barcode c', 'a.sample_id = c.testing_type_id', 'left');
         $this->datatables->where('a.flag', '0');
-        $this->datatables->where('a.id_client_sample', $id);
-        $this->datatables->group_by('a.id_sample');
+        $this->datatables->where('a.id_sample', $id);
+        $this->datatables->group_by('a.id_testing');
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 4){
-            $this->datatables->add_column('action', '', 'id_sample');
+            $this->datatables->add_column('action', '', 'id_testing');
         }
         else if ($lvl == 3){
-            $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_sample');
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_testing');
         }
         else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-               ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_sample');
+               ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_testing');
+               
         }
         return $this->datatables->generate();
     }
@@ -87,12 +99,20 @@ class Sample_reception_model extends CI_Model
         return $this->db->get($this->table)->row();
     }
 
-    function get_by_id_detail($id)
+    function get_by_id_sample($id_one_water_sample)
     {
-        $this->db->where('id_sample', $id);
+        $this->db->where('id_one_water_sample', $id_one_water_sample);
         $this->db->where('flag', '0');
         // $this->db->where('lab', $this->session->userdata('lab'));
         return $this->db->get('sample_reception_sample')->row();
+    }
+
+    function get_by_id_detail($id)
+    {
+        $this->db->where('id_testing', $id);
+        $this->db->where('flag', '0');
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        return $this->db->get('sample_reception_testing')->row();
     }
 
     // Function get detail2 by id
@@ -106,12 +126,13 @@ class Sample_reception_model extends CI_Model
     function get_detail($id)
     {
       $response = array();
-      $this->db->select('*');
-      $this->db->join('ref_sampletype', 'sample_reception.id_sampletype=ref_sampletype.id_sampletype', 'left');
-      $this->db->join('ref_person', 'sample_reception.id_person=ref_person.id_person', 'left');
-      $this->db->where('sample_reception.id_project', $id);
-      $this->db->where('sample_reception.flag', '0');
-      $q = $this->db->get('sample_reception');
+      $this->db->select('sample_reception_sample.id_sample, sample_reception_sample.id_project,sample_reception_sample.id_one_water_sample, sample_reception_sample.date_collected, sample_reception_sample.time_collected, sample_reception_sample.date_created,
+        ref_person.initial, ref_sampletype.sampletype, sample_reception_sample.quality_check, sample_reception_sample.comments, sample_reception_sample.date_arrival, sample_reception_sample.time_arrival');
+      $this->db->join('ref_sampletype', 'sample_reception_sample.id_sampletype = ref_sampletype.id_sampletype', 'left');
+      $this->db->join('ref_person', 'sample_reception_sample.id_person=ref_person.id_person', 'left');
+      $this->db->where('sample_reception_sample.id_one_water_sample', $id);
+      $this->db->where('sample_reception_sample.flag', '0');
+      $q = $this->db->get('sample_reception_sample');
       $response = $q->row();
       return $response;
     }
@@ -120,9 +141,9 @@ class Sample_reception_model extends CI_Model
     {
       $response = array();
       $this->db->select('*');
-      $this->db->where('sample_reception_sample.id_sample', $id);
-      $this->db->where('sample_reception_sample.flag', '0');
-      $q = $this->db->get('sample_reception_sample');
+      $this->db->where('sample_reception_testing.id_testing', $id);
+      $this->db->where('sample_reception_testing.flag', '0');
+      $q = $this->db->get('sample_reception_testing');
       $response = $q->row();
       return $response;
     }
@@ -210,9 +231,10 @@ class Sample_reception_model extends CI_Model
     // Function to get the latest id_one_water_sample
     public function get_latest_one_water_sample_id() {
         $this->db->select('id_one_water_sample');
-        $this->db->order_by('id_project', 'DESC');
+        $this->db->where('flag', '0');
+        $this->db->order_by('id_sample', 'DESC');
         $this->db->limit(1);
-        $query = $this->db->get('sample_reception');
+        $query = $this->db->get('sample_reception_sample');
 
         // Check if there is a previous client
         if ($query->num_rows() > 0) {
@@ -244,13 +266,20 @@ class Sample_reception_model extends CI_Model
     
 
     // Fuction insert data
+    // public function insert($data) {
+    //     $data['id_project'] = $this->generate_project_id();
+    //     $this->db->insert('sample_reception',  $data);
+    // }
+    
     public function insert($data) {
         $data['id_project'] = $this->generate_project_id();
-        // $data['client'] = $this->generate_client();
-        $data['id_one_water_sample'] = $this->generate_one_water_sample_id();
-        $this->db->insert('sample_reception',  $data);
+        $this->db->insert('sample_reception', $data);
+        return $data['id_project']; // Mengembalikan ID project yang baru dibuat
     }
     
+    public function insert_sample($data) {
+        $this->db->insert('sample_reception_sample', $data);
+    }
 
     // Function update data
     function update($id, $data)
@@ -258,6 +287,20 @@ class Sample_reception_model extends CI_Model
         $this->db->where('id_project', $id);
         $this->db->update('sample_reception', $data);
     }
+
+    // function update_sample($id_one_water_sample, $data)
+    // {
+    //     $this->db->where('id_one_water_sample', $id_one_water_sample);
+    //     $this->db->update('sample_reception_sample', $data);
+    // }
+
+    public function update_sample($id_one_water_sample, $data) {
+        $this->db->where('id_one_water_sample', $id_one_water_sample);
+        $this->db->update('sample_reception_sample', $data);
+        
+        return $this->db->affected_rows() > 0; // Return true jika update berhasil
+    }
+    
 
     // function insert_det($data)
     // {
@@ -281,27 +324,27 @@ class Sample_reception_model extends CI_Model
     // }
 
     function insert_det($data) {
-        $this->db->insert('sample_reception_sample', $data);
+        $this->db->insert('sample_reception_testing', $data);
         return $this->db->insert_id(); // Return the ID of the newly inserted row
     }
 
     function update_det($id, $data) {
-        $this->db->where('id_sample', $id);
-        $this->db->update('sample_reception_sample', $data);
+        $this->db->where('id_testing', $id);
+        $this->db->update('sample_reception_testing', $data);
     }
 
     function insert_barcode($data) {
         $this->db->insert('ref_barcode', $data);
     }
 
-    function update_barcode($id_sample, $id_testing_type, $data) {
-        $this->db->where('id_sample', $id_sample);
+    function update_barcode($id_testing, $id_testing_type, $data) {
+        $this->db->where('id_testing', $id_testing);
         $this->db->where('id_testing_type', $id_testing_type);
         $this->db->update('ref_barcode', $data);
     }
 
-    function delete_barcode($id_sample) {
-        $this->db->delete('ref_barcode', array('id_sample' => $id_sample));
+    function delete_barcode($id_testing) {
+        $this->db->delete('ref_barcode', array('id_testing' => $id_testing));
     }
 
 
@@ -376,7 +419,7 @@ class Sample_reception_model extends CI_Model
         $this->db->select_max('CAST(SUBSTR(barcode, ' . (strlen($prefix . $year) + 1) . ') AS UNSIGNED)', 'max_barcode');
         $this->db->like('barcode', $prefix . $year, 'after');
         // $query = $this->db->get('ref_barcode');
-        $query = $this->db->get('sample_reception_sample');
+        $query = $this->db->get('sample_reception_testing');
         $result = $query->row();
     
         $next_number = $result->max_barcode + 1;
@@ -398,8 +441,8 @@ class Sample_reception_model extends CI_Model
     public function get_sample_testing($id) {
         $response = array();
         $this->db->select('*');
-        $this->db->where('id_sample', $id);
-        $query = $this->db->get('sample_reception_sample');
+        $this->db->where('id_testing', $id);
+        $query = $this->db->get('sample_reception_testing');
         $response = $query->result_array();
         return $response; 
     }
@@ -415,17 +458,80 @@ class Sample_reception_model extends CI_Model
     }
 
     function get_all() {
-        $this->db->select('sr.id_project, sr.client, sr.id_client_sample, sr.id_one_water_sample, rp.initial, rs.sampletype,
-        sr.date_arrival, sr.time_arrival, sr.comments, rt.testing_type');
+        $this->db->select('sr.id_project, sr.client, sr.id_client_sample, srs.id_one_water_sample, srs.quality_check, rp.initial, rs.sampletype, rt.testing_type, srt.barcode, srs.date_arrival, srs.time_arrival, srs.date_collected, srs.time_collected, srs.comments');
         $this->db->from('sample_reception AS sr');
-        $this->db->join('ref_person AS rp', 'sr.id_person = rp.id_person');
-        $this->db->join('ref_sampletype AS rs', 'sr.id_sampletype = rs.id_sampletype');
-        $this->db->join('sample_reception_sample AS srs', 'sr.id_project = srs.id_project');
-        $this->db->join('ref_testing AS rt', 'srs.id_testing_type = rt.id_testing_type');
-        $this->db->where('sr.flag', '0');
+        $this->db->join('sample_reception_sample AS srs', 'sr.id_project = srs.id_project', 'LEFT');
+        $this->db->join('ref_person AS rp', 'srs.id_person = rp.id_person', 'LEFT');
+        $this->db->join('ref_sampletype AS rs', 'srs.id_sampletype = rs.id_sampletype', 'LEFT');
+        $this->db->join('sample_reception_testing AS srt', 'srs.id_sample = srt.id_sample', 'LEFT');
+        $this->db->join('ref_testing AS rt', 'srt.id_testing_type = rt.id_testing_type', 'LEFT');
+        $this->db->where('srs.flag', 0);
+        $this->db->where('sr.flag', 0);
         $this->db->order_by('sr.id_project', 'ASC');
         return $this->db->get()->result();
     }
+
+
+    // public function get_samples_by_project($id_project) {
+    //     $this->db->select('id_one_water_sample, date_collected, time_collected, date_created');
+    //     $this->db->from('sample_reception_sample');
+    //     $this->db->where('id_project', $id_project);
+    //     return $this->db->get()->result();
+    // }
+
+    public function get_samples_by_project($id_project) {
+        $this->db->select('sample_reception_sample.id_one_water_sample, sample_reception_sample.id_project, sample_reception_sample.date_collected, sample_reception_sample.time_collected, sample_reception_sample.date_created,
+        ref_person.initial, ref_sampletype.sampletype, sample_reception_sample.quality_check, sample_reception_sample.comments, sample_reception_sample.date_arrival, sample_reception_sample.time_arrival');
+        $this->db->join('ref_sampletype', 'sample_reception_sample.id_sampletype = ref_sampletype.id_sampletype', 'left');
+        $this->db->join('ref_person', 'sample_reception_sample.id_person=ref_person.id_person', 'left');
+        $this->db->from('sample_reception_sample');
+        $this->db->where('sample_reception_sample.id_project', $id_project);
+        $this->db->where('sample_reception_sample.flag', '0');
+        $query = $this->db->get()->result();
+    
+        foreach ($query as $row) {
+            $row->action = '
+                <a href="' . site_url('sample_reception/read/' . $row->id_one_water_sample) . '" class="btn btn-warning btn-sm">
+                    <i class="fa fa-eye"></i>
+                </a>
+                <button class="btn btn-info btn-sm btn_edit_sample" data-id="' . $row->id_one_water_sample . '">
+                    <i class="fa fa-pencil"></i>
+                </button>
+                <button class="btn btn-danger btn-sm btn_delete_sample" data-id="' . $row->id_one_water_sample . '">
+                    <i class="fa fa-trash"></i>
+                </button>';
+        }
+    
+        return $query;
+    }
+
+
+    public function get_sample_detail($id_one_water_sample) {
+        $this->db->select('srs.id_one_water_sample, srs.date_arrival, srs.time_arrival,  srs.date_collected, srs.time_collected,
+            srs.quality_check, srs.comments, srs.id_sampletype, 
+            rst.sampletype, srs.id_person, rp.initial');
+        $this->db->from('sample_reception_sample srs');
+        $this->db->join('ref_sampletype rst', 'srs.id_sampletype = rst.id_sampletype', 'left');
+        $this->db->join('ref_person rp', 'srs.id_person = rp.id_person', 'left');
+        $this->db->where('srs.id_one_water_sample', $id_one_water_sample);
+        $this->db->where('srs.flag', '0');
+        
+        $query = $this->db->get();
+    
+        if ($query->num_rows() > 0) {
+            echo json_encode($query->row());
+        } else {
+            echo json_encode(["error" => "Data tidak ditemukan"]);
+        }
+    
+        exit; // **Tambahkan ini untuk mencegah output tambahan**
+    }
+    
+    
+    
+    
+    
+    
       
 }
 

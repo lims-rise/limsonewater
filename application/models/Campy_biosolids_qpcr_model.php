@@ -399,7 +399,7 @@ class Campy_biosolids_qpcr_model extends CI_Model
 
       function getID_one(){
         $q = $this->db->query('
-        SELECT id_one_water_sample FROM sample_reception
+        SELECT id_one_water_sample FROM sample_reception_sample
         WHERE id_one_water_sample NOT IN (SELECT id_one_water_sample FROM campy_biosolids)
         AND flag = 0');       
         $response = $q->result_array();
@@ -409,7 +409,7 @@ class Campy_biosolids_qpcr_model extends CI_Model
     function getOneWaterSampleById($idOneWaterSample)
     {
         $this->db->select('sr.id_sampletype, rs.sampletype');
-        $this->db->from('sample_reception sr');
+        $this->db->from('sample_reception_sample sr');
         $this->db->join('ref_sampletype rs', 'sr.id_sampletype = rs.id_sampletype', 'left');
         $this->db->where('sr.id_one_water_sample', $idOneWaterSample);
         $query = $this->db->get();

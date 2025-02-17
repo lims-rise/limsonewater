@@ -28,13 +28,22 @@ class Extraction_culture_model extends CI_Model
         ');
         $this->datatables->from('extraction_culture');
         $this->datatables->join('ref_person', 'extraction_culture.id_person = ref_person.id_person', 'left');
-        $this->datatables->join('ref_barcode', 'ref_barcode.barcode = extraction_culture.barcode_sample', 'left');
-        $this->datatables->join('sample_reception_sample', 'ref_barcode.id_sample = sample_reception_sample.id_sample', 'left');
-        $this->datatables->join('sample_reception', 'sample_reception_sample.id_project = sample_reception.id_project', 'left');
-        $this->datatables->join('ref_sampletype', 'sample_reception.id_sampletype = ref_sampletype.id_sampletype', 'left');
+        $this->datatables->join('sample_reception_testing', 'sample_reception_testing.barcode = extraction_culture.barcode_sample', 'left');
+        $this->datatables->join('sample_reception_sample', 'sample_reception_sample.id_sample = sample_reception_testing.id_sample', 'left');
+        $this->datatables->join('ref_sampletype', 'sample_reception_sample.id_sampletype = ref_sampletype.id_sampletype', 'left');
         $this->datatables->join('ref_kit', 'extraction_culture.id_kit = ref_kit.id_kit', 'left');
         $this->datatables->join('ref_location', 'extraction_culture.id_location = ref_location.id_location', 'left');
         $this->datatables->join('ref_position', 'extraction_culture.id_pos = ref_position.id_pos', 'left');
+
+        // $this->datatables->from('extraction_culture');
+        // $this->datatables->join('ref_person', 'extraction_culture.id_person = ref_person.id_person', 'left');
+        // $this->datatables->join('ref_barcode', 'ref_barcode.barcode = extraction_culture.barcode_sample', 'left');
+        // $this->datatables->join('sample_reception_sample', 'ref_barcode.id_sample = sample_reception_sample.id_sample', 'left');
+        // $this->datatables->join('sample_reception', 'sample_reception_sample.id_project = sample_reception.id_project', 'left');
+        // $this->datatables->join('ref_sampletype', 'sample_reception.id_sampletype = ref_sampletype.id_sampletype', 'left');
+        // $this->datatables->join('ref_kit', 'extraction_culture.id_kit = ref_kit.id_kit', 'left');
+        // $this->datatables->join('ref_location', 'extraction_culture.id_location = ref_location.id_location', 'left');
+        // $this->datatables->join('ref_position', 'extraction_culture.id_pos = ref_position.id_pos', 'left');
         // $this->datatables->where('extraction_culture.id_country', $this->session->userdata('lab'));
         $this->datatables->where('extraction_culture.flag', '0');
         $lvl = $this->session->userdata('id_user_level');
@@ -168,9 +177,9 @@ class Extraction_culture_model extends CI_Model
     function barcode_check($id){
         $q = $this->db->query('
         select ref_sampletype.sampletype
-        from sample_reception 
-        left join ref_sampletype on sample_reception.id_sampletype = ref_sampletype.id_sampletype
-        WHERE sample_reception.id_one_water_sample = "'.$id.'"');        
+        from sample_reception_sample 
+        left join ref_sampletype on sample_reception_sample.id_sampletype = ref_sampletype.id_sampletype
+        WHERE sample_reception_sample.id_one_water_sample = "'.$id.'"');        
         $response = $q->result_array();
         return $response;
       }    
@@ -199,7 +208,7 @@ class Extraction_culture_model extends CI_Model
 
       function getID_one(){
         $q = $this->db->query('
-        SELECT id_one_water_sample FROM sample_reception
+        SELECT id_one_water_sample FROM sample_reception_sample
         WHERE id_one_water_sample NOT IN (SELECT id_one_water_sample FROM extraction_culture)
         AND flag = 0
         ORDER BY id_one_water_sample');        

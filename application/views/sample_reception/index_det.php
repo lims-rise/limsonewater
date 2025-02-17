@@ -7,71 +7,60 @@
 				<form role="form"  id="formKeg" method="post" class="form-horizontal">
 					<div class="box-body">
 						<!-- <input type="hidden" class="form-control " id="id_req" name="id_req" value="<?php// echo $id_req ?>"> -->
-						<!-- <input id="id_req" name="id_req" type="hidden" class="form-control input-sm"> -->
+						
+						<input class="form-control " id="id_sample" name="id_sample" value="<?php echo $id_sample ?>"  type="hidden" disabled>
 						<div class="form-group">
 							<label for="id_project" class="col-sm-2 control-label">COC</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="id_project" name="id_project" value="<?php echo $id_project ?>"  disabled>
-							</div>
-
-							<label for="id_client_sample" class="col-sm-2 control-label">ID Client</label>
-							<div class="col-sm-4">
-								<input class="form-control " id="id_client_sample" name="id_client_sample" value="<?php echo $id_client_sample ?>"  disabled>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label for="client" class="col-sm-2 control-label">Client</label>
-							<div class="col-sm-4">
-								<input class="form-control " id="client" name="client" value="<?php echo $client ?>"  disabled>
+								<input class="form-control " id="id_project" name="id_project" value="<?php echo $id_project ? : '-' ?>"  disabled>
 							</div>
 
 							<label for="id_one_water_sample" class="col-sm-2 control-label">One Water Sample ID</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="id_one_water_sample" name="id_one_water_sample" value="<?php echo $id_one_water_sample ?>"  disabled>
+								<input class="form-control " id="id_one_water_sample" name="id_one_water_sample" value="<?php echo $id_one_water_sample  ? : '-'  ?>"  disabled>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label for="initial" class="col-sm-2 control-label">Lab Tech</label>
+							<label for="initial" class="col-sm-2 control-label">Receiving Lab</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="initial" name="initial" value="<?php echo $initial ?>"  disabled>
+								<input class="form-control " id="initial" name="initial" value="<?php echo $initial  ? : '-'  ?>"  disabled>
 							</div>
 
 							<label for="sampletype" class="col-sm-2 control-label">Sample Type</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="sampletype" name="sampletype" value="<?php echo $sampletype ?>"  disabled>
+								<input class="form-control " id="sampletype" name="sampletype" value="<?php echo $sampletype ? : '-' ?>"  disabled>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="date_arrival" class="col-sm-2 control-label">Date arrive</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="date_arrival" name="date_arrival" value="<?php echo $date_arrival ?>" disabled>
+								<input class="form-control " id="date_arrival" name="date_arrival" value="<?php echo $date_arrival ? : '-' ?>" disabled>
 							</div>
 
 							<label for="time_arrival" class="col-sm-2 control-label">Time arrive</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="time_arrival" name="time_arrival" value="<?php echo $time_arrival ?>"  disabled>
+								<input class="form-control " id="time_arrival" name="time_arrival" value="<?php echo $time_arrival ? : '-' ?>"  disabled>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="date_collected" class="col-sm-2 control-label">Date Collected</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="date_collected" name="date_collected" value="<?php echo $date_collected ?>" disabled>
+								<input class="form-control " id="date_collected" name="date_collected" value="<?php echo $date_collected ? : '-' ?>" disabled>
 							</div>
 
 							<label for="time_collected" class="col-sm-2 control-label">Time Collected</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="time_collected" name="time_collected" value="<?php echo $time_collected ?>"  disabled>
+								<input class="form-control " id="time_collected" name="time_collected" value="<?php echo $time_collected ? : '-' ?>"  disabled>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="comments" class="col-sm-2 control-label">Comments</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="comments" name="comments" value="<?php echo $comments ?>"  disabled>
+								<input class="form-control " id="comments" name="comments" value="<?php echo $comments ? : '-' ?>"  disabled>
 							</div>
 						</div>
 
@@ -132,14 +121,14 @@
                                 <div class="col-sm-9">
                                     <input id="mode_det" name="mode_det" type="hidden" class="form-control input-sm">
 									<input id="id2_project" name="id2_project" type="hidden" class="form-control input-sm">
-									<input id="idx_client_sample" name="idx_client_sample" type="hidden" class="form-control input-sm">
+									<input id="idx_one_water_sample" name="idx_one_water_sample" type="hidden" class="form-control input-sm">
                                 </div>
                             </div>
 
 							<div class="form-group" id="idx_sample">
-                                <label for="id_sample" class="col-sm-4 control-label">Sample ID</label>
+                                <label for="id2_sample" class="col-sm-4 control-label">Sample ID</label>
                                 <div class="col-sm-8">
-                                    <input id="id_sample" name="id_sample" type="text"  placeholder="Sample ID" class="form-control">
+                                    <input id="id2_sample" name="id2_sample" type="text"  placeholder="Sample ID" class="form-control">
                                 </div>
                             </div>
 
@@ -292,8 +281,8 @@
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
 <script type="text/javascript">
     let table;
-	let id_project = $('#id_project').val();
-	let id_client_sample = $('#id_client_sample').val();
+	let id_sample = $('#id_sample').val();
+	let id_one_water_sample = $('#id_one_water_sample').val();
 	let base_url = location.hostname;
 
 	// Add event listener for clicks on URL column
@@ -468,7 +457,7 @@
 			info: false,
 			bFilter: false,
 			ajax: {
-				"url": "../../Sample_reception/subjson?id=" + encodeURIComponent(id_client_sample), 
+				"url": "../../Sample_reception/subjson?id=" + encodeURIComponent(id_sample), 
 				"type": "POST"
 			},
 			columns: [
@@ -524,8 +513,8 @@
 			$('#mode_det').val('insert');
 			$('#modal-title-detail').html('<i class="fa fa-wpforms"></i> Detail Sample Reception | New Sample Testing<span id="my-another-cool-loader"></span>');
 			$('#idx_sample').hide();
-			$('#id2_project').val(id_project);
-			$('#idx_client_sample').val(id_client_sample);
+			$('#id2_sample').val(id_sample);
+			$('#idx_one_water_sample').val(id_one_water_sample);
 			$('#id_testing_type').val('');
 			$('#compose-modal').modal('show');
 		});
@@ -571,9 +560,8 @@
 				$('#mode_det').val('edit');
 				$('#modal-title-detail').html('<i class="fa fa-pencil-square"></i> Detail Sample Reception | Update Sample Testing<span id="my-another-cool-loader"></span>');
 				$('#idx_sample').hide();
-				$('#id_sample').val(data.id_sample);
-				$('#id2_project').val(data.id_project);
-				$('#idx_client_sample').val(id_client_sample);
+				$('#id2_sample').val(data.id_sample);
+				$('#idx_one_water_sample').val(id_one_water_sample);
 				$('.testing-type-checkbox').prop('checked', false); // Uncheck all checkboxes first
 				testingTypeIds.forEach(function(id) {
 					$(`input[value="${id}"]`).prop('checked', true); // Check the checkboxes based on testingTypeIds

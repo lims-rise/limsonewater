@@ -20,8 +20,8 @@ class Biobankin_model extends CI_Model
         $this->datatables->select('biobank_in.id_one_water_sample, biobank_in.date_conduct, ref_sampletype.sampletype, ref_person.initial,
         biobank_in.replicates, biobank_in.comments, biobank_in.id_person, biobank_in.flag');
         $this->datatables->from('biobank_in');
-        $this->datatables->join('sample_reception', 'biobank_in.id_one_water_sample = sample_reception.id_one_water_sample', 'left');
-        $this->datatables->join('ref_sampletype', 'sample_reception.id_sampletype = ref_sampletype.id_sampletype', 'left');
+        $this->datatables->join('sample_reception_sample', 'biobank_in.id_one_water_sample = sample_reception_sample.id_one_water_sample', 'left');
+        $this->datatables->join('ref_sampletype', 'sample_reception_sample.id_sampletype = ref_sampletype.id_sampletype', 'left');
         $this->datatables->join('ref_person', 'biobank_in.id_person = ref_person.id_person', 'left');
         // $this->datatables->where('Water_sample_reception.id_country', $this->session->userdata('lab'));
         $this->datatables->where('biobank_in.flag', '0');
@@ -132,7 +132,7 @@ class Biobankin_model extends CI_Model
 
     function getID_one(){
         $q = $this->db->query('
-        SELECT id_one_water_sample FROM sample_reception
+        SELECT id_one_water_sample FROM sample_reception_sample
         WHERE id_one_water_sample NOT IN (SELECT id_one_water_sample FROM biobank_in)
         AND flag = 0
         ORDER BY id_one_water_sample');        
@@ -143,10 +143,10 @@ class Biobankin_model extends CI_Model
 
       function samplecheck($id){
         $q = $this->db->query('
-        select sample_reception.id_one_water_sample, ref_sampletype.sampletype
-        from sample_reception 
-        left join ref_sampletype on sample_reception.id_sampletype = ref_sampletype.id_sampletype
-        WHERE sample_reception.id_one_water_sample = "'.$id.'"
+        select sample_reception_sampe.id_one_water_sample, ref_sampletype.sampletype
+        from sample_reception_sampe
+        left join ref_sampletype on sample_reception_sampe.id_sampletype = ref_sampletype.id_sampletype
+        WHERE sample_reception_sampe.id_one_water_sample = "'.$id.'"
         ');        
         $response = $q->result_array();
         return $response;
