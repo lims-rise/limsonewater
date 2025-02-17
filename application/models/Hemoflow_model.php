@@ -24,7 +24,7 @@ class Hemoflow_model extends CI_Model
         ');
         $this->datatables->from('hemoflow a');
         $this->datatables->join('ref_person b', 'a.id_person = b.id_person', 'left');
-        $this->datatables->join('sample_reception c', 'a.id_one_water_sample = c.id_one_water_sample', 'left');
+        $this->datatables->join('sample_reception_sample c', 'a.id_one_water_sample = c.id_one_water_sample', 'left');
         $this->datatables->join('ref_sampletype d', 'c.id_sampletype = d.id_sampletype', 'left');
         $this->datatables->join('ref_person e', 'a.id_person_proc = e.id_person', 'left');
         // $this->datatables->where('Hemoflow.id_country', $this->session->userdata('lab'));
@@ -46,7 +46,7 @@ class Hemoflow_model extends CI_Model
 
     function getID_one(){
         $q = $this->db->query('
-        SELECT id_one_water_sample FROM sample_reception
+        SELECT id_one_water_sample FROM sample_reception_sample
         WHERE id_one_water_sample NOT IN (SELECT id_one_water_sample FROM hemoflow)
         AND flag = 0
         ORDER BY id_one_water_sample');        
@@ -92,7 +92,7 @@ class Hemoflow_model extends CI_Model
     function barcode_check($id){
         $q = $this->db->query('
         select a.id_sampletype, b.sampletype
-        from sample_reception a 
+        from sample_reception_sample a 
         left join ref_sampletype b on a.id_sampletype = b.id_sampletype
         WHERE a.id_one_water_sample = "'.$id.'"
         ');        

@@ -17,8 +17,9 @@ class Rep_campympn_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('a.id_project, a.id_client_sample, a.date_arrival, c.realname, a.flag');
-        $this->datatables->from('sample_reception a');
+        $this->datatables->select('a.id_project, d.id_client_sample, a.date_arrival, c.realname, a.flag');
+        $this->datatables->from('sample_reception_sample a');
+        $this->datatables->join('sample_reception d', 'a.id_project = d.id_project');
         $this->datatables->join('campy_biosolids b', 'a.id_one_water_sample = b.id_one_water_sample');
         $this->datatables->join('ref_person c', 'b.id_person = c.id_person', 'left');
         $lvl = $this->session->userdata('id_user_level');
@@ -31,14 +32,14 @@ class Rep_campympn_model extends CI_Model
     {
         $q = $this->db->query('SELECT a.id_project, a.id_client_sample, a.date_arrival, c.realname, d.sampletype, a.date_collected, a.time_collected,
         e.testing_type, b.sample_wetweight, b.elution_volume
-        FROM sample_reception a
+        FROM sample_reception_sample a
         JOIN campy_biosolids b ON a.id_one_water_sample = b.id_one_water_sample
         LEFT JOIN ref_person c ON b.id_person = c.id_person
         LEFT JOIN ref_sampletype d ON a.id_sampletype= d.id_sampletype
-        LEFT JOIN (SELECT x.id_project, GROUP_CONCAT(y.testing_type) AS testing_type
-        FROM sample_reception_sample x
+        LEFT JOIN (SELECT x.id_sample, GROUP_CONCAT(y.testing_type) AS testing_type
+        FROM sample_reception_testing x
         LEFT JOIN ref_testing y ON x.id_testing_type=y.id_testing_type
-        GROUP BY x.id_project) e ON a.id_project = e.id_project
+        GROUP BY x.id_sample) e ON a.id_sample = e.id_sample
         WHERE a.id_project="'.$id.'"
         AND a.flag = 0 
         ');        
