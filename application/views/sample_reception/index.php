@@ -42,8 +42,8 @@
                                         <th>Number of Samples</th>
                                         <th>Client Sample ID</th>
                                         <th>Comments</th>
-                                        <th>Date Created</th>
-                                        <th>Date Updated</th>
+                                        <th>Date Collected</th>
+                                        <th>Time Collected</th>
                                         <th width="120px">Action</th>
                                     </tr>
                                 </thead>
@@ -641,8 +641,8 @@
                 {"data": "number_sample"},
                 {"data": "id_client_sample"},
                 {"data": "comments"},
-                {"data": "date_created"},
-                {"data": "date_updated"},
+                {"data": "date_collected"},
+                {"data": "time_collected"},
                 // {
                 //     "data": "action",
                 //     "orderable": false,
