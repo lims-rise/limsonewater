@@ -478,15 +478,20 @@ class Sample_reception extends CI_Controller
         $spreadsheet = new Spreadsheet();    
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setCellValue('A1', "Coc"); 
-        $sheet->setCellValue('B1', "ID Client"); 
-        $sheet->setCellValue('C1', "Client Sample");
-        $sheet->setCellValue('D1', "ID Sample");
-        $sheet->setCellValue('E1', "Sample Type");
-        $sheet->setCellValue('F1', "Lab Tech");
-        $sheet->setCellValue('G1', "Date Arrival");
-        $sheet->setCellValue('H1', "Time Arrival");
-        $sheet->setCellValue('I1', "Comments");
-        $sheet->setCellValue('J1', "Testing Type");
+        $sheet->setCellValue('B1', "Client Quote Number"); 
+        $sheet->setCellValue('C1', "Client as on Coc");
+        $sheet->setCellValue('D1', "Client ID");
+        $sheet->setCellValue('E1', "One Water Sampe ID");
+        $sheet->setCellValue('F1', "Time of Sample");
+        $sheet->setCellValue('G1', "Receiving Lab");
+        $sheet->setCellValue('H1', "Date Arrival");
+        $sheet->setCellValue('I1', "Time Arrival");
+        $sheet->setCellValue('J1', "Date Collected");
+        $sheet->setCellValue('K1', "Time Collected");
+        $sheet->setCellValue('L1', "Comments");
+        $sheet->setCellValue('M1', "Quality Check");
+        $sheet->setCellValue('N1', "Barcode");
+        $sheet->setCellValue('O1', "Testing Type");
 
         $sample_reception = $this->Sample_reception_model->get_all();
     
@@ -498,24 +503,30 @@ class Sample_reception extends CI_Controller
                 $sheet->setCellValue('A'.$numrow, '');
             }
     
-            if (property_exists($data, 'client')) {
-                $sheet->setCellValue('B'.$numrow, $data->client);
+            if (property_exists($data, 'client_quote_number')) {
+                $sheet->setCellValue('B'.$numrow, $data->client_quote_number);
             } else {
                 $sheet->setCellValue('B'.$numrow, '');
             }
     
-            if (property_exists($data, 'id_client_sample')) {
-                $sheet->setCellValue('C'.$numrow, $data->id_client_sample);
+            if (property_exists($data, 'client')) {
+                $sheet->setCellValue('C'.$numrow, $data->client);
             } else {
                 $sheet->setCellValue('C'.$numrow, '');
             }
     
-            if (property_exists($data, 'id_one_water_sample')) {
-                $sheet->setCellValue('D'.$numrow, $data->id_one_water_sample);
+            if (property_exists($data, 'id_client_sample')) {
+                $sheet->setCellValue('D'.$numrow, $data->id_client_sample);
             } else {
                 $sheet->setCellValue('D'.$numrow, '');
             }
 
+            if (property_exists($data, 'id_one_water_sample')) {
+                $sheet->setCellValue('E'.$numrow, $data->id_one_water_sample);
+            } else {
+                $sheet->setCellValue('E'.$numrow, '');
+            }
+    
             if (property_exists($data, 'sampletype')) {
                 $sheet->setCellValue('F'.$numrow, $data->sampletype);
             } else {
@@ -523,33 +534,57 @@ class Sample_reception extends CI_Controller
             }
     
             if (property_exists($data, 'initial')) {
-                $sheet->setCellValue('E'.$numrow, $data->initial);
-            } else {
-                $sheet->setCellValue('E'.$numrow, '');
-            }
-    
-            if (property_exists($data, 'date_arrival')) {
-                $sheet->setCellValue('G'.$numrow, $data->date_arrival);
+                $sheet->setCellValue('G'.$numrow, $data->initial);
             } else {
                 $sheet->setCellValue('G'.$numrow, '');
             }
     
-            if (property_exists($data, 'time_arrival')) {
-                $sheet->setCellValue('H'.$numrow, $data->time_arrival);
+            if (property_exists($data, 'date_arrival')) {
+                $sheet->setCellValue('H'.$numrow, $data->date_arrival);
             } else {
                 $sheet->setCellValue('H'.$numrow, '');
             }
     
-            if (property_exists($data, 'comments')) {
-                $sheet->setCellValue('I'.$numrow, $data->comments);
+            if (property_exists($data, 'time_arrival')) {
+                $sheet->setCellValue('I'.$numrow, $data->time_arrival);
             } else {
                 $sheet->setCellValue('I'.$numrow, '');
             }
     
-            if (property_exists($data, 'testing_type')) {
-                $sheet->setCellValue('J'.$numrow, $data->testing_type);
+            if (property_exists($data, 'date_collected')) {
+                $sheet->setCellValue('J'.$numrow, $data->date_collected);
             } else {
                 $sheet->setCellValue('J'.$numrow, '');
+            }
+
+            if (property_exists($data, 'time_collected')) {
+                $sheet->setCellValue('K'.$numrow, $data->time_collected);
+            } else {
+                $sheet->setCellValue('K'.$numrow, '');
+            }
+
+            if (property_exists($data, 'comments')) {
+                $sheet->setCellValue('L'.$numrow, $data->comments);
+            } else {
+                $sheet->setCellValue('L'.$numrow, '');
+            }
+
+            if (property_exists($data, 'quality_check')) {
+                $sheet->setCellValue('M'.$numrow, $data->quality_check);
+            } else {
+                $sheet->setCellValue('M'.$numrow, '');
+            }
+
+            if (property_exists($data, 'barcode')) {
+                $sheet->setCellValue('N'.$numrow, $data->barcode);
+            } else {
+                $sheet->setCellValue('N'.$numrow, '');
+            }
+
+            if (property_exists($data, 'testing_type')) {
+                $sheet->setCellValue('O'.$numrow, $data->testing_type);
+            } else {
+                $sheet->setCellValue('O'.$numrow, '');
             }
             $numrow++;
         }

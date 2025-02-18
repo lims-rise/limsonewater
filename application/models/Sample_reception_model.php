@@ -458,7 +458,23 @@ class Sample_reception_model extends CI_Model
     }
 
     function get_all() {
-        $this->db->select('sr.id_project, sr.client, sr.id_client_sample, srs.id_one_water_sample, srs.quality_check, rp.initial, rs.sampletype, rt.testing_type, srt.barcode, srs.date_arrival, srs.time_arrival, srs.date_collected, srs.time_collected, srs.comments');
+        $this->db->select('
+            sr.id_project,
+		    sr.client_quote_number, 
+            sr.client, 
+            sr.id_client_sample,
+            srs.id_one_water_sample,
+		    rs.sampletype, 
+		    rp.initial,
+		    srs.date_arrival, 
+            srs.time_arrival, 
+		    srs.date_collected, 
+            srs.time_collected, 
+		    srs.comments,
+            srs.quality_check,  
+		    srt.barcode, 
+            rt.testing_type
+        ');
         $this->db->from('sample_reception AS sr');
         $this->db->join('sample_reception_sample AS srs', 'sr.id_project = srs.id_project', 'LEFT');
         $this->db->join('ref_person AS rp', 'srs.id_person = rp.id_person', 'LEFT');
@@ -467,7 +483,7 @@ class Sample_reception_model extends CI_Model
         $this->db->join('ref_testing AS rt', 'srt.id_testing_type = rt.id_testing_type', 'LEFT');
         $this->db->where('srs.flag', 0);
         $this->db->where('sr.flag', 0);
-        $this->db->order_by('sr.id_project', 'ASC');
+        $this->db->order_by('sr.id_project', 'DESC');
         return $this->db->get()->result();
     }
 

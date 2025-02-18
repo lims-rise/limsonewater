@@ -634,7 +634,7 @@
                 {
                     "data": "client_quote_number",
                     "render": function(data, type, row) {
-                        return data === "" ? "-" : data;
+                        return data === "" || "null" ? "-" : data;
                     }
                 },
                 {"data": "client"},
@@ -869,16 +869,142 @@
                         }
 
                         tableContent += `</tbody></table>`;
+
                         row.child(tableContent).show();
+
+                        // Inisialisasi DataTables pada tabel child
+                        $('#mytable-sample').DataTable({
+                            "paging": true,
+                            "lengthChange": true,
+                            "searching": true,
+                            "ordering": true,
+                            "info": false,
+                            "autoWidth": true,
+                            "pageLength": 5,
+                            "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                            "displayLength": 5,
+                            "language": {
+                                "searchPlaceholder": "Search by sample ID"
+                            }
+                        });
+
                         icon.removeClass('fa-spinner fa-spin').addClass('fa-minus-square');
                     },
-                    error: function () {
-                        row.child('<div class="text-danger text-center py-2">Error loading data</div>').show();
-                        icon.removeClass('fa-spinner fa-spin').addClass('fa-plus-square');
-                    }
+                    // ...
                 });
             }
         });
+
+        // $('#mytable tbody').on('click', '.toggle-child', function () {
+        //     let tr = $(this).closest('tr');
+        //     let row = $('#mytable').DataTable().row(tr);
+        //     let id_project = row.data().id_project;
+        //     let icon = $(this).find('i');
+
+        //     if (row.child.isShown()) {
+        //         row.child.hide();
+        //         tr.removeClass('shown');
+        //         icon.removeClass('fa-minus-square').addClass('fa-plus-square');
+        //     } else {
+        //         row.child('<div class="text-center py-2">Loading...</div>').show();
+        //         tr.addClass('shown');
+        //         icon.removeClass('fa-plus-square').addClass('fa-spinner fa-spin');
+
+        //         $.ajax({
+        //             url: `Sample_reception/get_samples_by_project/${id_project}`,
+        //             type: "GET",
+        //             dataType: "json",
+        //             success: function (data) {
+        //                 let tableContent = `
+        //                     <div class="mb-3">
+        //                         <input type="text" id="childTableFilter" class="form-control" placeholder="Search Samples..." />
+        //                     </div>
+        //                     <table class="child-table table table-bordered table-sm" id="mytable-sample">
+        //                         <thead class="bg-light">
+        //                             <tr>
+        //                                 <th>Water Sample ID</th>
+        //                                 <th>Type of Sample</th>
+        //                                 <th>Receiving Lab</th>
+        //                                 <th>Date Arrived</th>
+        //                                 <th>Time Arrived</th>
+        //                                 <th>Date Collected</th>
+        //                                 <th>Time Collected</th>
+        //                                 <th>Quality Check</th>
+        //                                 <th>Comments</th>
+        //                                 <th>Action</th>
+        //                             </tr>
+        //                         </thead>
+        //                         <tbody>
+        //                 `;
+
+        //                 if (data.length > 0) {
+        //                     $.each(data, function (index, sample) {
+        //                         let qualityCheckIcon = '';
+
+        //                         // Determine the icon based on quality_check value
+        //                         if (sample.quality_check == 0) {
+        //                             qualityCheckIcon = '<i class="fa fa-square-o" style="color: gray;"></i>';
+        //                         } else if (sample.quality_check == 1) {
+        //                             qualityCheckIcon = '<i class="fa fa-check-square-o" style="color: green;"></i>';
+        //                         } else if (sample.quality_check == 2) {
+        //                             qualityCheckIcon = '<i class="fa fa-times-circle-o" style="color: red;"></i>';
+        //                         }
+
+        //                         tableContent += `
+        //                             <tr>
+        //                                 <td>${sample.id_one_water_sample ?? '-'}</td>
+        //                                 <td>${sample.sampletype ?? '-'}</td>
+        //                                 <td>${sample.initial ?? '-'}</td>
+        //                                 <td>${sample.date_arrival ?? '-'}</td>
+        //                                 <td>${sample.time_arrival ?? '-'}</td>
+        //                                 <td>${sample.date_collected ?? '-'}</td>
+        //                                 <td>${sample.time_collected ?? '-'}</td>
+        //                                 <td>${qualityCheckIcon ?? '-'}</td>
+        //                                 <td>${sample.comments ?? '-'}</td>
+        //                                 <td>${sample.action ?? '-'}</td>
+        //                             </tr>
+        //                         `;
+        //                     });
+        //                 } else {
+        //                     tableContent += `<tr><td colspan="10" class="text-center">No samples available</td></tr>`;
+        //                 }
+
+        //                 tableContent += `</tbody></table>`;
+        //                 row.child(tableContent).show();
+        //                 icon.removeClass('fa-spinner fa-spin').addClass('fa-minus-square');
+
+        //                 // Add filter functionality
+        //                 $('#childTableFilter').on('input', function() {
+        //                     let filterValue = $(this).val().toLowerCase();
+        //                     $('#mytable-sample tbody tr').each(function() {
+        //                         let row = $(this);
+        //                         let match = false;
+
+        //                         // Check each column in the row for the filter value
+        //                         row.find('td').each(function() {
+        //                             let cellText = $(this).text().toLowerCase();
+        //                             if (cellText.indexOf(filterValue) !== -1) {
+        //                                 match = true;
+        //                             }
+        //                         });
+
+        //                         // Show or hide the row based on the match
+        //                         if (match) {
+        //                             row.show();
+        //                         } else {
+        //                             row.hide();
+        //                         }
+        //                     });
+        //                 });
+        //             },
+        //             error: function () {
+        //                 row.child('<div class="text-danger text-center py-2">Error loading data</div>').show();
+        //                 icon.removeClass('fa-spinner fa-spin').addClass('fa-plus-square');
+        //             }
+        //         });
+        //     }
+        // });
+
 
 
 
