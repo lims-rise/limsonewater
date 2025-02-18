@@ -460,19 +460,19 @@ class Sample_reception_model extends CI_Model
     function get_all() {
         $this->db->select('
             sr.id_project,
-		    sr.client_quote_number, 
+            sr.client_quote_number, 
             sr.client, 
             sr.id_client_sample,
             srs.id_one_water_sample,
-		    rs.sampletype, 
-		    rp.initial,
-		    srs.date_arrival, 
+            rs.sampletype, 
+            rp.initial,
+            srs.date_arrival, 
             srs.time_arrival, 
-		    srs.date_collected, 
+            srs.date_collected, 
             srs.time_collected, 
-		    srs.comments,
-            srs.quality_check,  
-		    srt.barcode, 
+            srs.comments as note,
+            (CASE srs.quality_check WHEN 0 THEN "unchecked" WHEN 1 THEN "checked" WHEN 2 THEN "crossed" ELSE "unknown" END) AS quality_checked,
+            srt.barcode, 
             rt.testing_type
         ');
         $this->db->from('sample_reception AS sr');
