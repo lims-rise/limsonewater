@@ -488,7 +488,7 @@ class Sample_reception extends CI_Controller
         $sheet->setCellValue('I1', "Time Arrival");
         $sheet->setCellValue('J1', "Date Collected");
         $sheet->setCellValue('K1', "Time Collected");
-        $sheet->setCellValue('L1', "Comments");
+        $sheet->setCellValue('L1', "Note");
         $sheet->setCellValue('M1', "Quality Check");
         $sheet->setCellValue('N1', "Barcode");
         $sheet->setCellValue('O1', "Testing Type");
@@ -563,14 +563,14 @@ class Sample_reception extends CI_Controller
                 $sheet->setCellValue('K'.$numrow, '');
             }
 
-            if (property_exists($data, 'comments')) {
-                $sheet->setCellValue('L'.$numrow, $data->comments);
+            if (property_exists($data, 'note')) {
+                $sheet->setCellValue('L'.$numrow, $data->note);
             } else {
                 $sheet->setCellValue('L'.$numrow, '');
             }
 
-            if (property_exists($data, 'quality_check')) {
-                $sheet->setCellValue('M'.$numrow, $data->quality_check);
+            if (property_exists($data, 'quality_checked')) {
+                $sheet->setCellValue('M'.$numrow, $data->quality_checked);
             } else {
                 $sheet->setCellValue('M'.$numrow, '');
             }
