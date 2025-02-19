@@ -362,7 +362,7 @@
 
                                         
                                         <div class="form-group">
-                                                <label for="comments" class="col-sm-4 control-label">Comments</label>
+                                                <label for="comments" class="col-sm-4 control-label">Note</label>
                                                 <div class="col-sm-8">
                                                     <textarea id="comments_sample" name="comments_sample" class="form-control" placeholder="Comments"> </textarea>
                                                 </div>
@@ -1049,7 +1049,7 @@
                                             <th>Date Collected</th>
                                             <th>Time Collected</th>
                                             <th>Quality Check</th>
-                                            <th>Comments</th>
+                                            <th>Note</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
