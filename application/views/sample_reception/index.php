@@ -414,15 +414,45 @@
     }
 
     .child-table {
-    margin-left: 50px;
-    width: 90%;
-    border-collapse: collapse;
-}
+        margin-left: 50px;
+        width: 90%;
+        border-collapse: collapse;
+    }
 
-.child-table th, .child-table td {
-    border: 1px solid #ddd;
-    padding: 5px;
-}
+    .child-table th, .child-table td {
+        border: 1px solid #ddd;
+        padding: 5px;
+    }
+
+    /* Styling untuk container dengan scroll */
+    .child-table-container {
+        max-height: 500px; /* Atur tinggi maksimal sesuai kebutuhan */
+        overflow-y: auto;  /* Aktifkan scroll vertikal */
+    }
+
+    /* Style untuk scrollbar itu sendiri */
+    .child-table-container::-webkit-scrollbar {
+        width: 6px; /* Lebar scrollbar */
+    }
+
+    /* Style untuk track (background) scrollbar */
+    .child-table-container::-webkit-scrollbar-track {
+        background: #e0f2f1; /* Warna hijau toska muda sebagai background track */
+        border-radius: 10px; /* Membuat track lebih halus */
+    }
+
+    /* Style untuk thumb (pegangan scrollbar) */
+    .child-table-container::-webkit-scrollbar-thumb {
+        background: #9ACBD0; /* Warna hijau toska gelap untuk thumb scrollbar */
+        border-radius: 10px; /* Membuat thumb lebih halus */
+    }
+
+    /* Gaya saat thumb scrollbar di-hover */
+    .child-table-container::-webkit-scrollbar-thumb:hover {
+        background: #48A6A7; /* Warna hijau toska yang lebih gelap saat hover */
+    }
+
+
 
 </style>
 
@@ -798,102 +828,84 @@
         });
 
 
-        $('#mytable tbody').on('click', '.toggle-child', function () {
-            let tr = $(this).closest('tr');
-            let row = $('#mytable').DataTable().row(tr);
-            let id_project = row.data().id_project;
-            let icon = $(this).find('i');
+        // $('#mytable tbody').on('click', '.toggle-child', function () {
+        //     let tr = $(this).closest('tr');
+        //     let row = $('#mytable').DataTable().row(tr);
+        //     let id_project = row.data().id_project;
+        //     let icon = $(this).find('i');
 
-            if (row.child.isShown()) {
-                row.child.hide();
-                tr.removeClass('shown');
-                icon.removeClass('fa-minus-square').addClass('fa-plus-square');
-            } else {
-                row.child('<div class="text-center py-2">Loading...</div>').show();
-                tr.addClass('shown');
-                icon.removeClass('fa-plus-square').addClass('fa-spinner fa-spin');
+        //     if (row.child.isShown()) {
+        //         row.child.hide();
+        //         tr.removeClass('shown');
+        //         icon.removeClass('fa-minus-square').addClass('fa-plus-square');
+        //     } else {
+        //         row.child('<div class="text-center py-2">Loading...</div>').show();
+        //         tr.addClass('shown');
+        //         icon.removeClass('fa-plus-square').addClass('fa-spinner fa-spin');
 
-                $.ajax({
-                    url: `Sample_reception/get_samples_by_project/${id_project}`,
-                    type: "GET",
-                    dataType: "json",
-                    success: function (data) {
-                        let tableContent = `
-                            <table class="child-table table table-bordered table-sm"  id="mytable-sample">
-                                <thead class="bg-light">
-                                    <tr>
-                                        <th>Water Sample ID</th>
-                                        <th>Type of Sample</th>
-                                        <th>Receiving Lab</th>
-                                        <th>Date Arrived</th>
-                                        <th>Time Arrived</th>
-                                        <th>Date Collected</th>
-                                        <th>Time Collected</th>
-                                        <th>Quality Check</th>
-                                        <th>Comments</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                        `;
+        //         $.ajax({
+        //             url: `Sample_reception/get_samples_by_project/${id_project}`,
+        //             type: "GET",
+        //             dataType: "json",
+        //             success: function (data) {
+        //                 let tableContent = `
+        //                     <table class="child-table table table-bordered table-sm">
+        //                         <thead class="bg-light">
+        //                             <tr>
+        //                                 <th>Water Sample ID</th>
+        //                                 <th>Type of Sample</th>
+        //                                 <th>Receiving Lab</th>
+        //                                 <th>Date Arrived</th>
+        //                                 <th>Time Arrived</th>
+        //                                 <th>Date Collected</th>
+        //                                 <th>Time Collected</th>
+        //                                 <th>Quality Check</th>
+        //                                 <th>Comments</th>
+        //                                 <th>Action</th>
+        //                             </tr>
+        //                         </thead>
+        //                         <tbody>
+        //                 `;
 
-                        if (data.length > 0) {
-                            $.each(data, function (index, sample) {
-                                let qualityCheckIcon = '';
+        //                 if (data.length > 0) {
+        //                     $.each(data, function (index, sample) {
+        //                         let qualityCheckIcon = '';
 
-                                // Tentukan ikon berdasarkan nilai quality_check
-                                if (sample.quality_check == 0) {
-                                    qualityCheckIcon = '<i class="fa fa-square-o" style="color: gray;"></i>';
-                                } else if (sample.quality_check == 1) {
-                                    qualityCheckIcon = '<i class="fa fa-check-square-o" style="color: green;"></i>';
-                                } else if (sample.quality_check == 2) {
-                                    qualityCheckIcon = '<i class="fa fa-times-circle-o" style="color: red;"></i>';
-                                }
-                                tableContent += `
-                                    <tr>
-                                        <td>${sample.id_one_water_sample ?? '-'}</td>
-                                        <td>${sample.sampletype ?? '-'}</td>
-                                        <td>${sample.initial ?? '-'}</td>
-                                        <td>${sample.date_arrival ?? '-'}</td>
-                                        <td>${sample.time_arrival ?? '-'}</td>
-                                        <td>${sample.date_collected ?? '-'}</td>
-                                        <td>${sample.time_collected ?? '-'}</td>
-                                        <td>${qualityCheckIcon ?? '-'}</td>
-                                        <td>${sample.comments ?? '-'}</td>
-                                        <td>${sample.action ?? '-'}</td>
-                                    </tr>
-                                `;
-                            });
-                        } else {
-                            tableContent += `<tr><td colspan="5" class="text-center">No samples available</td></tr>`;
-                        }
+        //                         // Tentukan ikon berdasarkan nilai quality_check
+        //                         if (sample.quality_check == 0) {
+        //                             qualityCheckIcon = '<i class="fa fa-square-o" style="color: gray;"></i>';
+        //                         } else if (sample.quality_check == 1) {
+        //                             qualityCheckIcon = '<i class="fa fa-check-square-o" style="color: green;"></i>';
+        //                         } else if (sample.quality_check == 2) {
+        //                             qualityCheckIcon = '<i class="fa fa-times-circle-o" style="color: red;"></i>';
+        //                         }
+        //                         tableContent += `
+        //                             <tr>
+        //                                 <td>${sample.id_one_water_sample ?? '-'}</td>
+        //                                 <td>${sample.sampletype ?? '-'}</td>
+        //                                 <td>${sample.initial ?? '-'}</td>
+        //                                 <td>${sample.date_arrival ?? '-'}</td>
+        //                                 <td>${sample.time_arrival ?? '-'}</td>
+        //                                 <td>${sample.date_collected ?? '-'}</td>
+        //                                 <td>${sample.time_collected ?? '-'}</td>
+        //                                 <td>${qualityCheckIcon ?? '-'}</td>
+        //                                 <td>${sample.comments ?? '-'}</td>
+        //                                 <td>${sample.action ?? '-'}</td>
+        //                             </tr>
+        //                         `;
+        //                     });
+        //                 } else {
+        //                     tableContent += `<tr><td colspan="5" class="text-center">No samples available</td></tr>`;
+        //                 }
 
-                        tableContent += `</tbody></table>`;
-
-                        row.child(tableContent).show();
-
-                        // Inisialisasi DataTables pada tabel child
-                        $('#mytable-sample').DataTable({
-                            "paging": true,
-                            "lengthChange": true,
-                            "searching": true,
-                            "ordering": true,
-                            "info": false,
-                            "autoWidth": true,
-                            "pageLength": 5,
-                            "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
-                            "displayLength": 5,
-                            "language": {
-                                "searchPlaceholder": "Search by sample ID"
-                            }
-                        });
-
-                        icon.removeClass('fa-spinner fa-spin').addClass('fa-minus-square');
-                    },
-                    // ...
-                });
-            }
-        });
+        //                 tableContent += `</tbody></table>`;
+        //                 row.child(tableContent).show();
+        //                 icon.removeClass('fa-spinner fa-spin').addClass('fa-minus-square');
+        //             },
+        //             // ...
+        //         });
+        //     }
+        // });
 
         // $('#mytable tbody').on('click', '.toggle-child', function () {
         //     let tr = $(this).closest('tr');
@@ -1004,6 +1016,84 @@
         //         });
         //     }
         // });
+        $('#mytable tbody').on('click', '.toggle-child', function () {
+            let tr = $(this).closest('tr');
+            let row = $('#mytable').DataTable().row(tr);
+            let id_project = row.data().id_project;
+            let icon = $(this).find('i');
+
+            if (row.child.isShown()) {
+                row.child.hide();
+                tr.removeClass('shown');
+                icon.removeClass('fa-minus-square').addClass('fa-plus-square');
+            } else {
+                row.child('<div class="text-center py-2">Loading...</div>').show();
+                tr.addClass('shown');
+                icon.removeClass('fa-plus-square').addClass('fa-spinner fa-spin');
+
+                $.ajax({
+                    url: `Sample_reception/get_samples_by_project/${id_project}`,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        let tableContent = `
+                            <div class="child-table-container">
+                                <table class="child-table table table-bordered table-sm">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th>Water Sample ID</th>
+                                            <th>Type of Sample</th>
+                                            <th>Receiving Lab</th>
+                                            <th>Date Arrived</th>
+                                            <th>Time Arrived</th>
+                                            <th>Date Collected</th>
+                                            <th>Time Collected</th>
+                                            <th>Quality Check</th>
+                                            <th>Comments</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                        `;
+
+                        if (data.length > 0) {
+                            $.each(data, function (index, sample) {
+                                let qualityCheckIcon = '';
+
+                                // Tentukan ikon berdasarkan nilai quality_check
+                                if (sample.quality_check == 0) {
+                                    qualityCheckIcon = '<i class="fa fa-square-o" style="color: gray;"></i>';
+                                } else if (sample.quality_check == 1) {
+                                    qualityCheckIcon = '<i class="fa fa-check-square-o" style="color: green;"></i>';
+                                } else if (sample.quality_check == 2) {
+                                    qualityCheckIcon = '<i class="fa fa-times-circle-o" style="color: red;"></i>';
+                                }
+                                tableContent += `
+                                    <tr>
+                                        <td>${sample.id_one_water_sample ?? '-'}</td>
+                                        <td>${sample.sampletype ?? '-'}</td>
+                                        <td>${sample.initial ?? '-'}</td>
+                                        <td>${sample.date_arrival ?? '-'}</td>
+                                        <td>${sample.time_arrival ?? '-'}</td>
+                                        <td>${sample.date_collected ?? '-'}</td>
+                                        <td>${sample.time_collected ?? '-'}</td>
+                                        <td>${qualityCheckIcon ?? '-'}</td>
+                                        <td>${sample.comments ?? '-'}</td>
+                                        <td>${sample.action ?? '-'}</td>
+                                    </tr>
+                                `;
+                            });
+                        } else {
+                            tableContent += `<tr><td colspan="5" class="text-center">No samples available</td></tr>`;
+                        }
+
+                        tableContent += `</tbody></table></div>`;
+                        row.child(tableContent).show();
+                        icon.removeClass('fa-spinner fa-spin').addClass('fa-minus-square');
+                    },
+                });
+            }
+        });
 
 
 
