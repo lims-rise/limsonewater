@@ -147,7 +147,7 @@
                         </div>
                         <div class="modal-footer clearfix">
                             <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
-                            <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                            <button type="button" class="btn btn-warning"  id="cancelButton" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
                         </div>
                     </form>
                 </div><!-- /.modal-content -->
@@ -188,8 +188,46 @@
 	let client = $('#client').val();
     let id_one_water_sample = $('#id_one_water_sample').val();
 
-    $(document).ready(function() {
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        console.log('Current URL:', window.location.search);  // Cek URL yang sedang diakses
+        return urlParams.get(param);
+    }
 
+    $(document).ready(function() {
+        const params = new URLSearchParams(window.location.search);
+        const barcodeFromUrl = params.get('barcode');
+
+        if (barcodeFromUrl) {
+            $('#mode').val('insert');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Sample reception | New<span id="my-another-cool-loader"></span>');
+            $('#id_one_water_sample').attr('readonly', false);
+            $('#id_one_water_sample').val('');
+            $('#id_one_water_sample_list').val('');
+            $('#id_one_water_sample').hide();
+            $('#id_one_water_sample_list').show();
+            $('#id_person').val('');
+            $('#sampletype').attr('readonly', true);
+            $('#sampletype').val('');
+            // $('#date_conduct').val('');
+            $('#replicates').val('');
+            $('#comments').val('');
+            $('#compose-modal').modal('show');
+        } else {
+            console.log('Barcode tidak ditemukan di URL');
+        }
+
+        // Pembatalan dan kembali ke halaman sebelumnya
+        $(document).on('click', '#cancelButton', function() {
+            // Ambil URL asal dari document.referrer (halaman yang mengarah ke halaman ini)
+            var previousUrl = document.referrer;
+            
+            // Jika ada URL asal, arahkan kembali ke sana
+            if (previousUrl) {
+                window.location.href = previousUrl;
+            } 
+        });
+        
         function showConfirmation(url) {
             deleteUrl = url; // Set the URL to the variable
             $('#confirm-modal').modal('show');
