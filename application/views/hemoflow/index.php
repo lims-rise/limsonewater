@@ -173,7 +173,7 @@
                     </div>
                     <div class="modal-footer clearfix">
                         <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
-                        <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                        <button type="button" class="btn btn-warning" id="cancelButton" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
                     </div>
                 </form>
             </div><!-- /.modal-content -->
@@ -250,6 +250,15 @@
             console.log('Barcode tidak ditemukan di URL');
         }
 
+        $(document).on('click', '#cancelButton', function() {
+            // Ambil URL asal dari document.referrer (halaman yang mengarah ke halaman ini)
+            var previousUrl = document.referrer;
+            
+            // Jika ada URL asal, arahkan kembali ke sana
+            if (previousUrl) {
+                window.location.href = previousUrl;
+            } 
+        });
 
         function showConfirmation(url) {
             deleteUrl = url; // Set the URL to the variable

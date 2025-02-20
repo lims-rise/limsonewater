@@ -197,7 +197,7 @@
                     </div>
                     <div class="modal-footer clearfix">
                         <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
-                        <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                        <button type="button" class="btn btn-warning" id="cancelButton" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
                     </div>
                 </form>
             </div><!-- /.modal-content -->
@@ -257,7 +257,55 @@
 
     let table;
     let deleteUrl; // Variable to hold the delete URL
+
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        console.log('Current URL:', window.location.search);  // Cek URL yang sedang diakses
+        return urlParams.get(param);
+    }
+
     $(document).ready(function() {
+        const params = new URLSearchParams(window.location.search);
+        const barcodeFromUrl = params.get('barcode');
+
+        if (barcodeFromUrl) {
+            $('#mode').val('insert');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Campy Biosolids | New<span id="my-another-cool-loader"></span>');
+            $('#id_one_water_sample').val('');
+            $('#id_one_water_sample').show();
+            $('#idx_one_water_sample').hide();
+            $('#id_person').val('');
+            $('#number_of_tubes').val('');
+            $('#number_of_tubes').prop('disabled', false);
+            $('#campy_assay_barcode').val(barcodeFromUrl);
+            $('#campy_assay_barcode').attr('readonly', true);
+            $('#sampletype').val('');
+            $('#sampletype').attr('readonly', true);
+            $('#tray_weight').val('');
+            $('#traysample_wetweight').val('');
+            $('#comments').val('');
+            $('#mpn_pcr_conducted').val('');
+            let sampleVolumeInputs = $('#sampleVolumeInputs');
+            if (sampleVolumeInputs.children().length > 1) {
+                sampleVolumeInputs.empty();
+                sampleVolumeInputs.append('<input id="vol_sampletube1" name="vol_sampletube1" type="number" step="0.01" class="form-control sample-input" placeholder="Volume of The Sample(uL) Tube1" disabled required>');
+            }
+            $('#barcode_moisture_content').val('');
+            $('#compose-modal').modal('show');
+        } else {
+            console.log('Barcode tidak ditemukan di URL');
+        }
+
+        // Pembatalan dan kembali ke halaman sebelumnya
+        $(document).on('click', '#cancelButton', function() {
+            // Ambil URL asal dari document.referrer (halaman yang mengarah ke halaman ini)
+            var previousUrl = document.referrer;
+            
+            // Jika ada URL asal, arahkan kembali ke sana
+            if (previousUrl) {
+                window.location.href = previousUrl;
+            } 
+        });
 
         $('#compose-modal').on('hide.bs.modal', function () {
             $(this).find('input[type="radio"]').prop('checked', false); // Reset semua radio button
