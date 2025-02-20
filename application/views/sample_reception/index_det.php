@@ -71,13 +71,13 @@
                     <div class="col-xs-12"> 
                         <div class="box box-primary box-solid">
                             <div class="box-header">
-                                <h3 class="box-title">Detail Samples</h3>
+                                <h3 class="box-title">Sample Testing</h3>
                             </div>
 							<div class="box-body pad table-responsive">
 								<?php
 									$lvl = $this->session->userdata('id_user_level');
 									if ($lvl != 4){
-										echo "<button class='btn btn-primary' id='addtombol_det'><i class='fa fa-wpforms' aria-hidden='true'></i> New Data</button>";
+										echo "<button class='btn btn-primary' id='addtombol_det'><i class='fa fa-wpforms' aria-hidden='true'></i> Test </button>";
 									}
 								?>
 								<table id="example2" class="table display table-bordered table-striped" width="100%">
