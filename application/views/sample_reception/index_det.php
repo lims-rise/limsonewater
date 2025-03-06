@@ -466,7 +466,7 @@
 				"data": "url",  // Kolom yang berisi bagian dinamis URL
 				"render": function(data, type, row) {
 					// Cek apakah barcode ada, jika tidak, tampilkan '-' sebagai gantinya
-					return `<a href="javascript:void(0);" class="url-link" data-url="${data}" data-barcode="${row.barcode || '-'}">${row.barcode || '-'}</a>`;
+					return `<a href="javascript:void(0);" class="url-link" data-url="${data}" data-id_testing_type="${row.id_testing_type || '-'}" data-barcode="${row.barcode || '-'}" data-id_one_water_sample="${row.id_one_water_sample}">${`${row.testing_type} - ${row.id_one_water_sample}`|| '-'}</a>`;
 				}
 				},
 				{
@@ -479,18 +479,20 @@
 			rowCallback: function(row, data, iDisplayIndex) {
 				// Additional row callbacks if needed
 			}
-			});
+		});
 
 
 		// Event listener untuk klik pada kolom URL
 		$('#example2 tbody').on('click', 'a.url-link', function() {
-			var barcode = $(this).data('barcode');  // Ambil data barcode
-			var url = $(this).data('url');  // Ambil URL dinamis
+			let barcode = $(this).data('barcode');  // Ambil data barcode
+			let idOneWaterSample = $(this).data('id_one_water_sample');
+			let idTestingType = $(this).data('id_testing_type');
+			let url = $(this).data('url');  // Ambil URL dinamis
 
 			// Memastikan URL yang valid ada
 			if (url) {
 				// Menggunakan window.location.origin untuk membuat URL dinamis
-				var fullUrl = window.location.origin + '/limsonewater/index.php/' + url + '?barcode=' + barcode;
+				let fullUrl = window.location.origin + '/limsonewater/index.php/' + url + '?barcode=' + barcode + '&idOneWaterSample=' + idOneWaterSample + '&idTestingType=' + idTestingType;
 				window.location.href = fullUrl;  // Arahkan ke URL dinamis
 			} else {
 				console.error('URL tidak ditemukan untuk barcode: ' + barcode);

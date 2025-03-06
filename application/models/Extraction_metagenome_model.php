@@ -16,50 +16,79 @@ class Extraction_metagenome_model extends CI_Model
     }
 
     // datatables
+    // function json() {
+    //     $this->datatables->select('extraction_metagenome.barcode_sample, extraction_metagenome.id_one_water_sample, ref_person.initial,
+    //     ref_sampletype.sampletype, extraction_metagenome.date_extraction,
+    //     ref_kit.kit, extraction_metagenome.kit_lot, extraction_metagenome.barcode_tube, extraction_metagenome.dna_concentration, 
+    //     extraction_metagenome.cryobox, extraction_metagenome.id_location, extraction_metagenome.comments, extraction_metagenome.flag, 
+    //     extraction_metagenome.id_person, extraction_metagenome.id_kit, extraction_metagenome.id_location,
+    //     ref_location.freezer,ref_location.shelf,ref_location.rack,ref_location.tray, 
+    //     ref_position.rows1, ref_position.columns1
+    //     ');
+    //     $this->datatables->from('extraction_metagenome');
+    //     $this->datatables->join('ref_person', 'extraction_metagenome.id_person = ref_person.id_person', 'left');
+    //     $this->datatables->join('sample_reception_testing', 'sample_reception_testing.barcode = extraction_metagenome.barcode_sample', 'left');
+    //     $this->datatables->join('sample_reception_sample', 'sample_reception_sample.id_sample = sample_reception_testing.id_sample', 'left');
+    //     $this->datatables->join('ref_sampletype', 'sample_reception_sample.id_sampletype = ref_sampletype.id_sampletype', 'left');
+    //     $this->datatables->join('ref_kit', 'extraction_metagenome.id_kit = ref_kit.id_kit', 'left');
+    //     $this->datatables->join('ref_location', 'extraction_metagenome.id_location = ref_location.id_location', 'left');
+    //     $this->datatables->join('ref_position', 'extraction_metagenome.id_pos = ref_position.id_pos', 'left');
+
+    //     // $this->datatables->from('extraction_metagenome');
+    //     // $this->datatables->join('ref_person', 'extraction_metagenome.id_person = ref_person.id_person', 'left');
+    //     // $this->datatables->join('ref_barcode', 'ref_barcode.barcode = extraction_metagenome.barcode_sample', 'left');
+    //     // $this->datatables->join('sample_reception_sample', 'ref_barcode.id_sample = sample_reception_sample.id_sample', 'left');
+    //     // $this->datatables->join('sample_reception', 'sample_reception_sample.id_project = sample_reception.id_project', 'left');
+    //     // $this->datatables->join('ref_sampletype', 'sample_reception.id_sampletype = ref_sampletype.id_sampletype', 'left');
+    //     // $this->datatables->join('ref_kit', 'extraction_metagenome.id_kit = ref_kit.id_kit', 'left');
+    //     // $this->datatables->join('ref_location', 'extraction_metagenome.id_location = ref_location.id_location', 'left');
+    //     // $this->datatables->join('ref_position', 'extraction_metagenome.id_pos = ref_position.id_pos', 'left');
+    //     // $this->datatables->where('extraction_metagenome.id_country', $this->session->userdata('lab'));
+    //     $this->datatables->where('extraction_metagenome.flag', '0');
+    //     $lvl = $this->session->userdata('id_user_level');
+    //     if ($lvl == 4){
+    //         $this->datatables->add_column('action', 'barcode_sample');
+    //     }
+    //     else if ($lvl == 3){
+    //         $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'barcode_sample');
+    //     }
+    //     else {
+    //         $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
+    //               ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'barcode_sample');
+    //     }
+
+    //     return $this->datatables->generate();
+    // }
     function json() {
-        $this->datatables->select('extraction_metagenome.barcode_sample, extraction_metagenome.id_one_water_sample, ref_person.initial,
-        ref_sampletype.sampletype, extraction_metagenome.date_extraction,
-        ref_kit.kit, extraction_metagenome.kit_lot, extraction_metagenome.barcode_tube, extraction_metagenome.dna_concentration, 
-        extraction_metagenome.cryobox, extraction_metagenome.id_location, extraction_metagenome.comments, extraction_metagenome.flag, 
-        extraction_metagenome.id_person, extraction_metagenome.id_kit, extraction_metagenome.id_location,
-        ref_location.freezer,ref_location.shelf,ref_location.rack,ref_location.tray, 
-        ref_position.rows1, ref_position.columns1
-        ');
+        $this->datatables->select('NULL AS toggle, extraction_metagenome.number_sample, extraction_metagenome.id_one_water_sample, extraction_metagenome.id_person, ref_person.initial, ref_person.realname, extraction_metagenome.flag
+        ', FALSE);
         $this->datatables->from('extraction_metagenome');
         $this->datatables->join('ref_person', 'extraction_metagenome.id_person = ref_person.id_person', 'left');
-        $this->datatables->join('sample_reception_testing', 'sample_reception_testing.barcode = extraction_metagenome.barcode_sample', 'left');
-        $this->datatables->join('sample_reception_sample', 'sample_reception_sample.id_sample = sample_reception_testing.id_sample', 'left');
-        $this->datatables->join('ref_sampletype', 'sample_reception_sample.id_sampletype = ref_sampletype.id_sampletype', 'left');
-        $this->datatables->join('ref_kit', 'extraction_metagenome.id_kit = ref_kit.id_kit', 'left');
-        $this->datatables->join('ref_location', 'extraction_metagenome.id_location = ref_location.id_location', 'left');
-        $this->datatables->join('ref_position', 'extraction_metagenome.id_pos = ref_position.id_pos', 'left');
+        // $this->datatables->join('ref_sampletype', 'extraction_culture.id_sampletype = ref_sampletype.id_sampletype', 'left');
 
-        // $this->datatables->from('extraction_metagenome');
-        // $this->datatables->join('ref_person', 'extraction_metagenome.id_person = ref_person.id_person', 'left');
-        // $this->datatables->join('ref_barcode', 'ref_barcode.barcode = extraction_metagenome.barcode_sample', 'left');
-        // $this->datatables->join('sample_reception_sample', 'ref_barcode.id_sample = sample_reception_sample.id_sample', 'left');
-        // $this->datatables->join('sample_reception', 'sample_reception_sample.id_project = sample_reception.id_project', 'left');
-        // $this->datatables->join('ref_sampletype', 'sample_reception.id_sampletype = ref_sampletype.id_sampletype', 'left');
-        // $this->datatables->join('ref_kit', 'extraction_metagenome.id_kit = ref_kit.id_kit', 'left');
-        // $this->datatables->join('ref_location', 'extraction_metagenome.id_location = ref_location.id_location', 'left');
-        // $this->datatables->join('ref_position', 'extraction_metagenome.id_pos = ref_position.id_pos', 'left');
-        // $this->datatables->where('extraction_metagenome.id_country', $this->session->userdata('lab'));
         $this->datatables->where('extraction_metagenome.flag', '0');
         $lvl = $this->session->userdata('id_user_level');
+
+        // Kolom Toggle (Sisi Kiri)
+        $this->datatables->add_column('toggle', 
+            '<button type="button" class="btn btn-sm btn-primary toggle-child">
+                <i class="fa fa-plus-square"></i>
+            </button>', 
+        'id_one_water_sample');
+
         if ($lvl == 4){
-            $this->datatables->add_column('action', 'barcode_sample');
+            $this->datatables->add_column('action', 'id_one_water_sample');
         }
         else if ($lvl == 3){
-            $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'barcode_sample');
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
         }
         else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                  ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'barcode_sample');
+                  ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
         }
 
         return $this->datatables->generate();
     }
-
     function get_by_id($id)
     {
         $this->db->where($this->id, $id);
@@ -98,6 +127,7 @@ class Extraction_metagenome_model extends CI_Model
     // Fuction insert data
     public function insert($data) {
         $this->db->insert('extraction_metagenome', $data);
+        return $data['id_one_water_sample']; // Mengembalikan ID project yang baru dibuat
     }
 
     public function insert_freez($data_freez) {
@@ -112,9 +142,9 @@ class Extraction_metagenome_model extends CI_Model
         $this->db->update('extraction_metagenome', $data);
     }
 
-    function update_freez($id, $data_freez)
+    function update_freez($barcode_sample, $data_freez)
     {
-        $this->db->where('barcode_sample', $id);
+        $this->db->where('barcode_sample', $barcode_sample);
         $this->db->update('freezer_in', $data_freez);
     }
 
@@ -164,9 +194,9 @@ class Extraction_metagenome_model extends CI_Model
         // AND ref_barcode.barcode NOT IN (SELECT barcode_sample FROM extraction_metagenome)
 
         $q = $this->db->query('
-        select barcode_sample
+        select id_one_water_sample
         from extraction_metagenome
-        WHERE barcode_sample = "'.$id.'"
+        WHERE id_one_water_sample = "'.$id.'"
         ');        
         $response = $q->result_array();
         return $response;
@@ -236,7 +266,7 @@ class Extraction_metagenome_model extends CI_Model
         $response = array();
         $this->db->select('*');
         $this->db->where('flag', '0');
-        $this->db->order_by('realname');
+        $this->db->order_by('id_person', 'ASC');
         $labTech = $this->db->get('ref_person');
         $response = $labTech->result_array();
         return $response;
@@ -361,11 +391,45 @@ class Extraction_metagenome_model extends CI_Model
         return $prefix . $year . $padded_number;
     }
     
+    public function generate_barcode_sample($testing_type) {
+        // Get prefix and format from database
+        $this->db->select('prefix');
+        $this->db->where('testing_type', $testing_type);
+        $query = $this->db->get('ref_testing');
+        $result = $query->row();
+
+        if (!$result || $result->prefix === null) {
+            return null; // Testing type not found or prefix is null
+        }
+        $prefix = $result->prefix;
+        
+        // Get the current year
+        $year = date('y');
+
+        $this->db->select_max('CAST(SUBSTR(barcode_sample, ' . (strlen($prefix . $year) + 1) . ') AS UNSIGNED)', 'max_barcode');
+        $this->db->like('barcode_sample', $prefix . $year, 'after');
+        // $query = $this->db->get('ref_barcode');
+        $query = $this->db->get('extraction_metagenome_detail');
+        $result = $query->row();
     
+        $next_number = $result->max_barcode + 1;
+        $padded_number = str_pad($next_number, 5, '0', STR_PAD_LEFT);
+        return $prefix . $year . $padded_number;
+    }
+
+    public function insert_metagenome_detail($data) {
+        $this->db->insert('extraction_metagenome_detail', $data);
+    }
+
+    function update_metagenome($id_one_water_sample, $data)
+    {
+        $this->db->where('id_one_water_sample', $id_one_water_sample);
+        $this->db->update('extraction_metagenome', $data);
+    }
 
     public function get_name_by_id($id) {
         $this->db->select('testing_type');
-        $this->db->where('testing_type_id', $id);
+        $this->db->where('id_testing_type', $id);
         $query = $this->db->get('ref_testing');
         $result = $query->row();
         return $result ? $result->testing_type : null;
@@ -381,6 +445,122 @@ class Extraction_metagenome_model extends CI_Model
         return $response; 
     }
 
+    public function get_extractions_by_project($id_one_water_sample) {
+        $this->db->select('
+            extraction_metagenome_detail.id_extraction_metagenome_detail, 
+            extraction_metagenome_detail.id_one_water_sample, 
+            extraction_metagenome_detail.barcode_sample, 
+            extraction_metagenome_detail.date_extraction, 
+            ref_sampletype.sampletype,
+            extraction_metagenome_detail.barcode_tube,
+            extraction_metagenome_detail.cryobox,
+            extraction_metagenome_detail.kit_lot,
+            extraction_metagenome_detail.comments
+        ');
+        $this->db->from('extraction_metagenome_detail');
+        $this->db->join('ref_sampletype', 'extraction_metagenome_detail.id_sampletype = ref_sampletype.id_sampletype', 'left');
+        $this->db->where('extraction_metagenome_detail.id_one_water_sample', $id_one_water_sample);
+        $this->db->where('extraction_metagenome_detail.flag', '0');
+        $query = $this->db->get()->result();
+    
+        foreach ($query as $row) {
+            $row->action = '
+                <button class="btn btn-info btn-sm btn_edit_child" data-id="' . $row->barcode_sample . '">
+                    <i class="fa fa-pencil"></i>
+                </button>
+                <button class="btn btn-danger btn-sm btn_delete_child" data-id="' . $row->barcode_sample . '">
+                    <i class="fa fa-trash"></i>
+                </button>';
+        }
+    
+        return $query;
+    }
+
+    public function get_extraction_child($barcode_sample) {
+        $this->db->select('
+            emd.id_one_water_sample, 
+            emd.barcode_sample, 
+            rst.sampletype, 
+            emd.id_sampletype,
+            emd.id_location,
+            emd.date_extraction,
+            emd.id_kit,
+            emd.kit_lot,
+            emd.barcode_tube,
+            emd.dna_concentration,
+            emd.cryobox,
+            loc.freezer,
+            loc.shelf,
+            loc.rack,
+            loc.tray,
+            pos.columns1,
+            pos.rows1,  
+            emd.comments 
+        ');
+        $this->db->from('extraction_metagenome_detail emd');
+        $this->db->join('ref_sampletype rst', 'emd.id_sampletype = rst.id_sampletype', 'left');
+        $this->db->join('ref_kit kit', 'emd.id_kit = kit.id_kit', 'left');
+        $this->db->join('ref_location loc', 'emd.id_location = loc.id_location', 'left');
+        $this->db->join('ref_position pos', 'emd.id_pos = pos.id_pos', 'left');
+        // $this->db->join('ref_person rp', 'emd.id_person = rp.id_person', 'left');
+        $this->db->where('emd.barcode_sample', $barcode_sample);
+        $this->db->where('emd.flag', '0');
+        
+        $query = $this->db->get();
+    
+        if ($query->num_rows() > 0) {
+            echo json_encode($query->row());
+        } else {
+            echo json_encode(["error" => "Data tidak ditemukan"]);
+        }
+    
+        exit; // **Tambahkan ini untuk mencegah output tambahan**
+    }
+
+    function getSampleType(){
+        $response = array();
+        $this->db->select('*');
+        $this->db->where('flag', '0');
+        $this->db->order_by('id_sampletype', 'ASC');
+        $q = $this->db->get('ref_sampletype');
+        $response = $q->result_array();
+        return $response;
+    }
+
+    function update_child($id, $data)
+    {
+        $this->db->where('barcode_sample', $id);
+        $this->db->update('extraction_metagenome_detail', $data);
+    }
+
+    function get_by_id_extraction_child($barcode_sample)
+    {
+        $this->db->where('barcode_sample', $barcode_sample);
+        $this->db->where('flag', '0');
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        return $this->db->get('extraction_metagenome_detail')->row();
+    }
+
+    public function update_extraction_child($barcode_sample, $data) {
+        $this->db->where('barcode_sample', $barcode_sample);
+        $this->db->update('extraction_metagenome_detail', $data);
+        
+        return $this->db->affected_rows() > 0; // Return true jika update berhasil
+    }
+
+    function get_by_id_extraction($id_one_water_sample)
+    {
+        $this->db->where('id_one_water_sample', $id_one_water_sample);
+        $this->db->where('flag', '0');
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        return $this->db->get('extraction_metagenome')->row();
+    }
+
+    function update_extraction($id_one_water_sample, $data)
+    {
+        $this->db->where('id_one_water_sample', $id_one_water_sample);
+        $this->db->update('extraction_metagenome', $data);
+    }
       
 }
 
