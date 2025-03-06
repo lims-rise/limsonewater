@@ -62,19 +62,13 @@ class Sample_reception_model extends CI_Model
     
 
     function subjson($id) {
-        // $this->datatables->select('a.sample_id, a.project_id, b.testing_type, a.testing_type_id, a.date_collected, a.time_collected, a.sample_barcode, a.flag');
-        // $this->datatables->from('sample_reception_sample a');
-        // $this->datatables->join('ref_testing b', 'a.testing_type_id = b.testing_type_id', 'right');
-        // $this->datatables->where('a.flag', '0');
-        // $this->datatables->where('a.project_id', $id);
-        $this->datatables->select('a.id_testing, a.id_sample, a.id_testing_type, a.barcode, b.testing_type AS testing_type, b.url, a.flag');
-        $this->datatables->from('sample_reception_testing a');
-        $this->datatables->join('ref_testing b', 'FIND_IN_SET(b.id_testing_type, a.id_testing_type)', 'left');
-        // $this->datatables->join('sample_reception_sample c', 'c.id_sample, a.id_sample', 'left');
-        // $this->datatables->join('ref_barcode c', 'a.sample_id = c.testing_type_id', 'left');
-        $this->datatables->where('a.flag', '0');
-        $this->datatables->where('a.id_sample', $id);
-        $this->datatables->group_by('a.id_testing');
+        $this->datatables->select('testing.id_testing, testing.id_sample, testing.id_testing_type, sample.id_one_water_sample, testing.barcode, retest.testing_type AS testing_type, retest.url, testing.flag');
+        $this->datatables->from('sample_reception_testing testing');
+        $this->datatables->join('ref_testing retest', 'FIND_IN_SET(retest.id_testing_type, testing.id_testing_type)', 'left');
+        $this->datatables->join('sample_reception_sample sample', 'sample.id_sample = testing.id_sample', 'left');
+        $this->datatables->where('testing.flag', '0');
+        $this->datatables->where('testing.id_sample', $id);
+        $this->datatables->group_by('testing.id_testing');
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 4){
             $this->datatables->add_column('action', '', 'id_testing');

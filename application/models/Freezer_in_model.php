@@ -21,8 +21,10 @@ class Freezer_in_model extends CI_Model
         a.cryobox, concat("F",d.freezer,"-","S",d.shelf,"-","R",d.rack,"-","T",d.tray) AS location, a.comments,
         a.id_person, a.id_location, a.flag');
         $this->datatables->from('freezer_in a');
-        $this->datatables->join('ref_person b', 'a.id_person=b.id_person', 'left');
-        $this->datatables->join('ref_location d', 'a.id_location=d.id_location', 'left');
+        $this->datatables->join('ref_location d', 'a.id_location=d.id_location');
+        $this->datatables->join('extraction_culture_plate ecp' , 'a.barcode_sample = ecp.barcode_sample');
+        $this->datatables->join('extraction_culture ec', 'ecp.id_one_water_sample = ec.id_one_water_sample');
+        $this->datatables->join('ref_person b', 'ec.id_person=b.id_person');
         $this->datatables->where('a.flag', '0');
 
         $lvl = $this->session->userdata('id_user_level');

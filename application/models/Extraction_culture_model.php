@@ -17,88 +17,110 @@ class Extraction_culture_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('extraction_culture.barcode_sample, extraction_culture.id_one_water_sample, ref_person.initial,
-        ref_sampletype.sampletype, extraction_culture.date_extraction, 
-        extraction_culture.culture_media,
-        ref_kit.kit, extraction_culture.kit_lot, extraction_culture.barcode_tube, extraction_culture.fin_volume, extraction_culture.dna_concentration, 
-        extraction_culture.cryobox, extraction_culture.id_location, extraction_culture.comments, extraction_culture.flag, 
-        extraction_culture.id_person, extraction_culture.id_kit, extraction_culture.id_location,
-        ref_location.freezer,ref_location.shelf,ref_location.rack,ref_location.tray, 
-        ref_position.rows1, ref_position.columns1
-        ');
+        $this->datatables->select('NULL AS toggle, extraction_culture.number_sample, extraction_culture.id_one_water_sample, ref_person.initial, ref_person.realname, extraction_culture.id_person, extraction_culture.flag
+        ', FALSE);
         $this->datatables->from('extraction_culture');
         $this->datatables->join('ref_person', 'extraction_culture.id_person = ref_person.id_person', 'left');
-        $this->datatables->join('sample_reception_testing', 'sample_reception_testing.barcode = extraction_culture.barcode_sample', 'left');
-        $this->datatables->join('sample_reception_sample', 'sample_reception_sample.id_sample = sample_reception_testing.id_sample', 'left');
-        $this->datatables->join('ref_sampletype', 'sample_reception_sample.id_sampletype = ref_sampletype.id_sampletype', 'left');
-        $this->datatables->join('ref_kit', 'extraction_culture.id_kit = ref_kit.id_kit', 'left');
-        $this->datatables->join('ref_location', 'extraction_culture.id_location = ref_location.id_location', 'left');
-        $this->datatables->join('ref_position', 'extraction_culture.id_pos = ref_position.id_pos', 'left');
+        // $this->datatables->join('ref_sampletype', 'extraction_culture.id_sampletype = ref_sampletype.id_sampletype', 'left');
 
-        // $this->datatables->from('extraction_culture');
-        // $this->datatables->join('ref_person', 'extraction_culture.id_person = ref_person.id_person', 'left');
-        // $this->datatables->join('ref_barcode', 'ref_barcode.barcode = extraction_culture.barcode_sample', 'left');
-        // $this->datatables->join('sample_reception_sample', 'ref_barcode.id_sample = sample_reception_sample.id_sample', 'left');
-        // $this->datatables->join('sample_reception', 'sample_reception_sample.id_project = sample_reception.id_project', 'left');
-        // $this->datatables->join('ref_sampletype', 'sample_reception.id_sampletype = ref_sampletype.id_sampletype', 'left');
-        // $this->datatables->join('ref_kit', 'extraction_culture.id_kit = ref_kit.id_kit', 'left');
-        // $this->datatables->join('ref_location', 'extraction_culture.id_location = ref_location.id_location', 'left');
-        // $this->datatables->join('ref_position', 'extraction_culture.id_pos = ref_position.id_pos', 'left');
-        // $this->datatables->where('extraction_culture.id_country', $this->session->userdata('lab'));
         $this->datatables->where('extraction_culture.flag', '0');
         $lvl = $this->session->userdata('id_user_level');
+
+        // Kolom Toggle (Sisi Kiri)
+        $this->datatables->add_column('toggle', 
+            '<button type="button" class="btn btn-sm btn-primary toggle-child">
+                <i class="fa fa-plus-square"></i>
+            </button>', 
+        'id_one_water_sample');
+
         if ($lvl == 4){
-            $this->datatables->add_column('action', 'barcode_sample');
+            $this->datatables->add_column('action', 'id_one_water_sample');
         }
         else if ($lvl == 3){
-            $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'barcode_sample');
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
         }
         else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                  ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'barcode_sample');
+                  ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
         }
 
         return $this->datatables->generate();
     }
 
-    function get_by_id($id)
+    function get_by_id_extraction($id_one_water_sample)
     {
-        $this->db->where($this->id, $id);
+        $this->db->where('id_one_water_sample', $id_one_water_sample);
         $this->db->where('flag', '0');
         // $this->db->where('lab', $this->session->userdata('lab'));
-        return $this->db->get($this->table)->row();
+        return $this->db->get('extraction_culture')->row();
     }
 
-    function get_by_id_detail($id)
-    {
-        $this->db->where('sample_id', $id);
-        $this->db->where('flag', '0');
-        // $this->db->where('lab', $this->session->userdata('lab'));
-        return $this->db->get('sample_reception_sample')->row();
+    public function generate_barcode_sample($testing_type) {
+        // Get prefix and format from database
+        $this->db->select('prefix');
+        $this->db->where('testing_type', $testing_type);
+        $query = $this->db->get('ref_testing');
+        $result = $query->row();
+
+        if (!$result || $result->prefix === null) {
+            return null; // Testing type not found or prefix is null
+        }
+        $prefix = $result->prefix;
+        
+        // Get the current year
+        $year = date('y');
+
+        $this->db->select_max('CAST(SUBSTR(barcode_sample, ' . (strlen($prefix . $year) + 1) . ') AS UNSIGNED)', 'max_barcode');
+        $this->db->like('barcode_sample', $prefix . $year, 'after');
+        // $query = $this->db->get('ref_barcode');
+        $query = $this->db->get('extraction_culture_plate');
+        $result = $query->row();
+    
+        $next_number = $result->max_barcode + 1;
+        $padded_number = str_pad($next_number, 5, '0', STR_PAD_LEFT);
+        return $prefix . $year . $padded_number;
     }
 
-    // Function get detail2 by id
-    function get_by_id_detail2($id)
-    {
-        $this->db->where('testing_id', $id);
-        $this->db->where('flag', '0');
-        return $this->db->get('sample_reception_testing')->row();
-    }
-
-    function get_detail2($id)
-    {
-      $response = array();
-      $this->db->select('*');
-      $this->db->where('sample_reception_sample.sample_id', $id);
-      $this->db->where('sample_reception_sample.flag', '0');
-      $q = $this->db->get('sample_reception_sample');
-      $response = $q->row();
-      return $response;
+    public function get_extractions_by_project($id_one_water_sample) {
+        $this->db->select('
+            extraction_culture_plate.id_extraction_culture_plate, 
+            extraction_culture_plate.id_one_water_sample, 
+            extraction_culture_plate.barcode_sample, 
+            extraction_culture_plate.date_extraction, 
+            extraction_culture_plate.culture_media,
+            ref_sampletype.sampletype,
+            extraction_culture_plate.barcode_tube,
+            extraction_culture_plate.cryobox,
+            extraction_culture_plate.kit_lot,
+            extraction_culture_plate.comments
+        ');
+        $this->db->from('extraction_culture_plate');
+        $this->db->join('ref_sampletype', 'extraction_culture_plate.id_sampletype = ref_sampletype.id_sampletype', 'left');
+        $this->db->where('extraction_culture_plate.id_one_water_sample', $id_one_water_sample);
+        $this->db->where('extraction_culture_plate.flag', '0');
+        $query = $this->db->get()->result();
+    
+        foreach ($query as $row) {
+            $row->action = '
+                <button class="btn btn-info btn-sm btn_edit_child" data-id="' . $row->barcode_sample . '">
+                    <i class="fa fa-pencil"></i>
+                </button>
+                <button class="btn btn-danger btn-sm btn_delete_child" data-id="' . $row->barcode_sample . '">
+                    <i class="fa fa-trash"></i>
+                </button>';
+        }
+    
+        return $query;
     }
    
     // Fuction insert data
     public function insert($data) {
         $this->db->insert('extraction_culture', $data);
+        return $data['id_one_water_sample']; // Mengembalikan ID project yang baru dibuat
+    }
+
+    public function insert_extraction($data) {
+        $this->db->insert('extraction_culture_plate', $data);
     }
 
     public function insert_freez($data_freez) {
@@ -107,15 +129,21 @@ class Extraction_culture_model extends CI_Model
     
 
     // Function update data
-    function update($id, $data)
+    function update_extraction($id_one_water_sample, $data)
     {
-        $this->db->where('barcode_sample', $id);
+        $this->db->where('id_one_water_sample', $id_one_water_sample);
         $this->db->update('extraction_culture', $data);
     }
 
-    function update_freez($id, $data_freez)
+    function update_child($id, $data)
     {
         $this->db->where('barcode_sample', $id);
+        $this->db->update('extraction_culture_plate', $data);
+    }
+
+    function update_freez($barcode_sample, $data_freez)
+    {
+        $this->db->where('barcode_sample', $barcode_sample);
         $this->db->update('freezer_in', $data_freez);
     }
 
@@ -159,15 +187,11 @@ class Extraction_culture_model extends CI_Model
     }
 
     function barcode_restrict($id){
-        // select ref_barcode.barcode
-        // from ref_barcode 
-        // WHERE ref_barcode.barcode = "'.$id.'"
-        // AND ref_barcode.barcode NOT IN (SELECT barcode_sample FROM extraction_culture)
 
         $q = $this->db->query('
-        select barcode_sample
+        select id_one_water_sample
         from extraction_culture
-        WHERE barcode_sample = "'.$id.'"
+        WHERE id_one_water_sample = "'.$id.'"
         ');        
         $response = $q->result_array();
         return $response;
@@ -359,7 +383,7 @@ class Extraction_culture_model extends CI_Model
 
     public function get_name_by_id($id) {
         $this->db->select('testing_type');
-        $this->db->where('testing_type_id', $id);
+        $this->db->where('id_testing_type', $id);
         $query = $this->db->get('ref_testing');
         $result = $query->row();
         return $result ? $result->testing_type : null;
@@ -373,6 +397,74 @@ class Extraction_culture_model extends CI_Model
         $query = $this->db->get('sample_reception_sample');
         $response = $query->result_array();
         return $response; 
+    }
+
+    public function get_extraction_child($barcode_sample) {
+        $this->db->select('
+            ecp.id_one_water_sample, 
+            ecp.barcode_sample, 
+            rst.sampletype, 
+            ecp.id_sampletype,
+            ecp.id_location,
+            ecp.date_extraction,
+            ecp.culture_media,
+            ecp.id_kit,
+            ecp.kit_lot,
+            ecp.barcode_tube,
+            ecp.fin_volume,
+            ecp.dna_concentration,
+            ecp.cryobox,
+            loc.freezer,
+            loc.shelf,
+            loc.rack,
+            loc.tray,
+            pos.columns1,
+            pos.rows1,  
+            ecp.comments 
+        ');
+        $this->db->from('extraction_culture_plate ecp');
+        $this->db->join('ref_sampletype rst', 'ecp.id_sampletype = rst.id_sampletype', 'left');
+        $this->db->join('ref_kit kit', 'ecp.id_kit = kit.id_kit', 'left');
+        $this->db->join('ref_location loc', 'ecp.id_location = loc.id_location', 'left');
+        $this->db->join('ref_position pos', 'ecp.id_pos = pos.id_pos', 'left');
+        // $this->db->join('ref_person rp', 'ecp.id_person = rp.id_person', 'left');
+        $this->db->where('ecp.barcode_sample', $barcode_sample);
+        $this->db->where('ecp.flag', '0');
+        
+        $query = $this->db->get();
+    
+        if ($query->num_rows() > 0) {
+            echo json_encode($query->row());
+        } else {
+            echo json_encode(["error" => "Data tidak ditemukan"]);
+        }
+    
+        exit; // **Tambahkan ini untuk mencegah output tambahan**
+    }
+
+    function getSampleType(){
+        $response = array();
+        $this->db->select('*');
+        $this->db->where('flag', '0');
+        $this->db->order_by('id_sampletype', 'ASC');
+        $q = $this->db->get('ref_sampletype');
+        $response = $q->result_array();
+        return $response;
+    }
+
+    function get_by_id_extraction_child($barcode_sample)
+    {
+        $this->db->where('barcode_sample', $barcode_sample);
+        $this->db->where('flag', '0');
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        return $this->db->get('extraction_culture_plate')->row();
+    }
+
+    public function update_extraction_child($barcode_sample, $data) {
+        $this->db->where('barcode_sample', $barcode_sample);
+        $this->db->update('extraction_culture_plate', $data);
+        
+        return $this->db->affected_rows() > 0; // Return true jika update berhasil
     }
 
       

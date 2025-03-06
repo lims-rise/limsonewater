@@ -17,46 +17,31 @@ class Extraction_liquid_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('extraction_liquid.barcode_sample, extraction_liquid.id_one_water_sample, ref_person.initial,
-        ref_sampletype.sampletype, extraction_liquid.date_extraction, extraction_liquid.filtration_volume, extraction_liquid.membrane_filter,
-        extraction_liquid.dilution, extraction_liquid.culture_media,
-        ref_kit.kit, extraction_liquid.kit_lot, extraction_liquid.barcode_tube, extraction_liquid.fin_volume, extraction_liquid.dna_concentration, 
-        extraction_liquid.cryobox, extraction_liquid.id_location, extraction_liquid.comments, extraction_liquid.flag, 
-        extraction_liquid.id_person, extraction_liquid.id_kit, extraction_liquid.id_location,
-        ref_location.freezer,ref_location.shelf,ref_location.rack,ref_location.tray, 
-        ref_position.rows1, ref_position.columns1
-        ');
-
+        $this->datatables->select('NULL AS toggle, extraction_liquid.number_sample, extraction_liquid.id_one_water_sample, ref_person.initial, ref_person.realname, extraction_liquid.id_person, extraction_liquid.flag
+        ', FALSE);
         $this->datatables->from('extraction_liquid');
         $this->datatables->join('ref_person', 'extraction_liquid.id_person = ref_person.id_person', 'left');
-        $this->datatables->join('sample_reception_testing', 'sample_reception_testing.barcode = extraction_liquid.barcode_sample', 'left');
-        $this->datatables->join('sample_reception_sample', 'sample_reception_sample.id_sample = sample_reception_testing.id_sample', 'left');
-        $this->datatables->join('ref_sampletype', 'sample_reception_sample.id_sampletype = ref_sampletype.id_sampletype', 'left');
-        $this->datatables->join('ref_kit', 'extraction_liquid.id_kit = ref_kit.id_kit', 'left');
-        $this->datatables->join('ref_location', 'extraction_liquid.id_location = ref_location.id_location', 'left');
-        $this->datatables->join('ref_position', 'extraction_liquid.id_pos = ref_position.id_pos', 'left');
-        
-        // $this->datatables->from('extraction_liquid');
-        // $this->datatables->join('ref_person', 'extraction_liquid.id_person = ref_person.id_person', 'left');
-        // $this->datatables->join('ref_barcode', 'ref_barcode.barcode = extraction_liquid.barcode_sample', 'left');
-        // $this->datatables->join('sample_reception_sample', 'ref_barcode.id_sample = sample_reception_sample.id_sample', 'left');
-        // $this->datatables->join('sample_reception', 'sample_reception_sample.id_project = sample_reception.id_project', 'left');
-        // $this->datatables->join('ref_sampletype', 'sample_reception.id_sampletype = ref_sampletype.id_sampletype', 'left');
-        // $this->datatables->join('ref_kit', 'extraction_liquid.id_kit = ref_kit.id_kit', 'left');
-        // $this->datatables->join('ref_location', 'extraction_liquid.id_location = ref_location.id_location', 'left');
-        // $this->datatables->join('ref_position', 'extraction_liquid.id_pos = ref_position.id_pos', 'left');
-        // $this->datatables->where('extraction_liquid.id_country', $this->session->userdata('lab'));
+        // $this->datatables->join('ref_sampletype', 'extraction_liquid.id_sampletype = ref_sampletype.id_sampletype', 'left');
+
         $this->datatables->where('extraction_liquid.flag', '0');
         $lvl = $this->session->userdata('id_user_level');
+
+        // Kolom Toggle (Sisi Kiri)
+        $this->datatables->add_column('toggle', 
+            '<button type="button" class="btn btn-sm btn-primary toggle-child">
+                <i class="fa fa-plus-square"></i>
+            </button>', 
+        'id_one_water_sample');
+
         if ($lvl == 4){
-            $this->datatables->add_column('action', 'barcode_sample');
+            $this->datatables->add_column('action', 'id_one_water_sample');
         }
         else if ($lvl == 3){
-            $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'barcode_sample');
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
         }
         else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                  ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'barcode_sample');
+                  ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
         }
 
         return $this->datatables->generate();
@@ -98,8 +83,13 @@ class Extraction_liquid_model extends CI_Model
     }
    
     // Fuction insert data
+    // public function insert($data) {
+    //     $this->db->insert('extraction_liquid', $data);
+    // }
+
     public function insert($data) {
         $this->db->insert('extraction_liquid', $data);
+        return $data['id_one_water_sample']; // Mengembalikan ID project yang baru dibuat
     }
 
     public function insert_freez($data_freez) {
@@ -114,9 +104,9 @@ class Extraction_liquid_model extends CI_Model
         $this->db->update('extraction_liquid', $data);
     }
 
-    function update_freez($id, $data_freez)
+    function update_freez($barcode_sample, $data_freez)
     {
-        $this->db->where('barcode_sample', $id);
+        $this->db->where('barcode_sample', $barcode_sample);
         $this->db->update('freezer_in', $data_freez);
     }
 
@@ -160,15 +150,11 @@ class Extraction_liquid_model extends CI_Model
     }
 
     function barcode_restrict($id){
-        // select ref_barcode.barcode
-        // from ref_barcode 
-        // WHERE ref_barcode.barcode = "'.$id.'"
-        // AND ref_barcode.barcode NOT IN (SELECT barcode_sample FROM extraction_liquid)
 
         $q = $this->db->query('
-        select barcode_sample
+        select id_one_water_sample
         from extraction_liquid
-        WHERE barcode_sample = "'.$id.'"
+        WHERE id_one_water_sample = "'.$id.'"
         ');        
         $response = $q->result_array();
         return $response;
@@ -367,7 +353,7 @@ class Extraction_liquid_model extends CI_Model
 
     public function get_name_by_id($id) {
         $this->db->select('testing_type');
-        $this->db->where('testing_type_id', $id);
+        $this->db->where('id_testing_type', $id);
         $query = $this->db->get('ref_testing');
         $result = $query->row();
         return $result ? $result->testing_type : null;
@@ -381,6 +367,159 @@ class Extraction_liquid_model extends CI_Model
         $query = $this->db->get('sample_reception_sample');
         $response = $query->result_array();
         return $response; 
+    }
+
+    public function generate_barcode_sample($testing_type) {
+        // Get prefix and format from database
+        $this->db->select('prefix');
+        $this->db->where('testing_type', $testing_type);
+        $query = $this->db->get('ref_testing');
+        $result = $query->row();
+
+        if (!$result || $result->prefix === null) {
+            return null; // Testing type not found or prefix is null
+        }
+        $prefix = $result->prefix;
+        
+        // Get the current year
+        $year = date('y');
+
+        $this->db->select_max('CAST(SUBSTR(barcode_sample, ' . (strlen($prefix . $year) + 1) . ') AS UNSIGNED)', 'max_barcode');
+        $this->db->like('barcode_sample', $prefix . $year, 'after');
+        // $query = $this->db->get('ref_barcode');
+        $query = $this->db->get('extraction_liquid_detail');
+        $result = $query->row();
+    
+        $next_number = $result->max_barcode + 1;
+        $padded_number = str_pad($next_number, 5, '0', STR_PAD_LEFT);
+        return $prefix . $year . $padded_number;
+    }
+
+    public function insert_extraction($data) {
+        $this->db->insert('extraction_liquid_detail', $data);
+    }
+
+    function update_extraction($id_one_water_sample, $data)
+    {
+        $this->db->where('id_one_water_sample', $id_one_water_sample);
+        $this->db->update('extraction_liquid', $data);
+    }
+
+    public function get_extractions_by_project($id_one_water_sample) {
+        $this->db->select('
+            extraction_liquid_detail.id_extraction_liquid_detail, 
+            extraction_liquid_detail.id_one_water_sample, 
+            extraction_liquid_detail.barcode_sample, 
+            extraction_liquid_detail.date_extraction, 
+            extraction_liquid_detail.culture_media,
+            ref_sampletype.sampletype,
+            extraction_liquid_detail.barcode_tube,
+            extraction_liquid_detail.cryobox,
+            extraction_liquid_detail.kit_lot,
+            extraction_liquid_detail.comments
+        ');
+        $this->db->from('extraction_liquid_detail');
+        $this->db->join('ref_sampletype', 'extraction_liquid_detail.id_sampletype = ref_sampletype.id_sampletype', 'left');
+        $this->db->where('extraction_liquid_detail.id_one_water_sample', $id_one_water_sample);
+        $this->db->where('extraction_liquid_detail.flag', '0');
+        $query = $this->db->get()->result();
+    
+        foreach ($query as $row) {
+            $row->action = '
+                <button class="btn btn-info btn-sm btn_edit_child" data-id="' . $row->barcode_sample . '">
+                    <i class="fa fa-pencil"></i>
+                </button>
+                <button class="btn btn-danger btn-sm btn_delete_child" data-id="' . $row->barcode_sample . '">
+                    <i class="fa fa-trash"></i>
+                </button>';
+        }
+    
+        return $query;
+    }
+
+    public function get_extraction_child($barcode_sample) {
+        $this->db->select('
+            eld.id_one_water_sample, 
+            eld.barcode_sample, 
+            rst.sampletype, 
+            eld.id_sampletype,
+            eld.id_location,
+            eld.date_extraction,
+            eld.culture_media,
+            eld.membrane_filter,
+            eld.filtration_volume,
+            eld.dilution,
+            eld.id_kit,
+            eld.kit_lot,
+            eld.barcode_tube,
+            eld.fin_volume,
+            eld.dna_concentration,
+            eld.cryobox,
+            loc.freezer,
+            loc.shelf,
+            loc.rack,
+            loc.tray,
+            pos.columns1,
+            pos.rows1,  
+            eld.comments 
+        ');
+        $this->db->from('extraction_liquid_detail eld');
+        $this->db->join('ref_sampletype rst', 'eld.id_sampletype = rst.id_sampletype', 'left');
+        $this->db->join('ref_kit kit', 'eld.id_kit = kit.id_kit', 'left');
+        $this->db->join('ref_location loc', 'eld.id_location = loc.id_location', 'left');
+        $this->db->join('ref_position pos', 'eld.id_pos = pos.id_pos', 'left');
+        // $this->db->join('ref_person rp', 'eld.id_person = rp.id_person', 'left');
+        $this->db->where('eld.barcode_sample', $barcode_sample);
+        $this->db->where('eld.flag', '0');
+        
+        $query = $this->db->get();
+    
+        if ($query->num_rows() > 0) {
+            echo json_encode($query->row());
+        } else {
+            echo json_encode(["error" => "Data tidak ditemukan"]);
+        }
+    
+        exit; // **Tambahkan ini untuk mencegah output tambahan**
+    }
+
+    function getSampleType(){
+        $response = array();
+        $this->db->select('*');
+        $this->db->where('flag', '0');
+        $this->db->order_by('id_sampletype', 'ASC');
+        $q = $this->db->get('ref_sampletype');
+        $response = $q->result_array();
+        return $response;
+    }
+
+    function update_child($id, $data)
+    {
+        $this->db->where('barcode_sample', $id);
+        $this->db->update('extraction_liquid_detail', $data);
+    }
+
+    function get_by_id_extraction($id_one_water_sample)
+    {
+        $this->db->where('id_one_water_sample', $id_one_water_sample);
+        $this->db->where('flag', '0');
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        return $this->db->get('extraction_culture')->row();
+    }
+
+    public function update_extraction_child($barcode_sample, $data) {
+        $this->db->where('barcode_sample', $barcode_sample);
+        $this->db->update('extraction_liquid_detail', $data);
+        
+        return $this->db->affected_rows() > 0; // Return true jika update berhasil
+    }
+
+    function get_by_id_extraction_child($barcode_sample)
+    {
+        $this->db->where('barcode_sample', $barcode_sample);
+        $this->db->where('flag', '0');
+        // $this->db->where('lab', $this->session->userdata('lab'));
+        return $this->db->get('extraction_liquid_detail')->row();
     }
 
       

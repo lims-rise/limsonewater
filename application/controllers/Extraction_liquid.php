@@ -28,6 +28,7 @@ class Extraction_liquid extends CI_Controller
 
     public function index()
     {
+        $data['sampletype'] = $this->Extraction_liquid_model->getSampleType();
         $data['id_one'] = $this->Extraction_liquid_model->getID_one();
         $data['labtech'] = $this->Extraction_liquid_model->getLabTech();
         $data['kit'] = $this->Extraction_liquid_model->getKit();
@@ -60,49 +61,221 @@ class Extraction_liquid extends CI_Controller
         echo $this->Extraction_liquid_model->subjson2($id2);
     }
 
-    // public function read($id)
-    // {
-    //     $data['testing_type'] = $this->Extraction_liquid_model->getTest();
-    //     $row = $this->Extraction_liquid_model->get_detail($id);
-    //     if ($row) {
+
+    // public function save() {
+    //     $mode = $this->input->post('mode', TRUE);
+    //     $dt = new DateTime();
+
+    //     $id_one_water_sample = $this->input->post('id_one_water_sample_list', TRUE);
+    //     $barcode_sample = $this->input->post('barcode_sample', TRUE);
+    //     $id_person = $this->input->post('id_person', TRUE);
+    //     $date_extraction = $this->input->post('date_extraction', TRUE);
+    //     $filtration_volume = $this->input->post('filtration_volume', TRUE);
+    //     $membrane_filter = $this->input->post('membrane_filter', TRUE);
+    //     $dilution = $this->input->post('dilution', TRUE);
+    //     $culture_media = $this->input->post('culture_media', TRUE);
+    //     $id_kit = $this->input->post('id_kit', TRUE);
+    //     $kit_lot = $this->input->post('kit_lot', TRUE);
+    //     $comments = $this->input->post('comments', TRUE);
+    //     $barcode_tube = $this->input->post('barcode_tube', TRUE);
+    //     $fin_volume = $this->input->post('fin_volume', TRUE);
+    //     $dna_concentration = $this->input->post('dna_concentration', TRUE);
+    //     $cryobox = $this->input->post('cryobox', TRUE);
+
+    //     $id_freez = $this->input->post('id_freez', TRUE);
+    //     $id_shelf = $this->input->post('id_shelf', TRUE);
+    //     $id_rack = $this->input->post('id_rack', TRUE);
+    //     $id_tray = $this->input->post('id_tray', TRUE);
+
+    //     $id_row = $this->input->post('id_row', TRUE);
+    //     $id_col = $this->input->post('id_col', TRUE);
+
+    //     $loc_obj = $this->Extraction_liquid_model->get_freezx($id_freez, $id_shelf, $id_rack, $id_tray);
+    //     $pos_obj = $this->Extraction_liquid_model->get_posx($id_row, $id_col);
+    //     $id_loc = $loc_obj->id_location;
+    //     $id_pos = $pos_obj->id_pos;        
+
+    //     if ($mode == "insert") {
     //         $data = array(
-    //             'project_id' => $row->project_id,
-    //             // 'client_name' => $row->client_name,
-    //             'initial' => $row->initial,
-    //             'date_arrival' => $row->date_arrival,
-    //             'time_arrival' => $row->time_arrival,
-    //             'client_sample_id' => $row->client_sample_id,
-    //             'classification_name' => $row->classification_name,
-    //             'comments' => $row->comments,
-    //             'testing_type' => $this->Extraction_liquid_model->getTest(),
-    //             );
-    //             $this->template->load('template','Extraction_liquid/index_det', $data);
+    //             'barcode_sample' => $barcode_sample,
+    //             'id_one_water_sample' => $id_one_water_sample,
+    //             'id_person' => $id_person,
+    //             'date_extraction' => $date_extraction,
+    //             'filtration_volume' => $filtration_volume,
+    //             'membrane_filter' => $membrane_filter,
+    //             'dilution' => $dilution,
+    //             'culture_media' => $culture_media,
+    //             'id_kit' => $id_kit,
+    //             'kit_lot' => $kit_lot,
+    //             'comments' => $comments,
+    //             'barcode_tube' => $barcode_tube,
+    //             'fin_volume' => $fin_volume,
+    //             'dna_concentration' => $dna_concentration,
+    //             'cryobox' => $cryobox,
+    //             'id_location' => $id_loc,
+    //             'id_pos' => $id_pos,
+    //             'uuid' => $this->uuid->v4(),
+    //             'user_created' => $this->session->userdata('id_users'),
+    //             'date_created' => $dt->format('Y-m-d H:i:s'),
+    //             'flag' => '0',
+    //         );
+    
+    //         $this->Extraction_liquid_model->insert($data);
+
+    //         $data_freez = array(
+    //             'date_in' => $date_extraction,
+    //             'time_in' => $dt->format('H:i:s'),
+    //             'id_person' => $id_person,
+    //             'barcode_sample' => $barcode_sample,
+    //             'barcode_tube' => $barcode_tube,
+    //             'cryobox' => $cryobox,
+    //             'id_location' => $id_loc,
+    //             'id_pos' => $id_pos,
+    //             'comments' => $comments,
+    //             'uuid' => $this->uuid->v4(),
+    //             'user_created' => $this->session->userdata('id_users'),
+    //             'date_created' => $dt->format('Y-m-d H:i:s'),
+    //             'flag' => '0',
+    //         );
+    
+    //         $this->Extraction_liquid_model->insert_freez($data_freez);            
+    //         $this->session->set_flashdata('message', 'Create Record Success');
+
+    //     } else if ($mode == "edit") {
+    //         $data = array(
+    //             'barcode_sample' => $barcode_sample,
+    //             'id_one_water_sample' => $id_one_water_sample,
+    //             'id_person' => $id_person,
+    //             'date_extraction' => $date_extraction,
+    //             'filtration_volume' => $filtration_volume,
+    //             'membrane_filter' => $membrane_filter,
+    //             'dilution' => $dilution,
+    //             'culture_media' => $culture_media,
+    //             'id_kit' => $id_kit,
+    //             'kit_lot' => $kit_lot,
+    //             'comments' => $comments,
+    //             'barcode_tube' => $barcode_tube,
+    //             'fin_volume' => $fin_volume,
+    //             'dna_concentration' => $dna_concentration,
+    //             'cryobox' => $cryobox,
+    //             'id_location' => $id_loc,
+    //             'id_pos' => $id_pos,
+    //             'user_updated' => $this->session->userdata('id_users'),
+    //             'date_updated' => $dt->format('Y-m-d H:i:s'),
+    //         );
+
+    //         $this->Extraction_liquid_model->update($barcode_sample, $data);
+
+    //         $data_freez = array(
+    //             'date_in' => $date_extraction,
+    //             'time_in' => $dt->format('H:i:s'),
+    //             'id_person' => $id_person,
+    //             'barcode_sample' => $barcode_sample,
+    //             'barcode_tube' => $barcode_tube,
+    //             'cryobox' => $cryobox,
+    //             'id_location' => $id_loc,
+    //             'id_pos' => $id_pos,
+    //             'comments' => $comments,
+    //             'user_updated' => $this->session->userdata('id_users'),
+    //             'date_updated' => $dt->format('Y-m-d H:i:s'),
+    //         );
+    
+    //         $this->Extraction_liquid_model->update_freez($barcode_sample, $data_freez);       
+
+    //         $this->session->set_flashdata('message', 'Update Record Success');
     //     }
-    //     else {
-    //         // $this->template->load('template','Extraction_liquid/index_det');
-    //     }
-    // }  
+    
+    //     redirect(site_url("Extraction_liquid"));
+    // }
 
     public function save() {
         $mode = $this->input->post('mode', TRUE);
         $dt = new DateTime();
 
-        $id_one_water_sample = $this->input->post('id_one_water_sample_list', TRUE);
-        $barcode_sample = $this->input->post('barcode_sample', TRUE);
+        $id_one_water_sample = $this->input->post('id_one_water_sample', TRUE);
         $id_person = $this->input->post('id_person', TRUE);
+        $number_sample = (int) $this->input->post('number_sample', TRUE);
+        $id_testing_type = $this->input->post('id_testing_type', TRUE);
+
+        // var_dump($id_testing_type);
+        // die();
+
+        if ($mode == "insert") {
+            $data = array(
+                'id_one_water_sample' => $id_one_water_sample,
+                'id_person' => $id_person,
+                'number_sample' => $number_sample,
+                'uuid' => $this->uuid->v4(),
+                'user_created' => $this->session->userdata('id_users'),
+                'date_created' => $dt->format('Y-m-d H:i:s'),
+                'flag' => '0',
+            );
+            // var_dump($data);
+            // die();
+            $id_one_water_sample = $this->Extraction_liquid_model->insert($data);
+
+            // Generate dan insert ke sample_reception_sample sesuai number_sample
+            for ($i = 0; $i < $number_sample; $i++) {
+                $testing_type_name = $this->Extraction_liquid_model->get_name_by_id($id_testing_type);
+                $barcode_sample = $this->Extraction_liquid_model->generate_barcode_sample($testing_type_name);
+                $extraction_data = array(
+                    'id_one_water_sample' => $id_one_water_sample,
+                    'barcode_sample' => $barcode_sample,
+                    'flag' => '0',
+                    'uuid' => $this->uuid->v4(),
+                    'user_created' => $this->session->userdata('id_users'),
+                    'date_created' => $dt->format('Y-m-d H:i:s'),
+                );
+                $this->Extraction_liquid_model->insert_extraction($extraction_data);
+
+                $data_freez = array(
+                    'barcode_sample' => $barcode_sample,
+                    'uuid' => $this->uuid->v4(),
+                    'user_created' => $this->session->userdata('id_users'),
+                    'date_created' => $dt->format('Y-m-d H:i:s'),
+                    'flag' => '0',
+                );
+    
+            $this->Extraction_liquid_model->insert_freez($data_freez);    
+            }
+          
+            $this->session->set_flashdata('message', 'Create Record Success');
+
+        } else if ($mode == "edit") {
+            $data = array(
+                'id_one_water_sample' => $id_one_water_sample,
+                'id_person' => $id_person,
+                'number_sample' => $number_sample,
+                'uuid' => $this->uuid->v4(),
+                'user_updated' => $this->session->userdata('id_users'),
+                'date_updated' => $dt->format('Y-m-d H:i:s'),
+                'flag' => '0',
+            );
+            $this->Extraction_liquid_model->update_extraction($id_one_water_sample, $data);
+            $this->session->set_flashdata('message', 'Update Record Success');
+        }
+    
+        redirect(site_url("Extraction_liquid"));
+    }
+
+    public function update_child() {
+        $mode = $this->input->post('mode-child', TRUE);
+        $dt = new DateTime();
+
+        $barcode_sample = $this->input->post('barcode_sample1', TRUE);
+        $id_sampletype = $this->input->post('id_sampletype', TRUE);
+        $culture_media = $this->input->post('culture_media', TRUE);
         $date_extraction = $this->input->post('date_extraction', TRUE);
+        $id_kit = $this->input->post('id_kit', TRUE);
         $filtration_volume = $this->input->post('filtration_volume', TRUE);
         $membrane_filter = $this->input->post('membrane_filter', TRUE);
         $dilution = $this->input->post('dilution', TRUE);
-        $culture_media = $this->input->post('culture_media', TRUE);
-        $id_kit = $this->input->post('id_kit', TRUE);
         $kit_lot = $this->input->post('kit_lot', TRUE);
         $comments = $this->input->post('comments', TRUE);
         $barcode_tube = $this->input->post('barcode_tube', TRUE);
         $fin_volume = $this->input->post('fin_volume', TRUE);
         $dna_concentration = $this->input->post('dna_concentration', TRUE);
         $cryobox = $this->input->post('cryobox', TRUE);
-
         $id_freez = $this->input->post('id_freez', TRUE);
         $id_shelf = $this->input->post('id_shelf', TRUE);
         $id_rack = $this->input->post('id_rack', TRUE);
@@ -114,64 +287,19 @@ class Extraction_liquid extends CI_Controller
         $loc_obj = $this->Extraction_liquid_model->get_freezx($id_freez, $id_shelf, $id_rack, $id_tray);
         $pos_obj = $this->Extraction_liquid_model->get_posx($id_row, $id_col);
         $id_loc = $loc_obj->id_location;
-        $id_pos = $pos_obj->id_pos;        
+        $id_pos = $pos_obj->id_pos;   
 
-        if ($mode == "insert") {
+        if ($mode == "edit") {
             $data = array(
                 'barcode_sample' => $barcode_sample,
-                'id_one_water_sample' => $id_one_water_sample,
-                'id_person' => $id_person,
+                // 'id_one_water_sample' => $id_one_water_sample,
+                'id_sampletype' => $id_sampletype,
+                // 'id_person' => $id_person,
+                'culture_media' => $culture_media,
                 'date_extraction' => $date_extraction,
                 'filtration_volume' => $filtration_volume,
                 'membrane_filter' => $membrane_filter,
                 'dilution' => $dilution,
-                'culture_media' => $culture_media,
-                'id_kit' => $id_kit,
-                'kit_lot' => $kit_lot,
-                'comments' => $comments,
-                'barcode_tube' => $barcode_tube,
-                'fin_volume' => $fin_volume,
-                'dna_concentration' => $dna_concentration,
-                'cryobox' => $cryobox,
-                'id_location' => $id_loc,
-                'id_pos' => $id_pos,
-                'uuid' => $this->uuid->v4(),
-                'user_created' => $this->session->userdata('id_users'),
-                'date_created' => $dt->format('Y-m-d H:i:s'),
-                'flag' => '0',
-            );
-    
-            $this->Extraction_liquid_model->insert($data);
-
-            $data_freez = array(
-                'date_in' => $date_extraction,
-                'time_in' => $dt->format('H:i:s'),
-                'id_person' => $id_person,
-                'barcode_sample' => $barcode_sample,
-                'barcode_tube' => $barcode_tube,
-                'cryobox' => $cryobox,
-                'id_location' => $id_loc,
-                'id_pos' => $id_pos,
-                'comments' => $comments,
-                'uuid' => $this->uuid->v4(),
-                'user_created' => $this->session->userdata('id_users'),
-                'date_created' => $dt->format('Y-m-d H:i:s'),
-                'flag' => '0',
-            );
-    
-            $this->Extraction_liquid_model->insert_freez($data_freez);            
-            $this->session->set_flashdata('message', 'Create Record Success');
-
-        } else if ($mode == "edit") {
-            $data = array(
-                'barcode_sample' => $barcode_sample,
-                'id_one_water_sample' => $id_one_water_sample,
-                'id_person' => $id_person,
-                'date_extraction' => $date_extraction,
-                'filtration_volume' => $filtration_volume,
-                'membrane_filter' => $membrane_filter,
-                'dilution' => $dilution,
-                'culture_media' => $culture_media,
                 'id_kit' => $id_kit,
                 'kit_lot' => $kit_lot,
                 'comments' => $comments,
@@ -185,12 +313,14 @@ class Extraction_liquid extends CI_Controller
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
 
-            $this->Extraction_liquid_model->update($barcode_sample, $data);
+            // var_dump($data);
+            // die();
+            $this->Extraction_liquid_model->update_child($barcode_sample, $data);
 
             $data_freez = array(
                 'date_in' => $date_extraction,
                 'time_in' => $dt->format('H:i:s'),
-                'id_person' => $id_person,
+                // 'id_person' => $id_person,
                 'barcode_sample' => $barcode_sample,
                 'barcode_tube' => $barcode_tube,
                 'cryobox' => $cryobox,
@@ -200,12 +330,12 @@ class Extraction_liquid extends CI_Controller
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
-    
+            // Debug untuk cek data yang dikirim
+            log_message('debug', 'Data Freez: ' . print_r($data_freez, true));
             $this->Extraction_liquid_model->update_freez($barcode_sample, $data_freez);       
 
             $this->session->set_flashdata('message', 'Update Record Success');
         }
-    
         redirect(site_url("Extraction_liquid"));
     }
     
@@ -407,6 +537,49 @@ class Extraction_liquid extends CI_Controller
         
         // Save the Excel file to the output stream
         $writer->save('php://output');
+    }
+
+    public function get_extractions_by_project($id_one_water_sample) {
+        $extraction = $this->Extraction_liquid_model->get_extractions_by_project($id_one_water_sample);
+        echo json_encode($extraction);
+    }
+
+    public function get_extraction_child($barcode_sample) {
+        $extraction_child = $this->Extraction_liquid_model->get_extraction_child($barcode_sample);
+        echo json_encode($extraction_child);
+    }
+
+    public function delete_child($barcode_sample) {
+        $row = $this->Extraction_liquid_model->get_by_id_extraction_child($barcode_sample);
+        $data = array(
+            'flag' => 1,
+            );
+
+        if ($row) {
+            $this->Extraction_liquid_model->update_extraction_child($barcode_sample, $data);
+            $this->session->set_flashdata('message', 'Delete Record Success');    
+            redirect(site_url('Extraction_liquid'));
+        } else {
+            $this->session->set_flashdata('message', 'Record Not Found');
+            redirect(site_url('Extraction_liquid'));
+        }
+    }
+
+    public function delete_extraction($id_one_water_sample) 
+    {
+        $row = $this->Extraction_liquid_model->get_by_id_extraction($id_one_water_sample);
+        $data = array(
+            'flag' => 1,
+            );
+
+        if ($row) {
+            $this->Extraction_liquid_model->update_extraction($id_one_water_sample, $data);
+            $this->session->set_flashdata('message', 'Delete Record Success');
+            redirect(site_url('Extraction_culture'));
+        } else {
+            $this->session->set_flashdata('message', 'Record Not Found');
+            redirect(site_url('Extraction_culture'));
+        }
     }
 
 }
