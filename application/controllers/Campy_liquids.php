@@ -86,16 +86,16 @@ class Campy_liquids extends CI_Controller
                 
             );
             
-            // Mendapatkan final concentration
-            $finalConcentration = $this->Campy_liquids_model->subjsonFinalConcentration($id);
-            if ($finalConcentration) {
-                $data['finalConcentration'] = $finalConcentration;
-            } else {
-                $data['finalConcentration'] = []; // Pastikan ini tidak null
-            }
-            // var_dump($data);
-            // die();
-            $this->template->load('template','campy_liquids/index_det', $data);
+        // Mendapatkan final concentration
+        $finalConcentration = $this->Campy_liquids_model->subjsonFinalConcentration($id);
+        if ($finalConcentration) {
+            $data['finalConcentration'] = $finalConcentration;
+        } else {
+            $data['finalConcentration'] = []; // Pastikan ini tidak null
+        }
+        
+        // Load view with data
+        $this->template->load('template','campy_liquids/index_det', $data);
 
         }
         else {
@@ -254,7 +254,7 @@ class Campy_liquids extends CI_Controller
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $plate = $this->input->post("growth_plate{$i}", TRUE);
-                if ($plate) {
+                if ($plate !== null) {
                     $this->Campy_liquids_model->insert_growth_plate(array(
                         'id_result_charcoal_liquids' => $assay_id,
                         'plate_number' => $i,
@@ -294,7 +294,7 @@ class Campy_liquids extends CI_Controller
 
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $plate = $this->input->post("growth_plate{$i}", TRUE);
-                if ($plate) {
+                if ($plate !== null) {
                     $data_plate = array(
                         'id_result_charcoal_liquids' => $id_result_charcoal_liquids,
                         'plate_number' => $i,
@@ -347,7 +347,7 @@ class Campy_liquids extends CI_Controller
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $plate = $this->input->post("growth_plate{$i}", TRUE);
 
-                if ($plate) {
+                if ($plate !== null) {
                     $this->Campy_liquids_model->insert_growth_plate_hba(array(
                         'id_result_hba_liquids' => $assay_id,
                         'plate_number' => $i,
@@ -385,7 +385,7 @@ class Campy_liquids extends CI_Controller
     
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $plate = $this->input->post("growth_plate{$i}", TRUE);
-                if ($plate) {
+                if ($plate !== null) {
                     $data_plate = array(
                         'id_result_hba_liquids' => $id_result_hba_liquids,
                         'plate_number' => $i,
@@ -460,15 +460,15 @@ class Campy_liquids extends CI_Controller
     }
     
 
-    public function delete_campyBiosolids($id) {
-        $row = $this->Campy_liquids_model->get_by_id_campybiosolids($id);
+    public function delete_campyLiquids($id) {
+        $row = $this->Campy_liquids_model->get_by_id_campyliquids($id);
         if ($row) {
             $id_parent = $row->id_result_charcoal; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
     
-            $this->Campy_liquids_model->updateCampyBiosolids($id, $data);
+            $this->Campy_liquids_model->updateCampyLiquids($id, $data);
             $this->Campy_liquids_model->updateSampleVolume($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
@@ -567,7 +567,7 @@ class Campy_liquids extends CI_Controller
         $sheet->setCellValue('F1', "MPN PCR Conducted");
         $sheet->setCellValue('G1', "Date Sample Processed");
         $sheet->setCellValue('H1', "Time Sample Processed");
-        $sheet->setCellValue('I1', "Elution Volume");
+        $sheet->setCellValue('I1', "Filtration  Volume(mL)");
     
         // Fetch the concentration data
         $finalConcentration = $this->Campy_liquids_model->get_export($id);
@@ -696,7 +696,7 @@ class Campy_liquids extends CI_Controller
         $sheet->setCellValue('F1', "MPN PCR Conducted");
         $sheet->setCellValue('G1', "Date Sample Processed");
         $sheet->setCellValue('H1', "Time Sample Processed");
-        $sheet->setCellValue('I1', "Elution Volume");
+        $sheet->setCellValue('I1', "Filtration  Volume(mL)");
     
         // Add Tube Volume headers
         for ($i = 1; $i <= $numberOfTubes; $i++) {
@@ -751,20 +751,18 @@ class Campy_liquids extends CI_Controller
             $numrow++;
         }
     }
-    
-    
-    
-    
-    
-    
-    
-
-    
-
 
     public function validateCampyAssayBarcode() {
         $id = $this->input->get('id');
         $data = $this->Campy_liquids_model->validateCampyAssayBarcode($id);
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
+
+    public function barcode_restrict() 
+    {
+        $id = $this->input->get('id1');
+        $data = $this->Campy_liquids_model->barcode_restrict($id);
         header('Content-Type: application/json');
         echo json_encode($data);
     }
