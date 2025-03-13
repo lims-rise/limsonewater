@@ -36,7 +36,7 @@ class Campy_liquids_model extends CI_Model
         else {
             $this->datatables->add_column('action', anchor(site_url('campy_liquids/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
             ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-            ".'<button type="button" class="btn_deleteCampyBiosolids btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_campy_liquids');
+            ".'<button type="button" class="btn_deleteCampyLiquids btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_campy_liquids');
         }
         $this->db->order_by('latest_date', 'DESC');
         return $this->datatables->generate();
@@ -192,7 +192,9 @@ class Campy_liquids_model extends CI_Model
         return $response;
     }
 
-
+    
+    
+     
 
     function get_export($id) {
         $response = array();
@@ -502,11 +504,11 @@ class Campy_liquids_model extends CI_Model
         $this->db->update('sample_growth_plate', $data);
     }
 
-    function get_by_id_campybiosolids($id)
+    function get_by_id_campyliquids($id)
     {
         $this->db->where('id_campy_liquids', $id);
         $this->db->where('flag', '0');
-        return $this->db->get('campy_biosolids')->row();
+        return $this->db->get('campy_liquids')->row();
     }
 
     function updateSampleVolume($id, $data) {
@@ -552,15 +554,26 @@ class Campy_liquids_model extends CI_Model
     
     function get_by_id_biochemical($id)
     {
-        $this->db->where('id_result_biochemical', $id);
+        $this->db->where('id_result_biochemical_liquids', $id);
         $this->db->where('flag', '0');
-        return $this->db->get('result_biochemical')->row();
+        return $this->db->get('campy_result_biochemical_liquids')->row();
     }
 
     function updateResultsBiochemical($id_result_biochemical_liquids, $data) {
         $this->db->where('id_result_biochemical_liquids', $id_result_biochemical_liquids);
         $this->db->update('campy_result_biochemical_liquids', $data);
     }
+
+    function barcode_restrict($id){
+
+        $q = $this->db->query('
+        select id_one_water_sample
+        from campy_liquids
+        WHERE id_one_water_sample = "'.$id.'"
+        ');        
+        $response = $q->result_array();
+        return $response;
+      } 
     
 
       

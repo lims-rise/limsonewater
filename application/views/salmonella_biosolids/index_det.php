@@ -11,67 +11,65 @@
 						<div class="form-group">
 							<label for="id_one_water_sample" class="col-sm-2 control-label">One Water Sample ID</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="id_one_water_sample" name="id_one_water_sample" value="<?php echo $id_one_water_sample ?>"  disabled>
+								<input class="form-control " id="id_one_water_sample" name="id_one_water_sample" value="<?php echo $id_one_water_sample ?? '-' ?>"  disabled>
 							</div>
 
 							<label for="initial" class="col-sm-2 control-label">Lab Tech</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="initial" name="initial" value="<?php echo $initial ?>"  disabled>
+								<input class="form-control " id="initial" name="initial" value="<?php echo $initial ?? '-' ?>"  disabled>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="number_of_tubes" class="col-sm-2 control-label">Number of Assay Tubes</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="number_of_tubes" name="number_of_tubes" value="<?php echo $number_of_tubes ?>"  disabled>
+								<input class="form-control " id="number_of_tubes" name="number_of_tubes" value="<?php echo $number_of_tubes ?? '-' ?>"  disabled>
 							</div>
 
 							<label for="sampletype" class="col-sm-2 control-label">Sample Type</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="sampletype" name="sampletype" value="<?php echo $sampletype ?>"  disabled>
+								<input class="form-control " id="sampletype" name="sampletype" value="<?php echo $sampletype ?? '-' ?>"  disabled>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="mpn_pcr_conducted" class="col-sm-2 control-label">MPN PCR Conducted</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="mpn_pcr_conducted" name="mpn_pcr_conducted" value="<?php echo $mpn_pcr_conducted ?>"  disabled>
+								<input class="form-control " id="mpn_pcr_conducted" name="mpn_pcr_conducted" value="<?php echo $mpn_pcr_conducted ?? '-' ?>"  disabled>
 							</div>
 
 							<label for="salmonella_assay_barcode" class="col-sm-2 control-label">Salmonella Assay Barcode</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="salmonella_assay_barcode" name="salmonella_assay_barcode" value="<?php echo $salmonella_assay_barcode ?>"  disabled>
+								<input class="form-control " id="salmonella_assay_barcode" name="salmonella_assay_barcode" value="<?php echo $salmonella_assay_barcode ?? '-' ?>"  disabled>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="date_sample_processed" class="col-sm-2 control-label">Date Sample</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="date_sample_processed" name="date_sample_processed" value="<?php echo $date_sample_processed ?>" disabled>
+								<input class="form-control " id="date_sample_processed" name="date_sample_processed" value="<?php echo $date_sample_processed ?? '-' ?>" disabled>
 							</div>
 
 							<label for="time_sample_processed" class="col-sm-2 control-label">Time Sample</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="time_sample_processed" name="time_sample_processed" value="<?php echo $time_sample_processed ?>"  disabled>
+								<input class="form-control " id="time_sample_processed" name="time_sample_processed" value="<?php echo $time_sample_processed ?? '-' ?>"  disabled>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label for="sample_wetweight" class="col-sm-2 control-label">Sample Wet Weight</label>
+							<!-- <label for="sample_wetweight" class="col-sm-2 control-label">Sample Wet Weight</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="sample_wetweight" name="sample_wetweight" value="<?php echo $sample_wetweight ?>"  disabled>
-							</div>
+							</div> -->
 
                             <label for="elution_volume" class="col-sm-2 control-label">Elution Volume</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="elution_volume" name="elution_volume" value="<?php echo $elution_volume ?>"  disabled>
+								<input class="form-control " id="elution_volume" name="elution_volume" value="<?php echo $elution_volume ?? '-' ?>"  disabled>
 							</div>
-						</div>
 
-                        <div class="form-group">
-							<label for="enrichment_media" class="col-sm-2 control-label">Enrichment media</label>
+                            <label for="enrichment_media" class="col-sm-2 control-label">Enrichment media</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="enrichment_media" name="enrichment_media" value="<?php echo $enrichment_media ?>"  disabled>
+								<input class="form-control " id="enrichment_media" name="enrichment_media" value="<?php echo $enrichment_media ?? '-' ?>"  disabled>
 							</div>
 						</div>
 
@@ -96,7 +94,7 @@
                                             <th>Salmonella Assay Barcode</th>
                                             <th>Date of Sample</th>
                                             <th>Time of Sample</th>
-                                            <th>Purple Colony Plate</th>
+                                            <th>Black Colony Plate</th>
                                             <th>Action</th>
 										</tr>
 									</thead>
@@ -123,7 +121,7 @@
                                             <th>Salmonella Assay Barcode</th>
                                             <th>Date of Sample</th>
                                             <th>Time of Sample</th>
-                                            <th>Black Colony Plate</th>
+                                            <th>Purple Colony Plate</th>
                                             <th>Action</th>
 										</tr>
 									</thead>
@@ -195,7 +193,7 @@
                                                         <td><?= htmlspecialchars($concentration->id_one_water_sample) ?></td>
                                                         <td><?= htmlspecialchars($concentration->salmonella_assay_barcode) ?></td>
                                                         <td><?= htmlspecialchars($concentration->initial) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->sampletype) ?></td>
+                                                        <td><?= htmlspecialchars($concentration->sampletype ?? '-') ?></td>
                                                         <td><?= htmlspecialchars($concentration->number_of_tubes) ?></td>
                                                         <td><?= htmlspecialchars($concentration->mpn_pcr_conducted) ?></td>
                                                         <td><?= htmlspecialchars($concentration->date_sample_processed) ?></td>
@@ -295,13 +293,18 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group" id="purple_colony_plate">
+                                    <!-- <div class="form-group" id="purple_colony_plate">
                                         <label class="col-sm-4 control-label"> Purple Colony Plate</label>
                                         <div class="col-sm-8" id="purpleColonyPlateInputs">
+                                        </div>
+                                    </div> -->
+
+                                    <div class="form-group" id="black_colony_plate_chromagar">
+                                        <label class="col-sm-4 control-label">Black Colony Plate</label>
+                                        <div class="col-sm-8" id="blackColonyPlateInputs">
                                             <!-- Radio buttons akan dihasilkan di sini -->
                                         </div>
                                     </div>
-
 
                             </div>
                             <div class="modal-footer clearfix">
@@ -360,13 +363,18 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group" id="black_colony_plate_chromagar">
+                                    <!-- <div class="form-group" id="black_colony_plate_chromagar">
                                         <label class="col-sm-4 control-label">Black Colony Plate</label>
                                         <div class="col-sm-8" id="blackColonyPlateInputsChromagar">
+                                        </div>
+                                    </div> -->
+
+                                    <div class="form-group" id="purple_colony_plate">
+                                        <label class="col-sm-4 control-label"> Purple Colony Plate</label>
+                                        <div class="col-sm-8" id="purpleColonyPlateInputs">
                                             <!-- Radio buttons akan dihasilkan di sini -->
                                         </div>
                                     </div>
-
 
                             </div>
                             <div class="modal-footer clearfix">
@@ -568,13 +576,13 @@
             for (let i = 1; i <= numberOfTubes; i++) {
                 container.append(
                     `<div class="d-flex align-items-center mb-2">
-                        <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Purple Colony Plate ${i}:</label>
+                        <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Black ${i}:</label>
                         <div class="d-flex align-items-center">
                             <label class="radio-inline me-2" style="margin-bottom: 0;">
-                                <input type="radio" name="colony_plate${i}" value="Yes" required> Yes
+                                <input type="radio" name="colony_plate${i}" value="1" required> Yes
                             </label>
                             <label class="radio-inline" style="margin-bottom: 0;">
-                                <input type="radio" name="colony_plate${i}" value="No" required> No
+                                <input type="radio" name="colony_plate${i}" value="0" required> No
                             </label>
                         </div>
                     </div>`
@@ -585,7 +593,7 @@
         $('#number_of_tubes').change(function() {
             let numberOfTubes = parseInt($(this).val()); // Get the selected value as an integer
             generateColonyPlateInputs($('#purpleColonyPlateInputs'), numberOfTubes);
-            generateColonyPlateInputs($('#blackColonyPlateInputsChromagar'), numberOfTubes);
+            generateColonyPlateInputs($('#blackColonyPlateInputs'), numberOfTubes);
         }).trigger('change');
 
 
@@ -761,7 +769,7 @@
                 {"data": "salmonella_assay_barcode"},
                 {"data": "date_sample_processed"},
                 {"data": "time_sample_processed"},
-                {"data": "purple_colony_plate"},
+                {"data": "black_colony_plate"},
                 {
                     "data" : "action",
                     "orderable": false,
@@ -802,7 +810,7 @@
                 {"data": "salmonella_assay_barcode"},
                 {"data": "date_sample_processed"},
                 {"data": "time_sample_processed"},
-                {"data": "black_colony_plate"},
+                {"data": "purple_colony_plate"},
                 {
                     "data" : "action",
                     "orderable": false,
@@ -836,11 +844,11 @@
             console.log(data);
 
             if (data) {
-                const blackColonyPlateArray = data.black_colony_plate.split(', ');
+                const purpleColonyPlateArray = data.purple_colony_plate.split(', ');
                 const plateNumberArray = data.plate_number.split(', ');
 
                 // Generate the biochemical results for all plate numbers
-                generateResultBiochemical($('#content-result-biochemical'), plateNumberArray.length, data.id_salmonella_biosolids, plateNumberArray, blackColonyPlateArray);
+                generateResultBiochemical($('#content-result-biochemical'), plateNumberArray.length, data.id_salmonella_biosolids, plateNumberArray, purpleColonyPlateArray);
             } else {
                 console.log('Data belum tersedia');
                 $('#content-result-biochemical').empty().append('<p class="text-center">No data available</p>');
@@ -848,7 +856,7 @@
         });
 
         // Improved generateResultBiochemical function
-        function generateResultBiochemical(container, numberOfPlates, id_salmonella_biosolids, plateNumberArray, blackColonyPlateArray) {
+        function generateResultBiochemical(container, numberOfPlates, id_salmonella_biosolids, plateNumberArray, purpleColonyPlateArray) {
             container.empty(); // Clear existing content
 
             // Iterate through the plateNumberArray
@@ -856,7 +864,7 @@
                 const plateNumber = plateNumberArray[i]; // Get the corresponding plate number
                 const tableId = `exampleBiochemical_${i}`; // Unique table ID
                 const buttonId = `addtombol_detResultsBiochemical_${plateNumber}`; // Unique button ID
-                const isDisabled = blackColonyPlateArray[i] === 'No' ? 'disabled' : ''; // Determine if button should be disabled
+                const isDisabled = purpleColonyPlateArray[i] === '0' ? 'disabled' : ''; // Determine if button should be disabled
                 console.log('button biochemical tube', isDisabled);
 
                 // Append the table and button for each plate
@@ -1001,31 +1009,31 @@
             $('#time_sample_processed1').val(data.time_sample_processed);
             $('#number_of_tubes1').val(number_of_tubes);
 
-            // Clear existing purpleColonyPlateInputs
-            let purpleColonyPlateInputs = $('#purpleColonyPlateInputs');
-            purpleColonyPlateInputs.empty();
+            // Clear existing blackColonyPlateInputs
+            let blackColonyPlateInputs = $('#blackColonyPlateInputs');
+            blackColonyPlateInputs.empty();
 
             // split the string into an array
-            const purpleColonyPlateArray = data.purple_colony_plate.split(', ');
+            const blackColonyPlateArray = data.black_colony_plate.split(', ');
             const plateNumberArray = data.plate_number.split(', ');
 
             // making the input base on the plate number
             plateNumberArray.forEach((plateNumber, index) => {
-                const plate = purpleColonyPlateArray[index] || '';
+                const plate = blackColonyPlateArray[index] || '';
 
                 // decide the value radio selected
-                const checkedYes = plate === 'Yes' ? 'checked' : '';
-                const checkedNo = plate === 'No' ? 'checked' : '';
+                const checkedYes = plate === '1' ? 'checked' : '';
+                const checkedNo = plate === '0' ? 'checked' : '';
 
-                purpleColonyPlateInputs.append(
+                blackColonyPlateInputs.append(
                     `<div class="d-flex align-items-center mb-2">
-                        <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Purple Colony Plate ${plateNumber}:</label>
+                        <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Black ${plateNumber}:</label>
                         <div class="d-flex align-items-center">
                             <label class="radio-inline me-2" style="margin-bottom: 0;">
-                                <input type="radio" id="purple_colony_plate${plateNumber}" name="purple_colony_plate${plateNumber}" value="Yes" ${checkedYes}> Yes
+                                <input type="radio" id="black_colony_plate${plateNumber}" name="black_colony_plate${plateNumber}" value="1" ${checkedYes}> Yes
                             </label>
                             <label class="radio-inline" style="margin-bottom: 0;">
-                                <input type="radio" id="purple_colony_plate${plateNumber}"  name="purple_colony_plate${plateNumber}" value="No" ${checkedNo}> No
+                                <input type="radio" id="black_colony_plate${plateNumber}"  name="black_colony_plate${plateNumber}" value="0" ${checkedNo}> No
                             </label>
                         </div>
                     </div>`
@@ -1054,35 +1062,35 @@
                 $('#number_of_tubesChromagar').val(number_of_tubes);
 
                 // Clear existing purpleColonyPlateInputs
-                let blackColonyPlateInputsChromagar = $('#blackColonyPlateInputsChromagar');
-                blackColonyPlateInputsChromagar.empty();
+                let purpleColonyPlateInputs = $('#purpleColonyPlateInputs');
+                purpleColonyPlateInputs.empty();
 
                 // split the string into an array
-                const purpleColonyPlateArray = data.purple_colony_plate.split(', ');
+                const purpleColonyPlateArray = data.black_colony_plate.split(', ');
                 const plateNumberArray = data.plate_number.split(', ');
 
-                console.log('purpleColonyPlateArray:', purpleColonyPlateArray);
-                console.log('plateNumberArray:', plateNumberArray);
+                // console.log('purpleColonyPlateArray:', purpleColonyPlateArray);
+                // console.log('plateNumberArray:', plateNumberArray);
 
                 // making the input base on the plate number
                 plateNumberArray.forEach((plateNumber, index) => {
                     const plate = purpleColonyPlateArray[index] || '';
 
                     // decide the value radio selected
-                    const checkedYes = plate === 'Yes' ? 'checked' : '';
-                    const checkedNo = plate === 'No' ? 'checked' : '';
-                    const disabled = plate === 'No' ? 'disabled' : '';
+                    const checkedYes = plate === '1' ? 'checked' : '';
+                    const checkedNo = plate === '0' ? 'checked' : '';
+                    const disabled = plate === '0' ? 'disabled' : '';
 
-                    blackColonyPlateInputsChromagar.append(
+                    purpleColonyPlateInputs.append(
                         `<div class="d-flex align-items-center mb-2">
-                            <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Black Colony Plate ${plateNumber}:</label>
+                            <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Purple ${plateNumber}:</label>
                             <div class="d-flex align-items-center">
-                                <input type="hidden" name="black_colony_plate${plateNumber}" value="${plate}">
+                                <input type="hidden" name="purple_colony_plate${plateNumber}" value="${plate}">
                                 <label class="radio-inline me-2" style="margin-bottom: 0;">
-                                    <input type="radio" id="black_colony_plate${plateNumber}" name="black_colony_plate${plateNumber}" value="Yes" ${disabled}> Yes
+                                    <input type="radio" id="purple_colony_plate${plateNumber}" name="purple_colony_plate${plateNumber}" value="1" ${disabled}> Yes
                                 </label>
                                 <label class="radio-inline" style="margin-bottom: 0;">
-                                    <input type="radio" id="black_colony_plate${plateNumber}"  name="black_colony_plate${plateNumber}" value="No" ${disabled}> No
+                                    <input type="radio" id="purple_colony_plate${plateNumber}"  name="purple_colony_plate${plateNumber}" value="0" ${disabled}> No
                                 </label>
                             </div>
                         </div>`
@@ -1102,6 +1110,7 @@
         $('#exampleChromagar').on('click', '.btn_edit_detResultsChromagar', function() {
             let tr = $(this).closest('tr');
             let data = table1.row(tr).data();
+            let data1 = table.row(tr).data();
             console.log(data);
             $('#mode_detResultsChromagar').val('edit');
             $('#modal-title-Chromagar').html('<i class="fa fa-pencil-square"></i> Update | Results Chromagar <span id="my-another-cool-loader"></span>');
@@ -1113,33 +1122,35 @@
             $('#time_sample_processedChromagar').val(data.time_sample_processed);
             $('#number_of_tubesChromagar').val(number_of_tubes);
 
-            // Clear existing growthPlateInputs
-            let blackColonyPlateInputsChromagar = $('#blackColonyPlateInputsChromagar');
-            blackColonyPlateInputsChromagar.empty();
+            // Clear existing purpleColonyPlateInputs
+            let purpleColonyPlateInputs = $('#purpleColonyPlateInputs');
+            purpleColonyPlateInputs.empty();
 
             // split the string into an array
-            const blackColonyPlateArray = data.black_colony_plate.split(', ');
+            const purpleColonyPlateArray = data.purple_colony_plate.split(', ');
             const plateNumberArray = data.plate_number.split(', ');
+            const purpleColonyPlateArray1 = data1.black_colony_plate.split(', ');
 
             // making the input base on the plate number
             plateNumberArray.forEach((plateNumber, index) => {
-                const plate = blackColonyPlateArray[index] || '';
+                const plate = purpleColonyPlateArray[index] || '';
+                const plate1 = purpleColonyPlateArray1[index] || '';
 
                 // decide the value radio selected
-                const checkedYes = plate === 'Yes' ? 'checked' : '';
-                const checkedNo = plate === 'No' ? 'checked' : '';
-                const disabled = plate === 'No' ? 'disabled' : '';
+                const checkedYes = plate === '1' ? 'checked' : '';
+                const checkedNo = plate === '0' ? 'checked' : '';
+                const disabled = plate1 === '0' ? 'disabled' : '';
 
-                blackColonyPlateInputsChromagar.append(
+                purpleColonyPlateInputs.append(
                     `<div class="d-flex align-items-center mb-2">
-                        <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Black Colony Plate ${plateNumber}:</label>
+                        <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Purple ${plateNumber}:</label>
                         <div class="d-flex align-items-center">
-                            <input type="hidden" name="black_colony_plate${plateNumber}" value="${plate}">
+                            <input type="hidden" name="purple_colony_plate${plateNumber}" value="${plate}">
                             <label class="radio-inline me-2" style="margin-bottom: 0;">
-                                <input type="radio" id="black_colony_plate${plateNumber}" name="black_colony_plate${plateNumber}" value="Yes" ${checkedYes}> Yes
+                                <input type="radio" id="purple_colony_plate${plateNumber}" name="purple_colony_plate${plateNumber}" value="1" ${checkedYes}  ${disabled}> Yes
                             </label>
                             <label class="radio-inline" style="margin-bottom: 0;">
-                                <input type="radio" id="black_colony_plate${plateNumber}"  name="black_colony_plate${plateNumber}" value="No" ${checkedNo}> No
+                                <input type="radio" id="purple_colony_plate${plateNumber}"  name="purple_colony_plate${plateNumber}" value="0" ${checkedNo}  ${disabled}> No
                             </label>
                         </div>
                     </div>`

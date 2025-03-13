@@ -28,8 +28,8 @@
                                             <th>Campy Assay Barcode</th>
                                             <th>Date of Sample</th>
                                             <th>Time of Sample</th>
-                                            <th>Elution Volume</th>
-                                            <th>Volume of Sample</th>
+                                            <th>Volume of Sample (mL)</th>
+                                            <th>Filtration  Volume(mL)</th>
                                             <th width="120px">Action</th>
                                         </tr>
                                     </thead>
@@ -72,7 +72,7 @@
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
                         <input id="id_campy_liquids" name="id_campy_liquids" type="hidden" class="form-control input-sm">
                         
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
                             <div class="col-sm-8">
                                 <input id="idx_one_water_sample" name="idx_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control">
@@ -88,6 +88,14 @@
                                             }
                                     ?>
                                 </select>
+                            </div>
+                        </div> -->
+                        <div class="form-group">
+                            <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
+                            <div class="col-sm-8">
+                                <input id="id_one_water_sample" name="id_one_water_sample" placeholder="One Water Sample ID" type="text"  class="form-control idOneWaterSampleSelect">
+                                <input id="idx_one_water_sample" name="idx_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control">
+                                <div class="val1tip"></div>
                             </div>
                         </div>
 
@@ -149,7 +157,7 @@
                             <label for="campy_assay_barcode" class="col-sm-4 control-label">Campy Assay Barcode</label>
                             <div class="col-sm-8">
                                 <input id="campy_assay_barcode" name="campy_assay_barcode" placeholder="Campy Assay Barcode" type="text" class="form-control" required>
-                                <div class="val1tip"></div>
+                                <div class="val2tip"></div>
                             </div>
                         </div>
 
@@ -172,17 +180,17 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="elution_volume" class="col-sm-4 control-label">Elution Volume(mL)</label>
-                            <div class="col-sm-8">
-                                <input id="elution_volume" name="elution_volume" type="number" step="0.01" class="form-control" placeholder="Elution Volume(mL)" required>
+                        <div class="form-group" id="sampleTubeContainer">
+                            <label class="col-sm-4 control-label">Volume of The Sample(mL)</label>
+                            <div class="col-sm-8" id="sampleVolumeInputs">
+                                <input id="vol_sampletube1" name="vol_sampletube1" type="number" step="0.01" class="form-control" placeholder="Volume of The Sample(mL) Tube1" required>
                             </div>
                         </div>
 
-                        <div class="form-group" id="sampleTubeContainer">
-                            <label class="col-sm-4 control-label">Volume of The Sample(uL)</label>
-                            <div class="col-sm-8" id="sampleVolumeInputs">
-                                <input id="vol_sampletube1" name="vol_sampletube1" type="number" step="0.01" class="form-control" placeholder="Volume of The Sample(uL) Tube1" required>
+                        <div class="form-group">
+                            <label for="elution_volume" class="col-sm-4 control-label">Filtration  Volume(mL)</label>
+                            <div class="col-sm-8">
+                                <input id="elution_volume" name="elution_volume" type="number" step="0.01" class="form-control" placeholder="Filtration  Volume(mL)" required>
                             </div>
                         </div>
 
@@ -259,12 +267,14 @@
     $(document).ready(function() {
         const params = new URLSearchParams(window.location.search);
         const barcodeFromUrl = params.get('barcode');
+        const idOneWaterSampleFromUrl = params.get('idOneWaterSample');
+        const idTestingTypeFromUrl = params.get('idTestingType');
 
-        if (barcodeFromUrl) {
+        if (barcodeFromUrl  && idOneWaterSampleFromUrl) {
             $('#mode').val('insert');
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Campy Liquids | New<span id="my-another-cool-loader"></span>');
-            $('#id_one_water_sample').val('');
-            $('#id_one_water_sample').show();
+            $('#id_one_water_sample').attr('readonly', true);
+            $('#id_one_water_sample').val(idOneWaterSampleFromUrl || '');  // Set ID jika ada
             $('#idx_one_water_sample').hide();
             $('#id_person').val('');
             $('#number_of_tubes').val('');
@@ -274,13 +284,9 @@
             $('#sampletype').val('');
             $('#sampletype').attr('readonly', true);
             $('#tray_weight').val('');
+            $('#elution_volume').val('');
             $('#comments').val('');
             $('#mpn_pcr_conducted').val('');
-            let sampleVolumeInputs = $('#sampleVolumeInputs');
-            if (sampleVolumeInputs.children().length > 1) {
-                sampleVolumeInputs.empty();
-                sampleVolumeInputs.append('<input id="vol_sampletube1" name="vol_sampletube1" type="number" step="0.01" class="form-control sample-input" placeholder="Volume of The Sample(uL) Tube1" disabled required>');
-            }
             $('#barcode_moisture_content').val('');
             $('#compose-modal').modal('show');
         } else {
@@ -312,14 +318,32 @@
             for (let i = 1; i <= numberOfTubes; i++) {
                 sampleVolumeInputs.append(
                     `<div class="form-group">
-                        <label for="vol_sampletube${i}" class="control-label">Volume of The Sample(uL) Tube ${i}</label>
-                        <input id="vol_sampletube${i}" name="vol_sampletube${i}" type="number" step="0.01" class="form-control sample-input" placeholder="Volume of The Sample(uL) Tube ${i}" required>
+                        <label for="vol_sampletube${i}" class="col-sm control-label">Tube ${i}</label>
+                        <div class="col-sm-8">
+                            <input id="vol_sampletube${i}" name="vol_sampletube${i}" type="number" step="0.01" class="form-control sample-input" placeholder="Volume of The Sample(mL) Tube ${i}" required>
+                        </div>
                     </div>`
                 );
             }
+            // Menambahkan event listener untuk setiap input volume tabung
+            addElutionVolumeCalculation();
         }).trigger('change');
 
+        // Fungsi untuk menghitung dan memperbarui elution_volume
+        function addElutionVolumeCalculation() {
+            $('#sampleVolumeInputs').on('input', 'input.sample-input', function() {
+                let totalVolume = 0;
 
+                // Menjumlahkan nilai dari semua input volume tabung
+                $('input.sample-input').each(function() {
+                    let value = parseFloat($(this).val()) || 0; // Ambil nilai input, default 0 jika kosong atau NaN
+                    totalVolume += value; // Jumlahkan nilai
+                });
+
+                // Perbarui input elution_volume dengan total
+                $('#elution_volume').val(totalVolume.toFixed(2)); // Set nilai pada elution_volume, dengan 2 angka desimal
+            });
+        }
 
         function showConfirmation(url) {
             deleteUrl = url; // Set the URL to the variable
@@ -327,9 +351,9 @@
         }
 
         // Handle the delete button click
-        $(document).on('click', '.btn_deleteCampyBiosolids', function() {
+        $(document).on('click', '.btn_deleteCampyLiquids', function() {
             let id = $(this).data('id');
-            let url = '<?php echo site_url('Campy_liquids/delete_campyBiosolids'); ?>/' + id;
+            let url = '<?php echo site_url('Campy_liquids/delete_campyLiquids'); ?>/' + id;
             $('#confirm-modal #id').text(id);
             console.log(id);
             showConfirmation(url);
@@ -353,35 +377,6 @@
                     location.reload();
                 }
             });
-        });
-
-
-        $('.idOneWaterSampleSelect').change(function() {
-            let id_one_water_sample = $(this).val(); // Mendapatkan ID produk yang dipilih
-            if (id_one_water_sample) {
-                $.ajax({
-                    url: '<?php echo site_url('Moisture_content/getIdOneWaterDetails'); ?>', // URL untuk request AJAX
-                    type: 'POST',
-                    data: { id_one_water_sample: id_one_water_sample }, // Data yang dikirim ke server
-                    dataType: 'json', // Format data yang diharapkan dari server
-                    success: function(response) {
-                        // Mengisi field 'unit_of_measure' dengan nilai yang diterima dari server
-                        $('#sampletype').val(response.sampletype || '');
-                        $('#id_sampletype').val(response.id_sampletype || '');
-
-                        // Trigger input event to handle visibility of tray_weight
-                        $('#sampletype').trigger('input');
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        // Menangani error jika terjadi kesalahan dalam request
-                        console.error('AJAX error:', textStatus, errorThrown);
-                        $('#sampletype').val('');
-                    }
-                });
-            } else {
-                $('#sampletype').val('');
-                $('#tray_weight_container').hide(); 
-            }
         });
 
         $('.clockpicker').clockpicker({
@@ -431,6 +426,68 @@
                 $('.val1tip').tooltipster('hide');   
             }, 3000);                            
         });
+
+
+        $('.idOneWaterSampleSelect').change(function() {
+            let id_one_water_sample = $(this).val(); // Mendapatkan ID produk yang dipilih
+            if (id_one_water_sample) {
+                $.ajax({
+                    url: '<?php echo site_url('Campy_liquids/getIdOneWaterDetails'); ?>', // URL untuk request AJAX
+                    type: 'POST',
+                    data: { id_one_water_sample: id_one_water_sample }, // Data yang dikirim ke server
+                    dataType: 'json', // Format data yang diharapkan dari server
+                    success: function(response) {
+                        // Mengisi field 'unit_of_measure' dengan nilai yang diterima dari server
+                        $('#sampletype').val(response.sampletype || '');
+                        $('#id_sampletype').val(response.id_sampletype || '');
+
+                        // Trigger input event to handle visibility of tray_weight
+                        $('#sampletype').trigger('input');
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        // Menangani error jika terjadi kesalahan dalam request
+                        console.error('AJAX error:', textStatus, errorThrown);
+                        $('#sampletype').val('');
+                    }
+                });
+            } else {
+                $('#sampletype').val('');
+                $('#tray_weight_container').hide(); 
+            }
+        }).trigger('change');
+
+        $('#id_one_water_sample').on("change", function() {
+            $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
+            id_one_water_sample = $('#id_one_water_sample').val();
+            $.ajax({
+                type: "GET",
+                url: "Campy_liquids/barcode_restrict?id1="+id_one_water_sample,
+                dataType: "json",
+                success: function(data) {
+                    if (data.length > 0) {
+                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Id One Water Sample <strong> ' + id_one_water_sample +'</strong> is already in the system !</span>');
+                        $('.val1tip').tooltipster('content', tip);
+                        $('.val1tip').tooltipster('show');
+                        $('#id_one_water_sample').focus();
+                        $('#id_one_water_sample').val('');        
+                        $('#id_one_water_sample').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#id_one_water_sample').css({'background-color' : '#FFFFFF'});
+                            setTimeout(function(){
+                                $('#id_one_water_sample').css({'background-color' : '#FFE6E7'});
+                                setTimeout(function(){
+                                    $('#id_one_water_sample').css({'background-color' : '#FFFFFF'});
+                                }, 300);                            
+                            }, 300);
+                        }, 300);
+                        id_one_water_sample = data[0].id_one_water_sample;
+                        console.log(data);
+                    }
+                    else {
+                    }
+                }
+            });
+        }).trigger('change');
 
         $('#campy_assay_barcode').on("change", function() {
             let campyAssayBarcode = $('#campy_assay_barcode').val();
@@ -503,14 +560,19 @@
             columns: [
                 {"data": "id_one_water_sample"},
                 {"data": "initial"},
-                {"data": "sampletype"},
+                {
+                    "data": "sampletype",
+                    "render": function(data, type, row) {
+                        return data ? data : '-';
+                    }
+                },
                 {"data": "number_of_tubes"},
                 {"data": "mpn_pcr_conducted"},
                 {"data": "campy_assay_barcode"},
                 {"data": "date_sample_processed"},
                 {"data": "time_sample_processed"},
-                {"data": "elution_volume"},
                 {"data": "vol_sampletube"},
+                {"data": "elution_volume"},
                 {
                     "data" : "action",
                     "orderable": false,
@@ -576,7 +638,7 @@
             let sampleVolumeInputs = $('#sampleVolumeInputs');
             if (sampleVolumeInputs.children().length > 1) {
                 sampleVolumeInputs.empty();
-                sampleVolumeInputs.append('<input id="vol_sampletube1" name="vol_sampletube1" type="number" step="0.01" class="form-control sample-input" placeholder="Volume of The Sample(uL) Tube1" disabled required>');
+                sampleVolumeInputs.append('<input id="vol_sampletube1" name="vol_sampletube1" type="number" step="0.01" class="form-control sample-input" placeholder="Volume of The Sample(mL) Tube1" disabled required>');
             }
             $('#barcode_moisture_content').val('');
             $('#compose-modal').modal('show');
@@ -590,7 +652,7 @@
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Campy Liquids | Update<span id="my-another-cool-loader"></span>');
             $('#id_campy_liquids').val(data.id_campy_liquids);
             $('#id_one_water_sample').hide();
-            $('#idx_one_water_sample').show();
+            // $('#idx_one_water_sample').show();
             $('#idx_one_water_sample').attr('readonly', true);
             $('#idx_one_water_sample').val(data.id_one_water_sample);
             $('#id_person').val(data.id_person);
@@ -632,8 +694,10 @@
                 const volume = volSampletubeArray[index] || ''; // Dapatkan volume yang sesuai atau kosong jika tidak ada
                 sampleVolumeInputs.append(
                     `<div class="form-group">
-                        <label for="vol_sampletube${tubeNumber}" class="control-label">Volume of The Sample(uL) Tube ${tubeNumber}</label>
-                        <input id="vol_sampletube${tubeNumber}" name="vol_sampletube${tubeNumber}" type="number" step="0.01" class="form-control sample-input" placeholder="Volume of The Sample(uL) Tube ${tubeNumber}" value="${volume}" required>
+                        <label for="vol_sampletube${tubeNumber}" class="col-sm control-label">Tube ${tubeNumber}</label>
+                        <div class="col-sm-8">
+                            <input id="vol_sampletube${tubeNumber}" name="vol_sampletube${tubeNumber}" type="number" step="0.01" class="form-control sample-input" placeholder="Volume of The Sample(mL) Tube ${tubeNumber}" value="${volume}" required>
+                        </div>
                     </div>`
                 );
             });

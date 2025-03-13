@@ -71,7 +71,7 @@ class Salmonella_liquids extends CI_Controller
                 'salmonella_assay_barcode' => $row->salmonella_assay_barcode,
                 'date_sample_processed' => $row->date_sample_processed,
                 'time_sample_processed' => $row->time_sample_processed,
-                'sample_wetweight' => $row->sample_wetweight,
+                // 'sample_wetweight' => $row->sample_wetweight,
                 'elution_volume' => $row->elution_volume,
                 'enrichment_media' => $row->enrichment_media,
                 'vol_sampletube' => $row->vol_sampletube,
@@ -131,7 +131,7 @@ class Salmonella_liquids extends CI_Controller
         $salmonella_assay_barcode = $this->input->post('salmonella_assay_barcode', TRUE);
         $date_sample_processed = $this->input->post('date_sample_processed', TRUE);
         $time_sample_processed = $this->input->post('time_sample_processed', TRUE);
-        $sample_wetweight = $this->input->post('sample_wetweight', TRUE);
+        // $sample_wetweight = $this->input->post('sample_wetweight', TRUE);
         $elution_volume = $this->input->post('elution_volume', TRUE);
         $enrichment_media = $this->input->post('enrichment_media', TRUE);
     
@@ -146,7 +146,7 @@ class Salmonella_liquids extends CI_Controller
                 'salmonella_assay_barcode' => $salmonella_assay_barcode,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
-                'sample_wetweight' => $sample_wetweight,
+                // 'sample_wetweight' => $sample_wetweight,
                 'elution_volume' => $elution_volume,
                 'enrichment_media' => $enrichment_media,
                 'flag' => '0',
@@ -192,7 +192,7 @@ class Salmonella_liquids extends CI_Controller
                 'salmonella_assay_barcode' => $salmonella_assay_barcode,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
-                'sample_wetweight' => $sample_wetweight,
+                // 'sample_wetweight' => $sample_wetweight,
                 'elution_volume' => $elution_volume,
                 'enrichment_media' => $enrichment_media,
                 'flag' => '0',
@@ -240,6 +240,97 @@ class Salmonella_liquids extends CI_Controller
         redirect(site_url("salmonella_liquids"));
     }
 
+    // public function saveResultsXld() {
+    //     $mode = $this->input->post('mode_detResultsXld', TRUE);
+    //     $id_salmonella_liquids = $this->input->post('id_salmonella_liquids1', TRUE);
+    //     $id_result_xld = $this->input->post('id_result_xld', TRUE);
+    //     $dt = new DateTime();
+    //     $date_sample_processed = $this->input->post('date_sample_processed1', TRUE);
+    //     $time_sample_processed = $this->input->post('time_sample_processed1', TRUE);
+    
+    //     if ($mode == "insert") {
+    //         // Insert data into assays table
+    //         $data = array(
+    //             'id_salmonella_liquids' => $id_salmonella_liquids,
+    //             'date_sample_processed' => $date_sample_processed,
+    //             'time_sample_processed' => $time_sample_processed,
+    //             'flag' => '0',
+    //             'lab' => $this->session->userdata('lab'),
+    //             'uuid' => $this->uuid->v4(),
+    //             'user_created' => $this->session->userdata('id_users'),
+    //             'date_created' => $dt->format('Y-m-d H:i:s'),
+    //         );
+
+    //         // var_dump($data);
+    //         // die();
+    
+    //         $assay_id = $this->Salmonella_liquids_model->insertResultsXld($data);
+    
+    //         // Insert sample volumes
+    //         $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
+    //         for ($i = 1; $i <= $number_of_tubes; $i++) {
+    //             $plate = $this->input->post("colony_plate{$i}", TRUE);
+    //             if ($plate !== null) {
+    //                 $this->Salmonella_liquids_model->insert_purple_colony_plate(array(
+    //                     'id_result_xld' => $assay_id,
+    //                     'plate_number' => $i,
+    //                     'purple_colony_plate' => $plate,
+    //                     'flag' => '0',
+    //                     'lab' => $this->session->userdata('lab'),
+    //                     'uuid' => $this->uuid->v4(),
+    //                     'user_created' => $this->session->userdata('id_users'),
+    //                     'date_created' => $dt->format('Y-m-d H:i:s'),
+    //                 ));
+    //             }
+    //         }
+    
+    //         $this->session->set_flashdata('message', 'Create Record Success');
+    
+    //     } else if ($mode == "edit") {
+    //         // Update data in assays table
+    //         $data = array(
+    //             'id_salmonella_liquids' => $id_salmonella_liquids,
+    //             'date_sample_processed' => $date_sample_processed,
+    //             'time_sample_processed' => $time_sample_processed,
+    //             'flag' => '0',
+    //             'lab' => $this->session->userdata('lab'),
+    //             'uuid' => $this->uuid->v4(),
+    //             'user_updated' => $this->session->userdata('id_users'),
+    //             'date_updated' => $dt->format('Y-m-d H:i:s'),
+    //         );
+
+    //         // var_dump($data);
+    //         // die();
+    
+    //         $this->Salmonella_liquids_model->updateResultsXld($id_result_xld, $data);
+
+    //         // Update sample volumes
+    //         $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
+    //         $this->Salmonella_liquids_model->delete_purple_colony_plates($id_result_xld); // Hapus volume yang ada
+
+    //         for ($i = 1; $i <= $number_of_tubes; $i++) {
+    //             $plate = $this->input->post("purple_colony_plate{$i}", TRUE);
+    //             if ($plate !== null) {
+    //                 $data_plate = array(
+    //                     'id_result_xld' => $id_result_xld,
+    //                     'plate_number' => $i,
+    //                     'purple_colony_plate' => $plate,
+    //                     'flag' => '0',
+    //                     'lab' => $this->session->userdata('lab'),
+    //                     'uuid' => $this->uuid->v4(),
+    //                     'user_created' => $this->session->userdata('id_users'),
+    //                     'date_created' => $dt->format('Y-m-d H:i:s'),
+    //                 );
+    //                 $this->Salmonella_liquids_model->insert_purple_colony_plate($data_plate);
+    //             }
+    //         }
+    
+    //         $this->session->set_flashdata('message', 'Update Record Success');
+    //     }
+    
+    //     redirect(site_url("salmonella_liquids/read/" . $id_salmonella_liquids));
+    // }
+
     public function saveResultsXld() {
         $mode = $this->input->post('mode_detResultsXld', TRUE);
         $id_salmonella_liquids = $this->input->post('id_salmonella_liquids1', TRUE);
@@ -270,11 +361,11 @@ class Salmonella_liquids extends CI_Controller
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $plate = $this->input->post("colony_plate{$i}", TRUE);
-                if ($plate) {
-                    $this->Salmonella_liquids_model->insert_purple_colony_plate(array(
+                if ($plate !== null) {
+                    $this->Salmonella_liquids_model->insert_black_colony_plate_chromagar(array(
                         'id_result_xld' => $assay_id,
                         'plate_number' => $i,
-                        'purple_colony_plate' => $plate,
+                        'black_colony_plate' => $plate,
                         'flag' => '0',
                         'lab' => $this->session->userdata('lab'),
                         'uuid' => $this->uuid->v4(),
@@ -306,22 +397,22 @@ class Salmonella_liquids extends CI_Controller
 
             // Update sample volumes
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
-            $this->Salmonella_liquids_model->delete_purple_colony_plates($id_result_xld); // Hapus volume yang ada
+            $this->Salmonella_liquids_model->delete_black_colony_plates_chromagar($id_result_xld); // Hapus volume yang ada
 
             for ($i = 1; $i <= $number_of_tubes; $i++) {
-                $plate = $this->input->post("purple_colony_plate{$i}", TRUE);
-                if ($plate) {
+                $plate = $this->input->post("black_colony_plate{$i}", TRUE);
+                if ($plate !== null) {
                     $data_plate = array(
                         'id_result_xld' => $id_result_xld,
                         'plate_number' => $i,
-                        'purple_colony_plate' => $plate,
+                        'black_colony_plate' => $plate,
                         'flag' => '0',
                         'lab' => $this->session->userdata('lab'),
                         'uuid' => $this->uuid->v4(),
                         'user_created' => $this->session->userdata('id_users'),
                         'date_created' => $dt->format('Y-m-d H:i:s'),
                     );
-                    $this->Salmonella_liquids_model->insert_purple_colony_plate($data_plate);
+                    $this->Salmonella_liquids_model->insert_black_colony_plate_Chromagar($data_plate);
                 }
             }
     
@@ -331,6 +422,96 @@ class Salmonella_liquids extends CI_Controller
         redirect(site_url("salmonella_liquids/read/" . $id_salmonella_liquids));
     }
 
+    // public function saveResultsChromagar() {
+    //     $mode = $this->input->post('mode_detResultsChromagar', TRUE);
+    //     $id_salmonella_liquids = $this->input->post('id_salmonella_liquidsChromagar', TRUE);
+    //     $id_result_chromagar = $this->input->post('id_result_chromagar', TRUE);
+
+    //     $dt = new DateTime();
+    //     $date_sample_processed = $this->input->post('date_sample_processedChromagar', TRUE);
+    //     $time_sample_processed = $this->input->post('time_sample_processedChromagar', TRUE);
+    
+    //     if ($mode == "insert") {
+    //         // Insert data into assays table
+    //         $data = array(
+    //             'id_salmonella_liquids' => $id_salmonella_liquids,
+    //             'date_sample_processed' => $date_sample_processed,
+    //             'time_sample_processed' => $time_sample_processed,
+    //             'flag' => '0',
+    //             'lab' => $this->session->userdata('lab'),
+    //             'uuid' => $this->uuid->v4(),
+    //             'user_created' => $this->session->userdata('id_users'),
+    //             'date_created' => $dt->format('Y-m-d H:i:s'),
+    //         );
+
+    //         // var_dump($data);
+    //         // die();
+    
+    //         $assay_id = $this->Salmonella_liquids_model->insertResultsChromagar($data);
+    
+    //         // Insert sample volumes
+    //         $number_of_tubes = $this->input->post('number_of_tubesChromagar', TRUE);
+    //         for ($i = 1; $i <= $number_of_tubes; $i++) {
+    //             $plate = $this->input->post("black_colony_plate{$i}", TRUE);
+
+    //             if ($plate) {
+    //                 $this->Salmonella_liquids_model->insert_black_colony_plate_chromagar(array(
+    //                     'id_result_chromagar' => $assay_id,
+    //                     'plate_number' => $i,
+    //                     'black_colony_plate' => $plate,
+    //                     'flag' => '0',
+    //                     'lab' => $this->session->userdata('lab'),
+    //                     'uuid' => $this->uuid->v4(),
+    //                     'user_created' => $this->session->userdata('id_users'),
+    //                     'date_created' => $dt->format('Y-m-d H:i:s'),
+    //                 ));
+    //             }
+
+    //         }
+    
+    //         $this->session->set_flashdata('message', 'Create Record Success');
+    
+    //     } else if ($mode == "edit") {
+    //         // Update data in assays table
+    //         $data = array(
+    //             'id_salmonella_liquids' => $id_salmonella_liquids,
+    //             'date_sample_processed' => $date_sample_processed,
+    //             'time_sample_processed' => $time_sample_processed,
+    //             'flag' => '0',
+    //             'lab' => $this->session->userdata('lab'),
+    //             'uuid' => $this->uuid->v4(),
+    //             'user_updated' => $this->session->userdata('id_users'),
+    //             'date_updated' => $dt->format('Y-m-d H:i:s'),
+    //         );
+    
+    //         $this->Salmonella_liquids_model->updateResultsChromagar($id_result_chromagar, $data);
+    
+    //         // Update sample volumes
+    //         $number_of_tubes = $this->input->post('number_of_tubesChromagar', TRUE);
+    //         $this->Salmonella_liquids_model->delete_black_colony_plates_chromagar($id_result_chromagar); // Hapus volume yang ada
+    
+    //         for ($i = 1; $i <= $number_of_tubes; $i++) {
+    //             $plate = $this->input->post("black_colony_plate{$i}", TRUE);
+    //             if ($plate) {
+    //                 $data_plate = array(
+    //                     'id_result_chromagar' => $id_result_chromagar,
+    //                     'plate_number' => $i,
+    //                     'black_colony_plate' => $plate,
+    //                     'flag' => '0',
+    //                     'lab' => $this->session->userdata('lab'),
+    //                     'uuid' => $this->uuid->v4(),
+    //                     'user_created' => $this->session->userdata('id_users'),
+    //                     'date_created' => $dt->format('Y-m-d H:i:s'),
+    //                 );
+    //                 $this->Salmonella_liquids_model->insert_black_colony_plate_Chromagar($data_plate);
+    //             }
+    //         }
+    
+    //         $this->session->set_flashdata('message', 'Update Record Success');
+    //     }
+    
+    //     redirect(site_url("salmonella_liquids/read/" . $id_salmonella_liquids));
+    // }
     public function saveResultsChromagar() {
         $mode = $this->input->post('mode_detResultsChromagar', TRUE);
         $id_salmonella_liquids = $this->input->post('id_salmonella_liquidsChromagar', TRUE);
@@ -361,13 +542,13 @@ class Salmonella_liquids extends CI_Controller
             // Insert sample volumes
             $number_of_tubes = $this->input->post('number_of_tubesChromagar', TRUE);
             for ($i = 1; $i <= $number_of_tubes; $i++) {
-                $plate = $this->input->post("black_colony_plate{$i}", TRUE);
+                $plate = $this->input->post("purple_colony_plate{$i}", TRUE);
 
-                if ($plate) {
-                    $this->Salmonella_liquids_model->insert_black_colony_plate_chromagar(array(
+                if ($plate !== null) {
+                    $this->Salmonella_liquids_model->insert_purple_colony_plate(array(
                         'id_result_chromagar' => $assay_id,
                         'plate_number' => $i,
-                        'black_colony_plate' => $plate,
+                        'purple_colony_plate' => $plate,
                         'flag' => '0',
                         'lab' => $this->session->userdata('lab'),
                         'uuid' => $this->uuid->v4(),
@@ -397,22 +578,22 @@ class Salmonella_liquids extends CI_Controller
     
             // Update sample volumes
             $number_of_tubes = $this->input->post('number_of_tubesChromagar', TRUE);
-            $this->Salmonella_liquids_model->delete_black_colony_plates_chromagar($id_result_chromagar); // Hapus volume yang ada
+            $this->Salmonella_liquids_model->delete_purple_colony_plates($id_result_chromagar); // Hapus volume yang ada
     
             for ($i = 1; $i <= $number_of_tubes; $i++) {
-                $plate = $this->input->post("black_colony_plate{$i}", TRUE);
-                if ($plate) {
+                $plate = $this->input->post("purple_colony_plate{$i}", TRUE);
+                if ($plate !== null) {
                     $data_plate = array(
                         'id_result_chromagar' => $id_result_chromagar,
                         'plate_number' => $i,
-                        'black_colony_plate' => $plate,
+                        'purple_colony_plate' => $plate,
                         'flag' => '0',
                         'lab' => $this->session->userdata('lab'),
                         'uuid' => $this->uuid->v4(),
                         'user_created' => $this->session->userdata('id_users'),
                         'date_created' => $dt->format('Y-m-d H:i:s'),
                     );
-                    $this->Salmonella_liquids_model->insert_black_colony_plate_Chromagar($data_plate);
+                    $this->Salmonella_liquids_model->insert_purple_colony_plate($data_plate);
                 }
             }
     
@@ -569,7 +750,7 @@ class Salmonella_liquids extends CI_Controller
         $sheet->setCellValue('G1', "Date Sample Processed");
         $sheet->setCellValue('H1', "Time Sample Processed");
         $sheet->setCellValue('I1', "Sample Wet Weight");
-        $sheet->setCellValue('J1', "Elution Volume");
+        $sheet->setCellValue('J1', "Filtration  Volume(mL)");
         $sheet->setCellValue('K1', "Enrichment Media");
     
         // Fetch the concentration data
@@ -702,7 +883,7 @@ class Salmonella_liquids extends CI_Controller
         $sheet->setCellValue('G1', "Date Sample Processed");
         $sheet->setCellValue('H1', "Time Sample Processed");
         $sheet->setCellValue('I1', "Sample Wet Weight");
-        $sheet->setCellValue('J1', "Elution Volume");
+        $sheet->setCellValue('J1', "Filtration  Volume(mL)");
         $sheet->setCellValue('K1', "Enrichment Media");
     
         // Add Tube Volume headers
@@ -765,6 +946,14 @@ class Salmonella_liquids extends CI_Controller
     public function validateSalmonellaAssayBarcode() {
         $id = $this->input->get('id');
         $data = $this->Salmonella_liquids_model->validateSalmonellaAssayBarcode($id);
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
+
+    public function barcode_restrict() 
+    {
+        $id = $this->input->get('id1');
+        $data = $this->Salmonella_liquids_model->barcode_restrict($id);
         header('Content-Type: application/json');
         echo json_encode($data);
     }

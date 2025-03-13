@@ -44,10 +44,10 @@ class Salmonella_biosolids_model extends CI_Model
 
     function subjsonXld($id) {
         $this->datatables->select('srx.id_result_xld, sb.salmonella_assay_barcode, srx.id_salmonella_biosolids, srx.date_sample_processed, srx.time_sample_processed,
-        GROUP_CONCAT(sspcl.purple_colony_plate ORDER BY sspcl.plate_number SEPARATOR ", ") AS purple_colony_plate, GROUP_CONCAT(sspcl.plate_number ORDER BY sspcl.plate_number SEPARATOR ", ") AS plate_number, srx.flag');
+        GROUP_CONCAT(sspcl.black_colony_plate ORDER BY sspcl.plate_number SEPARATOR ", ") AS black_colony_plate, GROUP_CONCAT(sspcl.plate_number ORDER BY sspcl.plate_number SEPARATOR ", ") AS plate_number, srx.flag');
         $this->datatables->from('salmonella_result_xld AS srx');
         $this->datatables->join('salmonella_biosolids AS sb', 'srx.id_salmonella_biosolids = sb.id_salmonella_biosolids', 'left');
-        $this->datatables->join('salmonella_sample_purple_colony_plate AS sspcl', 'srx.id_result_xld = sspcl.id_result_xld', 'left');
+        $this->datatables->join('salmonella_sample_black_colony_plate AS sspcl', 'srx.id_result_xld = sspcl.id_result_xld', 'left');
         $this->datatables->where('srx.flag', '0');
         $this->datatables->where('srx.id_salmonella_biosolids', $id);
         $this->datatables->group_by('
@@ -74,10 +74,10 @@ class Salmonella_biosolids_model extends CI_Model
 
     function subjsonChroMagar($id) {
         $this->datatables->select('src.id_result_chromagar, sb.salmonella_assay_barcode, src.id_salmonella_biosolids, src.date_sample_processed, src.time_sample_processed, 
-        GROUP_CONCAT(ssbcpc.black_colony_plate ORDER BY ssbcpc.plate_number SEPARATOR ", ") AS black_colony_plate, GROUP_CONCAT(ssbcpc.plate_number ORDER BY ssbcpc.plate_number SEPARATOR ", ") AS plate_number, src.flag, ssbcpc.id_sample_plate_chromagar');
+        GROUP_CONCAT(ssbcpc.purple_colony_plate ORDER BY ssbcpc.plate_number SEPARATOR ", ") AS purple_colony_plate, GROUP_CONCAT(ssbcpc.plate_number ORDER BY ssbcpc.plate_number SEPARATOR ", ") AS plate_number, src.flag, ssbcpc.id_sample_purple_plate');
         $this->datatables->from('salmonella_result_chromagar AS src');
         $this->datatables->join('salmonella_biosolids AS sb', 'src.id_salmonella_biosolids = sb.id_salmonella_biosolids', 'left');
-        $this->datatables->join('salmonella_sample_black_colony_plate_chromagar AS ssbcpc', 'src.id_result_chromagar = ssbcpc.id_result_chromagar', 'left');
+        $this->datatables->join('salmonella_sample_purple_colony_plate AS ssbcpc', 'src.id_result_chromagar = ssbcpc.id_result_chromagar', 'left');
         $this->datatables->where('src.flag', '0');
         $this->datatables->where('src.id_salmonella_biosolids', $id);
         $this->datatables->group_by('
@@ -160,7 +160,7 @@ class Salmonella_biosolids_model extends CI_Model
                         GROUP_CONCAT(DISTINCT ssbcpc.plate_number ORDER BY ssbcpc.plate_number SEPARATOR ', ') AS plate_numbers");
         $this->db->from('salmonella_biosolids AS sb');
         $this->db->join('salmonella_result_chromagar AS src', 'sb.id_salmonella_biosolids = src.id_salmonella_biosolids', 'left');
-        $this->db->join('salmonella_sample_black_colony_plate_chromagar AS ssbcpc', 'src.id_result_chromagar = ssbcpc.id_result_chromagar', 'left');
+        $this->db->join('salmonella_sample_purple_colony_plate AS ssbcpc', 'src.id_result_chromagar = ssbcpc.id_result_chromagar', 'left');
         $this->db->join('salmonella_sample_volumes AS ssv1', 'src.id_salmonella_biosolids = ssv1.id_salmonella_biosolids', 'left');
         $this->db->join('salmonella_result_biochemical AS srb', 'ssbcpc.id_result_chromagar = srb.id_result_chromagar', 'left');
         $this->db->join('ref_sampletype AS rs', 'sb.id_sampletype = rs.id_sampletype', 'left');
@@ -227,7 +227,7 @@ class Salmonella_biosolids_model extends CI_Model
                            GROUP_CONCAT(DISTINCT ssbcpc.plate_number ORDER BY ssbcpc.plate_number SEPARATOR ', ') AS plate_numbers");
         $this->db->from('salmonella_biosolids AS sb');
         $this->db->join('salmonella_result_chromagar AS src', 'sb.id_salmonella_biosolids = src.id_salmonella_biosolids', 'left');
-        $this->db->join('salmonella_sample_black_colony_plate_chromagar AS ssbcpc', 'src.id_result_chromagar = ssbcpc.id_result_chromagar', 'left');
+        $this->db->join('salmonella_sample_purple_colony_plate AS ssbcpc', 'src.id_result_chromagar = ssbcpc.id_result_chromagar', 'left');
         $this->db->join('salmonella_sample_volumes AS ssv1', 'src.id_salmonella_biosolids = ssv1.id_salmonella_biosolids', 'left');
         $this->db->join('salmonella_result_biochemical AS srb', 'ssbcpc.id_result_chromagar = srb.id_result_chromagar', 'left');
         $this->db->join('ref_sampletype AS rs', 'sb.id_sampletype = rs.id_sampletype', 'left');
@@ -302,7 +302,7 @@ class Salmonella_biosolids_model extends CI_Model
                            GROUP_CONCAT(DISTINCT ssbcpc.plate_number ORDER BY ssbcpc.plate_number SEPARATOR ', ') AS plate_numbers");
         $this->db->from('salmonella_biosolids AS sb');
         $this->db->join('salmonella_result_chromagar AS src', 'sb.id_salmonella_biosolids = src.id_salmonella_biosolids', 'left');
-        $this->db->join('salmonella_sample_black_colony_plate_chromagar AS ssbcpc', 'src.id_result_chromagar = ssbcpc.id_result_chromagar', 'left');
+        $this->db->join('salmonella_sample_purple_colony_plate AS ssbcpc', 'src.id_result_chromagar = ssbcpc.id_result_chromagar', 'left');
         $this->db->join('salmonella_sample_volumes AS ssv1', 'src.id_salmonella_biosolids = ssv1.id_salmonella_biosolids', 'left');
         $this->db->join('salmonella_result_biochemical AS srb', 'ssbcpc.id_result_chromagar = srb.id_result_chromagar', 'left');
         $this->db->join('ref_sampletype AS rs', 'sb.id_sampletype = rs.id_sampletype', 'left');
@@ -482,8 +482,8 @@ class Salmonella_biosolids_model extends CI_Model
         $this->db->update('salmonella_result_xld', $data);
     }
 
-    public function delete_purple_colony_plates($id_result_xld) {
-        $this->db->where('id_result_xld', $id_result_xld);
+    public function delete_purple_colony_plates($id_result_chromagar) {
+        $this->db->where('id_result_chromagar', $id_result_chromagar);
         $this->db->delete('salmonella_sample_purple_colony_plate');
     }
 
@@ -517,7 +517,7 @@ class Salmonella_biosolids_model extends CI_Model
     }
 
     public function insert_black_colony_plate_chromagar($data) {
-        $this->db->insert('salmonella_sample_black_colony_plate_chromagar', $data);
+        $this->db->insert('salmonella_sample_black_colony_plate', $data);
     }
 
     function updateResultsChroMagar($id_result_chromagar, $data) {
@@ -525,9 +525,9 @@ class Salmonella_biosolids_model extends CI_Model
         $this->db->update('salmonella_result_chromagar', $data);
     }
 
-    public function delete_black_colony_plates_chromagar($id_result_chromagar) {
-        $this->db->where('id_result_chromagar', $id_result_chromagar);
-        $this->db->delete('salmonella_sample_black_colony_plate_chromagar');
+    public function delete_black_colony_plates_chromagar($id_result_xld) {
+        $this->db->where('id_result_xld', $id_result_xld);
+        $this->db->delete('salmonella_sample_black_colony_plate');
     }
 
     function get_by_id_chromagar($id)
@@ -539,7 +539,7 @@ class Salmonella_biosolids_model extends CI_Model
 
     function updateResultsBlackColonyPlateChroMagar($id, $data) {
         $this->db->where('id_result_chromagar', $id);
-        $this->db->update('salmonella_sample_black_colony_plate_chromagar', $data);
+        $this->db->update('salmonella_sample_black_colony_plate', $data);
     }
 
     function insertResultsBiochemical($data) {
@@ -559,7 +559,16 @@ class Salmonella_biosolids_model extends CI_Model
         $this->db->update('salmonella_result_biochemical', $data);
     }
     
+    function barcode_restrict($id){
 
+        $q = $this->db->query('
+        select id_one_water_sample
+        from salmonella_biosolids
+        WHERE id_one_water_sample = "'.$id.'"
+        ');        
+        $response = $q->result_array();
+        return $response;
+      } 
       
 }
 

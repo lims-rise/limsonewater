@@ -44,10 +44,10 @@ class Salmonella_liquids_model extends CI_Model
 
     function subjsonXld($id) {
         $this->datatables->select('srxl.id_result_xld, sl.salmonella_assay_barcode, srxl.id_salmonella_liquids, srxl.date_sample_processed, srxl.time_sample_processed,
-        GROUP_CONCAT(sspcpl.purple_colony_plate ORDER BY sspcpl.plate_number SEPARATOR ", ") AS purple_colony_plate, GROUP_CONCAT(sspcpl.plate_number ORDER BY sspcpl.plate_number SEPARATOR ", ") AS plate_number, srxl.flag');
+        GROUP_CONCAT(sspcpl.black_colony_plate ORDER BY sspcpl.plate_number SEPARATOR ", ") AS black_colony_plate, GROUP_CONCAT(sspcpl.plate_number ORDER BY sspcpl.plate_number SEPARATOR ", ") AS plate_number, srxl.flag');
         $this->datatables->from('salmonella_result_xld_liquids AS srxl');
         $this->datatables->join('salmonella_liquids AS sl', 'srxl.id_salmonella_liquids = sl.id_salmonella_liquids', 'left');
-        $this->datatables->join('salmonella_sample_purple_colony_plate_liquids AS sspcpl', 'srxl.id_result_xld = sspcpl.id_result_xld', 'left');
+        $this->datatables->join('salmonella_sample_black_colony_plate_liquids AS sspcpl', 'srxl.id_result_xld = sspcpl.id_result_xld', 'left');
         $this->datatables->where('srxl.flag', '0');
         $this->datatables->where('srxl.id_salmonella_liquids', $id);
         $this->datatables->group_by('
@@ -74,10 +74,10 @@ class Salmonella_liquids_model extends CI_Model
 
     function subjsonChroMagar($id) {
         $this->datatables->select('srcl.id_result_chromagar, sl.salmonella_assay_barcode, srcl.id_salmonella_liquids, srcl.date_sample_processed, srcl.time_sample_processed, 
-        GROUP_CONCAT(ssbcpcl.black_colony_plate ORDER BY ssbcpcl.plate_number SEPARATOR ", ") AS black_colony_plate, GROUP_CONCAT(ssbcpcl.plate_number ORDER BY ssbcpcl.plate_number SEPARATOR ", ") AS plate_number, srcl.flag, ssbcpcl.id_sample_plate_chromagar');
+        GROUP_CONCAT(ssbcpcl.purple_colony_plate ORDER BY ssbcpcl.plate_number SEPARATOR ", ") AS purple_colony_plate, GROUP_CONCAT(ssbcpcl.plate_number ORDER BY ssbcpcl.plate_number SEPARATOR ", ") AS plate_number, srcl.flag, ssbcpcl.id_sample_purple_plate');
         $this->datatables->from('salmonella_result_chromagar_liquids AS srcl');
         $this->datatables->join('salmonella_liquids AS sl', 'srcl.id_salmonella_liquids = sl.id_salmonella_liquids', 'left');
-        $this->datatables->join('salmonella_sample_black_colony_plate_chromagar_liquids AS ssbcpcl', 'srcl.id_result_chromagar = ssbcpcl.id_result_chromagar', 'left');
+        $this->datatables->join('salmonella_sample_purple_colony_plate_liquids AS ssbcpcl', 'srcl.id_result_chromagar = ssbcpcl.id_result_chromagar', 'left');
         $this->datatables->where('srcl.flag', '0');
         $this->datatables->where('srcl.id_salmonella_liquids', $id);
         $this->datatables->group_by('
@@ -160,7 +160,7 @@ class Salmonella_liquids_model extends CI_Model
                         GROUP_CONCAT(DISTINCT ssbcpcl.plate_number ORDER BY ssbcpcl.plate_number SEPARATOR ', ') AS plate_numbers");
         $this->db->from('salmonella_liquids AS sl');
         $this->db->join('salmonella_result_chromagar_liquids AS srcl', 'sl.id_salmonella_liquids = srcl.id_salmonella_liquids', 'left');
-        $this->db->join('salmonella_sample_black_colony_plate_chromagar_liquids AS ssbcpcl', 'srcl.id_result_chromagar = ssbcpcl.id_result_chromagar', 'left');
+        $this->db->join('salmonella_sample_purple_colony_plate_liquids AS ssbcpcl', 'srcl.id_result_chromagar = ssbcpcl.id_result_chromagar', 'left');
         $this->db->join('salmonella_sample_volumes_liquids AS ssvl1', 'srcl.id_salmonella_liquids = ssvl1.id_salmonella_liquids', 'left');
         $this->db->join('salmonella_result_biochemical_liquids AS srbl', 'ssbcpcl.id_result_chromagar = srbl.id_result_chromagar', 'left');
         $this->db->join('ref_sampletype AS rs', 'sl.id_sampletype = rs.id_sampletype', 'left');
@@ -227,7 +227,7 @@ class Salmonella_liquids_model extends CI_Model
                            GROUP_CONCAT(DISTINCT ssbcpcl.plate_number ORDER BY ssbcpcl.plate_number SEPARATOR ', ') AS plate_numbers");
         $this->db->from('salmonella_liquids AS sl');
         $this->db->join('salmonella_result_chromagar_liquids AS srcl', 'sl.id_salmonella_liquids = srcl.id_salmonella_liquids', 'left');
-        $this->db->join('salmonella_sample_black_colony_plate_chromagar_liquids AS ssbcpcl', 'srcl.id_result_chromagar = ssbcpcl.id_result_chromagar', 'left');
+        $this->db->join('salmonella_sample_purple_colony_plate_liquids AS ssbcpcl', 'srcl.id_result_chromagar = ssbcpcl.id_result_chromagar', 'left');
         $this->db->join('salmonella_sample_volumes_liquids AS ssvl1', 'srcl.id_salmonella_liquids = ssvl1.id_salmonella_liquids', 'left');
         $this->db->join('salmonella_result_biochemical_liquids AS srbl', 'ssbcpcl.id_result_chromagar = srbl.id_result_chromagar', 'left');
         $this->db->join('ref_sampletype AS rs', 'sl.id_sampletype = rs.id_sampletype', 'left');
@@ -302,7 +302,7 @@ class Salmonella_liquids_model extends CI_Model
                            GROUP_CONCAT(DISTINCT ssbcpcl.plate_number ORDER BY ssbcpcl.plate_number SEPARATOR ', ') AS plate_numbers");
         $this->db->from('salmonella_liquids AS sl');
         $this->db->join('salmonella_result_chromagar_liquids AS srcl', 'sl.id_salmonella_liquids = srcl.id_salmonella_liquids', 'left');
-        $this->db->join('salmonella_sample_black_colony_plate_chromagar_liquids AS ssbcpcl', 'srcl.id_result_chromagar = ssbcpcl.id_result_chromagar', 'left');
+        $this->db->join('salmonella_sample_purple_colony_plate_liquids AS ssbcpcl', 'srcl.id_result_chromagar = ssbcpcl.id_result_chromagar', 'left');
         $this->db->join('salmonella_sample_volumes_liquids AS ssvl1', 'srcl.id_salmonella_liquids = ssvl1.id_salmonella_liquids', 'left');
         $this->db->join('salmonella_result_biochemical_liquids AS srbl', 'ssbcpcl.id_result_chromagar = srbl.id_result_chromagar', 'left');
         $this->db->join('ref_sampletype AS rs', 'sl.id_sampletype = rs.id_sampletype', 'left');
@@ -482,8 +482,8 @@ class Salmonella_liquids_model extends CI_Model
         $this->db->update('salmonella_result_xld_liquids', $data);
     }
 
-    public function delete_purple_colony_plates($id_result_xld) {
-        $this->db->where('id_result_xld', $id_result_xld);
+    public function delete_purple_colony_plates($id_result_chromagar) {
+        $this->db->where('id_result_chromagar', $id_result_chromagar);
         $this->db->delete('salmonella_sample_purple_colony_plate_liquids');
     }
 
@@ -517,7 +517,7 @@ class Salmonella_liquids_model extends CI_Model
     }
 
     public function insert_black_colony_plate_chromagar($data) {
-        $this->db->insert('salmonella_sample_black_colony_plate_chromagar_liquids', $data);
+        $this->db->insert('salmonella_sample_black_colony_plate_liquids', $data);
     }
 
     function updateResultsChroMagar($id_result_chromagar, $data) {
@@ -525,9 +525,9 @@ class Salmonella_liquids_model extends CI_Model
         $this->db->update('salmonella_result_chromagar_liquids', $data);
     }
 
-    public function delete_black_colony_plates_chromagar($id_result_chromagar) {
-        $this->db->where('id_result_chromagar', $id_result_chromagar);
-        $this->db->delete('salmonella_sample_black_colony_plate_chromagar_liquids');
+    public function delete_black_colony_plates_chromagar($id_result_xld) {
+        $this->db->where('id_result_xld', $id_result_xld);
+        $this->db->delete('salmonella_sample_black_colony_plate_liquids');
     }
 
     function get_by_id_chromagar($id)
@@ -539,7 +539,7 @@ class Salmonella_liquids_model extends CI_Model
 
     function updateResultsBlackColonyPlateChroMagar($id, $data) {
         $this->db->where('id_result_chromagar', $id);
-        $this->db->update('salmonella_sample_black_colony_plate_chromagar_liquids', $data);
+        $this->db->update('salmonella_sample_black_colony_plate_liquids', $data);
     }
 
     function insertResultsBiochemical($data) {
@@ -558,6 +558,17 @@ class Salmonella_liquids_model extends CI_Model
         $this->db->where('id_result_biochemical', $id_result_biochemical);
         $this->db->update('salmonella_result_biochemical_liquids', $data);
     }
+
+    function barcode_restrict($id){
+
+        $q = $this->db->query('
+        select id_one_water_sample
+        from salmonella_liquids
+        WHERE id_one_water_sample = "'.$id.'"
+        ');        
+        $response = $q->result_array();
+        return $response;
+      } 
     
 
       
