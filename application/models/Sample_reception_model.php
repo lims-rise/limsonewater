@@ -224,13 +224,21 @@ class Sample_reception_model extends CI_Model
 
     // Function to get the latest id_one_water_sample
     public function get_latest_one_water_sample_id() {
-        $this->db->select('id_one_water_sample');
-        $this->db->where('flag', '0');
-        $this->db->order_by('id_sample', 'DESC');
-        $this->db->limit(1);
-        $query = $this->db->get('sample_reception_sample');
-
-        // Check if there is a previous client
+        // Ambil tahun saat ini (dua digit terakhir)
+        $current_year = date('y');
+    
+        // Query SQL dinamis berdasarkan tahun saat ini
+        $sql = "SELECT id_one_water_sample
+                FROM sample_reception_sample
+                WHERE flag = '0'
+                  AND id_one_water_sample LIKE CONCAT('P', ?, '%')
+                ORDER BY CAST(SUBSTRING(id_one_water_sample, 4) AS UNSIGNED) DESC
+                LIMIT 1";
+    
+        // Menjalankan query dengan parameter tahun dinamis
+        $query = $this->db->query($sql, array($current_year));
+    
+        // Memeriksa apakah ada hasil
         if ($query->num_rows() > 0) {
             return $query->row()->id_one_water_sample;
         } else {
@@ -497,6 +505,7 @@ class Sample_reception_model extends CI_Model
         $this->db->from('sample_reception_sample');
         $this->db->where('sample_reception_sample.id_project', $id_project);
         $this->db->where('sample_reception_sample.flag', '0');
+        $this->db->order_by('sample_reception_sample.id_sample', 'ASC');
         $query = $this->db->get()->result();
     
         foreach ($query as $row) {
