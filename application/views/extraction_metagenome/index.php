@@ -58,7 +58,7 @@
                             <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
                             <div class="col-sm-8">
                                 <input id="id_one_water_sample" name="id_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control">
-                                <div class="val1tip"></div>
+                                <div class="val2tip"></div>
                             </div>
                         </div>
 
@@ -88,9 +88,30 @@
                         </div>
                         <hr>	                        
                     </div>
-                    <div class="modal-footer clearfix">
+                    <!-- <div class="modal-footer clearfix">
                         <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
                         <button type="button" class="btn btn-warning" id="cancelButton" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                    </div> -->
+                    <!-- Modal Footer with Dynamic TextInform -->
+                    <div class="modal-footer clearfix" style="display: flex; align-items: center; justify-content: space-between;">
+                        <!-- Info Card on the left side -->
+                        <div class="modal-footer-content" style="flex: 1; display: flex; align-items: center;">
+                            <div id="textInform1" class="textInform card" style="width: auto; padding: 5px 10px; display: none;">
+                                <div class="card-body">
+                                    <div class="card-header">
+                                        <h5 class="card-title statusMessage"></h5>
+                                        <i class="fa fa-times close-card" style="float: right; cursor: pointer;"></i>
+                                    </div>
+                                    <p class="statusDescription"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Buttons on the right side -->
+                        <div class="modal-buttons">
+                            <button type="submit" class="btn btn-primary" id="saveButton"><i class="fa fa-save"></i> Save</button>
+                            <button type="button" class="btn btn-warning" id="cancelButton" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                        </div>
                     </div>
                 </form>
             </div><!-- /.modal-content -->
@@ -109,6 +130,7 @@
                 <form id="formSample"  action= <?php echo site_url('Extraction_metagenome/update_child') ?> method="post" class="form-horizontal">
                     <div class="modal-body">
                         <input id="mode-child" name="mode-child" type="hidden" class="form-control input-sm">
+                        <input id="user_review" name="user_review" type="hidden" class="form-control input-sm">
 
                         <div class="form-group">
                             <label for="barcode_sample1" class="col-sm-4 control-label">Barcode Sample</label>
@@ -269,12 +291,47 @@
                                     ?>
                             </select>
                             </div>
-                        </div>	                        
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="review" class="col-sm-4 control-label">Status</label>
+                            <div class="col-sm-8">
+                                <input type="hidden" id="review" name="review" value="0">
+                                <span id="review_label" class="form-check-label unreview" role="button">
+                                    Unreview
+                                </span>
+                                
+                                <!-- New label to display who reviewed the data -->
+                                <span id="reviewed_by_label"  style="margin-left: 10px; font-style: italic;  font-weight: bold; font-size: 11px;">
+                                    <!-- This will display the name of the reviewer, dynamically set -->
+                                </span>
+                            </div>
+                        </div>
 
                     </div>
-                    <div class="modal-footer clearfix">
+                    <!-- <div class="modal-footer clearfix">
                         <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
                         <button type="button" class="btn btn-warning"  data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                    </div> -->
+                    <div class="modal-footer clearfix" style="display: flex; align-items: center; justify-content: space-between;">
+                        <!-- Info Card on the left side -->
+                        <div class="modal-footer-content" style="flex: 1; display: flex; align-items: center;">
+                            <div id="textInform2" class="textInform card" style="width: auto; padding: 5px 10px; display: none;">
+                                <div class="card-body">
+                                    <div class="card-header">
+                                        <h5 class="card-title statusMessage"></h5>
+                                        <i class="fa fa-times close-card" style="float: right; cursor: pointer;"></i>
+                                    </div>
+                                    <p class="statusDescription"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Buttons on the right side -->
+                        <div class="modal-buttons">
+                            <button type="submit" class="btn btn-primary" id="saveButtonDetail"><i class="fa fa-save"></i> Save</button>
+                            <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                        </div>
                     </div>
                 </form>
             </div><!-- /.modal-content -->
@@ -373,6 +430,148 @@
     .child-table-container::-webkit-scrollbar-thumb:hover {
         background: #48A6A7; /* Warna hijau toska yang lebih gelap saat hover */
     }
+
+    .badge {
+        font-size: 14px;
+        padding: 8px 12px;
+        border-radius: 20px;
+        margin-top: 0px;
+    }
+
+    .badge-success {
+        background-color: #6A9C89;
+        color: white;
+    }
+
+    .badge-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .alert {
+        padding: 8px 12px;
+        border-radius: 5px;
+        font-size: 14px;
+        margin-top: 0px;
+    }
+
+    .alert-success {
+        background-color: #6A9C89;
+        color: white;
+    }
+
+    .alert-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .card {
+        border-radius: 10px;
+        margin-top: 0px;
+        padding: 8px 12px;
+        width: 100%; /* Ensures card uses available space */
+    }
+
+    .card-success {
+        border: 1px solid #28a745;
+        background-color: #d4edda;
+    }
+
+    .card-danger {
+        border: 1px solid #dc3545;
+        background-color: #f8d7da;
+    }
+
+    .card-title {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: left; /* Align title to the left */
+        margin-bottom: 0px;
+    }
+
+    .card-body {
+        font-size: 14px;
+        text-align: left; /* Align body text to the left */
+    }
+
+    .modal-footer-content {
+        float: left;
+        width: auto;
+        margin-right: 10px;
+    }
+
+    .modal-buttons {
+        float: right;
+    }
+
+    .icon-success {
+        color: #28a745;
+        margin-right: 10px;
+    }
+
+    .icon-fail {
+        color: #dc3545;
+        margin-right: 10px;
+    }
+
+    .modal-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 15px;
+    }
+
+    .modal-footer-content {
+        flex: 1;
+        display: flex;
+        align-items: center;
+    }
+
+    .modal-buttons {
+        display: flex;
+        align-items: center;
+    }
+
+    .card-body {
+        padding: 0px;
+    }
+
+    .card-title {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .card-description {
+        font-size: 14px;
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .close-card {
+        cursor: pointer;
+        font-size: 18px;
+        color: #FDAB9E;  /* Red color for close icon */
+    }
+
+    .close-card:hover {
+        color: #bd2130; /* Darker red when hovered */
+    }
+
+    .unreview {
+        color: gray !important;
+        border-color: gray !important;
+        box-shadow: none; /* Override Bootstrap box-shadow */
+    }
+
+    /* input.form-check-label. */
+    .review {
+        color: green !important;
+        border-color: green !important;
+    }
 </style>
 
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
@@ -422,13 +621,24 @@
         }
 
         $(document).on('click', '#cancelButton', function() {
-            // Ambil URL asal dari document.referrer (halaman yang mengarah ke halaman ini)
-            var previousUrl = document.referrer;
+            // Get URL parameters
+            const params = new URLSearchParams(window.location.search);
+            const barcodeFromUrl = params.get('barcode');
+            const idOneWaterSampleFromUrl = params.get('idOneWaterSample');
+            const idTestingTypeFromUrl = params.get('idTestingType');
             
-            // Jika ada URL asal, arahkan kembali ke sana
-            if (previousUrl) {
-                window.location.href = previousUrl;
-            } 
+            // Check if the necessary query parameters exist
+            if (barcodeFromUrl && idOneWaterSampleFromUrl && idTestingTypeFromUrl) {
+                // If the parameters exist, redirect to the previous page
+                var previousUrl = document.referrer;
+                
+                if (previousUrl) {
+                    window.location.href = previousUrl;  // Redirect to the previous page
+                }
+            } else {
+                // If the parameters are not found, simply close the modal
+                $('#compose-modal').modal('hide');  // Close the modal
+            }
         });
 
 
@@ -523,8 +733,8 @@
                 success: function(data) {
                     if (data.length > 0) {
                         tip = $('<span><i class="fa fa-exclamation-triangle"></i> Id One Water Sample <strong> ' + data1 +'</strong> is already in the system !</span>');
-                        $('.val1tip').tooltipster('content', tip);
-                        $('.val1tip').tooltipster('show');
+                        $('.val2tip').tooltipster('content', tip);
+                        $('.val2tip').tooltipster('show');
                         $('#id_one_water_sample').focus();
                         $('#id_one_water_sample').val('');        
                         $('#id_one_water_sample').css({'background-color' : '#FFE6E7'});
@@ -833,6 +1043,7 @@
 
         $('#mytable').on('click', '.btn_edit_child', function() {
             let barcode_sample = $(this).data('id');
+            let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
             $('#mode-child').val('edit');
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Sample reception | Update<span id="my-another-cool-loader"></span>');
             $('#modal-sample-body').html('<div class="text-center py-3"><i class="fa fa-spinner fa-spin"></i> Loading...</div>');
@@ -865,6 +1076,73 @@
                     $('#id_row').val(data.rows1);
                     $('#id_col').val(data.columns1);
                     $('#comments').val(data.comments);
+                    $('#review').val(data.review);
+                    $('#user_review').val(data.user_review);
+                    $('#reviewed_by_label').text('Reviewed by: ' + (data.full_name ? data.full_name : '-'));
+                    // Set the checkbox state
+                    if (data.user_created !== loggedInUser) {
+                        $('#user_review').val(loggedInUser);
+                        // Set the checkbox state
+                        if (data.review == 1) {
+                            $('#review').prop('checked', true); // Check the checkbox
+                            const label = document.getElementById('review_label');
+                            label.textContent = 'Review';
+                            label.className = `form-check-label review`;            
+                        } else if (data.review == 0) {
+                            $('#review').prop('checked', false); // Uncheck the checkbox
+                            const label = document.getElementById('review_label');
+                            label.textContent = 'Unreview';
+                            label.className = `form-check-label unreview`;            
+                        }
+                        $('#review').val(data.review);
+                                            // Define the states with associated values and labels
+                                            const states = [
+                            { value: 0, label: "Unreview", class: "unreview" },
+                            { value: 1, label: "Review", class: "review" }
+                            // { value: 2, label: "Crossed", class: "crossed" }
+                        ];
+
+                        let currentState = 0; // Start with "Unchecked"
+
+                        // Add event listener to toggle through states
+                        document.getElementById('review_label').addEventListener('click', function () {
+                            // Cycle through the states
+                            currentState = (currentState + 1) % states.length;
+
+                            const checkbox = document.getElementById('review');
+                            const label = document.getElementById('review_label');
+
+                            // Update the label text
+                            label.textContent = states[currentState].label;
+
+                            // Apply styling to the label based on the state
+                            label.className = `form-check-label ${states[currentState].class}`;
+
+                            // (Optional) Update a hidden input or store the value somewhere for submission
+                            checkbox.value = states[currentState].value; // Set the value to the current state
+                        });                
+                    } else {
+                        if (data.review == 1) {
+                                $('#review').prop('checked', true); // Check the checkbox
+                                const label = document.getElementById('review_label');
+                                label.textContent = 'Review';
+                                label.className = `form-check-label review`;            
+                            } else if (data.review == 0) {
+                                $('#review').prop('checked', false); // Uncheck the checkbox
+                                const label = document.getElementById('review_label');
+                                label.textContent = 'Unreview';
+                                label.className = `form-check-label unreview`;            
+                            }
+                    }
+
+                    console.log('test user', data.user_created);
+                    if (data.user_created === loggedInUser) {
+                        $('#saveButtonDetail').prop('disabled', false);  // Enable Save button if user is the same as the one who created
+                        showInfoCard('#textInform2', '<i class="fa fa-check-circle"></i> You are the creator', "You have full access to edit this data.", true);
+                    } else {
+                        $('#saveButtonDetail').prop('disabled', false);  // Disable Save button if user is not the same as the one who created
+                        showInfoCard('#textInform2', '<i class="fa fa-times-circle"></i> You are not the creator', "In the case you can review this data and make changes.", false);
+                    }
 
 
                     // Display modal
@@ -953,6 +1231,7 @@
         $('#mytable').on('click', '.btn_edit', function(){
             let tr = $(this).parent().parent();
             let data = table.row(tr).data();
+            let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';  // Get the logged-in user from the session or a similar method.
             console.log(data);
             $('#mode').val('edit');
             $('#modal-title').html('<i class="fa fa-pencil-square-o"></i> Extraction culture plate | Update<span id="my-another-cool-loader"></span>');
@@ -963,6 +1242,20 @@
             $('#id_person').val(data.id_person);
             $('#number_sample').attr('readonly', true);
             $('#number_sample').val(data.number_sample || '');  // Set barcode jika ada
+            $('#user_created').val(data.user_created || '');  // Set barcode jika ada
+            $('#user_created').attr('readonly', true);
+            if (data.user_created === loggedInUser) {
+                $('#saveButton').prop('disabled', false);  // Enable Save button if user is the same as the one who created
+                // $('#textInform').text("You are the creator").addClass("badge-success").prepend('<i class="fa fa-check-circle"></i> ');
+                // $('#textInform').removeClass('alert-danger').addClass('alert-success')
+                // .html('<i class="fa fa-check-circle"></i> You are the creator. You can edit this data.');
+                // Show info card with "You can edit this data"
+                showInfoCard('#textInform1', '<i class="fa fa-check-circle"></i> You are the creator', "You have full access to edit this data.", true);
+            } else {
+                $('#saveButton').prop('disabled', true);  // Disable Save button if user is not the same as the one who created
+                // $('#textInform').text("You are not the creator").addClass("badge-danger").prepend('<i class="fa fa-exclamation-circle"></i> ');
+                showInfoCard('#textInform1', '<i class="fa fa-times-circle"></i> You are not the creator', "You can only view this data and cannot make changes.", false);
+            }
             // $('#sampletype').attr('readonly', true);
             // $('#sampletype').val('');
             // $('#comments').val('');
@@ -970,14 +1263,37 @@
             $('#compose-modal').modal('show');
         });
 
-        $('#mytable tbody').on('click', 'tr', function () {
-            if ($(this).hasClass('active')) {
-                $(this).removeClass('active');
+        // Function to show a dynamic info card
+        function showInfoCard(target, message, description, isSuccess) {
+            // Add dynamic content to the target card
+            $(target).find('.statusMessage').html(message);
+            $(target).find('.statusDescription').text(description);
+
+            // Apply classes based on success or failure
+            if (isSuccess) {
+                $(target).removeClass('card-danger').addClass('card-success');
             } else {
-                table.$('tr.active').removeClass('active');
-                $(this).addClass('active');
+                $(target).removeClass('card-success').addClass('card-danger');
             }
-        })   
+
+            // Show the info card
+            $(target).fadeIn();
+        }
+
+        // Close the card when the 'x' icon is clicked
+        $('.close-card').on('click', function() {
+            $('#textInform1').fadeOut(); // Fade out the card
+            $('#textInform2').fadeOut();
+        });
+
+        // $('#mytable tbody').on('click', 'tr', function () {
+        //     if ($(this).hasClass('active')) {
+        //         $(this).removeClass('active');
+        //     } else {
+        //         table.$('tr.active').removeClass('active');
+        //         $(this).addClass('active');
+        //     }
+        // })   
                             
     });
 </script>

@@ -17,7 +17,7 @@ class Extraction_culture_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('NULL AS toggle, extraction_culture.number_sample, extraction_culture.id_one_water_sample, ref_person.initial, ref_person.realname, extraction_culture.id_person, extraction_culture.flag
+        $this->datatables->select('NULL AS toggle, extraction_culture.number_sample, extraction_culture.id_one_water_sample, ref_person.initial, extraction_culture.user_created, ref_person.realname, extraction_culture.id_person, extraction_culture.flag
         ', FALSE);
         $this->datatables->from('extraction_culture');
         $this->datatables->join('ref_person', 'extraction_culture.id_person = ref_person.id_person', 'left');
@@ -420,13 +420,18 @@ class Extraction_culture_model extends CI_Model
             loc.tray,
             pos.columns1,
             pos.rows1,  
-            ecp.comments 
+            ecp.comments,
+            ecp.user_created,
+            ecp.user_review,
+            ecp.review,
+            user.full_name
         ');
         $this->db->from('extraction_culture_plate ecp');
         $this->db->join('ref_sampletype rst', 'ecp.id_sampletype = rst.id_sampletype', 'left');
         $this->db->join('ref_kit kit', 'ecp.id_kit = kit.id_kit', 'left');
         $this->db->join('ref_location loc', 'ecp.id_location = loc.id_location', 'left');
         $this->db->join('ref_position pos', 'ecp.id_pos = pos.id_pos', 'left');
+        $this->db->join('tbl_user user', 'ecp.user_review = user.id_users', 'left');
         // $this->db->join('ref_person rp', 'ecp.id_person = rp.id_person', 'left');
         $this->db->where('ecp.barcode_sample', $barcode_sample);
         $this->db->where('ecp.flag', '0');

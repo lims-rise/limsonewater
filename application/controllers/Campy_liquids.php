@@ -121,6 +121,8 @@ class Campy_liquids extends CI_Controller
         $date_sample_processed = $this->input->post('date_sample_processed', TRUE);
         $time_sample_processed = $this->input->post('time_sample_processed', TRUE);
         $elution_volume = $this->input->post('elution_volume', TRUE);
+        $review = $this->input->post('review', TRUE);
+        $user_review = $this->input->post('user_review', TRUE);
     
         if ($mode == "insert") {
             // Insert data into assays table
@@ -178,6 +180,8 @@ class Campy_liquids extends CI_Controller
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
                 'elution_volume' => $elution_volume,
+                'review' => $review,
+                'user_review' => $user_review,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),

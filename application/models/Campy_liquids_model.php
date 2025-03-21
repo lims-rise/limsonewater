@@ -14,13 +14,17 @@ class Campy_liquids_model extends CI_Model
 // datatables
     function json() {
         $this->datatables->select('cl.id_campy_liquids, cl.id_one_water_sample, cl.id_person, cl.number_of_tubes, cl.mpn_pcr_conducted, cl.campy_assay_barcode, 
-        rp.initial, cl.date_sample_processed, cl.time_sample_processed, cl.elution_volume,
+        rp.initial, cl.date_sample_processed, cl.time_sample_processed, cl.elution_volume, cl.user_created, 
+        cl.user_review,
+        cl.review,
+        user.full_name,
         cl.id_sampletype, rs.sampletype, GROUP_CONCAT(svl.vol_sampletube ORDER BY svl.tube_number SEPARATOR ", ") AS vol_sampletube, GROUP_CONCAT(svl.tube_number ORDER BY svl.tube_number SEPARATOR ", ") AS tube_number, cl.flag,
         cl.date_created, cl.date_updated, GREATEST(cl.date_created, cl.date_updated) AS latest_date');
         $this->datatables->from('campy_liquids AS cl');
         $this->datatables->join('ref_person AS rp', 'cl.id_person = rp.id_person', 'left');
         $this->datatables->join('ref_sampletype AS rs', 'cl.id_sampletype = rs.id_sampletype', 'left');
         $this->datatables->join('campy_sample_volumes_liquids AS svl', 'cl.id_campy_liquids = svl.id_campy_liquids', 'left');
+        $this->datatables->join('tbl_user user', 'cl.user_review = user.id_users', 'left');
         // $this->datatables->where('lab', $this->session->userdata('lab'));
         $this->datatables->where('cl.flag', '0');
         // GROUP BY
