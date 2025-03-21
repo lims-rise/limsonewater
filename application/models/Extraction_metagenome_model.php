@@ -60,7 +60,7 @@ class Extraction_metagenome_model extends CI_Model
     //     return $this->datatables->generate();
     // }
     function json() {
-        $this->datatables->select('NULL AS toggle, extraction_metagenome.number_sample, extraction_metagenome.id_one_water_sample, extraction_metagenome.id_person, ref_person.initial, ref_person.realname, extraction_metagenome.flag
+        $this->datatables->select('NULL AS toggle, extraction_metagenome.number_sample, extraction_metagenome.id_one_water_sample, extraction_metagenome.id_person, ref_person.initial, extraction_metagenome.user_created, ref_person.realname, extraction_metagenome.flag
         ', FALSE);
         $this->datatables->from('extraction_metagenome');
         $this->datatables->join('ref_person', 'extraction_metagenome.id_person = ref_person.id_person', 'left');
@@ -495,13 +495,19 @@ class Extraction_metagenome_model extends CI_Model
             loc.tray,
             pos.columns1,
             pos.rows1,  
-            emd.comments 
+            emd.comments,
+            emd.user_created,
+            emd.user_review,
+            emd.review,
+            user.full_name
+            
         ');
         $this->db->from('extraction_metagenome_detail emd');
         $this->db->join('ref_sampletype rst', 'emd.id_sampletype = rst.id_sampletype', 'left');
         $this->db->join('ref_kit kit', 'emd.id_kit = kit.id_kit', 'left');
         $this->db->join('ref_location loc', 'emd.id_location = loc.id_location', 'left');
         $this->db->join('ref_position pos', 'emd.id_pos = pos.id_pos', 'left');
+        $this->db->join('tbl_user user', 'emd.user_review = user.id_users', 'left');
         // $this->db->join('ref_person rp', 'emd.id_person = rp.id_person', 'left');
         $this->db->where('emd.barcode_sample', $barcode_sample);
         $this->db->where('emd.flag', '0');

@@ -281,6 +281,9 @@ class Extraction_liquid extends CI_Controller
         $id_rack = $this->input->post('id_rack', TRUE);
         $id_tray = $this->input->post('id_tray', TRUE);
 
+        $review = $this->input->post('review', TRUE);
+        $user_review = $this->input->post('user_review', TRUE);
+
         $id_row = $this->input->post('id_row', TRUE);
         $id_col = $this->input->post('id_col', TRUE);
 
@@ -309,6 +312,8 @@ class Extraction_liquid extends CI_Controller
                 'cryobox' => $cryobox,
                 'id_location' => $id_loc,
                 'id_pos' => $id_pos,
+                'review' => $review,
+                'user_review' => $user_review,
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );

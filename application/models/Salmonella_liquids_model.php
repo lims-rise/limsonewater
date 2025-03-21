@@ -14,13 +14,17 @@ class Salmonella_liquids_model extends CI_Model
     // datatables
     function json() {
         $this->datatables->select('sl.id_salmonella_liquids, sl.id_one_water_sample, sl.id_person, sl.number_of_tubes, sl.mpn_pcr_conducted, sl.salmonella_assay_barcode, 
-        rp.initial, sl.date_sample_processed, sl.time_sample_processed, sl.sample_wetweight, sl.elution_volume, sl.enrichment_media,
+        rp.initial, sl.date_sample_processed, sl.time_sample_processed, sl.sample_wetweight, sl.elution_volume, sl.enrichment_media, sl.user_created,
+        sl.user_review,
+        sl.review,
+        user.full_name,
         sl.id_sampletype, rs.sampletype, GROUP_CONCAT(ssvl.vol_sampletube ORDER BY ssvl.tube_number SEPARATOR ", ") AS vol_sampletube, GROUP_CONCAT(ssvl.tube_number ORDER BY ssvl.tube_number SEPARATOR ", ") AS tube_number, sl.flag,
         sl.date_created, sl.date_updated, GREATEST(sl.date_created, sl.date_updated) AS latest_date');
         $this->datatables->from('salmonella_liquids AS sl');
         $this->datatables->join('ref_person AS rp', 'sl.id_person = rp.id_person', 'left');
         $this->datatables->join('ref_sampletype AS rs', 'sl.id_sampletype = rs.id_sampletype', 'left');
         $this->datatables->join('salmonella_sample_volumes_liquids AS ssvl', 'sl.id_salmonella_liquids = ssvl.id_salmonella_liquids', 'left');
+        $this->datatables->join('tbl_user user', 'sl.user_review = user.id_users', 'left');
         // $this->datatables->where('lab', $this->session->userdata('lab'));
         $this->datatables->where('sl.flag', '0');
         // GROUP BY

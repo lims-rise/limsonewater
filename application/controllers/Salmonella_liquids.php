@@ -134,6 +134,8 @@ class Salmonella_liquids extends CI_Controller
         // $sample_wetweight = $this->input->post('sample_wetweight', TRUE);
         $elution_volume = $this->input->post('elution_volume', TRUE);
         $enrichment_media = $this->input->post('enrichment_media', TRUE);
+        $review = $this->input->post('review', TRUE);
+        $user_review = $this->input->post('user_review', TRUE);
     
         if ($mode == "insert") {
             // Insert data into assays table
@@ -195,6 +197,8 @@ class Salmonella_liquids extends CI_Controller
                 // 'sample_wetweight' => $sample_wetweight,
                 'elution_volume' => $elution_volume,
                 'enrichment_media' => $enrichment_media,
+                'review' => $review,
+                'user_review' => $user_review,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),

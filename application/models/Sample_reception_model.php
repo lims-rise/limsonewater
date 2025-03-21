@@ -17,7 +17,7 @@ class Sample_reception_model extends CI_Model
     // datatables
     public function json() {
         $this->datatables->select('NULL AS toggle, sr.id_project, sr.client_quote_number, sr.client, sr.id_client_sample, sr.number_sample, sr.comments, sr.date_collected, sr.time_collected, 
-            sr.date_created, sr.date_updated, sr.flag, GREATEST(sr.date_created, sr.date_updated) AS latest_date', FALSE);
+            sr.date_created, sr.date_updated, sr.flag', FALSE);
     
         $this->datatables->from('sample_reception sr');
         $this->datatables->where('sr.flag', '0');
@@ -53,7 +53,7 @@ class Sample_reception_model extends CI_Model
                 </button>', 'id_project');
         }
     
-        $this->db->order_by('latest_date', 'DESC');
+        $this->db->order_by('sr.date_created', 'DESC');
     
         return $this->datatables->generate();
     }

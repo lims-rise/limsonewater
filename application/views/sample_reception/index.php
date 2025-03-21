@@ -986,6 +986,8 @@
             $('#id_client_sample').attr('readonly', true);
             $('#number_sample').val(data.number_sample);
             $('#number_sample').attr('readonly', true);
+            $('#date_collected').val(data.date_collected);
+            $('#time_collected').val(data.time_collected);
             $('#comments').val(data.comments);
             $('#compose-modal').modal('show');
         });   

@@ -17,7 +17,7 @@ class Extraction_liquid_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('NULL AS toggle, extraction_liquid.number_sample, extraction_liquid.id_one_water_sample, ref_person.initial, ref_person.realname, extraction_liquid.id_person, extraction_liquid.flag
+        $this->datatables->select('NULL AS toggle, extraction_liquid.number_sample, extraction_liquid.id_one_water_sample, ref_person.initial, ref_person.realname, extraction_liquid.user_created, extraction_liquid.id_person, extraction_liquid.flag
         ', FALSE);
         $this->datatables->from('extraction_liquid');
         $this->datatables->join('ref_person', 'extraction_liquid.id_person = ref_person.id_person', 'left');
@@ -461,13 +461,18 @@ class Extraction_liquid_model extends CI_Model
             loc.tray,
             pos.columns1,
             pos.rows1,  
-            eld.comments 
+            eld.comments,
+            eld.user_created,
+            eld.user_review,
+            eld.review,
+            user.full_name
         ');
         $this->db->from('extraction_liquid_detail eld');
         $this->db->join('ref_sampletype rst', 'eld.id_sampletype = rst.id_sampletype', 'left');
         $this->db->join('ref_kit kit', 'eld.id_kit = kit.id_kit', 'left');
         $this->db->join('ref_location loc', 'eld.id_location = loc.id_location', 'left');
         $this->db->join('ref_position pos', 'eld.id_pos = pos.id_pos', 'left');
+        $this->db->join('tbl_user user', 'eld.user_review = user.id_users', 'left');
         // $this->db->join('ref_person rp', 'eld.id_person = rp.id_person', 'left');
         $this->db->where('eld.barcode_sample', $barcode_sample);
         $this->db->where('eld.flag', '0');
