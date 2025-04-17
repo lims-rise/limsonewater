@@ -30,6 +30,7 @@
                                     }
                             ?>        
                             <?php echo anchor(site_url('Sample_reception/excel'), '<i class="fa fa-file-excel-o"></i> Export to XLS', 'class="btn btn-success"'); ?>
+                            <?php echo anchor(site_url('Sample_reception/excel'), '<i class="fa fa-file-scan-o"></i> Scan', 'class="btn btn-warning"'); ?>
                         </div>
                             <div class="table-responsive">
                             <table class="table table-bordered table-striped" id="mytable" style="width:100%">
@@ -166,6 +167,15 @@
                                 <label for="id_client_sample" class="col-sm-4 control-label">Client Sample ID</label>
                                 <div class="col-sm-8">
                                     <input id="id_client_sample" name="id_client_sample" placeholder="Client Sample ID" type="text" class="form-control" required>
+                                    <div class="val1tip"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="files" class="col-sm-4 control-label">Filename</label>
+                                <div class="col-sm-8">
+                                    <input id="files" name="files" placeholder="Filename" type="text" class="form-control" required>
+                                    <button type="button" class="btn btn-success" style="margin-top: 5px;" onclick="openScanner()">Scan</button>
                                     <div class="val1tip"></div>
                                 </div>
                             </div>
@@ -1002,4 +1012,23 @@
         })   
                             
     });
+</script>
+
+<!-- <script>
+    function openScanner() {
+        window.open("<?= base_url('index.php/scan_page') ?>", "_blank");  // Ganti dengan 'scan' karena itu adalah route-nya
+    }
+
+</script> -->
+
+<script>
+function openScanner() {
+  const w = 800;
+  const h = 600;
+  const y = window.top.outerHeight / 2 + window.top.screenY - ( h / 2);
+  const x = window.top.outerWidth / 2 + window.top.screenX - ( w / 2);
+
+  window.open("<?= site_url('scan_page') ?>", "Scan Document",
+    `width=${w},height=${h},top=${y},left=${x}`);
+}
 </script>
