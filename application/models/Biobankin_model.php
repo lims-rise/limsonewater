@@ -18,11 +18,14 @@ class Biobankin_model extends CI_Model
     // datatables
     function json() {
         $this->datatables->select('biobank_in.id_one_water_sample, biobank_in.date_conduct, ref_sampletype.sampletype, ref_person.initial,
-        biobank_in.replicates, biobank_in.comments, biobank_in.id_person, biobank_in.flag');
+        biobank_in.replicates, biobank_in.comments, biobank_in.id_person, biobank_in.flag, biobank_in.user_created, 
+        biobank_in.user_review,
+        biobank_in.review, user.full_name');
         $this->datatables->from('biobank_in');
         $this->datatables->join('sample_reception_sample', 'biobank_in.id_one_water_sample = sample_reception_sample.id_one_water_sample', 'left');
         $this->datatables->join('ref_sampletype', 'sample_reception_sample.id_sampletype = ref_sampletype.id_sampletype', 'left');
         $this->datatables->join('ref_person', 'biobank_in.id_person = ref_person.id_person', 'left');
+        $this->datatables->join('tbl_user user', 'biobank_in.user_review = user.id_users', 'left');
         // $this->datatables->where('Water_sample_reception.id_country', $this->session->userdata('lab'));
         $this->datatables->where('biobank_in.flag', '0');
         $lvl = $this->session->userdata('id_user_level');
@@ -451,6 +454,28 @@ class Biobankin_model extends CI_Model
         $response = $query->result_array();
         return $response; 
     }
+
+
+    function getOneWaterSampleById($idOneWaterSample)
+    {
+        $this->db->select('sr.id_sampletype, rs.sampletype');
+        $this->db->from('sample_reception_sample sr');
+        $this->db->join('ref_sampletype rs', 'sr.id_sampletype = rs.id_sampletype', 'left');
+        $this->db->where('sr.id_one_water_sample', $idOneWaterSample);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+
+    function barcode_restrict($id){
+
+        $q = $this->db->query('
+        select id_one_water_sample
+        from biobank_in
+        WHERE id_one_water_sample = "'.$id.'"
+        ');        
+        $response = $q->result_array();
+        return $response;
+      } 
 
       
 }
