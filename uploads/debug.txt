@@ -85,3 +85,24 @@ Array
 
 )
 
+[2025-04-21 10:34:53]
+FILES:
+Array
+(
+)
+
+[2025-04-21 11:40:28]
+FILES:
+Array
+(
+    [RemoteFile] => Array
+        (
+            [name] => Screenshot 2024-07-31 082114.png
+            [type] => image/png
+            [tmp_name] => C:\Users\onewa\AppData\Local\Temp\phpAA85.tmp
+            [error] => 0
+            [size] => 130421
+        )
+
+)
+

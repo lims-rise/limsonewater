@@ -105,32 +105,49 @@ class Scan_page extends CI_Controller {
             echo json_encode(['success' => false, 'error' => "PHP Upload Error: $errorMsg"]);
             exit;
         }
+
+
+
+
     
         // Proses file yang diupload
-        $file = $_FILES['RemoteFile'];
-        $originalFilename = basename($file['name']);
-        $safeFilename = preg_replace("/[^a-zA-Z0-9\._-]/", "_", $originalFilename);
-        $targetPath = $uploadDir . $safeFilename;
+
+        if (isset($_FILES['RemoteFile'])) {
+            // proses upload
+            $file = $_FILES['RemoteFile'];
+            // var_dump($file);
+            // die();
+            $originalFilename = basename($file['name']);
+            $safeFilename = preg_replace("/[^a-zA-Z0-9\._-]/", "_", $originalFilename);
+            $targetPath = $uploadDir . $safeFilename;
+            $rawInput = file_get_contents("php://input");
+            file_put_contents($logFile, "Attempting to move '{$file['tmp_name']}' to '$targetPath'\n", FILE_APPEND);
     
-        file_put_contents($logFile, "Attempting to move '{$file['tmp_name']}' to '$targetPath'\n", FILE_APPEND);
     
-        // Pindahkan file yang diupload
-        if (move_uploaded_file($file['tmp_name'], $targetPath)) {
-            $successMsg = "File berhasil diupload dan disimpan sebagai: " . date('Y-m-d') . '/' . $safeFilename;
-            file_put_contents($logFile, "SUCCESS: $successMsg\n", FILE_APPEND);
-            http_response_code(200);
-            echo json_encode(['success' => true, 'filename' => date('Y-m-d') . '/' . $safeFilename, 'message' => $successMsg]);
-            exit;
-        } else {
-            $moveError = error_get_last();
-            $errorMsg = "Gagal memindahkan file yang diupload ke '$targetPath'. Kemungkinan masalah izin atau path tidak valid.";
-            file_put_contents($logFile, "ERROR: $errorMsg\n", FILE_APPEND);
-            if ($moveError) {
-                file_put_contents($logFile, "Move Error Details: " . print_r($moveError, true) . "\n", FILE_APPEND);
+            file_put_contents('php://temp', $rawInput); // atau log ke file
+            log_message('debug', "Raw input size: " . strlen($rawInput) . " bytes");
+    
+        
+            // Pindahkan file yang diupload
+            if (move_uploaded_file($file['tmp_name'], $targetPath)) {
+                $successMsg = "File berhasil diupload dan disimpan sebagai: " . date('Y-m-d') . '/' . $safeFilename;
+                file_put_contents($logFile, "SUCCESS: $successMsg\n", FILE_APPEND);
+                http_response_code(200);
+                echo json_encode(['success' => true, 'filename' => date('Y-m-d') . '/' . $safeFilename, 'message' => $successMsg]);
+                exit;
+            } else {
+                $moveError = error_get_last();
+                $errorMsg = "Gagal memindahkan file yang diupload ke '$targetPath'. Kemungkinan masalah izin atau path tidak valid.";
+                file_put_contents($logFile, "ERROR: $errorMsg\n", FILE_APPEND);
+                if ($moveError) {
+                    file_put_contents($logFile, "Move Error Details: " . print_r($moveError, true) . "\n", FILE_APPEND);
+                }
+                http_response_code(200); // Atau 500
+                echo json_encode(['success' => false, 'error' => $errorMsg]);
+                exit;
             }
-            http_response_code(200); // Atau 500
-            echo json_encode(['success' => false, 'error' => $errorMsg]);
-            exit;
+        } else {
+            log_message('error', 'RemoteFile tidak ditemukan di $_FILES.');
         }
         // ---------------------------------------------------------------------
     }

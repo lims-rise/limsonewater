@@ -190,3 +190,46 @@ Array
 Directory created or already exists: C:\laragon\www\limsonewater\uploads/2025-04-17/
 Attempting to move 'C:\Users\onewa\AppData\Local\Temp\phpC1E5.tmp' to 'C:\laragon\www\limsonewater\uploads/2025-04-17/Screenshot__4_.png'
 SUCCESS: File berhasil diupload dan disimpan sebagai: 2025-04-17/Screenshot__4_.png
+
+--- UPLOAD ATTEMPT [2025-04-21 10:34:53] ---
+Request Method: GET
+Headers Logged to debug_headers.txt
+Raw Input Size: 0 bytes
+FILES:
+Array
+(
+)
+
+POST:
+Array
+(
+)
+
+Directory created or already exists: C:\laragon\www\limsonewater\uploads/2025-04-21/
+ERROR: Tidak ada file yang diterima dengan nama "RemoteFile".
+
+--- UPLOAD ATTEMPT [2025-04-21 11:40:28] ---
+Request Method: POST
+Headers Logged to debug_headers.txt
+Raw Input Size: 0 bytes
+FILES:
+Array
+(
+    [RemoteFile] => Array
+        (
+            [name] => Screenshot 2024-07-31 082114.png
+            [type] => image/png
+            [tmp_name] => C:\Users\onewa\AppData\Local\Temp\phpAA85.tmp
+            [error] => 0
+            [size] => 130421
+        )
+
+)
+
+POST:
+Array
+(
+)
+
+Attempting to move 'C:\Users\onewa\AppData\Local\Temp\phpAA85.tmp' to 'C:\laragon\www\limsonewater\uploads/2025-04-21/Screenshot_2024-07-31_082114.png'
+SUCCESS: File berhasil diupload dan disimpan sebagai: 2025-04-21/Screenshot_2024-07-31_082114.png

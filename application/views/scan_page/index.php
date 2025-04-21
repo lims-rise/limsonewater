@@ -1,143 +1,147 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Scan Document</title>
+    <title>Scan Page</title>
     <script src="https://cdn.jsdelivr.net/npm/dwt/dist/dynamsoft.webtwain.min.js"></script>
-    </head>
+</head>
 <body>
-    <h2>Scan Document</h2>
+    <h1>Scan Document</h1>
 
-    <div id="dwtcontrolContainer" style="width:600px; height:400px; border:1px solid #ccc;"></div>
+    <!-- Container untuk WebTWAIN -->
+    <div id="dwtcontrolContainer" style="width:600px;height:400px;"></div>
 
-    <button id="scanButton">Start Scanning</button>
-    <button id="saveButton">Save to Server</button>
-    <form method="post" enctype="multipart/form-data" action="http://127.0.0.1/limsonewater/index.php/scan_page/upload">
-    <input type="file" name="RemoteFile">
-    <input type="submit" value="Upload">
+    <button onclick="acquireImage()">Scan</button>
+    <button onclick="uploadImage()">Upload</button>
+    <form action="http://127.0.0.1/limsonewater/index.php/Scan_page/upload" method="post" enctype="multipart/form-data">
+  <input type="file" name="RemoteFile">
+  <input type="submit" value="Upload">
 </form>
+
+
     <script>
-        // Konfigurasi Kunci Lisensi Dynamsoft Anda
-        Dynamsoft.DWT.ProductKey = "t01948AUAALwlHm/qc8mA4t3oftSBSLCX/NHmLcXAlfg6qkWDRBww2VU2d6T0TBdacZZMNUuCBybsglmueeFDMM3/AwTIhI2PKycrOFXeKZR3WgUnbzmBfpl2W7abZd+8gRPwWgDtz2EHLAa2syTA262rV4YAYA5QBlDuDJYDTm/hg+/i4M3JOMb0v4SeOVnBqfLOuEDKOK2Ck7ecvkDaDs3obztuBWLxywkA5gCdAvb7yA4FghRgDtABkFr6r959AT67MX8=;t01898AUAALPhhfYLzj6kyFEPPzuAgVzqtnyWmROrgkEDxUqKt6BHnJRDTiGM17ZMSrGq/Bwqxj6MHHbmC9FQwrOSCgeQzmTlVAWnlXcayjtZwalbTqCfm9162s08LgyQB14zYNt12ADGwDqXBHi7pffKsAOUAywDWG4OzAGnqzhuvpAGJP77z4EGpyo4rbwzDkgZJys4dcs5BaTt0IzTasc1IIxvzg5QDrBTgL+H7BAQpIBygB0As1aCc1/V4zFe"; // Pastikan kunci ini valid
+        let DWObject = null;
 
-        // Path ke sumber daya DWT (biasanya diperlukan jika tidak menggunakan CDN atau untuk file lokal)
+        // Masukkan ProductKey kamu di sini
+        Dynamsoft.DWT.ProductKey = "t01948AUAALwlHm/qc8mA4t3oftSBSLCX/NHmLcXAlfg6qkWDRBww2VU2d6T0TBdacZZMNUuCBybsglmueeFDMM3/AwTIhI2PKycrOFXeKZR3WgUnbzmBfpl2W7abZd+8gRPwWgDtz2EHLAa2syTA262rV4YAYA5QBlDuDJYDTm/hg+/i4M3JOMb0v4SeOVnBqfLOuEDKOK2Ck7ecvkDaDs3obztuBWLxywkA5gCdAvb7yA4FghRgDtABkFr6r959AT67MX8=;t01898AUAALPhhfYLzj6kyFEPPzuAgVzqtnyWmROrgkEDxUqKt6BHnJRDTiGM17ZMSrGq/Bwqxj6MHHbmC9FQwrOSCgeQzmTlVAWnlXcayjtZwalbTqCfm9162s08LgyQB14zYNt12ADGwDqXBHi7pffKsAOUAywDWG4OzAGnqzhuvpAGJP77z4EGpyo4rbwzDkgZJys4dcs5BaTt0IzTasc1IIxvzg5QDrBTgL+H7BAQpIBygB0As1aCc1/V4zFe"; // Ganti dengan lisensi kamu
+
         Dynamsoft.DWT.ResourcesPath = "https://cdn.jsdelivr.net/npm/dwt/dist";
-
-        // Konfigurasi wadah tempat kontrol DWT akan ditampilkan
         Dynamsoft.DWT.Containers = [{ ContainerId: 'dwtcontrolContainer', Width: 600, Height: 400 }];
-
-        // Memuat Dynamsoft Web TWAIN
         Dynamsoft.DWT.Load();
+        Dynamsoft.DWT.RegisterEvent('OnWebTwainReady', function () {
+            DWObject = Dynamsoft.DWT.GetWebTwain('dwtcontrolContainer');
+            if (DWObject) {
+                console.log("Dynamsoft Web TWAIN Ready!");
+            } else {
+                alert("Failed to initialize Dynamsoft Web TWAIN.");
+            }
+        });
 
-        // Fungsi yang dijalankan setelah DWT siap digunakan
-        Dynamsoft.DWT.OnWebTwainReady = function () {
-            console.log("Dynamsoft Web TWAIN Ready!"); // Pesan konfirmasi di console
-            let viewer = Dynamsoft.DWT.GetWebTwain('dwtcontrolContainer');
-
-            if (!viewer) {
-                alert("Gagal menginisialisasi Dynamsoft Web TWAIN viewer.");
+        function acquireImage() {
+            if (!DWObject) {
+                alert("Scanner belum siap. Mohon tunggu sampai scanner siap.");
                 return;
             }
 
-            // Event handler untuk tombol Scan
-            document.getElementById("scanButton").onclick = function () {
-                if (viewer.SourceCount > 0) {
-                    // Pilih sumber (scanner)
-                    viewer.SelectSource(function() { // Menggunakan callback untuk memastikan sumber dipilih sebelum dibuka
-                        viewer.OpenSource();
-                        viewer.AcquireImage({}, // Opsi akuisisi (bisa kosong)
-                            function() { console.log("Image acquired successfully."); viewer.CloseSource(); }, // Sukses akuisisi
-                            function(errorCode, errorString) { console.error("Acquire Error: " + errorString + " (Code: " + errorCode + ")"); viewer.CloseSource(); } // Error akuisisi
-                        );
-                    }, function(errorCode, errorString) {
-                        console.error("Select Source Error: " + errorString + " (Code: " + errorCode + ")");
-                        alert("Gagal memilih sumber scanner: " + errorString);
-                    });
+            if (DWObject.SourceCount === 0) {
+                alert("Tidak ada sumber scanner yang terdeteksi.");
+                return;
+            }
+
+            DWObject.SelectSourceAsync().then(() => {
+                console.log("Sumber scanner dipilih.");
+                return DWObject.AcquireImageAsync({});
+            }).then(() => {
+                console.log("Gambar berhasil discan.");
+            }).catch(err => {
+                console.error("Gagal scan:", err.message || err);
+                alert("Terjadi kesalahan saat scan: " + (err.message || err));
+            });
+        }
+
+
+  // function uploadImage() {
+  //     if (!DWObject) {
+  //         alert("DWObject not ready.");
+  //         return;
+  //     }
+
+  //     const imageIndex = 0;
+  //     const uploadFieldName = "RemoteFile";
+  //     const filename = "scan_" + Date.now() + ".jpg";
+  //     const uploadURL = "http://127.0.0.1/limsonewater/index.php/Scan_page/upload";
+
+  //     console.log("Attempting to upload to:", uploadURL);
+  //     console.log("Filename:", filename);
+  //     console.log("Images in buffer:", DWObject.HowManyImagesInBuffer);
+  //     console.log("Upload field name:", uploadFieldName);
+
+  //     const result = DWObject.HTTPUploadThroughPostEx(
+  //         uploadURL,
+  //         imageIndex,
+  //         filename,
+  //         Dynamsoft.DWT.EnumDWT_ImageType.IT_JPG,
+  //         Dynamsoft.DWT.EnumDWT_UploadDataFormat.Binary,
+  //         uploadFieldName
+  //     );
+
+  //     if (result === 0) {
+  //         const errorString = DWObject.ErrorString;
+  //         console.error("Upload failed. Error:", errorString);
+  //         alert("Upload gagal: " + errorString);
+  //     } else {
+  //         console.log("Upload berhasil.");
+  //         alert("Upload sukses!");
+  //     }
+  // }
+
+  function uploadImage() {
+    if (!DWObject) {
+        alert("DWObject not ready.");
+        return;
+    }
+
+    const imageIndex = 0; // penting!
+    const uploadFieldName = "RemoteFile";
+    const filename = "scan_" + Date.now() + ".jpg";
+    const uploadURL = "http://localhost/limsonewater/index.php/Scan_page/upload"; // ganti 127.0.0.1 jadi localhost
+
+    console.log("Attempting to upload to:", uploadURL);
+    console.log("Filename:", filename);
+    console.log("Images in buffer:", DWObject.HowManyImagesInBuffer);
+    console.log("Upload field name:", uploadFieldName);
+
+    // 👇 Coba simpan gambar secara lokal dulu untuk debug
+    // const testSaveResult = DWObject.SaveAsJPEG("C:\\temp\\test.jpg", imageIndex);
+    // if (!testSaveResult) {
+    //     console.error("Gagal menyimpan gambar lokal. Error:", DWObject.ErrorString);
+    //     alert("Gagal menyimpan gambar ke lokal. Periksa apakah gambarnya valid.");
+    //     return;
+    // } else {
+    //     console.log("Berhasil menyimpan gambar ke C:\\temp\\test.jpg");
+    // }
+
+    // 👇 Upload gambar ke server
+            DWObject.HTTPUploadThroughPost(
+            uploadURL,
+            imageIndex,
+            filename,
+            Dynamsoft.DWT.EnumDWT_ImageType.IT_JPG,
+            uploadFieldName,
+            function(result, serverResponse) {
+                if (result) {
+                    console.log("Upload berhasil. Server response:", serverResponse);
+                    alert("Upload sukses!");
                 } else {
-                    alert("Tidak ada perangkat scanner yang ditemukan. Pastikan driver scanner terinstal dan Dynamsoft Service berjalan.");
+                    console.error("Upload gagal. Error:", DWObject.ErrorString);
+                    alert("Upload gagal: " + DWObject.ErrorString);
                 }
-            };
+            }
+        );
 
-            // Event handler untuk tombol Save to Server
-            document.getElementById("saveButton").onclick = function () {
-                if (viewer.HowManyImagesInBuffer > 0) {
-                    // Nama file unik berdasarkan timestamp
-                    let filename = 'scan_' + Date.now() + '.jpg';
-                    let uploadURL = "http://127.0.0.1/limsonewater/index.php/scan_page/upload"; // Pastikan URL ini benar
+}
 
-                    // --- PERUBAHAN UTAMA: Baris ini dihapus/dikomentari ---
-                    // viewer.HTTPPort = 80;
-                    // ----------------------------------------------------
 
-                    viewer.IfSSL = false; // Gunakan false jika URL adalah http://
-                    viewer.IfShowFileDialog = false; // Jangan tampilkan dialog simpan file lokal
-                    viewer.HTTPUploadDataFieldName = "RemoteFile"; // Nama field file di $_FILES PHP
-                    viewer.HTTPHeaders = []; // Header tambahan jika diperlukan (biasanya tidak untuk upload standar)
-
-                    console.log("Attempting to upload to:", uploadURL);
-                    console.log("Filename:", filename);
-                    console.log("Images in buffer:", viewer.HowManyImagesInBuffer);
-                    console.log("Upload field name:", viewer.HTTPUploadDataFieldName);
-                    console.log("Calling HTTPUploadThroughPost with:", {
-                      uploadURL,
-                      filename,
-                      index: viewer.CurrentImageIndexInBuffer
-                    });
-                    let viewer1 = Dynamsoft.DWT.GetWebTwain('dwtcontrolContainer');
-                      if (viewer1) {
-                          console.log("DWT Version:", viewer1.VersionInfo || viewer1.Version || "Tidak diketahui");
-                      }
-
-                      let currentIndex = viewer.CurrentImageIndexInBuffer;
-                      console.log("Current Image Index:", currentIndex);
-
-                      viewer.HTTPUploadThroughPostEx(
-                            uploadURL,
-                            filename,
-                            currentIndex,
-                            "image/jpeg",
-                            Dynamsoft.DWT.EnumDWT_UploadDataFormat.UDF_JPG,
-                            function (responseText) {
-                                console.log("Server response:", responseText);
-                                try {
-                                    const res = JSON.parse(responseText);
-                                    if (res.success && window.opener) {
-                                        window.opener.document.getElementById("files").value = res.filename;
-                                        window.close();
-                                    } else {
-                                        alert("Upload failed: " + (res.error || "Unknown error"));
-                                    }
-                                } catch (e) {
-                                    alert("Invalid JSON response: " + responseText);
-                                }
-                            },
-                            function (errCode, errString) {
-                                alert("Upload Error: " + errString + " (code " + errCode + ")");
-                            },
-                            {
-                                bUseForm: true, // << INI HARUS ADA
-                                // HTTPHeader: [
-                                //     "Cache-Control: no-cache",
-                                //     "Content-Type: multipart/form-data"
-                                // ],
-                                // additionalFields: [{ name: "RemoteFile", value: filename }] // 🔥 Tambahkan ini
-                            }
-                      );
-
-                } else {
-                    alert("Silakan pindai dokumen terlebih dahulu sebelum menyimpan.");
-                }
-            }; // Akhir dari saveButton onclick
-
-        }; // Akhir dari OnWebTwainReady
-
-        // Menangani error jika DWT gagal dimuat
-        Dynamsoft.DWT.OnWebTwainLoadFailed = function(errorCode, errorString) {
-            console.error('Gagal memuat Dynamsoft Web TWAIN:', errorString + " (Code: " + errorCode + ")");
-            alert('Gagal memuat komponen scanner: ' + errorString);
-        };
 
     </script>
-
 </body>
 </html>
