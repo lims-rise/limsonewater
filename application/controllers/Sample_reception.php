@@ -103,6 +103,27 @@ class Sample_reception extends CI_Controller
         }
     }     
 
+    public function rep_print($id) 
+    {
+        $row = $this->Sample_reception_model->get_rep($id);
+        if ($row) {
+            $data = array(
+            'id_project' => $row->id_project,
+            'client' => $row->client,
+            'id_client_sample' => $row->id_client_sample,
+            'date_collected' => $row->date_collected,
+            'time_collected' => $row->time_collected,
+            'id_person' => $row->id_person,
+            'realname' => $row->realname,
+            );
+        // $data['items'] = $this->Tbl_receive_old_model->getItems();
+            $this->template->load('template','sample_reception/index_rep', $data);
+        } else {
+            $this->session->set_flashdata('message', 'Record Not Found');
+            redirect(site_url("sample_reception/read/".$id));
+        }
+    }
+
     // public function save() {
     //     $mode = $this->input->post('mode', TRUE);
     //     $dt = new DateTime();

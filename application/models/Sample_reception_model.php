@@ -44,7 +44,11 @@ class Sample_reception_model extends CI_Model
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                 </button>', 'id_project');
         } else {
-            $this->datatables->add_column('action', "
+            $this->datatables->add_column('action', 
+            anchor(site_url('sample_reception/rep_print/$1'), 
+                '<i class="fa fa-print" aria-hidden="true"></i>', 
+                array('class' => 'btn btn-info btn-sm')) . 
+            "
                 " . '<button type="button" class="btn_edit btn btn-info btn-sm">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                 </button>' . " 
@@ -57,9 +61,6 @@ class Sample_reception_model extends CI_Model
     
         return $this->datatables->generate();
     }
-    
-    
-    
 
     function subjson($id) {
         $this->datatables->select('testing.id_testing, testing.id_sample, testing.id_testing_type, sample.id_one_water_sample, testing.barcode, retest.testing_type AS testing_type, retest.url, testing.flag');
@@ -84,6 +85,18 @@ class Sample_reception_model extends CI_Model
         return $this->datatables->generate();
     }
 
+    function get_rep($id)
+    {
+        $q = $this->db->query('SELECT a.id_project, a.client, a.id_client_sample, b.date_collected, b.time_collected, b.id_person, c.realname
+        FROM sample_reception a
+        LEFT JOIN sample_reception_sample b ON a.id_project = b.id_project
+        LEFT JOIN ref_person c ON b.id_person = c.id_person
+        WHERE a.id_project="'.$id.'"
+        AND a.flag = 0 
+        ');        
+        $response = $q->row();
+        return $response;
+      }
 
     function get_by_id($id)
     {

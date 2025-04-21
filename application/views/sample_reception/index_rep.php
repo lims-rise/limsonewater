@@ -3,20 +3,11 @@
     .noprint{
         display:none;
     }
-
-    .print-bg {
-            background-color: #b7d5f7 !important;
-        }
-
-    @page { margin: 0; }
-    body { margin: 1.6cm; }
+@page { margin: 0; }
+body { margin: 1.6cm; }
  }
 
 .tab1 { tab-size: 2; }
-
-h3 {
-    text-align: center;
-}
 
 </style>
 
@@ -24,147 +15,319 @@ h3 {
 <div class="content-wrapper">
 
 <section class="content">
-<?php
-    if(!empty($this->session->userdata('lab'))) {
-        if ($this->session->userdata('lab')==1) {
-            $country = 'ID';
-            $office = 'RISE MAKASSAR';
-        }
-        else {
-            $country = 'FJ';
-            $office = 'RISE SUVA';
-        }
-    }                            
-?>
-
 <div class="row">
     <div class="col-md-12">
         <div class="box box-primary">
-            <div class="box-header">            
-            <div style="display: flex; align-items: center; justify-content: space-between;">
-                <img src="../../../img/rise_logo_x.jpg" width="80px" class="icon" style="padding: 0px; float: left;">
-                <div style="text-align: center;">            
-                    <h3 class="text-center"><?php echo $office; ?> - BUDGET REQUEST</h3>
-                    <h4 class="text-center"><?php echo $objective; ?></h2>
-                    <h4 class="text-center">Title : <?php echo $title; ?></h2>
-                    <h4 class="text-center">Period : <?php echo $periode; ?></h4>
-                </div>
-                <img src="../../../img/monash.png" width="160px" class="icon" style="padding: 0px; float: right;">
-            </div>
-            <div class="noprint">
-                <div class="modal-footer clearfix">
-                    <button id='print' class="btn btn-primary no-print" onclick="document.title = '<?php echo $country .'_'. date('Ymd') . '_BR_' . $title ?>'; window.print();"><i class="fa fa-print"></i> Print</button>
-                    <button id='close' class="btn btn-warning" onclick="javascript:history.go(-1);"><i class="fa fa-times"></i> Close</button> 
-                </div>
-            </div>
-            </div>
-        </div>
+            <div class="box-header">
+<!-- <img src="../../../assets/img/header_inv_02.png" width="1025px" class="icon" style="padding: 10px; float: left;"> -->
+<img src="../../../img/onewaterlogo.png" height="40px" class="icon" style="padding: 0px; float: left;">
+<img src="../../../img/monash.png" height="40px" class="icon" style="padding: 0px; float: right;">
+<!-- <h3>LIMS - REPORT</h3> -->
+<div class="noprint">
+    <div class="modal-footer clearfix">
+        <button id='print' class="btn btn-primary no-print" onclick="document.title = '<?php echo 'Print_Spectro_CRM'?>'; window.print();"><i class="fa fa-print"></i> Print</button>
+        <button id='close' class="btn btn-warning" onclick="javascript:history.go(-1);"><i class="fa fa-times"></i> Close</button> 
     </div>
+</div>
+<!-- // <h4 class=text-right>Invoice : $invoice_number </h4>
+// <h4 class=text-right>Date : $date_invoice </h4> -->
 </div>
 
 <?php
 
-$q = $this->db->query('SELECT a.items, a.qty, b.unit, 
-FORMAT(a.estimate_price, 0, "de_DE") AS estimate_price, 
-FORMAT(a.qty * a.estimate_price, 0, "de_DE") AS total, a.remarks 
-FROM budget_request_detail a
-LEFT JOIN ref_unit b ON a.id_unit=b.id_unit   
-WHERE a.flag = 0
-AND a.id_req="'.$id_req.'"
-ORDER BY a.id_reqdetail');        
+// $q = $this->db->query('SELECT duplication, result, trueness, bias_method FROM obj2b_spectro_crm_det
+// WHERE flag = 0
+// AND id_spec="'.$id_spec.'"
+// ORDER BY duplication');        
 
-$response = $q->result();
+// $response = $q->result();
 
 ?>
 
 
 <div class="box">
-<input type='hidden' id='id_req' value='<?php echo $id_req; ?>'>
+<h3 class="text-center">CERTIFICATE OF ANALYSIS</h3>
+<input type='hidden' id='id_project' value='<?php echo $id_project; ?>'>
 
-<table id="tabletop" width=100%; style="border:0px solid black; margin-left:auto;margin-right:auto;">
+<!-- <table id="mytable1" width=50%; style="border:0px solid black; margin-left:auto;margin-right:auto;"> -->
+<!-- Table 1: Report Header Information -->
+<table id="report-header" width="50%" style="border:0px solid black; margin-bottom: 0; border-collapse: collapse;">
+    <thead>
+        <tr>
+            <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Report Number</td>
+            <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">0910291029</td>
+        </tr>
+        <tr>
+            <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Report issue date</td>
+            <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">2025-04-21</td>
+        </tr>
+    </thead>
+</table>
+
+<!-- Separator Line -->
+<div style="width: 50%; border-top: 1px solid #ddd; margin: 5px 0;"></div>
+
+<!-- Table 2: Project Details -->
+<table id="project-details" width="50%" style="border:0px solid black; margin-top: 0; border-collapse: collapse;">
+    <thead>
+        <tr>
+            <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Project ID</td>
+            <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $id_project ?></td>
+        </tr>
+        <tr>
+            <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Client</td>
+            <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $client ?></td>
+        </tr>
+        <tr>
+            <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Client contact details</td>
+            <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $id_client_sample ?></td>
+        </tr>
+        <tr>
+            <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Date received</td>
+            <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $date_collected ?></td>
+        </tr>
+        <tr>
+            <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Time received</td>
+            <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $time_collected ?></td>
+        </tr>
+        <tr>
+            <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Test signatories</td>
+            <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $realname ?></td>
+        </tr>
+        <tr>
+            <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">ISO or NATA accreditation number/symbol</td>
+            <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
+        </tr>
+    </thead>
+</table>
+
+<!-- <p class="text-left">The results of the verification of the <?php //echo $chem_parameter ?> as <?php //echo $chem2 ?> (<?php //echo $chem3 ?>) test method spectrophotometrically with the determination of trueness, bias and method precision are as follows:
+    </p> -->
+<!-- <h4 class="text-right">Date : <?php //echo $date_invoice ?></h4> -->
+</br>
+
+<!-- <table id="tabletop" width=100%; style="border:0px solid black; margin-left:auto;margin-right:auto;">
     <tr>
-    <table id="mytable2" width=95%; style="border:1px solid black; margin-left:auto;margin-right:auto;">
+    <td align="left"><b>Table 1. Information <?php // echo $chem_parameter ?> as <?php //echo $chem2 ?> in CRM </b> </td>
+    </tr>
+    <tr> <td> </br> </td></tr>
+    
+    <tr>
+    <table id="mytable1" width=50%; style="border:0px solid black; margin-left:auto;margin-right:auto;">
+        <thead>
+            <tr style="border:0px solid black;">
+                <td colspan="2" align="center">Information Certificate of Analysis <?php //echo $chem3 ?></td>
+            </tr>
+            <tr>
+                <td width=40%; style="border:0px solid black;" align="center">Mixture Name</td>
+                <td width=60%; style="border:0px solid black;" align="center"><?php //echo $mixture_name ?></td>
+            </tr>
+            <tr>
+                <td width=40%; style="border:0px solid black;" align="center">Sample No.</td>
+                <td width=60%; style="border:0px solid black;" align="center"><?php //echo $sample_no ?></td>
+            </tr>
+            <tr>
+                <td width=40%; style="border:0px solid black;" align="center">Lot. No.</td>
+                <td width=60%; style="border:0px solid black;" align="center"><?php// echo $lot_no ?></td>
+            </tr>
+            <tr>
+                <td width=40%; style="border:0px solid black;" align="center">Exp. date</td>
+                <td width=60%; style="border:0px solid black;" align="center"><?php// echo $date_expired ?></td>
+            </tr>
+            <tr>
+                <td width=40%; style="border:0px solid black;" align="center">Certified Value</td>
+                <td width=60%; style="border:0px solid black;" align="center"><?php //echo $cert_value ?></td>
+            </tr>
+            <tr>
+                <td width=40%; style="border:0px solid black;" align="center">Uncertainty</td>
+                <td width=60%; style="border:0px solid black;" align="center"><?php //echo $uncertainty ?></td>
+            </tr>
+        </thead>
+    </table>
+    </br>
+    </br>
+    </tr>
+    <tr>
+    <td align="left"><b>Table 3. Results of Analysis</b> </td>
+    </tr>
+    <tr>
+    </br>
+    <table id="mytable2" style="border:0px solid black; margin-left:auto;margin-right:auto;">
         <thead>
             <tr>
-                <td width=5%; class="print-bg" style="border:1px solid black; padding: 5px;" align="center"><b>No.</b></td>
-                <td width=25%; class="print-bg" style="border:1px solid black;" align="center"><b>Description</b></td>
-                <td width=5%; class="print-bg" style="border:1px solid black;" align="center"><b>Qty</b></td>
-                <td width=10%; class="print-bg" style="border:1px solid black;" align="center"><b>Unit</b></td>
-                <td width=15%; class="print-bg" style="border:1px solid black;" align="center"><b>Unit Price IDR</b></td>
-                <td width=15%; class="print-bg" style="border:1px solid black;" align="center"><b>Total Price IDR</b></td>
-                <td width=25%; class="print-bg" style="border:1px solid black;" align="center"><b>Remarks</b></td>
+                <td width=100px; style="border:0px solid black;" align="center"><b>Duplication</b></td>
+                <td width=100px; style="border:0px solid black;" align="center"><b>Result (mg/L)</b></td>
+                <td width=100px; style="border:0px solid black;" align="center"><b>Trueness (%R)</b></td>
+                <td width=100px; style="border:0px solid black;" align="center"><b>% Bias Method</b></td>
             </tr>
 
-            <?php $i=1;
-             foreach ($response as $row):?>
+            <?php// foreach ($response as $row): ?>
             <tr>
-                <td style="border:1px solid black;" align="center"><?php echo $i; ?></td>
-                <td style="border:1px solid black; padding: 5px;" align="left"><?php echo $row->items; ?></td>
-                <td style="border:1px solid black;" align="center"><?php echo $row->qty; ?></td>
-                <td style="border:1px solid black;" align="center"><?php echo $row->unit; ?></td>
-                <td style="border:1px solid black; padding: 5px;" align="right"><?php echo $row->estimate_price; ?></td>
-                <td style="border:1px solid black; padding: 5px;" align="right"><?php echo $row->total; ?></td>
-                <td style="border:1px solid black; padding: 5px;" align="left"><?php echo $row->remarks; ?></td>
+                <td style="border:0px solid black;" align="center"><?php //echo $row->duplication; ?></td>
+                <td style="border:0px solid black;" align="center"><?php //echo $row->result; ?></td>
+                <td style="border:0px solid black;" align="center"><?php //echo $row->trueness; ?></td>
+                <td style="border:0px solid black;" align="center"><?php //echo $row->bias_method; ?></td>
             </tr>
-            <?php $i++; endforeach; ?>
+            <?php //endforeach; ?>
             <tr>
-                <td style="border:1px solid black;" align="center" colspan="2"><b>Grand Total</b></td>
-                <td style="border:1px solid black; padding: 5px;" align="right" colspan="4"><b><?php echo $budget_req; ?></b></td>
-                <td style="border:1px solid black;" align="center"></td>
-                <td style="border:1px solid black;" align="center"></td>
+                <td style="border:0px solid black;" align="center"><b>Total</b></td>
+                <td style="border:0px solid black;" align="center"><?php //echo $tot_result; ?></td>
+                <td style="border:0px solid black;" align="center"><?php //echo $tot_trueness; ?></td>
+                <td style="border:0px solid black;" align="center"><?php //echo $tot_bias; ?></td>
+            </tr>
+            <tr>
+                <td style="border:0px solid black;" align="center"><b>Average</b></td>
+                <td style="border:0px solid black;" align="center"><?php //echo $avg_result; ?></td>
+                <td style="border:0px solid black;" align="center"><?php //echo $avg_trueness; ?></td>
+                <td style="border:0px solid black;" align="center"><?php //echo $avg_bias; ?></td>
+            </tr>
+            <tr>
+                <td style="border:0px solid black;" align="center"><b>SD</b></td>
+                <td style="border:0px solid black;" align="center"><?php //echo $sd; ?></td>
+                <td style="border:0px solid black;" align="center"></td>
+                <td style="border:0px solid black;" align="center"></td>
+            </tr>
+            <tr>
+                <td style="border:0px solid black;" align="center"><b>%RSD</b></td>
+                <td style="border:0px solid black;" align="center"><?php //echo $rsd; ?></td>
+                <td style="border:0x solid black;" align="center"></td>
+                <td style="border:0px solid black;" align="center"></td>
+            </tr>
+            <tr>
+                <td style="border:0px solid black;" align="center"><b>%CV Horwits</b></td>
+                <td style="border:0px solid black;" align="center"><?php //echo $cv_horwits; ?></td>
+                <td style="border:0px solid black;" align="center"></td>
+                <td style="border:0px solid black;" align="center"></td>
+            </tr>
+            <tr>
+                <td style="border:0px solid black;" align="center"><b>0.67 x %CV</b></td>
+                <td style="border:0px solid black;" align="center"><?php //echo $cv; ?></td>
+                <td style="border:0px solid black;" align="center"></td>
+                <td style="border:0px solid black;" align="center"></td>
             </tr>
             
         </thead>
-        </br>
-        </br>
-        <thead>
     </table>
+    </br>
+    </br>
     </tr>
     <tr>
-    <!-- </br> -->
-    <table id="mytable3" width=95%; style="border:0px solid black; margin-left:auto;margin-right:auto;">
+    <td align="left"><b>Table 4. Acceptance %RSD dan %R for determination Accuracy, Precision and Bias Method</b> </td>
+    </br>
+    </tr>
+    <tr>
+    </br>
+    <table id="mytable3" style="border:0px solid black; margin-left:auto;margin-right:auto;">
         <thead>
-            </br>
             <tr>
-                <td width=100px; style="border:0px solid black; padding: 5px; " align="left"><b>Makassar, <?php echo $date_req; ?></b></td>
-                <td style="border:0px" align="center"></td>
-                <td style="border:0px" align="center"></td>
+                <td width=100px; style="border:0px solid black;" align="center"><b>Parameter</b></td>
+                <td width=150px; style="border:0px solid black;" align="center"><b>Requirements</b></td>
+                <td width=100px; style="border:0px solid black;" align="center"><b>Results</b></td>
+                <td width=100px; style="border:0px solid black;" align="center"><b>Conclusion</b></td>
             </tr>
             <tr>
-                <td width=100px; style="border:0px solid black;padding: 5px; " align="left"><b>Prepared,</b></td>
-                <td width=100px; style="border:0px solid black;" align="center"><b>Reviewed,</b></td>
-                <td width=100px; style="border:0px solid black;" align="center"><b>Approved,</b></td>
+                <td style="border:0px solid black;" align="center"><b>Precision</b></td>
+                <td style="border:0px solid black;" align="center">% RSD ≤ <?php //echo $cv; ?></td>
+                <td style="border:0px solid black;" align="center"><?php //echo $rsd; ?></td>
+                <td style="border:0px solid black;" align="center"><?php //echo $prec; ?></td>
             </tr>
             <tr>
-                <td style="border:0px" align="center"></br></td>
-                <td style="border:0px" align="center"></td>
-                <td style="border:0px" align="center"></td>
+                <td style="border:0px solid black;" align="center"><b>Accuracy</b></td>
+                <td style="border:0px solid black;" align="center">80% ≤ %R ≤ 115%</td>
+                <td style="border:0px solid black;" align="center"><?php //echo $avg_trueness; ?></td>
+                <td style="border:0px solid black;" align="center"><?php //echo $accuracy; ?></td>
             </tr>
             <tr>
-                <td style="border:0px" align="center"></br></td>
-                <td style="border:0px" align="center"></td>
-                <td style="border:0px" align="center"></td>
-            </tr>
-            <tr>
-                <td style="border:0px" align="center"></br></td>
-                <td style="border:0px" align="center"></td>
-                <td style="border:0px" align="center"></td>
-            </tr>
-            <tr>
-                <td width=100px; style="border:0px solid black; padding: 5px; " align="left"><?php echo $realname; ?></td>
-                <td style="border:0px" align="center"><?php echo $reviewed; ?></td>
-                <td style="border:0px" align="center"><?php echo $approved; ?></td>
+                <td style="border:0px solid black;" align="center"><b>Bias</b></td>
+                <td style="border:0px solid black;" align="center">-20% ≤ Bias ≤ 15</td>
+                <td style="border:0px solid black;" align="center"><?php //echo $avg_bias; ?></td>
+                <td style="border:0px solid black;" align="center"><?php //echo $bias; ?></td>
             </tr>
         </thead>
     </table>
     </tr>
-<!-- 
+
+    <tr>
+    </br>
+    <table id="mytable3" style="border:0px solid black; margin-left:auto;margin-right:auto;">
+        <thead>
+            <tr>
+                <td width=155px; style="border:0px solid black;" align="center"><b>Date of Conducted</b></td>
+                <td width=300px; style="border:0px solid black;" align="center"><b><?php //echo $date_spec; ?></b></td>
+            </tr>
+            <tr>
+                <td style="border:0px solid black;" align="center"><b>Place of Conducted</b></td>
+                <td style="border:0px solid black;" align="center">RISE Laboratory</td>
+            </tr>
+            <tr>
+                <td style="border:0px solid black;" align="center"><b>Analyst</b></td>
+                <td style="border:0px solid black;" align="center"><?php //echo $realname; ?></td>
+            </tr>
+        </thead>
+    </table>
+    </tr>
     <tfoot>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
         <tr>
         <td>Copyright © 2022-2023 LIMS-RISE | RISE Data Team. All rights reserved.</td>
         </tr>
-    </tfoot> -->
-</table>
+    </tfoot>
+</table> -->
+
+
+
+<!-- <div class="footer">
+           <img src="../../../assets/img/dot.jpg" width="1025px" height="400px" class="icon" style="padding: 70px; float: left;">
+     </div> -->
+</div>
+</div>
+</div>
 </div>
 </section>    
 </div>
+
+<script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
+        <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
+        <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
+        <script type="text/javascript">
+            var table
+            $(document).ready(function() {
+                // var id_del = $('#id_delivery').val();
+				// var base_url = location.hostname;
+
+                // table = $("#mytable2").DataTable({
+                //     oLanguage: {
+                //         sProcessing: "loading..."
+                //     },
+                //     processing: true,
+                //     serverSide: true,
+                //     paging: false,
+                //     ordering: false,
+                //     info: false,
+                //     bFilter: false,
+                //     ajax: {"url": "wat_water_spectroqc/spec_printdet?id="+id_spec, "type": "POST"},
+                //     columnDefs: [
+                //         {
+                //         targets: [4,5],
+                //         className: 'text-right'
+                //         }
+                //     ],
+                //     columns: [
+                //         // {
+                //         //     "data": "id_delivery_det",
+                //         //     "orderable": false
+                //         // },
+                //         {"data": "duplication"},
+                //         {"data": "result"},
+                //         {"data": "trueness"},
+                //         {"data": "bias_method"},
+                //     ]
+                // });
+               
+            });
+        </script>
