@@ -413,7 +413,7 @@
                             <!-- Buttons on the right side -->
                             <div class="modal-buttons">
                                 <button type="submit" class="btn btn-primary" id="saveButtonDetail"><i class="fa fa-save"></i> Save</button>
-                                <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                                <button type="button" class="btn btn-warning" id="cancelButton" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
                             </div>
                         </div>
                         <!-- <div class="modal-footer clearfix">
