@@ -30,7 +30,6 @@
                                     }
                             ?>        
                             <?php echo anchor(site_url('Sample_reception/excel'), '<i class="fa fa-file-excel-o"></i> Export to XLS', 'class="btn btn-success"'); ?>
-                            <?php echo anchor(site_url('Sample_reception/excel'), '<i class="fa fa-file-scan-o"></i> Scan', 'class="btn btn-warning"'); ?>
                         </div>
                             <div class="table-responsive">
                             <table class="table table-bordered table-striped" id="mytable" style="width:100%">
@@ -45,6 +44,7 @@
                                         <th>Comments</th>
                                         <th>Date Collected</th>
                                         <th>Time Collected</th>
+                                        <th>File Status</th>
                                         <th width="120px">Action</th>
                                     </tr>
                                 </thead>
@@ -175,8 +175,8 @@
                                 <label for="files" class="col-sm-4 control-label">Filename</label>
                                 <div class="col-sm-8">
                                     <input id="files" name="files" placeholder="Filename" type="text" class="form-control" required>
+                                    <div class="val2tip"></div>
                                     <button type="button" class="btn btn-success" style="margin-top: 5px;" onclick="openScanner()">Scan</button>
-                                    <div class="val1tip"></div>
                                 </div>
                             </div>
 
@@ -637,6 +637,31 @@
                 {"data": "comments"},
                 {"data": "date_collected"},
                 {"data": "time_collected"},
+                {
+                    "data": "files",
+                    "render": function(data, type, row) {
+                        if (!data || data === "null") return `<button type="button" class="btn btn-sm btn-light" disabled>
+                                    <i class="fa fa-times"></i> No scan yet
+                                </button>`;
+
+                        const fileURL = `<?= site_url('scan_page/view_file/') ?>${data}`;
+                        return `<a href="${fileURL}" target="_blank" class="btn btn-sm btn-success">
+                                    <i class="fa fa-check"></i> View Scan
+                                </a>`;
+                    }
+                },
+                // {
+                //     "data": "files",
+                //     "render": function(data, type, row) {
+                //         if (!data || data === "null") return `<button type="button" class="btn btn-sm btn-light" disabled>
+                //                     <i class="fa fa-times"></i> No scan yet
+                //                 </button>`;
+                //         return `<button type="button" class="btn btn-sm btn-success" disabled>
+                //                     <i class="fa fa-check"></i> Scanning
+                      // <i class="fa fa-file-pdf-o"></i> Lihat File
+                //                 </button>`;
+                //     }
+                // },
                 { "data": "action", "orderable": false, "searchable": false }
             ],
             columnDefs: [
@@ -973,6 +998,7 @@
             $('#id_client_sample').attr('readonly', false);
             $('#number_sample').val('');    
             $('#number_sample').attr('readonly', false);
+            $('#files').val('');
             $('#comments').val('');
             $('#compose-modal').modal('show');
         });
@@ -996,6 +1022,8 @@
             $('#id_client_sample').attr('readonly', true);
             $('#number_sample').val(data.number_sample);
             $('#number_sample').attr('readonly', true);
+            $('#files').val(data.files);
+            $('#files').attr('readonly', true);
             $('#date_collected').val(data.date_collected);
             $('#time_collected').val(data.time_collected);
             $('#comments').val(data.comments);
@@ -1031,4 +1059,24 @@ function openScanner() {
   window.open("<?= site_url('scan_page') ?>", "Scan Document",
     `width=${w},height=${h},top=${y},left=${x}`);
 }
+
+// 👇 Tangkap data dari scanner popup
+window.addEventListener("message", function(event) {
+    if (event.data && event.data.type === 'scan-upload-complete') {
+        const filename = event.data.filename;
+        console.log("Dapat nama file dari scanner:", filename);
+
+        // Masukkan ke input #files
+        const fileInput = document.getElementById("files");
+        if (fileInput) {
+            fileInput.value = filename;
+        }
+
+        // Optional: kasih tanda sukses
+        const valTip = document.querySelector(".val2tip");
+        if (valTip) {
+            valTip.innerHTML = `<span class="text-success">File <b>${filename}</b> sudah diunggah!</span>`;
+        }
+    }
+});
 </script>

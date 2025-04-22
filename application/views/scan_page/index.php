@@ -12,10 +12,6 @@
 
     <button onclick="acquireImage()">Scan</button>
     <button onclick="uploadImage()">Upload</button>
-    <form action="http://127.0.0.1/limsonewater/index.php/Scan_page/upload" method="post" enctype="multipart/form-data">
-  <input type="file" name="RemoteFile">
-  <input type="submit" value="Upload">
-</form>
 
 
     <script>
@@ -59,86 +55,65 @@
         }
 
 
-  // function uploadImage() {
-  //     if (!DWObject) {
-  //         alert("DWObject not ready.");
-  //         return;
-  //     }
+        // function uploadImage() {
+        //     if (!DWObject) {
+        //         alert("DWObject belum siap.");
+        //         return;
+        //     }
+            
+        //     const imageIndex = 0; // semua image
+        //     const filename = "scan_" + Date.now() + ".pdf"; // ✅ sudah string & .pdf
+        //     const uploadFieldName = "RemoteFile";
+        //     const uploadURL = "http://localhost/limsonewater/index.php/Scan_page/upload";
 
-  //     const imageIndex = 0;
-  //     const uploadFieldName = "RemoteFile";
-  //     const filename = "scan_" + Date.now() + ".jpg";
-  //     const uploadURL = "http://127.0.0.1/limsonewater/index.php/Scan_page/upload";
+        //     // Simpan ke lokal untuk debug
+        //     const testSaveResult = DWObject.SaveAsPDF("S:\\OneWater\\Data\\Scan\\" + filename, imageIndex);
+        //     if (!testSaveResult) {
+        //         console.error("Gagal simpan lokal:", DWObject.ErrorString);
+        //         alert("Gagal simpan lokal.");
+        //         return;
+        //     } else {
+        //         alert("Upload sukses: " + filename);
+        //         // kirim ke parent
+        //         window.opener.postMessage({
+        //             type: 'scan-upload-complete',
+        //             filename: filename
+        //         }, "*");
 
-  //     console.log("Attempting to upload to:", uploadURL);
-  //     console.log("Filename:", filename);
-  //     console.log("Images in buffer:", DWObject.HowManyImagesInBuffer);
-  //     console.log("Upload field name:", uploadFieldName);
+        //         setTimeout(() => window.close(), 1000);
+        //     }
+        // }
 
-  //     const result = DWObject.HTTPUploadThroughPostEx(
-  //         uploadURL,
-  //         imageIndex,
-  //         filename,
-  //         Dynamsoft.DWT.EnumDWT_ImageType.IT_JPG,
-  //         Dynamsoft.DWT.EnumDWT_UploadDataFormat.Binary,
-  //         uploadFieldName
-  //     );
-
-  //     if (result === 0) {
-  //         const errorString = DWObject.ErrorString;
-  //         console.error("Upload failed. Error:", errorString);
-  //         alert("Upload gagal: " + errorString);
-  //     } else {
-  //         console.log("Upload berhasil.");
-  //         alert("Upload sukses!");
-  //     }
-  // }
-
-  function uploadImage() {
-    if (!DWObject) {
-        alert("DWObject not ready.");
-        return;
-    }
-
-    const imageIndex = 0; // penting!
-    const uploadFieldName = "RemoteFile";
-    const filename = "scan_" + Date.now() + ".jpg";
-    const uploadURL = "http://localhost/limsonewater/index.php/Scan_page/upload"; // ganti 127.0.0.1 jadi localhost
-
-    console.log("Attempting to upload to:", uploadURL);
-    console.log("Filename:", filename);
-    console.log("Images in buffer:", DWObject.HowManyImagesInBuffer);
-    console.log("Upload field name:", uploadFieldName);
-
-    // 👇 Coba simpan gambar secara lokal dulu untuk debug
-    // const testSaveResult = DWObject.SaveAsJPEG("C:\\temp\\test.jpg", imageIndex);
-    // if (!testSaveResult) {
-    //     console.error("Gagal menyimpan gambar lokal. Error:", DWObject.ErrorString);
-    //     alert("Gagal menyimpan gambar ke lokal. Periksa apakah gambarnya valid.");
-    //     return;
-    // } else {
-    //     console.log("Berhasil menyimpan gambar ke C:\\temp\\test.jpg");
-    // }
-
-    // 👇 Upload gambar ke server
-            DWObject.HTTPUploadThroughPost(
-            uploadURL,
-            imageIndex,
-            filename,
-            Dynamsoft.DWT.EnumDWT_ImageType.IT_JPG,
-            uploadFieldName,
-            function(result, serverResponse) {
-                if (result) {
-                    console.log("Upload berhasil. Server response:", serverResponse);
-                    alert("Upload sukses!");
-                } else {
-                    console.error("Upload gagal. Error:", DWObject.ErrorString);
-                    alert("Upload gagal: " + DWObject.ErrorString);
-                }
+        function uploadImage() {
+            if (!DWObject) {
+                alert("DWObject belum siap.");
+                return;
             }
-        );
 
-}
+            const filename = "scan_" + Date.now() + ".pdf";
+            const localPath = "S:\\OneWater\\Data\\Scan\\" + filename;
+
+            console.log("Jumlah halaman di buffer:", DWObject.HowManyImagesInBuffer);
+
+            // ✅ Simpan semua image di buffer ke dalam 1 PDF
+            const result = DWObject.SaveAllAsPDF(localPath);
+
+            if (!result) {
+                console.error("Gagal simpan lokal:", DWObject.ErrorString);
+                alert("Gagal simpan lokal.");
+                return;
+            } else {
+                alert("Upload sukses: " + filename);
+
+                // Kirim ke parent modal
+                window.opener.postMessage({
+                    type: 'scan-upload-complete',
+                    filename: filename
+                }, "*");
+
+                setTimeout(() => window.close(), 1000);
+            }
+        }
 
 
 
