@@ -90,19 +90,22 @@ class Biobankin extends CI_Controller
 
     public function save() {
         $mode = $this->input->post('mode', TRUE);
-        $id_one_water_sample_list = $this->input->post('id_one_water_sample_list', TRUE);
+        // $id_one_water_sample_list = $this->input->post('id_one_water_sample_list', TRUE);
         $id_one_water_sample = $this->input->post('id_one_water_sample', TRUE);
+        $idx_one_water_sample = $this->input->post('idx_one_water_sample', TRUE);
         $dt = new DateTime();
 
         $sampletype = $this->input->post('sampletype', TRUE);
         $id_person = $this->input->post('id_person', TRUE);
         $date_conduct = $this->input->post('date_conduct', TRUE);
         $replicates = $this->input->post('replicates', TRUE);
-        $comments = $this->input->post('comments', TRUE);        
+        $comments = $this->input->post('comments', TRUE);  
+        $review = $this->input->post('review', TRUE);
+        $user_review = $this->input->post('user_review', TRUE);      
     
         if ($mode == "insert") {
             $data = array(
-                'id_one_water_sample' => $id_one_water_sample_list,
+                'id_one_water_sample' => $id_one_water_sample,
                 'sampletype' => $sampletype,
                 'date_conduct' => $date_conduct,
                 'replicates' => $replicates,
@@ -113,25 +116,32 @@ class Biobankin extends CI_Controller
                 'user_created' => $this->session->userdata('id_users'),
                 'date_created' => $dt->format('Y-m-d H:i:s'),
             );
+
+            // var_dump($data);
+            // die();
     
             $this->Biobankin_model->insert($data);
             $this->session->set_flashdata('message', 'Create Record Success');
 
         } else if ($mode == "edit") {
             $data = array(
-                'id_one_water_sample' => $id_one_water_sample,
+                'id_one_water_sample' => $idx_one_water_sample,
                 'sampletype' => $sampletype,
                 'date_conduct' => $date_conduct,
                 'replicates' => $replicates,
                 'id_person' => $id_person,
                 'comments' => $comments,
+                'review' => $review,
+                'user_review' => $user_review,
                 'flag' => '0',
                 // 'uuid' => $this->uuid->v4(),
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
 
-            $this->Biobankin_model->update($id_one_water_sample, $data);
+            // var_dump($data);
+            // die();
+            $this->Biobankin_model->update($idx_one_water_sample, $data);
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
@@ -334,6 +344,21 @@ class Biobankin extends CI_Controller
         header('Content-Type: application/json');
         echo json_encode($data);
         exit; // Ensure no extra output after JSON
+    }
+
+    public function getIdOneWaterDetails()
+    {
+        $idOneWaterSample = $this->input->post('id_one_water_sample');
+        $oneWaterSample = $this->Biobankin_model->getOneWaterSampleById($idOneWaterSample);
+        echo json_encode($oneWaterSample);
+    }
+
+    public function barcode_restrict() 
+    {
+        $id = $this->input->get('id1');
+        $data = $this->Biobankin_model->barcode_restrict($id);
+        header('Content-Type: application/json');
+        echo json_encode($data);
     }
     
 
