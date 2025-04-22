@@ -164,10 +164,14 @@ body { margin: 1.6cm; }
     </div>
 </div>
 
-<div style="width: 100%; border-top: 0px solid #ddd; margin: 30px 0; text-align: center;">
+<div style="width: 100%; border-top: 0px solid #ddd; margin: 30px 0;"></div>
+
+<div style="width: 80%; margin: 5px auto; border-top: 0px solid #ddd; text-align: center;">
   The sample(s) referred to in this report were analysed by the following method(s) under NATA Accreditation No. 992. The hash (#) below
   indicates methods not covered by NATA accreditation in the performance of this service.
 </div>
+
+<div style="width: 100%; border-top: 0px solid #ddd; margin: 50px 0;"></div>
 
 <div style="width: 100%;">
     <table id="additional-info" width="100%" style="border:0px solid black; border-collapse: collapse;">
@@ -228,6 +232,9 @@ body { margin: 1.6cm; }
 </div>
 </section>    
 </div>
+<footer>
+<div style="width: 60%; margin: 40px auto 0 auto; border-top: 3px solid black;"></div>
+</footer>
 
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
         <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
