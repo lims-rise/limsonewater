@@ -81,8 +81,7 @@ body { margin: 1.6cm; }
 
 </style>
 
-<html>
-<body>
+
 <div class="content-wrapper">
 
 <section class="content">
@@ -279,15 +278,13 @@ body { margin: 1.6cm; }
 <div style="width: 100%; border-top: 5px solid #3C8DBC; margin: 30px 0;"></div>
 
 </section>    
-</div> <!-- end of content-wrapper -->
 
+</div> <!-- end of content-wrapper -->
 
 <footer>
     <div class="footer-border"></div>
 </footer>
 
-</body>
-</html>
 
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
