@@ -190,6 +190,7 @@ class Sample_reception extends CI_Controller
         $comments = $this->input->post('comments', TRUE);
         $date_collected = $this->input->post('date_collected', TRUE);
         $time_collected = $this->input->post('time_collected', TRUE);
+        $files =  $this->input->post('files', TRUE);
     
         if ($mode == "insert") {
             // Insert ke sample_reception
@@ -200,12 +201,16 @@ class Sample_reception extends CI_Controller
                 'number_sample' => $number_sample,
                 'date_collected' => $date_collected,
                 'time_collected' => $time_collected,
+                'files' => $files,
                 'comments' => $comments,
                 'flag' => '0',
                 'uuid' => $this->uuid->v4(),
                 'user_created' => $this->session->userdata('id_users'),
                 'date_created' => $dt->format('Y-m-d H:i:s'),
             );
+
+            // var_dump($data);
+            // die();
     
             $id_project = $this->Sample_reception_model->insert($data);
     
@@ -233,6 +238,7 @@ class Sample_reception extends CI_Controller
                             'number_sample' => $number_sample,
                             'date_collected' => $date_collected,
                             'time_collected' => $time_collected,
+                            'files' => $files,
                             'comments' => $comments,
                             'flag' => '0',
                             'uuid' => $this->uuid->v4(),

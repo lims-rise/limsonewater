@@ -16,7 +16,7 @@ class Sample_reception_model extends CI_Model
 
     // datatables
     public function json() {
-        $this->datatables->select('NULL AS toggle, sr.id_project, sr.client_quote_number, sr.client, sr.id_client_sample, sr.number_sample, sr.comments, sr.date_collected, sr.time_collected, 
+        $this->datatables->select('NULL AS toggle, sr.id_project, sr.client_quote_number, sr.client, sr.id_client_sample, sr.number_sample, sr.comments, sr.files, sr.date_collected, sr.time_collected, 
             sr.date_created, sr.date_updated, sr.flag', FALSE);
     
         $this->datatables->from('sample_reception sr');
@@ -47,7 +47,7 @@ class Sample_reception_model extends CI_Model
             $this->datatables->add_column('action', 
             anchor(site_url('sample_reception/rep_print/$1'), 
                 '<i class="fa fa-print" aria-hidden="true"></i>', 
-                array('class' => 'btn btn-info btn-sm')) . 
+                array('class' => 'btn btn-warning btn-sm')) . 
             "
                 " . '<button type="button" class="btn_edit btn btn-info btn-sm">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
