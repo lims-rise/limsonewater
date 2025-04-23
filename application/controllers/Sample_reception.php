@@ -238,6 +238,7 @@ class Sample_reception extends CI_Controller
                             'number_sample' => $number_sample,
                             'date_collected' => $date_collected,
                             'time_collected' => $time_collected,
+                            'files' => $files,
                             'comments' => $comments,
                             'flag' => '0',
                             'uuid' => $this->uuid->v4(),

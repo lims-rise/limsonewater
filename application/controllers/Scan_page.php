@@ -207,26 +207,65 @@ class Scan_page extends CI_Controller {
         }
     }
 
+    // public function view_file($filename)
+    // {
+    //     $filename = basename($filename);
+    //     $basePath = '\\\\ad.monash.edu\\shared\\OneWater\\Data\\Scan\\';
+    //     $filePath = $basePath . $filename;
+    
+    //     if (!file_exists($filePath)) {
+    //         log_message('error', 'File tidak ditemukan: ' . $filePath);
+    //         show_404();
+    //         return;
+    //     }
+    
+    //     // Set header supaya file bisa dibuka di browser
+    //     header('Content-Type: application/pdf');
+    //     header('Content-Disposition: inline; filename="' . $filename . '"');
+    //     header('Content-Length: ' . filesize($filePath));
+    
+    //     readfile($filePath);
+    //     exit;
+    // }
+
     public function view_file($filename)
     {
         $filename = basename($filename);
         $basePath = '\\\\ad.monash.edu\\shared\\OneWater\\Data\\Scan\\';
         $filePath = $basePath . $filename;
-    
+
         if (!file_exists($filePath)) {
-            log_message('error', 'File tidak ditemukan: ' . $filePath);
-            show_404();
+            $folderAccessible = is_dir($basePath);
+
+            log_message('error', 'File not found or inaccessible: ' . $filePath);
+
+            $error_message = $folderAccessible
+                ? "The file <b>$filename</b> could not be found."
+                : "Failed to access the file <b>$filename</b>.<br>Please make sure you are connected to the Monash internal network and VPN.";
+
+            echo "<!DOCTYPE html>
+                <html><head><title>File Access Error</title>
+                <style>
+                    body { font-family: Arial; padding: 40px; background: #f8f9fa; }
+                    .msg { background: #fff3cd; border: 1px solid #ffeeba; padding: 20px; border-radius: 8px; }
+                </style>
+                </head><body>
+                <div class='msg'>
+                    <h3>⚠️ Unable to Display File</h3>
+                    <p>$error_message</p>
+                </div>
+                </body></html>";
             return;
         }
-    
-        // Set header supaya file bisa dibuka di browser
+
         header('Content-Type: application/pdf');
         header('Content-Disposition: inline; filename="' . $filename . '"');
         header('Content-Length: ' . filesize($filePath));
-    
+
         readfile($filePath);
         exit;
     }
+
     
 
 

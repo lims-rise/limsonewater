@@ -655,7 +655,7 @@
 
                         const fileURL = `<?= site_url('scan_page/view_file/') ?>${data}`;
                         return `<a href="${fileURL}" target="_blank" class="btn btn-sm btn-success">
-                                    <i class="fa fa-check"></i> View Scan
+                                    <i class="fa fa-file-pdf-o"></i> View Scan
                                 </a>`;
                     }
                 },
@@ -1009,6 +1009,7 @@
             $('#number_sample').attr('readonly', false);
             $('#files').val('');
             $('#comments').val('');
+            $('.val2tip').html('');
             $('#compose-modal').modal('show');
         });
 
@@ -1036,6 +1037,7 @@
             $('#date_collected').val(data.date_collected);
             $('#time_collected').val(data.time_collected);
             $('#comments').val(data.comments);
+            $('.val2tip').html('');
             $('#compose-modal').modal('show');
         });   
 
@@ -1084,7 +1086,7 @@ window.addEventListener("message", function(event) {
         // Optional: kasih tanda sukses
         const valTip = document.querySelector(".val2tip");
         if (valTip) {
-            valTip.innerHTML = `<span class="text-success">File <b>${filename}</b> sudah diunggah!</span>`;
+            valTip.innerHTML = `<span class="text-success">File <b>${filename}</b> has been uploading!</span>`;
         }
     }
 });
