@@ -361,7 +361,7 @@
                                 </div>
                             </div>
                     
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="replicates" class="col-sm-4 control-label">Replicates</label>
                                 <div class="col-sm-8">
                                     <select id="replicates" name="replicates" class="form-control" required>
@@ -370,6 +370,13 @@
                                         <option value="2">2</option>
                                         <option value="3">3</option>
                                     </select>
+                                </div>
+                            </div> -->
+
+                            <div class="form-group">
+                                <label for="replicates" class="col-sm-4 control-label">Replicates</label>
+                                <div class="col-sm-8">
+                                    <input id="replicates" name="replicates" placeholder="Replicates" type="number" class="form-control" required>
                                 </div>
                             </div>
                             
