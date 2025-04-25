@@ -84,7 +84,9 @@
 									<thead>
 										<tr>
 											<th>Testing Type</th>
-											<th>Barcode</th>
+											<th>Main module</th>
+											<th>Detail module</th>
+											<th>Status</th>
 											<th>Action</th>
 										</tr>
 									</thead>
@@ -270,8 +272,16 @@
 	width: 50%;
 }
 
-.url-link{
+.url-link-detail {
 	color: #FC8F54;
+}
+
+.url-link-status {
+	color: #FC8F54;
+}
+
+.rounded-pill {
+  border-radius: 9999px !important;
 }
 
 
@@ -448,56 +458,104 @@
 
 
 		table = $("#example2").DataTable({
-			oLanguage: {
-				sProcessing: "Loading data, please wait..."
-			},
-			processing: true,
-			serverSide: true,
-			paging: false,
-			info: false,
-			bFilter: false,
-			ajax: {
-				"url": "../../Sample_reception/subjson?id=" + encodeURIComponent(id_sample), 
-				"type": "POST"
-			},
-			columns: [
-				{"data": "testing_type"},
-				{
-				"data": "url",  // Kolom yang berisi bagian dinamis URL
-				"render": function(data, type, row) {
-					// Cek apakah barcode ada, jika tidak, tampilkan '-' sebagai gantinya
-					return `<a href="javascript:void(0);" class="url-link" data-url="${data}" data-id_testing_type="${row.id_testing_type || '-'}" data-barcode="${row.barcode || '-'}" data-id_one_water_sample="${row.id_one_water_sample}">${`${row.testing_type} - ${row.id_one_water_sample}`|| '-'}</a>`;
-				}
-				},
-				{
-				"data": "action",
-				"orderable": false,
-				"className": "text-center"
-				}
-			],
-			order: [[0, 'asc']],
-			rowCallback: function(row, data, iDisplayIndex) {
-				// Additional row callbacks if needed
+	oLanguage: {
+		sProcessing: "Loading data, please wait..."
+	},
+	processing: true,
+	serverSide: true,
+	paging: false,
+	info: false,
+	bFilter: false,
+	ajax: {
+		"url": "../../Sample_reception/subjson?id=" + encodeURIComponent(id_sample),
+		"type": "POST"
+	},
+	columns: [
+		{ "data": "testing_type" },
+		{
+			"data": "url",
+			"render": function(data, type, row) {
+				return `
+					<a href="javascript:void(0);" class="url-link-detail"
+						data-url="${data}"
+						data-id_testing_type="${row.id_testing_type || '-'}"
+						data-barcode="${row.barcode || '-'}"
+						data-id_one_water_sample="${row.id_one_water_sample}">
+						${row.testing_type || '-'} - ${row.id_one_water_sample || '-'}
+					</a>
+				`;
 			}
-		});
+		},
+		{
+			"data": "url",
+			"render": function(data, type, row) {
+				return `
+					<a href="javascript:void(0);" class="url-link-status"
+						data-url="${data}"
+						data-id_testing_type="${row.id_testing_type || '-'}"
+						data-barcode="${row.barcode || '-'}"
+						data-id_one_water_sample="${row.id_one_water_sample}">
+						${row.testing_type || '-'} - ${row.id_one_water_sample || '-'}
+					</a>
+				`;
+			}
+		},
+		{
+			"data": null, // <- karena kita render manual
+			"render": function(data, type, row) {
+				let statusBtn = '';
+				if (row.review == "1") {
+					statusBtn = '<span class="btn btn-xs btn-success rounded-pill">Review</span>';
+				} else if (row.review == "0") {
+					statusBtn = '<span class="btn btn-xs btn-warning rounded-pill">Unreview</span>';
+				} else {
+					statusBtn = '<span class="btn btn-xs btn-dark rounded-pill">No data has been entered</span>';
+				}
+
+				let fullNameBtn = `<span class="btn btn-xs btn-primary rounded-pill">${row.full_name || 'No user'}</span>`;
+
+				return `${fullNameBtn} - ${statusBtn}`;
+			}
+		},
+		{
+			"data": "action",
+			"orderable": false,
+			"className": "text-center"
+		}
+	],
+	order: [[0, 'asc']],
+	rowCallback: function(row, data, iDisplayIndex) {
+		// Additional row callbacks if needed
+	}
+});
 
 
-		// Event listener untuk klik pada kolom URL
-		$('#example2 tbody').on('click', 'a.url-link', function() {
-			let barcode = $(this).data('barcode');  // Ambil data barcode
+
+		// Klik link untuk detail
+		$('#example2 tbody').on('click', 'a.url-link-detail', function() {
+			let barcode = $(this).data('barcode');
 			let idOneWaterSample = $(this).data('id_one_water_sample');
 			let idTestingType = $(this).data('id_testing_type');
-			let url = $(this).data('url');  // Ambil URL dinamis
+			let url = $(this).data('url');
 
-			// Memastikan URL yang valid ada
 			if (url) {
-				// Menggunakan window.location.origin untuk membuat URL dinamis
-				let fullUrl = window.location.origin + '/limsonewater/index.php/' + url + '?barcode=' + barcode + '&idOneWaterSample=' + idOneWaterSample + '&idTestingType=' + idTestingType;
-				window.location.href = fullUrl;  // Arahkan ke URL dinamis
-			} else {
-				console.error('URL tidak ditemukan untuk barcode: ' + barcode);
+				let fullUrl = `${window.location.origin}/limsonewater/index.php/${url}?barcode=${barcode}&idOneWaterSample=${idOneWaterSample}&idTestingType=${idTestingType}`;
+				window.location.href = fullUrl;
 			}
 		});
+
+		// Klik link untuk status
+		$('#example2 tbody').on('click', 'a.url-link-status', function() {
+			let idOneWaterSample = $(this).data('id_one_water_sample');
+			let url = $(this).data('url');
+
+			if (url) {
+				let fullUrlStatus = `${window.location.origin}/limsonewater/index.php/${url}/read/${idOneWaterSample}`;
+				window.location.href = fullUrlStatus;
+			}
+		});
+
+
 
 
 

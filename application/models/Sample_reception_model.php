@@ -63,10 +63,27 @@ class Sample_reception_model extends CI_Model
     }
 
     function subjson($id) {
-        $this->datatables->select('testing.id_testing, testing.id_sample, testing.id_testing_type, sample.id_one_water_sample, testing.barcode, retest.testing_type AS testing_type, retest.url, testing.flag');
+            $this->datatables->select("
+            testing.id_testing, 
+            testing.id_sample, 
+            testing.id_testing_type, 
+            sample.id_one_water_sample, 
+            testing.barcode, 
+            retest.testing_type AS testing_type, 
+            retest.url, 
+            COALESCE(bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review) AS user_review, 
+            COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review) AS review, 
+            tbl_user.full_name, 
+            testing.flag
+        ");
         $this->datatables->from('sample_reception_testing testing');
         $this->datatables->join('ref_testing retest', 'FIND_IN_SET(retest.id_testing_type, testing.id_testing_type)', 'left');
         $this->datatables->join('sample_reception_sample sample', 'sample.id_sample = testing.id_sample', 'left');
+        $this->datatables->join('biobank_in bank', 'bank.biobankin_barcode = testing.barcode', 'left');
+        $this->datatables->join('campy_liquids campy', 'campy.campy_assay_barcode = testing.barcode', 'left');
+        $this->datatables->join('salmonella_liquids salmonellaL', 'salmonellaL.salmonella_assay_barcode = testing.barcode', 'left');
+        $this->datatables->join('salmonella_biosolids salmonellaB', 'salmonellaB.salmonella_assay_barcode = testing.barcode', 'left');
+        $this->datatables->join('tbl_user', 'tbl_user.id_users = COALESCE(bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review)', 'left');
         $this->datatables->where('testing.flag', '0');
         $this->datatables->where('testing.id_sample', $id);
         $this->datatables->group_by('testing.id_testing');
