@@ -40,7 +40,7 @@ html, body {
             display: block;
         }
         footer {
-            width: 100%;
+            width: 96%;
             position: fixed;
             bottom: 0;
         }
@@ -277,13 +277,20 @@ body { margin: 1.6cm; }
 </div> <!-- end of row -->
 <div style="width: 100%; border-top: 5px solid #3C8DBC; margin: 30px 0;"></div>
 
-</section>    
+</section>
+
+<section class="content">
+    <!-- <div class="row">
+        <div class="col-md-12">
+
+        </div>
+    </div> -->
+    <footer>
+                    <div  class="footer-border"></div>
+                </footer>
+</section>
 
 </div> <!-- end of content-wrapper -->
-
-<footer>
-    <div class="footer-border"></div>
-</footer>
 
 
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
