@@ -111,8 +111,8 @@ class Sample_reception extends CI_Controller
             'id_project' => $row->id_project,
             'client' => $row->client,
             'id_client_sample' => $row->id_client_sample,
-            'date_collected' => $row->date_collected,
-            'time_collected' => $row->time_collected,
+            'date_arrival' => $row->date_arrival,
+            'time_arrival' => $row->time_arrival,
             'id_person' => $row->id_person,
             'realname' => $row->realname,
             );

@@ -104,7 +104,7 @@ class Sample_reception_model extends CI_Model
 
     function get_rep($id)
     {
-        $q = $this->db->query('SELECT a.id_project, a.client, a.id_client_sample, b.date_collected, b.time_collected, b.id_person, c.realname
+        $q = $this->db->query('SELECT a.id_project, a.client, a.id_client_sample, b.date_arrival, b.time_arrival, b.id_person, c.realname
         FROM sample_reception a
         LEFT JOIN sample_reception_sample b ON a.id_project = b.id_project
         LEFT JOIN ref_person c ON b.id_person = c.id_person
