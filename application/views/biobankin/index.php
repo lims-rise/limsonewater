@@ -327,6 +327,14 @@
                                     <div class="val1tip"></div>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label for="biobankin_barcode" class="col-sm-4 control-label">Bionbankin Barcode</label>
+                                <div class="col-sm-8">
+                                    <input id="biobankin_barcode" name="biobankin_barcode" placeholder="One Water Sample ID" type="text"  class="form-control">
+                                    <input id="biobankinx_barcode" name="biobankinx_barcode" placeholder="One Water Sample ID" type="text" class="form-control">
+                                </div>
+                            </div>
                         
                             <div class="form-group">
                                 <label for="sampletype" class="col-sm-4 control-label">Sample Type</label>
@@ -484,6 +492,9 @@
             $('#id_one_water_sample').attr('readonly', true);
             $('#id_one_water_sample').val(idOneWaterSampleFromUrl || '');  // Set ID jika ada
             $('#idx_one_water_sample').hide();
+            $('#biobankin_barcode').attr('readonly', true);
+            $('#biobankin_barcode').val(barcodeFromUrl || '');  // Set ID jika ada
+            $('#biobankinx_barcode').hide();
             $('#id_person').val('');
             $('#sampletype').attr('readonly', true);
             $('#sampletype').val('');
@@ -725,9 +736,12 @@
             $('#mode').val('edit');
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Sample reception | Update<span id="my-another-cool-loader"></span>');
             $('#id_one_water_sample').hide();
+            $('#biobankin_barcode').hide();
             // $('#idx_one_water_sample').show();
             $('#idx_one_water_sample').attr('readonly', true);
             $('#idx_one_water_sample').val(data.id_one_water_sample);
+            $('#biobankinx_barcode').attr('readonly', true);
+            $('#biobankinx_barcode').val(data.biobankin_barcode);
             // $('#id_one_water_sample_list').val(data.id_one_water_sample).trigger('change');
             $('#id_person').val(data.id_person).trigger('change');
             $('#sampletype').attr('readonly', true);
@@ -738,6 +752,7 @@
             $('#review').val(data.review);
             $('#user_review').val(data.user_review);
             $('#reviewed_by_label').text('Reviewed by: ' + (data.full_name ? data.full_name : '-'));
+            
             if (data.user_created !== loggedInUser) {
                 $('#user_review').val(loggedInUser);
                     // Set the checkbox state

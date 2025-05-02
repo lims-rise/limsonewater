@@ -47,6 +47,28 @@
 
 					</div><!-- /.box-body -->
 				</form>
+				<form id="formSample" action="<?php echo site_url('Biobankin/save') ?>" method="post" class="form-horizontal">
+				<div id="textInform2"></div>
+					<input type="hidden" id="review" name="review" value="<?php echo $review ?>">
+					<input type="hidden" id="user_review" name="user_review" value="<?php echo $user_review ?>">
+					<input type="hidden" id="user_created" name="user_created" value="<?php echo $user_created ?>">
+
+					<div class="form-group">
+						<label for="review" class="col-sm-4 control-label">Status</label>
+						<div class="col-sm-8">
+							<span id="review_label" class="form-check-label unreview" role="button" tabindex="0">
+								Unreview
+							</span>
+
+							<input type="text" id="reviewed_by_label" 
+								value="<?php echo 'Review by: ' . $full_name ? $full_name : '-' ?>" 
+								readonly style="margin-left: 10px; font-style: italic; font-weight: bold; font-size: 11px;" />
+						</div>
+					</div>
+
+					<button type="submit" id="saveButtonDetail" class="btn btn-primary">Submit</button>
+				</form>
+
 			<div class="box-footer">
                 <!-- <div class="row"> -->
                     <div class="col-xs-12"> 
@@ -316,7 +338,28 @@
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 
+<style>
+	.unreview {
+        color: gray !important;
+        border-color: gray !important;
+        box-shadow: none; /* Override Bootstrap box-shadow */
+    }
 
+    /* input.form-check-label. */
+    .review {
+        color: green !important;
+        border-color: green !important;
+    }
+
+	#textInform2 .alert {
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+</style>
+
+<!-- SweetAlert2 CSS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
@@ -325,8 +368,129 @@
 	let id_one_water_sample = $('#id_one_water_sample1').val();
 	let barcode_water = $('#barcode_water').val();
 	let base_url = location.hostname;
-
 	$(document).ready(function() {
+    	 // Ambil ID user login dari session PHP
+	 	let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
+		let userCreated = $('#user_created').val();
+		let userReview = $('#user_review').val();
+		let fullName = $('#reviewed_by_label').val(); // atau .text() jika pakai <span>
+
+		// Tampilkan nama reviewer (keterangan)
+		$('#reviewed_by_label').val(fullName ? fullName : '-');
+
+		// Definisikan state review
+		const states = [
+			{ value: 0, label: "Unreview", class: "unreview" },
+			{ value: 1, label: "Review", class: "review" }
+		];
+
+		// Ambil nilai awal dari input hidden
+		let currentState = parseInt($('#review').val());
+
+		// Set tampilan awal pada label review
+		$('#review_label')
+			.text(states[currentState].label)
+			.removeClass()
+			.addClass('form-check-label ' + states[currentState].class);
+
+		// Cek apakah user login BUKAN creator
+		if (userCreated !== loggedInUser) {
+			$('#user_review').val(loggedInUser);
+
+			// Pasang event klik pada label review
+			$('#review_label').off('click').on('click', function () {
+				currentState = (currentState + 1) % states.length;
+
+				// Tampilkan SweetAlert2 dengan konfirmasi OK/Cancel
+				Swal.fire({
+					icon: 'question',
+					title: 'Are you sure?',
+					// text: 'Changed the status',
+					showCancelButton: true,
+					confirmButtonText: 'OK',
+					cancelButtonText: 'Cancel',
+					reverseButtons: true
+				}).then((result) => {
+					if (result.isConfirmed) {
+						// Update tampilan dan nilai hidden input jika OK
+						$('#review').val(states[currentState].value);
+						$(this)
+							.text(states[currentState].label)
+							.removeClass()
+							.addClass('form-check-label ' + states[currentState].class);
+
+						// Berikan notifikasi dengan SweetAlert2 jika state berubah
+						Swal.fire({
+							icon: 'success',
+							title: 'Changed Success, click submit to save',
+							// text: 'State changed to: ' + states[currentState].label + ' (value: ' + states[currentState].value + ')',
+							confirmButtonText: 'OK',
+							timer: 3000 // 3 detik
+						});
+					} else {
+						// Tidak ada perubahan jika Cancel ditekan
+						Swal.fire({
+							icon: 'info',
+							title: 'Review Not Changed',
+							text: 'No changes were made.',
+							confirmButtonText: 'OK',
+							timer: 2000 // 2 detik
+						});
+					}
+				});
+			});
+
+			// Informasi untuk user bukan creator
+			showInfoCard(
+				'#textInform2',
+				'<i class="fa fa-times-circle"></i> You are not the creator',
+				"In this case you can review this data and make changes.",
+				false
+			);
+
+			$('#saveButtonDetail').prop('disabled', false);
+		} else {
+			// Jika user adalah creator
+			$('#user_review').val(loggedInUser);
+
+			showInfoCard(
+				'#textInform2',
+				'<i class="fa fa-check-circle"></i> You are the creator',
+				"You have full access to edit this data.",
+				true
+			);
+
+			$('#saveButtonDetail').prop('disabled', true);
+		}
+
+		function showInfoCard(targetSelector, iconHtml, message, isSuccess) {
+			// Pilih elemen target yang akan menampilkan informasi
+			var target = $(targetSelector);
+
+			// Tentukan kelas CSS berdasarkan status success atau notifikasi error
+			var infoCardClass = isSuccess ? 'alert-success' : 'alert-danger';
+
+			// Membuat HTML untuk card info
+			var infoCardHtml = `
+				<div class="alert ${infoCardClass} alert-dismissible fade show" role="alert">
+					<div class="d-flex align-items-center">
+						<div class="me-2">${iconHtml}</div>
+						<div>${message}</div>
+					</div>
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+			`;
+
+			// Menambahkan HTML ke elemen target
+			target.html(infoCardHtml);
+		}
+
+
+        // Close the card when the 'x' icon is clicked
+        $('.close-card').on('click', function() {
+            $('#textInform1').fadeOut(); // Fade out the card
+            $('#textInform2').fadeOut();
+        });
 
 		function showConfirmationDelete(url) {
             deleteUrl = url; // Set the URL to the variable

@@ -347,7 +347,32 @@ class Scan_page extends CI_Controller {
 // }
 
     
-    
+    public function do_upload() {
+        $upload_path = '\\\\ad.monash.edu\\shared\\OneWater\\Data\\Scan\\';
+        $filename = 'sample_' . time();
+
+        $config['upload_path']   = $upload_path;
+        $config['allowed_types'] = '*'; // Ganti jika ingin batasi ke pdf/jpg/png
+        $config['file_name']     = $filename;
+        $config['overwrite']     = FALSE;
+
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('file')) {
+            // Jika gagal
+            $error = $this->upload->display_errors();
+            return $this->output
+                        ->set_content_type('application/json')
+                        ->set_status_header(400)
+                        ->set_output(json_encode(['error' => strip_tags($error)]));
+        } else {
+            // Jika berhasil
+            $data = $this->upload->data();
+            return $this->output
+                        ->set_content_type('application/json')
+                        ->set_output(json_encode(['filename' => $data['file_name']]));
+        }
+    }
     
     
 

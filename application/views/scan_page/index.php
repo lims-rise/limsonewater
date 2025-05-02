@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Scan Page</title>
-    <script src="https://cdn.jsdelivr.net/npm/dwt/dist/dynamsoft.webtwain.min.js"></script>
+    <title>Upload Scan Manual</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -15,99 +15,230 @@
         <img src="../img/monash.png" height="40px">
     </div>
 
-    <div id="dwtcontrolContainer" style="width:700px;height:400px;border:1px solid #ccc;"></div>
+    <div class="text-center mb-4">
+        <!-- <input type="file" id="fileInput" class="form-control mb-3" accept="application/pdf,image/*" onchange="previewFile()"> -->
+        <div class="text-center mb-4">
+            <div id="dropArea" class="border border-2 border-dashed rounded p-5 bg-light" 
+                ondragover="event.preventDefault()" 
+                ondrop="handleDrop(event)" 
+                onclick="document.getElementById('fileInput').click()" 
+                style="cursor: pointer;">
+                <p class="mb-0 text-muted"><i class="fas fa-cloud-upload-alt fa-2x mb-2"></i><br>Drag & Drop file here or click to choose</p>
+                <!-- <input type="file" id="fileInput" class="d-none" accept="application/pdf,image/*" onchange="handleFile(this.files)"> -->
+                <input type="file" id="fileInput" class="d-none" accept="application/pdf" onchange="handleFile(this.files)">
+            </div>
 
-    <div class="mt-4 text-center">
-        <button class="btn btn-primary me-3" onclick="acquireImage()">
-            <i class="fa fa-camera"></i> Scan
-        </button>
-        <button class="btn btn-success" onclick="uploadImage()">
-            <i class="fa fa-upload"></i> Upload
+            <div id="previewContainer" class="mt-3" style="display: none;">
+                <p class="mb-2">Preview:</p>
+                <iframe id="filePreview" width="100%" height="400px" style="border:1px solid #ccc;"></iframe>
+            </div>
+        </div>
+
+        <div id="previewContainer" style="display: none;">
+            <p class="mb-2">Preview:</p>
+            <iframe id="filePreview" width="100%" height="400px" style="border:1px solid #ccc;"></iframe>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button id="uploadBtn" class="btn btn-success" onclick="uploadFile()">
+            <span id="uploadIcon"><i class="fa fa-upload"></i> Upload</span>
+            <span id="uploadSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
         </button>
     </div>
 </div>
 
+<!-- <script>
+    let selectedFile = null;
 
-    <script>
-        let DWObject = null;
+    function previewFile() {
+        const input = document.getElementById('fileInput');
+        selectedFile = input.files[0];
 
-        // Masukkan ProductKey kamu di sini
-        Dynamsoft.DWT.ProductKey = "t01948AUAALwlHm/qc8mA4t3oftSBSLCX/NHmLcXAlfg6qkWDRBww2VU2d6T0TBdacZZMNUuCBybsglmueeFDMM3/AwTIhI2PKycrOFXeKZR3WgUnbzmBfpl2W7abZd+8gRPwWgDtz2EHLAa2syTA262rV4YAYA5QBlDuDJYDTm/hg+/i4M3JOMb0v4SeOVnBqfLOuEDKOK2Ck7ecvkDaDs3obztuBWLxywkA5gCdAvb7yA4FghRgDtABkFr6r959AT67MX8=;t01898AUAALPhhfYLzj6kyFEPPzuAgVzqtnyWmROrgkEDxUqKt6BHnJRDTiGM17ZMSrGq/Bwqxj6MHHbmC9FQwrOSCgeQzmTlVAWnlXcayjtZwalbTqCfm9162s08LgyQB14zYNt12ADGwDqXBHi7pffKsAOUAywDWG4OzAGnqzhuvpAGJP77z4EGpyo4rbwzDkgZJys4dcs5BaTt0IzTasc1IIxvzg5QDrBTgL+H7BAQpIBygB0As1aCc1/V4zFe"; // Ganti dengan lisensi kamu
+        if (!selectedFile) return;
 
-        Dynamsoft.DWT.ResourcesPath = "https://cdn.jsdelivr.net/npm/dwt/dist";
-        Dynamsoft.DWT.Containers = [{ ContainerId: 'dwtcontrolContainer', Width: 700, Height: 400 }];
-        Dynamsoft.DWT.Load();
-        Dynamsoft.DWT.RegisterEvent('OnWebTwainReady', function () {
-            DWObject = Dynamsoft.DWT.GetWebTwain('dwtcontrolContainer');
-            if (DWObject) {
-                console.log("Dynamsoft Web TWAIN Ready!");
-            } else {
-                alert("Failed to initialize Dynamsoft Web TWAIN.");
-            }
-        });
+        const preview = document.getElementById('filePreview');
+        const container = document.getElementById('previewContainer');
 
-        Dynamsoft.DWT.RegisterEvent('OnWebTwainReady', function () {
-            DWObject = Dynamsoft.DWT.GetWebTwain('dwtcontrolContainer');
-            if (DWObject) {
-                console.log("Dynamsoft Web TWAIN Ready!");
-            } else {
-                Swal.fire("Gagal", "Failed to initialize Dynamsoft Web TWAIN.", "error");
-            }
-        });
+        const fileURL = URL.createObjectURL(selectedFile);
+        preview.src = fileURL;
+        container.style.display = 'block';
+    }
 
-        function acquireImage() {
-            if (!DWObject) {
-                Swal.fire("Scanner is not ready", "Waiting till scanner is ready.", "warning");
-                return;
-            }
-
-            if (DWObject.SourceCount === 0) {
-                Swal.fire("There is no scanner", "Scanner is not detect.", "error");
-                return;
-            }
-
-            DWObject.SelectSourceAsync().then(() => {
-                return DWObject.AcquireImageAsync({});
-            }).then(() => {
-                Swal.fire("Success", "Image scan successfully.", "success");
-            }).catch(err => {
-                console.error("Scan failed:", err.message || err);
-                Swal.fire("Scan failed", err.message || "Unknown error", "error");
-            });
+    function uploadFile() {
+        if (!selectedFile) {
+            Swal.fire("No file selected", "Please select a file to upload.", "warning");
+            return;
         }
 
-        function uploadImage() {
-            if (!DWObject) {
-                Swal.fire("DWObject is not ready", "", "warning");
-                return;
-            }
+        const formData = new FormData();
+        formData.append("file", selectedFile);
 
-            const filename = "scan_" + Date.now() + ".pdf";
-            const localPath = "S:\\OneWater\\Data\\Scan\\" + filename;
+        fetch("Scan_page/do_upload", { // <- GANTI sesuai endpoint upload backend kamu
+            method: "POST",
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Upload failed");
+            return response.json();
+        })
+        .then(data => {
+            Swal.fire("Upload success", `File uploaded as: ${data.filename}`, "success");
 
-            console.log("Jumlah halaman di buffer:", DWObject.HowManyImagesInBuffer);
+            // Kirim data ke parent window jika dibuka dari modal
+            window.opener?.postMessage({
+                type: 'scan-upload-complete',
+                filename: data.filename
+            }, "*");
 
-            const result = DWObject.SaveAllAsPDF(localPath);
+            setTimeout(() => window.close(), 1000);
+        })
+        .catch(err => {
+            console.error(err);
+            Swal.fire("Upload error", err.message || "Failed to upload file.", "error");
+        });
+    }
+</script> -->
 
-            if (!result) {
-                console.error("Gagal simpan lokal:", DWObject.ErrorString);
-                Swal.fire("Failed to save the image", DWObject.ErrorString || "Gagal menyimpan ke lokal.", "error");
-                return;
-            } else {
-                Swal.fire("Upload success", "File: " + filename, "success");
+<style>
+    #dropArea {
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+        border-style: dashed;
+        border-width: 2px;
+        border-color: #ccc;
+        background-color: #f8f9fa;
+        cursor: pointer;
+        text-align: center;
+    }
 
-                window.opener.postMessage({
-                    type: 'scan-upload-complete',
-                    filename: filename
-                }, "*");
+    #dropArea:hover {
+        background-color: #e9f5ff;
+        border-color: #0d6efd;
+    }
 
-                setTimeout(() => window.close(), 1000);
-            }
+    #dropArea.active {
+        background-color: #e0f7ff;
+        border-color: #0d6efd;
+        box-shadow: 0 0 10px rgba(13, 110, 253, 0.5);
+        animation: pulseBorder 1.2s infinite;
+    }
+
+    @keyframes pulseBorder {
+        0% {
+            box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.4);
+        }
+        70% {
+            box-shadow: 0 0 0 10px rgba(13, 110, 253, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(13, 110, 253, 0);
+        }
+    }
+
+    #dropArea p {
+        transition: color 0.3s ease;
+    }
+
+    #dropArea.active p {
+        color: #0d6efd;
+    }
+</style>
+
+
+<script>
+    let selectedFile = null;
+    const dropArea = document.getElementById('dropArea');
+
+    function handleFile(files) {
+        if (!files || files.length === 0) return;
+
+        const file = files[0];
+        if (file.type !== "application/pdf") {
+            Swal.fire("Invalid file", "Only PDF files are allowed.", "error");
+            return;
         }
 
+        selectedFile = file;
+
+        const preview = document.getElementById('filePreview');
+        const container = document.getElementById('previewContainer');
+
+        const fileURL = URL.createObjectURL(selectedFile);
+        preview.src = fileURL;
+        container.style.display = 'block';
+    }
 
 
-    </script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    function handleDrop(event) {
+        event.preventDefault();
+        dropArea.classList.remove('active');
+        handleFile(event.dataTransfer.files);
+    }
+
+    dropArea.addEventListener("dragover", function (e) {
+        e.preventDefault();
+        dropArea.classList.add('active');
+    });
+
+    dropArea.addEventListener("dragleave", function (e) {
+        e.preventDefault();
+        dropArea.classList.remove('active');
+    });
+
+    dropArea.addEventListener("drop", function (e) {
+        e.preventDefault();
+        dropArea.classList.remove('active');
+        handleFile(e.dataTransfer.files);
+    });
+
+    function uploadFile() {
+        if (!selectedFile) {
+            Swal.fire("No file selected", "Please select a file to upload.", "warning");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+
+        // Handle UI loading state
+        const btn = document.getElementById('uploadBtn');
+        const icon = document.getElementById('uploadIcon');
+        const spinner = document.getElementById('uploadSpinner');
+
+        btn.disabled = true;
+        icon.innerHTML = "Uploading...";
+        spinner.classList.remove("d-none");
+
+        fetch("Scan_page/do_upload", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Upload failed");
+            return response.json();
+        })
+        .then(data => {
+            Swal.fire("Upload success", `File uploaded as: ${data.filename}`, "success");
+
+            window.opener?.postMessage({
+                type: 'scan-upload-complete',
+                filename: data.filename
+            }, "*");
+
+            setTimeout(() => window.close(), 1000);
+        })
+        .catch(err => {
+            console.error(err);
+            Swal.fire("Upload error", err.message || "Failed to upload file.", "error");
+        })
+        .finally(() => {
+            // Reset button state
+            btn.disabled = false;
+            icon.innerHTML = '<i class="fa fa-upload"></i> Upload';
+            spinner.classList.add("d-none");
+        });
+    }
+
+</script>
 </body>
 </html>

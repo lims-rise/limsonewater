@@ -17,7 +17,7 @@ class Biobankin_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('biobank_in.id_one_water_sample, biobank_in.date_conduct, ref_sampletype.sampletype, ref_person.initial,
+        $this->datatables->select('biobank_in.id_one_water_sample, biobank_in.date_conduct, ref_sampletype.sampletype, ref_person.initial, biobank_in.biobankin_barcode,
         biobank_in.replicates, biobank_in.comments, biobank_in.id_person, biobank_in.flag, biobank_in.user_created, 
         biobank_in.user_review,
         biobank_in.review, user.full_name');
@@ -113,8 +113,11 @@ class Biobankin_model extends CI_Model
       $response = array();
       $this->db->select('biobank_in.id_one_water_sample, biobank_in.sampletype, biobank_in.date_conduct,
                             biobank_in.replicates, ref_person.initial, ref_person.realname, biobank_in.comments, 
-                            biobank_in.id_person, biobank_in.flag');
-      $this->db->join('ref_person', 'biobank_in.id_person=ref_person.id_person', 'left');
+                            biobank_in.id_person, biobank_in.flag, biobank_in.user_created, 
+        biobank_in.user_review,
+        biobank_in.review, user.full_name');
+      $this->db->join('ref_person', 'biobank_in.id_person  =ref_person.id_person', 'left');
+      $this->db->join('tbl_user user', 'biobank_in.user_review = user.id_users', 'left');
       $this->db->where('biobank_in.id_one_water_sample', $id);
       $this->db->where('biobank_in.flag', '0');
       $q = $this->db->get('biobank_in');

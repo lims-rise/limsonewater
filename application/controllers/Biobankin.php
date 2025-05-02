@@ -68,6 +68,10 @@ class Biobankin extends CI_Controller
                 'id_person' => $row->id_person,
                 'realname' => $row->realname,
                 'comments' => $row->comments,
+                'full_name' => $row->full_name,
+                'user_review' => $row->user_review,
+                'review' => $row->review,
+                'user_created'  => $row->user_created,
                 'culture' => $this->Biobankin_model->getCulture(),
                 'freez1' => $this->Biobankin_model->getFreezer1(),
                 'shelf1' => $this->Biobankin_model->getFreezer2(),
@@ -93,6 +97,8 @@ class Biobankin extends CI_Controller
         // $id_one_water_sample_list = $this->input->post('id_one_water_sample_list', TRUE);
         $id_one_water_sample = $this->input->post('id_one_water_sample', TRUE);
         $idx_one_water_sample = $this->input->post('idx_one_water_sample', TRUE);
+        $biobankin_barcode = $this->input->post('biobankin_barcode', TRUE);
+        $biobankinx_barcode = $this->input->post('biobankinx_barcode', TRUE);
         $dt = new DateTime();
 
         $sampletype = $this->input->post('sampletype', TRUE);
@@ -106,6 +112,7 @@ class Biobankin extends CI_Controller
         if ($mode == "insert") {
             $data = array(
                 'id_one_water_sample' => $id_one_water_sample,
+                'biobankin_barcode' => $biobankin_barcode,
                 'sampletype' => $sampletype,
                 'date_conduct' => $date_conduct,
                 'replicates' => $replicates,
@@ -126,6 +133,7 @@ class Biobankin extends CI_Controller
         } else if ($mode == "edit") {
             $data = array(
                 'id_one_water_sample' => $idx_one_water_sample,
+                'biobankin_barcode' => $biobankinx_barcode,
                 'sampletype' => $sampletype,
                 'date_conduct' => $date_conduct,
                 'replicates' => $replicates,
