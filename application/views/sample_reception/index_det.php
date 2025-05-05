@@ -77,7 +77,7 @@
 								<?php
 									$lvl = $this->session->userdata('id_user_level');
 									if ($lvl != 4){
-										echo "<button class='btn btn-primary' id='addtombol_det'><i class='fa fa-wpforms' aria-hidden='true'></i> Test </button>";
+										echo "<button class='btn btn-primary' id='addtombol_det'><i class='fa fa-wpforms' aria-hidden='true'></i> Add Test </button>";
 									}
 								?>
 								<table id="example2" class="table display table-bordered table-striped" width="100%">
