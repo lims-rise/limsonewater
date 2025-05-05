@@ -68,6 +68,10 @@ class Biobankin extends CI_Controller
                 'id_person' => $row->id_person,
                 'realname' => $row->realname,
                 'comments' => $row->comments,
+                'full_name' => $row->full_name,
+                'user_review' => $row->user_review,
+                'review' => $row->review,
+                'user_created'  => $row->user_created,
                 'culture' => $this->Biobankin_model->getCulture(),
                 'freez1' => $this->Biobankin_model->getFreezer1(),
                 'shelf1' => $this->Biobankin_model->getFreezer2(),
@@ -93,6 +97,8 @@ class Biobankin extends CI_Controller
         // $id_one_water_sample_list = $this->input->post('id_one_water_sample_list', TRUE);
         $id_one_water_sample = $this->input->post('id_one_water_sample', TRUE);
         $idx_one_water_sample = $this->input->post('idx_one_water_sample', TRUE);
+        $biobankin_barcode = $this->input->post('biobankin_barcode', TRUE);
+        $biobankinx_barcode = $this->input->post('biobankinx_barcode', TRUE);
         $dt = new DateTime();
 
         $sampletype = $this->input->post('sampletype', TRUE);
@@ -106,6 +112,7 @@ class Biobankin extends CI_Controller
         if ($mode == "insert") {
             $data = array(
                 'id_one_water_sample' => $id_one_water_sample,
+                'biobankin_barcode' => $biobankin_barcode,
                 'sampletype' => $sampletype,
                 'date_conduct' => $date_conduct,
                 'replicates' => $replicates,
@@ -126,6 +133,7 @@ class Biobankin extends CI_Controller
         } else if ($mode == "edit") {
             $data = array(
                 'id_one_water_sample' => $idx_one_water_sample,
+                'biobankin_barcode' => $biobankinx_barcode,
                 'sampletype' => $sampletype,
                 'date_conduct' => $date_conduct,
                 'replicates' => $replicates,
@@ -148,6 +156,80 @@ class Biobankin extends CI_Controller
         redirect(site_url("Biobankin"));
     }
 
+    // public function saveReview()
+    // {
+    //     $this->load->model('Biobankin_model');
+    //     header('Content-Type: application/json'); // Tambahkan ini
+
+    //     // Ambil data dari POST
+    //     $id_one_water_sample = $this->input->post('id_one_water_sample', true);
+    //     $review              = $this->input->post('review', true);
+    //     $user_review         = $this->input->post('user_review', true);
+
+    //     // Validasi data minimal
+    //     if (!$id_one_water_sample || $review === null || !$user_review) {
+    //         echo json_encode([
+    //             'status' => false,
+    //             'message' => 'Missing required fields.'
+    //         ]);
+    //         return;
+    //     }
+
+    //     // Siapkan data untuk update
+    //     $data = [
+    //         'review' => $review,
+    //         'user_review' => $user_review,
+    //         'user_updated' => $this->session->userdata('id_users'),
+    //         'date_updated' => date('Y-m-d H:i:s')
+    //     ];
+
+    //     // var_dump($data);
+    //     // die();
+
+    //     // Proses update via model
+    //     $this->Biobankin_model->update($id_one_water_sample, $data);
+
+    //     // Response JSON
+    //     echo json_encode([
+    //         'status' => true,
+    //         'message' => 'Review updated successfully.'
+    //     ]);
+
+    //     redirect(site_url("Biobankin/read/" . $id_one_water_sample));
+    // }
+
+    public function saveReview()
+    {
+        header('Content-Type: application/json');
+    
+        $id = $this->input->post('id_one_water_sample', true);
+        $review = $this->input->post('review', true);
+        $user_review = $this->input->post('user_review', true);
+    
+        if (!$id || $review === null || !$user_review) {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Missing required fields.'
+            ]);
+            return;
+        }
+    
+        $data = [
+            'review' => $review,
+            'user_review' => $user_review,
+            'user_updated' => $this->session->userdata('id_users'),
+            'date_updated' => date('Y-m-d H:i:s')
+        ];
+    
+        $this->load->model('Biobankin_model');
+        $this->Biobankin_model->update($id, $data);
+    
+        echo json_encode([
+            'status' => true,
+            'message' => 'Review saved successfully.'
+        ]);
+    }
+    
     public function savedetail() {
 
         $date_conduct = $this->input->post('date_conduct2', TRUE);

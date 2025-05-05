@@ -176,7 +176,7 @@
                                 <div class="col-sm-8">
                                     <input id="files" name="files" placeholder="Filename" type="text" class="form-control" required>
                                     <div class="val2tip"></div>
-                                    <button type="button" class="btn btn-success" style="margin-top: 5px;" onclick="openScanner()">Scan</button>
+                                    <button type="button" class="btn btn-success" style="margin-top: 5px;" onclick="openScanner()">Open File</button>
                                 </div>
                             </div>
 
