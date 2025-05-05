@@ -458,76 +458,76 @@
 
 
 		table = $("#example2").DataTable({
-	oLanguage: {
-		sProcessing: "Loading data, please wait..."
-	},
-	processing: true,
-	serverSide: true,
-	paging: false,
-	info: false,
-	bFilter: false,
-	ajax: {
-		"url": "../../Sample_reception/subjson?id=" + encodeURIComponent(id_sample),
-		"type": "POST"
-	},
-	columns: [
-		{ "data": "testing_type" },
-		{
-			"data": "url",
-			"render": function(data, type, row) {
-				return `
-					<a href="javascript:void(0);" class="url-link-detail"
-						data-url="${data}"
-						data-id_testing_type="${row.id_testing_type || '-'}"
-						data-barcode="${row.barcode || '-'}"
-						data-id_one_water_sample="${row.id_one_water_sample}">
-						${row.testing_type || '-'} - ${row.id_one_water_sample || '-'}
-					</a>
-				`;
-			}
-		},
-		{
-			"data": "url",
-			"render": function(data, type, row) {
-				return `
-					<a href="javascript:void(0);" class="url-link-status"
-						data-url="${data}"
-						data-id_testing_type="${row.id_testing_type || '-'}"
-						data-barcode="${row.barcode || '-'}"
-						data-id_one_water_sample="${row.id_one_water_sample}">
-						${row.testing_type || '-'} - ${row.id_one_water_sample || '-'}
-					</a>
-				`;
-			}
-		},
-		{
-			"data": null, // <- karena kita render manual
-			"render": function(data, type, row) {
-				let statusBtn = '';
-				if (row.review == "1") {
-					statusBtn = '<span class="btn btn-xs btn-success rounded-pill">Review</span>';
-				} else if (row.review == "0") {
-					statusBtn = '<span class="btn btn-xs btn-warning rounded-pill">Unreview</span>';
-				} else {
-					statusBtn = '<span class="btn btn-xs btn-dark rounded-pill">No data has been entered</span>';
+			oLanguage: {
+				sProcessing: "Loading data, please wait..."
+			},
+			processing: true,
+			serverSide: true,
+			paging: false,
+			info: false,
+			bFilter: false,
+			ajax: {
+				"url": "../../Sample_reception/subjson?id=" + encodeURIComponent(id_sample),
+				"type": "POST"
+			},
+			columns: [
+				{ "data": "testing_type" },
+				{
+					"data": "url",
+					"render": function(data, type, row) {
+						return `
+							<a href="javascript:void(0);" class="url-link-detail"
+								data-url="${data}"
+								data-id_testing_type="${row.id_testing_type || '-'}"
+								data-barcode="${row.barcode || '-'}"
+								data-id_one_water_sample="${row.id_one_water_sample}">
+								${row.testing_type || '-'} - ${row.id_one_water_sample || '-'}
+							</a>
+						`;
+					}
+				},
+				{
+					"data": "url",
+					"render": function(data, type, row) {
+						return `
+							<a href="javascript:void(0);" class="url-link-status"
+								data-url="${data}"
+								data-id_testing_type="${row.id_testing_type || '-'}"
+								data-barcode="${row.barcode || '-'}"
+								data-id_one_water_sample="${row.id_one_water_sample}">
+								${row.testing_type || '-'} - ${row.id_one_water_sample || '-'}
+							</a>
+						`;
+					}
+				},
+				{
+					"data": null, // <- karena kita render manual
+					"render": function(data, type, row) {
+						let statusBtn = '';
+						if (row.review == "1") {
+							statusBtn = '<span class="btn btn-xs btn-success rounded-pill">Review</span>';
+						} else if (row.review == "0") {
+							statusBtn = '<span class="btn btn-xs btn-warning rounded-pill">Unreview</span>';
+						} else {
+							statusBtn = '<span class="btn btn-xs btn-dark rounded-pill">No data has been entered</span>';
+						}
+
+						let fullNameBtn = `<span class="btn btn-xs btn-primary rounded-pill">${row.full_name || 'No user'}</span>`;
+
+						return `${fullNameBtn} - ${statusBtn}`;
+					}
+				},
+				{
+					"data": "action",
+					"orderable": false,
+					"className": "text-center"
 				}
-
-				let fullNameBtn = `<span class="btn btn-xs btn-primary rounded-pill">${row.full_name || 'No user'}</span>`;
-
-				return `${fullNameBtn} - ${statusBtn}`;
+			],
+			order: [[0, 'asc']],
+			rowCallback: function(row, data, iDisplayIndex) {
+				// Additional row callbacks if needed
 			}
-		},
-		{
-			"data": "action",
-			"orderable": false,
-			"className": "text-center"
-		}
-	],
-	order: [[0, 'asc']],
-	rowCallback: function(row, data, iDisplayIndex) {
-		// Additional row callbacks if needed
-	}
-});
+		});
 
 
 
