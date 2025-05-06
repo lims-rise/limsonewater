@@ -624,6 +624,8 @@
             };
         };
 
+        let lastIdProject = localStorage.getItem('last_id_project');
+        let lastPage = localStorage.getItem('last_page');
         table = $("#mytable").DataTable({
             oLanguage: {
                 sProcessing: "loading..."
@@ -631,6 +633,7 @@
             processing: true,
             serverSide: true,
             ajax: {"url": "Sample_reception/json", "type": "POST"},
+            displayStart: lastPage ? (parseInt(lastPage) * 10) : 0, // <-- ini di sini ya!
             columns: [
                 { "data": "toggle", "orderable": false, "searchable": false }, // Ikon toggle di awal
                 {"data": "id_project"},
@@ -743,8 +746,40 @@
                         $(firstRow).addClass('highlight');
                     }, 5000);
                 }
+
+                if (lastIdProject) {
+                    api.rows().every(function () {
+                        let rowData = this.data();
+                        if (rowData.id_project === lastIdProject) {
+                            $(this.node()).addClass('highlight');
+                            $('html, body').animate({
+                                scrollTop: $(this.node()).offset().top - 100
+                            }, 1000);
+                            // buka child-nya otomatis
+                            openChildRow($(this.node()), rowData);
+                        }
+                    });
+
+                    // localStorage.removeItem('last_id_project');
+                    // localStorage.removeItem('last_page');
+                }
             }
         });
+
+        $('#mytable tbody').on('click', 'tr', function () {
+            const table = $('#mytable').DataTable();
+            const rowData = table.row(this).data(); // Ambil data dari DataTable, bukan dari DOM
+
+            if (rowData) {
+                const id = rowData.id_project; // pastikan nama field sesuai dari server
+
+                const pageInfo = table.page.info();
+                localStorage.setItem('last_id_project', id);
+                localStorage.setItem('last_page', pageInfo.page);
+            }
+        });
+
+
 
         // Event handler untuk klik pada baris
         $('#mytable tbody').on('click', 'tr', function() {
@@ -753,6 +788,49 @@
             $(this).removeClass('highlight');
             $(this).removeClass('highlight-edit');
         });
+
+        function openChildRow(tr, rowData) {
+            let row = $('#mytable').DataTable().row(tr);
+            let id_project = rowData.id_project;
+            let icon = tr.find('.toggle-child i');
+
+            if (!row.child.isShown()) {
+                row.child('<div class="text-center py-2">Loading...</div>').show();
+                tr.addClass('shown');
+                if (icon.length) {
+                    icon.removeClass('fa-plus-square').addClass('fa-spinner fa-spin');
+                }
+
+                $.ajax({
+                    url: `Sample_reception/get_samples_by_project/${id_project}`,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        let tableContent = `<div class="child-table-container"><table class="child-table table table-bordered table-sm"><thead class="bg-light"><tr><th>Water Sample ID</th><th>Type of Sample</th><th>Receiving Lab</th><th>Date Arrived</th><th>Time Arrived</th><th>Date Collected</th><th>Time Collected</th><th>Quality Check</th><th>Note</th><th>Action</th></tr></thead><tbody>`;
+
+                        if (data.length > 0) {
+                            $.each(data, function (index, sample) {
+                                let qualityCheckIcon = '';
+                                if (sample.quality_check == 0) qualityCheckIcon = '<i class="fa fa-square-o" style="color: gray;"></i>';
+                                else if (sample.quality_check == 1) qualityCheckIcon = '<i class="fa fa-check-square-o" style="color: green;"></i>';
+                                else if (sample.quality_check == 2) qualityCheckIcon = '<i class="fa fa-times-circle-o" style="color: red;"></i>';
+
+                                tableContent += `<tr><td>${sample.id_one_water_sample ?? '-'}</td><td>${sample.sampletype ?? '-'}</td><td>${sample.initial ?? '-'}</td><td>${sample.date_arrival ?? '-'}</td><td>${sample.time_arrival ?? '-'}</td><td>${sample.date_collected ?? '-'}</td><td>${sample.time_collected ?? '-'}</td><td>${qualityCheckIcon ?? '-'}</td><td>${sample.comments ?? '-'}</td><td>${sample.action ?? '-'}</td></tr>`;
+                            });
+                        } else {
+                            tableContent += `<tr><td colspan="10" class="text-center">No samples available</td></tr>`;
+                        }
+
+                        tableContent += `</tbody></table></div>`;
+                        row.child(tableContent).show();
+
+                        if (icon.length) {
+                            icon.removeClass('fa-spinner fa-spin').addClass('fa-minus-square');
+                        }
+                    },
+                });
+            }
+        }
 
         $('#mytable tbody').on('click', '.toggle-child', function () {
             let tr = $(this).closest('tr');
