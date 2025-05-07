@@ -834,12 +834,23 @@
 
 
 			// Informasi untuk user bukan creator
-			showInfoCard(
-				'#textInform2',
-				'<i class="fa fa-times-circle"></i> You are not the creator',
-				"In this case you can review this data.",
-				false
-			);
+			// 🔍 Tambahan logika: apakah data sudah direview?
+			if ($('#review').val() === '1') {
+				showInfoCard(
+					'#textInform2',
+					'<i class="fa fa-times-circle"></i> You are not the creator',
+					"In this case, you can't review because it has already been reviewed.",
+
+					false
+				);
+			} else {
+				showInfoCard(
+					'#textInform2',
+					'<i class="fa fa-times-circle"></i> You are not the creator',
+					"In this case you can review this data.",
+					false
+				);
+			}
 
 			$('#saveButtonDetail').prop('disabled', false);
 		} else {
