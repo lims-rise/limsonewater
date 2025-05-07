@@ -376,7 +376,6 @@
 #review_label {
     cursor: pointer;
     font-size: 14px;  /* Ukuran font untuk label */
-	border: none;
 }
 
 #reviewed_by_label {
@@ -551,24 +550,24 @@
     .close-card {
         cursor: pointer;
         font-size: 18px;
-        color: #FDAB9E;  /* Red color for close icon */
+        color: #FDAB9E; 
     }
 
     .close-card:hover {
-        color: #bd2130; /* Darker red when hovered */
+        color: #bd2130; 
     }
 
     .unreview {
         color: gray !important;
         border-color: gray !important;
-        box-shadow: none; /* Override Bootstrap box-shadow */
+        box-shadow: none; 
     }
 
     /* input.form-check-label. */
     .review {
         color: white !important;
         background-color: #3D8D7A;
-		border: 50%;
+		border: none  !important;
     }
 
     .highlight {
@@ -614,30 +613,30 @@
 
     /* Styling untuk container dengan scroll */
     .child-table-container {
-        max-height: 500px; /* Atur tinggi maksimal sesuai kebutuhan */
-        overflow-y: auto;  /* Aktifkan scroll vertikal */
+        max-height: 500px; 
+        overflow-y: auto; 
     }
 
     /* Style untuk scrollbar itu sendiri */
     .child-table-container::-webkit-scrollbar {
-        width: 6px; /* Lebar scrollbar */
+        width: 6px; 
     }
 
     /* Style untuk track (background) scrollbar */
     .child-table-container::-webkit-scrollbar-track {
-        background: #e0f2f1; /* Warna hijau toska muda sebagai background track */
-        border-radius: 10px; /* Membuat track lebih halus */
+        background: #e0f2f1;
+        border-radius: 10px;
     }
 
     /* Style untuk thumb (pegangan scrollbar) */
     .child-table-container::-webkit-scrollbar-thumb {
-        background: #9ACBD0; /* Warna hijau toska gelap untuk thumb scrollbar */
-        border-radius: 10px; /* Membuat thumb lebih halus */
+        background: #9ACBD0; 
+        border-radius: 10px; 
     }
 
     /* Gaya saat thumb scrollbar di-hover */
     .child-table-container::-webkit-scrollbar-thumb:hover {
-        background: #48A6A7; /* Warna hijau toska yang lebih gelap saat hover */
+        background: #48A6A7;
     }
 
 	.review-border {
@@ -667,13 +666,11 @@
 	let barcode_water = $('#barcode_water').val();
 	let base_url = location.hostname;
 	$(document).ready(function() {
-    	 // Ambil ID user login dari session PHP
 	 	let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
 		let userCreated = $('#user_created').val();
 		let userReview = $('#user_review').val();
-		let fullName = $('#reviewed_by_label').val(); // atau .text() jika pakai <span>
+		let fullName = $('#reviewed_by_label').val();
 
-		// Tampilkan nama reviewer (keterangan)
 		$('#reviewed_by_label').val(fullName ? fullName : '-');
 
 		// Definisikan state review
@@ -765,9 +762,7 @@
 		if (userCreated !== loggedInUser) {
 			$('#user_review').val(loggedInUser);
 
-			// Pasang event klik pada label review
 			$('#review_label').off('click').on('click', function () {
-				// Cek jika sudah direview (status review = 1), maka tidak bisa diubah lagi
 				if ($('#review').val() === '1') {
 					Swal.fire({
 						icon: 'info',
@@ -787,17 +782,15 @@
 					reverseButtons: true
 				}).then((result) => {
 					if (result.isConfirmed) {
-						// Baru ubah currentState saat user konfirmasi OK
+
 						currentState = (currentState + 1) % states.length;
 
-						// Update tampilan dan nilai input
 						$('#review').val(states[currentState].value);
 						$('#review_label')
 							.text(states[currentState].label)
 							.removeClass()
 							.addClass('form-check-label ' + states[currentState].class);
 
-						// Kirim data langsung via AJAX
 						$.ajax({
 							url: '<?php echo site_url('Biobankin/saveReview'); ?>',
 							method: 'POST',
@@ -838,10 +831,6 @@
 				});
 			});
 
-
-
-			// Informasi untuk user bukan creator
-			// 🔍 Tambahan logika: apakah data sudah direview?
 			if ($('#review').val() === '1') {
 				showInfoCard(
 					'#textInform2',
@@ -854,30 +843,29 @@
 				showInfoCard(
 					'#textInform2',
 					'<i class="fa fa-times-circle"></i> You are not the creator',
-					"In this case you can review this data.",
+					"In this case, you can review this data. Hover over the box on the right side to start the review.",
 					false
 				);
+
 			}
 
-			// Tambahkan event untuk mengubah teks review_label saat kursor mengarah
 			$('#review_label')
 			.on('mouseenter', function() {
-				if ($('#review').val() !== '1') {  // Cek jika review belum dilakukan
-					$(this).text('Review')          // Mengubah teks saat kursor masuk
-						.addClass('review-border');  // Menambahkan border hijau
+				if ($('#review').val() !== '1') { 
+					$(this).text('Review')
+						.addClass('review-border');
 				}
 			})
 			.on('mouseleave', function() {
-				if ($('#review').val() !== '1') {  // Cek jika review belum dilakukan
-					$(this).text('Unreview')        // Mengubah kembali teks saat kursor keluar
-						.removeClass('review-border');  // Menghapus border hijau
+				if ($('#review').val() !== '1') { 
+					$(this).text('Unreview')
+						.removeClass('review-border');
 				}
 			});
 
 
 			$('#saveButtonDetail').prop('disabled', false);
 		} else {
-			// Jika user adalah creator
 			$('#user_review').val(loggedInUser);
 
 			showInfoCard(
@@ -1107,12 +1095,6 @@
 					"className" : "text-center"
 				}
 			],
-			// columnDefs: [
-			// 	{
-			// 		targets: [0], // Index of the 'estimate_price' column
-			// 		className: 'text-right' // Apply right alignment to this column
-			// 	}
-			// ],
 			order: [[0, 'asc']],
 			rowCallback: function(row, data, iDisplayIndex) {
 				let info = this.fnPagingInfo();
