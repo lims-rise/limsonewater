@@ -505,7 +505,7 @@
 					"render": function(data, type, row) {
 						let statusBtn = '';
 						if (row.review == "1") {
-							statusBtn = '<span class="btn btn-xs btn-success rounded-pill">Review</span>';
+							statusBtn = '<span class="btn btn-xs btn-success rounded-pill">Reviewed</span>';
 						} else if (row.review == "0") {
 							statusBtn = '<span class="btn btn-xs btn-warning rounded-pill">Unreview</span>';
 						} else {
@@ -514,7 +514,7 @@
 
 						let fullNameBtn = `<span class="btn btn-xs btn-primary rounded-pill">${row.full_name || 'No user'}</span>`;
 
-						return `${fullNameBtn} - ${statusBtn}`;
+						return `${statusBtn} - ${fullNameBtn}`;
 					}
 				},
 				{
