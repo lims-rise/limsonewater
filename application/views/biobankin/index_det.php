@@ -69,37 +69,37 @@
 					</div> -->
 
 
-					<div class="modal-footer clearfix" style="display: flex; align-items: center; justify-content: space-between;">
-                            <!-- Info Card on the left side -->
-                            <div class="modal-footer-content" style="flex: 1; display: flex; align-items: center;">
-                                <div id="textInform2" class="textInform card" style="width: auto; padding: 5px 10px; display: none;">
-                                    <div class="card-body">
-                                        <div class="card-header">
-                                            <h5 class="card-title statusMessage"></h5>
-                                            <i class="fa fa-times close-card" style="float: right; cursor: pointer;"></i>
-                                        </div>
-                                        <p class="statusDescription"></p>
-                                    </div>
-                                </div>
-                            </div>
-
-							<div class="col-sm-8">
-							<div class="d-flex align-items-center">
-								<span id="review_label" class="form-check-label unreview" role="button" tabindex="0">
-									Unreview
-								</span>
-								<span class="ms-2">Review by: </span>
-								<input type="text" id="reviewed_by_label" 
-									value="<?php echo $full_name ? $full_name : '-' ?>" 
-									readonly style="font-style: italic; font-weight: bold; font-size: 11px; border: none;" />
+					<div class="modal-footer clearfix" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+    
+						<!-- Info Card on the left side -->
+						<div class="modal-footer-content" style="flex: 1; display: flex; align-items: center;">
+							<div id="textInform2" class="textInform card" style="width: auto; padding: 5px 10px; display: none;">
+								<div class="card-body">
+									<div class="card-header d-flex justify-content-between align-items-center">
+										<h5 class="card-title statusMessage mb-0"></h5>
+										<i class="fa fa-times close-card" style="cursor: pointer;"></i>
+									</div>
+									<p class="statusDescription mb-0"></p>
+								</div>
 							</div>
 						</div>
 
-                            <!-- Buttons on the right side -->
-                            <div class="modal-buttons">
-                                <button type="submit" class="btn btn-primary" id="saveButtonDetail"><i class="fa fa-save"></i> Submit</button>
-                            </div>
-                        </div>
+						<!-- Review Info on the right side -->
+						<div class="d-flex align-items-center flex-wrap" style="gap: 10px;">
+							<span class="text-muted">Status:</span>
+							<!-- <span id="review_label" class="form-check-label unreview" role="button" tabindex="0" style="cursor: pointer;"> -->
+							<span id="review_label" class="badge bg-warning text-dark" role="button" tabindex="0" style="cursor: pointer;">
+								Unreview
+							</span>
+
+							<span class="text-muted ms-3">Reviewed by:</span>
+							<span id="reviewed_by_label" style="font-style: italic; font-weight: 800; font-size: 14px;">
+								<?php echo $full_name ? $full_name : '-' ?>
+							</span>
+						</div>
+
+					</div>
+
 				</form>
 
 			<div class="box-footer">
@@ -685,51 +685,153 @@
 			.addClass('form-check-label ' + states[currentState].class);
 
 		// Cek apakah user login BUKAN creator
+		// if (userCreated !== loggedInUser) {
+		// 	$('#user_review').val(loggedInUser);
+
+		// 	// Pasang event klik pada label review
+		// 	$('#review_label').off('click').on('click', function () {
+		// 		currentState = (currentState + 1) % states.length;
+
+		// 		// Tampilkan SweetAlert2 dengan konfirmasi OK/Cancel
+		// 		Swal.fire({
+		// 			icon: 'question',
+		// 			title: 'Are you sure?',
+		// 			// text: 'Changed the status',
+		// 			showCancelButton: true,
+		// 			confirmButtonText: 'OK',
+		// 			cancelButtonText: 'Cancel',
+		// 			reverseButtons: true
+		// 		}).then((result) => {
+		// 			if (result.isConfirmed) {
+		// 				// Update tampilan dan nilai hidden input jika OK
+		// 				$('#review').val(states[currentState].value);
+		// 				$(this)
+		// 					.text(states[currentState].label)
+		// 					.removeClass()
+		// 					.addClass('form-check-label ' + states[currentState].class);
+
+		// 				// Berikan notifikasi dengan SweetAlert2 jika state berubah
+		// 				Swal.fire({
+		// 					icon: 'success',
+		// 					title: 'Changed Success, click save to submit',
+		// 					// text: 'State changed to: ' + states[currentState].label + ' (value: ' + states[currentState].value + ')',
+		// 					confirmButtonText: 'OK',
+		// 					timer: 1000 // 3 detik
+		// 				});
+		// 			} else {
+		// 				// Tidak ada perubahan jika Cancel ditekan
+		// 				Swal.fire({
+		// 					icon: 'info',
+		// 					title: 'Review Not Changed',
+		// 					text: 'No changes were made.',
+		// 					confirmButtonText: 'OK',
+		// 					timer: 2000 // 2 detik
+		// 				});
+		// 			}
+		// 		});
+		// 	});
+
+		// 	// Informasi untuk user bukan creator
+		// 	showInfoCard(
+		// 		'#textInform2',
+		// 		'<i class="fa fa-times-circle"></i> You are not the creator',
+		// 		"In this case you can review this data.",
+		// 		false
+		// 	);
+
+		// 	$('#saveButtonDetail').prop('disabled', false);
+		// } else {
+		// 	// Jika user adalah creator
+		// 	$('#user_review').val(loggedInUser);
+
+		// 	showInfoCard(
+		// 		'#textInform2',
+		// 		'<i class="fa fa-check-circle"></i> You are the creator',
+		// 		"You have full access to edit this data but not review.",
+		// 		true
+		// 	);
+
+		// 	$('#saveButtonDetail').prop('disabled', true);
+		// }
+
+		// Cek apakah user login BUKAN creator
 		if (userCreated !== loggedInUser) {
 			$('#user_review').val(loggedInUser);
 
 			// Pasang event klik pada label review
 			$('#review_label').off('click').on('click', function () {
-				currentState = (currentState + 1) % states.length;
+				// Cek jika sudah direview (status review = 1), maka tidak bisa diubah lagi
+				if ($('#review').val() === '1') {
+					Swal.fire({
+						icon: 'info',
+						title: 'Review Locked',
+						text: 'You have already reviewed this. Further changes are not allowed.',
+						confirmButtonText: 'OK'
+					});
+					return;
+				}
 
-				// Tampilkan SweetAlert2 dengan konfirmasi OK/Cancel
 				Swal.fire({
 					icon: 'question',
 					title: 'Are you sure?',
-					// text: 'Changed the status',
 					showCancelButton: true,
 					confirmButtonText: 'OK',
 					cancelButtonText: 'Cancel',
 					reverseButtons: true
 				}).then((result) => {
 					if (result.isConfirmed) {
-						// Update tampilan dan nilai hidden input jika OK
+						// Baru ubah currentState saat user konfirmasi OK
+						currentState = (currentState + 1) % states.length;
+
+						// Update tampilan dan nilai input
 						$('#review').val(states[currentState].value);
-						$(this)
+						$('#review_label')
 							.text(states[currentState].label)
 							.removeClass()
 							.addClass('form-check-label ' + states[currentState].class);
 
-						// Berikan notifikasi dengan SweetAlert2 jika state berubah
-						Swal.fire({
-							icon: 'success',
-							title: 'Changed Success, click save to submit',
-							// text: 'State changed to: ' + states[currentState].label + ' (value: ' + states[currentState].value + ')',
-							confirmButtonText: 'OK',
-							timer: 1000 // 3 detik
+						// Kirim data langsung via AJAX
+						$.ajax({
+							url: '<?php echo site_url('Biobankin/saveReview'); ?>',
+							method: 'POST',
+							data: $('#formSampleReview').serialize(),
+							dataType: 'json',
+							success: function(response) {
+								if (response.status) {
+									Swal.fire({
+										icon: 'success',
+										title: 'Review saved successfully!',
+										text: response.message,
+										timer: 1000,
+										showConfirmButton: false
+									}).then(() => {
+										location.reload();
+									});
+								} else {
+									Swal.fire({
+										icon: 'error',
+										title: 'Failed to save review',
+										text: response.message
+									});
+								}
+							},
+							error: function(xhr, status, error) {
+								console.error('AJAX Error: ' + status + error);
+								Swal.fire('Error', 'Something went wrong during submission.', 'error');
+							}
 						});
 					} else {
-						// Tidak ada perubahan jika Cancel ditekan
 						Swal.fire({
 							icon: 'info',
 							title: 'Review Not Changed',
 							text: 'No changes were made.',
-							confirmButtonText: 'OK',
-							timer: 2000 // 2 detik
+							timer: 2000
 						});
 					}
 				});
 			});
+
+
 
 			// Informasi untuk user bukan creator
 			showInfoCard(
@@ -753,6 +855,7 @@
 
 			$('#saveButtonDetail').prop('disabled', true);
 		}
+
 
         // Function to show a dynamic info card
 		function showInfoCard(target, message, description, isSuccess) {
@@ -778,27 +881,27 @@
         });
 
 
-		$('#formSampleReview').on('submit', function(e) {
-			e.preventDefault();
+		// $('#formSampleReview').on('submit', function(e) {
+		// 	e.preventDefault();
 
-			$.ajax({
-				url: '<?php echo site_url('Biobankin/saveReview'); ?>',
-				method: 'POST',
-				data: $(this).serialize(),
-				dataType: 'json',
-				success: function(response) {
-					if (response.status) {
-						Swal.fire('Success', response.message, 'success');
-					} else {
-						Swal.fire('Error', response.message, 'error');
-					}
-				},
-				error: function(xhr, status, error) {
-					console.error('AJAX Error: ' + status + error);
-					Swal.fire('Error', 'Something went wrong.', 'error');
-				}
-			});
-		});
+		// 	$.ajax({
+		// 		url: '<?php echo site_url('Biobankin/saveReview'); ?>',
+		// 		method: 'POST',
+		// 		data: $(this).serialize(),
+		// 		dataType: 'json',
+		// 		success: function(response) {
+		// 			if (response.status) {
+		// 				Swal.fire('Success', response.message, 'success');
+		// 			} else {
+		// 				Swal.fire('Error', response.message, 'error');
+		// 			}
+		// 		},
+		// 		error: function(xhr, status, error) {
+		// 			console.error('AJAX Error: ' + status + error);
+		// 			Swal.fire('Error', 'Something went wrong.', 'error');
+		// 		}
+		// 	});
+		// });
 
 
 		function showConfirmationDelete(url) {
