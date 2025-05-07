@@ -85,14 +85,14 @@
 						</div>
 
 						<!-- Review Info on the right side -->
-						<div class="d-flex align-items-center flex-wrap" style="gap: 10px;">
+						<div class="d-flex align-items-center flex-wrap" style="gap: 8px;">
 							<span class="text-muted">Status:</span>
 							<!-- <span id="review_label" class="form-check-label unreview" role="button" tabindex="0" style="cursor: pointer;"> -->
 							<span id="review_label" class="badge bg-warning text-dark" role="button" tabindex="0" style="cursor: pointer;">
 								Unreview
 							</span>
 
-							<span class="text-muted ms-3">Reviewed by:</span>
+							<span class="text-muted ms-3">by:</span>
 							<span id="reviewed_by_label" style="font-style: italic; font-weight: 800; font-size: 14px;">
 								<?php echo $full_name ? $full_name : '-' ?>
 							</span>
@@ -376,6 +376,7 @@
 #review_label {
     cursor: pointer;
     font-size: 14px;  /* Ukuran font untuk label */
+	border: none;
 }
 
 #reviewed_by_label {
@@ -565,8 +566,9 @@
 
     /* input.form-check-label. */
     .review {
-        color: green !important;
-        border-color: green !important;
+        color: white !important;
+        background-color: #3D8D7A;
+		border: 50%;
     }
 
     .highlight {
@@ -637,6 +639,11 @@
     .child-table-container::-webkit-scrollbar-thumb:hover {
         background: #48A6A7; /* Warna hijau toska yang lebih gelap saat hover */
     }
+
+	.review-border {
+		border: 1px solid green  !important;
+		color: green  !important;
+	}
 </style>
 <style>
 	#textInform2 .alert {
@@ -672,7 +679,7 @@
 		// Definisikan state review
 		const states = [
 			{ value: 0, label: "Unreview", class: "unreview" },
-			{ value: 1, label: "Review", class: "review" }
+			{ value: 1, label: "Reviewed", class: "review" }
 		];
 
 		// Ambil nilai awal dari input hidden
@@ -851,6 +858,22 @@
 					false
 				);
 			}
+
+			// Tambahkan event untuk mengubah teks review_label saat kursor mengarah
+			$('#review_label')
+			.on('mouseenter', function() {
+				if ($('#review').val() !== '1') {  // Cek jika review belum dilakukan
+					$(this).text('Review')          // Mengubah teks saat kursor masuk
+						.addClass('review-border');  // Menambahkan border hijau
+				}
+			})
+			.on('mouseleave', function() {
+				if ($('#review').val() !== '1') {  // Cek jika review belum dilakukan
+					$(this).text('Unreview')        // Mengubah kembali teks saat kursor keluar
+						.removeClass('review-border');  // Menghapus border hijau
+				}
+			});
+
 
 			$('#saveButtonDetail').prop('disabled', false);
 		} else {
