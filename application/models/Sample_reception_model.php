@@ -71,8 +71,8 @@ class Sample_reception_model extends CI_Model
             testing.barcode, 
             retest.testing_type AS testing_type, 
             retest.url, 
-            COALESCE(bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review) AS user_review, 
-            COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review) AS review, 
+            COALESCE(bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review, ec.user_review) AS user_review, 
+            COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review) AS review, 
             tbl_user.full_name, 
             testing.flag
         ");
@@ -83,7 +83,8 @@ class Sample_reception_model extends CI_Model
         $this->datatables->join('campy_liquids campy', 'campy.campy_assay_barcode = testing.barcode', 'left');
         $this->datatables->join('salmonella_liquids salmonellaL', 'salmonellaL.salmonella_assay_barcode = testing.barcode', 'left');
         $this->datatables->join('salmonella_biosolids salmonellaB', 'salmonellaB.salmonella_assay_barcode = testing.barcode', 'left');
-        $this->datatables->join('tbl_user', 'tbl_user.id_users = COALESCE(bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review)', 'left');
+        $this->datatables->join('extraction_culture ec', 'ec.extraction_barcode = testing.barcode', 'left');
+        $this->datatables->join('tbl_user', 'tbl_user.id_users = COALESCE(bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review, ec.user_review)', 'left');
         $this->datatables->where('testing.flag', '0');
         $this->datatables->where('testing.id_sample', $id);
         $this->datatables->group_by('testing.id_testing');
