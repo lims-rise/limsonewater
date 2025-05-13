@@ -137,13 +137,28 @@
 							<div class="form-group">
 								<label for="id_testing_type" class="col-sm-4 control-label">Testing Type</label>
 								<div class="col-sm-4" id="conf">
-									<?php foreach ($testing_type as $row): ?>
+									<!-- <?php foreach ($testing_type as $row): ?>
 										<div class="checkbox">
 											<label>
 												<input type="checkbox" name="id_testing_type[]" class="testing-type-checkbox" data-testing-type="<?php echo $row['testing_type']; ?>" value="<?php echo $row['id_testing_type']; ?>"> <?php echo $row['testing_type']; ?>
 											</label>
 										</div>
+									<?php endforeach; ?> -->
+
+									<?php foreach ($testing_type as $row): ?>
+										<div class="checkbox">
+											<label>
+												<input type="checkbox" 
+													id="testing_type_<?php echo $row['id_testing_type']; ?>"
+													name="id_testing_type[]" 
+													class="testing-type-checkbox" 
+													data-testing-type="<?php echo $row['testing_type']; ?>" 
+													value="<?php echo $row['id_testing_type']; ?>"> 
+												<?php echo $row['testing_type']; ?>
+											</label>
+										</div>
 									<?php endforeach; ?>
+
 									<!-- <div class="checkbox">
 										<label>
 											<input type="checkbox" id="check-all"> All
@@ -286,6 +301,7 @@
 
 
 </style>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
@@ -545,15 +561,52 @@
 		});
 
 		// Klik link untuk status
+		// $('#example2 tbody').on('click', 'a.url-link-status', function() {
+		// 	let idOneWaterSample = $(this).data('id_one_water_sample');
+		// 	let url = $(this).data('url');
+
+		// 	if (url) {
+		// 		let fullUrlStatus = `${window.location.origin}/limsonewater/index.php/${url}/read/${idOneWaterSample}`;
+		// 		window.location.href = fullUrlStatus;
+		// 	}
+		// });
 		$('#example2 tbody').on('click', 'a.url-link-status', function() {
 			let idOneWaterSample = $(this).data('id_one_water_sample');
 			let url = $(this).data('url');
 
 			if (url) {
 				let fullUrlStatus = `${window.location.origin}/limsonewater/index.php/${url}/read/${idOneWaterSample}`;
-				window.location.href = fullUrlStatus;
+
+				// Menambahkan indikator loading
+				Swal.fire({
+					title: 'Checking...',
+					text: 'Please wait while we verify the page availability.',
+					didOpen: () => {
+						Swal.showLoading();
+					}
+				});
+
+				// Memeriksa status halaman
+				$.ajax({
+					url: fullUrlStatus,
+					type: 'HEAD',
+					success: function() {
+						// Jika status 200 OK, lakukan pengalihan
+						window.location.href = fullUrlStatus;
+					},
+					error: function(xhr) {
+						// Jika status bukan 200 OK, tampilkan pesan kesalahan
+						Swal.fire({
+							icon: 'error',
+							title: 'Page Not Available',
+							text: 'The page you are trying to access is not available.',
+							confirmButtonText: 'OK'
+						});
+					}
+				});
 			}
 		});
+
 
 
 
@@ -569,7 +622,16 @@
         })   
 
 
-		$('#addtombol_det').click(function() {
+		// $('#addtombol_det').click(function() {
+		// 	$('#mode_det').val('insert');
+		// 	$('#modal-title-detail').html('<i class="fa fa-wpforms"></i> Detail Sample Reception | New Sample Testing<span id="my-another-cool-loader"></span>');
+		// 	$('#idx_sample').hide();
+		// 	$('#id2_sample').val(id_sample);
+		// 	$('#idx_one_water_sample').val(id_one_water_sample);
+		// 	$('#id_testing_type').val('');
+		// 	$('#compose-modal').modal('show');
+		// });
+		$('#addtombol_det').click(function () {
 			$('#mode_det').val('insert');
 			$('#modal-title-detail').html('<i class="fa fa-wpforms"></i> Detail Sample Reception | New Sample Testing<span id="my-another-cool-loader"></span>');
 			$('#idx_sample').hide();
@@ -577,7 +639,31 @@
 			$('#idx_one_water_sample').val(id_one_water_sample);
 			$('#id_testing_type').val('');
 			$('#compose-modal').modal('show');
+
+			// Ambil daftar ID testing yang sudah ada dari DataTable
+			let selectedTestingTypes = [];
+			let table = $('#example2').DataTable();
+			table.rows().every(function () {
+				let row = this.data();
+				if (row.id_testing_type) {
+					selectedTestingTypes.push(row.id_testing_type);
+				}
+			});
+
+			// Disable checkbox jika id sudah ada
+			selectedTestingTypes.forEach(function (id) {
+				let checkbox = $('#testing_type_' + id);
+				checkbox.prop('disabled', true);
+				checkbox.closest('label').css('color', 'gray');
+			});
 		});
+
+		$('#compose-modal').on('hidden.bs.modal', function () {
+			// Aktifkan semua kembali dan reset warna label
+			$('.testing-type-checkbox').prop('disabled', false).closest('label').css('color', '');
+		});
+
+
 
 
 		$('#example2').on('click', '.btn_edit_det', function() {

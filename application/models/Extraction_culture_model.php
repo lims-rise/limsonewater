@@ -17,10 +17,13 @@ class Extraction_culture_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('NULL AS toggle, extraction_culture.number_sample, extraction_culture.id_one_water_sample, ref_person.initial, extraction_culture.user_created, ref_person.realname, extraction_culture.id_person, extraction_culture.flag
+        $this->datatables->select('NULL AS toggle, extraction_culture.number_sample, extraction_culture.id_one_water_sample, ref_person.initial, extraction_culture.user_created, ref_person.realname,
+        extraction_culture.id_person, extraction_culture.flag, extraction_culture.user_review,
+        extraction_culture.review, user.full_name
         ', FALSE);
         $this->datatables->from('extraction_culture');
         $this->datatables->join('ref_person', 'extraction_culture.id_person = ref_person.id_person', 'left');
+        $this->datatables->join('tbl_user user', 'extraction_culture.user_review = user.id_users', 'left');
         // $this->datatables->join('ref_sampletype', 'extraction_culture.id_sampletype = ref_sampletype.id_sampletype', 'left');
 
         $this->datatables->where('extraction_culture.flag', '0');

@@ -87,7 +87,14 @@ class Biobankin extends CI_Controller
 
         }
         else {
-            // $this->template->load('template','Water_Biobankin/index_det', $test);
+            if (!$data) {
+                // Jika data tidak ditemukan, tampilkan halaman dengan pesan
+                $this->load->view('errors/custom_not_found', [
+                    'message' => 'No detail data available for this sample ID.',
+                    'sample_id' => $id
+                ]);
+                return;
+            }
         }
 
     } 

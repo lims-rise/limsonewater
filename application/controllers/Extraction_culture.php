@@ -407,6 +407,46 @@ class Extraction_culture extends CI_Controller
         }
     }
 
+    public function saveReview()
+    {
+        header('Content-Type: application/json');
+    
+        $id = $this->input->post('id_one_water_sample', true);
+        $review = $this->input->post('review', true);
+        $user_review = $this->input->post('user_review', true);
+    
+        if (!$id || $review === null || !$user_review) {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Missing required fields.'
+            ]);
+            return;
+        }
+    
+        $data = [
+            'review' => $review,
+            'user_review' => $user_review,
+            'user_updated' => $this->session->userdata('id_users'),
+            'date_updated' => date('Y-m-d H:i:s')
+        ];
+    
+        $this->load->model('Extraction_culture_model');
+    
+        try {
+            $this->Extraction_culture_model->update_extraction($id, $data);
+            echo json_encode([
+                'status' => true,
+                'message' => 'Review saved successfully.'
+            ]);
+        } catch (Exception $e) {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Error saving review: ' . $e->getMessage()
+            ]);
+        }
+    }
+    
+
 }
 
 /* End of file Extraction_culture.php */
