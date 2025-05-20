@@ -70,7 +70,7 @@
 
 
 					<div class="modal-footer clearfix" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
-    
+
 						<!-- Info Card on the left side -->
 						<div class="modal-footer-content" style="flex: 1; display: flex; align-items: center;">
 							<div id="textInform2" class="textInform card" style="width: auto; padding: 5px 10px; display: none;">
@@ -87,7 +87,6 @@
 						<!-- Review Info on the right side -->
 						<div class="d-flex align-items-center flex-wrap" style="gap: 8px;">
 							<span class="text-muted">Status:</span>
-							<!-- <span id="review_label" class="form-check-label unreview" role="button" tabindex="0" style="cursor: pointer;"> -->
 							<span id="review_label" class="badge bg-warning text-dark" role="button" tabindex="0" style="cursor: pointer;">
 								Unreview
 							</span>
@@ -96,9 +95,16 @@
 							<span id="reviewed_by_label" style="font-style: italic; font-weight: 800; font-size: 14px;">
 								<?php echo $full_name ? $full_name : '-' ?>
 							</span>
-						</div>
 
+							<!-- Tombol Cancel Review untuk admin (id_users = 1 atau 2) -->
+							<?php if (in_array($this->session->userdata('id_user_level'), [1, 2])): ?>
+								<button type="button" id="cancelReviewBtn" class="btn btn-danger ms-3">
+									Cancel Review
+								</button>
+							<?php endif; ?>
+						</div>
 					</div>
+
 
 				</form>
 
@@ -174,7 +180,7 @@
 			<form id="formSample"  action= <?php echo site_url('Biobankin/savedetail') ?> method="post" class="form-horizontal">
 				<div class="modal-body">
 					<input id="mode_det" name="mode_det" type="hidden" class="form-control input-sm">
-					<input id="id_one_water_sample" name="id_one_water_sample" type="hidden" class="form-control">
+					<input id="id_one_water_samplex" name="id_one_water_samplex" type="hidden" class="form-control">
 					<input id="date_conduct2" type="hidden" name="date_conduct2" value="<?php echo $date_conduct ?>">
 					<input id="id_person" type="hidden" name="id_person" value="<?php echo $id_person ?>">
 					<!-- <input id="id_req" name="id_req" type="hidden" class="form-control input-sm"> -->
@@ -643,6 +649,13 @@
 		border: 1px solid green  !important;
 		color: green  !important;
 	}
+
+	.disabled-btn {
+		background-color: #ccc; /* Ganti warna latar belakang tombol */
+		color: #666; /* Ganti warna teks tombol */
+		border: 1px solid #ddd; /* Ganti border tombol */
+		cursor: not-allowed; /* Set cursor menjadi not-allowed agar tidak bisa diklik */
+	}
 </style>
 <style>
 	#textInform2 .alert {
@@ -687,76 +700,6 @@
 			.text(states[currentState].label)
 			.removeClass()
 			.addClass('form-check-label ' + states[currentState].class);
-
-		// Cek apakah user login BUKAN creator
-		// if (userCreated !== loggedInUser) {
-		// 	$('#user_review').val(loggedInUser);
-
-		// 	// Pasang event klik pada label review
-		// 	$('#review_label').off('click').on('click', function () {
-		// 		currentState = (currentState + 1) % states.length;
-
-		// 		// Tampilkan SweetAlert2 dengan konfirmasi OK/Cancel
-		// 		Swal.fire({
-		// 			icon: 'question',
-		// 			title: 'Are you sure?',
-		// 			// text: 'Changed the status',
-		// 			showCancelButton: true,
-		// 			confirmButtonText: 'OK',
-		// 			cancelButtonText: 'Cancel',
-		// 			reverseButtons: true
-		// 		}).then((result) => {
-		// 			if (result.isConfirmed) {
-		// 				// Update tampilan dan nilai hidden input jika OK
-		// 				$('#review').val(states[currentState].value);
-		// 				$(this)
-		// 					.text(states[currentState].label)
-		// 					.removeClass()
-		// 					.addClass('form-check-label ' + states[currentState].class);
-
-		// 				// Berikan notifikasi dengan SweetAlert2 jika state berubah
-		// 				Swal.fire({
-		// 					icon: 'success',
-		// 					title: 'Changed Success, click save to submit',
-		// 					// text: 'State changed to: ' + states[currentState].label + ' (value: ' + states[currentState].value + ')',
-		// 					confirmButtonText: 'OK',
-		// 					timer: 1000 // 3 detik
-		// 				});
-		// 			} else {
-		// 				// Tidak ada perubahan jika Cancel ditekan
-		// 				Swal.fire({
-		// 					icon: 'info',
-		// 					title: 'Review Not Changed',
-		// 					text: 'No changes were made.',
-		// 					confirmButtonText: 'OK',
-		// 					timer: 2000 // 2 detik
-		// 				});
-		// 			}
-		// 		});
-		// 	});
-
-		// 	// Informasi untuk user bukan creator
-		// 	showInfoCard(
-		// 		'#textInform2',
-		// 		'<i class="fa fa-times-circle"></i> You are not the creator',
-		// 		"In this case you can review this data.",
-		// 		false
-		// 	);
-
-		// 	$('#saveButtonDetail').prop('disabled', false);
-		// } else {
-		// 	// Jika user adalah creator
-		// 	$('#user_review').val(loggedInUser);
-
-		// 	showInfoCard(
-		// 		'#textInform2',
-		// 		'<i class="fa fa-check-circle"></i> You are the creator',
-		// 		"You have full access to edit this data but not review.",
-		// 		true
-		// 	);
-
-		// 	$('#saveButtonDetail').prop('disabled', true);
-		// }
 
 		// Cek apakah user login BUKAN creator
 		if (userCreated !== loggedInUser) {
@@ -877,6 +820,94 @@
 
 			$('#saveButtonDetail').prop('disabled', true);
 		}
+		
+		// Fungsi untuk cancel review (khusus admin user 1 & 2)
+  // Cek status review ketika halaman dimuat
+  if ($('#review').val() === '1') {
+        // Jika status review = 0 (belum di-review), disable tombol cancel
+        $('#cancelReviewBtn').prop('disabled', false).removeClass('disabled-btn');
+    } else {
+        // Jika status review = 1 (sudah di-review),  tombol bisa diklik
+        $('#cancelReviewBtn').prop('disabled', true).addClass('disabled-btn');
+    }
+
+    // Event handler ketika tombol Cancel Review diklik
+    $('#cancelReviewBtn').on('click', function () {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Cancel Review?',
+            text: 'This will reset the review status so another user can review it again.',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, cancel it',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Set review dan user_review untuk cancel
+                $('#review').val(0);
+                $('#user_review').val('');  // Kosongkan user review
+
+                // Update label status menjadi Unreview
+                $('#review_label')
+                    .text('Unreview')
+                    .removeClass()
+                    .addClass('form-check-label unreview');  // Ubah tampilan label
+
+                // Disable the Cancel Review button after canceling the review
+                $('#cancelReviewBtn').prop('disabled', true).addClass('disabled-btn');  // Disable tombol
+
+                // Pastikan ID yang diperlukan ada di form
+                let formData = $('#formSampleReview').serialize(); 
+                console.log('Form data to be sent: ', formData); // Debugging log
+
+                $.ajax({
+                    url: '<?php echo site_url('Biobankin/cancelReview'); ?>',
+                    method: 'POST',
+                    data: formData,
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.status) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Review canceled successfully!',
+                                timer: 1000,
+                                showConfirmButton: false
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Failed to cancel review',
+                                text: response.message
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('AJAX Error: ' + status + error);
+                        Swal.fire('Error', 'Something went wrong during cancel.', 'error');
+                    }
+                });
+            }
+        });
+    });
+
+
+
+	  // Mouse enter/leave effects for review label
+	  $('#review_label')
+        .on('mouseenter', function() {
+            if ($('#review').val() !== '1') { 
+                $(this).text('Review')
+                    .addClass('review-border');
+            }
+        })
+        .on('mouseleave', function() {
+            if ($('#review').val() !== '1') { 
+                $(this).text('Unreview')
+                    .removeClass('review-border');
+            }
+        });
+
 
 
         // Function to show a dynamic info card
@@ -1144,7 +1175,7 @@
 			$('#modal-title-detail').html('<i class="fa fa-wpforms"></i> New Replication<span id="my-another-cool-loader"></span>');
             $('#barcode_water').attr('readonly', false);
 			$('#barcode_water').val('');
-			$('#id_one_water_sample').val(id_one_water_sample);
+			$('#id_one_water_samplex').val(id_one_water_sample);
 			$('#weight').val('');
 			$('#concentration_dna').val('');
 			$('#volume').val('');
@@ -1200,7 +1231,7 @@
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Update Replication<span id="my-another-cool-loader"></span>');
             $('#barcode_water').attr('readonly', true);
 			$('#barcode_water').val(data.barcode_water);
-			$('#id_one_water_sample').val(id_one_water_sample);
+			$('#id_one_water_samplex').val(id_one_water_sample);
 			$('#weight').val(data.weight);
 			$('#concentration_dna').val(data.concentration_dna);
 			$('#volume').val(data.volume);
