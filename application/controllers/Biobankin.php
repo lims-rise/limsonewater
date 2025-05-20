@@ -146,7 +146,6 @@ class Biobankin extends CI_Controller
                 'replicates' => $replicates,
                 'id_person' => $id_person,
                 'comments' => $comments,
-                'review' => $review,
                 'user_review' => $user_review,
                 'flag' => '0',
                 // 'uuid' => $this->uuid->v4(),
@@ -236,14 +235,79 @@ class Biobankin extends CI_Controller
             'message' => 'Review saved successfully.'
         ]);
     }
+
+
+    public function cancelReview()
+    {
+        header('Content-Type: application/json');
     
+        // Ambil data POST
+        $id = $this->input->post('id_one_water_sample', true);
+        $review = $this->input->post('review', true);
+        $user_review = $this->input->post('user_review', true);
+    
+        // Debug log untuk memastikan data yang diterima
+        log_message('debug', "Received data: id=$id, review=$review, user_review=$user_review");
+    
+        // Cek jika data yang dibutuhkan ada
+        if (!$id || $review === null) {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Missing required fields.'
+            ]);
+            return;
+        }
+    
+        // Data yang akan diperbarui jika review dibatalkan
+        $data = [
+            'review' => 0,  // Reset status review
+            'user_review' => '', // Kosongkan user review
+            'user_updated' => $this->session->userdata('id_users'),
+            'date_updated' => date('Y-m-d H:i:s')
+        ];
+
+        // Pastikan update pada `Biobankin_model->update` mengubah review status menjadi 'reviewed' jika sudah ada review.
+        // $data = [
+        //     'review' => 1,  // Set status menjadi reviewed
+        //     'user_review' => $loggedInUser,  // Menyimpan user yang melakukan review
+        //     'user_updated' => $this->session->userdata('id_users'),
+        //     'date_updated' => date('Y-m-d H:i:s')
+        // ];
+
+    
+        // Load model dan update data review di database
+        $this->load->model('Biobankin_model');
+        $updateResult = $this->Biobankin_model->updateCancel($id, $data);
+    
+        // Debug log untuk memeriksa hasil update
+        log_message('debug', "Update result: " . ($updateResult ? 'Success' : 'Failure'));
+    
+        // Cek apakah update berhasil
+        if ($updateResult) {
+            echo json_encode([
+                'status' => true,
+                'message' => 'Review canceled successfully.'
+            ]);
+        } else {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Failed to cancel review.'
+            ]);
+        }
+    }
+    
+    
+
+    
+    
+
     public function savedetail() {
 
         $date_conduct = $this->input->post('date_conduct2', TRUE);
         $id_person = $this->input->post('id_person', TRUE);
 
         $mode = $this->input->post('mode_det', TRUE);
-        $id_one_water_sample = $this->input->post('id_one_water_sample', TRUE);
+        $id_one_water_sample = $this->input->post('id_one_water_samplex', TRUE);
         $dt = new DateTime();
 
         $barcode_water = $this->input->post('barcode_water', TRUE);
@@ -288,6 +352,7 @@ class Biobankin extends CI_Controller
                 'user_created' => $this->session->userdata('id_users'),
                 'date_created' => $dt->format('Y-m-d H:i:s'),
             );
+
             $this->Biobankin_model->insert_det($data);
 
             $data_freez = array(

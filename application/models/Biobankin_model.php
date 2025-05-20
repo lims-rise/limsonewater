@@ -175,6 +175,21 @@ class Biobankin_model extends CI_Model
         $this->db->update($this->table, $data);
     }
 
+    function updateCancel($id, $data)
+    {
+        // Eksekusi query update
+        $this->db->where($this->id_table, $id);
+        $this->db->update($this->table, $data);
+
+        // Cek apakah ada baris yang diubah
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     function update_freez($id, $data_freez)
     {
         $this->db->where('barcode_sample', $id);
