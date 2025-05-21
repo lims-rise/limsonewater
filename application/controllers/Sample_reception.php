@@ -31,10 +31,14 @@ class Sample_reception extends CI_Controller
         $data['sampletype'] = $this->Sample_reception_model->getSampleType();
         $data['labtech'] = $this->Sample_reception_model->getLabTech();
         $data['id_project'] = $this->Sample_reception_model->generate_project_id();
-        // $data['client'] = $this->Sample_reception_model->generate_client();
-        // $data['id_one_water_sample'] = $this->Sample_reception_model->generate_one_water_sample_id();
-        $this->template->load('template','sample_reception/index', $data);
-    } 
+        $data['clientcontact'] = $this->Sample_reception_model->getClientContact();
+    
+        // Default value if you want to preselect a client, else keep it empty
+        $data['selected_client_id'] = '';
+    
+        $this->template->load('template', 'sample_reception/index', $data);
+    }
+    
     
     public function json() {
         header('Content-Type: application/json');
@@ -185,6 +189,7 @@ class Sample_reception extends CI_Controller
         $client_quote_number = $this->input->post('client_quote_number', TRUE);
         $client = $this->input->post('client', TRUE);
         $clientx = $this->input->post('clientx', TRUE);
+        $id_client_contact = $this->input->post('id_client_contact', TRUE);
         $number_sample = (int) $this->input->post('number_sample', TRUE);
         $id_client_sample = $this->input->post('id_client_sample', TRUE);
         $comments = $this->input->post('comments', TRUE);
@@ -198,6 +203,7 @@ class Sample_reception extends CI_Controller
                 'client_quote_number' => $client_quote_number,
                 'client' => $client,
                 'id_client_sample' => $id_client_sample,
+                'id_client_contact' => $id_client_contact,
                 'number_sample' => $number_sample,
                 'date_collected' => $date_collected,
                 'time_collected' => $time_collected,
@@ -234,6 +240,7 @@ class Sample_reception extends CI_Controller
                 $data = array(
                             'client_quote_number' => $client_quote_number,
                             'client' => $clientx,
+                            'id_client_contact' => $id_client_contact,
                             'id_client_sample' => $id_client_sample,
                             'number_sample' => $number_sample,
                             'date_collected' => $date_collected,

@@ -41,6 +41,7 @@
                                         <th>Client (As On CoC)</th>
                                         <th>Number of Samples</th>
                                         <th>Client Sample ID</th>
+                                        <th>Client Contact</th>
                                         <th>Comments</th>
                                         <th>Date Collected</th>
                                         <th>Time Collected</th>
@@ -134,7 +135,7 @@
                             </div>
 
                             
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="client" class="col-sm-4 control-label">ID Client</label>
                                 <div class="col-sm-8">
                                     <input id="clientx" name="clientx" placeholder="Client (as on CoC)" type="text" class="form-control" style="display:none;">
@@ -151,6 +152,15 @@
                                         <option value="CLT00009">CLT00009</option>
                                         <option value="CLT00010">CLT00010</option>
                                     </select>
+                                </div>
+                            </div> -->
+
+                            <div class="form-group">
+                                <label for="client" class="col-sm-4 control-label">ID Client</label>
+                                <div class="col-sm-8">
+                                    <input id="clientx" name="clientx" placeholder="Client (as on CoC)" type="text" class="form-control" style="display:none;">
+                                    <input id="client" name="client" placeholder="Client (as on CoC)" type="text" class="form-control">
+                                    <div class="val1tip"></div>
                                 </div>
                             </div>
 
@@ -170,6 +180,57 @@
                                     <div class="val1tip"></div>
                                 </div>
                             </div>
+
+                            <!-- Dropdown Client Contact -->
+                            <div class="form-group">
+                                <label for="id_client_contact" class="col-sm-4 control-label">Client Contact</label>
+                                <div class="col-sm-8">
+                                    <select id="id_client_contact" name="id_client_contact" class="form-control">
+                                        <option value="" selected disabled>-- Select Client Contact --</option>
+                                        <?php foreach ($clientcontact as $row): ?>
+                                            <option 
+                                                value="<?= htmlspecialchars($row['id_client_contact']) ?>"
+                                                data-address="<?= htmlspecialchars($row['address']) ?>"
+                                                data-telp="<?= htmlspecialchars($row['telp']) ?>"
+                                                data-phone="<?= htmlspecialchars($row['phone']) ?>"
+                                                data-email="<?= htmlspecialchars($row['email']) ?>"
+                                                <?= ($selected_client_id == $row['id_client_contact']) ? 'selected' : '' ?>
+                                            >
+                                                <?= htmlspecialchars($row['client_name']) ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Detail Info: Address, Telp, Phone, Email -->
+                            <div id="clientDetails" style="margin-top: 15px; display: none;">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 control-label">Address</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="client_address" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 control-label">Telp</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="client_telp" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 control-label">Phone</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="client_phone" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-4 control-label">Email</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="client_email" class="form-control" readonly>
+                                    </div>
+                                </div>
+                            </div>
+
 
                             <div class="form-group">
                                 <label for="files" class="col-sm-4 control-label">Filename</label>
@@ -484,6 +545,71 @@
     }
 </script>
 
+<!-- <script>
+    $(document).ready(function () {
+        function updateClientDetails() {
+                    const selected = $('#id_client_contact option:selected');
+
+                    const address = selected.data('address') || '';
+                    const telp    = selected.data('telp') || '';
+                    const phone   = selected.data('phone') || '';
+                    const email   = selected.data('email') || '';
+
+                    $('#client_address').val(address);
+                    $('#client_telp').val(telp);
+                    $('#client_phone').val(phone);
+                    $('#client_email').val(email);
+
+                    // Show the details section
+                    if (selected.val()) {
+                        $('#clientDetails').slideDown();
+                    } else {
+                        $('#clientDetails').slideUp();
+                    }
+                }
+
+                // Trigger on dropdown change
+                $('#id_client_contact').on('change', updateClientDetails);
+
+                // Trigger once on page load if a client is already selected
+                if ($('#id_client_contact').val()) {
+                    updateClientDetails();
+                }
+        });
+
+        function populateClientDetails() {
+            const selectedOption = $('#id_client_contact option:selected');
+
+            if (selectedOption.val()) {
+                $('#client_address').val(selectedOption.data('address') || '-');
+                $('#client_telp').val(selectedOption.data('telp') || '-');
+                $('#client_phone').val(selectedOption.data('phone') || '-');
+                $('#client_email').val(selectedOption.data('email') || '-');
+                $('#clientDetails').show();
+            } else {
+                $('#clientDetails').hide();
+                $('#client_address, #client_telp, #client_phone, #client_email').val('');
+            }
+        }
+
+        $('#id_client_contact').on('change', function () {
+            populateClientDetails();
+        });
+
+        $('#compose_modal').on('hide.bs.modal', function () {
+            // Reset all input fields inside the modal
+            $(this).find('form')[0].reset();
+
+            // Kosongkan manual jika tidak pakai form
+            $(this).find('#client_address, #client_telp, #client_phone, #client_email').val('');
+
+            // Sembunyikan detail client jika ada
+            $('#clientDetails').hide();
+        });
+
+
+</script> -->
+
 <script type="text/javascript">
     let table;
     let id_project = $('#id_project').val();
@@ -491,6 +617,7 @@
 	let client = $('#client').val();
 
     $(document).ready(function() {
+
 
         function showConfirmation(url) {
             deleteUrl = url; // Set the URL to the variable
@@ -641,12 +768,19 @@
                 {
                     "data": "client_quote_number",
                     "render": function(data, type, row) {
-                        return data === "" || "null" ? "-" : data;
+                        return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
                     }
                 },
                 {"data": "client"},
                 {"data": "number_sample"},
                 {"data": "id_client_sample"},
+                // {"data": "client_name"},
+                {
+                    "data": "client_name",
+                    "render": function(data, type, row) {
+                        return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
+                    }
+                },
                 {"data": "comments"},
                 {"data": "date_collected"},
                 {"data": "time_collected"},
@@ -1073,52 +1207,124 @@
         });
 
 
+        // Function to populate client details based on selected contact
+        function populateClientDetails() {
+            const selectedOption = $('#id_client_contact option:selected');
+
+            if (selectedOption.val()) {
+                $('#client_address').val(selectedOption.data('address') || '-');
+                $('#client_telp').val(selectedOption.data('telp') || '-');
+                $('#client_phone').val(selectedOption.data('phone') || '-');
+                $('#client_email').val(selectedOption.data('email') || '-');
+                $('#clientDetails').show();
+            } else {
+                $('#clientDetails').hide();
+                $('#client_address, #client_telp, #client_phone, #client_email').val('');
+            }
+        }
+
+        // Trigger populateClientDetails on dropdown change
+        $('#id_client_contact').on('change', function () {
+            populateClientDetails();
+        });
+
+        // Function to update client details (already selected client contact)
+        function updateClientDetails() {
+            const selected = $('#id_client_contact option:selected');
+            const address = selected.data('address') || '';
+            const telp    = selected.data('telp') || '';
+            const phone   = selected.data('phone') || '';
+            const email   = selected.data('email') || '';
+
+            $('#client_address').val(address);
+            $('#client_telp').val(telp);
+            $('#client_phone').val(phone);
+            $('#client_email').val(email);
+
+            // Show or hide the client details section based on selection
+            if (selected.val()) {
+                $('#clientDetails').slideDown();
+            } else {
+                $('#clientDetails').slideUp();
+            }
+        }
+
+        // Trigger updateClientDetails on dropdown change and on page load
+        $('#id_client_contact').on('change', updateClientDetails);
+        if ($('#id_client_contact').val()) {
+            updateClientDetails();
+        }
+
+        $('#compose-modal').on('hide.bs.modal', function () {
+            // Reset seluruh form
+            $(this).find('form')[0].reset();
+
+            // Reset dropdown manual
+            $('#id_client_contact option:selected').prop('selected', false); // unselect
+            $('#id_client_contact').val(''); // clear value
+            $('#id_client_contact').prop('selectedIndex', 0); // set ke opsi pertama jika ada
+            $('#id_client_contact').trigger('change'); // jaga-jaga, tetap trigger
+
+            // Reset manual semua inputan detail client
+            $('#client_address').val('');
+            $('#client_telp').val('');
+            $('#client_phone').val('');
+            $('#client_email').val('');
+
+            // Sembunyikan detail client
+            $('#clientDetails').hide();
+        });
+
+
+
+        // Open the modal for adding new data
         $('#addtombol').click(function() {
-            $('#mode').val('insert');
+            $('#mode').val('insert'); // Set mode to insert
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Sample reception | New <span id="my-another-cool-loader"></span>');
-            $('#idx_project').val(id_project);
-            $('#idx_project').attr('readonly', true);
+
+            // Reset form fields for new entry
+            $('#idx_project').val(id_project).attr('readonly', true);
             $('#client_quote_number').val('');
             $('#client').val('');
             $('#clientx').hide();
             $('#client').show();
-            $('#id_client_sample').val('');
-            $('#id_client_sample').attr('readonly', false);
-            $('#number_sample').val('');    
-            $('#number_sample').attr('readonly', false);
+            $('#id_client_contact').val(''); // Clear client contact dropdown
+            $('#id_client_sample').val('').attr('readonly', false);
+            $('#number_sample').val('').attr('readonly', false);
             $('#files').val('');
             $('#comments').val('');
             $('.val2tip').html('');
             $('#compose-modal').modal('show');
         });
 
-        $('#mytable').on('click', '.btn_edit', function(){
-            let tr = $(this).parent().parent();
-            let data = table.row(tr).data();
-            console.log(data);
-            $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Sample reception | Update<span id="my-another-cool-loader"></span>');
-            $('#idx_project').attr('readonly', true);
-            $('#idx_project').val(data.id_project);
+        // Open the modal for editing existing data
+        $('#mytable').on('click', '.btn_edit', function() {
+            let tr = $(this).closest('tr');
+            let data = table.row(tr).data(); // Assuming `table` is your DataTable instance
+            
+            $('#mode').val('edit'); // Set mode to edit
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Sample reception | Update <span id="my-another-cool-loader"></span>');
+
+            // Pre-fill fields with the selected data for editing
+            $('#idx_project').val(data.id_project).attr('readonly', true);
             $('#client_quote_number').val(data.client_quote_number);
             $('#client').hide();
-            $('#clientx').show();
-            $('#clientx').val(data.client);
-            $('#clientx').attr('readonly', true);
-            $('#idx_one_water_sample').val(data.id_one_water_sample);
-            $('#idx_one_water_sample').attr('readonly', true);
-            $('#id_client_sample').val(data.id_client_sample);
-            $('#id_client_sample').attr('readonly', true);
-            $('#number_sample').val(data.number_sample);
-            $('#number_sample').attr('readonly', true);
-            $('#files').val(data.files);
-            $('#files').attr('readonly', true);
+            $('#clientx').show().val(data.client);
+            $('#id_client_sample').val(data.id_client_sample).attr('readonly', true);
+            $('#id_client_contact').val(data.id_client_contact);
+            
+            // Populate client details
+            populateClientDetails();
+
+            // Pre-fill other form fields
+            $('#number_sample').val(data.number_sample).attr('readonly', true);
+            $('#files').val(data.files).attr('readonly', true);
             $('#date_collected').val(data.date_collected);
             $('#time_collected').val(data.time_collected);
             $('#comments').val(data.comments);
             $('.val2tip').html('');
             $('#compose-modal').modal('show');
-        });   
+        });
 
         $('#mytable tbody').on('click', 'tr', function () {
             if ($(this).hasClass('active')) {
