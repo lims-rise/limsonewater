@@ -16,10 +16,11 @@ class Sample_reception_model extends CI_Model
 
     // datatables
     public function json() {
-        $this->datatables->select('NULL AS toggle, sr.id_project, sr.client_quote_number, sr.client, sr.id_client_sample, sr.number_sample, sr.comments, sr.files, sr.date_collected, sr.time_collected, 
+        $this->datatables->select('NULL AS toggle, sr.id_project, sr.client_quote_number, sr.client, sr.id_client_sample, cc.client_name, sr.id_client_contact, sr.number_sample, sr.comments, sr.files, sr.date_collected, sr.time_collected, 
             sr.date_created, sr.date_updated, sr.flag', FALSE);
-    
+            
         $this->datatables->from('sample_reception sr');
+        $this->datatables->join('ref_client cc', 'sr.id_client_contact = cc.id_client_contact', 'left');
         $this->datatables->where('sr.flag', '0');
     
         $lvl = $this->session->userdata('id_user_level');
@@ -576,6 +577,15 @@ class Sample_reception_model extends CI_Model
     
         exit; // **Tambahkan ini untuk mencegah output tambahan**
     }
+
+
+    function getClientContact() {
+        $this->db->select('*');
+        $this->db->where('flag', '0');
+        $this->db->order_by('client_name');
+        return $this->db->get('ref_client')->result_array();
+    }
+    
     
     
     
