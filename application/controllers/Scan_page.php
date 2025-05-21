@@ -231,7 +231,7 @@ class Scan_page extends CI_Controller {
     public function view_file($filename)
     {
         $filename = basename($filename);
-        $basePath = '\\\\ad.monash.edu\\shared\\OneWater\\Data\\Scan\\';
+        $basePath = '\\\\ad.monash.edu\\shared\\OneWater\\SecBackups\\Data\\Scan\\';
         $filePath = $basePath . $filename;
 
         if (!file_exists($filePath)) {
@@ -348,7 +348,7 @@ class Scan_page extends CI_Controller {
 
     
     public function do_upload() {
-        $upload_path = '\\\\ad.monash.edu\\shared\\OneWater\\Data\\Scan\\';
+        $upload_path = '\\\\ad.monash.edu\\shared\\OneWater\\SecBackups\\Data\\Scan\\';
         $filename = 'sample_' . time();
 
         $config['upload_path']   = $upload_path;
