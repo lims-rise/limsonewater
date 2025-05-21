@@ -487,6 +487,7 @@
 <script type="text/javascript">
     let table;
     let id_project = $('#id_project').val();
+
 	let client = $('#client').val();
 
     $(document).ready(function() {
@@ -1140,14 +1141,18 @@
 
 <script>
 function openScanner() {
+  const idxProject = $('#idx_project').val(); // Ambil nilai project dari input form
   const w = 800;
   const h = 600;
-  const y = window.top.outerHeight / 2 + window.top.screenY - ( h / 2);
-  const x = window.top.outerWidth / 2 + window.top.screenX - ( w / 2);
+  const y = window.top.outerHeight / 2 + window.top.screenY - (h / 2);
+  const x = window.top.outerWidth / 2 + window.top.screenX - (w / 2);
 
-  window.open("<?= site_url('scan_page') ?>", "Scan Document",
+  const url = "<?= site_url('scan_page') ?>?project_id=" + encodeURIComponent(idxProject);
+
+  window.open(url, "Scan Document",
     `width=${w},height=${h},top=${y},left=${x}`);
 }
+
 
 // 👇 Tangkap data dari scanner popup
 window.addEventListener("message", function(event) {

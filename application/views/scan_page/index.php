@@ -149,6 +149,14 @@
     let selectedFile = null;
     const dropArea = document.getElementById('dropArea');
 
+    // Helper untuk ambil query parameter
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    const projectId = getQueryParam('project_id'); // ← Ambil dari URL
+
     function handleFile(files) {
         if (!files || files.length === 0) return;
 
@@ -191,53 +199,102 @@
         handleFile(e.dataTransfer.files);
     });
 
+    // function uploadFile() {
+    //     if (!selectedFile) {
+    //         Swal.fire("No file selected", "Please select a file to upload.", "warning");
+    //         return;
+    //     }
+
+    //     const formData = new FormData();
+    //     formData.append("file", selectedFile);
+
+    //     // Handle UI loading state
+    //     const btn = document.getElementById('uploadBtn');
+    //     const icon = document.getElementById('uploadIcon');
+    //     const spinner = document.getElementById('uploadSpinner');
+
+    //     btn.disabled = true;
+    //     icon.innerHTML = "Uploading...";
+    //     spinner.classList.remove("d-none");
+
+    //     fetch("Scan_page/do_upload", {
+    //         method: "POST",
+    //         body: formData
+    //     })
+    //     .then(response => {
+    //         if (!response.ok) throw new Error("Upload failed");
+    //         return response.json();
+    //     })
+    //     .then(data => {
+    //         Swal.fire("Upload success", `File uploaded as: ${data.filename}`, "success");
+
+    //         window.opener?.postMessage({
+    //             type: 'scan-upload-complete',
+    //             filename: data.filename
+    //         }, "*");
+
+    //         setTimeout(() => window.close(), 1000);
+    //     })
+    //     .catch(err => {
+    //         console.error(err);
+    //         Swal.fire("Upload error", err.message || "Failed to upload file.", "error");
+    //     })
+    //     .finally(() => {
+    //         // Reset button state
+    //         btn.disabled = false;
+    //         icon.innerHTML = '<i class="fa fa-upload"></i> Upload';
+    //         spinner.classList.add("d-none");
+    //     });
+    // }
+
     function uploadFile() {
-        if (!selectedFile) {
-            Swal.fire("No file selected", "Please select a file to upload.", "warning");
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append("file", selectedFile);
-
-        // Handle UI loading state
-        const btn = document.getElementById('uploadBtn');
-        const icon = document.getElementById('uploadIcon');
-        const spinner = document.getElementById('uploadSpinner');
-
-        btn.disabled = true;
-        icon.innerHTML = "Uploading...";
-        spinner.classList.remove("d-none");
-
-        fetch("Scan_page/do_upload", {
-            method: "POST",
-            body: formData
-        })
-        .then(response => {
-            if (!response.ok) throw new Error("Upload failed");
-            return response.json();
-        })
-        .then(data => {
-            Swal.fire("Upload success", `File uploaded as: ${data.filename}`, "success");
-
-            window.opener?.postMessage({
-                type: 'scan-upload-complete',
-                filename: data.filename
-            }, "*");
-
-            setTimeout(() => window.close(), 1000);
-        })
-        .catch(err => {
-            console.error(err);
-            Swal.fire("Upload error", err.message || "Failed to upload file.", "error");
-        })
-        .finally(() => {
-            // Reset button state
-            btn.disabled = false;
-            icon.innerHTML = '<i class="fa fa-upload"></i> Upload';
-            spinner.classList.add("d-none");
-        });
+    if (!selectedFile) {
+        Swal.fire("No file selected", "Please select a file to upload.", "warning");
+        return;
     }
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    formData.append("project_id", projectId); // ← Kirim project_id
+
+    const btn = document.getElementById('uploadBtn');
+    const icon = document.getElementById('uploadIcon');
+    const spinner = document.getElementById('uploadSpinner');
+
+    btn.disabled = true;
+    icon.innerHTML = "Uploading...";
+    spinner.classList.remove("d-none");
+
+    fetch("<?= site_url('Scan_page/do_upload') ?>", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) throw new Error("Upload failed");
+        return response.json();
+    })
+    .then(data => {
+        Swal.fire("Upload success", `File uploaded as: ${data.filename}`, "success");
+
+        window.opener?.postMessage({
+            type: 'scan-upload-complete',
+            filename: data.filename
+        }, "*");
+
+        setTimeout(() => window.close(), 1000);
+    })
+    .catch(err => {
+        console.error(err);
+        Swal.fire("Upload error", err.message || "Failed to upload file.", "error");
+    })
+    .finally(() => {
+        btn.disabled = false;
+        icon.innerHTML = '<i class="fa fa-upload"></i> Upload';
+        spinner.classList.add("d-none");
+    });
+}
+</script>
+
 
 </script>
 </body>
