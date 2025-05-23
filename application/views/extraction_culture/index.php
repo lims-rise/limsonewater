@@ -327,7 +327,73 @@
                                     ?>
                             </select>
                             </div>
-                        </div>	
+                        </div>
+
+                        <!-- <div class="form-group">
+                             <label for="sequence" class="col-sm-4 control-label">Sequence</label>
+                                <div class="col-sm-8">
+                                    <input type="checkbox" id="sequenceCheckbox" name="sequence" value="1">
+                                </div>
+                        </div> -->
+
+                        <div class="form-group">
+                            <label for="sequenceCheckbox" class="col-sm-4 control-label">Sequence</label>
+                            <div class="col-sm-8" style="padding-top: 7px;">
+                                <input type="checkbox" id="sequenceCheckbox" name="sequence" value="1">
+                            </div>
+                        </div>
+
+
+                        <div id="sequenceFields" style="display: none;">
+                            <div class="form-group">
+                                <label for="sequence_id" class="col-sm-4 control-label">Sequence Type</label>
+                                <div class="col-sm-8" >
+                                    <select id='sequence_id' name="sequence_id" class="form-control">
+                                        <option value="" disabled>-- Select Sequence Type --</option>
+                                            <?php
+                                                foreach($sequencetype as $row){
+                                                    if ($sequence_id == $row['sequence_id']) {
+                                                        echo "<option value='".$row['sequence_id']."' selected='selected'>".$row['sequence_type']."</option>";
+                                                    }
+                                                    else {
+                                                        echo "<option value='".$row['sequence_id']."'>".$row['sequence_type']."</option>";
+                                                    }
+                                                }
+                                            ?>
+                                        <option value="other">Other</option>
+                                    </select>
+                                    <input type="text" id="other_sequence_name" name="other_sequence_name" class="form-control" placeholder="Enter new sequence type" style="display:none; margin-top:5px;">
+                                </div>
+                            </div>
+
+                            <!-- <div class="form-group">
+                                <label for="sequence_id" class="col-sm-4 control-label">Sequence Type</label>
+                                <div class="col-sm-8">
+                                    <select id="sequence_id" name="sequence_id" class="form-control">
+                                        <option value="" disabled selected>-- Select Sequence Type --</option>
+                                        <?php foreach ($sequenceTypes as $type): ?>
+                                            <option value="<?= $type['sequence_id'] ?>"><?= $type['sequence_typr'] ?></option>
+                                        <?php endforeach; ?>
+                                        <option value="other">Other</option>
+                                    </select>
+                                    <input type="text" id="other_sequence_name" class="form-control" placeholder="Enter new sequence type" style="display:none; margin-top:5px;">
+                                </div>
+                            </div> -->
+
+                            <!-- <div class="form-group">
+                                <label for="species_id">Species ID</label>
+                                <input type="text" id="species_id" name="species_id" class="form-control">
+                            </div> -->
+
+                            <div class="form-group">
+                                <label for="species_id" class="col-sm-4 control-label">Species ID</label>
+                                <div class="col-sm-8">
+                                    <input id="species_id" name="species_id" placeholder="Species ID" class="form-control">
+                                </div>
+                            </div>
+
+                        </div>
+
                         
                         <!-- <div class="form-group">
                             <label for="review" class="col-sm-4 control-label">Status</label>
@@ -922,6 +988,28 @@
         const barcodeFromUrl = params.get('barcode');
         const idOneWaterSampleFromUrl = params.get('idOneWaterSample');
         const idTestingTypeFromUrl = params.get('idTestingType');
+
+         // Toggle sequence fields
+        $('#sequenceCheckbox').on('change', function () {
+            if ($(this).is(':checked')) {
+                $('#sequenceFields').slideDown();
+            } else {
+                $('#sequenceFields').slideUp();
+
+                // Clear values if unchecked (opsional)
+                $('#sequence_id').val('');
+                $('#species_id').val('');
+            }
+        });
+
+        $('#sequence_id').on('change', function () {
+            if ($(this).val() === 'other') {
+                $('#other_sequence_name').show().attr('required', true);
+            } else {
+                $('#other_sequence_name').hide().val('').attr('required', false);
+            }
+        });
+
 
         // Cek apakah barcode dan id_one_water_sample ada di URL
         if (barcodeFromUrl && idOneWaterSampleFromUrl && idTestingTypeFromUrl) {
@@ -2259,76 +2347,19 @@ function showInfoCard(targetSelector, message, description, isSuccess) {
                     $('#id_rack').val(data.rack);
                     $('#id_tray').val(data.tray);
                     $('#id_row').val(data.rows1);
+                    $('#sequence_id').val(data.sequence_id);
+                    // $('#sequence').val(data.sequence);
+                    // Set the checkbox and handle dependent fields
+                    if (data.sequence == 1 || data.sequence === '1') {
+                        $('#sequenceCheckbox').prop('checked', true);
+                        $('#sequenceFields').show();  // Show the dependent fields (sequence_id, species_id)
+                    } else {
+                        $('#sequenceCheckbox').prop('checked', false);
+                        $('#sequenceFields').hide();  // Hide the dependent fields (sequence_id, species_id)
+                    }
+                    $('#species_id').val(data.species_id);
                     $('#id_col').val(data.columns1);
                     $('#comments').val(data.comments);
-                    // $('#review').val(data.review);
-                    // $('#user_review').val(data.user_review);
-                    // $('#reviewed_by_label').text('Reviewed by: ' + (data.full_name ? data.full_name : '-'));
-                    // // Set the checkbox state
-                    // if (data.user_created !== loggedInUser) {
-                    //     $('#user_review').val(loggedInUser);
-                    //     // Set the checkbox state
-                    //     if (data.review == 1) {
-                    //         $('#review').prop('checked', true); // Check the checkbox
-                    //         const label = document.getElementById('review_label');
-                    //         label.textContent = 'Review';
-                    //         label.className = `form-check-label review`;            
-                    //     } else if (data.review == 0) {
-                    //         $('#review').prop('checked', false); // Uncheck the checkbox
-                    //         const label = document.getElementById('review_label');
-                    //         label.textContent = 'Unreview';
-                    //         label.className = `form-check-label unreview`;            
-                    //     }
-                    //     $('#review').val(data.review);
-                    //                         // Define the states with associated values and labels
-                    //                         const states = [
-                    //         { value: 0, label: "Unreview", class: "unreview" },
-                    //         { value: 1, label: "Review", class: "review" }
-                    //         // { value: 2, label: "Crossed", class: "crossed" }
-                    //     ];
-
-                    //     let currentState = 0; // Start with "Unchecked"
-
-                    //     // Add event listener to toggle through states
-                    //     document.getElementById('review_label').addEventListener('click', function () {
-                    //         // Cycle through the states
-                    //         currentState = (currentState + 1) % states.length;
-
-                    //         const checkbox = document.getElementById('review');
-                    //         const label = document.getElementById('review_label');
-
-                    //         // Update the label text
-                    //         label.textContent = states[currentState].label;
-
-                    //         // Apply styling to the label based on the state
-                    //         label.className = `form-check-label ${states[currentState].class}`;
-
-                    //         // (Optional) Update a hidden input or store the value somewhere for submission
-                    //         checkbox.value = states[currentState].value; // Set the value to the current state
-                    //     });                
-                    // } else {
-                    //     if (data.review == 1) {
-                    //             $('#review').prop('checked', true); // Check the checkbox
-                    //             const label = document.getElementById('review_label');
-                    //             label.textContent = 'Review';
-                    //             label.className = `form-check-label review`;            
-                    //         } else if (data.review == 0) {
-                    //             $('#review').prop('checked', false); // Uncheck the checkbox
-                    //             const label = document.getElementById('review_label');
-                    //             label.textContent = 'Unreview';
-                    //             label.className = `form-check-label unreview`;            
-                    //         }
-                    // }
-
-                    // console.log('test user', data.user_created);
-                    // if (data.user_created === loggedInUser) {
-                    //     $('#saveButtonDetail').prop('disabled', false);  // Enable Save button if user is the same as the one who created
-                    //     showInfoCard('#textInform2', '<i class="fa fa-check-circle"></i> You are the creator', "You have full access to edit this data.", true);
-                    // } else {
-                    //     $('#saveButtonDetail').prop('disabled', false);  // Disable Save button if user is not the same as the one who created
-                    //     showInfoCard('#textInform2', '<i class="fa fa-times-circle"></i> You are not the creator', "In the case you can review this data and make changes.", false);
-                    // }
-
 
 
                     // Display modal
@@ -2339,6 +2370,16 @@ function showInfoCard(targetSelector, message, description, isSuccess) {
                     $('#modal-sample-body').html('<div class="text-danger text-center py-3">Gagal memuat data</div>');
                 }
             });
+        });
+
+        $('#sequenceCheckbox').on('change', function () {
+            if ($(this).is(':checked')) {
+                $('#sequenceFields').slideDown();
+            } else {
+                $('#sequenceFields').slideUp();
+                $('#sequence_id').val('');
+                $('#species_id').val('');
+            }
         });
 
         $(document).on('click', '.btn_delete_child', function() {

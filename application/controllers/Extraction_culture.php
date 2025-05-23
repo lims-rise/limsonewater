@@ -40,7 +40,9 @@ class Extraction_culture extends CI_Controller
         $data['tray1'] = $this->Extraction_culture_model->getFreezer4();
         $data['row1'] = $this->Extraction_culture_model->getPos1();
         $data['col1'] = $this->Extraction_culture_model->getPos2();
-
+        $data['sequencetype'] = $this->Extraction_culture_model->getSequenceType();
+        $data['selected_sequence_id'] = '';
+$data['selected_sequence_type'] = '';
         $this->template->load('template','Extraction_culture/index', $data);
     } 
     
@@ -137,10 +139,95 @@ class Extraction_culture extends CI_Controller
         redirect(site_url("Extraction_culture"));
     }
 
+    // public function update_child() {
+    //     $mode = $this->input->post('mode-child', TRUE);
+    //     $dt = new DateTime();
+
+    //     $barcode_sample = $this->input->post('barcode_sample1', TRUE);
+    //     $id_sampletype = $this->input->post('id_sampletype', TRUE);
+    //     $culture_media = $this->input->post('culture_media', TRUE);
+    //     $date_extraction = $this->input->post('date_extraction', TRUE);
+    //     $id_kit = $this->input->post('id_kit', TRUE);
+    //     $kit_lot = $this->input->post('kit_lot', TRUE);
+    //     $comments = $this->input->post('comments', TRUE);
+    //     $barcode_tube = $this->input->post('barcode_tube', TRUE);
+    //     $fin_volume = $this->input->post('fin_volume', TRUE);
+    //     $dna_concentration = $this->input->post('dna_concentration', TRUE);
+    //     $cryobox = $this->input->post('cryobox', TRUE);
+    //     $id_freez = $this->input->post('id_freez', TRUE);
+    //     $id_shelf = $this->input->post('id_shelf', TRUE);
+    //     $id_rack = $this->input->post('id_rack', TRUE);
+    //     $id_tray = $this->input->post('id_tray', TRUE);
+
+    //     $id_row = $this->input->post('id_row', TRUE);
+    //     $id_col = $this->input->post('id_col', TRUE);
+    //     $review = $this->input->post('review', TRUE);
+    //     $user_review = $this->input->post('user_review', TRUE);
+
+    //     $sequence = $this->input->post('sequence', TRUE);
+    //     $sequence_id = $this->input->post('sequence_id', TRUE);
+    //     $species_id = $this->input->post('species_id', TRUE);
+
+    //     $loc_obj = $this->Extraction_culture_model->get_freezx($id_freez, $id_shelf, $id_rack, $id_tray);
+    //     $pos_obj = $this->Extraction_culture_model->get_posx($id_row, $id_col);
+    //     $id_loc = $loc_obj->id_location;
+    //     $id_pos = $pos_obj->id_pos;   
+
+    //     if ($mode == "edit") {
+    //         $data = array(
+    //             'barcode_sample' => $barcode_sample,
+    //             // 'id_one_water_sample' => $id_one_water_sample,
+    //             'id_sampletype' => $id_sampletype,
+    //             // 'id_person' => $id_person,
+    //             'culture_media' => $culture_media,
+    //             'date_extraction' => $date_extraction,
+    //             'id_kit' => $id_kit,
+    //             'kit_lot' => $kit_lot,
+    //             'comments' => $comments,
+    //             'barcode_tube' => $barcode_tube,
+    //             'fin_volume' => $fin_volume,
+    //             'dna_concentration' => $dna_concentration,
+    //             'cryobox' => $cryobox,
+    //             'id_location' => $id_loc,
+    //             'id_pos' => $id_pos,
+    //             'review' => $review,
+    //             'user_review' => $user_review,
+    //             'sequence' => $sequence,
+    //             'sequence_id' => $sequence_id,
+    //             'species_id' => $species_id,
+    //             'user_updated' => $this->session->userdata('id_users'),
+    //             'date_updated' => $dt->format('Y-m-d H:i:s'),
+    //         );
+
+    //         // var_dump($data);
+    //         // die();
+    //         $this->Extraction_culture_model->update_child($barcode_sample, $data);
+
+    //         $data_freez = array(
+    //             'date_in' => $date_extraction,
+    //             'time_in' => $dt->format('H:i:s'),
+    //             // 'id_person' => $id_person,
+    //             'barcode_sample' => $barcode_sample,
+    //             'barcode_tube' => $barcode_tube,
+    //             'cryobox' => $cryobox,
+    //             'id_location' => $id_loc,
+    //             'id_pos' => $id_pos,
+    //             'comments' => $comments,
+    //             'user_updated' => $this->session->userdata('id_users'),
+    //             'date_updated' => $dt->format('Y-m-d H:i:s'),
+    //         );
+    //         // Debug untuk cek data yang dikirim
+    //         log_message('debug', 'Data Freez: ' . print_r($data_freez, true));
+    //         $this->Extraction_culture_model->update_freez($barcode_sample, $data_freez);       
+
+    //         $this->session->set_flashdata('message', 'Update Record Success');
+    //     }
+    //     redirect(site_url("Extraction_culture"));
+    // }
     public function update_child() {
         $mode = $this->input->post('mode-child', TRUE);
         $dt = new DateTime();
-
+    
         $barcode_sample = $this->input->post('barcode_sample1', TRUE);
         $id_sampletype = $this->input->post('id_sampletype', TRUE);
         $culture_media = $this->input->post('culture_media', TRUE);
@@ -156,23 +243,50 @@ class Extraction_culture extends CI_Controller
         $id_shelf = $this->input->post('id_shelf', TRUE);
         $id_rack = $this->input->post('id_rack', TRUE);
         $id_tray = $this->input->post('id_tray', TRUE);
-
+    
         $id_row = $this->input->post('id_row', TRUE);
         $id_col = $this->input->post('id_col', TRUE);
         $review = $this->input->post('review', TRUE);
         $user_review = $this->input->post('user_review', TRUE);
-
+    
+        $sequence = $this->input->post('sequence', TRUE);
+        $sequence_id = $this->input->post('sequence_id', TRUE);
+        $species_id = $this->input->post('species_id', TRUE);
+    
+        // Cek jika user memilih 'Other' untuk sequence type
+        $other_sequence = $this->input->post('other_sequence_name', TRUE);  // Nama sequence "Other" jika diisi
+        // var_dump($other_sequence);
+        // die();
+    
+        // Jika user memilih 'Other', proses tambahan untuk sequence
+        if ($sequence_id === 'other' && !empty($other_sequence)) {
+            // Cek apakah sequence ini sudah ada di database
+            $existing = $this->db->get_where('ref_sequence', ['sequence_type' => $other_sequence])->row();
+    
+            if ($existing) {
+                $sequence_id = $existing->sequence_id; // Gunakan ID yang sudah ada
+            } else {
+                // Insert sequence baru jika tidak ada
+                $this->db->insert('ref_sequence', [
+                    'sequence_type' => $other_sequence,
+                    'flag' => 0,
+                    'is_custom' => 1
+                ]);
+                
+                $sequence_id = $this->db->insert_id(); // Ambil ID yang baru disimpan
+            }
+        }
+    
+        // Mengambil lokasi dan posisi
         $loc_obj = $this->Extraction_culture_model->get_freezx($id_freez, $id_shelf, $id_rack, $id_tray);
         $pos_obj = $this->Extraction_culture_model->get_posx($id_row, $id_col);
         $id_loc = $loc_obj->id_location;
-        $id_pos = $pos_obj->id_pos;   
-
+        $id_pos = $pos_obj->id_pos;
+    
         if ($mode == "edit") {
             $data = array(
                 'barcode_sample' => $barcode_sample,
-                // 'id_one_water_sample' => $id_one_water_sample,
                 'id_sampletype' => $id_sampletype,
-                // 'id_person' => $id_person,
                 'culture_media' => $culture_media,
                 'date_extraction' => $date_extraction,
                 'id_kit' => $id_kit,
@@ -186,18 +300,19 @@ class Extraction_culture extends CI_Controller
                 'id_pos' => $id_pos,
                 'review' => $review,
                 'user_review' => $user_review,
+                'sequence' => $sequence,
+                'sequence_id' => $sequence_id,  // Gunakan ID yang didapat (baik yang baru atau yang sudah ada)
+                'species_id' => $species_id,
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
-
-            // var_dump($data);
-            // die();
+    
+            // Update child di model
             $this->Extraction_culture_model->update_child($barcode_sample, $data);
-
+    
             $data_freez = array(
                 'date_in' => $date_extraction,
                 'time_in' => $dt->format('H:i:s'),
-                // 'id_person' => $id_person,
                 'barcode_sample' => $barcode_sample,
                 'barcode_tube' => $barcode_tube,
                 'cryobox' => $cryobox,
@@ -207,14 +322,16 @@ class Extraction_culture extends CI_Controller
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
-            // Debug untuk cek data yang dikirim
-            log_message('debug', 'Data Freez: ' . print_r($data_freez, true));
-            $this->Extraction_culture_model->update_freez($barcode_sample, $data_freez);       
-
+    
+            // Update data freezer
+            $this->Extraction_culture_model->update_freez($barcode_sample, $data_freez);
+    
+            // Beri pesan success
             $this->session->set_flashdata('message', 'Update Record Success');
         }
         redirect(site_url("Extraction_culture"));
     }
+    
 
     public function barcode_restrict() 
     {
