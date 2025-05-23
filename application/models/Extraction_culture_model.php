@@ -95,10 +95,15 @@ class Extraction_culture_model extends CI_Model
             extraction_culture_plate.barcode_tube,
             extraction_culture_plate.cryobox,
             extraction_culture_plate.kit_lot,
-            extraction_culture_plate.comments
+            extraction_culture_plate.comments,
+            extraction_culture_plate.sequence_id,
+            ref_sequence.sequence_type,
+            extraction_culture_plate.sequence,
+            extraction_culture_plate.species_id
         ');
         $this->db->from('extraction_culture_plate');
         $this->db->join('ref_sampletype', 'extraction_culture_plate.id_sampletype = ref_sampletype.id_sampletype', 'left');
+        $this->db->join('ref_sequence', 'extraction_culture_plate.sequence_id = ref_sequence.sequence_id', 'left');
         $this->db->where('extraction_culture_plate.id_one_water_sample', $id_one_water_sample);
         $this->db->where('extraction_culture_plate.flag', '0');
         $query = $this->db->get()->result();
@@ -427,13 +432,18 @@ class Extraction_culture_model extends CI_Model
             ecp.user_created,
             ecp.user_review,
             ecp.review,
-            user.full_name
+            user.full_name,
+            ecp.sequence_id,
+            rs.sequence_type,
+            ecp.sequence,
+            ecp.species_id
         ');
         $this->db->from('extraction_culture_plate ecp');
         $this->db->join('ref_sampletype rst', 'ecp.id_sampletype = rst.id_sampletype', 'left');
         $this->db->join('ref_kit kit', 'ecp.id_kit = kit.id_kit', 'left');
         $this->db->join('ref_location loc', 'ecp.id_location = loc.id_location', 'left');
         $this->db->join('ref_position pos', 'ecp.id_pos = pos.id_pos', 'left');
+        $this->db->join('ref_sequence rs', 'ecp.sequence_id = rs.sequence_id', 'left');
         $this->db->join('tbl_user user', 'ecp.user_review = user.id_users', 'left');
         // $this->db->join('ref_person rp', 'ecp.id_person = rp.id_person', 'left');
         $this->db->where('ecp.barcode_sample', $barcode_sample);
@@ -474,6 +484,18 @@ class Extraction_culture_model extends CI_Model
         
         return $this->db->affected_rows() > 0; // Return true jika update berhasil
     }
+
+    function getSequenceType() {
+        $this->db->select('sequence_id, sequence_type'); // pilih kolom yang dibutuhkan saja
+        $this->db->from('ref_sequence');
+        $this->db->where('flag', 0); // jika kolom flag berupa integer, jangan pakai string
+        $this->db->where_in('is_custom', [0, 1]);
+        $this->db->order_by('sequence_id', 'ASC');
+    
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    
 
       
 }
