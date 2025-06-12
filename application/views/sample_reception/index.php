@@ -771,7 +771,13 @@
                         return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
                     }
                 },
-                {"data": "client"},
+                // {"data": "client"},
+                {
+                    "data": "client",
+                    "render": function(data, type, row) {
+                        return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
+                    }
+                },
                 {"data": "number_sample"},
                 {"data": "id_client_sample"},
                 // {"data": "client_name"},
