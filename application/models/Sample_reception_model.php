@@ -106,10 +106,21 @@ class Sample_reception_model extends CI_Model
 
     function get_rep($id)
     {
-        $q = $this->db->query('SELECT a.id_project, a.client, a.id_client_sample, b.date_arrival, b.time_arrival, b.id_person, c.realname
+        $q = $this->db->query('SELECT a.report_number, a.report_date, a.id_project, a.client, 
+        d.client_name, d.address, d.phone1, d.phone2, d.email, 
+        a.client_quote_number, a.po_number, 
+        DATE_FORMAT(e.from_date, "%d-%b-%Y") AS from_date,
+        DATE_FORMAT(e.to_date, "%d-%b-%Y") AS to_date,
+        b.date_arrival, b.time_arrival,
+        a.id_client_sample, b.id_one_water_sample,  b.id_person, c.realname
         FROM sample_reception a
         LEFT JOIN sample_reception_sample b ON a.id_project = b.id_project
         LEFT JOIN ref_person c ON b.id_person = c.id_person
+				LEFT JOIN ref_client d ON a.id_client_contact = d.id_client_contact
+				LEFT JOIN 
+				(SELECT id_project, MIN(date_arrival) AS from_date, MAX(date_arrival) AS to_date 
+					FROM sample_reception_sample
+					GROUP BY id_project) e ON e.id_project = b.id_project
         WHERE a.id_project="'.$id.'"
         AND a.flag = 0 
         ');        

@@ -112,9 +112,20 @@ class Sample_reception extends CI_Controller
         $row = $this->Sample_reception_model->get_rep($id);
         if ($row) {
             $data = array(
+            'report_number' => $row->report_number,
+            'report_date' => $row->report_date,
             'id_project' => $row->id_project,
             'client' => $row->client,
+            'client_name' => $row->client_name,
+            'address' => $row->address,
+            'phone1' => $row->phone1,
+            'phone2' => $row->phone2,
+            'email' => $row->email,
+            'client_quote_number' => $row->client_quote_number,
+            'po_number' => $row->po_number,
             'id_client_sample' => $row->id_client_sample,
+            'from_date' => $row->from_date,
+            'to_date' => $row->to_date,
             'date_arrival' => $row->date_arrival,
             'time_arrival' => $row->time_arrival,
             'id_person' => $row->id_person,

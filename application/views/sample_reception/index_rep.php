@@ -31,11 +31,11 @@
                                     <thead>
                                         <tr>
                                             <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Report Number</td>
-                                            <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">25-10299</td>
+                                            <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $report_number ?></td>
                                         </tr>
                                         <tr>
                                             <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Report issue date</td>
-                                            <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo date('Y-m-d'); ?></td>
+                                            <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $report_date ?></td>
                                         </tr>
                                     </thead>
                                 </table>
@@ -54,25 +54,49 @@
                                         </tr>
                                         <tr>
                                             <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Client contact details</td>
-                                            <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $id_client_sample ?></td>
+                                            <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $client_name ?></td>
                                         </tr>
                                         <tr>
-                                            <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Date received</td>
-                                            <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $date_arrival ?></td>
+                                            <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"></td>
+                                            <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $address ?></td>
                                         </tr>
                                         <tr>
-                                            <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Time received</td>
-                                            <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $time_arrival ?></td>
+                                            <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"></td>
+                                            <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $phone1 ?></td>
                                         </tr>
                                         <tr>
-                                            <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Test signatories</td>
+                                            <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"></td>
+                                            <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $phone2 ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"></td>
+                                            <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $email ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Quote Number</td>
+                                            <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $client_quote_number ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">PO Number</td>
+                                            <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $po_number ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Date of Sample Received</td>
+                                            <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $from_date . "&nbsp &nbsp~&nbsp &nbsp" . $to_date ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Analysis</td>
+                                            <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo "??" ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Test Analyst(s)</td>
                                             <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $realname ?></td>
                                         </tr>
                                     </thead>
                                 </table>
                             </div>
 
-                            <div style="width: 49%;">
+                            <!-- <div style="width: 49%;">
                                 <table id="additional-info" width="100%" style="border:0px solid black; border-collapse: collapse;">
                                     <thead>
                                         <tr>
@@ -111,10 +135,10 @@
                                         </tr>
                                     </thead>
                                 </table>
-                            </div>
+                            </div> -->
                         </div>
 
-                        <div style="width: 100%; border-top: 0px solid #ddd; margin: 30px 0;"></div>
+                        <!-- <div style="width: 100%; border-top: 0px solid #ddd; margin: 30px 0;"></div>
 
                         <div style="width: 80%; margin: 5px auto; border-top: 0px solid #ddd; text-align: center;">
                         The sample(s) referred to in this report were analysed by the following method(s) under NATA Accreditation No. 992. The hash (#) below
@@ -173,7 +197,7 @@
                                     </tr>
                                 </thead>
                             </table>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </section>
