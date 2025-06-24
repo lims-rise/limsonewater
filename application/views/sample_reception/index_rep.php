@@ -10,8 +10,8 @@
             <section class="content">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <img src="../../../img/onewaterlogo.png" height="40px" class="icon" style="padding: 0px; float: left;">
-                        <img src="../../../img/monash.png" height="40px" class="icon" style="padding: 0px; float: right;">
+                        <img src="../../../img/monash.png" height="50px" class="icon" style="padding: 0px; float: left;">
+                        <img src="../../../img/onewaterlogo.png" height="40px" class="icon" style="padding: 0px; float: right;">
                     </div>
                     <div class="box-body">
                         <div style="position: relative; height: 40px; margin-bottom: 10px;">
