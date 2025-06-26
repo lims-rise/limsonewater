@@ -29,7 +29,7 @@ class Biobankin extends CI_Controller
     public function index()
     {
         $data['id_one'] = $this->Biobankin_model->getID_one();
-        // $data['sampletype'] = $this->Biobankin_model->getSampleType();
+        $data['sampletype'] = $this->Biobankin_model->getSampleType();
         $data['labtech'] = $this->Biobankin_model->getLabTech();
         // $data['id_project'] = $this->Biobankin_model->generate_project_id();
         // $data['client'] = $this->Biobankin_model->generate_client();
@@ -62,6 +62,7 @@ class Biobankin extends CI_Controller
             $data = array(
                 'id_one_water_sample' => $row->id_one_water_sample,
                 'sampletype' => $row->sampletype,
+                'sampletypecombination' => $row->sampletypecombination,
                 'date_conduct' => $row->date_conduct,
                 'replicates' => $row->replicates,
                 'initial' => $row->initial,
@@ -108,11 +109,12 @@ class Biobankin extends CI_Controller
         $biobankinx_barcode = $this->input->post('biobankinx_barcode', TRUE);
         $dt = new DateTime();
 
-        $sampletype = $this->input->post('sampletype', TRUE);
+        $id_sampletype = $this->input->post('id_sampletype', TRUE);
+        // $combination_type = $this->input->post('combination_type', TRUE);
         $id_person = $this->input->post('id_person', TRUE);
         $date_conduct = $this->input->post('date_conduct', TRUE);
         $replicates = $this->input->post('replicates', TRUE);
-        $comments = $this->input->post('comments', TRUE);  
+        $comments = $this->input->post('comments', TRUE);
         $review = $this->input->post('review', TRUE);
         $user_review = $this->input->post('user_review', TRUE);      
     
@@ -120,7 +122,8 @@ class Biobankin extends CI_Controller
             $data = array(
                 'id_one_water_sample' => $id_one_water_sample,
                 'biobankin_barcode' => $biobankin_barcode,
-                'sampletype' => $sampletype,
+                'id_sampletype' => $id_sampletype,
+                // 'combination_type' => $combination_type,
                 'date_conduct' => $date_conduct,
                 'replicates' => $replicates,
                 'id_person' => $id_person,
@@ -141,7 +144,8 @@ class Biobankin extends CI_Controller
             $data = array(
                 'id_one_water_sample' => $idx_one_water_sample,
                 'biobankin_barcode' => $biobankinx_barcode,
-                'sampletype' => $sampletype,
+                'id_sampletype' => $id_sampletype,
+                // 'combination_type' => $combination_type,
                 'date_conduct' => $date_conduct,
                 'replicates' => $replicates,
                 'id_person' => $id_person,

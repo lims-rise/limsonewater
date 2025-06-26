@@ -167,6 +167,7 @@ class Colilert_idexx_water extends CI_Controller
             $ecoli_largewells = $this->input->post('ecoli_largewells', TRUE);
             $ecoli_smallwells = $this->input->post('ecoli_smallwells', TRUE);
             $ecoli = $this->input->post('ecoli', TRUE);
+            $lowerdetection = $this->input->post('lowerdetection', TRUE);
             $coliforms_largewells = $this->input->post('coliforms_largewells', TRUE);
             $coliforms_smallwells = $this->input->post('coliforms_smallwells', TRUE);
             $total_coliforms = $this->input->post('total_coliforms', TRUE);
@@ -181,6 +182,7 @@ class Colilert_idexx_water extends CI_Controller
                     'ecoli_largewells' => $ecoli_largewells,
                     'ecoli_smallwells' => $ecoli_smallwells,
                     'ecoli' => $ecoli,
+                    'lowerdetection' => $lowerdetection,
                     'coliforms_largewells' => $coliforms_largewells,
                     'coliforms_smallwells' => $coliforms_smallwells,
                     'total_coliforms' => $total_coliforms,
@@ -209,6 +211,7 @@ class Colilert_idexx_water extends CI_Controller
                     'ecoli_largewells' => $ecoli_largewells,
                     'ecoli_smallwells' => $ecoli_smallwells,
                     'ecoli' => $ecoli,
+                    'lowerdetection' => $lowerdetection,
                     'coliforms_largewells' => $coliforms_largewells,
                     'coliforms_smallwells' => $coliforms_smallwells,
                     'total_coliforms' => $total_coliforms,

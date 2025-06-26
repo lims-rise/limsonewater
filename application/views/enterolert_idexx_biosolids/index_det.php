@@ -52,18 +52,25 @@
 								<input class="form-control " id="wet_weight" name="wet_weight" value="<?php echo $wet_weight ?>"  disabled>
 							</div>
 
-                            <label for="elution_volume" class="col-sm-2 control-label">Elution Volume (mL)</label>
+                            <label for="sample_dry_weight" class="col-sm-2 control-label">Sample dry weight (g)</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="elution_volume" name="elution_volume" value="<?php echo $elution_volume ?>"  disabled>
+								<input class="form-control " id="sample_dry_weight" name="sample_dry_weight" value="<?php echo $sample_dry_weight ?>"  disabled>
 							</div>
 						</div>
 
 						<div class="form-group">
+                            <label for="elution_volume" class="col-sm-2 control-label">Elution Volume (mL)</label>
+							<div class="col-sm-4">
+								<input class="form-control " id="elution_volume" name="elution_volume" value="<?php echo $elution_volume ?>"  disabled>
+							</div>
+
 							<label for="volume_bottle" class="col-sm-2 control-label">Volume in Bottle (mL)</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="volume_bottle" name="volume_bottle" value="<?php echo $volume_bottle ?>"  disabled>
 							</div>
+						</div>
 
+                        <div class="form-group">
                             <label for="dilution" class="col-sm-2 control-label">Dilution</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="dilution" name="dilution" value="<?php echo $dilution ?>"  disabled>
@@ -94,7 +101,9 @@
                                             <th>Time Sample</th>
                                             <th>Enterococcus large wells</th>
                                             <th>Enterococcus small wells</th>
-                                            <th>Enterococcus (Raw MPN)</th>
+                                            <th>Enterococcus MPN/100 mL</th>
+                                            <th>E.coli MPN/g dry weight</th>
+                                            <th>Lowerdetection Dryweight</th>
                                             <th>Remarks</th>
                                             <th>Action</th>
 										</tr>
@@ -190,6 +199,22 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label for="ecoli_dryweight" class="col-sm-4 control-label">E.coli MPN/g dry weight</label>
+                                        <div class="col-sm-8">
+                                            <input id="ecoli_dryweight" name="ecoli_dryweight" type="text"  placeholder="E.coli MPN/g dry weight" class="form-control">
+                                            <!-- <div class="val1tip"></div> -->
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="lowerdetection_dryweight" class="col-sm-4 control-label">Lowerdetection Dryweight</label>
+                                        <div class="col-sm-8">
+                                            <input id="lowerdetection_dryweight" name="lowerdetection_dryweight" type="text"  placeholder="Lowerdetection Dryweight" class="form-control">
+                                            <!-- <div class="val1tip"></div> -->
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
                                         <label for="remarks" class="col-sm-4 control-label">Remarks</label>
                                         <div class="col-sm-8">
                                             <textarea id="remarks" name="remarks" class="form-control" placeholder="Remarks"></textarea>
@@ -245,6 +270,65 @@
     let result;
 
     $(document).ready(function() {
+
+        $('#enterococcus, #enterococcus_largewells, #enterococcus_smallwells').on("keyup change", function() {
+            let enterococcusMPN = parseFloat($('#enterococcus').val()) || 0;
+            let elutionVol = parseFloat($('#elution_volume').val()) || 0;
+            let sampleDryWeight = parseFloat($('#sample_dry_weight').val()) || 0;
+
+            enterococcusMPN = enterococcusMPN / 100;
+            let ecoliDryweight = (enterococcusMPN * elutionVol) / sampleDryWeight;
+            $('#ecoli_dryweight').val(ecoliDryweight.toFixed(2)); // 2 angka desimal
+        });
+
+        $('#enterococcus, #ecoli_dryweight, #enterococcus_largewells, #enterococcus_smallwells').on("keyup change", function() {
+            let ecoliDryweight = parseFloat($('#ecoli_dryweight').val()) || 0;
+            let elutionVol = parseFloat($('#elution_volume').val()) || 0;
+            let sampleDryWeight = parseFloat($('#sample_dry_weight').val()) || 0;
+
+            ecoliDryweight = ecoliDryweight / 100;
+            let lowerdetectionDryweight = (ecoliDryweight * elutionVol) / sampleDryWeight;
+            $('#lowerdetection_dryweight').val(lowerdetectionDryweight.toFixed(2)); // 2 angka desimal
+        });
+
+        // function calculateEcoliDryweight() {
+        //     let enterococcusMPN = parseFloat($('#enterococcus').val()) || 0;
+        //     let elutionVol = parseFloat($('#elution_volume').val()) || 0;
+        //     let sampleDryWeight = parseFloat($('#sample_dry_weight').val()) || 0;
+
+        //     if (sampleDryWeight > 0) {
+        //         enterococcusMPN = enterococcusMPN / 100;
+        //         let ecoliDryweight = (enterococcusMPN * elutionVol) / sampleDryWeight;
+        //         $('#ecoli_dryweight').val(ecoliDryweight.toFixed(2));
+        //     } else {
+        //         $('#ecoli_dryweight').val('');
+        //     }
+        // }
+
+        // function calculateLowerDetection() {
+        //     let ecoliDryweight = parseFloat($('#ecoli_dryweight').val()) || 0;
+        //     let elutionVol = parseFloat($('#elution_volume').val()) || 0;
+        //     let sampleDryWeight = parseFloat($('#sample_dry_weight').val()) || 0;
+
+        //     if (sampleDryWeight > 0) {
+        //         ecoliDryweight = ecoliDryweight / 100;
+        //         let lowerdetectionDryweight = (ecoliDryweight * elutionVol) / sampleDryWeight;
+        //         $('#lowerdetection_dryweight').val(lowerdetectionDryweight.toFixed(2));
+        //     } else {
+        //         $('#lowerdetection_dryweight').val('');
+        //     }
+        // }
+
+        // $('#enterococcus, #enterococcus_largewells, #enterococcus_smallwells, #sample_dry_weight, #elution_volume').on("keyup change", function () {
+        //     calculateEcoliDryweight();
+        //     calculateLowerDetection();
+        // });
+
+        // $('#ecoli_dryweight').on("keyup change", function () {
+        //     calculateLowerDetection();
+        // });
+
+
 
         function datachart(valueLargeWells, valueSmallWells) {
             $.ajax({
@@ -439,6 +523,8 @@
                 {"data": "enterococcus_largewells"}, 
                 {"data": "enterococcus_smallwells"},
                 {"data": "enterococcus"},
+                {"data": "ecoli_dryweight"},
+                {"data": "lowerdetection_dryweight"},
                 {"data": "remarks"},
                 {
                     "data" : "action",
@@ -472,9 +558,14 @@
             $('#enterolert_barcodex').val(enterolertBarcode);
             $('#enterolert_barcodex').attr('readonly', true);
             $('#idx_enterolert_bio_in').val(idEnterolertIn);
-            $('#enterococcus_largewells').val('0');
-            $('#enterococcus_smallwells').val('0');
+            $('#enterococcus_largewells').val('');
+            $('#enterococcus_smallwells').val('');
             $('#enterococcus').val('0');
+            $('#enterococcus').attr('readonly', true);
+            $('#ecoli_dryweight').val('0');
+            $('#ecoli_dryweight').attr('readonly', true);
+            $('#lowerdetection_dryweight').val('0');
+            $('#lowerdetection_dryweight').attr('readonly', true);
             $('#remarks').val('');
             $('#compose-modal').modal('show');
         });
@@ -494,6 +585,11 @@
             $('#enterococcus_largewells').val(data.enterococcus_largewells);
             $('#enterococcus_smallwells').val(data.enterococcus_smallwells);
             $('#enterococcus').val(data.enterococcus);
+            $('#enterococcus').attr('readonly', true);
+            $('#ecoli_dryweight').val(data.ecoli_dryweight);
+            $('#ecoli_dryweight').attr('readonly', true);
+            $('#lowerdetection_dryweight').val(data.lowerdetection_dryweight);
+            $('#lowerdetection_dryweight').attr('readonly', true);
             $('#remarks').val(data.remarks);
             $('#compose-modal').modal('show');
         });

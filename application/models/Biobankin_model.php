@@ -17,13 +17,32 @@ class Biobankin_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('biobank_in.id_one_water_sample, biobank_in.date_conduct, ref_sampletype.sampletype, ref_person.initial, biobank_in.biobankin_barcode,
-        biobank_in.replicates, biobank_in.comments, biobank_in.id_person, biobank_in.flag, biobank_in.user_created, 
-        biobank_in.user_review,
-        biobank_in.review, user.full_name');
+        $this->datatables->select("
+            biobank_in.id_one_water_sample, 
+            biobank_in.date_conduct, 
+            ref_sampletype.sampletype AS sampletypecombination, 
+            ref_sampletype.id_sampletype, 
+            ref_person.initial, 
+            biobank_in.biobankin_barcode,
+            biobank_in.replicates, 
+            biobank_in.comments, 
+            biobank_in.id_person, 
+            biobank_in.flag, 
+            biobank_in.user_created, 
+            biobank_in.user_review,
+            biobank_in.review, 
+            user.full_name,
+        
+            (SELECT GROUP_CONCAT(ref_sampletype.sampletype SEPARATOR ', ')
+            FROM sample_reception_sample AS srs
+            LEFT JOIN ref_sampletype ON srs.id_sampletype = ref_sampletype.id_sampletype
+            WHERE srs.id_one_water_sample = biobank_in.id_one_water_sample
+            ) AS sampletype
+        ");
+
         $this->datatables->from('biobank_in');
         $this->datatables->join('sample_reception_sample', 'biobank_in.id_one_water_sample = sample_reception_sample.id_one_water_sample', 'left');
-        $this->datatables->join('ref_sampletype', 'sample_reception_sample.id_sampletype = ref_sampletype.id_sampletype', 'left');
+        $this->datatables->join('ref_sampletype', 'biobank_in.id_sampletype = ref_sampletype.id_sampletype', 'left');
         $this->datatables->join('ref_person', 'biobank_in.id_person = ref_person.id_person', 'left');
         $this->datatables->join('tbl_user user', 'biobank_in.user_review = user.id_users', 'left');
         // $this->datatables->where('Water_sample_reception.id_country', $this->session->userdata('lab'));
@@ -110,20 +129,43 @@ class Biobankin_model extends CI_Model
 
     function get_detail($id)
     {
-      $response = array();
-      $this->db->select('biobank_in.id_one_water_sample, biobank_in.sampletype, biobank_in.date_conduct,
-                            biobank_in.replicates, ref_person.initial, ref_person.realname, biobank_in.comments, 
-                            biobank_in.id_person, biobank_in.flag, biobank_in.user_created, 
-        biobank_in.user_review,
-        biobank_in.review, user.full_name');
-      $this->db->join('ref_person', 'biobank_in.id_person  =ref_person.id_person', 'left');
-      $this->db->join('tbl_user user', 'biobank_in.user_review = user.id_users', 'left');
-      $this->db->where('biobank_in.id_one_water_sample', $id);
-      $this->db->where('biobank_in.flag', '0');
-      $q = $this->db->get('biobank_in');
-      $response = $q->row();
-      return $response;
+        $response = array();
+    
+        $this->db->select("
+            biobank_in.id_one_water_sample, 
+            ref_sampletype.id_sampletype, 
+            ref_sampletype.sampletype AS sampletypecombination, 
+            biobank_in.date_conduct,
+            biobank_in.replicates, 
+            ref_person.initial, 
+            ref_person.realname, 
+            biobank_in.comments, 
+            biobank_in.id_person, 
+            biobank_in.flag, 
+            biobank_in.user_created, 
+            biobank_in.user_review, 
+            biobank_in.review, 
+            user.full_name,
+    
+            (
+                SELECT GROUP_CONCAT(CONCAT(ref_sampletype.sampletype) SEPARATOR ', ')
+                FROM sample_reception_sample AS srs
+                LEFT JOIN ref_sampletype ON srs.id_sampletype = ref_sampletype.id_sampletype
+                WHERE srs.id_one_water_sample = biobank_in.id_one_water_sample
+            ) AS sampletype
+        ");
+    
+        $this->db->from('biobank_in');
+        $this->db->join('ref_sampletype', 'biobank_in.id_sampletype = ref_sampletype.id_sampletype', 'left');
+        $this->db->join('ref_person', 'biobank_in.id_person = ref_person.id_person', 'left');
+        $this->db->join('tbl_user user', 'biobank_in.user_review = user.id_users', 'left');
+        $this->db->where('biobank_in.id_one_water_sample', $id);
+        $this->db->where('biobank_in.flag', '0');
+    
+        $query = $this->db->get();
+        return $query->row();
     }
+    
 
     function get_detail2($id)
     {

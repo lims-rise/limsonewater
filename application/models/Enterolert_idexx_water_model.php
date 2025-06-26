@@ -51,7 +51,7 @@ class Enterolert_idexx_water_model extends CI_Model
     }
 
     function subjson($id) {
-        $this->datatables->select('ewo.id_enterolert_out, ewo.enterolert_barcode, ewo.date_sample, ewo.time_sample, ewo.enterococcus_largewells,  ewo.enterococcus_smallwells, ewo.enterococcus, ewo.remarks, ewo.flag');
+        $this->datatables->select('ewo.id_enterolert_out, ewo.enterolert_barcode, ewo.date_sample, ewo.time_sample, ewo.enterococcus_largewells,  ewo.enterococcus_smallwells, ewo.enterococcus, ewo.lowerdetection, ewo.remarks, ewo.flag');
         $this->datatables->from('enterolert_water_out AS ewo');
         // $this->datatables->join('ref_testing b', 'FIND_IN_SET(b.id_testing_type, a.id_testing_type)', 'left');
         // $this->datatables->join('ref_barcode c', 'a.sample_id = c.testing_type_id', 'left');
@@ -198,7 +198,7 @@ class Enterolert_idexx_water_model extends CI_Model
     {
         $this->db->select('ewi.id_enterolert_in, ewi.id_one_water_sample, rp.initial, rs.sampletype, ewi.enterolert_barcode, ewi.date_sample,
         ewi.time_sample, ewi.volume_bottle,ewi.dilution, ewo.id_enterolert_out, ewo.enterolert_barcode, ewo.date_sample, ewo.time_sample, ewo.enterococcus_largewells,
-        ewo.enterococcus_smallwells, ewo.enterococcus, ewo.remarks');
+        ewo.enterococcus_smallwells, ewo.enterococcus, ewo.lowerdetection, ewo.remarks');
         $this->db->from('enterolert_water_in AS ewi');
         $this->db->join('ref_person AS rp', 'ewi.id_person = rp.id_person');
         $this->db->join('ref_sampletype AS rs', 'ewi.id_sampletype = rs.id_sampletype');

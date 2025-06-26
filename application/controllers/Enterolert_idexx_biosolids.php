@@ -31,6 +31,7 @@ class Enterolert_idexx_biosolids extends CI_Controller
         $data['id_one'] = $this->Enterolert_idexx_biosolids_model->getID_one();
         $data['sampletype'] = $this->Enterolert_idexx_biosolids_model->getSampleType();
         $data['labtech'] = $this->Enterolert_idexx_biosolids_model->getLabTech();
+        $data['dryweight'] = $this->Enterolert_idexx_biosolids_model->getDryWeight();
         // $data['id_project'] = $this->Moisture_content_model->generate_project_id();
         // $data['client'] = $this->Moisture_content_model->generate_client();
         // $data['id_one_water_sample'] = $this->Moisture_content_model->generate_one_water_sample_id();
@@ -71,6 +72,7 @@ class Enterolert_idexx_biosolids extends CI_Controller
                 'date_sample' => $row->date_sample,
                 'time_sample' => $row->time_sample,
                 'wet_weight' => $row->wet_weight,
+                'sample_dry_weight' => $row->sample_dry_weight,
                 'elution_volume' => $row->elution_volume,
                 'volume_bottle' => $row->volume_bottle,
                 'dilution' =>$row->dilution,
@@ -100,6 +102,8 @@ class Enterolert_idexx_biosolids extends CI_Controller
         $date_sample = $this->input->post('date_sample', TRUE);
         $time_sample = $this->input->post('time_sample', TRUE);
         $wet_weight = $this->input->post('wet_weight', TRUE);
+        $dry_weight_persen = $this->input->post('dry_weight_persen', TRUE);
+        $sample_dry_weight = $this->input->post('sample_dry_weight', TRUE);
         $elution_volume = $this->input->post('elution_volume', TRUE);
         $volume_bottle = $this->input->post('volume_bottle', TRUE);
         $dilution = $this->input->post('dilution', TRUE);
@@ -116,6 +120,8 @@ class Enterolert_idexx_biosolids extends CI_Controller
                 'date_sample' => $date_sample,
                 'time_sample' => $time_sample,
                 'wet_weight' => $wet_weight,
+                'dry_weight_persen' => $dry_weight_persen,
+                'sample_dry_weight' => $sample_dry_weight,
                 'elution_volume' => $elution_volume,
                 'volume_bottle' => $volume_bottle,
                 'dilution' => $dilution,
@@ -141,6 +147,8 @@ class Enterolert_idexx_biosolids extends CI_Controller
                 'date_sample' => $date_sample,
                 'time_sample' => $time_sample,
                 'wet_weight' => $wet_weight,
+                'dry_weight_persen' => $dry_weight_persen,
+                'sample_dry_weight' => $sample_dry_weight,
                 'elution_volume' => $elution_volume,
                 'volume_bottle' => $volume_bottle,
                 'dilution' => $dilution,
@@ -176,6 +184,8 @@ class Enterolert_idexx_biosolids extends CI_Controller
             $enterococcus_largewells = $this->input->post('enterococcus_largewells', TRUE);
             $enterococcus_smallwells = $this->input->post('enterococcus_smallwells', TRUE);
             $enterococcus = $this->input->post('enterococcus', TRUE);
+            $ecoli_dryweight = $this->input->post('ecoli_dryweight', TRUE);
+            $lowerdetection_dryweight = $this->input->post('lowerdetection_dryweight', TRUE);
             $remarks = $this->input->post('remarks', TRUE);
         
             if($mode_det == "insert") {
@@ -187,6 +197,8 @@ class Enterolert_idexx_biosolids extends CI_Controller
                     'enterococcus_largewells' => $enterococcus_largewells,
                     'enterococcus_smallwells' => $enterococcus_smallwells,
                     'enterococcus' => $enterococcus,
+                    'ecoli_dryweight' => $ecoli_dryweight,
+                    'lowerdetection_dryweight' => $lowerdetection_dryweight,
                     'remarks' => $remarks,
                     'flag' => '0',
                     'lab' => $this->session->userdata('lab'),
@@ -211,6 +223,8 @@ class Enterolert_idexx_biosolids extends CI_Controller
                     'enterococcus_largewells' => $enterococcus_largewells,
                     'enterococcus_smallwells' => $enterococcus_smallwells,
                     'enterococcus' => $enterococcus,
+                    'ecoli_dryweight' => $ecoli_dryweight,
+                    'lowerdetection_dryweight' => $lowerdetection_dryweight,
                     'remarks' => $remarks,
                     'flag' => '0',
                     'lab' => $this->session->userdata('lab'),

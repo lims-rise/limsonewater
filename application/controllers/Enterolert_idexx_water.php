@@ -168,6 +168,7 @@ class Enterolert_idexx_water extends CI_Controller
             $enterococcus_largewells = $this->input->post('enterococcus_largewells', TRUE);
             $enterococcus_smallwells = $this->input->post('enterococcus_smallwells', TRUE);
             $enterococcus = $this->input->post('enterococcus', TRUE);
+            $lowerdetection = $this->input->post('lowerdetection', TRUE);
             $remarks = $this->input->post('remarks', TRUE);
         
             if($mode_det == "insert") {
@@ -179,6 +180,7 @@ class Enterolert_idexx_water extends CI_Controller
                     'enterococcus_largewells' => $enterococcus_largewells,
                     'enterococcus_smallwells' => $enterococcus_smallwells,
                     'enterococcus' => $enterococcus,
+                    'lowerdetection' => $lowerdetection,
                     'remarks' => $remarks,
                     'flag' => '0',
                     'lab' => $this->session->userdata('lab'),
@@ -203,6 +205,7 @@ class Enterolert_idexx_water extends CI_Controller
                     'enterococcus_largewells' => $enterococcus_largewells,
                     'enterococcus_smallwells' => $enterococcus_smallwells,
                     'enterococcus' => $enterococcus,
+                    'lowerdetection' => $lowerdetection,
                     'remarks' => $remarks,
                     'flag' => '0',
                     'lab' => $this->session->userdata('lab'),
