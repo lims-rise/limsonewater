@@ -23,6 +23,7 @@
                                             <th>One Water ID</th>
                                             <th>Date Conduct</th>
                                             <th>Sample Type</th>
+                                            <th>Combination of Type</th>
                                             <th>Lab Tech</th>
                                             <th>Replicates</th>
                                             <th>Comments</th>
@@ -336,11 +337,37 @@
                                 </div>
                             </div>
                         
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="sampletype" class="col-sm-4 control-label">Sample Type</label>
                                 <div class="col-sm-8">
                                     <input id="id_sampletype" name="id_sampletype" placeholder="Sample Type" type="hidden" class="form-control">
                                     <input id="sampletype" name="sampletype" placeholder="Sample Type" type="text" class="form-control smple">
+                                </div>
+                            </div> -->
+
+                            <div class="form-group">
+                                <label for="sampletype1" class="col-sm-4 control-label">Sample Type</label>
+                                <div class="col-sm-8">
+                                    <input id="id_sampletype1" name="id_sampletype1" placeholder="Sample Type" type="hidden" class="form-control">
+                                    <input id="sampletype1" name="sampletype1" placeholder="Sample Type" type="text" class="form-control smple">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="id_sampletype" class="col-sm-4 control-label">Combination of Type</label>
+                                <div class="col-sm-8">
+                                    <select id="id_sampletype" name="id_sampletype" class="form-control" required>
+                                        <option value="" disabled>-- Select Combination of Type --</option>
+                                        <?php
+                                            foreach($sampletype as $row) {
+                                                if ($id_sampletype == $row['id_sampletype']) {
+                                                    echo "<option value='".$row['id_sampletype']."' selected='selected'>".$row['sampletype']."</option>";
+                                                } else {
+                                                    echo "<option value='".$row['id_sampletype']."'>".$row['sampletype']."</option>";
+                                                }
+                                            }
+                                        ?>
+                                    </select>
                                 </div>
                             </div>
 
@@ -486,6 +513,40 @@
         const idOneWaterSampleFromUrl = params.get('idOneWaterSample');
         const idTestingTypeFromUrl = params.get('idTestingType');
 
+        // Fungsi untuk ambil data OneWater Sample lewat AJAX
+        function loadOneWaterSampleDetails(id) {
+            if (!id) {
+                $('#sampletype1').val('');
+                $('#tray_weight_container').hide();
+                return;
+            }
+
+            $.ajax({
+                url: '<?php echo site_url('Biobankin/getIdOneWaterDetails'); ?>',
+                type: 'POST',
+                data: { id_one_water_sample: id },
+                dataType: 'json',
+                success: function(response) {
+                    $('#sampletype1')
+                        .val(response.sampletype || '')
+                        .attr('readonly', true)
+                        .trigger('input');
+
+                    $('#id_sampletype1').val(response.id_sampletype || '');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('AJAX error:', textStatus, errorThrown);
+                    $('#sampletype1').val('');
+                }
+            });
+        }
+
+        // Event listener hanya sekali, di luar handler edit
+        $('#idx_one_water_sample, #id_one_water_sample').on('change', function() {
+            const id = $(this).val();
+            loadOneWaterSampleDetails(id);
+        });
+
         if (barcodeFromUrl) {
             $('#mode').val('insert');
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Sample reception | New<span id="my-another-cool-loader"></span>');
@@ -496,9 +557,10 @@
             $('#biobankin_barcode').val(barcodeFromUrl || '');  // Set ID jika ada
             $('#biobankinx_barcode').hide();
             $('#id_person').val('');
-            $('#sampletype').attr('readonly', true);
-            $('#sampletype').val('');
-            // $('#date_conduct').val('');
+            // $('#sampletype').attr('readonly', true);
+            $('#id_sampletype').val('');
+            $('#sampletype1').attr('readonly', true);
+            // $('#combination_type').val('');
             $('#replicates').val('');
             $('#comments').val('');
             $('#compose-modal').modal('show');
@@ -600,33 +662,33 @@
             }, 3000);                            
         });
 
-        $('.idOneWaterSampleSelect').change(function() {
-            let id_one_water_sample = $(this).val(); // Mendapatkan ID produk yang dipilih
-            if (id_one_water_sample) {
-                $.ajax({
-                    url: '<?php echo site_url('Biobankin/getIdOneWaterDetails'); ?>', // URL untuk request AJAX
-                    type: 'POST',
-                    data: { id_one_water_sample: id_one_water_sample }, // Data yang dikirim ke server
-                    dataType: 'json', // Format data yang diharapkan dari server
-                    success: function(response) {
-                        // Mengisi field 'unit_of_measure' dengan nilai yang diterima dari server
-                        $('#sampletype').val(response.sampletype || '');
-                        $('#id_sampletype').val(response.id_sampletype || '');
+        // $('.idOneWaterSampleSelect').change(function() {
+        //     let id_one_water_sample = $(this).val(); // Mendapatkan ID produk yang dipilih
+        //     if (id_one_water_sample) {
+        //         $.ajax({
+        //             url: '<?php echo site_url('Biobankin/getIdOneWaterDetails'); ?>', // URL untuk request AJAX
+        //             type: 'POST',
+        //             data: { id_one_water_sample: id_one_water_sample }, // Data yang dikirim ke server
+        //             dataType: 'json', // Format data yang diharapkan dari server
+        //             success: function(response) {
+        //                 // Mengisi field 'unit_of_measure' dengan nilai yang diterima dari server
+        //                 $('#sampletype1').val(response.sampletype || '');
+        //                 $('#id_sampletype1').val(response.id_sampletype || '');
 
-                        // Trigger input event to handle visibility of tray_weight
-                        $('#sampletype').trigger('input');
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        // Menangani error jika terjadi kesalahan dalam request
-                        console.error('AJAX error:', textStatus, errorThrown);
-                        $('#sampletype').val('');
-                    }
-                });
-            } else {
-                $('#sampletype').val('');
-                $('#tray_weight_container').hide(); 
-            }
-        });
+        //                 // Trigger input event to handle visibility of tray_weight
+        //                 $('#sampletype1').trigger('input');
+        //             },
+        //             error: function(jqXHR, textStatus, errorThrown) {
+        //                 // Menangani error jika terjadi kesalahan dalam request
+        //                 console.error('AJAX error:', textStatus, errorThrown);
+        //                 $('#sampletype1').val('');
+        //             }
+        //         });
+        //     } else {
+        //         $('#sampletype1').val('');
+        //         $('#tray_weight_container').hide(); 
+        //     }
+        // });
 
         $('#id_one_water_sample').on("change", function() {
             $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
@@ -686,6 +748,7 @@
                 {"data": "id_one_water_sample"},
                 {"data": "date_conduct"},
                 {"data": "sampletype"},
+                {"data": "sampletypecombination"},
                 {"data": "initial"},
                 {"data": "replicates"},
                 {"data": "comments"},
@@ -728,96 +791,90 @@
         //     $('#compose-modal').modal('show');
         // });
 
-        $('#mytable').on('click', '.btn_edit', function(){
-            let tr = $(this).parent().parent();
-            let data = table.row(tr).data();
-            let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
+        // $('#mytable').on('click', '.btn_edit', function(){
+        //     let tr = $(this).parent().parent();
+        //     let data = table.row(tr).data();
+        //     let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
+        //     console.log(data);
+        //     $('#mode').val('edit');
+        //     $('#modal-title').html('<i class="fa fa-pencil-square"></i> Sample reception | Update<span id="my-another-cool-loader"></span>');
+        //     $('#id_one_water_sample').hide();
+        //     $('#biobankin_barcode').hide();
+        //     // $('#idx_one_water_sample').show();
+        //     $('#idx_one_water_sample').attr('readonly', true);
+        //     $('#idx_one_water_sample').val(data.id_one_water_sample);
+        //     $('#idx_one_water_sample').show();
+        //     $('#biobankinx_barcode').attr('readonly', true);
+        //     $('#biobankinx_barcode').val(data.biobankin_barcode);
+        //     $('#biobankinx_barcode').show();
+        //     // $('#id_one_water_sample_list').val(data.id_one_water_sample).trigger('change');
+        //     $('#id_person').val(data.id_person).trigger('change');
+        //     // $('#combination_type').val(data.combination_type);
+        //     $('#id_sampletype').val(data.id_sampletype);
+        //     $('#idx_one_water_sample').on('change', function() {
+        //         let id_one_water_sample = $(this).val();
+        //         if (id_one_water_sample) {
+        //             $.ajax({
+        //                 url: '<?php echo site_url('Biobankin/getIdOneWaterDetails'); ?>',
+        //                 type: 'POST',
+        //                 data: { id_one_water_sample: id_one_water_sample },
+        //                 dataType: 'json',
+        //                 success: function(response) {
+        //                     $('#sampletype1').val(response.sampletype || '');
+        //                     $('#id_sampletype1').val(response.id_sampletype || '');
+        //                     $('#sampletype1').attr('readonly', true);
+        //                     $('#sampletype1').trigger('input');
+        //                 },
+        //                 error: function(jqXHR, textStatus, errorThrown) {
+        //                     console.error('AJAX error:', textStatus, errorThrown);
+        //                     $('#sampletype1').val('');
+        //                 }
+        //             });
+        //         } else {
+        //             $('#sampletype1').val('');
+        //             $('#tray_weight_container').hide(); 
+        //         }
+        //     });
+        //     $('#idx_one_water_sample').trigger('change');
+
+        //     $('#date_conduct').val(data.date_conduct).trigger('change');
+        //     $('#replicates').val(data.replicates).trigger('change');
+        //     $('#comments').val(data.comments);
+        //     $('#compose-modal').modal('show');
+        // });  
+
+        // Handler tombol edit
+        $('#mytable').on('click', '.btn_edit', function() {
+            const tr = $(this).closest('tr');
+            const data = table.row(tr).data();
+
             console.log(data);
+
             $('#mode').val('edit');
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Sample reception | Update<span id="my-another-cool-loader"></span>');
-            $('#id_one_water_sample').hide();
-            $('#biobankin_barcode').hide();
-            // $('#idx_one_water_sample').show();
-            $('#idx_one_water_sample').attr('readonly', true);
-            $('#idx_one_water_sample').val(data.id_one_water_sample);
-            $('#biobankinx_barcode').attr('readonly', true);
-            $('#biobankinx_barcode').val(data.biobankin_barcode);
-            // $('#id_one_water_sample_list').val(data.id_one_water_sample).trigger('change');
+
+            $('#id_one_water_sample, #biobankin_barcode').hide();
+
+            $('#idx_one_water_sample')
+                .val(data.id_one_water_sample)
+                .prop('readonly', true)
+                .show()
+                .trigger('change'); // Ini akan otomatis jalankan AJAX
+
+            $('#biobankinx_barcode')
+                .val(data.biobankin_barcode)
+                .prop('readonly', true)
+                .show();
+
             $('#id_person').val(data.id_person).trigger('change');
-            $('#sampletype').attr('readonly', true);
-            $('#sampletype').val(data.sampletype);
+            $('#id_sampletype').val(data.id_sampletype);
             $('#date_conduct').val(data.date_conduct).trigger('change');
             $('#replicates').val(data.replicates).trigger('change');
             $('#comments').val(data.comments);
-            // $('#review').val(data.review);
-            // $('#user_review').val(data.user_review);
-            // $('#reviewed_by_label').text('Reviewed by: ' + (data.full_name ? data.full_name : '-'));
 
-            // if (data.user_created !== loggedInUser) {
-            //     $('#user_review').val(loggedInUser);
-            //         // Set the checkbox state
-            //         if (data.review == 1) {
-            //             $('#review').prop('checked', true); // Check the checkbox
-            //             const label = document.getElementById('review_label');
-            //             label.textContent = 'Review';
-            //             label.className = `form-check-label review`;            
-            //         } else if (data.review == 0) {
-            //             $('#review').prop('checked', false); // Uncheck the checkbox
-            //             const label = document.getElementById('review_label');
-            //             label.textContent = 'Unreview';
-            //             label.className = `form-check-label unreview`;            
-            //         }
-            //         $('#review').val(data.review);
-            //                             // Define the states with associated values and labels
-            //                             const states = [
-            //             { value: 0, label: "Unreview", class: "unreview" },
-            //             { value: 1, label: "Review", class: "review" }
-            //             // { value: 2, label: "Crossed", class: "crossed" }
-            //         ];
-
-            //         let currentState = 0; // Start with "Unchecked"
-
-            //         // Add event listener to toggle through states
-            //         document.getElementById('review_label').addEventListener('click', function () {
-            //             // Cycle through the states
-            //             currentState = (currentState + 1) % states.length;
-
-            //             const checkbox = document.getElementById('review');
-            //             const label = document.getElementById('review_label');
-
-            //             // Update the label text
-            //             label.textContent = states[currentState].label;
-
-            //             // Apply styling to the label based on the state
-            //             label.className = `form-check-label ${states[currentState].class}`;
-
-            //             // (Optional) Update a hidden input or store the value somewhere for submission
-            //             checkbox.value = states[currentState].value; // Set the value to the current state
-            //         });                
-            // } else {
-            //     $('#user_review').val(loggedInUser);
-            //     if (data.review == 1) {
-            //             $('#review').prop('checked', true); // Check the checkbox
-            //             const label = document.getElementById('review_label');
-            //             label.textContent = 'Review';
-            //             label.className = `form-check-label review`;            
-            //         } else if (data.review == 0) {
-            //             $('#review').prop('checked', false); // Uncheck the checkbox
-            //             const label = document.getElementById('review_label');
-            //             label.textContent = 'Unreview';
-            //             label.className = `form-check-label unreview`;            
-            //         }
-            // }
-                    // console.log('test user', data.user_created);
-                    // if (data.user_created === loggedInUser) {
-                    //     $('#saveButtonDetail').prop('disabled', false);  // Enable Save button if user is the same as the one who created
-                    //     showInfoCard('#textInform2', '<i class="fa fa-check-circle"></i> You are the creator', "You have full access to edit this data.", true);
-                    // } else {
-                    //     $('#saveButtonDetail').prop('disabled', false);  // Disable Save button if user is not the same as the one who created
-                    //     showInfoCard('#textInform2', '<i class="fa fa-times-circle"></i> You are not the creator', "In the case you can review this data and make changes.", false);
-                    // }
             $('#compose-modal').modal('show');
-        });  
+        });
+
 
         $('#mytable tbody').on('click', 'tr', function () {
             if ($(this).hasClass('active')) {

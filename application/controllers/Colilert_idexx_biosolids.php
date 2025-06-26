@@ -31,6 +31,7 @@ class Colilert_idexx_biosolids extends CI_Controller
         $data['id_one'] = $this->Colilert_idexx_biosolids_model->getID_one();
         $data['sampletype'] = $this->Colilert_idexx_biosolids_model->getSampleType();
         $data['labtech'] = $this->Colilert_idexx_biosolids_model->getLabTech();
+        $data['dryweight'] = $this->Colilert_idexx_biosolids_model->getDryWeight();
         // $data['id_project'] = $this->Moisture_content_model->generate_project_id();
         // $data['client'] = $this->Moisture_content_model->generate_client();
         // $data['id_one_water_sample'] = $this->Moisture_content_model->generate_one_water_sample_id();
@@ -71,6 +72,7 @@ class Colilert_idexx_biosolids extends CI_Controller
                 'date_sample' => $row->date_sample,
                 'time_sample' => $row->time_sample,
                 'wet_weight' => $row->wet_weight,
+                'sample_dry_weight' => $row->sample_dry_weight,
                 'elution_volume' => $row->elution_volume,
                 'volume_bottle' => $row->volume_bottle,
                 'dilution' =>$row->dilution,
@@ -100,6 +102,8 @@ class Colilert_idexx_biosolids extends CI_Controller
         $date_sample = $this->input->post('date_sample', TRUE);
         $time_sample = $this->input->post('time_sample', TRUE);
         $wet_weight = $this->input->post('wet_weight', TRUE);
+        $dry_weight_persen = $this->input->post('dry_weight_persen', TRUE);
+        $sample_dry_weight = $this->input->post('sample_dry_weight', TRUE);
         $elution_volume = $this->input->post('elution_volume', TRUE);
         $volume_bottle = $this->input->post('volume_bottle', TRUE);
         $dilution = $this->input->post('dilution', TRUE);
@@ -114,6 +118,8 @@ class Colilert_idexx_biosolids extends CI_Controller
                 'date_sample' => $date_sample,
                 'time_sample' => $time_sample,
                 'wet_weight' => $wet_weight,
+                'dry_weight_persen' => $dry_weight_persen,
+                'sample_dry_weight' => $sample_dry_weight,
                 'elution_volume' => $elution_volume,
                 'volume_bottle' => $volume_bottle,
                 'dilution' => $dilution,
@@ -139,6 +145,8 @@ class Colilert_idexx_biosolids extends CI_Controller
                 'date_sample' => $date_sample,
                 'time_sample' => $time_sample,
                 'wet_weight' => $wet_weight,
+                'dry_weight_persen' => $dry_weight_persen,
+                'sample_dry_weight' => $sample_dry_weight,
                 'elution_volume' => $elution_volume,
                 'volume_bottle' => $volume_bottle,
                 'dilution' => $dilution,
@@ -173,6 +181,9 @@ class Colilert_idexx_biosolids extends CI_Controller
             $ecoli_largewells = $this->input->post('ecoli_largewells', TRUE);
             $ecoli_smallwells = $this->input->post('ecoli_smallwells', TRUE);
             $ecoli = $this->input->post('ecoli', TRUE);
+            $lowerdetection = $this->input->post('lowerdetection', TRUE);
+            $ecoli_dryweight = $this->input->post('ecoli_dryweight', TRUE);
+            $lowerdetection_dryweight = $this->input->post('lowerdetection_dryweight', TRUE);
             $coliforms_largewells = $this->input->post('coliforms_largewells', TRUE);
             $coliforms_smallwells = $this->input->post('coliforms_smallwells', TRUE);
             $total_coliforms = $this->input->post('total_coliforms', TRUE);
@@ -187,6 +198,9 @@ class Colilert_idexx_biosolids extends CI_Controller
                     'ecoli_largewells' => $ecoli_largewells,
                     'ecoli_smallwells' => $ecoli_smallwells,
                     'ecoli' => $ecoli,
+                    'lowerdetection' => $lowerdetection,
+                    'ecoli_dryweight' => $ecoli_dryweight,
+                    'lowerdetection_dryweight' => $lowerdetection_dryweight,
                     'coliforms_largewells' => $coliforms_largewells,
                     'coliforms_smallwells' => $coliforms_smallwells,
                     'total_coliforms' => $total_coliforms,
@@ -215,6 +229,9 @@ class Colilert_idexx_biosolids extends CI_Controller
                     'ecoli_largewells' => $ecoli_largewells,
                     'ecoli_smallwells' => $ecoli_smallwells,
                     'ecoli' => $ecoli,
+                    'lowerdetection' => $lowerdetection,
+                    'ecoli_dryweight' => $ecoli_dryweight,
+                    'lowerdetection_dryweight' => $lowerdetection_dryweight,
                     'coliforms_largewells' => $coliforms_largewells,
                     'coliforms_smallwells' => $coliforms_smallwells,
                     'total_coliforms' => $total_coliforms,

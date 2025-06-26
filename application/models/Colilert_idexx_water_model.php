@@ -52,7 +52,7 @@ class Colilert_idexx_water_model extends CI_Model
 
     function subjson($id) {
         $this->datatables->select('cwo.id_colilert_out, cwo.colilert_barcode, cwo.date_sample, cwo.time_sample, cwo.ecoli_largewells, cwo.ecoli_smallwells, 
-        cwo.ecoli, cwo.coliforms_largewells, cwo.coliforms_smallwells, cwo.total_coliforms, cwo.remarks, cwo.flag');
+        cwo.ecoli, cwo.lowerdetection, cwo.coliforms_largewells, cwo.coliforms_smallwells, cwo.total_coliforms, cwo.remarks, cwo.flag');
         $this->datatables->from('colilert_water_out AS cwo');
         // $this->datatables->join('ref_testing b', 'FIND_IN_SET(b.id_testing_type, a.id_testing_type)', 'left');
         // $this->datatables->join('ref_barcode c', 'a.sample_id = c.testing_type_id', 'left');
@@ -202,7 +202,7 @@ class Colilert_idexx_water_model extends CI_Model
         $this->db->select('cwi.id_colilert_in, cwi.id_one_water_sample, rp.initial, rs.sampletype, cwi.colilert_barcode, cwi.date_sample,
             cwi.time_sample, cwi.volume_bottle,cwi.dilution, cwo.id_colilert_out, cwo.colilert_barcode, cwo.date_sample, cwo.time_sample, 
             cwo.ecoli_largewells, cwo.ecoli_smallwells,
-            cwo.ecoli, cwo.coliforms_largewells, cwo.coliforms_smallwells, cwo.total_coliforms, cwo.remarks');
+            cwo.ecoli, cwo.lowerdetection, cwo.coliforms_largewells, cwo.coliforms_smallwells, cwo.total_coliforms, cwo.remarks');
         $this->db->from('colilert_water_in AS cwi');
         $this->db->join('ref_person AS rp', 'cwi.id_person = rp.id_person');
         $this->db->join('ref_sampletype AS rs', 'cwi.id_sampletype = rs.id_sampletype');

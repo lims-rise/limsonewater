@@ -21,7 +21,7 @@ class Enterolert_idexx_biosolids_model extends CI_Model
     function json() {
         $this->datatables->select('enterolert_biosolids_in.id_enterolert_bio_in, enterolert_biosolids_in.id_one_water_sample, enterolert_biosolids_in.id_person, ref_person.initial,
         enterolert_biosolids_in.id_sampletype, ref_sampletype.sampletype, enterolert_biosolids_in.enterolert_barcode, enterolert_biosolids_in.date_sample, enterolert_biosolids_in.time_sample,
-        enterolert_biosolids_in.wet_weight, enterolert_biosolids_in.elution_volume, enterolert_biosolids_in.volume_bottle, enterolert_biosolids_in.dilution,
+        enterolert_biosolids_in.wet_weight, enterolert_biosolids_in.dry_weight_persen, enterolert_biosolids_in.sample_dry_weight, enterolert_biosolids_in.elution_volume, enterolert_biosolids_in.volume_bottle, enterolert_biosolids_in.dilution,
         enterolert_biosolids_in.date_created, enterolert_biosolids_in.date_updated, GREATEST(enterolert_biosolids_in.date_created, enterolert_biosolids_in.date_updated) AS latest_date');
         $this->datatables->from($this->table);
         $this->datatables->join('ref_person', 'enterolert_biosolids_in.id_person = ref_person.id_person', 'left');
@@ -52,7 +52,7 @@ class Enterolert_idexx_biosolids_model extends CI_Model
     }
 
     function subjson($id) {
-        $this->datatables->select('ebo.id_enterolert_bio_out, ebo.enterolert_barcode, ebo.date_sample, ebo.time_sample, ebo.enterococcus_largewells,  ebo.enterococcus_smallwells, ebo.enterococcus, ebo.remarks, ebo.flag');
+        $this->datatables->select('ebo.id_enterolert_bio_out, ebo.enterolert_barcode, ebo.date_sample, ebo.time_sample, ebo.enterococcus_largewells, ebo.enterococcus_smallwells, ebo.enterococcus, ebo.ecoli_dryweight, ebo.lowerdetection_dryweight, ebo.remarks, ebo.flag');
         $this->datatables->from('enterolert_biosolids_out AS ebo');
         // $this->datatables->join('ref_testing b', 'FIND_IN_SET(b.id_testing_type, a.id_testing_type)', 'left');
         // $this->datatables->join('ref_barcode c', 'a.sample_id = c.testing_type_id', 'left');
@@ -97,7 +97,7 @@ class Enterolert_idexx_biosolids_model extends CI_Model
       $response = array();
       $this->db->select('ebi.id_enterolert_bio_in, ebi.id_one_water_sample, ebi.id_person, rp.initial,
         ebi.id_sampletype, rs.sampletype, ebi.enterolert_barcode, ebi.date_sample, ebi.time_sample,
-        ebi.wet_weight, ebi.elution_volume, ebi.volume_bottle, ebi.dilution');
+        ebi.wet_weight, ebi.sample_dry_weight, ebi.sample_dry_weight, ebi.elution_volume, ebi.volume_bottle, ebi.dilution');
       $this->db->from('enterolert_biosolids_in AS ebi');
       $this->db->join('ref_sampletype AS rs', 'ebi.id_sampletype = rs.id_sampletype', 'left');
       $this->db->join('ref_person AS rp',  'ebi.id_person = rp.id_person', 'left');
@@ -227,6 +227,19 @@ class Enterolert_idexx_biosolids_model extends CI_Model
         select mpn FROM idexxchart WHERE big = "'.$valueLargeWells.'" AND small = "'.$valueSmallWells.'"
         ');        
         $response = $q->result_array();
+        return $response;
+      }
+
+      function getDryWeight(){
+        $response = array();
+        $this->db->select('mc.id_moisture, m72.dry_weight_persen, m24.dry_weight24');
+        // $this->db->from('moisture_content AS mc');
+        $this->db->join('moisture24 AS m24', 'mc.id_moisture = m24.id_moisture', 'left');
+        $this->db->join('moisture72 AS m72', 'mc.id_moisture = m72.id_moisture', 'left');
+        $this->db->where('mc.flag', '0');
+        $this->db->order_by('mc.id_moisture', 'ASC');
+        $dryWeight = $this->db->get('moisture_content AS mc');
+        $response = $dryWeight->result_array();
         return $response;
       }
     

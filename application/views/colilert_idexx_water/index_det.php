@@ -84,6 +84,7 @@
                                             <th>E. Coli large wells</th>
                                             <th>E. Coli small wells</th>
                                             <th>E. Coli (MPN/100mL)</th>
+                                            <th>Lower detection limit MPN/100 mL</th>
                                             <th>Coliforms large wells</th>
                                             <th>Coliforms small wells</th>
                                             <th>Total Coliforms (MPN/100mL)</th>
@@ -177,6 +178,14 @@
                                         <label for="ecoli" class="col-sm-4 control-label">E. Coli (MPN/100mL)</label>
                                         <div class="col-sm-8">
                                             <input id="ecoli" name="ecoli" type="text"  placeholder="E. Coli (MPN/100mL)" class="form-control">
+                                            <!-- <div class="val1tip"></div> -->
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="lowerdetection" class="col-sm-4 control-label">Lower detection limit MPN/100 mL</label>
+                                        <div class="col-sm-8">
+                                            <input id="lowerdetection" name="lowerdetection" type="text"  placeholder="Lower detection limit MPN/100 mL" class="form-control">
                                             <!-- <div class="val1tip"></div> -->
                                         </div>
                                     </div>
@@ -482,6 +491,7 @@
                 {"data": "ecoli_largewells"}, 
                 {"data": "ecoli_smallwells"},
                 {"data": "ecoli"},
+                {"data": "lowerdetection"},
                 {"data": "coliforms_largewells"}, 
                 {"data": "coliforms_smallwells"},
                 {"data": "total_coliforms"},
@@ -520,10 +530,11 @@
             $('#idx_colilert_in').val(idColilertIn);
             $('#ecoli_largewells').val('0');
             $('#ecoli_smallwells').val('0');
-            $('#ecoli').val('0');
+            $('#ecoli').val('');
+            $('#lowerdetection').val('');
             $('#coliforms_largewells').val('0');
             $('#coliforms_smallwells').val('0');
-            $('#total_coliforms').val('0');
+            $('#total_coliforms').val('');
             $('#remarks').val('');
             $('#compose-modal').modal('show');
         });
@@ -543,9 +554,12 @@
             $('#ecoli_largewells').val(data.ecoli_largewells);
             $('#ecoli_smallwells').val(data.ecoli_smallwells);
             $('#ecoli').val(data.ecoli);
+            $('#ecoli').attr('readonly', true);
+            $('#lowerdetection').val(data.lowerdetection);
             $('#coliforms_largewells').val(data.coliforms_largewells);
             $('#coliforms_smallwells').val(data.coliforms_smallwells);
             $('#total_coliforms').val(data.total_coliforms);
+            $('#total_coliforms').attr('readonly', true);
             $('#remarks').val(data.remarks);
             $('#compose-modal').modal('show');
         });

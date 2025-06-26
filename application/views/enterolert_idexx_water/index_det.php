@@ -83,6 +83,7 @@
                                             <th>Enterococcus large wells</th>
                                             <th>Enterococcus small wells</th>
                                             <th>Enterococcus (MPN/100 mL)</th>
+                                            <th>Lower detection limit MPN/100 mL</th>
                                             <th>Remarks</th>
                                             <th>Action</th>
 										</tr>
@@ -173,6 +174,14 @@
                                         <label for="enterococcus" class="col-sm-4 control-label">Enterococcus (MPN/100 mL)</label>
                                         <div class="col-sm-8">
                                             <input id="enterococcus" name="enterococcus" type="text"  placeholder="Enterococcus (MPN/100 mL)" class="form-control">
+                                            <!-- <div class="val1tip"></div> -->
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="lowerdetection" class="col-sm-4 control-label">Lower detection limit MPN/100 mL</label>
+                                        <div class="col-sm-8">
+                                            <input id="lowerdetection" name="lowerdetection" type="text"  placeholder="Lower detection limit MPN/100 mL" class="form-control">
                                             <!-- <div class="val1tip"></div> -->
                                         </div>
                                     </div>
@@ -427,6 +436,7 @@
                 {"data": "enterococcus_largewells"}, 
                 {"data": "enterococcus_smallwells"},
                 {"data": "enterococcus"},
+                {"data": "lowerdetection"},
                 {"data": "remarks"},
                 {
                     "data" : "action",
@@ -462,7 +472,8 @@
             $('#idx_enterolert_in').val(idEnterolertIn);
             $('#enterococcus_largewells').val('0');
             $('#enterococcus_smallwells').val('0');
-            $('#enterococcus').val('0');
+            $('#enterococcus').val('');
+            $('#lowerdetection').val('');
             $('#remarks').val('');
             $('#compose-modal').modal('show');
         });
@@ -482,6 +493,7 @@
             $('#enterococcus_largewells').val(data.enterococcus_largewells);
             $('#enterococcus_smallwells').val(data.enterococcus_smallwells);
             $('#enterococcus').val(data.enterococcus);
+            $('#lowerdetection').val(data.lowerdetection);
             $('#remarks').val(data.remarks);
             $('#compose-modal').modal('show');
         });

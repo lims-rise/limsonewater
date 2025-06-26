@@ -27,6 +27,8 @@
                                             <th>Date Sample</th>
                                             <th>Time Sample</th>
                                             <th>Wet Weight (g)</th>
+                                            <th>Dry weight %</th>
+                                            <th>Sample Dry Weight (g)</th>
                                             <th>Elution Volume (mL)</th>
                                             <th>Volume in Bottle (mL)</th>
                                             <th>Dilution</th>
@@ -71,7 +73,7 @@
                             <input id="mode" name="mode" type="hidden" class="form-control input-sm">
                             <input id="idx_colilert_bio_in" name="idx_colilert_bio_in" type="hidden" class="form-control input-sm">
                             
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
                                 <div class="col-sm-8">
                                     <input id="idx_one_water_sample" name="idx_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control">
@@ -87,6 +89,15 @@
                                             }
                                         ?>
                                     </select>
+                                </div>
+                            </div> -->
+
+                            <div class="form-group">
+                                <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
+                                <div class="col-sm-8">
+                                    <input id="id_one_water_sample" name="id_one_water_sample" placeholder="One Water Sample ID" type="text"  class="form-control idOneWaterSampleSelect">
+                                    <input id="idx_one_water_sample" name="idx_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control">
+                                    <div class="val1tip"></div>
                                 </div>
                             </div>
 
@@ -150,6 +161,31 @@
                                 <label for="wet_weight" class="col-sm-4 control-label">Wet Weight (g)</label>
                                 <div class="col-sm-8">
                                     <input id="wet_weight" name="wet_weight" type="number" step="0.001"  class="form-control" placeholder="Wet Weight (g)" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dry_weight_persen" class="col-sm-4 control-label">Dry weight %</label>
+                                <div class="col-sm-8">
+                                    <select id="dry_weight_persen" name="dry_weight_persen" class="form-control" required>
+                                        <option value="" disabled>-- Select Dry weight % --</option>
+                                        <?php
+                                            foreach($dryweight as $row) {
+                                                if ($dry_weight_persen == $row['dry_weight_persen']) {
+                                                    echo "<option value='".$row['dry_weight_persen']."' selected='selected'>".$row['dry_weight_persen']."</option>";
+                                                } else {
+                                                    echo "<option value='".$row['dry_weight_persen']."'>".$row['dry_weight_persen']."</option>";
+                                                }
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="sample_dry_weight" class="col-sm-4 control-label">Sample dry weight (g)</label>
+                                <div class="col-sm-8">
+                                    <input id="sample_dry_weight" name="sample_dry_weight" type="number" step="0.001"  class="form-control" placeholder="Sample dry weight (g)" required>
                                 </div>
                             </div>
 
@@ -225,6 +261,7 @@
 
     let table;
     let deleteUrl; // Variable to hold the delete URL
+    let id_one_water_sample = $('#id_one_water_sample').val();
 
     function getQueryParam(param) {
         const urlParams = new URLSearchParams(window.location.search);
@@ -235,18 +272,25 @@
     $(document).ready(function() {
         const params = new URLSearchParams(window.location.search);
         const barcodeFromUrl = params.get('barcode');
+        const idOneWaterSampleFromUrl = params.get('idOneWaterSample');
+        const idTestingTypeFromUrl = params.get('idTestingType');
 
         if (barcodeFromUrl) {
             handleSampleTypeInput('#sampletype');
             $('#mode').val('insert');
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Colilert Idexx Biosolids | New<span id="my-another-cool-loader"></span>');
-            $('#id_one_water_sample').val('');
-            $('#id_one_water_sample').show();
+            $('#id_one_water_sample').attr('readonly', true);
+            $('#id_one_water_sample').val(idOneWaterSampleFromUrl || '');  // Set ID jika ada
+            // $('#id_one_water_sample').val('');
+            // $('#id_one_water_sample').show();
             $('#idx_one_water_sample').hide();
             $('#id_person').val('');
             $('#sampletype').val('');
             $('#sampletype').attr('readonly', true);
             $('#wet_weight').val('');
+            $('#dry_weight_persen').val('');
+            $('#sample_dry_weight').val('');
+            $('#sample_dry_weight').attr('readonly', true);
             $('#elution_volume').val('');
             $('#colilert_barcode').val(barcodeFromUrl);
             $('#colilert_barcode').attr('readonly', true);
@@ -260,18 +304,42 @@
 
         // Pembatalan dan kembali ke halaman sebelumnya
         $(document).on('click', '#cancelButton', function() {
-            // Ambil URL asal dari document.referrer (halaman yang mengarah ke halaman ini)
-            var previousUrl = document.referrer;
+            // Get URL parameters
+            const params = new URLSearchParams(window.location.search);
+            const barcodeFromUrl = params.get('barcode');
+            const idOneWaterSampleFromUrl = params.get('idOneWaterSample');
+            const idTestingTypeFromUrl = params.get('idTestingType');
             
-            // Jika ada URL asal, arahkan kembali ke sana
-            if (previousUrl) {
-                window.location.href = previousUrl;
-            } 
+            // Check if the necessary query parameters exist
+            if (barcodeFromUrl && idOneWaterSampleFromUrl && idTestingTypeFromUrl) {
+                // If the parameters exist, redirect to the previous page
+                var previousUrl = document.referrer;
+                
+                if (previousUrl) {
+                    window.location.href = previousUrl;  // Redirect to the previous page
+                }
+            } else {
+                // If the parameters are not found, simply close the modal
+                $('#compose-modal').modal('hide');  // Close the modal
+            }
         });
 
         $('#volume_bottle').on("keyup change click", function() {
             $('#dilution').val($('#volume_bottle').val()/100);
         });
+
+        $('#wet_weight, #dry_weight_persen').on("keyup change", function() {
+            let wetWeight = parseFloat($('#wet_weight').val()) || 0;
+            let dryWeightPersen = parseFloat($('#dry_weight_persen').val()) || 0;
+
+            // Jika dryWeightPersen dalam persen (misal 25), ubah ke desimal
+            dryWeightPersen = dryWeightPersen / 100;
+
+            let sampleDryWeight = wetWeight * dryWeightPersen;
+
+            $('#sample_dry_weight').val(sampleDryWeight.toFixed(2)); // 2 angka desimal
+        });
+
 
         function handleSampleTypeInput(selector) {
             $(selector).on('input', function() {
@@ -318,34 +386,6 @@
             });
         });
 
-        $('.idOneWaterSampleSelect').change(function() {
-            let id_one_water_sample = $(this).val(); // Mendapatkan ID produk yang dipilih
-            if (id_one_water_sample) {
-                $.ajax({
-                    url: '<?php echo site_url('Moisture_content/getIdOneWaterDetails'); ?>', // URL untuk request AJAX
-                    type: 'POST',
-                    data: { id_one_water_sample: id_one_water_sample }, // Data yang dikirim ke server
-                    dataType: 'json', // Format data yang diharapkan dari server
-                    success: function(response) {
-                        // Mengisi field 'unit_of_measure' dengan nilai yang diterima dari server
-                        $('#sampletype').val(response.sampletype || '');
-                        $('#id_sampletype').val(response.id_sampletype || '');
-
-                        // Trigger input event to handle visibility of tray_weight
-                        $('#sampletype').trigger('input');
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        // Menangani error jika terjadi kesalahan dalam request
-                        console.error('AJAX error:', textStatus, errorThrown);
-                        $('#sampletype').val('');
-                    }
-                });
-            } else {
-                $('#sampletype').val('');
-                $('#tray_weight_container').hide(); 
-            }
-        });
-
         $('.clockpicker').clockpicker({
         placement: 'bottom', // clock popover placement
         align: 'left',       // popover arrow align
@@ -384,15 +424,116 @@
             }, 3000);                            
         });
 
-        $("input").keypress(function(){
-            $('.val1tip').tooltipster('hide');   
+        $('.idOneWaterSampleSelect').change(function() {
+            let id_one_water_sample = $(this).val(); // Mendapatkan ID produk yang dipilih
+            console.log('test'+ id_one_water_sample)
+            if (id_one_water_sample) {
+                $.ajax({
+                    url: '<?php echo site_url('Colilert_idexx_biosolids/getIdOneWaterDetails'); ?>', // URL untuk request AJAX
+                    type: 'POST',
+                    data: { id_one_water_sample: id_one_water_sample }, // Data yang dikirim ke server
+                    dataType: 'json', // Format data yang diharapkan dari server
+                    success: function(response) {
+                        console.log('ceks:',response);
+                        // Mengisi field 'unit_of_measure' dengan nilai yang diterima dari server
+                        $('#sampletype').val(response.sampletype || '');
+                        $('#id_sampletype').val(response.id_sampletype || '');
+
+                        // Trigger input event to handle visibility of tray_weight
+                        $('#sampletype').trigger('input');
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        // Menangani error jika terjadi kesalahan dalam request
+                        console.error('AJAX error:', textStatus, errorThrown);
+                        $('#sampletype').val('');
+                    }
+                });
+            } else {
+                $('#sampletype').val('');
+                $('#tray_weight_container').hide(); 
+            }
         });
 
-        $("input").click(function(){
-            setTimeout(function(){
-                $('.val1tip').tooltipster('hide');   
-            }, 3000);                            
-        });
+        $('#id_one_water_sample').on("change", function() {
+            $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
+            id_one_water_sample = $('#id_one_water_sample').val();
+            $.ajax({
+                type: "GET",
+                url: "Colilert_idexx_biosolids/barcode_restrict?id1="+id_one_water_sample,
+                dataType: "json",
+                success: function(data) {
+                    if (data.length > 0) {
+                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Id One Water Sample <strong> ' + id_one_water_sample +'</strong> is already in the system !</span>');
+                        $('.val1tip').tooltipster('content', tip);
+                        $('.val1tip').tooltipster('show');
+                        $('#id_one_water_sample').focus();
+                        $('#id_one_water_sample').val('');        
+                        $('#id_one_water_sample').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#id_one_water_sample').css({'background-color' : '#FFFFFF'});
+                            setTimeout(function(){
+                                $('#id_one_water_sample').css({'background-color' : '#FFE6E7'});
+                                setTimeout(function(){
+                                    $('#id_one_water_sample').css({'background-color' : '#FFFFFF'});
+                                }, 300);                            
+                            }, 300);
+                        }, 300);
+                        id_one_water_sample = data[0].id_one_water_sample;
+                        console.log(data);
+                    }
+                    else {
+                    }
+                }
+            });
+        }).trigger('change');
+
+        // $('.clockpicker').clockpicker({
+        // placement: 'bottom', // clock popover placement
+        // align: 'left',       // popover arrow align
+        // donetext: 'Done',     // done button text
+        // autoclose: true,    // auto close when minute is selected
+        // vibrate: true        // vibrate the device when dragging clock hand
+        // });                
+
+        // $('.val1tip, .val2tip, .val3tip').tooltipster({
+        //     animation: 'swing',
+        //     delay: 1,
+        //     theme: 'tooltipster-default',
+        //     autoClose: true,
+        //     position: 'bottom',
+        // });
+
+        // $("#compose-modal").on('hide.bs.modal', function(){
+        //     $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
+        // });        
+
+        // $('#compose-modal').on('shown.bs.modal', function () {
+		// 	$('#id_client_sample').focus();
+        //     // $('#budget_req').on('input', function() {
+        //     //     formatNumber(this);
+        //     //     });
+        //     });
+    
+
+        // $("input").keypress(function(){
+        //     $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
+        // });
+
+        // $("input").click(function(){
+        //     setTimeout(function(){
+        //         $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
+        //     }, 3000);                            
+        // });
+
+        // $("input").keypress(function(){
+        //     $('.val1tip').tooltipster('hide');   
+        // });
+
+        // $("input").click(function(){
+        //     setTimeout(function(){
+        //         $('.val1tip').tooltipster('hide');   
+        //     }, 3000);                            
+        // });
         
         $('#colilert_barcode').on("change", function() {
             let colilertBarcode = $('#colilert_barcode').val();
@@ -479,6 +620,8 @@
                 {"data": "date_sample"},
                 {"data": "time_sample"},
                 {"data": "wet_weight"},
+                {"data": "dry_weight_persen"},
+                {"data": "sample_dry_weight"},
                 {"data": "elution_volume"},
                 {"data": "volume_bottle"},
                 {"data": "dilution"},
@@ -563,7 +706,7 @@
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Colilert Idexx Biosolids | Update<span id="my-another-cool-loader"></span>');
             $('#idx_colilert_bio_in').val(data.id_colilert_bio_in);
             $('#id_one_water_sample').hide();
-            $('#idx_one_water_sample').show();
+            // $('#idx_one_water_sample').show();
             $('#idx_one_water_sample').attr('readonly', true);
             $('#idx_one_water_sample').val(data.id_one_water_sample);
             $('#id_person').val(data.id_person);
@@ -571,12 +714,17 @@
             $('#sampletype').val(data.sampletype);
             $('#sampletype').attr('readonly', true);
             $('#colilert_barcode').val(data.colilert_barcode);
+            $('#colilert_barcode').attr('readonly', true);
             $('#date_sample').val(data.date_sample);
             $('#time_sample').val(data.time_sample);
             $('#wet_weight').val(data.wet_weight);
+            $('#dry_weight_persen').val(data.dry_weight_persen);
+            $('#sample_dry_weight').val(data.sample_dry_weight);
+            $('#sample_dry_weight').attr('readonly', true);
             $('#elution_volume').val(data.elution_volume);
             $('#volume_bottle').val(data.volume_bottle);
             $('#dilution').val(data.dilution);
+            $('#dilution').attr('readonly', true);
             $('#compose-modal').modal('show');
         });  
 

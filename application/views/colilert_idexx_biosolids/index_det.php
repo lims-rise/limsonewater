@@ -52,24 +52,31 @@
 								<input class="form-control " id="wet_weight" name="wet_weight" value="<?php echo $wet_weight ?>"  disabled>
 							</div>
 
-                            <label for="elution_volume" class="col-sm-2 control-label">Elution Volume (mL)</label>
+                            <label for="sample_dry_weight" class="col-sm-2 control-label">Sample dry weight (g)</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="elution_volume" name="elution_volume" value="<?php echo $elution_volume ?>"  disabled>
+								<input class="form-control " id="sample_dry_weight" name="sample_dry_weight" value="<?php echo $sample_dry_weight ?>"  disabled>
 							</div>
 						</div>
 
 
 						<div class="form-group">
+                            <label for="elution_volume" class="col-sm-2 control-label">Elution Volume (mL)</label>
+							<div class="col-sm-4">
+								<input class="form-control " id="elution_volume" name="elution_volume" value="<?php echo $elution_volume ?>"  disabled>
+							</div>
+
 							<label for="volume_bottle" class="col-sm-2 control-label">Volume in Bottle (mL)</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="volume_bottle" name="volume_bottle" value="<?php echo $volume_bottle ?>"  disabled>
 							</div>
-
-                            <label for="dilution" class="col-sm-2 control-label">Dilution</label>
-							<div class="col-sm-4">
-								<input class="form-control " id="dilution" name="dilution" value="<?php echo $dilution ?>"  disabled>
-							</div>
 						</div>
+
+                        <div class="form-group">
+                            <label for="dilution" class="col-sm-2 control-label">Dilution</label>
+                            <div class="col-sm-4">
+                                <input class="form-control " id="dilution" name="dilution" value="<?php echo $dilution ?>"  disabled>
+                            </div>
+                        </div>
 
 					</div>
 				</form>
@@ -93,12 +100,15 @@
 											<th>Colilert Barcode</th>
 											<th>Date Sample</th>
                                             <th>Time Sample</th>
-                                            <th>E.Coli large wells</th>
-                                            <th>E.Coli small wells</th>
-                                            <th>E.Coli (raw MPN)</th>
-                                            <th>Coliforms large wells</th>
-                                            <th>Coliforms small wells</th>
-                                            <th>Total Coliforms (raw MPN)</th>
+                                            <th>E.Coli largewells</th>
+                                            <th>E.Coli smallwells</th>
+                                            <th>E.Coli MPN/100 mL</th>
+                                            <th>Lowerdetection MPN/100 mL</th>
+                                            <th>E.Coli MPN/g Dryweight</th>
+                                            <th>Lowerdetection MPN/g Dryweight</th>
+                                            <th>Coliforms largewells</th>
+                                            <th>Coliforms smallwells</th>
+                                            <th>Total Coliforms (rawMPN)</th>
                                             <th>Remarks</th>
                                             <th>Action</th>
 										</tr>
@@ -186,10 +196,30 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="ecoli" class="col-sm-4 control-label">E. Coli (raw MPN)</label>
+                                        <label for="ecoli" class="col-sm-4 control-label">E. coli MPN/100 mL</label>
                                         <div class="col-sm-8">
-                                            <input id="ecoli" name="ecoli" type="text"  placeholder="E. Coli (raw MPN)" class="form-control">
-                                            <!-- <div class="val1tip"></div> -->
+                                            <input id="ecoli" name="ecoli" type="text"  placeholder="E. coli MPN/100 mL" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="lowerdetection" class="col-sm-4 control-label">Lowerdetection MPN/100 mL</label>
+                                        <div class="col-sm-8">
+                                            <input id="lowerdetection" name="lowerdetection" type="text"  placeholder="Lowerdetection MPN/100 mL" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="ecoli_dryweight" class="col-sm-4 control-label">E.Coli MPN/g Dryweight</label>
+                                        <div class="col-sm-8">
+                                            <input id="ecoli_dryweight" name="ecoli_dryweight" type="text"  placeholder="E.Coli MPN/g Dryweight" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="lowerdetection_dryweight" class="col-sm-4 control-label">Lowerdetection MPN/g Dryweight</label>
+                                        <div class="col-sm-8">
+                                            <input id="lowerdetection_dryweight" name="lowerdetection_dryweight" type="text"  placeholder="Lowerdetection MPN/g Dryweight" class="form-control">
                                         </div>
                                     </div>
 
@@ -272,6 +302,27 @@
     let result;
 
     $(document).ready(function() {
+
+        $('#ecoli, #lowerdetection, #ecoli_largewells, #ecoli_smallwells').on("keyup change", function() {
+            let eColi = parseFloat($('#ecoli').val()) || 0;
+            let loweDetection = parseFloat($('#lowerdetection').val()) || 0;
+            let elutionVol = parseFloat($('#elution_volume').val()) || 0;
+            let sampleDryWeight = parseFloat($('#sample_dry_weight').val()) || 0;
+
+            eColi = eColi / 100;
+            let ecoliDryweight = (eColi * elutionVol) / sampleDryWeight;
+            $('#ecoli_dryweight').val(ecoliDryweight.toFixed(2)); // 2 angka desimal
+        });
+
+        $('#ecoli, #lowerdetection, #ecoli_largewells, #ecoli_smallwells').on("keyup change", function() {
+            let loweDetection = parseFloat($('#lowerdetection').val()) || 0;
+            let elutionVol = parseFloat($('#elution_volume').val()) || 0;
+            let sampleDryWeight = parseFloat($('#sample_dry_weight').val()) || 0;
+
+            loweDetection = loweDetection / 100;
+            let lowerdetectionDryweight = (loweDetection * elutionVol) / sampleDryWeight;
+            $('#lowerdetection_dryweight').val(lowerdetectionDryweight.toFixed(2)); // 2 angka desimal
+        });
 
         function datachart(valueLargeWells, valueSmallWells) {
             $.ajax({
@@ -494,6 +545,9 @@
                 {"data": "ecoli_largewells"}, 
                 {"data": "ecoli_smallwells"},
                 {"data": "ecoli"},
+                {"data": "lowerdetection"},
+                {"data": "ecoli_dryweight"},
+                {"data": "lowerdetection_dryweight"},
                 {"data": "coliforms_largewells"}, 
                 {"data": "coliforms_smallwells"},
                 {"data": "total_coliforms"},
@@ -530,12 +584,19 @@
             $('#colilert_barcodex').val(colilertBarcode);
             $('#colilert_barcodex').attr('readonly', true);
             $('#idx_colilert_bio_in').val(idColilertBioIn);
-            $('#ecoli_largewells').val('0');
-            $('#ecoli_smallwells').val('0');
+            $('#ecoli_largewells').val('');
+            $('#ecoli_smallwells').val('');
             $('#ecoli').val('0');
-            $('#coliforms_largewells').val('0');
-            $('#coliforms_smallwells').val('0');
+            $('#ecoli').attr('readonly', true);
+            $('#lowerdetection').val('');
+            $('#ecoli_dryweight').val('');
+            $('#ecoli_dryweight').attr('readonly', true);
+            $('#lowerdetection_dryweight').val('');
+            $('#lowerdetection_dryweight').attr('readonly', true);
+            $('#coliforms_largewells').val('');
+            $('#coliforms_smallwells').val('');
             $('#total_coliforms').val('0');
+            $('#total_coliforms').attr('readonly', true);
             $('#remarks').val('');
             $('#compose-modal').modal('show');
         });
@@ -555,9 +616,16 @@
             $('#ecoli_largewells').val(data.ecoli_largewells);
             $('#ecoli_smallwells').val(data.ecoli_smallwells);
             $('#ecoli').val(data.ecoli);
+            $('#ecoli').attr('readonly', true);
+            $('#lowerdetection').val(data.lowerdetection);
+            $('#ecoli_dryweight').val(data.ecoli_dryweight);
+            $('#ecoli_dryweight').attr('readonly', true);
+            $('#lowerdetection_dryweight').val(data.lowerdetection_dryweight);
+            $('#lowerdetection_dryweight').attr('readonly', true);
             $('#coliforms_largewells').val(data.coliforms_largewells);
             $('#coliforms_smallwells').val(data.coliforms_smallwells);
             $('#total_coliforms').val(data.total_coliforms);
+            $('#total_coliforms').attr('readonly', true);
             $('#remarks').val(data.remarks);
             $('#compose-modal').modal('show');
         });
