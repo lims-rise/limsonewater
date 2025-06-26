@@ -14,7 +14,7 @@
 								<input class="form-control " id="id_one_water_sample1" name="id_one_water_sample1" value="<?php echo $id_one_water_sample ?>"  disabled>
 							</div>
 
-							<label for="sampletypecombination" class="col-sm-2 control-label">Combination of Type</label>
+							<label for="sampletypecombination" class="col-sm-2 control-label">Sample Type</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="sampletypecombination" name="sampletypecombination" value="<?php echo $sampletypecombination ?>"  disabled>
 							</div>
@@ -22,36 +22,36 @@
 
 						<div class="form-group">
 
-							<label for="sampletype" class="col-sm-2 control-label">Sample Type</label>
+							<!-- <label for="sampletype" class="col-sm-2 control-label">Sample Type</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="sampletype" name="sampletype" value="<?php echo $sampletype ?>"  disabled>
-							</div>
+							</div> -->
 
 							<label for="replicates" class="col-sm-2 control-label">Replicates</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="replicates" name="replicates" value="<?php echo $replicates ?>"  disabled>
 							</div>
-						</div>
 
-						<div class="form-group">
 							<label for="date_conduct" class="col-sm-2 control-label">Date conduct</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="date_conduct" name="date_conduct" value="<?php echo $date_conduct ?>"  disabled>
 							</div>
+						</div>
 
+						<div class="form-group">
 							<label for="realname" class="col-sm-2 control-label">Lab tech</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="realname" name="realname" value="<?php echo $realname ?>"  disabled>
 							</div>
-						</div>
 
-						<div class="form-group">
 							<label for="comments1" class="col-sm-2 control-label">Comments</label>
 							<div class="col-sm-4">
 								<!-- <input class="form-control " id="comments" name="comments" value="<?php echo $comments ?>"  disabled> -->
 								<textarea id="comments1" name="comments1" class="form-control" disabled> <?php echo $comments ?> </textarea>
 							</div>
 						</div>
+
+
 
 					</div><!-- /.box-body -->
 				</form>
