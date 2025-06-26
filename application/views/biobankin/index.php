@@ -22,8 +22,8 @@
                                         <tr>
                                             <th>One Water ID</th>
                                             <th>Date Conduct</th>
+                                            <!-- <th>Sample Type</th> -->
                                             <th>Sample Type</th>
-                                            <th>Combination of Type</th>
                                             <th>Lab Tech</th>
                                             <th>Replicates</th>
                                             <th>Comments</th>
@@ -344,20 +344,20 @@
                                     <input id="sampletype" name="sampletype" placeholder="Sample Type" type="text" class="form-control smple">
                                 </div>
                             </div> -->
-
+<!-- 
                             <div class="form-group">
                                 <label for="sampletype1" class="col-sm-4 control-label">Sample Type</label>
                                 <div class="col-sm-8">
                                     <input id="id_sampletype1" name="id_sampletype1" placeholder="Sample Type" type="hidden" class="form-control">
                                     <input id="sampletype1" name="sampletype1" placeholder="Sample Type" type="text" class="form-control smple">
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="form-group">
-                                <label for="id_sampletype" class="col-sm-4 control-label">Combination of Type</label>
+                                <label for="id_sampletype" class="col-sm-4 control-label">Sample Type</label>
                                 <div class="col-sm-8">
                                     <select id="id_sampletype" name="id_sampletype" class="form-control" required>
-                                        <option value="" disabled>-- Select Combination of Type --</option>
+                                        <option value="" disabled>-- Select Sample Type --</option>
                                         <?php
                                             foreach($sampletype as $row) {
                                                 if ($id_sampletype == $row['id_sampletype']) {
@@ -747,7 +747,7 @@
             columns: [
                 {"data": "id_one_water_sample"},
                 {"data": "date_conduct"},
-                {"data": "sampletype"},
+                // {"data": "sampletype"},
                 {"data": "sampletypecombination"},
                 {"data": "initial"},
                 {"data": "replicates"},
