@@ -330,7 +330,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="biobankin_barcode" class="col-sm-4 control-label">Bionbankin Barcode</label>
+                                <label for="biobankin_barcode" class="col-sm-4 control-label">Biobankin Barcode</label>
                                 <div class="col-sm-8">
                                     <input id="biobankin_barcode" name="biobankin_barcode" placeholder="One Water Sample ID" type="text"  class="form-control">
                                     <input id="biobankinx_barcode" name="biobankinx_barcode" placeholder="One Water Sample ID" type="text" class="form-control">
@@ -549,7 +549,7 @@
 
         if (barcodeFromUrl) {
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> Sample reception | New<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Bionbankin | New<span id="my-another-cool-loader"></span>');
             $('#id_one_water_sample').attr('readonly', true);
             $('#id_one_water_sample').val(idOneWaterSampleFromUrl || '');  // Set ID jika ada
             $('#idx_one_water_sample').hide();
@@ -851,7 +851,7 @@
             console.log(data);
 
             $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Sample reception | Update<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Biobankin | Update<span id="my-another-cool-loader"></span>');
 
             $('#id_one_water_sample, #biobankin_barcode').hide();
 
