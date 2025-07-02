@@ -104,30 +104,103 @@ class Sample_reception_model extends CI_Model
         return $this->datatables->generate();
     }
 
+    // function get_rep($id)
+    // {
+    //     $q = $this->db->query('SELECT a.report_number, a.report_date, a.id_project, a.client, 
+    //     d.client_name, d.address, d.phone1, d.phone2, d.email, 
+    //     a.client_quote_number, a.po_number, 
+    //     DATE_FORMAT(e.from_date, "%d-%b-%Y") AS from_date,
+    //     DATE_FORMAT(e.to_date, "%d-%b-%Y") AS to_date,
+    //     b.date_arrival, b.time_arrival,
+    //     a.id_client_sample, b.id_one_water_sample,  b.id_person, c.realname
+    //     FROM sample_reception a
+    //     LEFT JOIN sample_reception_sample b ON a.id_project = b.id_project
+    //     LEFT JOIN ref_person c ON b.id_person = c.id_person
+	// 			LEFT JOIN ref_client d ON a.id_client_contact = d.id_client_contact
+	// 			LEFT JOIN 
+	// 			(SELECT id_project, MIN(date_arrival) AS from_date, MAX(date_arrival) AS to_date 
+	// 				FROM sample_reception_sample
+	// 				GROUP BY id_project) e ON e.id_project = b.id_project
+    //     WHERE a.id_project="'.$id.'"
+    //     AND a.flag = 0 
+    //     ');        
+    //     $response = $q->row();
+    //     return $response;
+    //   }
+
     function get_rep($id)
     {
-        $q = $this->db->query('SELECT a.report_number, a.report_date, a.id_project, a.client, 
-        d.client_name, d.address, d.phone1, d.phone2, d.email, 
-        a.client_quote_number, a.po_number, 
-        DATE_FORMAT(e.from_date, "%d-%b-%Y") AS from_date,
-        DATE_FORMAT(e.to_date, "%d-%b-%Y") AS to_date,
-        b.date_arrival, b.time_arrival,
-        a.id_client_sample, b.id_one_water_sample,  b.id_person, c.realname
-        FROM sample_reception a
-        LEFT JOIN sample_reception_sample b ON a.id_project = b.id_project
-        LEFT JOIN ref_person c ON b.id_person = c.id_person
-				LEFT JOIN ref_client d ON a.id_client_contact = d.id_client_contact
-				LEFT JOIN 
-				(SELECT id_project, MIN(date_arrival) AS from_date, MAX(date_arrival) AS to_date 
-					FROM sample_reception_sample
-					GROUP BY id_project) e ON e.id_project = b.id_project
-        WHERE a.id_project="'.$id.'"
-        AND a.flag = 0 
-        ');        
+        $this->db->select('a.report_number, a.report_date, a.id_project, a.client, 
+                            d.client_name, d.address, d.phone1, d.phone2, d.email, 
+                            a.client_quote_number, a.po_number, 
+                            DATE_FORMAT(e.from_date, "%d-%b-%Y") AS from_date,
+                            DATE_FORMAT(e.to_date, "%d-%b-%Y") AS to_date,
+                            b.date_arrival, b.time_arrival,
+                            a.id_client_sample, b.id_one_water_sample, b.id_person, c.realname', FALSE);
+        $this->db->from('sample_reception a');
+        $this->db->join('sample_reception_sample b', 'a.id_project = b.id_project', 'left');
+        $this->db->join('ref_person c', 'b.id_person = c.id_person', 'left');
+        $this->db->join('ref_client d', 'a.id_client_contact = d.id_client_contact', 'left');
+        $this->db->join('(SELECT id_project, MIN(date_arrival) AS from_date, MAX(date_arrival) AS to_date 
+                           FROM sample_reception_sample
+                           GROUP BY id_project) e', 'e.id_project = a.id_project', 'left');
+        $this->db->where('a.id_project', $id);
+        $this->db->where('a.flag', '0');
+        $q = $this->db->get(); 
         $response = $q->row();
         return $response;
-      }
+    }
 
+    function generate_new_report_number() {
+        $current_year_short = date('y');
+        $prefix = 'M' . $current_year_short;
+
+    
+        $this->db->select('MAX(CAST(SUBSTRING(report_number, 5) AS UNSIGNED)) AS max_sequence');
+        $this->db->where('report_number REGEXP "^M[0-9]{2}-[0-9]{5}$"'); 
+
+        $this->db->where('SUBSTRING(report_number, 2, 2) =', $current_year_short); 
+
+
+        $query = $this->db->get($this->table);
+        $result = $query->row();
+
+        $next_sequence = 1;
+        if ($result && $result->max_sequence !== null) {
+            $next_sequence = $result->max_sequence + 1;
+        }
+        return $prefix . '-' . sprintf('%05d', $next_sequence);
+    }
+
+    function update_report_details_if_empty($id_project, $report_number_to_save, $report_date_to_save) {
+        $this->db->select('report_number, report_date');
+        $this->db->where($this->id, $id_project);
+        $query = $this->db->get($this->table);
+        $row = $query->row();
+    
+        if ($row) {
+            $update_data = array(); 
+            $needs_update = false;
+    
+            if (empty($row->report_number) || $row->report_number === null || $row->report_number === '') {
+                $update_data['report_number'] = $report_number_to_save;
+                $needs_update = true; 
+            }
+            if (empty($row->report_date) || $row->report_date === null || $row->report_date === '' || trim($row->report_date) === '0000-00-00') {
+                $update_data['report_date'] = $report_date_to_save; 
+                $needs_update = true; 
+            }
+
+            if ($needs_update) {
+                $this->db->where($this->id, $id_project);
+                $this->db->update($this->table, $update_data); 
+                return $this->db->affected_rows() > 0; 
+            }
+        }
+        
+        return false; 
+    }
+    
     function get_by_id($id)
     {
         $this->db->where($this->id, $id);
