@@ -38,9 +38,9 @@
                                         <th></th> <!-- Kolom kosong untuk ikon toggle -->
                                         <th>Coc</th>
                                         <th>Client Quote Number</th>
+                                        <th>Client Sample ID</th>
                                         <th>Client (As On CoC)</th>
                                         <th>Number of Samples</th>
-                                        <th>Client Sample ID</th>
                                         <th>Client Contact</th>
                                         <th>Comments</th>
                                         <th>Date Collected</th>
@@ -154,6 +154,14 @@
                                     </select>
                                 </div>
                             </div> -->
+                            
+                            <div class="form-group">
+                                <label for="id_client_sample" class="col-sm-4 control-label">Client Sample ID</label>
+                                <div class="col-sm-8">
+                                    <input id="id_client_sample" name="id_client_sample" placeholder="Client Sample ID" type="text" class="form-control" required>
+                                    <div class="val1tip"></div>
+                                </div>
+                            </div>
 
                             <div class="form-group">
                                 <label for="client" class="col-sm-4 control-label">ID Client</label>
@@ -173,19 +181,11 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="id_client_sample" class="col-sm-4 control-label">Client Sample ID</label>
-                                <div class="col-sm-8">
-                                    <input id="id_client_sample" name="id_client_sample" placeholder="Client Sample ID" type="text" class="form-control" required>
-                                    <div class="val1tip"></div>
-                                </div>
-                            </div>
-
                             <!-- Dropdown Client Contact -->
                             <div class="form-group">
                                 <label for="id_client_contact" class="col-sm-4 control-label">Client Contact</label>
                                 <div class="col-sm-8">
-                                    <select id="id_client_contact" name="id_client_contact" class="form-control">
+                                    <!-- <select id="id_client_contact" name="id_client_contact" class="form-control">
                                         <option value="" selected disabled>-- Select Client Contact --</option>
                                         <?php foreach ($clientcontact as $row): ?>
                                             <option 
@@ -199,6 +199,25 @@
                                                 <?= htmlspecialchars($row['client_name']) ?>
                                             </option>
                                         <?php endforeach; ?>
+                                    </select> -->
+                                    <select id="id_client_contact" name="id_client_contact" class="form-control">
+                                        <option value="" selected disabled>-- Select Client Contact --</option>
+                                        <?php if (!empty($clientcontact)): ?>
+                                            <?php foreach ($clientcontact as $row): ?>
+                                                <option 
+                                                    value="<?= htmlspecialchars($row['id_client_contact']) ?>"
+                                                    data-address="<?= htmlspecialchars($row['address']) ?>"
+                                                    data-telp="<?= htmlspecialchars($row['phone1']) ?>"
+                                                    data-phone="<?= htmlspecialchars($row['phone2']) ?>"
+                                                    data-email="<?= htmlspecialchars($row['email']) ?>"
+                                                    <?= ($selected_client_id == $row['id_client_contact']) ? 'selected' : '' ?>
+                                                >
+                                                    <?= htmlspecialchars($row['client_name']) ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        <?php else: ?>
+                                            <option value="" disabled>No client contacts available</option>
+                                        <?php endif; ?>
                                     </select>
                                 </div>
                             </div>
@@ -772,6 +791,7 @@
                     }
                 },
                 // {"data": "client"},
+                {"data": "id_client_sample"},
                 {
                     "data": "client",
                     "render": function(data, type, row) {
@@ -779,7 +799,6 @@
                     }
                 },
                 {"data": "number_sample"},
-                {"data": "id_client_sample"},
                 // {"data": "client_name"},
                 {
                     "data": "client_name",
