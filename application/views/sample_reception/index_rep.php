@@ -442,7 +442,8 @@
                     } // End of Human-specific chunk loop 
                     ?>
 
-                    <div class="page-break"></div> <?php
+                    <!-- <div class="page-break"></div>  -->
+                    <?php
                     // --- GENERASI TABEL 2 (FAECAL-SPECIFIC) ---
                     echo '<h4 style="margin-top: 0; margin-bottom: 10px;">Table 2 - Faecal-specific contribution within total microbial community:</h4>';
                     for ($chunk_idx = 0; $chunk_idx < $num_chunks; $chunk_idx++) {
@@ -488,7 +489,8 @@
                     } // End of Faecal-specific chunk loop 
                     ?>
 
-                    <div class="page-break"></div> <h4 style="margin-top: 30px; margin-bottom: 10px;">Note for interpretation of microbial community contribution report(s):</h4>
+                    <!-- <div class="page-break"></div>  -->
+                    <h4 style="margin-top: 30px; margin-bottom: 10px;">Note for interpretation of microbial community contribution report(s):</h4>
                     <ol style="margin-left: 15px;">
                         <li>Values displayed represent significant relative median microbial community contribution (relative standard deviation <100%). The results were taken as the average of five replicate SourceTracker runs.</li>
                         <li>Values with relative standard deviation ≥100% were deemed non-significant result, and therefore omitted from the report.</li>
