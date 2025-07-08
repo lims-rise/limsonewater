@@ -23,9 +23,9 @@
                                             <th>One Water ID</th>
                                             <th>Date Conduct</th>
                                             <!-- <th>Sample Type</th> -->
-                                            <!-- <th>Sample Type</th> -->
+                                            <th>Sample Type</th>
                                             <th>Lab Tech</th>
-                                            <!-- <th>Replicates</th> -->
+                                            <th>Replicates</th>
                                             <th>Comments</th>
                                             <th width="120px">Action</th>
                                         </tr>
@@ -353,7 +353,7 @@
                                 </div>
                             </div> -->
 
-                            <!-- <div class="form-group">
+                            <div class="form-group">
                                 <label for="id_sampletype" class="col-sm-4 control-label">Sample Type</label>
                                 <div class="col-sm-8">
                                     <select id="id_sampletype" name="id_sampletype" class="form-control" required>
@@ -369,7 +369,7 @@
                                         ?>
                                     </select>
                                 </div>
-                            </div> -->
+                            </div>
 
                             <div class="form-group">
                                 <label for="date_conduct" class="col-sm-4 control-label">Date Conduct</label>
@@ -408,12 +408,12 @@
                                 </div>
                             </div> -->
 
-                            <!-- <div class="form-group">
+                            <div class="form-group">
                                 <label for="replicates" class="col-sm-4 control-label">Replicates</label>
                                 <div class="col-sm-8">
                                     <input id="replicates" name="replicates" placeholder="Replicates" type="number" class="form-control" required>
                                 </div>
-                            </div> -->
+                            </div>
                             
                             <div class="form-group">
                                     <label for="comments" class="col-sm-4 control-label">Comments</label>
@@ -558,10 +558,10 @@
             $('#biobankinx_barcode').hide();
             $('#id_person').val('');
             // $('#sampletype').attr('readonly', true);
-            // $('#id_sampletype').val('');
-            // $('#sampletype1').attr('readonly', true);
+            $('#id_sampletype').val('');
+            $('#sampletype1').attr('readonly', true);
             // $('#combination_type').val('');
-            // $('#replicates').val('');
+            $('#replicates').val('');
             $('#comments').val('');
             $('#compose-modal').modal('show');
         } else {
@@ -748,9 +748,9 @@
                 {"data": "id_one_water_sample"},
                 {"data": "date_conduct"},
                 // {"data": "sampletype"},
-                // {"data": "sampletypecombination"},
+                {"data": "sampletypecombination"},
                 {"data": "initial"},
-                // {"data": "replicates"},
+                {"data": "replicates"},
                 {"data": "comments"},
                 {
                     "data" : "action",
@@ -867,9 +867,9 @@
                 .show();
 
             $('#id_person').val(data.id_person).trigger('change');
-            // $('#id_sampletype').val(data.id_sampletype);
+            $('#id_sampletype').val(data.id_sampletype);
             $('#date_conduct').val(data.date_conduct).trigger('change');
-            // $('#replicates').val(data.replicates).trigger('change');
+            $('#replicates').val(data.replicates).trigger('change');
             $('#comments').val(data.comments);
 
             $('#compose-modal').modal('show');

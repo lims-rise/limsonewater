@@ -2,7 +2,7 @@
 	<section class="content">
 		<div class="box box-black box-solid">
 			<div class="box-header with-border">
-				<h3 class="box-title">Processing | Sample Biobank | Sample</h3>
+				<h3 class="box-title">Processing | Sample Biobank | Replicates</h3>
 			</div>
 				<form role="form"  id="formKeg" method="post" class="form-horizontal">
 					<div class="box-body">
@@ -14,28 +14,29 @@
 								<input class="form-control " id="id_one_water_sample1" name="id_one_water_sample1" value="<?php echo $id_one_water_sample ?>"  disabled>
 							</div>
 
-							<label for="date_conduct" class="col-sm-2 control-label">Date conduct</label>
-							<div class="col-sm-4">
-								<input class="form-control " id="date_conduct" name="date_conduct" value="<?php echo $date_conduct ?>"  disabled>
-							</div>
-
-							<!-- <label for="sampletypecombination" class="col-sm-2 control-label">Sample Type</label>
+							<label for="sampletypecombination" class="col-sm-2 control-label">Sample Type</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="sampletypecombination" name="sampletypecombination" value="<?php echo $sampletypecombination ?>"  disabled>
-							</div> -->
+							</div>
 						</div>
 
-						<!-- <div class="form-group">
-							<label for="sampletype" class="col-sm-2 control-label">Sample Type</label>
+						<div class="form-group">
+
+							<!-- <label for="sampletype" class="col-sm-2 control-label">Sample Type</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="sampletype" name="sampletype" value="<?php echo $sampletype ?>"  disabled>
-							</div>
+							</div> -->
 
 							<label for="replicates" class="col-sm-2 control-label">Replicates</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="replicates" name="replicates" value="<?php echo $replicates ?>"  disabled>
 							</div>
-						</div> -->
+
+							<label for="date_conduct" class="col-sm-2 control-label">Date conduct</label>
+							<div class="col-sm-4">
+								<input class="form-control " id="date_conduct" name="date_conduct" value="<?php echo $date_conduct ?>"  disabled>
+							</div>
+						</div>
 
 						<div class="form-group">
 							<label for="realname" class="col-sm-2 control-label">Lab tech</label>
@@ -60,8 +61,25 @@
 					<input type="hidden" id="user_review" name="user_review" value="<?php echo $user_review ?>">
 					<input type="hidden" id="user_created" name="user_created" value="<?php echo $user_created ?>">
 
+					<!-- <div class="form-group row">
+						<label for="review" class="col-sm-4 col-form-label"></label>
+						<div class="col-sm-8">
+							<div class="d-flex align-items-center">
+								<span id="review_label" class="form-check-label unreview" role="button" tabindex="0">
+									Unreview
+								</span>
+								<span class="ms-2">Review by: </span>
+								<input type="text" id="reviewed_by_label" 
+									value="<?php echo $full_name ? $full_name : '-' ?>" 
+									readonly style="font-style: italic; font-weight: bold; font-size: 11px;" />
+							</div>
+						</div>
+					</div> -->
+
+
 					<div class="modal-footer clearfix" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
 
+						<!-- Info Card on the left side -->
 						<div class="modal-footer-content" style="flex: 1; display: flex; align-items: center;">
 							<div id="textInform2" class="textInform card" style="width: auto; padding: 5px 10px; display: none;">
 								<div class="card-body">
@@ -74,6 +92,7 @@
 							</div>
 						</div>
 
+						<!-- Review Info on the right side -->
 						<div class="d-flex align-items-center flex-wrap" style="gap: 8px;">
 							<span class="text-muted">Status:</span>
 							<span id="review_label" class="badge bg-warning text-dark" role="button" tabindex="0" style="cursor: pointer;">
@@ -85,6 +104,7 @@
 								<?php echo $full_name ? $full_name : '-' ?>
 							</span>
 
+							<!-- Tombol Cancel Review untuk admin (id_users = 1 atau 2) -->
 							<?php if (in_array($this->session->userdata('id_user_level'), [1, 2])): ?>
 								<button type="button" id="cancelReviewBtn" class="btn btn-danger ms-3">
 									Cancel Review
@@ -92,6 +112,8 @@
 							<?php endif; ?>
 						</div>
 					</div>
+
+
 				</form>
 
 			<div class="box-footer">
@@ -99,21 +121,39 @@
                     <div class="col-xs-12"> 
                         <div class="box box-primary box-solid">
                             <div class="box-header">
-                                <h3 class="box-title">Sample Items</h3>
+                                <h3 class="box-title">Detail Samples</h3>
                             </div>
 							<div class="box-body pad table-responsive">
 								<?php
 									$lvl = $this->session->userdata('id_user_level');
 									if ($lvl != 4){
-										echo "<button class='btn btn-primary' id='addtombol_det'><i class='fa fa-wpforms' aria-hidden='true'></i> Add Sample</button>";
+										$q = $this->db->query('
+										SELECT a.replicates, COUNT(b.barcode_water) as cb_detail
+										FROM biobank_in a
+										LEFT JOIN biobank_in_detail b ON a.id_one_water_sample = b.id_one_water_sample
+										WHERE a.id_one_water_sample = "' . $id_one_water_sample .'"');        
+										$response = $q->row();
+										if ($response) {
+											$replicates = $response->replicates;
+											$cb_detail = $response->cb_detail;										
+											if ($replicates > $cb_detail) {
+												echo "<button class='btn btn-primary' id='addtombol_det'><i class='fa fa-wpforms' aria-hidden='true'></i> Add Replicate</button>";
+											}
+											else {
+												echo "<button class='btn btn-primary' id='addtombol_det' disabled><i class='fa fa-wpforms' aria-hidden='true'></i> Add Replicate</button>";
+											}
+										}	
 									}
 								?>
 								<table id="example2" class="table display table-bordered table-striped" width="100%">
 									<thead>
 										<tr>
-											<th>Sample Type</th>
-											<th>Replicate</th>
-											<th>Comment</th>
+											<th>Barcode Water</th>
+											<th>Weight (g)</th>
+											<th>Concentration (ng/uL)</th>
+											<th>Volume (mL)</th>
+											<th>Culture method</th>
+											<th>Freezer Location</th>
 											<th>Action</th>
 										</tr>
 									</thead>
@@ -141,7 +181,7 @@
 		<div class="modal-content">
 			<div class="modal-header box">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="modal-title">Biobank-IN | Sample
+				<h4 class="modal-title" id="modal-title">Biobank-IN | Replicates 
 				<!-- <input id="id_one_water_sample" name="id_one_water_sample" type="text" disabled>  -->
 				</h4>
 			</div>
@@ -151,9 +191,9 @@
 					<input id="id_one_water_samplex" name="id_one_water_samplex" type="hidden" class="form-control">
 					<input id="date_conduct2" type="hidden" name="date_conduct2" value="<?php echo $date_conduct ?>">
 					<input id="id_person" type="hidden" name="id_person" value="<?php echo $id_person ?>">
-					<input id="id_biobankin_detail" name="id_biobankin_detail" type="hidden" class="form-control input-sm">
+					<!-- <input id="id_req" name="id_req" type="hidden" class="form-control input-sm"> -->
 				
-					<!-- <div class="form-group">
+					<div class="form-group">
 						<label for="weight" class="col-sm-4 control-label">Weight (g)</label>
 						<div class="col-sm-8">
 							<input id="weight" name="weight" placeholder="Weight" type="number" step="1" class="form-control">
@@ -204,17 +244,18 @@
 						<div class="col-sm-8">
 							<input id="barcode_tube" name="barcode_tube" placeholder="Barcode Tube" type="text" class="form-control">
 						</div>
-					</div> -->
+					</div>
 					
-					<!-- <div class="form-group">
+					<div class="form-group">
 						<label for="cryobox" class="col-sm-4 control-label">Cryobox</label>
 						<div class="col-sm-8">
 							<input id="cryobox" name="cryobox" placeholder="Cryobox" type="text" class="form-control">
 						</div>
-					</div> -->
+					</div>
 
-					<!-- <div class="form-group">
+					<div class="form-group">
 						<label for="id_location" class="col-sm-4 control-label">Freezer Location</label>
+						<!-- <input id="id_loc" name="id_loc" type="hidden" class="form-control" required> -->
 						<div class="col-sm-2">
 						<select id='id_freez' name="id_freez" class="form-control" required>
 							<option >Freezer</option>
@@ -255,10 +296,11 @@
 								?>
 						</select>
 						</div>
-					</div>							 -->
+					</div>							
 					
-					<!-- <div class="form-group">
-						<label for="id_position" class="col-sm-4 control-label">Position on Cryobox</label>>
+					<div class="form-group">
+						<label for="id_position" class="col-sm-4 control-label">Position on Cryobox</label>
+						<!-- <input id="id_pos" name="id_pos" type="hidden" class="form-control" required>						 -->
 						<div class="col-sm-2">
 						<select id='id_row' name="id_row" class="form-control" required>
 							<option >Row</option>
@@ -279,32 +321,7 @@
 								?>
 						</select>
 						</div>
-					</div>		 -->
-
-					<div class="form-group">
-                        <label for="id_sampletype" class="col-sm-4 control-label">Sample Type</label>
-                        <div class="col-sm-8">
-                            <select id="id_sampletype" name="id_sampletype" class="form-control" required>
-                                <option value="" disabled>-- Select Sample Type --</option>
-                                	<?php
-                                        foreach($sampletype as $row) {
-                                            if ($id_sampletype == $row['id_sampletype']) {
-                                                echo "<option value='".$row['id_sampletype']."' selected='selected'>".$row['sampletype']."</option>";
-                                            } else {
-                                                echo "<option value='".$row['id_sampletype']."'>".$row['sampletype']."</option>";
-                                            }
-                                        }
-                                	?>
-                            </select>
-                        </div>
-                    </div>
-
-					<div class="form-group">
-                        <label for="replicates" class="col-sm-4 control-label">Replicates</label>
-                        <div class="col-sm-8">
-                        	<input id="replicates" name="replicates" placeholder="Replicates" type="number" class="form-control" required>
-                        </div>
-                    </div>
+					</div>		
 
 					<div class="form-group">
 						<label for="comments" class="col-sm-4 control-label">Comments</label>
@@ -1105,9 +1122,12 @@
 			bFilter: false,
 			ajax: {"url": "../../Biobankin/subjson?id="+id_one_water_sample, "type": "POST"},
 			columns: [
-  				{"data": "sampletype"},
-				{"data": "replicates"}, 
-				{"data": "comments"},  
+				{"data": "barcode_water"}, 
+				{"data": "weight"}, 
+				{"data": "concentration_dna"}, 
+				{"data": "volume"}, 
+				{"data": "culture"}, 
+				{"data": "location"}, 
 				{
 					"data" : "action",
 					"orderable": false,
@@ -1135,51 +1155,50 @@
 
 
 		$('#addtombol_det').click(function() {
-			// let data1 = $('#sampletype').val();
-			// if (data1 === 'Sediment' || data1 === 'Faeces' || data1 === 'Soil') {
-			// 	$('#weight').closest('.form-group').show();
-			// } else {
-			// 	$('#weight').closest('.form-group').hide();
-			// }
-			// if (data1 === 'DNA') {
-			// 	$('#concentration_dna').closest('.form-group').show();
-			// } else {
-			// 	$('#concentration_dna').closest('.form-group').hide();
-			// }
-			// if (data1 === 'Water' || data1 === 'Sewage' || data1 === 'Other Liquid') {
-			// 	$('#barcode_water').closest('.form-group').show();
-			// 	$('#volume').closest('.form-group').show();
-			// } else {
-			// 	$('#barcode_water').closest('.form-group').hide();
-			// 	$('#volume').closest('.form-group').hide();
-			// }
-			// if (data1 === 'Culture' || data1 === 'Culture Plate' || data1 === 'Sediment' || data1 === 'Faeces' || data1 === 'Soil' || data1 === 'Nucleic Acids') {
-			// 	$('#id_culture').closest('.form-group').show();
-			// } else {
-			// 	$('#id_culture').closest('.form-group').hide();
-			// }
+			let data1 = $('#sampletypecombination').val();
+			if (data1 === 'Sediment' || data1 === 'Faeces' || data1 === 'Soil') {
+				$('#weight').closest('.form-group').show();
+			} else {
+				$('#weight').closest('.form-group').hide();
+			}
+			if (data1 === 'DNA') {
+				$('#concentration_dna').closest('.form-group').show();
+			} else {
+				$('#concentration_dna').closest('.form-group').hide();
+			}
+			if (data1 === 'Water' || data1 === 'Sewage' || data1 === 'Other Liquid') {
+				$('#barcode_water').closest('.form-group').show();
+				$('#volume').closest('.form-group').show();
+			} else {
+				$('#barcode_water').closest('.form-group').hide();
+				$('#volume').closest('.form-group').hide();
+			}
+			if (data1 === 'Culture' || data1 === 'Culture Plate' || data1 === 'Sediment' || data1 === 'Faeces' || data1 === 'Soil' || data1 === 'Nucleic Acids') {
+				$('#id_culture').closest('.form-group').show();
+			} else {
+				$('#id_culture').closest('.form-group').hide();
+			}
 
 			$('#mode_det').val('insert');
 			$('#modal-title-detail').html('<i class="fa fa-wpforms"></i> New Replication<span id="my-another-cool-loader"></span>');
-            // $('#barcode_water').attr('readonly', false);
-			// $('#barcode_water').val('');
+            $('#barcode_water').attr('readonly', false);
+			$('#barcode_water').val('');
 			$('#id_one_water_samplex').val(id_one_water_sample);
-			// $('#weight').val('');
-			// $('#concentration_dna').val('');
-			// $('#volume').val('');
-			// $('#id_culture').val('');
-			// $('#barcode_tube').val('');
-			// $('#cryobox').val('');
-			// $('#id_loc').val('');
-			// $('#id_pos').val('');
-            // $('#id_freez').val('');
-            // $('#id_shelf').val('');
-            // $('#id_rack').val('');
-            // $('#id_tray').val('');
-            // $('#id_row').val('');
-            // $('#id_col').val('');
-			$('#id_sampletype').val('');
-			$('#replicates').val('');
+			$('#weight').val('');
+			$('#concentration_dna').val('');
+			$('#volume').val('');
+			$('#id_culture').val('');
+			$('#barcode_tube').val('');
+			$('#cryobox').val('');
+			$('#id_loc').val('');
+			$('#id_pos').val('');
+            $('#id_freez').val('');
+            $('#id_shelf').val('');
+            $('#id_rack').val('');
+            $('#id_tray').val('');
+            $('#id_row').val('');
+            $('#id_col').val('');
+
 			$('#comments').val('');
 			$('#compose-modal').modal('show');
 		});
@@ -1191,7 +1210,7 @@
             let data = table.row(tr).data();
             console.log(data);
 
-			let data1 = $('#sampletype').val();
+			let data1 = $('#sampletypecombination').val();
 			if (data1 === 'Sediment' || data1 === 'Faeces' || data1 === 'Soil') {
 				$('#weight').closest('.form-group').show();
 			} else {
@@ -1218,8 +1237,8 @@
 			// var data = this.parents('tr').data();
             $('#mode_det').val('edit');
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Update Replication<span id="my-another-cool-loader"></span>');
-            // $('#id_biobankin_detail').attr('readonly', true);
-			$('#id_biobankin_detail').val(data.id_biobankin_detail);
+            $('#barcode_water').attr('readonly', true);
+			$('#barcode_water').val(data.barcode_water);
 			$('#id_one_water_samplex').val(id_one_water_sample);
 			$('#weight').val(data.weight);
 			$('#concentration_dna').val(data.concentration_dna);
@@ -1233,8 +1252,6 @@
             $('#id_tray').val(data.tray);
             $('#id_row').val(data.rows1);
             $('#id_col').val(data.columns1);
-			$('#id_sampletype').val(data.id_sampletype);
-			$('#replicates').val(data.replicates);
 			$('#comments').val(data.comments);
             $('#compose-modal').modal('show');
 		});
