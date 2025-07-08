@@ -20,20 +20,29 @@ class Biobankin_model extends CI_Model
         $this->datatables->select("
             biobank_in.id_one_water_sample, 
             biobank_in.date_conduct, 
+            ref_sampletype.sampletype AS sampletypecombination, 
+            ref_sampletype.id_sampletype, 
             ref_person.initial, 
             biobank_in.biobankin_barcode,
+            biobank_in.replicates, 
             biobank_in.comments, 
             biobank_in.id_person, 
             biobank_in.flag, 
             biobank_in.user_created, 
             biobank_in.user_review,
             biobank_in.review, 
-            user.full_name
+            user.full_name,
+        
+            (SELECT GROUP_CONCAT(ref_sampletype.sampletype SEPARATOR ', ')
+            FROM sample_reception_sample AS srs
+            LEFT JOIN ref_sampletype ON srs.id_sampletype = ref_sampletype.id_sampletype
+            WHERE srs.id_one_water_sample = biobank_in.id_one_water_sample
+            ) AS sampletype
         ");
 
         $this->datatables->from('biobank_in');
         $this->datatables->join('sample_reception_sample', 'biobank_in.id_one_water_sample = sample_reception_sample.id_one_water_sample', 'left');
-        // $this->datatables->join('ref_sampletype', 'biobank_in.id_sampletype = ref_sampletype.id_sampletype', 'left');
+        $this->datatables->join('ref_sampletype', 'biobank_in.id_sampletype = ref_sampletype.id_sampletype', 'left');
         $this->datatables->join('ref_person', 'biobank_in.id_person = ref_person.id_person', 'left');
         $this->datatables->join('tbl_user user', 'biobank_in.user_review = user.id_users', 'left');
         // $this->datatables->where('Water_sample_reception.id_country', $this->session->userdata('lab'));
@@ -66,50 +75,19 @@ class Biobankin_model extends CI_Model
     //   $q = $this->db->get('biobank_in_detail');
 
     function subjson($id) {
-        $this->datatables->select('a.id_biobankin_detail, a.id_sampletype, b.sampletype,
-                             a.id_one_water_sample, a.replicates, a.comments');
-        $this->datatables->from('biobank_in_detail a');
-        $this->datatables->join('ref_sampletype b', 'a.id_sampletype = b.id_sampletype', 'left');
-        $this->datatables->join('biobank_in c', 'a.id_one_water_sample = c.id_one_water_sample', 'left');
-        $this->datatables->where('a.flag', '0');
-        $this->datatables->where('a.id_one_water_sample', $id);
-        // $this->datatables->where('a.id_one_water_sample', $id);
-        // $this->datatables->group_by('a.id_sample');
-        $lvl = $this->session->userdata('id_user_level');
-        if ($lvl == 4){
-            $this->datatables->add_column('action', anchor(site_url('Biobankin/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')), 'id_biobankin_detail');
-        }
-        else if ($lvl == 3){
-            $this->datatables->add_column('action', anchor(site_url('Biobankin/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
-            ".'<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_biobankin_detail');
-            // $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'barcode_water');
-        }
-        else {
-            // $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-            //    ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'barcode_water');
-
-               $this->datatables->add_column('action', anchor(site_url('Biobankin/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
-               ".'<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-               ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_biobankin_detail');
-        }
-        return $this->datatables->generate();
-    }
-
-    function subjsonreplicate($id) {
-        $this->datatables->select('a.id_biobankin_replicate, a.id_biobankin_detail, a.barcode_water, e.id_one_water_sample, a.weight,
+        $this->datatables->select('a.barcode_water, a.id_one_water_sample, a.weight,
                              a.concentration_dna, a.volume, b.culture, 
                              a.barcode_tube, a.cryobox, 
                              concat("F",c.freezer,"-","S",c.shelf,"-","R",c.rack,"-","T",c.tray) AS location,
                              a.comments, a.id_culture, a.id_location, a.id_pos, 
                              c.freezer,c.shelf,c.rack,c.tray, d.rows1, d.columns1
                              ');
-        $this->datatables->from('biobank_in_replicate a');
+        $this->datatables->from('biobank_in_detail a');
         $this->datatables->join('ref_culture b', 'a.id_culture=b.id_culture', 'left');
         $this->datatables->join('ref_location c', 'a.id_location=c.id_location', 'left');
         $this->datatables->join('ref_position d', 'a.id_pos=d.id_pos', 'left');
-        $this->datatables->join('biobank_in_detail e', 'a.id_biobankin_detail=e.id_biobankin_detail', 'left');
         $this->datatables->where('a.flag', '0');
-        $this->datatables->where('a.id_biobankin_detail', $id);
+        $this->datatables->where('a.id_one_water_sample', $id);
         // $this->datatables->group_by('a.id_sample');
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 4){
@@ -155,40 +133,10 @@ class Biobankin_model extends CI_Model
     
         $this->db->select("
             biobank_in.id_one_water_sample, 
-            biobank_in.date_conduct, 
-            ref_person.initial, 
-            ref_person.realname, 
-            biobank_in.comments, 
-            biobank_in.id_person, 
-            biobank_in.flag, 
-            biobank_in.user_created, 
-            biobank_in.user_review, 
-            biobank_in.review, 
-            user.full_name
-        ");
-    
-        $this->db->from('biobank_in');
-        // $this->db->join('ref_sampletype', 'biobank_in.id_sampletype = ref_sampletype.id_sampletype', 'left');
-        $this->db->join('ref_person', 'biobank_in.id_person = ref_person.id_person', 'left');
-        $this->db->join('tbl_user user', 'biobank_in.user_review = user.id_users', 'left');
-        $this->db->where('biobank_in.id_one_water_sample', $id);
-        $this->db->where('biobank_in.flag', '0');
-    
-        $query = $this->db->get();
-        return $query->row();
-    }
-
-    function get_detail_replicate($id)
-    {
-        $response = array();
-    
-        $this->db->select("
-            biobank_in.id_one_water_sample, 
             ref_sampletype.id_sampletype, 
             ref_sampletype.sampletype AS sampletypecombination, 
             biobank_in.date_conduct,
-            biobank_in_detail.replicates, 
-            biobank_in_detail.id_biobankin_detail,
+            biobank_in.replicates, 
             ref_person.initial, 
             ref_person.realname, 
             biobank_in.comments, 
@@ -208,11 +156,10 @@ class Biobankin_model extends CI_Model
         ");
     
         $this->db->from('biobank_in');
+        $this->db->join('ref_sampletype', 'biobank_in.id_sampletype = ref_sampletype.id_sampletype', 'left');
         $this->db->join('ref_person', 'biobank_in.id_person = ref_person.id_person', 'left');
-        $this->db->join('biobank_in_detail', 'biobank_in.id_one_water_sample = biobank_in_detail.id_one_water_sample', 'left');
-        $this->db->join('ref_sampletype', 'biobank_in_detail.id_sampletype = ref_sampletype.id_sampletype', 'left');
         $this->db->join('tbl_user user', 'biobank_in.user_review = user.id_users', 'left');
-        $this->db->where('biobank_in_detail.id_biobankin_detail', $id);
+        $this->db->where('biobank_in.id_one_water_sample', $id);
         $this->db->where('biobank_in.flag', '0');
     
         $query = $this->db->get();
@@ -296,22 +243,11 @@ class Biobankin_model extends CI_Model
     {
         $this->db->insert('biobank_in_detail', $data);
     }
-
-    function insert_rep($data)
-    {
-        $this->db->insert('biobank_in_replicate', $data);
-    }
     
     function update_det($id, $data)
     {
-        $this->db->where('id_biobankin_detail', $id);
+        $this->db->where('barcode_water', $id);
         $this->db->update('biobank_in_detail', $data);
-    }
-
-    function update_rep($id, $data)
-    {
-        $this->db->where('id_biobankin_replicate', $id);
-        $this->db->update('biobank_in_replicate', $data);
     }
 
     // function update_barcode($id, $data)

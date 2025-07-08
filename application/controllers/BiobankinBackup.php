@@ -55,64 +55,11 @@ class Biobankin extends CI_Controller
         echo $this->Biobankin_model->subjson2($id2);
     }
 
-    public function subjsonreplicate() {
-        $id = $this->input->get('id',TRUE);
-        header('Content-Type: application/json');
-        echo $this->Biobankin_model->subjsonreplicate($id);
-    }
-
     public function read($id)
     {
         $row = $this->Biobankin_model->get_detail($id);
         if ($row) {
             $data = array(
-                'id_one_water_sample' => $row->id_one_water_sample,
-                // 'sampletype' => $row->sampletype,
-                // 'sampletypecombination' => $row->sampletypecombination,
-                'date_conduct' => $row->date_conduct,
-                // 'replicates' => $row->replicates,
-                'initial' => $row->initial,
-                'id_person' => $row->id_person,
-                'realname' => $row->realname,
-                'comments' => $row->comments,
-                'full_name' => $row->full_name,
-                'user_review' => $row->user_review,
-                'review' => $row->review,
-                'user_created'  => $row->user_created,
-                'culture' => $this->Biobankin_model->getCulture(),
-                'freez1' => $this->Biobankin_model->getFreezer1(),
-                'shelf1' => $this->Biobankin_model->getFreezer2(),
-                'rack1' => $this->Biobankin_model->getFreezer3(),
-                'tray1' => $this->Biobankin_model->getFreezer4(),
-                'row1' => $this->Biobankin_model->getPos1(),
-                'col1' => $this->Biobankin_model->getPos2(),
-                // 'testing_type' => $this->Biobankin_model->getTest(),
-                // 'barcode' => $this->Water_Biobankin_model->getBarcode(),
-                'sampletype' => $this->Biobankin_model->getSampleType(),
-            );
-                
-            $this->template->load('template','Biobankin/index_det', $data);
-
-        }
-        else {
-            if (!$data) {
-                // Jika data tidak ditemukan, tampilkan halaman dengan pesan
-                $this->load->view('errors/custom_not_found', [
-                    'message' => 'No detail data available for this sample ID.',
-                    'sample_id' => $id
-                ]);
-                return;
-            }
-        }
-
-    }
-
-    public function read2($id)
-    {
-        $row = $this->Biobankin_model->get_detail_replicate($id);
-        if ($row) {
-            $data = array(
-                'id_biobankin_detail' => $row->id_biobankin_detail,
                 'id_one_water_sample' => $row->id_one_water_sample,
                 'sampletype' => $row->sampletype,
                 'sampletypecombination' => $row->sampletypecombination,
@@ -137,7 +84,7 @@ class Biobankin extends CI_Controller
                 // 'barcode' => $this->Water_Biobankin_model->getBarcode(),
             );
                 
-            $this->template->load('template','Biobankin/index_replicate', $data);
+            $this->template->load('template','Biobankin/index_det', $data);
 
         }
         else {
@@ -162,11 +109,11 @@ class Biobankin extends CI_Controller
         $biobankinx_barcode = $this->input->post('biobankinx_barcode', TRUE);
         $dt = new DateTime();
 
-        // $id_sampletype = $this->input->post('id_sampletype', TRUE);
+        $id_sampletype = $this->input->post('id_sampletype', TRUE);
         // $combination_type = $this->input->post('combination_type', TRUE);
         $id_person = $this->input->post('id_person', TRUE);
         $date_conduct = $this->input->post('date_conduct', TRUE);
-        // $replicates = $this->input->post('replicates', TRUE);
+        $replicates = $this->input->post('replicates', TRUE);
         $comments = $this->input->post('comments', TRUE);
         $review = $this->input->post('review', TRUE);
         $user_review = $this->input->post('user_review', TRUE);      
@@ -175,10 +122,10 @@ class Biobankin extends CI_Controller
             $data = array(
                 'id_one_water_sample' => $id_one_water_sample,
                 'biobankin_barcode' => $biobankin_barcode,
-                // 'id_sampletype' => $id_sampletype,
+                'id_sampletype' => $id_sampletype,
                 // 'combination_type' => $combination_type,
                 'date_conduct' => $date_conduct,
-                // 'replicates' => $replicates,
+                'replicates' => $replicates,
                 'id_person' => $id_person,
                 'comments' => $comments,
                 'flag' => '0',
@@ -197,10 +144,10 @@ class Biobankin extends CI_Controller
             $data = array(
                 'id_one_water_sample' => $idx_one_water_sample,
                 'biobankin_barcode' => $biobankinx_barcode,
-                // 'id_sampletype' => $id_sampletype,
+                'id_sampletype' => $id_sampletype,
                 // 'combination_type' => $combination_type,
                 'date_conduct' => $date_conduct,
-                // 'replicates' => $replicates,
+                'replicates' => $replicates,
                 'id_person' => $id_person,
                 'comments' => $comments,
                 'user_review' => $user_review,
@@ -360,113 +307,11 @@ class Biobankin extends CI_Controller
 
     public function savedetail() {
 
-        // $date_conduct = $this->input->post('date_conduct2', TRUE);
-        // $id_person = $this->input->post('id_person', TRUE);
-
-        $mode = $this->input->post('mode_det', TRUE);
-        $id_one_water_sample = $this->input->post('id_one_water_samplex', TRUE);
-        $dt = new DateTime();
-
-        // $barcode_water = $this->input->post('barcode_water', TRUE);
-        // $weight = $this->input->post('weight', TRUE);
-        // $concentration_dna = $this->input->post('concentration_dna', TRUE);
-        // $volume = $this->input->post('volume', TRUE);
-        // $id_culture = $this->input->post('id_culture', TRUE);
-        // $barcode_tube = $this->input->post('barcode_tube', TRUE);
-        // $cryobox = $this->input->post('cryobox', TRUE);
-
-        // $id_freez = $this->input->post('id_freez', TRUE);
-        // $id_shelf = $this->input->post('id_shelf', TRUE);
-        // $id_rack = $this->input->post('id_rack', TRUE);
-        // $id_tray = $this->input->post('id_tray', TRUE);
-
-        $id_sampletype = $this->input->post('id_sampletype', TRUE);
-        $id_biobankin_detail = $this->input->post('id_biobankin_detail', TRUE);
-        $replicates = $this->input->post('replicates', TRUE);
-
-        $comments = $this->input->post('comments', TRUE);        
-
-        // $loc_obj = $this->Biobankin_model->get_freezx($id_freez, $id_shelf, $id_rack, $id_tray);
-        // $pos_obj = $this->Biobankin_model->get_posx($id_row, $id_col);
-
-        // $id_loc = $loc_obj->id_location;
-        // $id_pos = $pos_obj->id_pos;        
-
-        if ($mode == "insert") {
-            $data = array(
-                'id_one_water_sample' => $id_one_water_sample,
-                'id_sampletype' => $id_sampletype,
-                'replicates' => $replicates,
-                'comments' => $comments,
-                'flag' => '0',
-                'uuid' => $this->uuid->v4(),
-                'user_created' => $this->session->userdata('id_users'),
-                'date_created' => $dt->format('Y-m-d H:i:s'),
-            );
-            // var_dump($data);
-            // die();
-            $this->Biobankin_model->insert_det($data);
-
-            // $data_freez = array(
-            //     'date_in' => $date_conduct,
-            //     'time_in' => $dt->format('H:i:s'),
-            //     'id_person' => $id_person,
-            //     'barcode_sample' => $barcode_water,
-            //     'barcode_tube' => $barcode_tube,
-            //     'cryobox' => $cryobox,
-            //     'id_location' => $id_loc,
-            //     'comments' => $comments . ' POS: ' . $id_row . $id_col,
-            //     'uuid' => $this->uuid->v4(),
-            //     'user_created' => $this->session->userdata('id_users'),
-            //     'date_created' => $dt->format('Y-m-d H:i:s'),
-            //     'flag' => '0',
-            // );
-            // $this->Biobankin_model->insert_freez($data_freez);               
-
-            $this->session->set_flashdata('message', 'Create Record Success');
-
-        } else if ($mode == "edit") {
-            $data = array(
-                'id_one_water_sample' => $id_one_water_sample,
-                'id_sampletype' => $id_sampletype,
-                'replicates' => $replicates,
-                'comments' => $comments,
-                'flag' => '0',
-                'uuid' => $this->uuid->v4(),
-                'user_created' => $this->session->userdata('id_users'),
-                'date_created' => $dt->format('Y-m-d H:i:s'),
-            );
-            $this->Biobankin_model->update_det($id_biobankin_detail, $data);
-
-            // $data_freez = array(
-            //     'date_in' => $date_conduct,
-            //     'time_in' => $dt->format('H:i:s'),
-            //     'id_person' => $id_person,
-            //     'barcode_tube' => $barcode_tube,
-            //     'cryobox' => $cryobox,
-            //     'id_location' => $id_loc,
-            //     'comments' => $comments . ' POS: ' . $id_row . $id_col,
-            //     'uuid' => $this->uuid->v4(),
-            //     'user_created' => $this->session->userdata('id_users'),
-            //     'date_created' => $dt->format('Y-m-d H:i:s'),
-            //     'flag' => '0',
-            // );
-            // $this->Biobankin_model->update_freez($barcode_water, $data_freez);                
-            $this->session->set_flashdata('message', 'Update Record Success');
-        }
-    
-        redirect(site_url("Biobankin/read/" . $id_one_water_sample));
-    }
-
-    public function savereplicate() {
-
         $date_conduct = $this->input->post('date_conduct2', TRUE);
         $id_person = $this->input->post('id_person', TRUE);
 
         $mode = $this->input->post('mode_det', TRUE);
         $id_one_water_sample = $this->input->post('id_one_water_samplex', TRUE);
-        $id_biobankin_detail = $this->input->post('id_biobankin_detailx', TRUE);
-        $id_biobankin_replicate = $this->input->post('id_biobankin_replicatex', TRUE);
         $dt = new DateTime();
 
         $barcode_water = $this->input->post('barcode_water', TRUE);
@@ -495,7 +340,6 @@ class Biobankin extends CI_Controller
 
         if ($mode == "insert") {
             $data = array(
-                'id_biobankin_detail' => $id_biobankin_detail,
                 'barcode_water' => $barcode_water,
                 'id_one_water_sample' => $id_one_water_sample,
                 'weight' => $weight,
@@ -512,10 +356,8 @@ class Biobankin extends CI_Controller
                 'user_created' => $this->session->userdata('id_users'),
                 'date_created' => $dt->format('Y-m-d H:i:s'),
             );
-            // var_dump($data);
-            // die();
 
-            $this->Biobankin_model->insert_rep($data);
+            $this->Biobankin_model->insert_det($data);
 
             $data_freez = array(
                 'date_in' => $date_conduct,
@@ -537,7 +379,6 @@ class Biobankin extends CI_Controller
 
         } else if ($mode == "edit") {
             $data = array(
-                'id_biobankin_detail' => $id_biobankin_detail,
                 'barcode_water' => $barcode_water,
                 'id_one_water_sample' => $id_one_water_sample,
                 'weight' => $weight,
@@ -554,8 +395,7 @@ class Biobankin extends CI_Controller
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
-
-            $this->Biobankin_model->update_rep($id_biobankin_replicate, $data);
+            $this->Biobankin_model->update_det($barcode_water, $data);
 
             $data_freez = array(
                 'date_in' => $date_conduct,
@@ -574,7 +414,7 @@ class Biobankin extends CI_Controller
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
-        redirect(site_url("Biobankin/read2/" . $id_biobankin_detail));
+        redirect(site_url("Biobankin/read/" . $id_one_water_sample));
     }
 
 
