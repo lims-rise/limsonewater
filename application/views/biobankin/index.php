@@ -751,7 +751,12 @@
                 // {"data": "sampletypecombination"},
                 {"data": "initial"},
                 // {"data": "replicates"},
-                {"data": "comments"},
+                {
+                    "data": "comments",
+                    "render": function(data, type, row) {
+                        return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
+                    }
+                },
                 {
                     "data" : "action",
                     "orderable": false,
