@@ -1105,9 +1105,19 @@
 			bFilter: false,
 			ajax: {"url": "../../Biobankin/subjson?id="+id_one_water_sample, "type": "POST"},
 			columns: [
-  				{"data": "sampletype"},
+				  {
+                    "data": "sampletype",
+                    "render": function(data, type, row) {
+                        return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
+                    }
+                },
 				{"data": "replicates"}, 
-				{"data": "comments"},  
+				{
+                    "data": "comments",
+                    "render": function(data, type, row) {
+                        return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
+                    }
+                },
 				{
 					"data" : "action",
 					"orderable": false,

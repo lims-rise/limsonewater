@@ -791,7 +791,13 @@
                     }
                 },
                 // {"data": "client"},
-                {"data": "id_client_sample"},
+                // {"data": "id_client_sample"},
+                {
+                    "data": "id_client_sample",
+                    "render": function(data, type, row) {
+                        return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
+                    }
+                },
                 {
                     "data": "client",
                     "render": function(data, type, row) {
@@ -806,7 +812,12 @@
                         return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
                     }
                 },
-                {"data": "comments"},
+                {
+                    "data": "comments",
+                    "render": function(data, type, row) {
+                        return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
+                    }
+                },
                 {"data": "date_collected"},
                 {"data": "time_collected"},
                 {
@@ -1335,7 +1346,7 @@
             $('#client_quote_number').val(data.client_quote_number);
             $('#client').hide();
             $('#clientx').show().val(data.client);
-            $('#id_client_sample').val(data.id_client_sample).attr('readonly', true);
+            // $('#id_client_sample').val(data.id_client_sample).attr('readonly', true);
             $('#id_client_contact').val(data.id_client_contact);
             
             // Populate client details
