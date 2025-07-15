@@ -77,16 +77,16 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="telp" class="col-sm-4 control-label">Telp</label>
+                            <label for="phone1" class="col-sm-4 control-label">Telp</label>
                             <div class="col-sm-8">
-                                <input id="telp" name="telp" type="text" class="form-control" placeholder="Telp" required>
+                                <input id="phone1" name="phone1" type="text" class="form-control" placeholder="Telp" required>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="phone" class="col-sm-4 control-label">Phone</label>
+                            <label for="phone2" class="col-sm-4 control-label">Phone</label>
                             <div class="col-sm-8">
-                                <input id="phone" name="phone" type="text" class="form-control" placeholder="Phone" required>
+                                <input id="phone2" name="phone2" type="text" class="form-control" placeholder="Phone" required>
                             </div>
                         </div>
 
@@ -225,8 +225,8 @@
                 {"data": "id_client_contact"},
                 {"data": "client_name"},
                 {"data": "address"},
-                {"data": "telp"},
-                {"data": "phone"},
+                {"data": "phone1"},
+                {"data": "phone2"},
                 {"data": "email"},
                 {"data": "date_collected"},
 				{"data": "time_collected"},
@@ -264,8 +264,8 @@
             $('#id_client_contact').val(data.id_client_contact);
             $('#client_name').val(data.client_name);
             $('#address').val(data.address);
-            $('#telp').val(data.telp);
-            $('#phone').val(data.phone);
+            $('#phone1').val(data.phone1);
+            $('#phone2').val(data.phone2);
             $('#email').val(data.email);
             $('#date_collected').val(data.date_collected).trigger('change');
             $('#time_collected').val(data.time_collected).trigger('change');

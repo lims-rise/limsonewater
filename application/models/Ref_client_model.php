@@ -15,7 +15,7 @@
 
         function jsonClientModel()
         {
-            $this->datatables->select('id_client_contact, client_name, address, telp, phone, email, date_collected, time_collected');
+            $this->datatables->select('id_client_contact, client_name, address, phone1, phone2, email, date_collected, time_collected');
             $this->datatables->from('ref_client');
             $this->datatables->where('flag', '0');
             $lvl = $this->session->userdata('id_user_level');

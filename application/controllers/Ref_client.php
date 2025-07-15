@@ -35,8 +35,8 @@
                     'id_client_contact' => $this->input->post('id_client_contact',TRUE),
                     'client_name' => $this->input->post('client_name',TRUE),
                     'address' => $this->input->post('address',TRUE),
-                    'telp' => $this->input->post('telp',TRUE),
-                    'phone' => $this->input->post('phone',TRUE),
+                    'phone1' => $this->input->post('phone1',TRUE),
+                    'phone2' => $this->input->post('phone2',TRUE),
                     'email' => $this->input->post('email',TRUE),
                     'date_collected' => $this->input->post('date_collected',TRUE),
                     'time_collected' => $this->input->post('time_collected',TRUE),
@@ -45,6 +45,8 @@
                     'user_created' => $this->session->userdata('id_users'),
                     'date_created' => $dt->format('Y-m-d H:i:s'),
                 );
+                var_dump($data);
+                die();
                 $this->Ref_client_model->insertClient($data);
                 $this->session->set_flashdata('message', 'Create Record Success');    
             } else if ($mode == 'edit') {
@@ -52,8 +54,8 @@
                     'id_client_contact' => $this->input->post('id_client_contact',TRUE),
                     'client_name' => $this->input->post('client_name',TRUE),
                     'address' => $this->input->post('address',TRUE),
-                    'telp' => $this->input->post('telp',TRUE),
-                    'phone' => $this->input->post('phone',TRUE),
+                    'phone1' => $this->input->post('phone1',TRUE),
+                    'phone2' => $this->input->post('phone2',TRUE),
                     'email' => $this->input->post('email',TRUE),
                     'date_collected' => $this->input->post('date_collected',TRUE),
                     'time_collected' => $this->input->post('time_collected',TRUE),
