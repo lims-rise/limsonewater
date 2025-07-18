@@ -280,7 +280,6 @@ class Sample_reception_model extends CI_Model
         $this->db->limit(1);
         $query = $this->db->get('sample_reception');
 
-        // Check if there is a previous id_project
         if ($query->num_rows() > 0) {
             return $query->row()->id_project;
         } else {
