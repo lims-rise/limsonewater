@@ -179,6 +179,7 @@ class Extraction_metagenome extends CI_Controller
         $id_person = $this->input->post('id_person', TRUE);
         $number_sample = (int) $this->input->post('number_sample', TRUE);
         $id_testing_type = $this->input->post('id_testing_type', TRUE);
+        $extraction_barcode = $this->input->post('barcode_sample', TRUE);
 
         // var_dump($id_testing_type);
         // die();
@@ -187,6 +188,7 @@ class Extraction_metagenome extends CI_Controller
             $data = array(
                 'id_one_water_sample' => $id_one_water_sample,
                 'id_person' => $id_person,
+                'extraction_barcode' => $extraction_barcode,
                 'number_sample' => $number_sample,
                 'uuid' => $this->uuid->v4(),
                 'user_created' => $this->session->userdata('id_users'),
@@ -559,6 +561,100 @@ class Extraction_metagenome extends CI_Controller
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('Extraction_culture'));
         }
+    }
+
+        public function saveReview()
+    {
+        header('Content-Type: application/json');
+    
+        $id = $this->input->post('id_one_water_sample', true);
+        $review = $this->input->post('review', true);
+        $user_review = $this->input->post('user_review', true);
+    
+        if (!$id || $review === null || !$user_review) {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Missing required fields.'
+            ]);
+            return;
+        }
+    
+        $data = [
+            'review' => $review,
+            'user_review' => $user_review,
+            'user_updated' => $this->session->userdata('id_users'),
+            'date_updated' => date('Y-m-d H:i:s')
+        ];
+    
+        $this->load->model('Extraction_metagenome_model');
+    
+        try {
+            $this->Extraction_metagenome_model->update_extraction($id, $data);
+            echo json_encode([
+                'status' => true,
+                'message' => 'Review saved successfully.'
+            ]);
+        } catch (Exception $e) {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Error saving review: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+    public function cancelReview()
+    {
+        header('Content-Type: application/json');
+    
+        // Ambil data POST
+        $id = $this->input->post('id_one_water_sample', true);
+        $review = $this->input->post('review', true);
+        $user_review = $this->input->post('user_review', true);
+    
+        // Debug log untuk memastikan data yang diterima
+        log_message('debug', "Received data: id=$id, review=$review, user_review=$user_review");
+    
+        // Cek jika data yang dibutuhkan ada
+        if (!$id || $review === null) {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Missing required fields.'
+            ]);
+            return;
+        }
+    
+        // Data yang akan diperbarui jika review dibatalkan
+        $data = [
+            'review' => 0,  // Reset status review
+            'user_review' => '', // Kosongkan user review
+            'user_updated' => $this->session->userdata('id_users'),
+            'date_updated' => date('Y-m-d H:i:s')
+        ];
+
+        // Load model dan update data review di database
+        $this->load->model('Extraction_metagenome_model');
+        $updateResult = $this->Extraction_metagenome_model->updateCancel($id, $data);
+    
+        // Debug log untuk memeriksa hasil update
+        log_message('debug', "Update result: " . ($updateResult ? 'Success' : 'Failure'));
+    
+        // Cek apakah update berhasil
+        if ($updateResult) {
+            echo json_encode([
+                'status' => true,
+                'message' => 'Review canceled successfully.'
+            ]);
+        } else {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Failed to cancel review.'
+            ]);
+        }
+    }
+
+    public function get_extraction_by_id($id_one_water_sample) {
+        $samples = $this->Extraction_metagenome_model->get_extraction_by_id($id_one_water_sample);
+        echo json_encode($samples);
     }
 
 

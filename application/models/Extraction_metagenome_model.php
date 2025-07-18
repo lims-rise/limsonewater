@@ -60,10 +60,13 @@ class Extraction_metagenome_model extends CI_Model
     //     return $this->datatables->generate();
     // }
     function json() {
-        $this->datatables->select('NULL AS toggle, extraction_metagenome.number_sample, extraction_metagenome.id_one_water_sample, extraction_metagenome.id_person, ref_person.initial, extraction_metagenome.user_created, ref_person.realname, extraction_metagenome.flag
+        $this->datatables->select('NULL AS toggle, extraction_metagenome.id_extraction_metagenome, extraction_metagenome.number_sample, extraction_metagenome.id_one_water_sample, extraction_metagenome.id_person,
+         ref_person.initial, extraction_metagenome.user_created, ref_person.realname, extraction_metagenome.flag, extraction_metagenome.user_review,
+        extraction_metagenome.review, user.full_name
         ', FALSE);
         $this->datatables->from('extraction_metagenome');
         $this->datatables->join('ref_person', 'extraction_metagenome.id_person = ref_person.id_person', 'left');
+        $this->datatables->join('tbl_user user', 'extraction_metagenome.user_review = user.id_users', 'left');
         // $this->datatables->join('ref_sampletype', 'extraction_culture.id_sampletype = ref_sampletype.id_sampletype', 'left');
 
         $this->datatables->where('extraction_metagenome.flag', '0');
@@ -566,6 +569,49 @@ class Extraction_metagenome_model extends CI_Model
     {
         $this->db->where('id_one_water_sample', $id_one_water_sample);
         $this->db->update('extraction_metagenome', $data);
+    }
+
+        public function get_extraction_by_id($id_one_water_sample) {
+        $this->db->select('
+            extraction_metagenome_detail.id_extraction_metagenome_detail, 
+            extraction_metagenome_detail.id_one_water_sample, 
+            extraction_metagenome_detail.barcode_sample, 
+            extraction_metagenome_detail.date_extraction, 
+            ref_sampletype.sampletype,
+            extraction_metagenome_detail.barcode_tube,
+            extraction_metagenome_detail.cryobox,
+            extraction_metagenome_detail.kit_lot,
+            extraction_metagenome_detail.comments
+        ');
+        $this->db->from('extraction_metagenome_detail');
+        $this->db->join('ref_sampletype', 'extraction_metagenome_detail.id_sampletype = ref_sampletype.id_sampletype', 'left');
+        $this->db->where('extraction_metagenome_detail.id_one_water_sample', $id_one_water_sample);
+        $this->db->where('extraction_metagenome_detail.flag', '0');
+        $query = $this->db->get()->result();
+    
+        foreach ($query as $row) {
+            $row->action = '
+                <button class="btn btn-info btn-sm btn_edit_child" data-id="' . $row->barcode_sample . '">
+                    <i class="fa fa-pencil"></i>
+                </button>
+                <button class="btn btn-danger btn-sm btn_delete_child" data-id="' . $row->barcode_sample . '">
+                    <i class="fa fa-trash"></i>
+                </button>';
+        }
+    
+        return $query;
+    }
+
+    function updateCancel($id, $data)
+    {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->update('extraction_metagenome', $data);
+
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
       
 }

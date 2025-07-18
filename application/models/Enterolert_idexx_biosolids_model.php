@@ -242,6 +242,17 @@ class Enterolert_idexx_biosolids_model extends CI_Model
         $response = $dryWeight->result_array();
         return $response;
       }
+
+    function barcode_restrict($id){
+
+        $q = $this->db->query('
+        select id_one_water_sample
+        from biobank_in
+        WHERE id_one_water_sample = "'.$id.'"
+        ');        
+        $response = $q->result_array();
+        return $response;
+    } 
     
 
       

@@ -77,7 +77,7 @@ $data['selected_sequence_type'] = '';
         $id_person = $this->input->post('id_person', TRUE);
         $number_sample = (int) $this->input->post('number_sample', TRUE);
         $id_testing_type = $this->input->post('id_testing_type', TRUE);
-
+        $extraction_barcode = $this->input->post('barcode_sample', TRUE);
         // var_dump($id_testing_type);
         // die();
 
@@ -85,6 +85,7 @@ $data['selected_sequence_type'] = '';
             $data = array(
                 'id_one_water_sample' => $id_one_water_sample,
                 'id_person' => $id_person,
+                'extraction_barcode' => $extraction_barcode,
                 'number_sample' => $number_sample,
                 'uuid' => $this->uuid->v4(),
                 'user_created' => $this->session->userdata('id_users'),
@@ -561,6 +562,61 @@ $data['selected_sequence_type'] = '';
                 'message' => 'Error saving review: ' . $e->getMessage()
             ]);
         }
+    }
+
+        public function cancelReview()
+    {
+        header('Content-Type: application/json');
+    
+        // Ambil data POST
+        $id = $this->input->post('id_one_water_sample', true);
+        $review = $this->input->post('review', true);
+        $user_review = $this->input->post('user_review', true);
+    
+        // Debug log untuk memastikan data yang diterima
+        log_message('debug', "Received data: id=$id, review=$review, user_review=$user_review");
+    
+        // Cek jika data yang dibutuhkan ada
+        if (!$id || $review === null) {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Missing required fields.'
+            ]);
+            return;
+        }
+    
+        // Data yang akan diperbarui jika review dibatalkan
+        $data = [
+            'review' => 0,  // Reset status review
+            'user_review' => '', // Kosongkan user review
+            'user_updated' => $this->session->userdata('id_users'),
+            'date_updated' => date('Y-m-d H:i:s')
+        ];
+
+        // Load model dan update data review di database
+        $this->load->model('Extraction_culture_model');
+        $updateResult = $this->Extraction_culture_model->updateCancel($id, $data);
+    
+        // Debug log untuk memeriksa hasil update
+        log_message('debug', "Update result: " . ($updateResult ? 'Success' : 'Failure'));
+    
+        // Cek apakah update berhasil
+        if ($updateResult) {
+            echo json_encode([
+                'status' => true,
+                'message' => 'Review canceled successfully.'
+            ]);
+        } else {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Failed to cancel review.'
+            ]);
+        }
+    }
+
+    public function get_extraction_by_id($id_one_water_sample) {
+        $samples = $this->Extraction_culture_model->get_extraction_by_id($id_one_water_sample);
+        echo json_encode($samples);
     }
     
 

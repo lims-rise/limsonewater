@@ -17,7 +17,7 @@ class Extraction_culture_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('NULL AS toggle, extraction_culture.number_sample, extraction_culture.id_one_water_sample, ref_person.initial, extraction_culture.user_created, ref_person.realname,
+        $this->datatables->select('NULL AS toggle, extraction_culture.id_extraction_culture, extraction_culture.number_sample, extraction_culture.id_one_water_sample, ref_person.initial, extraction_culture.user_created, ref_person.realname,
         extraction_culture.id_person, extraction_culture.flag, extraction_culture.user_review,
         extraction_culture.review, user.full_name
         ', FALSE);
@@ -496,7 +496,54 @@ class Extraction_culture_model extends CI_Model
         return $query->result_array();
     }
     
+    function updateCancel($id, $data)
+    {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->update('extraction_culture', $data);
 
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function get_extraction_by_id($id_one_water_sample) {
+        $this->db->select('
+            extraction_culture_plate.id_extraction_culture_plate, 
+            extraction_culture_plate.id_one_water_sample, 
+            extraction_culture_plate.barcode_sample, 
+            extraction_culture_plate.date_extraction, 
+            extraction_culture_plate.culture_media,
+            ref_sampletype.sampletype,
+            extraction_culture_plate.barcode_tube,
+            extraction_culture_plate.cryobox,
+            extraction_culture_plate.kit_lot,
+            extraction_culture_plate.comments,
+            extraction_culture_plate.sequence_id,
+            ref_sequence.sequence_type,
+            extraction_culture_plate.sequence,
+            extraction_culture_plate.species_id
+        ');
+        $this->db->from('extraction_culture_plate');
+        $this->db->join('ref_sampletype', 'extraction_culture_plate.id_sampletype = ref_sampletype.id_sampletype', 'left');
+        $this->db->join('ref_sequence', 'extraction_culture_plate.sequence_id = ref_sequence.sequence_id', 'left');
+        $this->db->where('extraction_culture_plate.id_one_water_sample', $id_one_water_sample);
+        $this->db->where('extraction_culture_plate.flag', '0');
+        $query = $this->db->get()->result();
+    
+        foreach ($query as $row) {
+            $row->action = '
+                <button class="btn btn-info btn-sm btn_edit_child" data-id="' . $row->barcode_sample . '">
+                    <i class="fa fa-pencil"></i>
+                </button>
+                <button class="btn btn-danger btn-sm btn_delete_child" data-id="' . $row->barcode_sample . '">
+                    <i class="fa fa-trash"></i>
+                </button>';
+        }
+    
+        return $query;
+    }
       
 }
 

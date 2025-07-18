@@ -86,7 +86,8 @@ class Extraction_biosolid extends CI_Controller
         $mode = $this->input->post('mode', TRUE);
         $dt = new DateTime();
 
-        $id_one_water_sample = $this->input->post('id_one_water_sample_list', TRUE);
+        $id_one_water_sample = $this->input->post('id_one_water_sample', TRUE);
+        $idx_one_water_sample = $this->input->post('idx_one_water_sample', TRUE);
         $barcode_sample = $this->input->post('barcode_sample', TRUE);
         $id_person = $this->input->post('id_person', TRUE);
         $date_extraction = $this->input->post('date_extraction', TRUE);
@@ -164,7 +165,7 @@ class Extraction_biosolid extends CI_Controller
         } else if ($mode == "edit") {
             $data = array(
                 'barcode_sample' => $barcode_sample,
-                'id_one_water_sample' => $id_one_water_sample,
+                'id_one_water_sample' => $idx_one_water_sample,
                 'id_person' => $id_person,
                 'date_extraction' => $date_extraction,
                 'weight' => $weight,
@@ -405,6 +406,13 @@ class Extraction_biosolid extends CI_Controller
         
         // Save the Excel file to the output stream
         $writer->save('php://output');
+    }
+
+        public function getIdOneWaterDetails()
+    {
+        $idOneWaterSample = $this->input->post('id_one_water_sample');
+        $oneWaterSample = $this->Extraction_biosolid_model->getOneWaterSampleById($idOneWaterSample);
+        echo json_encode($oneWaterSample);
     }
 
 

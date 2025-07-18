@@ -53,6 +53,7 @@
                     <div class="modal-body">
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
                         <input id="id_testing_type" name="id_testing_type" type="hidden" class="form-control input-sm">
+                        <input id="barcode_sample" name="barcode_sample" type="hidden" class="form-control input-sm">
 
                         <div class="form-group">
                             <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
@@ -293,20 +294,17 @@
                             </div>
                         </div>
                         
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="review" class="col-sm-4 control-label">Status</label>
                             <div class="col-sm-8">
                                 <input type="hidden" id="review" name="review" value="0">
                                 <span id="review_label" class="form-check-label unreview" role="button">
                                     Unreview
                                 </span>
-                                
-                                <!-- New label to display who reviewed the data -->
                                 <span id="reviewed_by_label"  style="margin-left: 10px; font-style: italic;  font-weight: bold; font-size: 11px;">
-                                    <!-- This will display the name of the reviewer, dynamically set -->
                                 </span>
                             </div>
-                        </div>
+                        </div> -->
 
                     </div>
                     <!-- <div class="modal-footer clearfix">
@@ -315,7 +313,7 @@
                     </div> -->
                     <div class="modal-footer clearfix" style="display: flex; align-items: center; justify-content: space-between;">
                         <!-- Info Card on the left side -->
-                        <div class="modal-footer-content" style="flex: 1; display: flex; align-items: center;">
+                        <!-- <div class="modal-footer-content" style="flex: 1; display: flex; align-items: center;">
                             <div id="textInform2" class="textInform card" style="width: auto; padding: 5px 10px; display: none;">
                                 <div class="card-body">
                                     <div class="card-header">
@@ -325,7 +323,7 @@
                                     <p class="statusDescription"></p>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <!-- Buttons on the right side -->
                         <div class="modal-buttons">
@@ -562,7 +560,7 @@
     }
 
     .unreview {
-        color: gray !important;
+        color: white !important;
         border-color: gray !important;
         box-shadow: none; /* Override Bootstrap box-shadow */
     }
@@ -572,8 +570,297 @@
         color: green !important;
         border-color: green !important;
     }
-</style>
 
+
+</style>
+<style>
+
+#review_label {
+    cursor: pointer;
+    font-size: 14px;  /* Ukuran font untuk label */
+    position: relative;
+    z-index: 10;  /* Atur nilai z-index yang lebih tinggi */
+    pointer-events: auto;  /* Pastikan elemen ini dapat menerima klik */
+}
+
+#reviewed_by_label {
+    margin-left: 10px;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 12px;  /* Ukuran font kecil untuk input reviewer */
+}
+
+.d-flex {
+    display: flex;
+    align-items: center;
+}
+
+.ms-2 {
+    margin-left: 0.5rem;  /* Spacing antar elemen */
+}
+
+    .table tbody tr.selected {
+        color: white !important;
+        background-color: #9CDCFE !important;
+    }
+
+    #formKegHidden {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1;
+    }
+
+    .hidden {
+        visibility: hidden;
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+    }
+    .sample-input {
+        margin-bottom: 10px; /* Adjust the spacing as needed */
+    }
+
+    .modal {
+    overflow-y: auto;
+    }
+
+    .modal-body {
+    max-height: 80vh;
+    overflow-y: auto;
+    }
+
+    .badge {
+        font-size: 14px;
+        padding: 8px 12px;
+        border-radius: 20px;
+        margin-top: 0px;
+    }
+
+    .badge-success {
+        background-color: #6A9C89;
+        color: white;
+    }
+
+    .badge-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .alert {
+        padding: 8px 12px;
+        border-radius: 5px;
+        font-size: 14px;
+        margin-top: 0px;
+    }
+
+    .alert-success {
+        background-color: #6A9C89;
+        color: white;
+    }
+
+    .alert-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .card {
+        border-radius: 10px;
+        margin-top: 0px;
+        padding: 8px 12px;
+        width: 100%; /* Ensures card uses available space */
+    }
+
+    .card-success {
+        border: 1px solid #28a745;
+        background-color: #d4edda;
+    }
+
+    .card-danger {
+        border: 1px solid #dc3545;
+        background-color: #f8d7da;
+    }
+
+    .card-title {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: left; /* Align title to the left */
+        margin-bottom: 0px;
+    }
+
+    .card-body {
+        font-size: 14px;
+        text-align: left; /* Align body text to the left */
+    }
+
+    .modal-footer-content {
+        float: left;
+        width: auto;
+        margin-right: 10px;
+    }
+
+    .modal-buttons {
+        float: right;
+    }
+
+    .icon-success {
+        color: #28a745;
+        margin-right: 10px;
+    }
+
+    .icon-fail {
+        color: #dc3545;
+        margin-right: 10px;
+    }
+
+    .modal-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 15px;
+    }
+
+    .modal-footer-content {
+        flex: 1;
+        display: flex;
+        align-items: center;
+    }
+
+    .modal-buttons {
+        display: flex;
+        align-items: center;
+    }
+
+    .card-body {
+        padding: 0px;
+    }
+
+    .card-title {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .card-description {
+        font-size: 14px;
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .close-card {
+        cursor: pointer;
+        font-size: 18px;
+        color: #FDAB9E; 
+    }
+
+    .close-card:hover {
+        color: #bd2130; 
+    }
+
+    .unreview {
+        color: white !important;
+        border-color: gray !important;
+        box-shadow: none; 
+    }
+
+    /* input.form-check-label. */
+    .review {
+        color: white !important;
+        background-color: #3D8D7A;
+		border: none  !important;
+    }
+
+    .highlight {
+        background-color: rgba(0, 255, 0, 0.1) !important;
+        font-weight: bold !important;
+    }
+    .highlight-edit {
+        background-color: rgba(0, 0, 255, 0.1) !important;
+        font-weight: bold !important;
+    }
+        /* Basic button style for the span */
+        .form-check-label {
+        display: inline-block;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 12px;
+        cursor: pointer;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    /* Hover effect for the button */
+    .form-check-label:hover {
+        opacity: 0.8;
+    }
+
+    /* Focused effect to make it more accessible */
+    .form-check-label:focus {
+        outline: none;
+    }
+
+    .child-table {
+        margin-left: 50px;
+        width: 90%;
+        border-collapse: collapse;
+    }
+
+    .child-table th, .child-table td {
+        border: 1px solid #ddd;
+        padding: 5px;
+    }
+
+    /* Styling untuk container dengan scroll */
+    .child-table-container {
+        max-height: 500px; 
+        overflow-y: auto; 
+    }
+
+    /* Style untuk scrollbar itu sendiri */
+    .child-table-container::-webkit-scrollbar {
+        width: 6px; 
+    }
+
+    /* Style untuk track (background) scrollbar */
+    .child-table-container::-webkit-scrollbar-track {
+        background: #e0f2f1;
+        border-radius: 10px;
+    }
+
+    /* Style untuk thumb (pegangan scrollbar) */
+    .child-table-container::-webkit-scrollbar-thumb {
+        background: #9ACBD0; 
+        border-radius: 10px; 
+    }
+
+    /* Gaya saat thumb scrollbar di-hover */
+    .child-table-container::-webkit-scrollbar-thumb:hover {
+        background: #48A6A7;
+    }
+
+	.review-border {
+		border: 1px solid green  !important;
+		color: green  !important;
+	}
+</style>
+<style>
+	#textInform2 .alert {
+    display: block !important;
+    margin-top: 20px;
+    font-size: 16px;
+    z-index: 1000; /* Pastikan info card di atas elemen lain */
+}
+
+
+</style>
+<!-- SweetAlert2 CSS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
@@ -823,71 +1110,8 @@
             get_freez($('#id_freez').val(), $('#id_shelf').val(), $('#id_rack').val(), $('#id_tray').val())
         });
 
-
-        // table = $("#mytable").DataTable({
-        //     // initComplete: function() {
-        //     //     var api = this.api();
-        //     //     $('#mytable_filter input')
-        //     //             .off('.DT')
-        //     //             .on('keyup.DT', function(e) {
-        //     //                 if (e.keyCode == 13) {
-        //     //                     api.search(this.value).tray();
-        //     //                 }
-        //     //     });
-        //     // },
-        //     oLanguage: {
-        //         sProcessing: "loading..."
-        //     },
-        //     // select: true;
-        //     processing: true,
-        //     serverSide: true,
-        //     ajax: {"url": "Extraction_metagenome/json", "type": "POST"},
-        //     columns: [
-        //         // {
-        //         //     "data": "barcode_sample",
-        //         //     "orderable": false
-        //         // },
-        //         {"data": "barcode_sample"},
-        //         {"data": "id_one_water_sample"},
-        //         {"data": "initial"},
-        //         {"data": "sampletype"},
-        //         {"data": "date_extraction"},
-        //         {"data": "comments"},
-        //         {
-        //             "data" : "action",
-        //             "orderable": false,
-        //             "className" : "text-center"
-        //         }
-        //     ],
-		// 	// columnDefs: [
-		// 	// 	{
-		// 	// 		targets: [5], // Index of the 'estimate_price' column
-		// 	// 		className: 'text-right' // Apply right alignment to this column
-		// 	// 	}
-		// 	// ],
-        //     order: [[1, 'desc']],
-        //     order: [[0, 'desc']],
-        //     rowCallback: function(row, data, iDisplayIndex) {
-        //         var info = this.fnPagingInfo();
-        //         var page = info.iPage;
-        //         var length = info.iLength;
-        //         // var index = page * length + (iDisplayIndex + 1);
-        //         // $('td:eq(0)', row).html(index);
-        //     },
-        //     // initComplete: function() {
-        //     //     let api = this.api();
-        //     //     let firstRow = api.row(0).node();
-        //     //     $(firstRow).addClass('highlight');
-        //     // }
-        //     drawCallback: function(settings) {
-        //         let api = this.api();
-        //         let pageInfo = api.page.info();
-        //         if (pageInfo.page === 0) {
-        //             let firstRow = api.row(0).node();
-        //             $(firstRow).addClass('highlight');
-        //         }
-        //     }
-        // });
+        let lastIdProject = localStorage.getItem('last_id_extraction_metagenome');
+        let lastPage = localStorage.getItem('last_page_extraction_metagenome');
         table = $("#mytable").DataTable({
             oLanguage: {
                 sProcessing: "loading..."
@@ -895,6 +1119,7 @@
             processing: true,
             serverSide: true,
             ajax: {"url": "Extraction_metagenome/json", "type": "POST"},
+            displayStart: lastPage ? (parseInt(lastPage) * 10) : 0, // <-- ini di sini ya!
             columns: [
                 {"data": "toggle", "orderable": false, "searchable": false }, // Ikon toggle di awal
                 {"data": "id_one_water_sample"},
@@ -973,10 +1198,149 @@
                         $(firstRow).addClass('highlight');
                     }, 5000);
                 }
+
+                if (lastIdProject) {
+                    api.rows().every(function () {
+                        let rowData = this.data();
+                        if (rowData.id_extraction_metagenome === lastIdProject) {
+                            $(this.node()).addClass('highlight');
+                            $('html, body').animate({
+                                scrollTop: $(this.node()).offset().top - 100
+                            }, 1000);
+                            // buka child-nya otomatis
+                            openChildRow($(this.node()), rowData);
+                        }
+                    });
+                }
             }
         });
 
+        $('#mytable tbody').on('click', 'tr', function () {
+            const table = $('#mytable').DataTable();
+            const rowData = table.row(this).data(); // Ambil data dari DataTable, bukan dari DOM
+
+            if (rowData) {
+                const id = rowData.id_extraction_metagenome; // pastikan nama field sesuai dari server
+
+                const pageInfo = table.page.info();
+                localStorage.setItem('last_id_extraction_metagenome', id);
+                localStorage.setItem('last_page_extraction_metagenome', pageInfo.page);
+            }
+        });
+
+        function openChildRow(tr, rowData) {
+            let row = $('#mytable').DataTable().row(tr);
+            let id_one_water_sample = rowData.id_one_water_sample;
+            let icon = tr.find('.toggle-child i');
+
+            if (!row.child.isShown()) {
+                row.child('<div class="text-center py-2">Loading...</div>').show();
+                tr.addClass('shown');
+                if (icon.length) {
+                    icon.removeClass('fa-plus-square').addClass('fa-spinner fa-spin');
+                }
+
+                $.ajax({
+                    url: `Extraction_metagenome/get_extraction_by_id/${id_one_water_sample}`,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        let uniqueId = `review_${id_one_water_sample}`;
+                        let tableContent = `
+                            <div class="child-table-container">
+                                <table class="child-table table table-bordered table-sm">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th>Barcode Sample</th>
+                                            <th>Barcode Tube</th>
+                                            <th>Sample Type</th>
+                                            <th>Culture Media</th>
+                                            <th>Cryobox</th>
+                                            <th>Kit Lot</th>
+                                            <th>Date Extraction</th>
+                                            <th>Comments</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>`;
+
+                        if (data.length > 0) {
+                            $.each(data, function (index, extraction) {
+                                tableContent += `
+                                    <tr>
+                                        <td>${extraction.barcode_sample ?? '-'}</td>
+                                        <td>${extraction.barcode_tube ?? '-'}</td>
+                                        <td>${extraction.sampletype ?? '-'}</td>
+                                        <td>${extraction.culture_media ?? '-'}</td>
+                                        <td>${extraction.cryobox ?? '-'}</td>
+                                        <td>${extraction.kit_lot ?? '-'}</td>
+                                        <td>${extraction.date_extraction ?? '-'}</td>
+                                        <td>${extraction.comments ?? '-'}</td>
+                                        <td>${extraction.action ?? '-'}</td>
+                                    </tr>`;
+                            });
+                        } else {
+                            tableContent += `<tr><td colspan="9" class="text-center">No samples available</td></tr>`;
+                        }
+
+                        tableContent += `
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer clearfix mt-3" style="display: flex; justify-content: space-between; gap: 15px;">
+                                <div style="flex: 1;">
+                                    <div class="textInform card" style="display:none; padding: 5px 10px;" id="textInform_${uniqueId}">
+                                        <div class="card-body">
+                                            <div class="card-header d-flex justify-content-between align-items-center">
+                                                <h5 class="card-title statusMessage mb-0"></h5>
+                                                <i class="fa fa-times close-card" style="cursor: pointer;"></i>
+                                            </div>
+                                            <p class="statusDescription mb-0"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center flex-wrap" style="gap: 8px;">
+                                    <span class="text-muted">Status:</span>
+                                    <span class="review_label badge"
+                                        data-uniqueid="${uniqueId}"
+                                        data-usercreated="${row.data().user_created}"
+                                        data-review="${row.data().review}"
+                                        style="cursor: pointer;">
+                                        ${row.data().review == 1 ? 'Reviewed' : 'Unreview'}
+                                    </span>
+                                    <span class="text-muted ms-3">by:</span>
+                                    <span id="reviewed_by_label" style="font-style: italic; font-weight: 800; font-size: 14px;">
+                                        ${row.data().full_name ? row.data().full_name : '-'}
+                                    </span>
+                                </div>
+                                <?php if (in_array($this->session->userdata('id_user_level'), [1, 2])): ?>
+                                <button type="button" class="btn btn-danger ms-3 cancelReviewBtn" data-uniqueid="${uniqueId}" data-review="${row.data().review}">
+                                    Cancel Review
+                                </button>
+                                <?php endif; ?>
+                            </div>`;
+
+                        row.child(tableContent).show();
+
+                        if (icon.length) {
+                            icon.removeClass('fa-spinner fa-spin').addClass('fa-minus-square');
+                        }
+
+                        attachReviewBehavior(uniqueId, row.data().user_created, row.data().review);
+
+                        let $cancelReviewBtn = row.child().find('.cancelReviewBtn');
+                        if (parseInt(row.data().review) === 1) {
+                            $cancelReviewBtn.prop('disabled', false).removeClass('disabled-btn');
+                        } else {
+                            $cancelReviewBtn.prop('disabled', true).addClass('disabled-btn');
+                        }
+                    }
+                });
+            }
+        }
+
         $('#mytable tbody').on('click', '.toggle-child', function () {
+            let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
             let tr = $(this).closest('tr');
             let row = $('#mytable').DataTable().row(tr);
             let id_one_water_sample = row.data().id_one_water_sample;
@@ -996,6 +1360,7 @@
                     type: "GET",
                     dataType: "json",
                     success: function (data) {
+                        let uniqueId = `review_${id_one_water_sample}`;
                         let tableContent = `
                             <div class="child-table-container">
                                 <table class="child-table table table-bordered table-sm">
@@ -1011,8 +1376,7 @@
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                        `;
+                                    <tbody>`;
 
                         if (data.length > 0) {
                             $.each(data, function (index, extraction) {
@@ -1026,20 +1390,276 @@
                                         <td>${extraction.date_extraction ?? '-'}</td>
                                         <td>${extraction.comments ?? '-'}</td>
                                         <td>${extraction.action ?? '-'}</td>
-                                    </tr>
-                                `;
+                                    </tr>`;
                             });
                         } else {
                             tableContent += `<tr><td colspan="5" class="text-center">No samples available</td></tr>`;
                         }
 
-                        tableContent += `</tbody></table></div>`;
+                            tableContent += `
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer clearfix mt-3" style="display: flex; justify-content: space-between; gap: 15px;">
+                                <div style="flex: 1;">
+                                    <div class="textInform card" style="display:none; padding: 5px 10px;" id="textInform_${uniqueId}">
+                                        <div class="card-body">
+                                            <div class="card-header d-flex justify-content-between align-items-center">
+                                                <h5 class="card-title statusMessage mb-0"></h5>
+                                                <i class="fa fa-times close-card" style="cursor: pointer;"></i>
+                                            </div>
+                                            <p class="statusDescription mb-0"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center flex-wrap" style="gap: 8px;">
+                                    <span class="text-muted">Status:</span>
+                                    <span class="review_label badge"
+                                        data-uniqueid="${uniqueId}"
+                                        data-usercreated="${row.data().user_created}"
+                                        data-review="${row.data().review}"
+                                        style="cursor: pointer;">
+                                        ${row.data().review == 1 ? 'Reviewed' : 'Unreview'}
+                                    </span>
+                                    <span class="text-muted ms-3">by:</span>
+                                    <span id="reviewed_by_label" style="font-style: italic; font-weight: 800; font-size: 14px;">
+                                        ${row.data().full_name ? row.data().full_name : '-'}
+                                    </span>
+                                </div>
+                                <?php if (in_array($this->session->userdata('id_user_level'), [1, 2])): ?>
+								<button type="button" class="btn btn-danger ms-3 cancelReviewBtn" data-uniqueid="${uniqueId}" data-review="${row.data().review}">
+									Cancel Review
+								</button>
+							    <?php endif; ?>
+                            </div>`;
+
                         row.child(tableContent).show();
+
                         icon.removeClass('fa-spinner fa-spin').addClass('fa-minus-square');
+
+                        attachReviewBehavior(uniqueId, row.data().user_created, row.data().review);
+                        let $cancelReviewBtn = row.child().find('.cancelReviewBtn');
+                        if (parseInt(row.data().review) === 1) {
+                            $cancelReviewBtn.prop('disabled', false).removeClass('disabled-btn');
+                        } else {
+                            $cancelReviewBtn.prop('disabled', true).addClass('disabled-btn');
+                        }
                     },
                 });
             }
-        }); 
+        });
+
+        function attachReviewBehavior(uniqueId, userCreated, review) {
+            let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
+            let currentState = parseInt(review) || 0; // Default to 0 if review is not set
+
+            let $label = $(`.review_label[data-uniqueid="${uniqueId}"]`);
+            let $card = $(`#textInform_${uniqueId}`);
+
+            const states = [
+                { value: 0, label: "Unreview", class: "unreview" },
+                { value: 1, label: "Reviewed", class: "review" }
+            ];
+            const colorClasses = ['bg-warning', 'bg-success', 'text-dark', 'text-white'];
+
+            // if (![0, 1].includes(currentState)) {
+            //     currentState = 0; // fallback ke default
+            // }
+
+            $label
+                .text(states[currentState].label)
+                .removeClass(colorClasses.join(' '))
+                .addClass(states[currentState].class);
+
+            if (loggedInUser !== userCreated) {
+                $label.off('click').on('click', function () {
+                    if (currentState === 1) {
+                        Swal.fire('Review Locked', 'Already reviewed. No changes allowed.', 'info');
+                        return;
+                    }
+
+                    Swal.fire({
+                        title: 'Review this data?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes'
+                    }).then(result => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: '<?php echo site_url('Extraction_metagenome/saveReview'); ?>',
+                                method: 'POST',
+                                data: {
+                                    id_one_water_sample: uniqueId.replace('review_', ''),
+                                    user_review: loggedInUser,
+                                    review: 1
+                                },
+                                dataType: 'json',
+                                success: function (response) {
+                                    if (response.status) {
+                                        currentState = 1;
+
+                                        $label
+                                            .text(states[currentState].label)
+                                            .removeClass(colorClasses.join(' '))
+                                            .addClass(states[currentState].class);
+
+                                        showInfoCard(
+                                            `#textInform_${uniqueId}`,
+                                            '<i class="fa fa-check-circle"></i> Review Success',
+                                            'Review submitted successfully.',
+                                            true
+                                        );
+
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Review saved successfully!',
+                                            text: response.message,
+                                            timer: 1000,
+                                            showConfirmButton: false
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Failed to save review',
+                                            text: response.message
+                                        });
+                                    }
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error('AJAX Error: ' + status + error);
+                                    Swal.fire('Error', 'Something went wrong during submission.', 'error');
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'info',
+                                title: 'Review Not Changed',
+                                text: 'No changes were made.',
+                                timer: 2000
+                            });
+                        }
+                    });
+                });
+
+                $label.hover(
+                    function () {
+                        if (currentState === 0) $(this).text('Click to Review');
+                    },
+                    function () {
+                        if (currentState === 0) $(this).text('Unreview');
+                    }
+                );
+
+                showInfoCard(
+                    `#textInform_${uniqueId}`,
+                    '<i class="fa fa-times-circle"></i> You are not the creator',
+                    currentState === 1
+                        ? "In this case, you can't review because it has already been reviewed."
+                        : "In this case, you can review this data. Hover over the box on the right side to start the review.",
+                    false
+                );
+            } else {
+                showInfoCard(
+                    `#textInform_${uniqueId}`,
+                    '<i class="fa fa-check-circle"></i> You are the creator',
+                    "You have full access to edit this data but not review.",
+                    true
+                );
+
+                $label.off('click').on('click', function () {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Action Not Allowed',
+                        text: 'You are the creator of this data and cannot perform a review.',
+                        confirmButtonText: 'OK'
+                    });
+                });
+            }
+
+                $card.find('.close-card').on('click', function () {
+                    $card.fadeOut();
+                });
+        }
+
+        // Event handler ketika tombol Cancel Review diklik
+        $('#mytable tbody').on('click', '.cancelReviewBtn', function() {
+            let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
+            let uniqueId = $(this).data('uniqueid');
+            let review = $(this).data('review');
+            
+            // Kamu bisa gunakan uniqueId untuk dapatkan data review yg sesuai
+            // Contoh: cari elemen review label di child row ini
+            let $child = $(this).closest('.child-table-container').parent(); // atau parent row child
+            let $reviewLabel = $child.find('.review_label');
+            
+            // Lanjutkan logika cancel review, misal AJAX dll
+            
+            Swal.fire({
+                icon: 'warning',
+                title: 'Cancel Review?',
+                text: 'This will reset the review status so another user can review it again.',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, cancel it',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // contoh update UI dulu
+                    $reviewLabel.text('Unreview').removeClass().addClass('badge unreview');
+
+                    // lalu AJAX cancel review
+                    $.ajax({
+                        url: '<?php echo site_url('Extraction_metagenome/cancelReview'); ?>',
+                        method: 'POST',
+                        data: {
+                            id_one_water_sample: uniqueId.replace('review_', ''),
+                            review: review,
+                            user_review: loggedInUser
+                        },
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.status) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Review canceled successfully!',
+                                    timer: 1000,
+                                    showConfirmButton: false
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Failed to cancel review',
+                                    text: response.message
+                                });
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            if (xhr.responseText && xhr.responseText.trim().startsWith('<')) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Server returned HTML instead of JSON',
+                                    text: 'Please check server response. See console for details.',
+                                    footer: '<a href="javascript:console.log(xhr.responseText)">Click to view response</a>'
+                                });
+                            } else {
+                                Swal.fire('Error', 'Something went wrong during cancel.', 'error');
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        function showInfoCard(targetSelector, message, description, isSuccess) {
+            let $target = $(targetSelector);
+            $target.find('.statusMessage').html(message);
+            $target.find('.statusDescription').text(description);
+
+            $target.removeClass('card-success card-danger')
+                .addClass(isSuccess ? 'card-success' : 'card-danger')
+                .fadeIn();
+        }
 
         $('#mytable').on('click', '.btn_edit_child', function() {
             let barcode_sample = $(this).data('id');
@@ -1076,73 +1696,73 @@
                     $('#id_row').val(data.rows1);
                     $('#id_col').val(data.columns1);
                     $('#comments').val(data.comments);
-                    $('#review').val(data.review);
-                    $('#user_review').val(data.user_review);
-                    $('#reviewed_by_label').text('Reviewed by: ' + (data.full_name ? data.full_name : '-'));
-                    // Set the checkbox state
-                    if (data.user_created !== loggedInUser) {
-                        $('#user_review').val(loggedInUser);
-                        // Set the checkbox state
-                        if (data.review == 1) {
-                            $('#review').prop('checked', true); // Check the checkbox
-                            const label = document.getElementById('review_label');
-                            label.textContent = 'Review';
-                            label.className = `form-check-label review`;            
-                        } else if (data.review == 0) {
-                            $('#review').prop('checked', false); // Uncheck the checkbox
-                            const label = document.getElementById('review_label');
-                            label.textContent = 'Unreview';
-                            label.className = `form-check-label unreview`;            
-                        }
-                        $('#review').val(data.review);
-                                            // Define the states with associated values and labels
-                                            const states = [
-                            { value: 0, label: "Unreview", class: "unreview" },
-                            { value: 1, label: "Review", class: "review" }
-                            // { value: 2, label: "Crossed", class: "crossed" }
-                        ];
+                    // $('#review').val(data.review);
+                    // $('#user_review').val(data.user_review);
+                    // $('#reviewed_by_label').text('Reviewed by: ' + (data.full_name ? data.full_name : '-'));
+                    // // Set the checkbox state
+                    // if (data.user_created !== loggedInUser) {
+                    //     $('#user_review').val(loggedInUser);
+                    //     // Set the checkbox state
+                    //     if (data.review == 1) {
+                    //         $('#review').prop('checked', true); // Check the checkbox
+                    //         const label = document.getElementById('review_label');
+                    //         label.textContent = 'Review';
+                    //         label.className = `form-check-label review`;            
+                    //     } else if (data.review == 0) {
+                    //         $('#review').prop('checked', false); // Uncheck the checkbox
+                    //         const label = document.getElementById('review_label');
+                    //         label.textContent = 'Unreview';
+                    //         label.className = `form-check-label unreview`;            
+                    //     }
+                    //     $('#review').val(data.review);
+                    //                         // Define the states with associated values and labels
+                    //                         const states = [
+                    //         { value: 0, label: "Unreview", class: "unreview" },
+                    //         { value: 1, label: "Review", class: "review" }
+                    //         // { value: 2, label: "Crossed", class: "crossed" }
+                    //     ];
 
-                        let currentState = 0; // Start with "Unchecked"
+                    //     let currentState = 0; // Start with "Unchecked"
 
-                        // Add event listener to toggle through states
-                        document.getElementById('review_label').addEventListener('click', function () {
-                            // Cycle through the states
-                            currentState = (currentState + 1) % states.length;
+                    //     // Add event listener to toggle through states
+                    //     document.getElementById('review_label').addEventListener('click', function () {
+                    //         // Cycle through the states
+                    //         currentState = (currentState + 1) % states.length;
 
-                            const checkbox = document.getElementById('review');
-                            const label = document.getElementById('review_label');
+                    //         const checkbox = document.getElementById('review');
+                    //         const label = document.getElementById('review_label');
 
-                            // Update the label text
-                            label.textContent = states[currentState].label;
+                    //         // Update the label text
+                    //         label.textContent = states[currentState].label;
 
-                            // Apply styling to the label based on the state
-                            label.className = `form-check-label ${states[currentState].class}`;
+                    //         // Apply styling to the label based on the state
+                    //         label.className = `form-check-label ${states[currentState].class}`;
 
-                            // (Optional) Update a hidden input or store the value somewhere for submission
-                            checkbox.value = states[currentState].value; // Set the value to the current state
-                        });                
-                    } else {
-                        if (data.review == 1) {
-                                $('#review').prop('checked', true); // Check the checkbox
-                                const label = document.getElementById('review_label');
-                                label.textContent = 'Review';
-                                label.className = `form-check-label review`;            
-                            } else if (data.review == 0) {
-                                $('#review').prop('checked', false); // Uncheck the checkbox
-                                const label = document.getElementById('review_label');
-                                label.textContent = 'Unreview';
-                                label.className = `form-check-label unreview`;            
-                            }
-                    }
+                    //         // (Optional) Update a hidden input or store the value somewhere for submission
+                    //         checkbox.value = states[currentState].value; // Set the value to the current state
+                    //     });                
+                    // } else {
+                    //     if (data.review == 1) {
+                    //             $('#review').prop('checked', true); // Check the checkbox
+                    //             const label = document.getElementById('review_label');
+                    //             label.textContent = 'Review';
+                    //             label.className = `form-check-label review`;            
+                    //         } else if (data.review == 0) {
+                    //             $('#review').prop('checked', false); // Uncheck the checkbox
+                    //             const label = document.getElementById('review_label');
+                    //             label.textContent = 'Unreview';
+                    //             label.className = `form-check-label unreview`;            
+                    //         }
+                    // }
 
-                    console.log('test user', data.user_created);
-                    if (data.user_created === loggedInUser) {
-                        $('#saveButtonDetail').prop('disabled', false);  // Enable Save button if user is the same as the one who created
-                        showInfoCard('#textInform2', '<i class="fa fa-check-circle"></i> You are the creator', "You have full access to edit this data.", true);
-                    } else {
-                        $('#saveButtonDetail').prop('disabled', false);  // Disable Save button if user is not the same as the one who created
-                        showInfoCard('#textInform2', '<i class="fa fa-times-circle"></i> You are not the creator', "In the case you can review this data and make changes.", false);
-                    }
+                    // console.log('test user', data.user_created);
+                    // if (data.user_created === loggedInUser) {
+                    //     $('#saveButtonDetail').prop('disabled', false);  // Enable Save button if user is the same as the one who created
+                    //     showInfoCard('#textInform2', '<i class="fa fa-check-circle"></i> You are the creator', "You have full access to edit this data.", true);
+                    // } else {
+                    //     $('#saveButtonDetail').prop('disabled', false);  // Disable Save button if user is not the same as the one who created
+                    //     showInfoCard('#textInform2', '<i class="fa fa-times-circle"></i> You are not the creator', "In the case you can review this data and make changes.", false);
+                    // }
 
 
                     // Display modal
@@ -1242,20 +1862,15 @@
             $('#id_person').val(data.id_person);
             $('#number_sample').attr('readonly', true);
             $('#number_sample').val(data.number_sample || '');  // Set barcode jika ada
-            $('#user_created').val(data.user_created || '');  // Set barcode jika ada
-            $('#user_created').attr('readonly', true);
-            if (data.user_created === loggedInUser) {
-                $('#saveButton').prop('disabled', false);  // Enable Save button if user is the same as the one who created
-                // $('#textInform').text("You are the creator").addClass("badge-success").prepend('<i class="fa fa-check-circle"></i> ');
-                // $('#textInform').removeClass('alert-danger').addClass('alert-success')
-                // .html('<i class="fa fa-check-circle"></i> You are the creator. You can edit this data.');
-                // Show info card with "You can edit this data"
-                showInfoCard('#textInform1', '<i class="fa fa-check-circle"></i> You are the creator', "You have full access to edit this data.", true);
-            } else {
-                $('#saveButton').prop('disabled', true);  // Disable Save button if user is not the same as the one who created
-                // $('#textInform').text("You are not the creator").addClass("badge-danger").prepend('<i class="fa fa-exclamation-circle"></i> ');
-                showInfoCard('#textInform1', '<i class="fa fa-times-circle"></i> You are not the creator', "You can only view this data and cannot make changes.", false);
-            }
+            // $('#user_created').val(data.user_created || '');
+            // $('#user_created').attr('readonly', true);
+            // if (data.user_created === loggedInUser) {
+            //     $('#saveButton').prop('disabled', false);  // Enable Save button if user is the same as the one who created
+            //     showInfoCard('#textInform1', '<i class="fa fa-check-circle"></i> You are the creator', "You have full access to edit this data.", true);
+            // } else {
+            //     $('#saveButton').prop('disabled', true);  // Disable Save button if user is not the same as the one who created
+            //     showInfoCard('#textInform1', '<i class="fa fa-times-circle"></i> You are not the creator', "You can only view this data and cannot make changes.", false);
+            // }
             // $('#sampletype').attr('readonly', true);
             // $('#sampletype').val('');
             // $('#comments').val('');
@@ -1264,27 +1879,27 @@
         });
 
         // Function to show a dynamic info card
-        function showInfoCard(target, message, description, isSuccess) {
-            // Add dynamic content to the target card
-            $(target).find('.statusMessage').html(message);
-            $(target).find('.statusDescription').text(description);
+        // function showInfoCard(target, message, description, isSuccess) {
+        //     // Add dynamic content to the target card
+        //     $(target).find('.statusMessage').html(message);
+        //     $(target).find('.statusDescription').text(description);
 
-            // Apply classes based on success or failure
-            if (isSuccess) {
-                $(target).removeClass('card-danger').addClass('card-success');
-            } else {
-                $(target).removeClass('card-success').addClass('card-danger');
-            }
+        //     // Apply classes based on success or failure
+        //     if (isSuccess) {
+        //         $(target).removeClass('card-danger').addClass('card-success');
+        //     } else {
+        //         $(target).removeClass('card-success').addClass('card-danger');
+        //     }
 
-            // Show the info card
-            $(target).fadeIn();
-        }
+        //     // Show the info card
+        //     $(target).fadeIn();
+        // }
 
         // Close the card when the 'x' icon is clicked
-        $('.close-card').on('click', function() {
-            $('#textInform1').fadeOut(); // Fade out the card
-            $('#textInform2').fadeOut();
-        });
+        // $('.close-card').on('click', function() {
+        //     $('#textInform1').fadeOut(); // Fade out the card
+        //     $('#textInform2').fadeOut();
+        // });
 
         // $('#mytable tbody').on('click', 'tr', function () {
         //     if ($(this).hasClass('active')) {
