@@ -18,8 +18,7 @@ class Extraction_biosolid_model extends CI_Model
     // datatables
     function json() {
         $this->datatables->select('extraction_biosolid.barcode_sample, extraction_biosolid.id_one_water_sample, ref_person.initial,
-        ref_sampletype.sampletype, extraction_biosolid.date_extraction, extraction_biosolid.weight, extraction_biosolid.volume,
-        extraction_biosolid.dilution, extraction_biosolid.culture_plate, extraction_biosolid.culture_media,
+        ref_sampletype.sampletype, extraction_biosolid.date_extraction, extraction_biosolid.weight,
         ref_kit.kit, extraction_biosolid.kit_lot, extraction_biosolid.barcode_tube, extraction_biosolid.dna_concentration, 
         extraction_biosolid.cryobox, extraction_biosolid.id_location, extraction_biosolid.comments, extraction_biosolid.flag, 
         extraction_biosolid.id_person, extraction_biosolid.id_kit, extraction_biosolid.id_location,
@@ -150,11 +149,6 @@ class Extraction_biosolid_model extends CI_Model
     }
 
     function barcode_restrict($id){
-        // select ref_barcode.barcode
-        // from ref_barcode 
-        // WHERE ref_barcode.barcode = "'.$id.'"
-        // AND ref_barcode.barcode NOT IN (SELECT barcode_sample FROM extraction_biosolid)
-
         $q = $this->db->query('
         select barcode_sample
         from extraction_biosolid
@@ -371,6 +365,16 @@ class Extraction_biosolid_model extends CI_Model
         $query = $this->db->get('sample_reception_sample');
         $response = $query->result_array();
         return $response; 
+    }
+
+        function getOneWaterSampleById($idOneWaterSample)
+    {
+        $this->db->select('sr.id_sampletype, rs.sampletype');
+        $this->db->from('sample_reception_sample sr');
+        $this->db->join('ref_sampletype rs', 'sr.id_sampletype = rs.id_sampletype', 'left');
+        $this->db->where('sr.id_one_water_sample', $idOneWaterSample);
+        $query = $this->db->get();
+        return $query->row_array();
     }
 
       

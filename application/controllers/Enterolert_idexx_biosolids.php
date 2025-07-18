@@ -590,6 +590,14 @@ class Enterolert_idexx_biosolids extends CI_Controller
         echo json_encode($data);
     }
 
+    public function barcode_restrict() 
+    {
+        $id = $this->input->get('id1');
+        $data = $this->Enterolert_idexx_biosolids_model->barcode_restrict($id);
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
+
 }
 
 /* End of file Water_sample_reception.php */

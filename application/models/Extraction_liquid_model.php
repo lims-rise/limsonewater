@@ -17,10 +17,13 @@ class Extraction_liquid_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('NULL AS toggle, extraction_liquid.number_sample, extraction_liquid.id_one_water_sample, ref_person.initial, ref_person.realname, extraction_liquid.user_created, extraction_liquid.id_person, extraction_liquid.flag
+        $this->datatables->select('NULL AS toggle, extraction_liquid.id_extraction_liquid, extraction_liquid.number_sample, extraction_liquid.id_one_water_sample, ref_person.initial, ref_person.realname, 
+        extraction_liquid.user_created, extraction_liquid.id_person, extraction_liquid.flag, extraction_liquid.user_review,
+        extraction_liquid.review, user.full_name
         ', FALSE);
         $this->datatables->from('extraction_liquid');
         $this->datatables->join('ref_person', 'extraction_liquid.id_person = ref_person.id_person', 'left');
+        $this->datatables->join('tbl_user user', 'extraction_liquid.user_review = user.id_users', 'left');
         // $this->datatables->join('ref_sampletype', 'extraction_liquid.id_sampletype = ref_sampletype.id_sampletype', 'left');
 
         $this->datatables->where('extraction_liquid.flag', '0');
@@ -462,17 +465,14 @@ class Extraction_liquid_model extends CI_Model
             pos.columns1,
             pos.rows1,  
             eld.comments,
-            eld.user_created,
-            eld.user_review,
-            eld.review,
-            user.full_name
+            eld.user_created
         ');
         $this->db->from('extraction_liquid_detail eld');
         $this->db->join('ref_sampletype rst', 'eld.id_sampletype = rst.id_sampletype', 'left');
         $this->db->join('ref_kit kit', 'eld.id_kit = kit.id_kit', 'left');
         $this->db->join('ref_location loc', 'eld.id_location = loc.id_location', 'left');
         $this->db->join('ref_position pos', 'eld.id_pos = pos.id_pos', 'left');
-        $this->db->join('tbl_user user', 'eld.user_review = user.id_users', 'left');
+        // $this->db->join('tbl_user user', 'eld.user_review = user.id_users', 'left');
         // $this->db->join('ref_person rp', 'eld.id_person = rp.id_person', 'left');
         $this->db->where('eld.barcode_sample', $barcode_sample);
         $this->db->where('eld.flag', '0');
@@ -525,6 +525,51 @@ class Extraction_liquid_model extends CI_Model
         $this->db->where('flag', '0');
         // $this->db->where('lab', $this->session->userdata('lab'));
         return $this->db->get('extraction_liquid_detail')->row();
+    }
+
+    function updateCancel($id, $data)
+    {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->update('extraction_liquid', $data);
+
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public function get_extraction_by_id($id_one_water_sample) {
+        $this->db->select('
+            extraction_liquid_detail.id_extraction_liquid_detail, 
+            extraction_liquid_detail.id_one_water_sample, 
+            extraction_liquid_detail.barcode_sample, 
+            extraction_liquid_detail.date_extraction, 
+            extraction_liquid_detail.culture_media,
+            ref_sampletype.sampletype,
+            extraction_liquid_detail.barcode_tube,
+            extraction_liquid_detail.cryobox,
+            extraction_liquid_detail.kit_lot,
+            extraction_liquid_detail.comments
+        ');
+        $this->db->from('extraction_liquid_detail');
+        $this->db->join('ref_sampletype', 'extraction_liquid_detail.id_sampletype = ref_sampletype.id_sampletype', 'left');
+        $this->db->where('extraction_liquid_detail.id_one_water_sample', $id_one_water_sample);
+        $this->db->where('extraction_liquid_detail.flag', '0');
+        $query = $this->db->get()->result();
+    
+        foreach ($query as $row) {
+            $row->action = '
+                <button class="btn btn-info btn-sm btn_edit_child" data-id="' . $row->barcode_sample . '">
+                    <i class="fa fa-pencil"></i>
+                </button>
+                <button class="btn btn-danger btn-sm btn_delete_child" data-id="' . $row->barcode_sample . '">
+                    <i class="fa fa-trash"></i>
+                </button>';
+        }
+    
+        return $query;
     }
 
       
