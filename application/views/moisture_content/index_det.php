@@ -98,7 +98,7 @@
                     <div class="col-xs-12"> 
                         <div class="box box-primary box-solid">
                             <div class="box-header">
-                                <h3 class="box-title">72 Hour Moisture</h3>
+                                <h3 class="box-title">48 Hour Moisture</h3>
                             </div>
 							<div class="box-body pad table-responsive">
 								<?php
@@ -361,7 +361,7 @@
                 $('#confirm-modal-delete #id').text(id);
             } else if ($(this).hasClass('btn_delete72')) {
                 url = '<?php echo site_url('Moisture_content/delete_detail72'); ?>/' + id;
-                $('.modal-title').html('<i class="fa fa-trash"></i> 72 Hour Moisture | Delete <span id="my-another-cool-loader"></span>');
+                $('.modal-title').html('<i class="fa fa-trash"></i> 48 Hour Moisture | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
             }
 
@@ -665,7 +665,7 @@
 
         $('#addtombol_det72').on('click', function() {
             $('#mode_det72').val('insert');
-            $('#modal-title-detail72').html('<i class="fa fa-wpforms"></i> Moisture Content | 72 Hour <span id="my-another-cool-loader"></span>');
+            $('#modal-title-detail72').html('<i class="fa fa-wpforms"></i> Moisture Content | 48 Hour <span id="my-another-cool-loader"></span>');
             $('#barcode_tray72').val('');
             $('#barcode_tray72').attr('readonly', true);
             $('#barcode_tray72').attr('required', true);
@@ -695,7 +695,7 @@
             let tr = $(this).closest('tr');
             let data = table1.row(tr).data();
             $('#mode_det72').val('edit');
-            $('#modal-title-detail72').html('<i class="fa fa-pencil-square"></i> Update Moisture | 72 Hour <span id="my-another-cool-loader"></span>');
+            $('#modal-title-detail72').html('<i class="fa fa-pencil-square"></i> Update Moisture | 48 Hour <span id="my-another-cool-loader"></span>');
             $('#idx_moisture72').val(id_moisture);
             $('#id_moisture72').val(data.id_moisture72);
             $('#date_moisture72').val(data.date_moisture72);
