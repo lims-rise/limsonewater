@@ -113,7 +113,7 @@
 											<th>Date Moisture</th>
 											<th>Time Moisture Tested</th>
                                             <th>Barcode Tray</th>
-                                            <th>Dry Weight 72h (g)</th>
+                                            <th>Dry Weight 48h (g)</th>
                                             <th>Dry Weight %</th>
                                             <th>Comments</th>
                                             <th>Action</th>
