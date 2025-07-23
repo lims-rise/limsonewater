@@ -189,7 +189,7 @@
                                     <div class="form-group">
                                         <label for="dry_weight24" class="col-sm-4 control-label">Dry Weight 24h (g)</label>
                                         <div class="col-sm-8">
-                                            <input id="dry_weight24" name="dry_weight24" type="number" step="0.01"  placeholder="Dry Weight 24h (g)" class="form-control">
+                                            <input id="dry_weight24" name="dry_weight24" type="number"  step="any"  placeholder="Dry Weight 24h (g)" class="form-control">
                                         </div>
                                     </div>
 
@@ -262,14 +262,14 @@
                                     <div class="form-group">
                                         <label for="dry_weight72" class="col-sm-4 control-label">Dry Weight 72h (g)</label>
                                         <div class="col-sm-8 dryweightcount">
-                                            <input id="dry_weight72" name="dry_weight72" type="number" step="0.01"  placeholder="Dry Weight 72h (g)" class="form-control" required>
+                                            <input id="dry_weight72" name="dry_weight72" type="number"  step="any"  placeholder="Dry Weight 72h (g)" class="form-control" required>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="dry_weight_persen" class="col-sm-4 control-label">Dry Weight %</label>
                                         <div class="col-sm-8">
-                                            <input id="dry_weight_persen" name="dry_weight_persen" type="number" step="0.01"  placeholder="Dry Weight %" class="form-control" required>
+                                            <input id="dry_weight_persen" name="dry_weight_persen" type="number"  step="any"  placeholder="Dry Weight %" class="form-control" required>
                                         </div>
                                     </div>
 
