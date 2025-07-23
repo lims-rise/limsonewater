@@ -190,7 +190,7 @@
 					<div class="form-group">
 						<label for="weight" class="col-sm-4 control-label">Weight (g)</label>
 						<div class="col-sm-8">
-							<input id="weight" name="weight" placeholder="Weight" type="number" step="1" class="form-control">
+							<input id="weight" name="weight" placeholder="Weight" type="number" step="any" class="form-control">
 						</div>
 					</div>
 
