@@ -158,14 +158,14 @@
                             <div class="form-group" id="tray_weight_container" style="display: none;">
                                 <label for="tray_weight" class="col-sm-4 control-label">Tray Weight(g)</label>
                                 <div class="col-sm-8">
-                                    <input id="tray_weight" name="tray_weight" type="number" step="0.01" class="form-control" placeholder="Tray Weight(g)">
+                                    <input id="tray_weight" name="tray_weight" type="number"  step="any" class="form-control" placeholder="Tray Weight(g)">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="traysample_wetweight" class="col-sm-4 control-label">Tray Sample(g) Wet Weight</label>
                                 <div class="col-sm-8">
-                                    <input id="traysample_wetweight" name="traysample_wetweight" type="number" step="0.01"  class="form-control" placeholder="Tray Sample(g) Wet Weight" required>
+                                    <input id="traysample_wetweight" name="traysample_wetweight" type="number"  step="any"  class="form-control" placeholder="Tray Sample(g) Wet Weight" required>
                                 </div>
                             </div>
 
