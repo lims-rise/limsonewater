@@ -564,7 +564,7 @@ $data['selected_sequence_type'] = '';
         }
     }
 
-        public function cancelReview()
+    public function cancelReview()
     {
         header('Content-Type: application/json');
     

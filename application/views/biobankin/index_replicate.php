@@ -145,7 +145,7 @@
 											<th>Weight (g)</th>
 											<th>Concentration (ng/uL)</th>
 											<th>Volume (mL)</th>
-											<th>Culture method</th>
+											<th>Storage method</th>
 											<th>Freezer Location</th>
 											<th>Action</th>
 										</tr>
@@ -216,10 +216,10 @@
 					</div>
 
 					<div class="form-group">
-						<label for="id_culture" class="col-sm-4 control-label">Culture storage method</label>
+						<label for="id_culture" class="col-sm-4 control-label">Storage method</label>
 						<div class="col-sm-8">
 							<select id="id_culture" name="id_culture" class="form-control">
-								<option  >-- Select Culture storage --</option>
+								<option  >-- Select Storage method --</option>
 								<?php
 									foreach($culture as $row) {
 										if ($id_culture == $row['id_culture']) {

@@ -365,6 +365,10 @@ class Campy_liquids_model extends CI_Model
       $response = array();
       $this->db->select('cl.id_campy_liquids, cl.id_one_water_sample, cl.id_person, rp.initial, cl.number_of_tubes,
         cl.id_sampletype, rs.sampletype, cl.mpn_pcr_conducted, cl.campy_assay_barcode, cl.date_sample_processed,
+        cl.user_review, 
+        cl.review, 
+        user.full_name,
+        cl.user_created, 
         cl.time_sample_processed, cl.time_sample_processed, cl.elution_volume,
         GROUP_CONCAT(svl.vol_sampletube ORDER BY svl.tube_number SEPARATOR ", ") AS vol_sampletube, 
         GROUP_CONCAT(svl.tube_number ORDER BY svl.tube_number SEPARATOR ", ") AS tube_number');
@@ -372,6 +376,7 @@ class Campy_liquids_model extends CI_Model
       $this->db->join('ref_sampletype AS rs', 'cl.id_sampletype = rs.id_sampletype', 'left');
       $this->db->join('campy_sample_volumes_liquids AS svl', 'cl.id_campy_liquids = svl.id_campy_liquids', 'left');
       $this->db->join('ref_person AS rp', 'cl.id_person = rp.id_person', 'left');
+      $this->db->join('tbl_user user', 'cl.user_review = user.id_users', 'left');
       $this->db->where('cl.id_campy_liquids', $id);
       $this->db->where('cl.flag', 0);
       $query = $this->db->get();
@@ -579,6 +584,23 @@ class Campy_liquids_model extends CI_Model
         return $response;
       } 
     
+    function update_campy_liquids($id_one_water_sample, $data)
+    {
+        $this->db->where('id_one_water_sample', $id_one_water_sample);
+        $this->db->update('campy_liquids', $data);
+    }
+
+    function updateCancel($id, $data)
+    {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->update('campy_liquids', $data);
+
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
       
 }

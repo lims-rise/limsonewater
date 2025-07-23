@@ -261,17 +261,17 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="date_collected" class="col-sm-4 control-label">Date Collected</label>
+                                <label for="date_collected" class="col-sm-4 control-label">Date Arrived</label>
                                 <div class="col-sm-8">
-                                    <input id="date_collected" name="date_collected" type="date" class="form-control" placeholder="Date Collected" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
+                                    <input id="date_collected" name="date_collected" type="date" class="form-control" placeholder="Date Arrived" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="time_collected" class="col-sm-4 control-label">Time Collected</label>
+                                <label for="time_collected" class="col-sm-4 control-label">Time Arrived</label>
                                 <div class="col-sm-8">
                                     <div class="input-group clockpicker">
-                                    <input id="time_collected" name="time_collected" class="form-control" placeholder="Time Collected" value="<?php 
+                                    <input id="time_collected" name="time_collected" class="form-control" placeholder="Time Arrived" value="<?php 
                                     $datetime = new DateTime();
                                     echo $datetime->format( 'H:i' );
                                     ?>">
@@ -279,6 +279,14 @@
                                     <span class="glyphicon glyphicon-time"></span>
                                     </span>
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description" class="col-sm-4 control-label">Description</label>
+                                <div class="col-sm-8">
+                                    <input id="description" name="description" placeholder="Description" type="text" class="form-control" required>
+                                    <div class="val1tip"></div>
                                 </div>
                             </div>
 
@@ -1337,7 +1345,7 @@
         $('#mytable').on('click', '.btn_edit', function() {
             let tr = $(this).closest('tr');
             let data = table.row(tr).data(); // Assuming `table` is your DataTable instance
-            
+            console.log(data);
             $('#mode').val('edit'); // Set mode to edit
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Sample reception | Update <span id="my-another-cool-loader"></span>');
 
@@ -1358,6 +1366,8 @@
             $('#date_collected').val(data.date_collected);
             $('#time_collected').val(data.time_collected);
             $('#comments').val(data.comments);
+            $('#id_client_sample').val(data.id_client_sample);
+            $('#description').val(data.description);
             $('.val2tip').html('');
             $('#compose-modal').modal('show');
         });

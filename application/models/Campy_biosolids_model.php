@@ -15,6 +15,9 @@ class Campy_biosolids_model extends CI_Model
     // datatables
     function json() {
         $this->datatables->select('cb.id_campy_biosolids, cb.id_one_water_sample, cb.id_person, cb.number_of_tubes, cb.mpn_pcr_conducted, cb.campy_assay_barcode, 
+        cb.user_review,
+        cb.review,
+        user.full_name,
         rp.initial, cb.date_sample_processed, cb.time_sample_processed, cb.sample_wetweight, cb.elution_volume,
         cb.id_sampletype, rs.sampletype, GROUP_CONCAT(sv.vol_sampletube ORDER BY sv.tube_number SEPARATOR ", ") AS vol_sampletube, GROUP_CONCAT(sv.tube_number ORDER BY sv.tube_number SEPARATOR ", ") AS tube_number, cb.flag,
         cb.date_created, cb.date_updated, GREATEST(cb.date_created, cb.date_updated) AS latest_date');
@@ -22,6 +25,7 @@ class Campy_biosolids_model extends CI_Model
         $this->datatables->join('ref_person AS rp', 'cb.id_person = rp.id_person', 'left');
         $this->datatables->join('ref_sampletype AS rs', 'cb.id_sampletype = rs.id_sampletype', 'left');
         $this->datatables->join('campy_sample_volumes AS sv', 'cb.id_campy_biosolids = sv.id_campy_biosolids', 'left');
+        $this->datatables->join('tbl_user user', 'cb.user_review = user.id_users', 'left');
         // $this->datatables->where('lab', $this->session->userdata('lab'));
         $this->datatables->where('cb.flag', '0');
         // GROUP BY
@@ -359,12 +363,17 @@ class Campy_biosolids_model extends CI_Model
       $response = array();
       $this->db->select('cb.id_campy_biosolids, cb.id_one_water_sample, cb.id_person, rp.initial, cb.number_of_tubes,
         cb.id_sampletype, rs.sampletype, cb.mpn_pcr_conducted, cb.campy_assay_barcode, cb.date_sample_processed,
+        cb.user_review, 
+        cb.review, 
+        user.full_name,
+        cb.user_created, 
         cb.time_sample_processed, cb.time_sample_processed, cb.sample_wetweight, cb.elution_volume,
         GROUP_CONCAT(sv.vol_sampletube ORDER BY sv.tube_number SEPARATOR ", ") AS vol_sampletube, GROUP_CONCAT(sv.tube_number ORDER BY sv.tube_number SEPARATOR ", ") AS tube_number');
       $this->db->from('campy_biosolids AS cb');
       $this->db->join('ref_sampletype AS rs', 'cb.id_sampletype = rs.id_sampletype', 'left');
       $this->datatables->join('campy_sample_volumes AS sv', 'cb.id_campy_biosolids = sv.id_campy_biosolids', 'left');
       $this->db->join('ref_person AS rp',  'cb.id_person = rp.id_person', 'left');
+      $this->db->join('tbl_user user', 'cb.user_review = user.id_users', 'left');
       $this->db->where('cb.id_campy_biosolids', $id);
       $this->db->where('cb.flag', '0');
       $q = $this->db->get();
@@ -507,7 +516,7 @@ class Campy_biosolids_model extends CI_Model
     }
 
     public function insert_growth_plate_hba($data) {
-        $this->db->insert('campy_sample_growth_plate', $data);
+        $this->db->insert('campy_sample_growth_plate_hba', $data);
     }
 
     function updateResultsHba($id_result_hba, $data) {
@@ -547,6 +556,35 @@ class Campy_biosolids_model extends CI_Model
     function updateResultsBiochemical($id_result_biochemical, $data) {
         $this->db->where('id_result_biochemical', $id_result_biochemical);
         $this->db->update('campy_result_biochemical', $data);
+    }
+
+    function barcode_restrict($id){
+
+        $q = $this->db->query('
+        select id_one_water_sample
+        from campy_biosolids
+        WHERE id_one_water_sample = "'.$id.'"
+        ');        
+        $response = $q->result_array();
+        return $response;
+    }
+
+    function update_campy_biosolids($id_one_water_sample, $data)
+    {
+        $this->db->where('id_one_water_sample', $id_one_water_sample);
+        $this->db->update('campy_biosolids', $data);
+    }
+
+    function updateCancel($id, $data)
+    {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->update('campy_biosolids', $data);
+
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
     
 

@@ -685,6 +685,8 @@
 
 		// Ambil nilai awal dari input hidden
 		let currentState = parseInt($('#review').val());
+		if (isNaN(currentState) || currentState < 0 || currentState > 1) currentState = 0;
+
 
 		// Set tampilan awal pada label review
 		$('#review_label')

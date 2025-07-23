@@ -360,12 +360,17 @@ class Salmonella_liquids_model extends CI_Model
       $response = array();
       $this->db->select('sl.id_salmonella_liquids, sl.id_one_water_sample, sl.id_person, rp.initial, sl.number_of_tubes,
         sl.id_sampletype, rs.sampletype, sl.mpn_pcr_conducted, sl.salmonella_assay_barcode, sl.date_sample_processed,
+        sl.user_review, 
+        sl.review, 
+        user.full_name,
+        sl.user_created, 
         sl.time_sample_processed, sl.time_sample_processed, sl.sample_wetweight, sl.elution_volume, sl.enrichment_media,
         GROUP_CONCAT(ssvl.vol_sampletube ORDER BY ssvl.tube_number SEPARATOR ", ") AS vol_sampletube, GROUP_CONCAT(ssvl.tube_number ORDER BY ssvl.tube_number SEPARATOR ", ") AS tube_number');
       $this->db->from('salmonella_liquids AS sl');
       $this->db->join('ref_sampletype AS rs', 'sl.id_sampletype = rs.id_sampletype', 'left');
       $this->datatables->join('salmonella_sample_volumes_liquids AS ssvl', 'sl.id_salmonella_liquids = ssvl.id_salmonella_liquids', 'left');
       $this->db->join('ref_person AS rp',  'sl.id_person = rp.id_person', 'left');
+      $this->db->join('tbl_user user', 'sl.user_review = user.id_users', 'left');
       $this->db->where('sl.id_salmonella_liquids', $id);
       $this->db->where('sl.flag', '0');
       $q = $this->db->get();
@@ -573,6 +578,24 @@ class Salmonella_liquids_model extends CI_Model
         $response = $q->result_array();
         return $response;
       } 
+
+    function update_salmonella_liquids($id_one_water_sample, $data)
+    {
+        $this->db->where('id_one_water_sample', $id_one_water_sample);
+        $this->db->update('salmonella_liquids', $data);
+    }
+
+    function updateCancel($id, $data)
+    {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->update('salmonella_liquids', $data);
+
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     
 
       

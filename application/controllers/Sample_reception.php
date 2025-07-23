@@ -300,6 +300,7 @@ class Sample_reception extends CI_Controller
         $date_collected = $this->input->post('date_collected', TRUE);
         $time_collected = $this->input->post('time_collected', TRUE);
         $files =  $this->input->post('files', TRUE);
+        $description = $this->input->post('description', TRUE);
     
         if ($mode == "insert") {
             // Insert ke sample_reception
@@ -312,6 +313,7 @@ class Sample_reception extends CI_Controller
                 'date_collected' => $date_collected,
                 'time_collected' => $time_collected,
                 'files' => $files,
+                'description' => $description,
                 'comments' => $comments,
                 'flag' => '0',
                 'uuid' => $this->uuid->v4(),
@@ -350,6 +352,7 @@ class Sample_reception extends CI_Controller
                             'date_collected' => $date_collected,
                             'time_collected' => $time_collected,
                             'files' => $files,
+                            'description' => $description,
                             'comments' => $comments,
                             'flag' => '0',
                             'uuid' => $this->uuid->v4(),
