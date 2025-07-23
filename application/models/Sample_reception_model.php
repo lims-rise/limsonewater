@@ -16,7 +16,7 @@ class Sample_reception_model extends CI_Model
 
     // datatables
     public function json() {
-        $this->datatables->select('NULL AS toggle, sr.id_project, sr.client_quote_number, sr.client, sr.id_client_sample, cc.client_name, sr.id_client_contact, sr.number_sample, sr.comments, sr.files, sr.date_collected, sr.time_collected, 
+        $this->datatables->select('NULL AS toggle, sr.id_project, sr.client_quote_number, sr.client, sr.id_client_sample, cc.client_name, sr.id_client_contact, sr.number_sample, sr.description, sr.comments, sr.files, sr.date_collected, sr.time_collected, 
             sr.date_created, sr.date_updated, sr.flag', FALSE);
             
         $this->datatables->from('sample_reception sr');
@@ -72,8 +72,8 @@ class Sample_reception_model extends CI_Model
             testing.barcode, 
             retest.testing_type AS testing_type, 
             retest.url, 
-            COALESCE(bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review, ec.user_review, el.user_review, em.user_review) AS user_review, 
-            COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review) AS review, 
+            COALESCE(bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review, ec.user_review, el.user_review, em.user_review, cb.user_review) AS user_review, 
+            COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review) AS review, 
             tbl_user.full_name, 
             testing.flag
         ");
@@ -87,7 +87,8 @@ class Sample_reception_model extends CI_Model
         $this->datatables->join('extraction_culture ec', 'ec.extraction_barcode = testing.barcode', 'left');
         $this->datatables->join('extraction_liquid el', 'el.extraction_barcode = testing.barcode', 'left');
         $this->datatables->join('extraction_metagenome em', 'em.extraction_barcode = testing.barcode', 'left');
-        $this->datatables->join('tbl_user', 'tbl_user.id_users = COALESCE(bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review, ec.user_review, el.user_review, em.user_review)', 'left');
+        $this->datatables->join('campy_biosolids cb', 'cb.campy_assay_barcode = testing.barcode', 'left');
+        $this->datatables->join('tbl_user', 'tbl_user.id_users = COALESCE(bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review, ec.user_review, el.user_review, em.user_review, cb.user_review)', 'left');
         $this->datatables->where('testing.flag', '0');
         $this->datatables->where('testing.id_sample', $id);
         $this->datatables->group_by('testing.id_testing');

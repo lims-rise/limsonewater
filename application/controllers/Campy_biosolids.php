@@ -84,6 +84,10 @@ class Campy_biosolids extends CI_Controller
                 'elution_volume' => $row->elution_volume,
                 'vol_sampletube' => $row->vol_sampletube,
                 'tube_number' => $row->tube_number,
+                'full_name' => $row->full_name,
+                'user_review' => $row->user_review,
+                'review' => $row->review,
+                'user_created' => $row->user_created,
                 
             );
             
@@ -295,7 +299,7 @@ class Campy_biosolids extends CI_Controller
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $plate = $this->input->post("growth_plate{$i}", TRUE);
-                if ($plate) {
+                if ($plate !== null) {
                     $this->Campy_biosolids_model->insert_growth_plate(array(
                         'id_result_charcoal' => $assay_id,
                         'plate_number' => $i,
@@ -335,7 +339,7 @@ class Campy_biosolids extends CI_Controller
 
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $plate = $this->input->post("growth_plate{$i}", TRUE);
-                if ($plate) {
+                if ($plate !== null) {
                     $data_plate = array(
                         'id_result_charcoal' => $id_result_charcoal,
                         'plate_number' => $i,
@@ -388,7 +392,7 @@ class Campy_biosolids extends CI_Controller
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $plate = $this->input->post("growth_plate{$i}", TRUE);
 
-                if ($plate) {
+                if ($plate !== null) {
                     $this->Campy_biosolids_model->insert_growth_plate_hba(array(
                         'id_result_hba' => $assay_id,
                         'plate_number' => $i,
@@ -426,7 +430,7 @@ class Campy_biosolids extends CI_Controller
     
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $plate = $this->input->post("growth_plate{$i}", TRUE);
-                if ($plate) {
+                if ($plate !== null) {
                     $data_plate = array(
                         'id_result_hba' => $id_result_hba,
                         'plate_number' => $i,
@@ -1116,22 +1120,107 @@ class Campy_biosolids extends CI_Controller
             $numrow++;
         }
     }
-    
-    
-    
-    
-    
-    
-    
-
-    
-
 
     public function validateCampyAssayBarcode() {
         $id = $this->input->get('id');
         $data = $this->Campy_biosolids_model->validateCampyAssayBarcode($id);
         header('Content-Type: application/json');
         echo json_encode($data);
+    }
+
+    public function barcode_restrict() 
+    {
+        $id = $this->input->get('id1');
+        $data = $this->Campy_biosolids_model->barcode_restrict($id);
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
+
+    public function saveReview() {
+        header('Content-Type: application/json');
+    
+        $id = $this->input->post('id_one_water_sample', true);
+        $review = $this->input->post('review', true);
+        $user_review = $this->input->post('user_review', true);
+    
+        if (!$id || $review === null || !$user_review) {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Missing required fields.'
+            ]);
+            return;
+        }
+    
+        $data = [
+            'review' => $review,
+            'user_review' => $user_review,
+            'user_updated' => $this->session->userdata('id_users'),
+            'date_updated' => date('Y-m-d H:i:s')
+        ];
+    
+        $this->load->model('Campy_biosolids_model');
+    
+        try {
+            $this->Campy_biosolids_model->update_campy_biosolids($id, $data);
+            echo json_encode([
+                'status' => true,
+                'message' => 'Review saved successfully.'
+            ]);
+        } catch (Exception $e) {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Error saving review: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+    public function cancelReview() {
+        header('Content-Type: application/json');
+    
+        // Ambil data POST
+        $id = $this->input->post('id_one_water_sample', true);
+        $review = $this->input->post('review', true);
+        $user_review = $this->input->post('user_review', true);
+    
+        // Debug log untuk memastikan data yang diterima
+        log_message('debug', "Received data: id=$id, review=$review, user_review=$user_review");
+    
+        // Cek jika data yang dibutuhkan ada
+        if (!$id || $review === null) {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Missing required fields.'
+            ]);
+            return;
+        }
+    
+        // Data yang akan diperbarui jika review dibatalkan
+        $data = [
+            'review' => 0,  // Reset status review
+            'user_review' => '', // Kosongkan user review
+            'user_updated' => $this->session->userdata('id_users'),
+            'date_updated' => date('Y-m-d H:i:s')
+        ];
+
+        // Load model dan update data review di database
+        $this->load->model('Campy_biosolids_model');
+        $updateResult = $this->Campy_biosolids_model->updateCancel($id, $data);
+    
+        // Debug log untuk memeriksa hasil update
+        log_message('debug', "Update result: " . ($updateResult ? 'Success' : 'Failure'));
+    
+        // Cek apakah update berhasil
+        if ($updateResult) {
+            echo json_encode([
+                'status' => true,
+                'message' => 'Review canceled successfully.'
+            ]);
+        } else {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Failed to cancel review.'
+            ]);
+        }
     }
 
 }

@@ -70,6 +70,45 @@
 
 					</div>
 				</form>
+                <form id="formSampleReview" method="post">
+					<input type="hidden" name="id_one_water_sample" id="id_one_water_sample" value="<?php echo $id_one_water_sample ?>">
+					<input type="hidden" id="review" name="review" value="<?php echo $review ?>">
+					<input type="hidden" id="user_review" name="user_review" value="<?php echo $user_review ?>">
+					<input type="hidden" id="user_created" name="user_created" value="<?php echo $user_created ?>">
+
+					<div class="modal-footer clearfix" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+
+						<div class="modal-footer-content" style="flex: 1; display: flex; align-items: center;">
+							<div id="textInform2" class="textInform card" style="width: auto; padding: 5px 10px; display: none;">
+								<div class="card-body">
+									<div class="card-header d-flex justify-content-between align-items-center">
+										<h5 class="card-title statusMessage mb-0"></h5>
+										<i class="fa fa-times close-card" style="cursor: pointer;"></i>
+									</div>
+									<p class="statusDescription mb-0"></p>
+								</div>
+							</div>
+						</div>
+
+						<div class="d-flex align-items-center flex-wrap" style="gap: 8px;">
+							<span class="text-muted">Status:</span>
+							<span id="review_label" class="badge bg-warning text-dark" role="button" tabindex="0" style="cursor: pointer;">
+								Unreview
+							</span>
+
+							<span class="text-muted ms-3">by:</span>
+							<span id="reviewed_by_label" style="font-style: italic; font-weight: 800; font-size: 14px;">
+								<?php echo $full_name ? $full_name : '-' ?>
+							</span>
+
+							<?php if (in_array($this->session->userdata('id_user_level'), [1, 2])): ?>
+								<button type="button" id="cancelReviewBtn" class="btn btn-danger ms-3">
+									Cancel Review
+								</button>
+							<?php endif; ?>
+						</div>
+					</div>
+				</form>
 			<div class="box-footer">
                     <div class="col-xs-12"> 
                         <div class="box box-primary box-solid">
@@ -509,16 +548,295 @@
 </div><!-- /.modal -->
 
 <style>
-    #content-result-biochemical {
-        max-height: 400px; 
-        overflow-y: auto;
+
+    #review_label {
+        cursor: pointer;
+        font-size: 14px;  /* Ukuran font untuk label */
     }
-    .table-responsive {
-    overflow-x: auto;
-}
 
+    #reviewed_by_label {
+        margin-left: 10px;
+        font-style: italic;
+        font-weight: bold;
+        font-size: 12px;  /* Ukuran font kecil untuk input reviewer */
+    }
+
+    .d-flex {
+        display: flex;
+        align-items: center;
+    }
+
+    .ms-2 {
+        margin-left: 0.5rem;  /* Spacing antar elemen */
+    }
+
+    .table tbody tr.selected {
+        color: white !important;
+        background-color: #9CDCFE !important;
+    }
+
+    #formKegHidden {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1;
+    }
+
+    .hidden {
+        visibility: hidden;
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+    }
+    .sample-input {
+        margin-bottom: 10px; /* Adjust the spacing as needed */
+    }
+
+    .modal {
+    overflow-y: auto;
+    }
+
+    .modal-body {
+    max-height: 80vh;
+    overflow-y: auto;
+    }
+
+    .badge {
+        font-size: 14px;
+        padding: 8px 12px;
+        border-radius: 20px;
+        margin-top: 0px;
+    }
+
+    .badge-success {
+        background-color: #6A9C89;
+        color: white;
+    }
+
+    .badge-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .alert {
+        padding: 8px 12px;
+        border-radius: 5px;
+        font-size: 14px;
+        margin-top: 0px;
+    }
+
+    .alert-success {
+        background-color: #6A9C89;
+        color: white;
+    }
+
+    .alert-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .card {
+        border-radius: 10px;
+        margin-top: 0px;
+        padding: 8px 12px;
+        width: 100%; /* Ensures card uses available space */
+    }
+
+    .card-success {
+        border: 1px solid #28a745;
+        background-color: #d4edda;
+    }
+
+    .card-danger {
+        border: 1px solid #dc3545;
+        background-color: #f8d7da;
+    }
+
+    .card-title {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: left; /* Align title to the left */
+        margin-bottom: 0px;
+    }
+
+    .card-body {
+        font-size: 14px;
+        text-align: left; /* Align body text to the left */
+    }
+
+    .modal-footer-content {
+        float: left;
+        width: auto;
+        margin-right: 10px;
+    }
+
+    .modal-buttons {
+        float: right;
+    }
+
+    .icon-success {
+        color: #28a745;
+        margin-right: 10px;
+    }
+
+    .icon-fail {
+        color: #dc3545;
+        margin-right: 10px;
+    }
+
+    .modal-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 15px;
+    }
+
+    .modal-footer-content {
+        flex: 1;
+        display: flex;
+        align-items: center;
+    }
+
+    .modal-buttons {
+        display: flex;
+        align-items: center;
+    }
+
+    .card-body {
+        padding: 0px;
+    }
+
+    .card-title {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .card-description {
+        font-size: 14px;
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .close-card {
+        cursor: pointer;
+        font-size: 18px;
+        color: #FDAB9E; 
+    }
+
+    .close-card:hover {
+        color: #bd2130; 
+    }
+
+    .unreview {
+        color: gray !important;
+        border-color: gray !important;
+        box-shadow: none; 
+    }
+
+    /* input.form-check-label. */
+    .review {
+        color: white !important;
+        background-color: #3D8D7A;
+		border: none  !important;
+    }
+
+    .highlight {
+        background-color: rgba(0, 255, 0, 0.1) !important;
+        font-weight: bold !important;
+    }
+    .highlight-edit {
+        background-color: rgba(0, 0, 255, 0.1) !important;
+        font-weight: bold !important;
+    }
+        /* Basic button style for the span */
+        .form-check-label {
+        display: inline-block;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 12px;
+        cursor: pointer;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    /* Hover effect for the button */
+    .form-check-label:hover {
+        opacity: 0.8;
+    }
+
+    /* Focused effect to make it more accessible */
+    .form-check-label:focus {
+        outline: none;
+    }
+
+    .child-table {
+        margin-left: 50px;
+        width: 90%;
+        border-collapse: collapse;
+    }
+
+    .child-table th, .child-table td {
+        border: 1px solid #ddd;
+        padding: 5px;
+    }
+
+    /* Styling untuk container dengan scroll */
+    .child-table-container {
+        max-height: 500px; 
+        overflow-y: auto; 
+    }
+
+    /* Style untuk scrollbar itu sendiri */
+    .child-table-container::-webkit-scrollbar {
+        width: 6px; 
+    }
+
+    /* Style untuk track (background) scrollbar */
+    .child-table-container::-webkit-scrollbar-track {
+        background: #e0f2f1;
+        border-radius: 10px;
+    }
+
+    /* Style untuk thumb (pegangan scrollbar) */
+    .child-table-container::-webkit-scrollbar-thumb {
+        background: #9ACBD0; 
+        border-radius: 10px; 
+    }
+
+    /* Gaya saat thumb scrollbar di-hover */
+    .child-table-container::-webkit-scrollbar-thumb:hover {
+        background: #48A6A7;
+    }
+
+	.review-border {
+		border: 1px solid green  !important;
+		color: green  !important;
+	}
+
+	.disabled-btn {
+		background-color: #ccc; /* Ganti warna latar belakang tombol */
+		color: #666; /* Ganti warna teks tombol */
+		border: 1px solid #ddd; /* Ganti border tombol */
+		cursor: not-allowed; /* Set cursor menjadi not-allowed agar tidak bisa diklik */
+	}
 </style>
-
+<style>
+	#textInform2 .alert {
+        display: block !important;
+        margin-top: 20px;
+        font-size: 16px;
+        z-index: 1000; /* Pastikan info card di atas elemen lain */
+    }
+</style>
+<!-- SweetAlert2 CSS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
@@ -541,52 +859,304 @@
     const BASE_URL = '/limsonewater/index.php';
 
     $(document).ready(function() {
+        	let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
+		let userCreated = $('#user_created').val();
+		let userReview = $('#user_review').val();
+		let fullName = $('#reviewed_by_label').val();
 
-// Event handler untuk mengatur nilai null saat klik pada radio button yang sudah dipilih
-$('input[name="gramlysis"], input[name="oxidase"], input[name="catalase"]').on('click', function() {
-    // Mengecek apakah radio button yang diklik sudah dipilih
-    if ($(this).prop('checked') && $(this).data('clicked')) {
-        $(this).prop('checked', false);  // Hapus pilihan
-        $(this).data('clicked', false);  // Reset data clicked
+		$('#reviewed_by_label').val(fullName ? fullName : '-');
+
+		// Definisikan state review
+		const states = [
+			{ value: 0, label: "Unreview", class: "unreview" },
+			{ value: 1, label: "Reviewed", class: "review" }
+		];
+
+		// Ambil nilai awal dari input hidden
+		let currentState = parseInt($('#review').val());
+		if (isNaN(currentState) || currentState < 0 || currentState > 1) currentState = 0;
+
+
+		// Set tampilan awal pada label review
+		$('#review_label')
+			.text(states[currentState].label)
+			.removeClass()
+			.addClass('form-check-label ' + states[currentState].class);
+
+		// Cek apakah user login BUKAN creator
+		if (userCreated !== loggedInUser) {
+			$('#user_review').val(loggedInUser);
+
+			$('#review_label').off('click').on('click', function () {
+				if ($('#review').val() === '1') {
+					Swal.fire({
+						icon: 'info',
+						title: 'Review Locked',
+						text: 'You have already reviewed this. Further changes are not allowed.',
+						confirmButtonText: 'OK'
+					});
+					return;
+				}
+
+				Swal.fire({
+					icon: 'question',
+					title: 'Are you sure?',
+					showCancelButton: true,
+					confirmButtonText: 'OK',
+					cancelButtonText: 'Cancel',
+					reverseButtons: true
+				}).then((result) => {
+					if (result.isConfirmed) {
+
+						currentState = (currentState + 1) % states.length;
+
+						$('#review').val(states[currentState].value);
+						$('#review_label')
+							.text(states[currentState].label)
+							.removeClass()
+							.addClass('form-check-label ' + states[currentState].class);
+
+						$.ajax({
+							url: '<?php echo site_url('Campy_biosolids/saveReview'); ?>',
+							method: 'POST',
+							data: $('#formSampleReview').serialize(),
+							dataType: 'json',
+							success: function(response) {
+								if (response.status) {
+									Swal.fire({
+										icon: 'success',
+										title: 'Review saved successfully!',
+										text: response.message,
+										timer: 1000,
+										showConfirmButton: false
+									}).then(() => {
+										location.reload();
+									});
+								} else {
+									Swal.fire({
+										icon: 'error',
+										title: 'Failed to save review',
+										text: response.message
+									});
+								}
+							},
+							error: function(xhr, status, error) {
+								console.error('AJAX Error: ' + status + error);
+								Swal.fire('Error', 'Something went wrong during submission.', 'error');
+							}
+						});
+					} else {
+						Swal.fire({
+							icon: 'info',
+							title: 'Review Not Changed',
+							text: 'No changes were made.',
+							timer: 2000
+						});
+					}
+				});
+			});
+
+			if ($('#review').val() === '1') {
+				showInfoCard(
+					'#textInform2',
+					'<i class="fa fa-times-circle"></i> You are not the creator',
+					"In this case, you can't review because it has already been reviewed.",
+
+					false
+				);
+			} else {
+				showInfoCard(
+					'#textInform2',
+					'<i class="fa fa-times-circle"></i> You are not the creator',
+					"In this case, you can review this data. Hover over the box on the right side to start the review.",
+					false
+				);
+
+			}
+
+			$('#review_label')
+			.on('mouseenter', function() {
+				if ($('#review').val() !== '1') { 
+					$(this).text('Review')
+						.addClass('review-border');
+				}
+			})
+			.on('mouseleave', function() {
+				if ($('#review').val() !== '1') { 
+					$(this).text('Unreview')
+						.removeClass('review-border');
+				}
+			});
+
+
+			$('#saveButtonDetail').prop('disabled', false);
+		} else {
+			$('#user_review').val(loggedInUser);
+
+			showInfoCard(
+				'#textInform2',
+				'<i class="fa fa-check-circle"></i> You are the creator',
+				"You have full access to edit this data but not review.",
+				true
+			);
+
+			$('#saveButtonDetail').prop('disabled', true);
+		}
+		
+		// Fungsi untuk cancel review (khusus admin user 1 & 2)
+  // Cek status review ketika halaman dimuat
+  if ($('#review').val() === '1') {
+        // Jika status review = 0 (belum di-review), disable tombol cancel
+        $('#cancelReviewBtn').prop('disabled', false).removeClass('disabled-btn');
     } else {
-        $(this).data('clicked', true);  // Tandai radio button sudah diklik
+        // Jika status review = 1 (sudah di-review),  tombol bisa diklik
+        $('#cancelReviewBtn').prop('disabled', true).addClass('disabled-btn');
     }
-    updateConfirmation(); // Update konfirmasi setelah perubahan
-});
 
-function updateConfirmation() { 
-    const oxidaseValue = $('input[name="oxidase"]:checked').val();
-    const catalaseValue = $('input[name="catalase"]:checked').val();
-    const gramLysisValue = $('input[name="gramlysis"]:checked').val();
-    
-    let confirmationText = '';
+    // Event handler ketika tombol Cancel Review diklik
+    $('#cancelReviewBtn').on('click', function () {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Cancel Review?',
+            text: 'This will reset the review status so another user can review it again.',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, cancel it',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Set review dan user_review untuk cancel
+                $('#review').val(0);
+                $('#user_review').val('');  // Kosongkan user review
 
-    // Jika Gram-Lysis positif
-    if (gramLysisValue === 'Positive') {
-        confirmationText = 'Not Campylobacter';
-    } 
-    // Jika Gram-Lysis negatif, baru cek Oxidase dan Catalase
-    else {
-        if (oxidaseValue === 'Positive' && catalaseValue === 'Positive') {
-            confirmationText = 'Campylobacter';
-        } else if (oxidaseValue === 'Negative' && catalaseValue === 'Negative') {
-            confirmationText = 'Not Campylobacter';
-        } else if (oxidaseValue === 'Positive' && catalaseValue === 'Negative') {
-            confirmationText = 'Not Campylobacter';
-        } else if (oxidaseValue === 'Negative' && catalaseValue === 'Positive') {
-            confirmationText = 'Not Campylobacter';
-        } else {
-            confirmationText = '';
+                // Update label status menjadi Unreview
+                $('#review_label')
+                    .text('Unreview')
+                    .removeClass()
+                    .addClass('form-check-label unreview');  // Ubah tampilan label
+
+                // Disable the Cancel Review button after canceling the review
+                $('#cancelReviewBtn').prop('disabled', true).addClass('disabled-btn');  // Disable tombol
+
+                // Pastikan ID yang diperlukan ada di form
+                let formData = $('#formSampleReview').serialize(); 
+                console.log('Form data to be sent: ', formData); // Debugging log
+
+                $.ajax({
+                    url: '<?php echo site_url('Campy_biosolids/cancelReview'); ?>',
+                    method: 'POST',
+                    data: formData,
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.status) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Review canceled successfully!',
+                                timer: 1000,
+                                showConfirmButton: false
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Failed to cancel review',
+                                text: response.message
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('AJAX Error: ' + status + error);
+                        Swal.fire('Error', 'Something went wrong during cancel.', 'error');
+                    }
+                });
+            }
+        });
+    });
+
+
+
+	  // Mouse enter/leave effects for review label
+	  $('#review_label')
+        .on('mouseenter', function() {
+            if ($('#review').val() !== '1') { 
+                $(this).text('Review')
+                    .addClass('review-border');
+            }
+        })
+        .on('mouseleave', function() {
+            if ($('#review').val() !== '1') { 
+                $(this).text('Unreview')
+                    .removeClass('review-border');
+            }
+        });
+
+
+
+        // Function to show a dynamic info card
+		function showInfoCard(target, message, description, isSuccess) {
+            // Add dynamic content to the target card
+            $(target).find('.statusMessage').html(message);
+            $(target).find('.statusDescription').text(description);
+
+            // Apply classes based on success or failure
+            if (isSuccess) {
+                $(target).removeClass('card-danger').addClass('card-success');
+            } else {
+                $(target).removeClass('card-success').addClass('card-danger');
+            }
+
+            // Show the info card
+            $(target).fadeIn();
         }
-    }
 
-    // Menampilkan hasil ke kolom confirmation
-    $('#confirmation').val(confirmationText);
-}
+        // Close the card when the 'x' icon is clicked
+        $('.close-card').on('click', function() {
+            $('#textInform1').fadeOut(); // Fade out the card
+            $('#textInform2').fadeOut();
+        });
 
 
+        // Event handler untuk mengatur nilai null saat klik pada radio button yang sudah dipilih
+        $('input[name="gramlysis"], input[name="oxidase"], input[name="catalase"]').on('click', function() {
+            // Mengecek apakah radio button yang diklik sudah dipilih
+            if ($(this).prop('checked') && $(this).data('clicked')) {
+                $(this).prop('checked', false);  // Hapus pilihan
+                $(this).data('clicked', false);  // Reset data clicked
+            } else {
+                $(this).data('clicked', true);  // Tandai radio button sudah diklik
+            }
+            updateConfirmation(); // Update konfirmasi setelah perubahan
+        });
 
+        function updateConfirmation() { 
+            const oxidaseValue = $('input[name="oxidase"]:checked').val();
+            const catalaseValue = $('input[name="catalase"]:checked').val();
+            const gramLysisValue = $('input[name="gramlysis"]:checked').val();
+            
+            let confirmationText = '';
 
+            // Jika Gram-Lysis positif
+            if (gramLysisValue === 'Positive') {
+                confirmationText = 'Not Campylobacter';
+            } 
+            // Jika Gram-Lysis negatif, baru cek Oxidase dan Catalase
+            else {
+                if (oxidaseValue === 'Positive' && catalaseValue === 'Positive') {
+                    confirmationText = 'Campylobacter';
+                } else if (oxidaseValue === 'Negative' && catalaseValue === 'Negative') {
+                    confirmationText = 'Not Campylobacter';
+                } else if (oxidaseValue === 'Positive' && catalaseValue === 'Negative') {
+                    confirmationText = 'Not Campylobacter';
+                } else if (oxidaseValue === 'Negative' && catalaseValue === 'Positive') {
+                    confirmationText = 'Not Campylobacter';
+                } else {
+                    confirmationText = '';
+                }
+            }
+
+            // Menampilkan hasil ke kolom confirmation
+            $('#confirmation').val(confirmationText);
+        }
 
         function generateGrowthPlateInputs(container, numberOfTubes) {
             container.empty(); // Clear existing inputs
@@ -598,10 +1168,10 @@ function updateConfirmation() {
                         <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Growth Plate ${i}:</label>
                         <div class="d-flex align-items-center">
                             <label class="radio-inline me-2" style="margin-bottom: 0;">
-                                <input type="radio" name="growth_plate${i}" value="Yes" required> Yes
+                                <input type="radio" name="growth_plate${i}" value="1"> Yes 
                             </label>
                             <label class="radio-inline" style="margin-bottom: 0;">
-                                <input type="radio" name="growth_plate${i}" value="No" required> No
+                                <input type="radio" name="growth_plate${i}" value="0"> No 
                             </label>
                         </div>
                     </div>`
@@ -614,6 +1184,33 @@ function updateConfirmation() {
             generateGrowthPlateInputs($('#growthPlateInputs'), numberOfTubes);
             generateGrowthPlateInputs($('#growthPlateInputsHBA'), numberOfTubes);
         }).trigger('change');
+
+        // function generateGrowthPlateInputs(container, numberOfTubes) {
+        //     container.empty(); // Clear existing inputs
+
+        //     // Create the required number of inputs and labels
+        //     for (let i = 1; i <= numberOfTubes; i++) {
+        //         container.append(
+        //             `<div class="d-flex align-items-center mb-2">
+        //                 <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Growth Plate ${i}:</label>
+        //                 <div class="d-flex align-items-center">
+        //                     <label class="radio-inline me-2" style="margin-bottom: 0;">
+        //                         <input type="radio" name="growth_plate${i}" value="Yes" required> Yes
+        //                     </label>
+        //                     <label class="radio-inline" style="margin-bottom: 0;">
+        //                         <input type="radio" name="growth_plate${i}" value="No" required> No
+        //                     </label>
+        //                 </div>
+        //             </div>`
+        //         );
+        //     }
+        // }
+
+        // $('#number_of_tubes').change(function() {
+        //     let numberOfTubes = parseInt($(this).val()); // Get the selected value as an integer
+        //     generateGrowthPlateInputs($('#growthPlateInputs'), numberOfTubes);
+        //     generateGrowthPlateInputs($('#growthPlateInputsHBA'), numberOfTubes);
+        // }).trigger('change');
 
 
         function showConfirmationDelete(url) {
@@ -911,7 +1508,7 @@ function updateConfirmation() {
                 const plateNumber = plateNumberArray[i]; // Get the corresponding plate number
                 const tableId = `exampleBiochemical_${i}`; // Unique table ID
                 const buttonId = `addtombol_detResultsBiochemical_${plateNumber}`; // Unique button ID
-                const isDisabled = growthPlateArray[i] === 'No' ? 'disabled' : ''; // Determine if button should be disabled
+                const isDisabled = growthPlateArray[i] === '0' ? 'disabled' : ''; // Determine if button should be disabled
                 console.log('button biochemical tube', isDisabled);
 
                 // Append the table and button for each plate
@@ -1073,18 +1670,18 @@ function updateConfirmation() {
                 const plate = growthPlateArray[index] || '';
 
                 // decide the value radio selected
-                const checkedYes = plate === 'Yes' ? 'checked' : '';
-                const checkedNo = plate === 'No' ? 'checked' : '';
+                const checkedYes = plate === '1' ? 'checked' : '';
+                const checkedNo = plate === '0' ? 'checked' : '';
 
                 growthPlateInputs.append(
                     `<div class="d-flex align-items-center mb-2">
                         <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Growth Plate ${plateNumber}:</label>
                         <div class="d-flex align-items-center">
                             <label class="radio-inline me-2" style="margin-bottom: 0;">
-                                <input type="radio" id="growth_plate${plateNumber}" name="growth_plate${plateNumber}" value="Yes" ${checkedYes}> Yes
+                                <input type="radio" id="growth_plate${plateNumber}" name="growth_plate${plateNumber}" value="1" ${checkedYes}> Yes
                             </label>
                             <label class="radio-inline" style="margin-bottom: 0;">
-                                <input type="radio" id="growth_plate${plateNumber}"  name="growth_plate${plateNumber}" value="No" ${checkedNo}> No
+                                <input type="radio" id="growth_plate${plateNumber}"  name="growth_plate${plateNumber}" value="0" ${checkedNo}> No
                             </label>
                         </div>
                     </div>`
@@ -1127,20 +1724,20 @@ function updateConfirmation() {
                     const plate = growthPlateArray[index] || '';
 
                     // decide the value radio selected
-                    const checkedYes = plate === 'Yes' ? 'checked' : '';
-                    const checkedNo = plate === 'No' ? 'checked' : '';
-                    const disabled = plate === 'No' ? 'disabled' : '';
+                    const checkedYes = plate === '1' ? 'checked' : '';
+                    const checkedNo = plate === '0' ? 'checked' : '';
+                    const disabled = plate === '0' ? 'disabled' : '';
 
                     growthPlateInputsHba.append(
-                        `<div class="d-flex align-items-center mb-2">
+                      `<div class="d-flex align-items-center mb-2">
                             <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Growth Plate ${plateNumber}:</label>
                             <div class="d-flex align-items-center">
                                 <input type="hidden" name="growth_plate${plateNumber}" value="${plate}">
                                 <label class="radio-inline me-2" style="margin-bottom: 0;">
-                                    <input type="radio" id="growth_plate${plateNumber}" name="growth_plate${plateNumber}" value="Yes" ${disabled}> Yes
+                                    <input type="radio" id="growth_plate${plateNumber}" name="growth_plate${plateNumber}" value="1" ${disabled}> Yes
                                 </label>
                                 <label class="radio-inline" style="margin-bottom: 0;">
-                                    <input type="radio" id="growth_plate${plateNumber}"  name="growth_plate${plateNumber}" value="No" ${disabled}> No
+                                    <input type="radio" id="growth_plate${plateNumber}"  name="growth_plate${plateNumber}" value="0" ${disabled}> No
                                 </label>
                             </div>
                         </div>`
@@ -1160,6 +1757,7 @@ function updateConfirmation() {
         $('#exampleHba').on('click', '.btn_edit_detResultsHba', function() {
             let tr = $(this).closest('tr');
             let data = table1.row(tr).data();
+            let data1 = table.row(tr).data();
             console.log(data);
             $('#mode_detResultsHBA').val('edit');
             $('#modal-title-HBA').html('<i class="fa fa-pencil-square"></i> Update | Results HBA <span id="my-another-cool-loader"></span>');
@@ -1179,14 +1777,18 @@ function updateConfirmation() {
             const growthPlateArray = data.growth_plate.split(', ');
             const plateNumberArray = data.plate_number.split(', ');
 
+            const growthPlateArray1 = data1.growth_plate.split(', ');
+            const plateNumberArray1 = data1.plate_number.split(', ');
+
             // making the input base on the plate number
             plateNumberArray.forEach((plateNumber, index) => {
                 const plate = growthPlateArray[index] || '';
+                const plate1 = growthPlateArray1[index] || '';
 
                 // decide the value radio selected
-                const checkedYes = plate === 'Yes' ? 'checked' : '';
-                const checkedNo = plate === 'No' ? 'checked' : '';
-                const disabled = plate === 'No' ? 'disabled' : '';
+                const checkedYes = plate === '1' ? 'checked' : '';
+                const checkedNo = plate === '0' ? 'checked' : '';
+                const disabled = plate1 === '0' ? 'disabled' : '';
 
                 growthPlateInputsHba.append(
                     `<div class="d-flex align-items-center mb-2">
@@ -1194,10 +1796,10 @@ function updateConfirmation() {
                         <div class="d-flex align-items-center">
                             <input type="hidden" name="growth_plate${plateNumber}" value="${plate}">
                             <label class="radio-inline me-2" style="margin-bottom: 0;">
-                                <input type="radio" id="growth_plate${plateNumber}" name="growth_plate${plateNumber}" value="Yes" ${checkedYes}> Yes
+                                <input type="radio" id="growth_plate${plateNumber}" name="growth_plate${plateNumber}" value="1" ${checkedYes} ${disabled}> Yes
                             </label>
                             <label class="radio-inline" style="margin-bottom: 0;">
-                                <input type="radio" id="growth_plate${plateNumber}"  name="growth_plate${plateNumber}" value="No" ${checkedNo}> No
+                                <input type="radio" id="growth_plate${plateNumber}"  name="growth_plate${plateNumber}" value="0" ${checkedNo} ${disabled}> No
                             </label>
                         </div>
                     </div>`

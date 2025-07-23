@@ -43,23 +43,7 @@
     </section>
 </div>
 
-<style>
-    .table tbody tr.selected {
-        color: white !important;
-        background-color: #9CDCFE !important;
-    }
-    /* .highlight {
-        background-color: rgba(0, 255, 0, 0.1) !important;
-        font-weight: bold !important;
-    }
-    .highlight-edit {
-        background-color: rgba(0, 0, 255, 0.1) !important;
-        font-weight: bold !important;
-    } */
-</style>
-
 <!-- MODAL FORM -->
-
     <div class="modal fade"  id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true" data-bs-scrollable="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -195,30 +179,28 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="review" class="col-sm-4 control-label">Status</label>
-                            <div class="col-sm-8">
+                        <!-- <div class="form-group d-flex align-items-center" style="margin-bottom: 18px;">
+                            <label for="review" class="col-sm-4 control-label" style="margin-bottom:0;">Status</label>
+                            <div class="col-sm-8 d-flex align-items-center" style="gap: 12px;">
                                 <input type="hidden" id="review" name="review" value="0">
-                                <span id="review_label" class="form-check-label unreview" role="button">
-                                    Unreview
-                                </span>
-                                
-                                <!-- New label to display who reviewed the data -->
-                                <span id="reviewed_by_label"  style="margin-left: 10px; font-style: italic;  font-weight: bold; font-size: 11px;">
-                                    <!-- This will display the name of the reviewer, dynamically set -->
+                                <button id="review_label" type="button" class="form-check-label unreview" style="min-width: 80px; text-align:center;">
+                                    <i class="fa fa-times-circle"></i> Unreview
+                                </button>
+                                <?php if (in_array($this->session->userdata('id_user_level'), [1, 2])): ?>
+                                    <button type="button" class="btn btn-danger ms-3 btn-sm" id="cancelReviewBtn">
+                                        <i class="fa fa-times-circle"></i> Cancel Review
+                                    </button>
+                                <?php endif; ?>
+                                <span id="reviewed_by_label" style="font-style: italic; font-weight: bold; font-size: 12px; color: #3c8dbc;">
                                 </span>
                             </div>
-                        </div>
+                        </div> -->
 
                     </div>
-                    <!-- <div class="modal-footer clearfix">
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
-                        <button type="button" class="btn btn-warning" id="cancelButton" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-                    </div> -->
 
                     <div class="modal-footer clearfix" style="display: flex; align-items: center; justify-content: space-between;">
                         <!-- Info Card on the left side -->
-                        <div class="modal-footer-content" style="flex: 1; display: flex; align-items: center;">
+                        <!-- <div class="modal-footer-content" style="flex: 1; display: flex; align-items: center;">
                             <div id="textInform2" class="textInform card" style="width: auto; padding: 5px 10px; display: none;">
                                 <div class="card-body">
                                     <div class="card-header">
@@ -228,7 +210,7 @@
                                     <p class="statusDescription"></p>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <!-- Buttons on the right side -->
                         <div class="modal-buttons">
@@ -265,25 +247,79 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <style>
-    .hidden {
-        visibility: hidden;
-        position: absolute;
-        width: 0;
-        height: 0;
-        overflow: hidden;
+    .table tbody tr.selected {
+        color: white !important;
+        background-color: #9CDCFE !important;
     }
-    .sample-input {
-        margin-bottom: 10px; /* Adjust the spacing as needed */
+    .highlight {
+        background-color: rgba(0, 255, 0, 0.1) !important;
+        font-weight: bold !important;
+    }
+    .highlight-edit {
+        background-color: rgba(0, 0, 255, 0.1) !important;
+        font-weight: bold !important;
+    }
+        /* Basic button style for the span */
+        .form-check-label {
+        display: inline-block;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 12px;
+        cursor: pointer;
+        text-align: center;
+        transition: all 0.3s ease;
     }
 
-    .modal {
-    overflow-y: auto;
+    /* Hover effect for the button */
+    .form-check-label:hover {
+        opacity: 0.8;
     }
 
-    .modal-body {
-    max-height: 80vh;
-    overflow-y: auto;
+    /* Focused effect to make it more accessible */
+    .form-check-label:focus {
+        outline: none;
     }
+
+    .child-table {
+        margin-left: 50px;
+        width: 90%;
+        border-collapse: collapse;
+    }
+
+    .child-table th, .child-table td {
+        border: 1px solid #ddd;
+        padding: 5px;
+    }
+
+    /* Styling untuk container dengan scroll */
+    .child-table-container {
+        max-height: 500px; /* Atur tinggi maksimal sesuai kebutuhan */
+        overflow-y: auto;  /* Aktifkan scroll vertikal */
+    }
+
+    /* Style untuk scrollbar itu sendiri */
+    .child-table-container::-webkit-scrollbar {
+        width: 6px; /* Lebar scrollbar */
+    }
+
+    /* Style untuk track (background) scrollbar */
+    .child-table-container::-webkit-scrollbar-track {
+        background: #e0f2f1; /* Warna hijau toska muda sebagai background track */
+        border-radius: 10px; /* Membuat track lebih halus */
+    }
+
+    /* Style untuk thumb (pegangan scrollbar) */
+    .child-table-container::-webkit-scrollbar-thumb {
+        background: #9ACBD0; /* Warna hijau toska gelap untuk thumb scrollbar */
+        border-radius: 10px; /* Membuat thumb lebih halus */
+    }
+
+    /* Gaya saat thumb scrollbar di-hover */
+    .child-table-container::-webkit-scrollbar-thumb:hover {
+        background: #48A6A7; /* Warna hijau toska yang lebih gelap saat hover */
+    }
+
     .badge {
         font-size: 14px;
         padding: 8px 12px;
@@ -415,7 +451,8 @@
     }
 
     .unreview {
-        color: gray !important;
+        color: white !important;
+        background-color: gray !important;
         border-color: gray !important;
         box-shadow: none; /* Override Bootstrap box-shadow */
     }
@@ -424,6 +461,223 @@
     .review {
         color: green !important;
         border-color: green !important;
+    }
+
+    #review_label.review-hoverable {
+        transition: all 0.2s ease-in-out  !important;
+        box-shadow: 0 0 4px rgba(0, 128, 0, 0.3)  !important;
+    }
+
+    #review_label.review-hoverable:hover {
+        border: 1px solid green !important;
+        background-color: white  !important;
+        color: green  !important;
+        padding: 4px 8px  !important;
+        border-radius: 4px  !important;
+        cursor: pointer  !important;
+    }
+
+
+</style>
+<style>
+    #review_label {
+        cursor: pointer;
+        font-size: 14px;  /* Ukuran font untuk label */
+        position: relative;
+        z-index: 10;  /* Atur nilai z-index yang lebih tinggi */
+        pointer-events: auto;  /* Pastikan elemen ini dapat menerima klik */
+    }
+
+    #reviewed_by_label {
+        margin-left: 10px;
+        font-style: italic;
+        font-weight: bold;
+        font-size: 12px;  /* Ukuran font kecil untuk input reviewer */
+    }
+
+    .d-flex {
+        display: flex;
+        align-items: center;
+    }
+
+    .ms-2 {
+        margin-left: 0.5rem;  /* Spacing antar elemen */
+    }
+
+    .table tbody tr.selected {
+        color: white !important;
+        background-color: #9CDCFE !important;
+    }
+
+    #formKegHidden {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1;
+    }
+
+    .hidden {
+        visibility: hidden;
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+    }
+    .sample-input {
+        margin-bottom: 10px; /* Adjust the spacing as needed */
+    }
+
+    .modal {
+    overflow-y: auto;
+    }
+
+    .modal-body {
+    max-height: 80vh;
+    overflow-y: auto;
+    }
+
+    .badge {
+        font-size: 14px;
+        padding: 8px 12px;
+        border-radius: 20px;
+        margin-top: 0px;
+    }
+
+    .badge-success {
+        background-color: #6A9C89;
+        color: white;
+    }
+
+    .badge-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .alert {
+        padding: 8px 12px;
+        border-radius: 5px;
+        font-size: 14px;
+        margin-top: 0px;
+    }
+
+    .alert-success {
+        background-color: #6A9C89;
+        color: white;
+    }
+
+    .alert-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .card {
+        border-radius: 10px;
+        margin-top: 0px;
+        padding: 8px 12px;
+        width: 100%; /* Ensures card uses available space */
+    }
+
+    .card-success {
+        border: 1px solid #28a745;
+        background-color: #d4edda;
+    }
+
+    .card-danger {
+        border: 1px solid #dc3545;
+        background-color: #f8d7da;
+    }
+
+    .card-title {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: left; /* Align title to the left */
+        margin-bottom: 0px;
+    }
+
+    .card-body {
+        font-size: 14px;
+        text-align: left; /* Align body text to the left */
+    }
+
+    .modal-footer-content {
+        float: left;
+        width: auto;
+        margin-right: 10px;
+    }
+
+    .modal-buttons {
+        float: right;
+    }
+
+    .icon-success {
+        color: #28a745;
+        margin-right: 10px;
+    }
+
+    .icon-fail {
+        color: #dc3545;
+        margin-right: 10px;
+    }
+
+    .modal-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 15px;
+    }
+
+    .modal-footer-content {
+        flex: 1;
+        display: flex;
+        align-items: center;
+    }
+
+    .modal-buttons {
+        display: flex;
+        align-items: center;
+    }
+
+    .card-body {
+        padding: 0px;
+    }
+
+    .card-title {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .card-description {
+        font-size: 14px;
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .close-card {
+        cursor: pointer;
+        font-size: 18px;
+        color: #FDAB9E; 
+    }
+
+    .close-card:hover {
+        color: #bd2130; 
+    }
+
+    .unreview {
+        color: white !important;
+        border-color: gray !important;
+        box-shadow: none; 
+    }
+
+    /* input.form-check-label. */
+    .review {
+        color: white !important;
+        background-color: #3D8D7A;
+		border: none  !important;
     }
 
     .highlight {
@@ -469,34 +723,48 @@
 
     /* Styling untuk container dengan scroll */
     .child-table-container {
-        max-height: 500px; /* Atur tinggi maksimal sesuai kebutuhan */
-        overflow-y: auto;  /* Aktifkan scroll vertikal */
+        max-height: 500px; 
+        overflow-y: auto; 
     }
 
     /* Style untuk scrollbar itu sendiri */
     .child-table-container::-webkit-scrollbar {
-        width: 6px; /* Lebar scrollbar */
+        width: 6px; 
     }
 
     /* Style untuk track (background) scrollbar */
     .child-table-container::-webkit-scrollbar-track {
-        background: #e0f2f1; /* Warna hijau toska muda sebagai background track */
-        border-radius: 10px; /* Membuat track lebih halus */
+        background: #e0f2f1;
+        border-radius: 10px;
     }
 
     /* Style untuk thumb (pegangan scrollbar) */
     .child-table-container::-webkit-scrollbar-thumb {
-        background: #9ACBD0; /* Warna hijau toska gelap untuk thumb scrollbar */
-        border-radius: 10px; /* Membuat thumb lebih halus */
+        background: #9ACBD0; 
+        border-radius: 10px; 
     }
 
     /* Gaya saat thumb scrollbar di-hover */
     .child-table-container::-webkit-scrollbar-thumb:hover {
-        background: #48A6A7; /* Warna hijau toska yang lebih gelap saat hover */
+        background: #48A6A7;
     }
 
+	.review-border {
+		border: 1px solid green  !important;
+		color: green  !important;
+	}
+</style>
+<style>
+	#textInform2 .alert {
+        display: block !important;
+        margin-top: 20px;
+        font-size: 16px;
+        z-index: 1000; /* Pastikan info card di atas elemen lain */
+    }
 </style>
 
+<!-- SweetAlert2 CSS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
@@ -659,9 +927,6 @@
 
         $('#compose-modal').on('shown.bs.modal', function () {
 			$('#id_client_sample').focus();
-            // $('#budget_req').on('input', function() {
-            //     formatNumber(this);
-            //     });
             });
     
 
@@ -902,23 +1167,362 @@
             $('#compose-modal').modal('show');
         });
 
-        $('#mytable').on('click', '.btn_edit', function(){
-            let tr = $(this).parent().parent();
+        // $('#mytable').on('click', '.btn_edit', function(){
+        //     let tr = $(this).parent().parent();
+        //     let data = table.row(tr).data();
+        //     let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
+        //     console.log(data);
+        //     $('#mode').val('edit');
+        //     $('#modal-title').html('<i class="fa fa-pencil-square"></i> Campy Liquids | Update<span id="my-another-cool-loader"></span>');
+        //     $('#id_campy_liquids').val(data.id_campy_liquids);
+        //     $('#id_one_water_sample').hide();
+        //     // $('#idx_one_water_sample').show();
+        //     $('#idx_one_water_sample').attr('readonly', true);
+        //     $('#idx_one_water_sample').val(data.id_one_water_sample);
+        //     $('#id_person').val(data.id_person);
+        //     $('#date_start').val(data.date_start);
+        //     $('#id_sampletype').val(data.id_sampletype);
+        //     $('#sampletype').attr('readonly', true);
+        //     $('#sampletype').on('input', function() {
+        //         if ($(this).val().toLowerCase() === "soil") {
+        //             $('#tray_weight_container').show();
+        //         } else {
+        //             $('#tray_weight_container').hide();
+        //         }
+        //     }).val(data.sampletype).trigger('input');
+        //     $('#tray_weight').val(data.tray_weight);
+        //     // Set radio button value
+        //     if (data.mpn_pcr_conducted === 'Yes') {
+        //         $('#mpn_pcr_conducted input[type="radio"][value="Yes"]').prop('checked', true);
+        //     } else if (data.mpn_pcr_conducted === 'No') {
+        //         $('#mpn_pcr_conducted input[type="radio"][value="No"]').prop('checked', true);
+        //     }
+        //     $('#campy_assay_barcode').val(data.campy_assay_barcode);
+        //     $('#campy_assay_barcode').attr('readonly', true);
+        //     $('#date_sample_processed').val(data.date_sample_processed);
+        //     $('#time_sample_processed').val(data.time_sample_processed);
+        //     $('#elution_volume').val(data.elution_volume);
+        //     $('#number_of_tubes').val(data.number_of_tubes);
+        //     $('#number_of_tubes').prop('disabled', true);
+        //     $('#number_of_tubes1').val(data.number_of_tubes);
+        //     // Clear existing sample volume inputs
+        //     let sampleVolumeInputs = $('#sampleVolumeInputs');
+        //     sampleVolumeInputs.empty();
+
+        //     // Pecah data vol_sampletube dan tube_number
+        //     const volSampletubeArray = data.vol_sampletube.split(', ');
+        //     const tubeNumberArray = data.tube_number.split(', ');
+
+        //     // Buat input berdasarkan tube_number
+        //     tubeNumberArray.forEach((tubeNumber, index) => {
+        //         const volume = volSampletubeArray[index] || ''; // Dapatkan volume yang sesuai atau kosong jika tidak ada
+        //         sampleVolumeInputs.append(
+        //             `<div class="form-group">
+        //                 <label for="vol_sampletube${tubeNumber}" class="col-sm control-label">Tube ${tubeNumber}</label>
+        //                 <div class="col-sm-8">
+        //                     <input id="vol_sampletube${tubeNumber}" name="vol_sampletube${tubeNumber}" type="number" step="0.01" class="form-control sample-input" placeholder="Volume of The Sample(mL) Tube ${tubeNumber}" value="${volume}" required>
+        //                 </div>
+        //             </div>`
+        //         );
+        //     });
+        //     $('#comments').val(data.comments);
+        //     $('#review').val(data.review);
+        //     $('#user_review').val(data.user_review);
+        //     $('#reviewed_by_label').text('Reviewed by: ' + (data.full_name ? data.full_name : '-'));
+        //     if (data.user_created !== loggedInUser) {
+        //         $('#user_review').val(loggedInUser);
+        //             // Set the checkbox state
+        //             if (data.review == 1) {
+        //                 $('#review').prop('checked', true); // Check the checkbox
+        //                 const label = document.getElementById('review_label');
+        //                 label.textContent = 'Review';
+        //                 label.className = `form-check-label review`;            
+        //             } else if (data.review == 0) {
+        //                 $('#review').prop('checked', false); // Uncheck the checkbox
+        //                 const label = document.getElementById('review_label');
+        //                 label.textContent = 'Unreview';
+        //                 label.className = `form-check-label unreview`;            
+        //             }
+        //             $('#review').val(data.review);
+        //                                 // Define the states with associated values and labels
+        //                                 const states = [
+        //                 { value: 0, label: "Unreview", class: "unreview" },
+        //                 { value: 1, label: "Review", class: "review" }
+        //                 // { value: 2, label: "Crossed", class: "crossed" }
+        //             ];
+
+        //             let currentState = 0; // Start with "Unchecked"
+
+        //             // Add event listener to toggle through states
+        //             // document.getElementById('review_label').addEventListener('click', function () {
+        //             //     // Cycle through the states
+        //             //     currentState = (currentState + 1) % states.length;
+
+        //             //     const checkbox = document.getElementById('review');
+        //             //     const label = document.getElementById('review_label');
+
+        //             //     // Update the label text
+        //             //     label.textContent = states[currentState].label;
+
+        //             //     // Apply styling to the label based on the state
+        //             //     label.className = `form-check-label ${states[currentState].class}`;
+
+        //             //     // (Optional) Update a hidden input or store the value somewhere for submission
+        //             //     checkbox.value = states[currentState].value; // Set the value to the current state
+        //             // });               
+                    
+        //             $('#review_label').off('click').on('click', function () {
+        //                 const checkbox = $('#review');
+        //                 const label = $(this);
+        //                 let currentValue = parseInt(checkbox.val());
+        //                 let nextValue = currentValue === 1 ? 0 : 1; // toggle
+
+        //                 const states = [
+        //                     { value: 0, label: "Unreview", class: "form-check-label unreview" },
+        //                     { value: 1, label: "Review", class: "form-check-label review" }
+        //                 ];
+
+        //                 let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
+        //                 let idSample = $('#idx_one_water_sample').val();
+
+        //                 // Confirm before changing
+        //                 Swal.fire({
+        //                     title: `Mark as ${states[nextValue].label}?`,
+        //                     icon: 'question',
+        //                     showCancelButton: true,
+        //                     confirmButtonText: 'Yes'
+        //                 }).then(result => {
+        //                     if (result.isConfirmed) {
+        //                         // Lakukan AJAX untuk simpan ke database
+        //                         $.ajax({
+        //                             url: '<?php echo site_url('Campy_liquids/saveReview'); ?>',
+        //                             method: 'POST',
+        //                             data: {
+        //                                 id_one_water_sample: idSample,
+        //                                 review: nextValue,
+        //                                 user_review: loggedInUser
+        //                             },
+        //                             dataType: 'json',
+        //                             success: function (response) {
+        //                                 if (response.status) {
+        //                                     checkbox.val(nextValue); // Update hidden input
+        //                                     label.text(states[nextValue].label).attr('class', states[nextValue].class);
+
+        //                                     $('#reviewed_by_label').text('Reviewed by: ' + response.full_name);
+
+        //                                     Swal.fire({
+        //                                         icon: 'success',
+        //                                         title: 'Review updated',
+        //                                         text: response.message,
+        //                                         timer: 1000,
+        //                                         showConfirmButton: false
+        //                                     });
+        //                                 } else {
+        //                                     Swal.fire('Error', response.message, 'error');
+        //                                 }
+        //                             },
+        //                             error: function () {
+        //                                 Swal.fire('Error', 'Failed to connect to server.', 'error');
+        //                             }
+        //                         });
+        //                     }
+        //                 });
+        //             });
+
+        //     } else {
+        //         if (data.review == 1) {
+        //                 $('#review').prop('checked', true); // Check the checkbox
+        //                 const label = document.getElementById('review_label');
+        //                 label.textContent = 'Review';
+        //                 label.className = `form-check-label review`;            
+        //             } else if (data.review == 0) {
+        //                 $('#review').prop('checked', false); // Uncheck the checkbox
+        //                 const label = document.getElementById('review_label');
+        //                 label.textContent = 'Unreview';
+        //                 label.className = `form-check-label unreview`;            
+        //             }
+        //     }
+        //             // console.log('test user', data.user_created);
+        //             if (data.user_created === loggedInUser) {
+        //                 $('#saveButtonDetail').prop('disabled', false);  // Enable Save button if user is the same as the one who created
+        //                 showInfoCard('#textInform2', '<i class="fa fa-check-circle"></i> You are the creator', "You have full access to edit this data.", true);
+        //             } else {
+        //                 $('#saveButtonDetail').prop('disabled', false);  // Disable Save button if user is not the same as the one who created
+        //                 showInfoCard('#textInform2', '<i class="fa fa-times-circle"></i> You are not the creator', "In the case you can review this data and make changes.", false);
+        //             }
+        //     $('#barcode_moisture_content').val(data.barcode_moisture_content);
+        //     $('#compose-modal').modal('show');
+        // });
+        // $('#mytable').on('click', '.btn_edit', function () {
+        //     let tr = $(this).closest('tr');
+        //     let data = table.row(tr).data();
+        //     let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
+
+        //     // Set field values
+        //     $('#mode').val('edit');
+        //     $('#modal-title').html('<i class="fa fa-pencil-square"></i> Campy Liquids | Update<span id="my-another-cool-loader"></span>');
+        //     $('#id_campy_liquids').val(data.id_campy_liquids);
+        //     $('#id_one_water_sample').hide();
+        //     $('#idx_one_water_sample').attr('readonly', true).val(data.id_one_water_sample);
+        //     $('#id_person').val(data.id_person);
+        //     $('#date_start').val(data.date_start);
+        //     $('#id_sampletype').val(data.id_sampletype);
+        //     $('#sampletype').attr('readonly', true).on('input', function () {
+        //         if ($(this).val().toLowerCase() === "soil") {
+        //             $('#tray_weight_container').show();
+        //         } else {
+        //             $('#tray_weight_container').hide();
+        //         }
+        //     }).val(data.sampletype).trigger('input');
+        //     $('#tray_weight').val(data.tray_weight);
+        //                if (data.mpn_pcr_conducted === 'Yes') {
+        //         $('#mpn_pcr_conducted input[type="radio"][value="Yes"]').prop('checked', true);
+        //     } else if (data.mpn_pcr_conducted === 'No') {
+        //         $('#mpn_pcr_conducted input[type="radio"][value="No"]').prop('checked', true);
+        //     }
+        //     $('#campy_assay_barcode').val(data.campy_assay_barcode).attr('readonly', true);
+        //     $('#date_sample_processed').val(data.date_sample_processed);
+        //     $('#time_sample_processed').val(data.time_sample_processed);
+        //     $('#elution_volume').val(data.elution_volume);
+        //     $('#number_of_tubes').val(data.number_of_tubes).prop('disabled', true);
+        //     $('#number_of_tubes1').val(data.number_of_tubes);
+
+
+        //     // Volume input builder
+        //     let sampleVolumeInputs = $('#sampleVolumeInputs').empty();
+        //     const volSampletubeArray = data.vol_sampletube.split(', ');
+        //     const tubeNumberArray = data.tube_number.split(', ');
+
+        //     tubeNumberArray.forEach((tubeNumber, index) => {
+        //         const volume = volSampletubeArray[index] || '';
+        //         sampleVolumeInputs.append(`
+        //             <div class="form-group">
+        //                 <label for="vol_sampletube${tubeNumber}" class="col-sm control-label">Tube ${tubeNumber}</label>
+        //                 <div class="col-sm-8">
+        //                     <input id="vol_sampletube${tubeNumber}" name="vol_sampletube${tubeNumber}" type="number" step="0.01" class="form-control sample-input" placeholder="Volume of The Sample(mL) Tube ${tubeNumber}" value="${volume}" required>
+        //                 </div>
+        //             </div>
+        //         `);
+        //     });
+
+        //     // Fill other fields
+        //     $('#comments').val(data.comments);
+        //     $('#review').val(data.review);
+        //     $('#user_review').val(data.user_review);
+        //     $('#reviewed_by_label').text('Reviewed by: ' + (data.full_name || '-'));
+
+        //     // === Review logic ===
+        //     const reviewStates = [
+        //         { value: 0, label: "Unreview", class: "form-check-label unreview" },
+        //         { value: 1, label: "Review", class: "form-check-label review" }
+        //     ];
+
+        //     let currentState = parseInt(data.review);
+        //     if (isNaN(currentState) || currentState < 0 || currentState > 1) currentState = 0;
+        //     const $reviewLabel = $('#review_label');
+        //     const $reviewHidden = $('#review');
+
+        //     $reviewHidden.val(currentState);
+        //     $reviewLabel
+        //         .text(reviewStates[currentState].label)
+        //         .attr('class', reviewStates[currentState].class);
+
+        //     // Role: REVIEWER
+        //     if (data.user_created !== loggedInUser) {
+        //         $('#user_review').val(loggedInUser);
+
+        //         $reviewLabel.off('click').on('click', function () {
+        //             // Prevent changing if already reviewed
+        //             if (currentState === 1) {
+        //                 Swal.fire('Review Locked', 'Already reviewed. No changes allowed.', 'info');
+        //                 return;
+        //             }
+
+        //             let nextValue = currentState === 1 ? 0 : 1;
+
+        //             Swal.fire({
+        //                 title: `Mark as ${reviewStates[nextValue].label}?`,
+        //                 icon: 'question',
+        //                 showCancelButton: true,
+        //                 confirmButtonText: 'Yes'
+        //             }).then(result => {
+        //                 if (result.isConfirmed) {
+        //                     $.ajax({
+        //                         url: '<?php echo site_url('Campy_liquids/saveReview'); ?>',
+        //                         method: 'POST',
+        //                         data: {
+        //                             id_one_water_sample: data.id_one_water_sample,
+        //                             review: nextValue,
+        //                             user_review: loggedInUser
+        //                         },
+        //                         dataType: 'json',
+        //                         success: function (response) {
+        //                             if (response.status) {
+        //                                 currentState = nextValue;
+        //                                 $reviewHidden.val(nextValue);
+        //                                 $reviewLabel
+        //                                     .text(reviewStates[nextValue].label)
+        //                                     .attr('class', reviewStates[nextValue].class);
+        //                                 $('#reviewed_by_label').text('Reviewed by: ' + (response.full_name || '-'));
+
+        //                                 Swal.fire({
+        //                                     icon: 'success',
+        //                                     title: 'Review updated',
+        //                                     text: response.message,
+        //                                     timer: 1000,
+        //                                     showConfirmButton: false
+        //                                 });
+        //                             } else {
+        //                                 Swal.fire('Error', response.message, 'error');
+        //                             }
+        //                         },
+        //                         error: function () {
+        //                             Swal.fire('Error', 'Failed to connect to server.', 'error');
+        //                         }
+        //                     });
+        //                 }
+        //             });
+        //         });
+
+        //     } else {
+        //         // Role: CREATOR
+        //         $reviewLabel.off('click').on('click', function () {
+        //             Swal.fire({
+        //                 icon: 'info',
+        //                 title: 'Action Not Allowed',
+        //                 text: 'You are the creator of this data and cannot perform a review.',
+        //                 confirmButtonText: 'OK'
+        //             });
+        //         });
+        //     }
+
+        //     // Set Save button + Info
+        //     if (data.user_created === loggedInUser) {
+        //         $('#saveButtonDetail').prop('disabled', false);
+        //         showInfoCard('#textInform2', '<i class="fa fa-check-circle"></i> You are the creator', "You have full access to edit this data.", true);
+        //     } else {
+        //         $('#saveButtonDetail').prop('disabled', false);
+        //         showInfoCard('#textInform2', '<i class="fa fa-times-circle"></i> You are not the creator', "You can review this data but cannot edit core information.", false);
+        //     }
+
+        //     $('#barcode_moisture_content').val(data.barcode_moisture_content);
+        //     $('#compose-modal').modal('show');
+        // });
+        $('#mytable').on('click', '.btn_edit', function () {
+            let tr = $(this).closest('tr');
             let data = table.row(tr).data();
             let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
-            console.log(data);
+
+            // Set field values di modal
             $('#mode').val('edit');
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Campy Liquids | Update<span id="my-another-cool-loader"></span>');
             $('#id_campy_liquids').val(data.id_campy_liquids);
             $('#id_one_water_sample').hide();
-            // $('#idx_one_water_sample').show();
-            $('#idx_one_water_sample').attr('readonly', true);
-            $('#idx_one_water_sample').val(data.id_one_water_sample);
+            $('#idx_one_water_sample').attr('readonly', true).val(data.id_one_water_sample);
             $('#id_person').val(data.id_person);
             $('#date_start').val(data.date_start);
             $('#id_sampletype').val(data.id_sampletype);
-            $('#sampletype').attr('readonly', true);
-            $('#sampletype').on('input', function() {
+            $('#sampletype').attr('readonly', true).on('input', function () {
                 if ($(this).val().toLowerCase() === "soil") {
                     $('#tray_weight_container').show();
                 } else {
@@ -926,110 +1530,225 @@
                 }
             }).val(data.sampletype).trigger('input');
             $('#tray_weight').val(data.tray_weight);
-            // Set radio button value
+
             if (data.mpn_pcr_conducted === 'Yes') {
                 $('#mpn_pcr_conducted input[type="radio"][value="Yes"]').prop('checked', true);
             } else if (data.mpn_pcr_conducted === 'No') {
                 $('#mpn_pcr_conducted input[type="radio"][value="No"]').prop('checked', true);
             }
-            $('#campy_assay_barcode').val(data.campy_assay_barcode);
-            $('#campy_assay_barcode').attr('readonly', true);
+            $('#campy_assay_barcode').val(data.campy_assay_barcode).attr('readonly', true);
             $('#date_sample_processed').val(data.date_sample_processed);
             $('#time_sample_processed').val(data.time_sample_processed);
             $('#elution_volume').val(data.elution_volume);
-            $('#number_of_tubes').val(data.number_of_tubes);
-            $('#number_of_tubes').prop('disabled', true);
+            $('#number_of_tubes').val(data.number_of_tubes).prop('disabled', true);
             $('#number_of_tubes1').val(data.number_of_tubes);
-            // Clear existing sample volume inputs
-            let sampleVolumeInputs = $('#sampleVolumeInputs');
-            sampleVolumeInputs.empty();
 
-            // Pecah data vol_sampletube dan tube_number
+            // Volume input builder
+            let sampleVolumeInputs = $('#sampleVolumeInputs').empty();
             const volSampletubeArray = data.vol_sampletube.split(', ');
             const tubeNumberArray = data.tube_number.split(', ');
 
-            // Buat input berdasarkan tube_number
             tubeNumberArray.forEach((tubeNumber, index) => {
-                const volume = volSampletubeArray[index] || ''; // Dapatkan volume yang sesuai atau kosong jika tidak ada
-                sampleVolumeInputs.append(
-                    `<div class="form-group">
+                const volume = volSampletubeArray[index] || '';
+                sampleVolumeInputs.append(`
+                    <div class="form-group">
                         <label for="vol_sampletube${tubeNumber}" class="col-sm control-label">Tube ${tubeNumber}</label>
                         <div class="col-sm-8">
                             <input id="vol_sampletube${tubeNumber}" name="vol_sampletube${tubeNumber}" type="number" step="0.01" class="form-control sample-input" placeholder="Volume of The Sample(mL) Tube ${tubeNumber}" value="${volume}" required>
                         </div>
-                    </div>`
-                );
+                    </div>
+                `);
             });
+
+            // Fill other fields
             $('#comments').val(data.comments);
             $('#review').val(data.review);
             $('#user_review').val(data.user_review);
-            $('#reviewed_by_label').text('Reviewed by: ' + (data.full_name ? data.full_name : '-'));
+            $('#reviewed_by_label').text('Reviewed by: ' + (data.full_name || '-'));
+
+            // === Review logic ===
+            const reviewStates = [
+                { value: 0, label: "Unreview", class: "form-check-label unreview" },
+                { value: 1, label: "Review", class: "form-check-label review" }
+            ];
+
+            let currentState = parseInt(data.review);
+            if (isNaN(currentState) || currentState < 0 || currentState > 1) currentState = 0;
+            const $reviewLabel = $('#review_label');
+            const $reviewHidden = $('#review');
+
+            $reviewHidden.val(currentState);
+            $reviewLabel
+                .text(reviewStates[currentState].label)
+                .attr('class', reviewStates[currentState].class + ' form-check-label')
+                .removeClass('review-hoverable');
+
+            if (currentState === 0 && data.user_created !== loggedInUser) {
+                $reviewLabel
+                    .addClass('review-hoverable')
+                    .off('mouseenter mouseleave')
+                    .on('mouseenter', function () {
+                        $(this).text('Review');
+                    })
+                    .on('mouseleave', function () {
+                        $(this).text('Unreview');
+                    });
+            }
+
+            // Role: REVIEWER
             if (data.user_created !== loggedInUser) {
                 $('#user_review').val(loggedInUser);
-                    // Set the checkbox state
-                    if (data.review == 1) {
-                        $('#review').prop('checked', true); // Check the checkbox
-                        const label = document.getElementById('review_label');
-                        label.textContent = 'Review';
-                        label.className = `form-check-label review`;            
-                    } else if (data.review == 0) {
-                        $('#review').prop('checked', false); // Uncheck the checkbox
-                        const label = document.getElementById('review_label');
-                        label.textContent = 'Unreview';
-                        label.className = `form-check-label unreview`;            
+
+                $reviewLabel.off('click').on('click', function () {
+                    // Prevent changing if already reviewed
+                    if (currentState === 1) {
+                        Swal.fire('Review Locked', 'Already reviewed. No changes allowed.', 'info');
+                        return;
                     }
-                    $('#review').val(data.review);
-                                        // Define the states with associated values and labels
-                                        const states = [
-                        { value: 0, label: "Unreview", class: "unreview" },
-                        { value: 1, label: "Review", class: "review" }
-                        // { value: 2, label: "Crossed", class: "crossed" }
-                    ];
 
-                    let currentState = 0; // Start with "Unchecked"
+                    let nextValue = currentState === 1 ? 0 : 1;
 
-                    // Add event listener to toggle through states
-                    document.getElementById('review_label').addEventListener('click', function () {
-                        // Cycle through the states
-                        currentState = (currentState + 1) % states.length;
+                    Swal.fire({
+                        title: `Mark as ${reviewStates[nextValue].label}?`,
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes'
+                    }).then(result => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: '<?php echo site_url('Campy_liquids/saveReview'); ?>',
+                                method: 'POST',
+                                data: {
+                                    id_one_water_sample: data.id_one_water_sample,
+                                    review: nextValue,
+                                    user_review: loggedInUser
+                                },
+                                dataType: 'json',
+                                success: function (response) {
+                                    if (response.status) {
+                                        currentState = nextValue;
+                                        $reviewHidden.val(nextValue);
+                                        $reviewLabel
+                                            .text(reviewStates[nextValue].label)
+                                            .attr('class', reviewStates[nextValue].class);
 
-                        const checkbox = document.getElementById('review');
-                        const label = document.getElementById('review_label');
+                                        $('#reviewed_by_label').text('Reviewed by: ' + (response.full_name || '-'));
 
-                        // Update the label text
-                        label.textContent = states[currentState].label;
+                                        $('#compose-modal').modal('hide');
+                                        table.ajax.reload(null, false);
 
-                        // Apply styling to the label based on the state
-                        label.className = `form-check-label ${states[currentState].class}`;
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Review updated',
+                                            text: response.message,
+                                            timer: 1000,
+                                            showConfirmButton: false
+                                        });
+                                    } else {
+                                        Swal.fire('Error', response.message, 'error');
+                                    }
+                                },
+                                error: function () {
+                                    Swal.fire('Error', 'Failed to connect to server.', 'error');
+                                }
+                            });
+                        }
+                    });
+                });
 
-                        // (Optional) Update a hidden input or store the value somewhere for submission
-                        checkbox.value = states[currentState].value; // Set the value to the current state
-                    });                
             } else {
-                if (data.review == 1) {
-                        $('#review').prop('checked', true); // Check the checkbox
-                        const label = document.getElementById('review_label');
-                        label.textContent = 'Review';
-                        label.className = `form-check-label review`;            
-                    } else if (data.review == 0) {
-                        $('#review').prop('checked', false); // Uncheck the checkbox
-                        const label = document.getElementById('review_label');
-                        label.textContent = 'Unreview';
-                        label.className = `form-check-label unreview`;            
-                    }
+                // Role: CREATOR
+                $reviewLabel.off('click').on('click', function () {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Action Not Allowed',
+                        text: 'You are the creator of this data and cannot perform a review.',
+                        confirmButtonText: 'OK'
+                    });
+                });
             }
-                    // console.log('test user', data.user_created);
-                    if (data.user_created === loggedInUser) {
-                        $('#saveButtonDetail').prop('disabled', false);  // Enable Save button if user is the same as the one who created
-                        showInfoCard('#textInform2', '<i class="fa fa-check-circle"></i> You are the creator', "You have full access to edit this data.", true);
-                    } else {
-                        $('#saveButtonDetail').prop('disabled', false);  // Disable Save button if user is not the same as the one who created
-                        showInfoCard('#textInform2', '<i class="fa fa-times-circle"></i> You are not the creator', "In the case you can review this data and make changes.", false);
+
+            // Tambah event handler tombol Cancel Review, hanya jika tombol ada
+            $('#cancelReviewBtn').off('click').on('click', function () {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Cancel Review?',
+                    text: 'This will reset the review status so another user can review it again.',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, cancel it',
+                    cancelButtonText: 'No'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const idSample = data.id_one_water_sample;
+                        const loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
+
+                        $.ajax({
+                            url: '<?php echo site_url('Campy_liquids/cancelReview'); ?>',
+                            method: 'POST',
+                            data: {
+                                id_one_water_sample: idSample,
+                                review: 0,
+                                user_review: null
+                            },
+                            dataType: 'json',
+                            success: function(response) {
+                                if (response.status) {
+                                    $('#compose-modal').modal('hide');
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Review canceled successfully!',
+                                        timer: 1000,
+                                        showConfirmButton: false
+                                    });
+
+                                    // 🔄 Update datatable setelah cancel
+                                    table.ajax.reload(null, false);
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Failed to cancel review',
+                                        text: response.message
+                                    });
+                                }
+                            },
+
+                            error: function () {
+                                Swal.fire('Error', 'Something went wrong during cancel.', 'error');
+                            }
+                        });
                     }
+                });
+            });
+
+            // Remove or rewrite this block, as 'data' is a plain object and does not have .child() or .data() methods.
+            // Example: If you want to enable/disable a button based on review status, use a selector for the button in the modal.
+            if (parseInt(data.review) === 1) {
+                $('#cancelReviewBtn').prop('disabled', false).removeClass('disabled-btn');
+            } else {
+                $('#cancelReviewBtn').prop('disabled', true).addClass('disabled-btn');
+            }
+
+            // Set Save button + Info
+            if (data.user_created === loggedInUser) {
+                $('#saveButtonDetail').prop('disabled', false);
+                showInfoCard('#textInform2', '<i class="fa fa-check-circle"></i> You are the creator', "You have full access to edit this data but not review.", true);
+            } else {
+                $('#saveButtonDetail').prop('disabled', false);
+                showInfoCard(
+                    '#textInform2',
+                    data.review == 1
+                        ? '<i class="fa fa-check-circle"></i> You are not the creator'
+                        : '<i class="fa fa-times-circle"></i> You are not the creator',
+                    data.review == 1
+                        ? "In this case, you can't review because it has already been reviewed."
+                        : "In this case, you can review this data.",
+                    false
+                );
+            }
+
             $('#barcode_moisture_content').val(data.barcode_moisture_content);
             $('#compose-modal').modal('show');
         });
-        
         // Function to show a dynamic info card
         function showInfoCard(target, message, description, isSuccess) {
             // Add dynamic content to the target card
@@ -1052,6 +1771,5 @@
             $('#textInform1').fadeOut(); // Fade out the card
             $('#textInform2').fadeOut();
         });
-
     });
 </script>

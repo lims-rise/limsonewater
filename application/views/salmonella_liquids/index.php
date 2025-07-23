@@ -219,20 +219,18 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="review" class="col-sm-4 control-label">Status</label>
                             <div class="col-sm-8">
                                 <input type="hidden" id="review" name="review" value="0">
                                 <span id="review_label" class="form-check-label unreview" role="button">
                                     Unreview
                                 </span>
-                                
-                                <!-- New label to display who reviewed the data -->
+                        
                                 <span id="reviewed_by_label"  style="margin-left: 10px; font-style: italic;  font-weight: bold; font-size: 11px;">
-                                    <!-- This will display the name of the reviewer, dynamically set -->
                                 </span>
                             </div>
-                        </div>
+                        </div> -->
 
                     </div>
                     <!-- <div class="modal-footer clearfix">
@@ -241,7 +239,7 @@
                     </div> -->
                     <div class="modal-footer clearfix" style="display: flex; align-items: center; justify-content: space-between;">
                         <!-- Info Card on the left side -->
-                        <div class="modal-footer-content" style="flex: 1; display: flex; align-items: center;">
+                        <!-- <div class="modal-footer-content" style="flex: 1; display: flex; align-items: center;">
                             <div id="textInform2" class="textInform card" style="width: auto; padding: 5px 10px; display: none;">
                                 <div class="card-body">
                                     <div class="card-header">
@@ -251,7 +249,7 @@
                                     <p class="statusDescription"></p>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <!-- Buttons on the right side -->
                         <div class="modal-buttons">
@@ -1003,71 +1001,71 @@
                 );
             });
             $('#comments').val(data.comments);
-            $('#review').val(data.review);
-            $('#user_review').val(data.user_review);
-            $('#reviewed_by_label').text('Reviewed by: ' + (data.full_name ? data.full_name : '-'));
-            if (data.user_created !== loggedInUser) {
-                $('#user_review').val(loggedInUser);
-                    // Set the checkbox state
-                    if (data.review == 1) {
-                        $('#review').prop('checked', true); // Check the checkbox
-                        const label = document.getElementById('review_label');
-                        label.textContent = 'Review';
-                        label.className = `form-check-label review`;            
-                    } else if (data.review == 0) {
-                        $('#review').prop('checked', false); // Uncheck the checkbox
-                        const label = document.getElementById('review_label');
-                        label.textContent = 'Unreview';
-                        label.className = `form-check-label unreview`;            
-                    }
-                    $('#review').val(data.review);
-                                        // Define the states with associated values and labels
-                                        const states = [
-                        { value: 0, label: "Unreview", class: "unreview" },
-                        { value: 1, label: "Review", class: "review" }
-                        // { value: 2, label: "Crossed", class: "crossed" }
-                    ];
+            // $('#review').val(data.review);
+            // $('#user_review').val(data.user_review);
+            // $('#reviewed_by_label').text('Reviewed by: ' + (data.full_name ? data.full_name : '-'));
+            // if (data.user_created !== loggedInUser) {
+            //     $('#user_review').val(loggedInUser);
+            //         // Set the checkbox state
+            //         if (data.review == 1) {
+            //             $('#review').prop('checked', true); // Check the checkbox
+            //             const label = document.getElementById('review_label');
+            //             label.textContent = 'Review';
+            //             label.className = `form-check-label review`;            
+            //         } else if (data.review == 0) {
+            //             $('#review').prop('checked', false); // Uncheck the checkbox
+            //             const label = document.getElementById('review_label');
+            //             label.textContent = 'Unreview';
+            //             label.className = `form-check-label unreview`;            
+            //         }
+            //         $('#review').val(data.review);
+            //                             // Define the states with associated values and labels
+            //                             const states = [
+            //             { value: 0, label: "Unreview", class: "unreview" },
+            //             { value: 1, label: "Review", class: "review" }
+            //             // { value: 2, label: "Crossed", class: "crossed" }
+            //         ];
 
-                    let currentState = 0; // Start with "Unchecked"
+            //         let currentState = 0; // Start with "Unchecked"
 
-                    // Add event listener to toggle through states
-                    document.getElementById('review_label').addEventListener('click', function () {
-                        // Cycle through the states
-                        currentState = (currentState + 1) % states.length;
+            //         // Add event listener to toggle through states
+            //         document.getElementById('review_label').addEventListener('click', function () {
+            //             // Cycle through the states
+            //             currentState = (currentState + 1) % states.length;
 
-                        const checkbox = document.getElementById('review');
-                        const label = document.getElementById('review_label');
+            //             const checkbox = document.getElementById('review');
+            //             const label = document.getElementById('review_label');
 
-                        // Update the label text
-                        label.textContent = states[currentState].label;
+            //             // Update the label text
+            //             label.textContent = states[currentState].label;
 
-                        // Apply styling to the label based on the state
-                        label.className = `form-check-label ${states[currentState].class}`;
+            //             // Apply styling to the label based on the state
+            //             label.className = `form-check-label ${states[currentState].class}`;
 
-                        // (Optional) Update a hidden input or store the value somewhere for submission
-                        checkbox.value = states[currentState].value; // Set the value to the current state
-                    });                
-            } else {
-                if (data.review == 1) {
-                        $('#review').prop('checked', true); // Check the checkbox
-                        const label = document.getElementById('review_label');
-                        label.textContent = 'Review';
-                        label.className = `form-check-label review`;            
-                    } else if (data.review == 0) {
-                        $('#review').prop('checked', false); // Uncheck the checkbox
-                        const label = document.getElementById('review_label');
-                        label.textContent = 'Unreview';
-                        label.className = `form-check-label unreview`;            
-                    }
-            }
-                    // console.log('test user', data.user_created);
-                    if (data.user_created === loggedInUser) {
-                        $('#saveButtonDetail').prop('disabled', false);  // Enable Save button if user is the same as the one who created
-                        showInfoCard('#textInform2', '<i class="fa fa-check-circle"></i> You are the creator', "You have full access to edit this data.", true);
-                    } else {
-                        $('#saveButtonDetail').prop('disabled', false);  // Disable Save button if user is not the same as the one who created
-                        showInfoCard('#textInform2', '<i class="fa fa-times-circle"></i> You are not the creator', "In the case you can review this data and make changes.", false);
-                    }
+            //             // (Optional) Update a hidden input or store the value somewhere for submission
+            //             checkbox.value = states[currentState].value; // Set the value to the current state
+            //         });                
+            // } else {
+            //     if (data.review == 1) {
+            //             $('#review').prop('checked', true); // Check the checkbox
+            //             const label = document.getElementById('review_label');
+            //             label.textContent = 'Review';
+            //             label.className = `form-check-label review`;            
+            //         } else if (data.review == 0) {
+            //             $('#review').prop('checked', false); // Uncheck the checkbox
+            //             const label = document.getElementById('review_label');
+            //             label.textContent = 'Unreview';
+            //             label.className = `form-check-label unreview`;            
+            //         }
+            // }
+            //         // console.log('test user', data.user_created);
+            //         if (data.user_created === loggedInUser) {
+            //             $('#saveButtonDetail').prop('disabled', false);  // Enable Save button if user is the same as the one who created
+            //             showInfoCard('#textInform2', '<i class="fa fa-check-circle"></i> You are the creator', "You have full access to edit this data.", true);
+            //         } else {
+            //             $('#saveButtonDetail').prop('disabled', false);  // Disable Save button if user is not the same as the one who created
+            //             showInfoCard('#textInform2', '<i class="fa fa-times-circle"></i> You are not the creator', "In the case you can review this data and make changes.", false);
+            //         }
             $('#barcode_moisture_content').val(data.barcode_moisture_content);
             $('#compose-modal').modal('show');
         });
