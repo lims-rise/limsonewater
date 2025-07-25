@@ -181,7 +181,7 @@
                                     <div class="form-group">
                                         <label for="barcode_tray24" class="col-sm-4 control-label">Barcode Tray</label>
                                         <div class="col-sm-8">
-                                            <input id="barcode_tray24" name="barcode_tray24" type="text"  placeholder="Barcode Tray" class="form-control">
+                                            <input id="barcode_tray24" name="barcode_tray24" type="text"  placeholder="Barcode Tray" class="form-control" required>
                                             <div class="val1tip"></div>
                                         </div>
                                     </div>
@@ -260,9 +260,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="dry_weight72" class="col-sm-4 control-label">Dry Weight 72h (g)</label>
+                                        <label for="dry_weight72" class="col-sm-4 control-label">Dry Weight 48h (g)</label>
                                         <div class="col-sm-8 dryweightcount">
-                                            <input id="dry_weight72" name="dry_weight72" type="number"  step="any"  placeholder="Dry Weight 72h (g)" class="form-control" required>
+                                            <input id="dry_weight72" name="dry_weight72" type="number"  step="any"  placeholder="Dry Weight 48h (g)" class="form-control" required>
                                         </div>
                                     </div>
 

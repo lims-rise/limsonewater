@@ -31,16 +31,16 @@ class Salmonella_biosolids_model extends CI_Model
         $this->datatables->group_by('sb.id_salmonella_biosolids');
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 4){
-            $this->datatables->add_column('action', anchor(site_url('salmonella_biosolids/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')), 'id_salmonella_biosolids');
+            $this->datatables->add_column('action', anchor(site_url('salmonella_biosolids/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')), 'id_one_water_sample');
         }
         else if ($lvl == 3){
             $this->datatables->add_column('action', anchor(site_url('salmonella_biosolids/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
-                ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_salmonella_biosolids');
+                ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
         }
         else {
             $this->datatables->add_column('action', anchor(site_url('salmonella_biosolids/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
             ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-            ".'<button type="button" class="btn_deleteSalmonellaBiosolids btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_salmonella_biosolids');
+            ".'<button type="button" class="btn_deleteSalmonellaBiosolids btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
         }
         $this->db->order_by('latest_date', 'DESC');
         return $this->datatables->generate();
@@ -371,7 +371,7 @@ class Salmonella_biosolids_model extends CI_Model
       $this->datatables->join('salmonella_sample_volumes AS ssv', 'sb.id_salmonella_biosolids = ssv.id_salmonella_biosolids', 'left');
       $this->db->join('ref_person AS rp',  'sb.id_person = rp.id_person', 'left');
       $this->db->join('tbl_user user', 'sb.user_review = user.id_users', 'left');
-      $this->db->where('sb.id_salmonella_biosolids', $id);
+      $this->db->where('sb.id_one_water_sample', $id);
       $this->db->where('sb.flag', '0');
       $q = $this->db->get();
 

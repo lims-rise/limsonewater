@@ -32,19 +32,19 @@ class Colilert_idexx_biosolids_model extends CI_Model
 
         if ($lvl == 4){
             // $this->datatables->add_column('action', anchor(site_url('Enterolert_idexx_water/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_colilert_bio_in');
-            $this->datatables->add_column('action', '', 'id_colilert_bio_in');
+            $this->datatables->add_column('action', '', 'id_one_water_sample');
         }
         else if ($lvl == 3){
             // $this->datatables->add_column('action', anchor(site_url('Enterolert_idexx_water/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
             //     ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_colilert_bio_in');
             $this->datatables->add_column('action', 
             '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 
-            'id_colilert_bio_in');
+            'id_one_water_sample');
         }
         else {
             $this->datatables->add_column('action', anchor(site_url('colilert_idexx_biosolids/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
             ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-            ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_colilert_bio_in');
+            ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
         }
         $this->db->order_by('latest_date', 'DESC');
         return $this->datatables->generate();
@@ -96,12 +96,12 @@ class Colilert_idexx_biosolids_model extends CI_Model
     {
       $response = array();
       $this->db->select('cbi.id_colilert_bio_in, cbi.id_one_water_sample, cbi.id_person, rp.initial,
-        cbi.id_sampletype, rs.sampletype, cbi.colilert_barcode, cbi.date_sample, cbi.time_sample, cbi.wet_weight, cbi.sample_dry_weight, cbi.elution_volume,
+        cbi.id_sampletype, rs.sampletype, cbi.colilert_barcode, cbi.date_sample, cbi.time_sample, cbi.wet_weight, cbi.dry_weight_persen, cbi.sample_dry_weight, cbi.elution_volume,
         cbi.volume_bottle, cbi.dilution');
       $this->db->from('colilert_biosolids_in AS cbi');
       $this->db->join('ref_sampletype AS rs', 'cbi.id_sampletype = rs.id_sampletype', 'left');
       $this->db->join('ref_person AS rp',  'cbi.id_person = rp.id_person', 'left');
-      $this->db->where('cbi.id_colilert_bio_in', $id);
+      $this->db->where('cbi.id_one_water_sample', $id);
       $this->db->where('cbi.flag', '0');
       $q = $this->db->get();
 
@@ -230,19 +230,29 @@ class Colilert_idexx_biosolids_model extends CI_Model
         return $response;
       }
 
-      function getDryWeight(){
+    function getDryWeight(){
         $response = array();
-        $this->db->select('mc.id_moisture, m72.dry_weight_persen, m24.dry_weight24');
-        // $this->db->from('moisture_content AS mc');
+        $this->db->select('mc.id_moisture, m72.dry_weight_persen');
         $this->db->join('moisture24 AS m24', 'mc.id_moisture = m24.id_moisture', 'left');
         $this->db->join('moisture72 AS m72', 'mc.id_moisture = m72.id_moisture', 'left');
         $this->db->where('mc.flag', '0');
+        $this->db->where('m72.dry_weight_persen IS NOT NULL', null, false);
         $this->db->order_by('mc.id_moisture', 'ASC');
         $dryWeight = $this->db->get('moisture_content AS mc');
         $response = $dryWeight->result_array();
         return $response;
-      }
+    }
     
+    function barcode_restrict($id){
+
+        $q = $this->db->query('
+        select id_one_water_sample
+        from colilert_biosolids_in
+        WHERE id_one_water_sample = "'.$id.'"
+        ');        
+        $response = $q->result_array();
+        return $response;
+    }
 
       
 }

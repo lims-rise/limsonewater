@@ -31,16 +31,16 @@ class Salmonella_liquids_model extends CI_Model
         $this->datatables->group_by('sl.id_salmonella_liquids');
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 4){
-            $this->datatables->add_column('action', anchor(site_url('salmonella_liquids/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')), 'id_salmonella_liquids');
+            $this->datatables->add_column('action', anchor(site_url('salmonella_liquids/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')), 'id_one_water_sample');
         }
         else if ($lvl == 3){
             $this->datatables->add_column('action', anchor(site_url('salmonella_liquids/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
-                ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_salmonella_liquids');
+                ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
         }
         else {
             $this->datatables->add_column('action', anchor(site_url('salmonella_liquids/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
             ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-            ".'<button type="button" class="btn_deleteSalmonellaLiquids btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_salmonella_liquids');
+            ".'<button type="button" class="btn_deleteSalmonellaLiquids btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
         }
         $this->db->order_by('latest_date', 'DESC');
         return $this->datatables->generate();
@@ -371,7 +371,7 @@ class Salmonella_liquids_model extends CI_Model
       $this->datatables->join('salmonella_sample_volumes_liquids AS ssvl', 'sl.id_salmonella_liquids = ssvl.id_salmonella_liquids', 'left');
       $this->db->join('ref_person AS rp',  'sl.id_person = rp.id_person', 'left');
       $this->db->join('tbl_user user', 'sl.user_review = user.id_users', 'left');
-      $this->db->where('sl.id_salmonella_liquids', $id);
+      $this->db->where('sl.id_one_water_sample', $id);
       $this->db->where('sl.flag', '0');
       $q = $this->db->get();
 

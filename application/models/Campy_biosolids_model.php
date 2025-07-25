@@ -32,16 +32,16 @@ class Campy_biosolids_model extends CI_Model
         $this->datatables->group_by('cb.id_campy_biosolids');
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 4){
-            $this->datatables->add_column('action', anchor(site_url('campy_biosolids/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')), 'id_campy_biosolids');
+            $this->datatables->add_column('action', anchor(site_url('campy_biosolids/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')), 'id_one_water_sample');
         }
         else if ($lvl == 3){
             $this->datatables->add_column('action', anchor(site_url('campy_biosolids/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
-                ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_campy_biosolids');
+                ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
         }
         else {
             $this->datatables->add_column('action', anchor(site_url('campy_biosolids/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
             ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-            ".'<button type="button" class="btn_deleteCampyBiosolids btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_campy_biosolids');
+            ".'<button type="button" class="btn_deleteCampyBiosolids btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
         }
         $this->db->order_by('latest_date', 'DESC');
         return $this->datatables->generate();
@@ -374,7 +374,7 @@ class Campy_biosolids_model extends CI_Model
       $this->datatables->join('campy_sample_volumes AS sv', 'cb.id_campy_biosolids = sv.id_campy_biosolids', 'left');
       $this->db->join('ref_person AS rp',  'cb.id_person = rp.id_person', 'left');
       $this->db->join('tbl_user user', 'cb.user_review = user.id_users', 'left');
-      $this->db->where('cb.id_campy_biosolids', $id);
+      $this->db->where('cb.id_one_water_sample', $id);
       $this->db->where('cb.flag', '0');
       $q = $this->db->get();
 

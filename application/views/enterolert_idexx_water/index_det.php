@@ -123,6 +123,7 @@
                                             <input id="idx_enterolert_in" name="idx_enterolert_in" type="hidden" class="form-control input-sm">
                                             <input id="id_enterolert_in" name="id_enterolert_in" type="hidden" class="form-control input-sm">
                                             <input id="id_enterolert_out" name="id_enterolert_out" type="hidden" class="form-control input-sm">
+                                            <input id="idx_one_water_sample" name="idx_one_water_sample" type="hidden" class="form-control input-sm">
                                         </div>
                                     </div>
 
@@ -465,8 +466,10 @@
         });
 
         $('#addtombol_det').click(function() {
+            let id_one_water_sample = $('#id_one_water_sample').val();
             $('#mode_det').val('insert');
             $('#modal-title-detail').html('<i class="fa fa-wpforms"></i> Enterolert Idexx Out | New <span id="my-another-cool-loader"></span>');
+            $('#idx_one_water_sample').val(id_one_water_sample);
             $('#enterolert_barcodex').val(enterolertBarcode);
             $('#enterolert_barcodex').attr('readonly', true);
             $('#idx_enterolert_in').val(idEnterolertIn);
@@ -481,9 +484,11 @@
         $('#example2').on('click', '.btn_edit_det', function() {
             let tr = $(this).closest('tr');
             let data = table.row(tr).data();
+            let id_one_water_sample = $('#id_one_water_sample').val();
             console.log(data);
             $('#mode_det').val('edit');
             $('#modal-title-detail').html('<i class="fa fa-pencil-square"></i> Enterolert Idexx Out | Update <span id="my-another-cool-loader"></span>');
+            $('#idx_one_water_sample').val(id_one_water_sample);
             $('#idx_enterolert_in').val(idEnterolertIn);
             $('#id_enterolert_out').val(data.id_enterolert_out);
             $('#enterolert_barcodex').val(data.enterolert_barcode);

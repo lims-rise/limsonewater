@@ -128,7 +128,7 @@
                                 <label for="colilert_barcode" class="col-sm-4 control-label">Coliloert Barcode</label>
                                 <div class="col-sm-8">
                                     <input id="colilert_barcode" name="colilert_barcode" placeholder="Coliloert Barcode" type="text" class="form-control" required>
-                                    <div class="val1tip"></div>
+                                    <!-- <div class="val1tip"></div> -->
                                 </div>
                             </div>
 
@@ -415,7 +415,7 @@
             id_one_water_sample = $('#id_one_water_sample').val();
             $.ajax({
                 type: "GET",
-                url: "Biobankin/barcode_restrict?id1="+id_one_water_sample,
+                url: "Colilert_idexx_water/barcode_restrict?id1="+id_one_water_sample,
                 dataType: "json",
                 success: function(data) {
                     if (data.length > 0) {
@@ -491,50 +491,50 @@
         //     }, 3000);                            
         // });
         
-        $('#colilert_barcode').on("change", function() {
-            let colilertBarcode = $('#colilert_barcode').val();
-            $.ajax({
-                type: "GET",
-                url: "Colilert_idexx_water/validateColilertBarcode",
-                data: { id: colilertBarcode },
-                dataType: "json",
-                success: function(data) {
-                    if (data.length == 1) {
-                        let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Enterolert Barcode <strong> ' + colilertBarcode +'</strong> is already in the system !</span>');
-                        $('.val1tip').tooltipster('content', tip);
-                        $('.val1tip').tooltipster('show');
-                        $('#colilert_barcode').focus();
-                        $('#colilert_barcode').val('');       
-                        $('#colilert_barcode').css({'background-color' : '#FFE6E7'});
-                        setTimeout(function(){
-                            $('#colilert_barcode').css({'background-color' : '#FFFFFF'});
-                            setTimeout(function(){
-                                $('#colilert_barcode').css({'background-color' : '#FFE6E7'});
-                                setTimeout(function(){
-                                    $('#colilert_barcode').css({'background-color' : '#FFFFFF'});
-                                }, 300);                            
-                            }, 300);
-                        }, 300);
-                    } else if (/[^a-zA-Z0-9]/.test(colilertBarcode)) {
-                        let tip = $('<span><i class="fa fa-exclamation-triangle"></i>  Wrong type <strong>' + colilertBarcode +'</strong> Input must not contain symbols !</span>');
-                        $('.val1tip').tooltipster('content', tip);
-                        $('.val1tip').tooltipster('show');
-                        $('#colilert_barcode').focus();
-                        $('#colilert_barcode').val('');
-                        $('#colilert_barcode').css({'background-color' : '#FFE6E7'});
-                        setTimeout(function(){
-                            $('#colilert_barcode').css({'background-color' : '#FFFFFF'});
-                            setTimeout(function(){
-                                $('#colilert_barcode').css({'background-color' : '#FFE6E7'});
-                                setTimeout(function(){
-                                    $('#colilert_barcode').css({'background-color' : '#FFFFFF'});
-                                }, 300);                            
-                            }, 300);
-                        }, 300);
-                    }
-                }
-            });
-        });
+        // $('#colilert_barcode').on("change", function() {
+        //     let colilertBarcode = $('#colilert_barcode').val();
+        //     $.ajax({
+        //         type: "GET",
+        //         url: "Colilert_idexx_water/validateColilertBarcode",
+        //         data: { id: colilertBarcode },
+        //         dataType: "json",
+        //         success: function(data) {
+        //             if (data.length == 1) {
+        //                 let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Enterolert Barcode <strong> ' + colilertBarcode +'</strong> is already in the system !</span>');
+        //                 $('.val1tip').tooltipster('content', tip);
+        //                 $('.val1tip').tooltipster('show');
+        //                 $('#colilert_barcode').focus();
+        //                 $('#colilert_barcode').val('');       
+        //                 $('#colilert_barcode').css({'background-color' : '#FFE6E7'});
+        //                 setTimeout(function(){
+        //                     $('#colilert_barcode').css({'background-color' : '#FFFFFF'});
+        //                     setTimeout(function(){
+        //                         $('#colilert_barcode').css({'background-color' : '#FFE6E7'});
+        //                         setTimeout(function(){
+        //                             $('#colilert_barcode').css({'background-color' : '#FFFFFF'});
+        //                         }, 300);                            
+        //                     }, 300);
+        //                 }, 300);
+        //             } else if (/[^a-zA-Z0-9]/.test(colilertBarcode)) {
+        //                 let tip = $('<span><i class="fa fa-exclamation-triangle"></i>  Wrong type <strong>' + colilertBarcode +'</strong> Input must not contain symbols !</span>');
+        //                 $('.val1tip').tooltipster('content', tip);
+        //                 $('.val1tip').tooltipster('show');
+        //                 $('#colilert_barcode').focus();
+        //                 $('#colilert_barcode').val('');
+        //                 $('#colilert_barcode').css({'background-color' : '#FFE6E7'});
+        //                 setTimeout(function(){
+        //                     $('#colilert_barcode').css({'background-color' : '#FFFFFF'});
+        //                     setTimeout(function(){
+        //                         $('#colilert_barcode').css({'background-color' : '#FFE6E7'});
+        //                         setTimeout(function(){
+        //                             $('#colilert_barcode').css({'background-color' : '#FFFFFF'});
+        //                         }, 300);                            
+        //                     }, 300);
+        //                 }, 300);
+        //             }
+        //         }
+        //     });
+        // });
 
         let base_url = location.hostname;
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
