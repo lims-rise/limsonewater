@@ -187,6 +187,7 @@ class Enterolert_idexx_biosolids extends CI_Controller
             $ecoli_dryweight = $this->input->post('ecoli_dryweight', TRUE);
             $lowerdetection_dryweight = $this->input->post('lowerdetection_dryweight', TRUE);
             $remarks = $this->input->post('remarks', TRUE);
+            $id_one_water_sample = $this->input->post('idx_one_water_sample', TRUE);
         
             if($mode_det == "insert") {
                 $data = array(
@@ -242,7 +243,7 @@ class Enterolert_idexx_biosolids extends CI_Controller
                 }
             }
         
-            redirect(site_url("enterolert_idexx_biosolids/read/" . $idx_enterolert_bio_in));
+            redirect(site_url("enterolert_idexx_biosolids/read/" . $id_one_water_sample));
     }
 
 

@@ -156,15 +156,15 @@
                             </div> -->
                             
                             <div class="form-group">
-                                <label for="id_client_sample" class="col-sm-4 control-label">Client Sample ID</label>
+                                <label for="id_client_sample" class="col-sm-4 control-label">Client ID</label>
                                 <div class="col-sm-8">
-                                    <input id="id_client_sample" name="id_client_sample" placeholder="Client Sample ID" type="text" class="form-control" required>
+                                    <input id="id_client_sample" name="id_client_sample" placeholder="Client ID" type="text" class="form-control" required>
                                     <div class="val1tip"></div>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="client" class="col-sm-4 control-label">ID Client</label>
+                                <label for="client" class="col-sm-4 control-label">Client (As on CoC)</label>
                                 <div class="col-sm-8">
                                     <input id="clientx" name="clientx" placeholder="Client (as on CoC)" type="text" class="form-control" style="display:none;">
                                     <input id="client" name="client" placeholder="Client (as on CoC)" type="text" class="form-control">
@@ -279,14 +279,6 @@
                                     <span class="glyphicon glyphicon-time"></span>
                                     </span>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="description" class="col-sm-4 control-label">Description</label>
-                                <div class="col-sm-8">
-                                    <input id="description" name="description" placeholder="Description" type="text" class="form-control" required>
-                                    <div class="val1tip"></div>
                                 </div>
                             </div>
 
@@ -460,9 +452,9 @@
 
                                         
                                         <div class="form-group">
-                                                <label for="comments" class="col-sm-4 control-label">Note</label>
+                                                <label for="comments" class="col-sm-4 control-label">Description</label>
                                                 <div class="col-sm-8">
-                                                    <textarea id="comments_sample" name="comments_sample" class="form-control" placeholder="Comments"> </textarea>
+                                                    <textarea id="comments_sample" name="comments_sample" class="form-control" placeholder="Description"> </textarea>
                                                 </div>
                                         </div>
 
@@ -985,7 +977,7 @@
                     type: "GET",
                     dataType: "json",
                     success: function (data) {
-                        let tableContent = `<div class="child-table-container"><table class="child-table table table-bordered table-sm"><thead class="bg-light"><tr><th>Water Sample ID</th><th>Type of Sample</th><th>Receiving Lab</th><th>Date Arrived</th><th>Time Arrived</th><th>Date Collected</th><th>Time Collected</th><th>Quality Check</th><th>Note</th><th>Action</th></tr></thead><tbody>`;
+                        let tableContent = `<div class="child-table-container"><table class="child-table table table-bordered table-sm"><thead class="bg-light"><tr><th>Water Sample ID</th><th>Type of Sample</th><th>Receiving Lab</th><th>Date Arrived</th><th>Time Arrived</th><th>Date Collected</th><th>Time Collected</th><th>Quality Check</th><th>Description</th><th>Action</th></tr></thead><tbody>`;
 
                         if (data.length > 0) {
                             $.each(data, function (index, sample) {
@@ -1367,7 +1359,6 @@
             $('#time_collected').val(data.time_collected);
             $('#comments').val(data.comments);
             $('#id_client_sample').val(data.id_client_sample);
-            $('#description').val(data.description);
             $('.val2tip').html('');
             $('#compose-modal').modal('show');
         });

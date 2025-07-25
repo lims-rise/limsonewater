@@ -32,19 +32,19 @@ class Colilert_idexx_water_model extends CI_Model
 
         if ($lvl == 4){
             // $this->datatables->add_column('action', anchor(site_url('Enterolert_idexx_water/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_colilert_in');
-            $this->datatables->add_column('action', '', 'id_colilert_in');
+            $this->datatables->add_column('action', '', 'id_one_water_sample');
         }
         else if ($lvl == 3){
             // $this->datatables->add_column('action', anchor(site_url('Enterolert_idexx_water/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
             //     ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_colilert_in');
             $this->datatables->add_column('action', 
             '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 
-            'id_colilert_in');
+            'id_one_water_sample');
         }
         else {
             $this->datatables->add_column('action', anchor(site_url('colilert_idexx_water/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
             ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-            ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_colilert_in');
+            ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
         }
         $this->db->order_by('latest_date', 'DESC');
         return $this->datatables->generate();
@@ -101,7 +101,7 @@ class Colilert_idexx_water_model extends CI_Model
       $this->db->from('colilert_water_in AS cwi');
       $this->db->join('ref_sampletype AS rs', 'cwi.id_sampletype = rs.id_sampletype', 'left');
       $this->db->join('ref_person AS rp',  'cwi.id_person = rp.id_person', 'left');
-      $this->db->where('cwi.id_colilert_in', $id);
+      $this->db->where('cwi.id_one_water_sample', $id);
       $this->db->where('cwi.flag', '0');
       $q = $this->db->get();
 
@@ -229,9 +229,18 @@ class Colilert_idexx_water_model extends CI_Model
         ');        
         $response = $q->result_array();
         return $response;
-      }
+    }
     
+    function barcode_restrict($id){
 
+        $q = $this->db->query('
+        select id_one_water_sample
+        from colilert_water_in
+        WHERE id_one_water_sample = "'.$id.'"
+        ');        
+        $response = $q->result_array();
+        return $response;
+    }
       
 }
 

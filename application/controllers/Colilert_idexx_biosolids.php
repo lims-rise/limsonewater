@@ -32,6 +32,8 @@ class Colilert_idexx_biosolids extends CI_Controller
         $data['sampletype'] = $this->Colilert_idexx_biosolids_model->getSampleType();
         $data['labtech'] = $this->Colilert_idexx_biosolids_model->getLabTech();
         $data['dryweight'] = $this->Colilert_idexx_biosolids_model->getDryWeight();
+        // var_dump($data['dryweight']);
+        // die();
         // $data['id_project'] = $this->Moisture_content_model->generate_project_id();
         // $data['client'] = $this->Moisture_content_model->generate_client();
         // $data['id_one_water_sample'] = $this->Moisture_content_model->generate_one_water_sample_id();
@@ -188,6 +190,7 @@ class Colilert_idexx_biosolids extends CI_Controller
             $coliforms_smallwells = $this->input->post('coliforms_smallwells', TRUE);
             $total_coliforms = $this->input->post('total_coliforms', TRUE);
             $remarks = $this->input->post('remarks', TRUE);
+            $id_one_water_sample = $this->input->post('idx_one_water_sample', TRUE);
         
             if($mode_det == "insert") {
                 $data = array(
@@ -252,7 +255,7 @@ class Colilert_idexx_biosolids extends CI_Controller
                 }
             }
         
-            redirect(site_url("colilert_idexx_biosolids/read/" . $idx_colilert_bio_in));
+            redirect(site_url("colilert_idexx_biosolids/read/" . $id_one_water_sample));
     }
 
 
@@ -501,6 +504,14 @@ class Colilert_idexx_biosolids extends CI_Controller
         $valueLargeWells = $this->input->get('valueLargeWells');
         $valueSmallWells = $this->input->get('valueSmallWells');
         $data = $this->Colilert_idexx_biosolids_model->data_chart($valueLargeWells, $valueSmallWells);
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
+
+    public function barcode_restrict() 
+    {
+        $id = $this->input->get('id1');
+        $data = $this->Colilert_idexx_biosolids_model->barcode_restrict($id);
         header('Content-Type: application/json');
         echo json_encode($data);
     }

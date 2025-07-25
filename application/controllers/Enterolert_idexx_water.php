@@ -170,6 +170,7 @@ class Enterolert_idexx_water extends CI_Controller
             $enterococcus = $this->input->post('enterococcus', TRUE);
             $lowerdetection = $this->input->post('lowerdetection', TRUE);
             $remarks = $this->input->post('remarks', TRUE);
+            $id_one_water_sample = $this->input->post('idx_one_water_sample', TRUE);
         
             if($mode_det == "insert") {
                 $data = array(
@@ -223,7 +224,7 @@ class Enterolert_idexx_water extends CI_Controller
                 }
             }
         
-            redirect(site_url("enterolert_idexx_water/read/" . $id_enterolert_in));
+            redirect(site_url("enterolert_idexx_water/read/" . $id_one_water_sample));
     }
 
 
@@ -432,6 +433,14 @@ class Enterolert_idexx_water extends CI_Controller
         $valueLargeWells = $this->input->get('valueLargeWells');
         $valueSmallWells = $this->input->get('valueSmallWells');
         $data = $this->Enterolert_idexx_water_model->data_chart($valueLargeWells, $valueSmallWells);
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
+
+    public function barcode_restrict() 
+    {
+        $id = $this->input->get('id1');
+        $data = $this->Enterolert_idexx_water_model->barcode_restrict($id);
         header('Content-Type: application/json');
         echo json_encode($data);
     }

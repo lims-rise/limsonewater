@@ -126,7 +126,7 @@
                                 <label for="enterolert_barcode" class="col-sm-4 control-label">Enterolert Barcode</label>
                                 <div class="col-sm-8">
                                     <input id="enterolert_barcode" name="enterolert_barcode" placeholder="Enterolert Barcode" type="text" class="form-control" required>
-                                    <div class="val1tip"></div>
+                                    <!-- <div class="val1tip"></div> -->
                                 </div>
                             </div>
 
@@ -401,7 +401,7 @@
             id_one_water_sample = $('#id_one_water_sample').val();
             $.ajax({
                 type: "GET",
-                url: "Biobankin/barcode_restrict?id1="+id_one_water_sample,
+                url: "Enterolert_idexx_water/barcode_restrict?id1="+id_one_water_sample,
                 dataType: "json",
                 success: function(data) {
                     if (data.length > 0) {
@@ -477,50 +477,50 @@
         //     }, 3000);                            
         // });
         
-        $('#enterolert_barcode').on("change", function() {
-            let enterolertBarcode = $('#enterolert_barcode').val();
-            $.ajax({
-                type: "GET",
-                url: "Enterolert_idexx_water/validateEnterolertBarcode",
-                data: { id: enterolertBarcode },
-                dataType: "json",
-                success: function(data) {
-                    if (data.length == 1) {
-                        let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Enterolert Barcode <strong> ' + enterolertBarcode +'</strong> is already in the system !</span>');
-                        $('.val1tip').tooltipster('content', tip);
-                        $('.val1tip').tooltipster('show');
-                        $('#enterolert_barcode').focus();
-                        $('#enterolert_barcode').val('');       
-                        $('#enterolert_barcode').css({'background-color' : '#FFE6E7'});
-                        setTimeout(function(){
-                            $('#enterolert_barcode').css({'background-color' : '#FFFFFF'});
-                            setTimeout(function(){
-                                $('#enterolert_barcode').css({'background-color' : '#FFE6E7'});
-                                setTimeout(function(){
-                                    $('#enterolert_barcode').css({'background-color' : '#FFFFFF'});
-                                }, 300);                            
-                            }, 300);
-                        }, 300);
-                    } else if (/[^a-zA-Z0-9]/.test(enterolertBarcode)) {
-                        let tip = $('<span><i class="fa fa-exclamation-triangle"></i>  Wrong type <strong>' + enterolertBarcode +'</strong> Input must not contain symbols !</span>');
-                        $('.val1tip').tooltipster('content', tip);
-                        $('.val1tip').tooltipster('show');
-                        $('#enterolert_barcode').focus();
-                        $('#enterolert_barcode').val('');
-                        $('#enterolert_barcode').css({'background-color' : '#FFE6E7'});
-                        setTimeout(function(){
-                            $('#enterolert_barcode').css({'background-color' : '#FFFFFF'});
-                            setTimeout(function(){
-                                $('#enterolert_barcode').css({'background-color' : '#FFE6E7'});
-                                setTimeout(function(){
-                                    $('#enterolert_barcode').css({'background-color' : '#FFFFFF'});
-                                }, 300);                            
-                            }, 300);
-                        }, 300);
-                    }
-                }
-            });
-        });
+        // $('#enterolert_barcode').on("change", function() {
+        //     let enterolertBarcode = $('#enterolert_barcode').val();
+        //     $.ajax({
+        //         type: "GET",
+        //         url: "Enterolert_idexx_water/validateEnterolertBarcode",
+        //         data: { id: enterolertBarcode },
+        //         dataType: "json",
+        //         success: function(data) {
+        //             if (data.length == 1) {
+        //                 let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Enterolert Barcode <strong> ' + enterolertBarcode +'</strong> is already in the system !</span>');
+        //                 $('.val1tip').tooltipster('content', tip);
+        //                 $('.val1tip').tooltipster('show');
+        //                 $('#enterolert_barcode').focus();
+        //                 $('#enterolert_barcode').val('');       
+        //                 $('#enterolert_barcode').css({'background-color' : '#FFE6E7'});
+        //                 setTimeout(function(){
+        //                     $('#enterolert_barcode').css({'background-color' : '#FFFFFF'});
+        //                     setTimeout(function(){
+        //                         $('#enterolert_barcode').css({'background-color' : '#FFE6E7'});
+        //                         setTimeout(function(){
+        //                             $('#enterolert_barcode').css({'background-color' : '#FFFFFF'});
+        //                         }, 300);                            
+        //                     }, 300);
+        //                 }, 300);
+        //             } else if (/[^a-zA-Z0-9]/.test(enterolertBarcode)) {
+        //                 let tip = $('<span><i class="fa fa-exclamation-triangle"></i>  Wrong type <strong>' + enterolertBarcode +'</strong> Input must not contain symbols !</span>');
+        //                 $('.val1tip').tooltipster('content', tip);
+        //                 $('.val1tip').tooltipster('show');
+        //                 $('#enterolert_barcode').focus();
+        //                 $('#enterolert_barcode').val('');
+        //                 $('#enterolert_barcode').css({'background-color' : '#FFE6E7'});
+        //                 setTimeout(function(){
+        //                     $('#enterolert_barcode').css({'background-color' : '#FFFFFF'});
+        //                     setTimeout(function(){
+        //                         $('#enterolert_barcode').css({'background-color' : '#FFE6E7'});
+        //                         setTimeout(function(){
+        //                             $('#enterolert_barcode').css({'background-color' : '#FFFFFF'});
+        //                         }, 300);                            
+        //                     }, 300);
+        //                 }, 300);
+        //             }
+        //         }
+        //     });
+        // });
 
         let base_url = location.hostname;
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)

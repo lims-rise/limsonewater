@@ -172,7 +172,8 @@ class Colilert_idexx_water extends CI_Controller
             $coliforms_smallwells = $this->input->post('coliforms_smallwells', TRUE);
             $total_coliforms = $this->input->post('total_coliforms', TRUE);
             $remarks = $this->input->post('remarks', TRUE);
-        
+            $id_one_water_sample = $this->input->post('idx_one_water_sample', TRUE);
+
             if($mode_det == "insert") {
                 $data = array(
                     'id_colilert_in' => $idx_colilert_in,
@@ -232,7 +233,7 @@ class Colilert_idexx_water extends CI_Controller
                 }
             }
         
-            redirect(site_url("colilert_idexx_water/read/" . $idx_colilert_in));
+            redirect(site_url("colilert_idexx_water/read/" . $id_one_water_sample));
     }
 
 
@@ -465,6 +466,14 @@ class Colilert_idexx_water extends CI_Controller
         $valueLargeWells = $this->input->get('valueLargeWells');
         $valueSmallWells = $this->input->get('valueSmallWells');
         $data = $this->Colilert_idexx_water_model->data_chart($valueLargeWells, $valueSmallWells);
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
+
+    public function barcode_restrict() 
+    {
+        $id = $this->input->get('id1');
+        $data = $this->Colilert_idexx_water_model->barcode_restrict($id);
         header('Content-Type: application/json');
         echo json_encode($data);
     }

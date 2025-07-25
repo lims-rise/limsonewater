@@ -31,16 +31,16 @@ class Campy_liquids_model extends CI_Model
         $this->datatables->group_by('cl.id_campy_liquids');
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 4){
-            $this->datatables->add_column('action', anchor(site_url('campy_liquids/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')), 'id_campy_liquids');
+            $this->datatables->add_column('action', anchor(site_url('campy_liquids/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')), 'id_one_water_sample');
         }
         else if ($lvl == 3){
             $this->datatables->add_column('action', anchor(site_url('campy_liquids/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
-                ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_campy_liquids');
+                ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
         }
         else {
             $this->datatables->add_column('action', anchor(site_url('campy_liquids/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
             ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-            ".'<button type="button" class="btn_deleteCampyLiquids btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_campy_liquids');
+            ".'<button type="button" class="btn_deleteCampyLiquids btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
         }
         $this->db->order_by('latest_date', 'DESC');
         return $this->datatables->generate();
@@ -377,7 +377,7 @@ class Campy_liquids_model extends CI_Model
       $this->db->join('campy_sample_volumes_liquids AS svl', 'cl.id_campy_liquids = svl.id_campy_liquids', 'left');
       $this->db->join('ref_person AS rp', 'cl.id_person = rp.id_person', 'left');
       $this->db->join('tbl_user user', 'cl.user_review = user.id_users', 'left');
-      $this->db->where('cl.id_campy_liquids', $id);
+      $this->db->where('cl.id_one_water_sample', $id);
       $this->db->where('cl.flag', 0);
       $query = $this->db->get();
       

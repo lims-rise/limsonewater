@@ -131,7 +131,7 @@
                                 <label for="colilert_barcode" class="col-sm-4 control-label">Coliloert Barcode</label>
                                 <div class="col-sm-8">
                                     <input id="colilert_barcode" name="colilert_barcode" placeholder="Coliloert Barcode" type="text" class="form-control" required>
-                                    <div class="val1tip"></div>
+                                    <!-- <div class="val1tip"></div> -->
                                 </div>
                             </div>
 
@@ -160,7 +160,7 @@
                             <div class="form-group">
                                 <label for="wet_weight" class="col-sm-4 control-label">Wet Weight (g)</label>
                                 <div class="col-sm-8">
-                                    <input id="wet_weight" name="wet_weight" type="number" step="0.001"  class="form-control" placeholder="Wet Weight (g)" required>
+                                    <input id="wet_weight" name="wet_weight" type="number" step="any"  class="form-control" placeholder="Wet Weight (g)" required>
                                 </div>
                             </div>
 
@@ -170,36 +170,55 @@
                                     <select id="dry_weight_persen" name="dry_weight_persen" class="form-control" required>
                                         <option value="" disabled>-- Select Dry weight % --</option>
                                         <?php
-                                            foreach($dryweight as $row) {
-                                                if ($dry_weight_persen == $row['dry_weight_persen']) {
-                                                    echo "<option value='".$row['dry_weight_persen']."' selected='selected'>".$row['dry_weight_persen']."</option>";
-                                                } else {
-                                                    echo "<option value='".$row['dry_weight_persen']."'>".$row['dry_weight_persen']."</option>";
+                                            if (isset($dryweight) && is_array($dryweight)) {
+                                                foreach($dryweight as $row) {
+                                                    $selected = (isset($dry_weight_persen) && $dry_weight_persen == $row['dry_weight_persen']) ? "selected='selected'" : "";
+                                                    echo "<option value='".$row['dry_weight_persen']."' $selected>".$row['dry_weight_persen']."</option>";
                                                 }
+                                            } else {
+                                                echo "<option value=''>No data available</option>";
                                             }
                                         ?>
                                     </select>
                                 </div>
                             </div>
 
+                            <!-- <div class="form-group">
+                                <label for="dry_weight_persen" class="col-sm-4 control-label">Dry weight %</label>
+                                <div class="col-sm-8">
+                                    <select id="dry_weight_persen" name="dry_weight_persen" class="form-control" required>
+                                        <option value="" disabled>-- Select Dry weight % --</option>
+                                        <?php
+                                            foreach($dryweight as $row) {
+                                                if ($id_moisture == $row['dry_weight_persen']) {
+                                                    echo "<option value='".$row['dry_weight24']."' selected='selected'>".$row['dry_weight_persen']."</option>";
+                                                } else {
+                                                    echo "<option value='".$row['dry_weight24']."'>".$row['dry_weight24']."</option>";
+                                                }
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div> -->
+
                             <div class="form-group">
                                 <label for="sample_dry_weight" class="col-sm-4 control-label">Sample dry weight (g)</label>
                                 <div class="col-sm-8">
-                                    <input id="sample_dry_weight" name="sample_dry_weight" type="number" step="0.001"  class="form-control" placeholder="Sample dry weight (g)" required>
+                                    <input id="sample_dry_weight" name="sample_dry_weight" type="number" step="any"  class="form-control" placeholder="Sample dry weight (g)" required>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="elution_volume" class="col-sm-4 control-label">Elution Volume (mL)</label>
                                 <div class="col-sm-8">
-                                    <input id="elution_volume" name="elution_volume" type="number" step="0.001" class="form-control" placeholder="Elution Volume (mL)" required>
+                                    <input id="elution_volume" name="elution_volume" type="number" step="any" class="form-control" placeholder="Elution Volume (mL)" required>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="volume_bottle" class="col-sm-4 control-label">Volume in bottle (mL) added</label>
                                 <div class="col-sm-8">
-                                    <input id="volume_bottle" name="volume_bottle" type="number" step="0.001"  class="form-control" placeholder="Volume in bottle (mL) added" required>
+                                    <input id="volume_bottle" name="volume_bottle" type="number" step="any"  class="form-control" placeholder="Volume in bottle (mL) added" required>
                                 </div>
                             </div>
 
@@ -535,50 +554,50 @@
         //     }, 3000);                            
         // });
         
-        $('#colilert_barcode').on("change", function() {
-            let colilertBarcode = $('#colilert_barcode').val();
-            $.ajax({
-                type: "GET",
-                url: "Colilert_idexx_biosolids/validateColilertBarcode",
-                data: { id: colilertBarcode },
-                dataType: "json",
-                success: function(data) {
-                    if (data.length == 1) {
-                        let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Enterolert Barcode <strong> ' + colilertBarcode +'</strong> is already in the system !</span>');
-                        $('.val1tip').tooltipster('content', tip);
-                        $('.val1tip').tooltipster('show');
-                        $('#colilert_barcode').focus();
-                        $('#colilert_barcode').val('');       
-                        $('#colilert_barcode').css({'background-color' : '#FFE6E7'});
-                        setTimeout(function(){
-                            $('#colilert_barcode').css({'background-color' : '#FFFFFF'});
-                            setTimeout(function(){
-                                $('#colilert_barcode').css({'background-color' : '#FFE6E7'});
-                                setTimeout(function(){
-                                    $('#colilert_barcode').css({'background-color' : '#FFFFFF'});
-                                }, 300);                            
-                            }, 300);
-                        }, 300);
-                    } else if (/[^a-zA-Z0-9]/.test(colilertBarcode)) {
-                        let tip = $('<span><i class="fa fa-exclamation-triangle"></i>  Wrong type <strong>' + colilertBarcode +'</strong> Input must not contain symbols !</span>');
-                        $('.val1tip').tooltipster('content', tip);
-                        $('.val1tip').tooltipster('show');
-                        $('#colilert_barcode').focus();
-                        $('#colilert_barcode').val('');
-                        $('#colilert_barcode').css({'background-color' : '#FFE6E7'});
-                        setTimeout(function(){
-                            $('#colilert_barcode').css({'background-color' : '#FFFFFF'});
-                            setTimeout(function(){
-                                $('#colilert_barcode').css({'background-color' : '#FFE6E7'});
-                                setTimeout(function(){
-                                    $('#colilert_barcode').css({'background-color' : '#FFFFFF'});
-                                }, 300);                            
-                            }, 300);
-                        }, 300);
-                    }
-                }
-            });
-        });
+        // $('#colilert_barcode').on("change", function() {
+        //     let colilertBarcode = $('#colilert_barcode').val();
+        //     $.ajax({
+        //         type: "GET",
+        //         url: "Colilert_idexx_biosolids/validateColilertBarcode",
+        //         data: { id: colilertBarcode },
+        //         dataType: "json",
+        //         success: function(data) {
+        //             if (data.length == 1) {
+        //                 let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Enterolert Barcode <strong> ' + colilertBarcode +'</strong> is already in the system !</span>');
+        //                 $('.val1tip').tooltipster('content', tip);
+        //                 $('.val1tip').tooltipster('show');
+        //                 $('#colilert_barcode').focus();
+        //                 $('#colilert_barcode').val('');       
+        //                 $('#colilert_barcode').css({'background-color' : '#FFE6E7'});
+        //                 setTimeout(function(){
+        //                     $('#colilert_barcode').css({'background-color' : '#FFFFFF'});
+        //                     setTimeout(function(){
+        //                         $('#colilert_barcode').css({'background-color' : '#FFE6E7'});
+        //                         setTimeout(function(){
+        //                             $('#colilert_barcode').css({'background-color' : '#FFFFFF'});
+        //                         }, 300);                            
+        //                     }, 300);
+        //                 }, 300);
+        //             } else if (/[^a-zA-Z0-9]/.test(colilertBarcode)) {
+        //                 let tip = $('<span><i class="fa fa-exclamation-triangle"></i>  Wrong type <strong>' + colilertBarcode +'</strong> Input must not contain symbols !</span>');
+        //                 $('.val1tip').tooltipster('content', tip);
+        //                 $('.val1tip').tooltipster('show');
+        //                 $('#colilert_barcode').focus();
+        //                 $('#colilert_barcode').val('');
+        //                 $('#colilert_barcode').css({'background-color' : '#FFE6E7'});
+        //                 setTimeout(function(){
+        //                     $('#colilert_barcode').css({'background-color' : '#FFFFFF'});
+        //                     setTimeout(function(){
+        //                         $('#colilert_barcode').css({'background-color' : '#FFE6E7'});
+        //                         setTimeout(function(){
+        //                             $('#colilert_barcode').css({'background-color' : '#FFFFFF'});
+        //                         }, 300);                            
+        //                     }, 300);
+        //                 }, 300);
+        //             }
+        //         }
+        //     });
+        // });
 
         let base_url = location.hostname;
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)

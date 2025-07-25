@@ -32,19 +32,19 @@ class Enterolert_idexx_water_model extends CI_Model
 
         if ($lvl == 4){
             // $this->datatables->add_column('action', anchor(site_url('enterolert_idexx_water/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_enterolert_in');
-            $this->datatables->add_column('action', '', 'id_enterolert_in');
+            $this->datatables->add_column('action', '', 'id_one_water_sample');
         }
         else if ($lvl == 3){
             // $this->datatables->add_column('action', anchor(site_url('enterolert_idexx_water/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')) ."
             //     ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_enterolert_in');
             $this->datatables->add_column('action', 
             '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 
-            'id_enterolert_in');
+            'id_one_water_sample');
         }
         else {
             $this->datatables->add_column('action', anchor(site_url('enterolert_idexx_water/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
             ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-            ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_enterolert_in');
+            ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
         }
         $this->db->order_by('latest_date', 'DESC');
         return $this->datatables->generate();
@@ -98,7 +98,7 @@ class Enterolert_idexx_water_model extends CI_Model
       $this->db->from('enterolert_water_in AS ewi');
       $this->db->join('ref_sampletype AS rs', 'ewi.id_sampletype = rs.id_sampletype', 'left');
       $this->db->join('ref_person AS rp',  'ewi.id_person = rp.id_person', 'left');
-      $this->db->where('ewi.id_enterolert_in', $id);
+      $this->db->where('ewi.id_one_water_sample', $id);
       $this->db->where('ewi.flag', '0');
       $q = $this->db->get();
 
@@ -225,7 +225,18 @@ class Enterolert_idexx_water_model extends CI_Model
         ');        
         $response = $q->result_array();
         return $response;
-      }
+    }
+
+    function barcode_restrict($id){
+
+        $q = $this->db->query('
+        select id_one_water_sample
+        from enterolert_water_in
+        WHERE id_one_water_sample = "'.$id.'"
+        ');        
+        $response = $q->result_array();
+        return $response;
+    }
     
 
       

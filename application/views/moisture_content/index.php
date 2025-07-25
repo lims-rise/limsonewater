@@ -88,7 +88,7 @@
                             <input id="idx_moisture" name="idx_moisture" type="hidden" class="form-control input-sm">
                             <!-- <input id="id_req" name="id_req" type="hidden" class="form-control input-sm"> -->
                             
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
                                 <div class="col-sm-8">
                                     <input id="idx_one_water_sample" name="idx_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control">
@@ -104,6 +104,15 @@
                                             }
                                         ?>
                                     </select>
+                                </div>
+                            </div> -->
+
+                            <div class="form-group">
+                                <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
+                                <div class="col-sm-8">
+                                    <input id="id_one_water_sample" name="id_one_water_sample" placeholder="One Water Sample ID" type="text"  class="form-control idOneWaterSampleSelect">
+                                    <input id="idx_one_water_sample" name="idx_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control">
+                                    <div class="val1tip"></div>
                                 </div>
                             </div>
 
@@ -144,7 +153,7 @@
                                 <label for="barcode_moisture_content" class="col-sm-4 control-label">Barcode Moisture Content</label>
                                 <div class="col-sm-8">
                                     <input id="barcode_moisture_content" name="barcode_moisture_content" placeholder="Barcode Moisture Content" type="text" class="form-control" required>
-                                    <div class="val1tip"></div>
+                                    <div class="val2tip"></div>
                                 </div>
                             </div>
 
@@ -233,6 +242,8 @@
 
     let table;
     let deleteUrl; // Variable to hold the delete URL
+    let id_one_water_sample = $('#id_one_water_sample').val();
+
     // Fungsi untuk mendapatkan parameter dari URL
     function getQueryParam(param) {
         const urlParams = new URLSearchParams(window.location.search);
@@ -242,6 +253,8 @@
     $(document).ready(function() {
         const params = new URLSearchParams(window.location.search);
         const barcodeFromUrl = params.get('barcode');
+        const idOneWaterSampleFromUrl = params.get('idOneWaterSample');
+        const idTestingTypeFromUrl = params.get('idTestingType');
 
         if (barcodeFromUrl) {
             $('#barcode_moisture_content').val(barcodeFromUrl);
@@ -250,8 +263,11 @@
             handleSampleTypeInput('#sampletype');
             $('#mode').val('insert');
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Moisture Content | New<span id="my-another-cool-loader"></span>');
-            $('#id_one_water_sample').val('');
-            $('#id_one_water_sample').show();
+            // $('#id_one_water_sample').val('');
+            // $('#id_one_water_sample').show();
+            // $('#idx_one_water_sample').hide();
+            $('#id_one_water_sample').attr('readonly', true);
+            $('#id_one_water_sample').val(idOneWaterSampleFromUrl || '');  // Set ID jika ada);
             $('#idx_one_water_sample').hide();
             $('#id_person').val('');
             $('#sampletype').val('');
@@ -265,20 +281,79 @@
 
         // Pembatalan dan kembali ke halaman sebelumnya
         $(document).on('click', '#cancelButton', function() {
-            // Ambil URL asal dari document.referrer (halaman yang mengarah ke halaman ini)
-            var previousUrl = document.referrer;
+            // Get URL parameters
+            const params = new URLSearchParams(window.location.search);
+            const barcodeFromUrl = params.get('barcode');
+            const idOneWaterSampleFromUrl = params.get('idOneWaterSample');
+            const idTestingTypeFromUrl = params.get('idTestingType');
             
-            // Jika ada URL asal, arahkan kembali ke sana
-            if (previousUrl) {
-                window.location.href = previousUrl;
-            } 
+            // Check if the necessary query parameters exist
+            if (barcodeFromUrl && idOneWaterSampleFromUrl && idTestingTypeFromUrl) {
+                // If the parameters exist, redirect to the previous page
+                var previousUrl = document.referrer;
+                
+                if (previousUrl) {
+                    window.location.href = previousUrl;  // Redirect to the previous page
+                }
+            } else {
+                // If the parameters are not found, simply close the modal
+                $('#compose-modal').modal('hide');  // Close the modal
+            }
+        });
+
+        $('.clockpicker').clockpicker({
+            placement: 'bottom', // clock popover placement
+            align: 'left',       // popover arrow align
+            donetext: 'Done',     // done button text
+            autoclose: true,    // auto close when minute is selected
+            vibrate: true        // vibrate the device when dragging clock hand
+        });                
+
+        $('.val1tip, .val2tip, .val3tip').tooltipster({
+            animation: 'swing',
+            delay: 1,
+            theme: 'tooltipster-default',
+            autoClose: true,
+            position: 'bottom',
+        });
+
+        $("#compose-modal").on('hide.bs.modal', function(){
+            $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
+        });        
+
+        $('#compose-modal').on('shown.bs.modal', function () {
+			$('#id_client_sample').focus();
+            // $('#budget_req').on('input', function() {
+            //     formatNumber(this);
+            //     });
+            });
+    
+
+        $("input").keypress(function(){
+            $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
+        });
+
+        $("input").click(function(){
+            setTimeout(function(){
+                $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
+            }, 3000);                            
+        });
+
+        $("input").keypress(function(){
+            $('.val1tip').tooltipster('hide');   
+        });
+
+        $("input").click(function(){
+            setTimeout(function(){
+                $('.val1tip').tooltipster('hide');   
+            }, 3000);                            
         });
 
 
         function handleSampleTypeInput(selector) {
             $(selector).on('input', function() {
                 let sampleTypeValue = $(this).val().toLowerCase();
-                if (sampleTypeValue === 'soil') {
+                if (sampleTypeValue === 'soil' || sampleTypeValue === 'faeces') {
                     $('#tray_weight_container').show();
                 } else {
                     $('#tray_weight_container').hide();
@@ -335,6 +410,7 @@
 
         $('.idOneWaterSampleSelect').change(function() {
             let id_one_water_sample = $(this).val(); // Mendapatkan ID produk yang dipilih
+            console.log('test'+ id_one_water_sample)
             if (id_one_water_sample) {
                 $.ajax({
                     url: '<?php echo site_url('Moisture_content/getIdOneWaterDetails'); ?>', // URL untuk request AJAX
@@ -342,6 +418,7 @@
                     data: { id_one_water_sample: id_one_water_sample }, // Data yang dikirim ke server
                     dataType: 'json', // Format data yang diharapkan dari server
                     success: function(response) {
+                        console.log('ceks:',response);
                         // Mengisi field 'unit_of_measure' dengan nilai yang diterima dari server
                         $('#sampletype').val(response.sampletype || '');
                         $('#id_sampletype').val(response.id_sampletype || '');
@@ -361,53 +438,38 @@
             }
         });
 
-        $('.clockpicker').clockpicker({
-        placement: 'bottom', // clock popover placement
-        align: 'left',       // popover arrow align
-        donetext: 'Done',     // done button text
-        autoclose: true,    // auto close when minute is selected
-        vibrate: true        // vibrate the device when dragging clock hand
-        });                
-
-        $('.val1tip, .val2tip, .val3tip').tooltipster({
-            animation: 'swing',
-            delay: 1,
-            theme: 'tooltipster-default',
-            autoClose: true,
-            position: 'bottom',
-        });
-
-        $("#compose-modal").on('hide.bs.modal', function(){
+        $('#id_one_water_sample').on("change", function() {
             $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
-        });        
-
-        $('#compose-modal').on('shown.bs.modal', function () {
-			$('#id_client_sample').focus();
-            // $('#budget_req').on('input', function() {
-            //     formatNumber(this);
-            //     });
+            id_one_water_sample = $('#id_one_water_sample').val();
+            $.ajax({
+                type: "GET",
+                url: "Moisture_content/barcode_restrict?id1="+id_one_water_sample,
+                dataType: "json",
+                success: function(data) {
+                    if (data.length > 0) {
+                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Id One Water Sample <strong> ' + id_one_water_sample +'</strong> is already in the system !</span>');
+                        $('.val1tip').tooltipster('content', tip);
+                        $('.val1tip').tooltipster('show');
+                        $('#id_one_water_sample').focus();
+                        $('#id_one_water_sample').val('');        
+                        $('#id_one_water_sample').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#id_one_water_sample').css({'background-color' : '#FFFFFF'});
+                            setTimeout(function(){
+                                $('#id_one_water_sample').css({'background-color' : '#FFE6E7'});
+                                setTimeout(function(){
+                                    $('#id_one_water_sample').css({'background-color' : '#FFFFFF'});
+                                }, 300);
+                            }, 300);
+                        }, 300);
+                        id_one_water_sample = data[0].id_one_water_sample;
+                        console.log(data);
+                    }
+                    else {
+                    }
+                }
             });
-    
-
-        $("input").keypress(function(){
-            $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
-        });
-
-        $("input").click(function(){
-            setTimeout(function(){
-                $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
-            }, 3000);                            
-        });
-
-        $("input").keypress(function(){
-            $('.val1tip').tooltipster('hide');   
-        });
-
-        $("input").click(function(){
-            setTimeout(function(){
-                $('.val1tip').tooltipster('hide');   
-            }, 3000);                            
-        });
+        }).trigger('change');
 
         $('#barcode_moisture_content').on("change", function() {
             let barcodeMoistureContent = $('#barcode_moisture_content').val();
@@ -419,8 +481,8 @@
                 success: function(data) {
                     if (data.length == 1) {
                         let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode Moisture Content <strong> ' + barcodeMoistureContent +'</strong> is already in the system !</span>');
-                        $('.val1tip').tooltipster('content', tip);
-                        $('.val1tip').tooltipster('show');
+                        $('.val2tip').tooltipster('content', tip);
+                        $('.val2tip').tooltipster('show');
                         $('#barcode_moisture_content').focus();
                         $('#barcode_moisture_content').val('');       
                         $('#barcode_moisture_content').css({'background-color' : '#FFE6E7'});
@@ -589,8 +651,11 @@
             $('#mode').val('edit');
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Moisture Content | Update<span id="my-another-cool-loader"></span>');
             $('#idx_moisture').val(data.id_moisture);
+            // $('#id_one_water_sample').hide();
+            // $('#idx_one_water_sample').show();
+            // $('#idx_one_water_sample').attr('readonly', true);
+            // $('#idx_one_water_sample').val(data.id_one_water_sample);
             $('#id_one_water_sample').hide();
-            $('#idx_one_water_sample').show();
             $('#idx_one_water_sample').attr('readonly', true);
             $('#idx_one_water_sample').val(data.id_one_water_sample);
             $('#id_person').val(data.id_person);
@@ -599,7 +664,7 @@
             // $('#sampletype').val(data.sampletype);
             $('#sampletype').attr('readonly', true);
             $('#sampletype').on('input', function() {
-                if ($(this).val().toLowerCase() === "soil") {
+                if ($(this).val().toLowerCase() === "soil" || $(this).val().toLowerCase() === "faeces") {
                     $('#tray_weight_container').show();
                 } else {
                     $('#tray_weight_container').hide();
@@ -609,7 +674,7 @@
             $('#traysample_wetweight').val(data.traysample_wetweight);
             $('#time_incubator').val(data.time_incubator);
             $('#comments').val(data.comments);
-            $('#barcode_moisture_content').val(data.barcode_moisture_content);
+            $('#barcode_moisture_content').val(data.barcode_moisture_content).attr('readonly', true);
             // $('#barcode_moisture_content').attr('readonly', true);
             $('#compose-modal').modal('show');
         });  

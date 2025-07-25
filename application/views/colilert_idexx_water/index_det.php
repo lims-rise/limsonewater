@@ -127,6 +127,7 @@
                                             <input id="idx_colilert_in" name="idx_colilert_in" type="hidden" class="form-control input-sm">
                                             <input id="id_colilert_in" name="id_colilert_in" type="hidden" class="form-control input-sm">
                                             <input id="id_colilert_out" name="id_colilert_out" type="hidden" class="form-control input-sm">
+                                            <input id="idx_one_water_sample" name="idx_one_water_sample" type="hidden" class="form-control input-sm">
                                         </div>
                                     </div>
 
@@ -523,8 +524,10 @@
         });
 
         $('#addtombol_det').click(function() {
+            let id_one_water_sample = $('#id_one_water_sample').val();
             $('#mode_det').val('insert');
             $('#modal-title-detail').html('<i class="fa fa-wpforms"></i> Colilert Idexx Out | New <span id="my-another-cool-loader"></span>');
+            $('#idx_one_water_sample').val(id_one_water_sample);
             $('#colilert_barcodex').val(colilertBarcode);
             $('#colilert_barcodex').attr('readonly', true);
             $('#idx_colilert_in').val(idColilertIn);
@@ -542,9 +545,11 @@
         $('#example2').on('click', '.btn_edit_det', function() {
             let tr = $(this).closest('tr');
             let data = table.row(tr).data();
+            let id_one_water_sample = $('#id_one_water_sample').val();
             console.log(data);
             $('#mode_det').val('edit');
             $('#modal-title-detail').html('<i class="fa fa-pencil-square"></i> Colilert Idexx Out | Update <span id="my-another-cool-loader"></span>');
+            $('#idx_one_water_sample').val(id_one_water_sample);
             $('#idx_colilert_in').val(idColilertIn);
             $('#id_colilert_out').val(data.id_colilert_out);
             $('#colilert_barcodex').val(data.colilert_barcode);

@@ -31,16 +31,16 @@ class Moisture_content_model extends CI_Model
         $this->datatables->where('moisture_content.flag', '0');
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 4){
-            $this->datatables->add_column('action', anchor(site_url('moisture_content/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')), 'id_moisture');
+            $this->datatables->add_column('action', anchor(site_url('moisture_content/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')), 'id_one_water_sample');
         }
         else if ($lvl == 3){
             $this->datatables->add_column('action', anchor(site_url('moisture_content/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
-                ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_moisture');
+                ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
         }
         else {
             $this->datatables->add_column('action', anchor(site_url('moisture_content/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
             ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-            ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_moisture');
+            ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
         }
         $this->db->order_by('latest_date', 'DESC');
         return $this->datatables->generate();
@@ -123,7 +123,7 @@ class Moisture_content_model extends CI_Model
       $this->db->from('moisture_content AS mc');
       $this->db->join('ref_sampletype AS rs', 'mc.id_sampletype = rs.id_sampletype', 'left');
       $this->db->join('ref_person AS rp',  'mc.id_person = rp.id_person', 'left');
-      $this->db->where('mc.id_moisture', $id);
+      $this->db->where('mc.id_one_water_sample', $id);
       $this->db->where('mc.flag', '0');
       $q = $this->db->get();
 
@@ -231,11 +231,10 @@ class Moisture_content_model extends CI_Model
     }
 
     function validate24($id){
-        $q = $this->db->query('
-        SELECT barcode_moisture_content FROM moisture_content
-        WHERE barcode_moisture_content = "'.$id.'"
-        AND barcode_moisture_content NOT IN (SELECT barcode_tray FROM moisture24 WHERE flag IN (0))
-        ');        
+        $sql = 'SELECT barcode_moisture_content FROM moisture_content
+                WHERE barcode_moisture_content = ?
+                AND barcode_moisture_content NOT IN (SELECT barcode_tray FROM moisture24 WHERE flag IN (0))';
+        $q = $this->db->query($sql, array($id));
         $response = $q->result_array();
         return $response;
     }
@@ -271,6 +270,17 @@ class Moisture_content_model extends CI_Model
         SELECT barcode_moisture_content FROM moisture_content
         WHERE barcode_moisture_content = "'.$id.'"
         AND flag = 0 
+        ');        
+        $response = $q->result_array();
+        return $response;
+    }
+
+    function barcode_restrict($id){
+
+        $q = $this->db->query('
+        select id_one_water_sample
+        from moisture_content
+        WHERE id_one_water_sample = "'.$id.'"
         ');        
         $response = $q->result_array();
         return $response;

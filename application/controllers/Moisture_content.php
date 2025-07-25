@@ -535,6 +535,14 @@ class Moisture_content extends CI_Controller
         echo json_encode($data);
     }
 
+    public function barcode_restrict() 
+    {
+        $id = $this->input->get('id1');
+        $data = $this->Moisture_content_model->barcode_restrict($id);
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
+
 }
 
 /* End of file Water_sample_reception.php */
