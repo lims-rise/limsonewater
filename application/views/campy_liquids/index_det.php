@@ -374,6 +374,7 @@
                                             <input id="id_campy_liquids1" name="id_campy_liquids1" type="hidden" class="form-control input-sm">
                                             <input id="number_of_tubes1" name="number_of_tubes1" type="hidden" class="form-control input-sm">
                                             <input id="id_result_charcoal_liquids" name="id_result_charcoal_liquids" type="hidden" class="form-control input-sm">
+                                            <input id="idCharcoal_one_water_sample" name="idCharcoal_one_water_sample" type="hidden" class="form-control input-sm">
                                         </div>
                                     </div>
 
@@ -441,6 +442,7 @@
                                             <input id="id_campy_liquidsHBA" name="id_campy_liquidsHBA" type="hidden" class="form-control input-sm">
                                             <input id="number_of_tubesHba" name="number_of_tubesHba" type="hidden" class="form-control input-sm">
                                             <input id="id_result_hba_liquids" name="id_result_hba_liquids" type="hidden" class="form-control input-sm">
+                                            <input id="idHba_one_water_sample" name="idHba_one_water_sample" type="hidden" class="form-control input-sm">
                                         </div>
                                     </div>
 
@@ -505,6 +507,7 @@
                     <input id="id_result_biochemical_liquids" name="id_result_biochemical_liquids" type="hidden" class="form-control input-sm">
                     <input id="biochemical_tube" name="biochemical_tube" type="hidden" class="form-control input-sm">
                     <input id="id_result_hba1_liquids" name="id_result_hba1_liquids" type="hidden" class="form-control input-sm">
+                    <input id="idBiochemical_one_water_sample" name="idBiochemical_one_water_sample" type="hidden" class="form-control input-sm">
                     
 
                     <!-- Oxidase Result -->
@@ -920,6 +923,7 @@
     let id_campy_liquids = $('#id_campy_liquids').val();
     let number_of_tubes = $('#number_of_tubes').val();
     const BASE_URL = '/limsonewater/index.php';
+    let idx_one_water_sample = $('#id_one_water_sample').val();
 
     $(document).ready(function() {
     	let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
@@ -1631,6 +1635,7 @@
 
             $('#mode_detResultsBiochemical').val('insert');
             $('#modal-title-biochemical').html(`<i class="fa fa-wpforms"></i> Insert | Biochemical Tube ${plateNumber} <span id="my-another-cool-loader"></span>`);
+            $('#idBiochemical_one_water_sample').val(idx_one_water_sample);
             $('#id_campy_liquidsBiochemical').val(id_campy_liquids);
             $('#id_result_hba1_liquids').val(data.id_result_hba_liquids);
             $('#oxidase').val('');
@@ -1653,6 +1658,7 @@
             // Set nilai-nilai di dalam modal sesuai data yang didapat
             $('#mode_detResultsBiochemical').val('edit');
             $('#modal-title-biochemical').html('<i class="fa fa-pencil-square"></i> Update | Biochemical Tube ' + data.biochemical_tube + ' <span id="my-another-cool-loader"></span>');
+            $('#idBiochemical_one_water_sample').val(idx_one_water_sample);
             $('#id_result_biochemical_liquids').val(data.id_result_biochemical_liquids);
             $('#id_campy_liquidsBiochemical').val(data.id_campy_liquids);
             $('#id_result_hba1_liquids').val(data.id_result_hba_liquids);
@@ -1676,6 +1682,7 @@
         $('#addtombol_detResultsCharcoal').click(function() {
             $('#mode_detResultsCharcoal').val('insert');
             $('#modal-title-detail').html('<i class="fa fa-wpforms"></i> Insert | Results Charcoal <span id="my-another-cool-loader"></span>');
+            $('#idCharcoal_one_water_sample').val(idx_one_water_sample);
             $('#campy_assay_barcode1').val(campy_assay_barcode);
             $('#campy_assay_barcode1').attr('readonly', true);
             $('#id_campy_liquids1').val(id_campy_liquids);
@@ -1689,6 +1696,7 @@
             console.log(data);
             $('#mode_detResultsCharcoal').val('edit');
             $('#modal-title-detail').html('<i class="fa fa-pencil-square"></i> Update | Results Charcoal <span id="my-another-cool-loader"></span>');
+            $('#idCharcoal_one_water_sample').val(idx_one_water_sample);
             $('#id_result_charcoal_liquids').val(data.id_result_charcoal_liquids);
             $('#campy_assay_barcode1').val(data.campy_assay_barcode);
             $('#campy_assay_barcode1').attr('readonly', true);
@@ -1743,6 +1751,7 @@
                 let campy_assay_barcode = data.campy_assay_barcode;
 
                 // Parsing data ke komponen
+                $('#idHba_one_water_sample').val(idx_one_water_sample);
                 $('#campy_assay_barcodeHBA').val(campy_assay_barcode);
                 $('#id_campy_liquidsHBA').val(id_campy_liquids);
                 $('#campy_assay_barcodeHBA').attr('readonly', true);
@@ -1801,6 +1810,7 @@
             console.log(data);
             $('#mode_detResultsHBA').val('edit');
             $('#modal-title-HBA').html('<i class="fa fa-pencil-square"></i> Update | Results HBA <span id="my-another-cool-loader"></span>');
+            $('#idHba_one_water_sample').val(idx_one_water_sample);
             $('#id_result_hba_liquids').val(data.id_result_hba_liquids);
             $('#campy_assay_barcodeHBA').val(data.campy_assay_barcode);
             $('#campy_assay_barcodeHBA').attr('readonly', true);

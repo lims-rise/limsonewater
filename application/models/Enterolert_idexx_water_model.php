@@ -93,11 +93,16 @@ class Enterolert_idexx_water_model extends CI_Model
     {
       $response = array();
       $this->db->select('ewi.id_enterolert_in, ewi.id_one_water_sample, ewi.id_person, rp.initial,
+        ewi.user_created, 
+        ewi.user_review, 
+        ewi.review, 
+        user.full_name,
         ewi.id_sampletype, rs.sampletype, ewi.enterolert_barcode, ewi.date_sample, ewi.time_sample,
         ewi.volume_bottle, ewi.dilution');
       $this->db->from('enterolert_water_in AS ewi');
       $this->db->join('ref_sampletype AS rs', 'ewi.id_sampletype = rs.id_sampletype', 'left');
       $this->db->join('ref_person AS rp',  'ewi.id_person = rp.id_person', 'left');
+      $this->db->join('tbl_user user', 'ewi.user_review = user.id_users', 'left');
       $this->db->where('ewi.id_one_water_sample', $id);
       $this->db->where('ewi.flag', '0');
       $q = $this->db->get();
@@ -238,6 +243,23 @@ class Enterolert_idexx_water_model extends CI_Model
         return $response;
     }
     
+    function updateCancel($id, $data)
+    {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->update('enterolert_water_in', $data);
+
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function updateSave($id, $data)
+    {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->update('enterolert_water_in', $data);
+    }
 
       
 }

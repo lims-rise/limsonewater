@@ -50,6 +50,10 @@ class Sample_reception_model extends CI_Model
                 '<i class="fa fa-print" aria-hidden="true"></i>', 
                 array('class' => 'btn btn-warning btn-sm')) . 
             "
+                " . anchor(site_url('sample_reception/rep_print2/$1'), 
+                '<i class="fa fa-print" aria-hidden="true"></i>', 
+                array('class' => 'btn btn-success btn-sm')) . 
+            "
                 " . '<button type="button" class="btn_edit btn btn-info btn-sm">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                 </button>' . " 

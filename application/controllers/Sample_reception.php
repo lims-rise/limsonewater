@@ -197,6 +197,64 @@ class Sample_reception extends CI_Controller
         }
     }
 
+    public function rep_print2($id) 
+    {
+        $row = $this->Sample_reception_model->get_rep($id);
+        if ($row) {
+            $data = array(
+                'report_number' => $row->report_number,
+                'report_date' => $row->report_date,
+                'id_project' => $row->id_project,
+                'client' => $row->client,
+                'client_name' => $row->client_name,
+                'address' => $row->address,
+                'phone1' => $row->phone1,
+                'phone2' => $row->phone2,
+                'email' => $row->email,
+                'client_quote_number' => $row->client_quote_number,
+                'po_number' => $row->po_number,
+                'id_client_sample' => $row->id_client_sample,
+                'from_date' => $row->from_date,
+                'to_date' => $row->to_date,
+                'date_arrival' => $row->date_arrival,
+                'time_arrival' => $row->time_arrival,
+                'id_person' => $row->id_person,
+                'realname' => $row->realname,
+            );
+            $needs_generation_and_save = (
+                empty($data['report_number']) || $data['report_number'] === null || $data['report_number'] === '' ||
+                empty($data['report_date']) || $data['report_date'] === null || $data['report_date'] === '' || trim($data['report_date']) === '0000-00-00'
+            );
+
+            if ($needs_generation_and_save) {
+                $data['report_date_display'] = date('d-M-Y'); 
+                $data['report_number_display'] = $this->Sample_reception_model->generate_new_report_number();
+                
+                $data['report_date_to_send_ajax'] = $data['report_date_display'];
+                $data['report_number_to_send_ajax'] = $data['report_number_display'];
+            } else {
+
+                $date_obj_from_db = DateTime::createFromFormat('Y-m-d', $data['report_date']);
+                if ($date_obj_from_db) {
+                    $data['report_date_display'] = $date_obj_from_db->format('d-M-Y');
+                } else {
+
+                    $data['report_date_display'] = $data['report_date']; 
+                    log_message('error', 'Could not convert DB date "' . $data['report_date'] . '" to DD-Mon-YYYY format for display in rep_print2.');
+                }
+                $data['report_number_display'] = $data['report_number'];
+                
+                $data['report_date_to_send_ajax'] = ''; 
+                $data['report_number_to_send_ajax'] = ''; 
+            }
+            
+            $this->template->load('template','sample_reception/index_rep2', $data);
+        } else {
+            $this->session->set_flashdata('message', 'Record Not Found');
+            redirect(site_url("sample_reception/read/".$id));
+        }
+    }
+
     public function save_report_details_ajax() {
         if (!$this->input->is_ajax_request() || !$this->input->method('post')) {
             echo json_encode(['status' => 'error', 'message' => 'Invalid request.']);

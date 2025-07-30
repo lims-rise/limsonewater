@@ -70,7 +70,6 @@ class Campy_biosolids extends CI_Controller
 
         if ($row) {
             $data = array(
-
                 'id_campy_biosolids' => $row->id_campy_biosolids,
                 'id_one_water_sample' => $row->id_one_water_sample,
                 'initial' => $row->initial,
@@ -88,15 +87,14 @@ class Campy_biosolids extends CI_Controller
                 'user_review' => $row->user_review,
                 'review' => $row->review,
                 'user_created' => $row->user_created,
-                
             );
-            
-            // Mendapatkan final concentration
-            $finalConcentration = $this->Campy_biosolids_model->subjsonFinalConcentration($id);
+
+            // Mendapatkan final concentration dengan id_campy_biosolids
+            $finalConcentration = $this->Campy_biosolids_model->subjsonFinalConcentration($row->id_campy_biosolids);
             if ($finalConcentration) {
                 $data['finalConcentration'] = $finalConcentration;
             } else {
-                $data['finalConcentration'] = []; // Pastikan ini tidak null
+                $data['finalConcentration'] = [];
             }
             // var_dump($data);
             // die();
@@ -106,8 +104,7 @@ class Campy_biosolids extends CI_Controller
         else {
             // $this->template->load('template','Water_sample_reception/index_det', $test);
         }
-
-    } 
+    }
 
     public function read2($id)
     {
@@ -271,6 +268,7 @@ class Campy_biosolids extends CI_Controller
 
     public function saveResultsCharcoal() {
         $mode = $this->input->post('mode_detResultsCharcoal', TRUE);
+        $id_one_water_sample = $this->input->post('idCharcoal_one_water_sample', TRUE);
         $id_campy_biosolids = $this->input->post('id_campy_biosolids1', TRUE);
         $id_result_charcoal = $this->input->post('id_result_charcoal', TRUE);
         $dt = new DateTime();
@@ -357,11 +355,12 @@ class Campy_biosolids extends CI_Controller
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
-        redirect(site_url("campy_biosolids/read/" . $id_campy_biosolids));
+        redirect(site_url("campy_biosolids/read/" . $id_one_water_sample));
     }
 
     public function saveResultsHBA() {
         $mode = $this->input->post('mode_detResultsHBA', TRUE);
+        $id_one_water_sample = $this->input->post('idHba_one_water_sample', TRUE);
         $id_campy_biosolids = $this->input->post('id_campy_biosolidsHBA', TRUE);
         $id_result_hba = $this->input->post('id_result_hba', TRUE);
 
@@ -448,7 +447,7 @@ class Campy_biosolids extends CI_Controller
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
-        redirect(site_url("campy_biosolids/read/" . $id_campy_biosolids));
+        redirect(site_url("campy_biosolids/read/" . $id_one_water_sample));
     }
 
 
@@ -463,6 +462,7 @@ class Campy_biosolids extends CI_Controller
         $confirmation = $this->input->post('confirmation', TRUE);
         $sample_store = $this->input->post('sample_store', TRUE);
         $biochemical_tube = $this->input->post('biochemical_tube', TRUE);
+        $id_one_water_sample = $this->input->post('idBiochemical_one_water_sample', TRUE);
     
         // Defaukt value if the attribute is null
         if ($gramlysis === null) $gramlysis = '-';
@@ -503,8 +503,8 @@ class Campy_biosolids extends CI_Controller
             );
             $this->Campy_biosolids_model->updateResultsBiochemical($id_result_biochemical, $data);
         }
-    
-        redirect(site_url("campy_biosolids/read/" . $id_campy_biosolids));
+
+        redirect(site_url("campy_biosolids/read/" . $id_one_water_sample));
     }
     
     
@@ -958,6 +958,18 @@ class Campy_biosolids extends CI_Controller
                 $sheet->setCellValue($columnLetter . '1', "Tube $plate_number Result");
                 $tubeIndex++;
             }
+            
+            // Add MPN calculation headers after tube results
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $sheet->setCellValue($columnLetter . '1', "MPN Concentration");
+            $tubeIndex++;
+            
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $sheet->setCellValue($columnLetter . '1', "Upper CI");
+            $tubeIndex++;
+            
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $sheet->setCellValue($columnLetter . '1', "Lower CI");
         }
     
         // Start filling data from the second row
@@ -988,14 +1000,38 @@ class Campy_biosolids extends CI_Controller
             // Fill tube results
             $plate_numbers = explode(',', $concentration->plate_numbers);
             foreach ($plate_numbers as $plate_number) {
-                // Set default value for confirmation
-                $confirmation_value = isset($concentration->confirmation[$plate_number]) ? $concentration->confirmation[$plate_number] : 'No Growth'; 
+                $plate_number = trim($plate_number); // Remove any spaces
+                
+                // Check confirmation array for this plate number
+                $confirmation_value = 'No Growth'; // Default value
+                
+                if (isset($concentration->confirmation[$plate_number])) {
+                    $confirmation_value = $concentration->confirmation[$plate_number];
+                } else {
+                    // Try with space prefix (karena ada spasi di key confirmation)
+                    $spaced_key = ' ' . $plate_number;
+                    if (isset($concentration->confirmation[$spaced_key])) {
+                        $confirmation_value = $concentration->confirmation[$spaced_key];
+                    }
+                }
                 
                 // Calculate the column letter dynamically
                 $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
                 $sheet->setCellValue($columnLetter . $numrow, $confirmation_value);
                 $tubeIndex++;
             }
+            
+            // Fill MPN calculation data after tube results
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $sheet->setCellValue($columnLetter . $numrow, $concentration->mpn_concentration ?? '');
+            $tubeIndex++;
+            
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $sheet->setCellValue($columnLetter . $numrow, $concentration->upper_ci ?? '');
+            $tubeIndex++;
+            
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $sheet->setCellValue($columnLetter . $numrow, $concentration->lower_ci ?? '');
     
             $numrow++;
         }
@@ -1077,6 +1113,18 @@ class Campy_biosolids extends CI_Controller
             $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $numberOfTubes + $i);
             $sheet->setCellValue($columnLetter . '1', "Tube $i Result");
         }
+        
+        // Add MPN calculation headers after tube results
+        $mpnStartIndex = 10 + ($numberOfTubes * 2) + 1;
+        
+        $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex);
+        $sheet->setCellValue($columnLetter . '1', "MPN Concentration");
+        
+        $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex + 1);
+        $sheet->setCellValue($columnLetter . '1', "Upper CI");
+        
+        $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex + 2);
+        $sheet->setCellValue($columnLetter . '1', "Lower CI");
     }
     
     private function fillSheetData($sheet, $data, $numberOfTubes) {
@@ -1116,6 +1164,18 @@ class Campy_biosolids extends CI_Controller
             error_log("Confirmation for Tube {$i}: " . $confirmation_value);
             $sheet->setCellValue($columnLetter . $numrow, $confirmation_value);
         }
+        
+        // Fill MPN calculation data after tube results
+        $mpnStartIndex = 10 + ($numberOfTubes * 2) + 1;
+        
+        $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex);
+        $sheet->setCellValue($columnLetter . $numrow, $concentration->mpn_concentration ?? '');
+        
+        $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex + 1);
+        $sheet->setCellValue($columnLetter . $numrow, $concentration->upper_ci ?? '');
+        
+        $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex + 2);
+        $sheet->setCellValue($columnLetter . $numrow, $concentration->lower_ci ?? '');
     
             $numrow++;
         }
@@ -1223,7 +1283,215 @@ class Campy_biosolids extends CI_Controller
         }
     }
 
+    public function testCalculateMPN() {
+        header('Content-Type: application/json');
+        
+        try {
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Test endpoint working',
+                'session_data' => [
+                    'user_id' => $this->session->userdata('id_users'),
+                    'lab' => $this->session->userdata('lab')
+                ]
+            ]);
+        } catch (Exception $e) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Test failed: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+    public function testUpdateMPN() {
+        header('Content-Type: application/json');
+        
+        // Test method to check if update works
+        $id_campy_result_mpn = $this->input->get('id', TRUE);
+        
+        if (!$id_campy_result_mpn) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'ID required for test'
+            ]);
+            return;
+        }
+        
+        // Get current data
+        $current_data = $this->Campy_biosolids_model->get_by_id_calculate_mpn($id_campy_result_mpn);
+        
+        if (!$current_data) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Data not found'
+            ]);
+            return;
+        }
+        
+        // Try simple update
+        $test_data = array(
+            'mpn_concentration' => '999.99'
+        );
+        
+        $result = $this->Campy_biosolids_model->updateCalculateMPN($id_campy_result_mpn, $test_data);
+        
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'Test update result: ' . ($result ? 'SUCCESS' : 'FAILED'),
+            'current_data' => $current_data,
+            'test_data' => $test_data
+        ]);
+    }
+
+    public function saveCalculateMPN() {
+        header('Content-Type: application/json');
+        
+        try {
+            // Get form data
+            $mode = $this->input->post('mode_calculateMPN', TRUE);
+            $id_campy_biosolids = $this->input->post('id_campy_biosolids_mpn', TRUE);
+            $mpn_concentration = $this->input->post('mpn_concentration', TRUE);
+            $upper_ci = $this->input->post('upper_ci', TRUE);
+            $lower_ci = $this->input->post('lower_ci', TRUE);
+            
+            // Validation
+            if (!$mode || !in_array($mode, ['insert', 'edit'])) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Invalid operation mode.'
+                ]);
+                return;
+            }
+            
+            if (!$id_campy_biosolids || !$mpn_concentration || !$upper_ci || !$lower_ci) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'All fields are required.'
+                ]);
+                return;
+            }
+            
+            $dt = new DateTime();
+            $user_id = $this->session->userdata('id_users');
+            $lab = $this->session->userdata('lab');
+            
+            if ($mode === 'insert') {
+                // Insert mode
+                $data = array(
+                    'id_campy_biosolids' => $id_campy_biosolids,
+                    'mpn_concentration' => $mpn_concentration,
+                    'upper_ci' => $upper_ci,
+                    'lower_ci' => $lower_ci,
+                    'flag' => '0',
+                    'lab' => $lab ? $lab : '1',
+                    'uuid' => $this->uuid->v4(),
+                    'user_created' => $user_id,
+                    'date_created' => $dt->format('Y-m-d H:i:s'),
+                );
+                
+                $insert_id = $this->Campy_biosolids_model->insertCalculateMPN($data);
+                
+                if ($insert_id) {
+                    echo json_encode([
+                        'status' => 'success',
+                        'message' => 'MPN calculation saved successfully.',
+                        'id' => $insert_id
+                    ]);
+                } else {
+                    echo json_encode([
+                        'status' => 'error',
+                        'message' => 'Failed to save MPN calculation.'
+                    ]);
+                }
+                
+            } else if ($mode === 'edit') {
+                // Edit mode
+                $id_campy_result_mpn = $this->input->post('id_campy_result_mpn', TRUE);
+                
+                if (!$id_campy_result_mpn) {
+                    echo json_encode([
+                        'status' => 'error',
+                        'message' => 'MPN calculation ID is required for update.'
+                    ]);
+                    return;
+                }
+                
+                // Only update the fields that exist in the table
+                $data = array(
+                    'id_campy_biosolids' => $id_campy_biosolids,
+                    'mpn_concentration' => $mpn_concentration,
+                    'upper_ci' => $upper_ci,
+                    'lower_ci' => $lower_ci,
+                    'flag' => '0',
+                    'lab' => $lab ? $lab : '1',
+                    'uuid' => $this->uuid->v4(),
+                    // Remove date_updated and user_updated as they don't exist in the table
+                );
+                
+                // Debug logging - you can remove this later
+                log_message('debug', 'Update MPN Data: ' . json_encode($data));
+                log_message('debug', 'Update MPN ID: ' . $id_campy_result_mpn);
+                
+                $update_result = $this->Campy_biosolids_model->updateCalculateMPN($id_campy_result_mpn, $data);
+                
+                if ($update_result) {
+                    echo json_encode([
+                        'status' => 'success',
+                        'message' => 'MPN calculation updated successfully.'
+                    ]);
+                } else {
+                    echo json_encode([
+                        'status' => 'error',
+                        'message' => 'Failed to update MPN calculation. No changes detected.'
+                    ]);
+                }
+            }
+            
+        } catch (Exception $e) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Error: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+    public function getCalculateMPN() {
+        header('Content-Type: application/json');
+        
+        $id_campy_biosolids = $this->input->get('id_campy_biosolids', TRUE);
+        
+        if (!$id_campy_biosolids) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'ID Campy Biosolids is required.'
+            ]);
+            return;
+        }
+        
+        try {
+            $mpn_data = $this->Campy_biosolids_model->get_calculate_mpn_by_campy_biosolids($id_campy_biosolids);
+            
+            if ($mpn_data) {
+                echo json_encode([
+                    'status' => 'success',
+                    'data' => $mpn_data
+                ]);
+            } else {
+                echo json_encode([
+                    'status' => 'not_found',
+                    'message' => 'No MPN calculation found.'
+                ]);
+            }
+        } catch (Exception $e) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Error retrieving MPN calculation: ' . $e->getMessage()
+            ]);
+        }
+    }
 }
+/* End of file Campy_biosolids.php */
+/* Location: ./application/controllers/Campy_biosolids.php */
 
 /* End of file Water_sample_reception.php */
 /* Location: ./application/controllers/Water_sample_reception.php */

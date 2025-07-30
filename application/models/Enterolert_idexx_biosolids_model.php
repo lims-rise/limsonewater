@@ -96,11 +96,16 @@ class Enterolert_idexx_biosolids_model extends CI_Model
     {
       $response = array();
       $this->db->select('ebi.id_enterolert_bio_in, ebi.id_one_water_sample, ebi.id_person, rp.initial,
+        ebi.user_created, 
+        ebi.user_review, 
+        ebi.review, 
+        user.full_name,
         ebi.id_sampletype, rs.sampletype, ebi.enterolert_barcode, ebi.date_sample, ebi.time_sample,
         ebi.wet_weight, ebi.sample_dry_weight, ebi.sample_dry_weight, ebi.elution_volume, ebi.volume_bottle, ebi.dilution');
       $this->db->from('enterolert_biosolids_in AS ebi');
       $this->db->join('ref_sampletype AS rs', 'ebi.id_sampletype = rs.id_sampletype', 'left');
       $this->db->join('ref_person AS rp',  'ebi.id_person = rp.id_person', 'left');
+      $this->db->join('tbl_user user', 'ebi.user_review = user.id_users', 'left');
       $this->db->where('ebi.id_one_water_sample', $id);
       $this->db->where('ebi.flag', '0');
       $q = $this->db->get();
@@ -254,6 +259,23 @@ class Enterolert_idexx_biosolids_model extends CI_Model
         return $response;
     } 
     
+    function updateCancel($id, $data)
+    {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->update('enterolert_biosolids_in', $data);
+
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function updateSave($id, $data)
+    {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->update('enterolert_biosolids_in', $data);
+    }
 
       
 }

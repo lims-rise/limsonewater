@@ -158,7 +158,14 @@ class Campy_biosolids_model extends CI_Model
         $case_query = implode(', ', $case_statements);
     
         // Final query
-        $this->db->select("cb.id_one_water_sample, cb.id_person, rp.initial, cb.mpn_pcr_conducted, cb.number_of_tubes, cb.campy_assay_barcode, cb.date_sample_processed, cb.time_sample_processed, cb.sample_wetweight, cb.elution_volume, rs.sampletype,
+        $this->db->select("cb.id_one_water_sample, cb.id_person, rp.initial, cb.mpn_pcr_conducted, cb.number_of_tubes, cb.campy_assay_barcode, cb.date_sample_processed, 
+                        cb.time_sample_processed, 
+                        cb.sample_wetweight, 
+                        cb.elution_volume, 
+                        rs.sampletype,
+                        rm.mpn_concentration,
+                        rm.upper_ci,
+                        rm.lower_ci,
                            $case_query, 
                            GROUP_CONCAT(DISTINCT rb.biochemical_tube ORDER BY rb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
                            GROUP_CONCAT(DISTINCT CONCAT(rb.biochemical_tube, ':', rb.confirmation) ORDER BY rb.biochemical_tube SEPARATOR ', ') AS confirmation,
@@ -167,12 +174,12 @@ class Campy_biosolids_model extends CI_Model
         $this->db->join('campy_result_hba AS rh', 'cb.id_campy_biosolids = rh.id_campy_biosolids', 'left');
         $this->db->join('campy_sample_growth_plate_hba AS sgph', 'rh.id_result_hba = sgph.id_result_hba', 'left');
         $this->db->join('campy_sample_volumes AS sv1', 'rh.id_campy_biosolids = sv1.id_campy_biosolids', 'left');
-        $this->db->join('campy_result_biochemical AS rb', 'sgph.id_result_hba = rb.id_result_hba', 'left');
+        $this->db->join('campy_result_biochemical AS rb', 'sgph.id_result_hba = rb.id_result_hba AND rb.flag = 0', 'left');
+        $this->db->join('campy_result_mpn AS rm', 'cb.id_campy_biosolids = rm.id_campy_biosolids', 'left');
         $this->db->join('ref_sampletype AS rs', 'cb.id_sampletype = rs.id_sampletype', 'left');
         $this->db->join('ref_person AS rp',  'cb.id_person = rp.id_person', 'left');
     
         // Conditions
-        $this->db->where('rb.flag', '0');
         $this->db->where('rh.id_campy_biosolids', $id);
         $this->db->group_by('rh.id_result_hba');
     
@@ -181,14 +188,16 @@ class Campy_biosolids_model extends CI_Model
         if ($q->num_rows() > 0) {
             $response = $q->result(); // Fetch all results if available
             foreach ($response as $key => $value) {
-                $confirmations = explode(',', $value->confirmation);
-                $biochemical_tubes = explode(',', $value->biochemical_tube);
+                $confirmations = !empty($value->confirmation) ? explode(',', $value->confirmation) : [];
+                $biochemical_tubes = !empty($value->biochemical_tube) ? explode(',', $value->biochemical_tube) : [];
     
                 $confirmation_array = []; // Inisialisasi array konfirmasi
 
                 // Membuat array asosiasi untuk konfirmasi
-                foreach ($biochemical_tubes as $index => $tube) {
-                    $confirmation_array[$tube] = explode(':', $confirmations[$index] ?? 'No Growth Plate')[1] ?? 'No Growth Plate'; // Menyediakan default
+                if (!empty($biochemical_tubes) && !empty($confirmations)) {
+                    foreach ($biochemical_tubes as $index => $tube) {
+                        $confirmation_array[$tube] = explode(':', $confirmations[$index] ?? 'No Growth Plate')[1] ?? 'No Growth Plate'; // Menyediakan default
+                    }
                 }
                 $value->confirmation = $confirmation_array; // Assign confirmation yang sudah diproses
             }
@@ -226,7 +235,16 @@ class Campy_biosolids_model extends CI_Model
         $case_query = implode(', ', $case_statements);
     
         // Final query
-        $this->db->select("cb.id_one_water_sample, cb.id_person, rp.initial, cb.mpn_pcr_conducted, cb.number_of_tubes, cb.campy_assay_barcode, cb.date_sample_processed, cb.time_sample_processed, cb.sample_wetweight, cb.elution_volume, rs.sampletype,
+        $this->db->select("cb.id_one_water_sample, cb.id_person, rp.initial, cb.mpn_pcr_conducted, cb.number_of_tubes, 
+                        cb.campy_assay_barcode, 
+                        cb.date_sample_processed, 
+                        cb.time_sample_processed, 
+                        cb.sample_wetweight, 
+                        cb.elution_volume, 
+                        rs.sampletype,
+                        rm.mpn_concentration,
+                        rm.upper_ci,
+                        rm.lower_ci,
                            $case_query, 
                            GROUP_CONCAT(DISTINCT rb.biochemical_tube ORDER BY rb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
                            GROUP_CONCAT(DISTINCT CONCAT(rb.biochemical_tube, ':', rb.confirmation) ORDER BY rb.biochemical_tube SEPARATOR ', ') AS confirmation,
@@ -235,12 +253,13 @@ class Campy_biosolids_model extends CI_Model
         $this->db->join('campy_result_hba AS rh', 'cb.id_campy_biosolids = rh.id_campy_biosolids', 'left');
         $this->db->join('campy_sample_growth_plate_hba AS sgph', 'rh.id_result_hba = sgph.id_result_hba', 'left');
         $this->db->join('campy_sample_volumes AS sv1', 'rh.id_campy_biosolids = sv1.id_campy_biosolids', 'left');
-        $this->db->join('campy_result_biochemical AS rb', 'sgph.id_result_hba = rb.id_result_hba', 'left');
+        $this->db->join('campy_result_biochemical AS rb', 'sgph.id_result_hba = rb.id_result_hba AND rb.flag = 0', 'left');
+        $this->db->join('campy_result_mpn AS rm', 'cb.id_campy_biosolids = rm.id_campy_biosolids', 'left');
         $this->db->join('ref_sampletype AS rs', 'cb.id_sampletype = rs.id_sampletype', 'left');
         $this->db->join('ref_person AS rp',  'cb.id_person = rp.id_person', 'left');
     
         // Conditions
-        $this->db->where('rb.flag', '0');
+        // $this->db->where('rb.flag', '0');
         $this->db->where('rh.id_campy_biosolids', $id);
         $this->db->group_by('rh.id_result_hba');
     
@@ -249,23 +268,18 @@ class Campy_biosolids_model extends CI_Model
         if ($q->num_rows() > 0) {
             $response = $q->result(); // Fetch all results if available
             foreach ($response as $key => $value) {
-                $confirmations = explode(',', $value->confirmation);
-                $biochemical_tubes = explode(',', $value->biochemical_tube);
-                $plate_numbers = explode(',', $value->plate_numbers);
+                $confirmations = !empty($value->confirmation) ? explode(',', $value->confirmation) : [];
+                $biochemical_tubes = !empty($value->biochemical_tube) ? explode(',', $value->biochemical_tube) : [];
     
-                // Initialize confirmation array for each plate_number
-                $confirmation_array = array_fill_keys($plate_numbers, 'No Growth'); // Default to "No Growth"
-    
-                // Fill in confirmation values from biochemical_tubes
-                foreach ($biochemical_tubes as $tube) {
-                    $index = array_search($tube, $biochemical_tubes);
-                    if ($index !== false) {
-                        $confirmation_value = explode(':', $confirmations[$index] ?? 'No Growth')[1] ?? 'No Growth'; // Default if not set
-                        $confirmation_array[$tube] = $confirmation_value;
+                $confirmation_array = []; // Inisialisasi array konfirmasi
+
+                // Membuat array asosiasi untuk konfirmasi
+                if (!empty($biochemical_tubes) && !empty($confirmations)) {
+                    foreach ($biochemical_tubes as $index => $tube) {
+                        $confirmation_array[$tube] = explode(':', $confirmations[$index] ?? 'No Growth Plate')[1] ?? 'No Growth Plate'; // Menyediakan default
                     }
                 }
-    
-                $value->confirmation = $confirmation_array; // Assign processed confirmation
+                $value->confirmation = $confirmation_array; // Assign confirmation yang sudah diproses
             }
         }
     
@@ -300,7 +314,14 @@ class Campy_biosolids_model extends CI_Model
         $case_query = implode(', ', $case_statements);
     
         // Final query
-        $this->db->select("cb.id_one_water_sample, cb.id_person, rp.initial, cb.mpn_pcr_conducted, cb.number_of_tubes, cb.campy_assay_barcode, cb.date_sample_processed, cb.time_sample_processed, cb.sample_wetweight, cb.elution_volume, rs.sampletype,
+        $this->db->select("cb.id_one_water_sample, cb.id_person, rp.initial, cb.mpn_pcr_conducted, cb.number_of_tubes, cb.campy_assay_barcode, cb.date_sample_processed, 
+                        cb.time_sample_processed, 
+                        cb.sample_wetweight, 
+                        cb.elution_volume, 
+                        rs.sampletype,
+                        rm.mpn_concentration,
+                        rm.upper_ci,
+                        rm.lower_ci,
                            $case_query, 
                            GROUP_CONCAT(DISTINCT rb.biochemical_tube ORDER BY rb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
                            GROUP_CONCAT(DISTINCT CONCAT(rb.biochemical_tube, ':', rb.confirmation) ORDER BY rb.biochemical_tube SEPARATOR ', ') AS confirmation,
@@ -309,12 +330,13 @@ class Campy_biosolids_model extends CI_Model
         $this->db->join('campy_result_hba AS rh', 'cb.id_campy_biosolids = rh.id_campy_biosolids', 'left');
         $this->db->join('campy_sample_growth_plate_hba AS sgph', 'rh.id_result_hba = sgph.id_result_hba', 'left');
         $this->db->join('campy_sample_volumes AS sv1', 'rh.id_campy_biosolids = sv1.id_campy_biosolids', 'left');
-        $this->db->join('campy_result_biochemical AS rb', 'sgph.id_result_hba = rb.id_result_hba', 'left');
+        $this->db->join('campy_result_biochemical AS rb', 'sgph.id_result_hba = rb.id_result_hba AND rb.flag = 0', 'left');
+        $this->db->join('campy_result_mpn AS rm', 'cb.id_campy_biosolids = rm.id_campy_biosolids', 'left');
         $this->db->join('ref_sampletype AS rs', 'cb.id_sampletype = rs.id_sampletype', 'left');
         $this->db->join('ref_person AS rp', 'cb.id_person = rp.id_person', 'left');
     
         // Conditions
-        $this->db->where('rb.flag', '0');
+        // $this->db->where('rb.flag', '0');
         $this->db->where('sv1.flag', '0');
         $this->db->group_by('rh.id_result_hba');
     
@@ -585,6 +607,58 @@ class Campy_biosolids_model extends CI_Model
         } else {
             return false;
         }
+    }
+
+    function insertCalculateMPN($data) {
+        $this->db->insert('campy_result_mpn', $data);
+        
+        if ($this->db->affected_rows() > 0) {
+            return $this->db->insert_id();
+        } else {
+            // Log the error for debugging
+            log_message('error', 'Failed to insert MPN calculation: ' . $this->db->last_query());
+            log_message('error', 'Database error: ' . print_r($this->db->error(), true));
+            return false;
+        }
+    }
+
+    function updateCalculateMPN($id, $data) {
+        $this->db->where('id_campy_result_mpn', $id);
+        $this->db->update('campy_result_mpn', $data);
+        
+        // Check if update was successful
+        if ($this->db->affected_rows() >= 0) { // Changed from > 0 to >= 0 to handle cases where data is the same
+            return true;
+        } else {
+            // Log the error for debugging
+            log_message('error', 'Failed to update MPN calculation: ' . $this->db->last_query());
+            log_message('error', 'Database error: ' . print_r($this->db->error(), true));
+            return false;
+        }
+    }
+
+    function get_by_id_calculate_mpn($id) {
+        $this->db->where('id_campy_result_mpn', $id);
+        $this->db->where('flag', '0');
+        return $this->db->get('campy_result_mpn')->row();
+    }
+
+    function delete_calculate_mpn($id) {
+        $data = array('flag' => 1);
+        $this->db->where('id_campy_result_mpn', $id);
+        $this->db->update('campy_result_mpn', $data);
+        
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function get_calculate_mpn_by_campy_biosolids($id_campy_biosolids) {
+        $this->db->where('id_campy_biosolids', $id_campy_biosolids);
+        $this->db->where('flag', '0');
+        return $this->db->get('campy_result_mpn')->row();
     }
     
 

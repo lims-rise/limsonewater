@@ -186,6 +186,9 @@
                                     <button class="btn btn-success" id="exportBtn">
                                         <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS
                                     </button>
+                                    <button class="btn btn-primary" id="calculateMpnBtn" style="margin-left: 10px;">
+                                        <i class="fa fa-calculator" aria-hidden="true"></i> Calculate MPN
+                                    </button>
                                 </div>
                                 <input id="id_campy_biosolids" name="id_campy_biosolids" type="hidden" class="form-control input-sm" value="<?php echo $id_campy_biosolids ?>">
 
@@ -204,20 +207,27 @@
                                                 <th>Sample Wet Weight</th>
                                                 <th>Elution Volume</th>
                                                 <?php if (!empty($finalConcentration)): ?>
-                                                    <?php foreach ($finalConcentration[0] as $key => $value): ?>
-                                                        <?php if (strpos($key, 'Tube') === 0): ?>
-                                                            <th><?= htmlspecialchars($key) ?> Volume</th>
-                                                        <?php endif; ?>
-                                                    <?php endforeach; ?>
                                                     <?php 
-                                                    // Ambil plate_numbers dari data pertama
-                                                    $plate_numbers = explode(',', $finalConcentration[0]->plate_numbers);
-                                                    foreach ($plate_numbers as $plate_number): ?>
-                                                        <th>Tube <?= htmlspecialchars($plate_number) ?> Result</th>
-                                                    <?php endforeach; ?>
+                                                        // Tube volume headers
+                                                        foreach ($finalConcentration[0] as $key => $value): 
+                                                            if (strpos($key, 'Tube ') === 0): ?>
+                                                                <th><?= htmlspecialchars($key) ?> Volume</th>
+                                                            <?php endif;
+                                                        endforeach;
+                                                        // Plate number headers
+                                                        $plate_numbers = [];
+                                                        if (!empty($finalConcentration[0]->plate_numbers)) {
+                                                            $plate_numbers = array_map('trim', explode(',', $finalConcentration[0]->plate_numbers));
+                                                        }
+                                                        foreach ($plate_numbers as $plate_number): ?>
+                                                            <th>Tube <?= htmlspecialchars($plate_number) ?> Result</th>
+                                                        <?php endforeach; ?>
                                                 <?php else: ?>
                                                     <th colspan="100%" style="text-align: center">No data available</th>
                                                 <?php endif; ?>
+                                                <th>MPN Concentration</th>
+                                                <th>Upper CI</th>
+                                                <th>Lower CI</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -234,24 +244,36 @@
                                                         <td><?= htmlspecialchars($concentration->time_sample_processed) ?></td>
                                                         <td><?= htmlspecialchars($concentration->sample_wetweight) ?></td>
                                                         <td><?= htmlspecialchars($concentration->elution_volume) ?></td>
-
-                                                        <?php foreach ($concentration as $key => $value): ?>
-                                                            <?php if (strpos($key, 'Tube') === 0): ?>
-                                                                <td><?= htmlspecialchars($value) ?></td>
-                                                            <?php endif; ?>
-                                                        <?php endforeach; ?>
-                                                        
                                                         <?php 
-                                                        // Ambil plate_numbers dari data
-                                                        $plate_numbers = explode(',', $concentration->plate_numbers);
-                                                        
-                                                        // Loop untuk setiap plate_number
+                                                        // Tube volumes
+                                                        foreach ($concentration as $key => $value): 
+                                                            if (strpos($key, 'Tube ') === 0): ?>
+                                                                <td><?= htmlspecialchars($value) ?></td>
+                                                            <?php endif;
+                                                        endforeach;
+
+                                                        // Plate numbers
+                                                        $plate_numbers = [];
+                                                        if (!empty($concentration->plate_numbers)) {
+                                                            $plate_numbers = array_map('trim', explode(',', $concentration->plate_numbers));
+                                                        }
+                                                        // Confirmation values
+                                                        $confirmation = isset($concentration->confirmation) && is_array($concentration->confirmation) ? $concentration->confirmation : [];
                                                         foreach ($plate_numbers as $plate_number): 
-                                                            // Cek jika confirmation untuk plate_number ada
-                                                            $confirmation_value = isset($concentration->confirmation[$plate_number]) ? $concentration->confirmation[$plate_number] : 'No Available'; 
+                                                            // Normalize key for confirmation lookup (remove spaces)
+                                                            $lookup_key = trim($plate_number);
+                                                            // Try direct match, fallback to match with/without space
+                                                            $confirmation_value = isset($confirmation[$lookup_key]) ? $confirmation[$lookup_key] : (
+                                                                isset($confirmation[' ' . $lookup_key]) ? $confirmation[' ' . $lookup_key] : (
+                                                                    isset($confirmation[$plate_number]) ? $confirmation[$plate_number] : 'No Available'
+                                                                )
+                                                            );
                                                         ?>
                                                             <td><?= htmlspecialchars($confirmation_value) ?></td>
                                                         <?php endforeach; ?>
+                                                        <td><?= htmlspecialchars($concentration->mpn_concentration) ?></td>
+                                                        <td><?= htmlspecialchars($concentration->upper_ci) ?></td>
+                                                        <td><?= htmlspecialchars($concentration->lower_ci) ?></td>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             <?php else: ?>
@@ -298,6 +320,7 @@
                                             <input id="id_campy_biosolids1" name="id_campy_biosolids1" type="hidden" class="form-control input-sm">
                                             <input id="number_of_tubes1" name="number_of_tubes1" type="hidden" class="form-control input-sm">
                                             <input id="id_result_charcoal" name="id_result_charcoal" type="hidden" class="form-control input-sm">
+                                            <input id="idCharcoal_one_water_sample" name="idCharcoal_one_water_sample" type="hidden" class="form-control input-sm">
                                         </div>
                                     </div>
 
@@ -365,6 +388,7 @@
                                             <input id="id_campy_biosolidsHBA" name="id_campy_biosolidsHBA" type="hidden" class="form-control input-sm">
                                             <input id="number_of_tubesHba" name="number_of_tubesHba" type="hidden" class="form-control input-sm">
                                             <input id="id_result_hba" name="id_result_hba" type="hidden" class="form-control input-sm">
+                                            <input id="idHba_one_water_sample" name="idHba_one_water_sample" type="hidden" class="form-control input-sm">
                                         </div>
                                     </div>
 
@@ -429,7 +453,8 @@
                     <input id="id_result_biochemical" name="id_result_biochemical" type="hidden" class="form-control input-sm">
                     <input id="biochemical_tube" name="biochemical_tube" type="hidden" class="form-control input-sm">
                     <input id="id_result_hba1" name="id_result_hba1" type="hidden" class="form-control input-sm">
-                 
+                    <input id="idBiochemical_one_water_sample" name="idBiochemical_one_water_sample" type="hidden" class="form-control input-sm">
+
                     <!-- Gramlysis Result -->
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Gramlysis Result</label>
@@ -501,6 +526,55 @@
 
 
 
+
+
+<!-- MODAL FORM Calculate MPN -->
+<div class="modal fade" id="compose-modalCalculateMPN" tabindex="-1" role="dialog" aria-hidden="true" data-bs-scrollable="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #3c8dbc; color: white;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
+                <h4 class="modal-title" id="modal-title-calculate-mpn">Calculate MPN | New</h4>
+            </div>
+            <form id="formCalculateMPN" action="<?php echo site_url('Campy_biosolids/saveCalculateMPN') ?>" method="post" class="form-horizontal">
+                <div class="modal-body">
+                    <input id="mode_calculateMPN" name="mode_calculateMPN" type="hidden" class="form-control input-sm">
+                    <input id="id_campy_biosolids_mpn" name="id_campy_biosolids_mpn" type="hidden" class="form-control input-sm">
+                    <input id="id_campy_result_mpn" name="id_campy_result_mpn" type="hidden" class="form-control input-sm">
+
+                    <!-- MPN Concentration -->
+                    <div class="form-group">
+                        <label for="mpn_concentration" class="col-sm-4 control-label">MPN Concentration</label>
+                        <div class="col-sm-8">
+                            <input id="mpn_concentration" name="mpn_concentration" type="number" step="any" class="form-control" placeholder="Enter MPN concentration" required>
+                        </div>
+                    </div>
+
+                    <!-- Upper CI -->
+                    <div class="form-group">
+                        <label for="upper_ci" class="col-sm-4 control-label">Upper CI</label>
+                        <div class="col-sm-8">
+                            <input id="upper_ci" name="upper_ci" type="number" step="any" class="form-control" placeholder="Enter upper confidence interval" required>
+                        </div>
+                    </div>
+
+                    <!-- Lower CI -->
+                    <div class="form-group">
+                        <label for="lower_ci" class="col-sm-4 control-label">Lower CI</label>
+                        <div class="col-sm-8">
+                            <input id="lower_ci" name="lower_ci" type="number" step="any" class="form-control" placeholder="Enter lower confidence interval" required>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer clearfix">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 <!-- MODAL INFORMATION -->
@@ -846,6 +920,62 @@
         let id_campy_biosolids = document.getElementById('id_campy_biosolids').value;
         window.location.href = '<?php echo site_url('Campy_biosolids/excel') ?>/' + id_campy_biosolids;
     });
+
+    // Calculate MPN button click handler
+    document.getElementById('calculateMpnBtn').addEventListener('click', function() {
+        let id_campy_biosolids = document.getElementById('id_campy_biosolids').value;
+        
+        // Set the id_campy_biosolids value in the modal
+        document.getElementById('id_campy_biosolids_mpn').value = id_campy_biosolids;
+        
+        // Check if MPN calculation already exists
+        $.ajax({
+            url: '<?php echo site_url('Campy_biosolids/getCalculateMPN'); ?>',
+            type: 'GET',
+            data: { id_campy_biosolids: id_campy_biosolids },
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'success') {
+                    // Data exists, set to edit mode
+                    document.getElementById('mode_calculateMPN').value = 'edit';
+                    document.getElementById('id_campy_result_mpn').value = response.data.id_campy_result_mpn;
+                    document.getElementById('mpn_concentration').value = response.data.mpn_concentration;
+                    document.getElementById('upper_ci').value = response.data.upper_ci;
+                    document.getElementById('lower_ci').value = response.data.lower_ci;
+                    
+                    // Update modal title
+                    document.getElementById('modal-title-calculate-mpn').innerHTML = 'Calculate MPN | Edit';
+                } else {
+                    // No data exists, set to insert mode
+                    document.getElementById('mode_calculateMPN').value = 'insert';
+                    document.getElementById('id_campy_result_mpn').value = '';
+                    document.getElementById('mpn_concentration').value = '';
+                    document.getElementById('upper_ci').value = '';
+                    document.getElementById('lower_ci').value = '';
+                    
+                    // Update modal title
+                    document.getElementById('modal-title-calculate-mpn').innerHTML = 'Calculate MPN | New';
+                }
+                
+                // Show the modal
+                $('#compose-modalCalculateMPN').modal('show');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error checking MPN calculation:', error);
+                
+                // On error, default to insert mode
+                document.getElementById('mode_calculateMPN').value = 'insert';
+                document.getElementById('id_campy_result_mpn').value = '';
+                document.getElementById('mpn_concentration').value = '';
+                document.getElementById('upper_ci').value = '';
+                document.getElementById('lower_ci').value = '';
+                document.getElementById('modal-title-calculate-mpn').innerHTML = 'Calculate MPN | New';
+                
+                // Show the modal
+                $('#compose-modalCalculateMPN').modal('show');
+            }
+        });
+    });
 </script>
 <script type="text/javascript">
 
@@ -856,6 +986,8 @@
     let campy_assay_barcode = $('#campy_assay_barcode').val();
     let id_campy_biosolids = $('#id_campy_biosolids').val();
     let number_of_tubes = $('#number_of_tubes').val();
+    let idx_one_water_sample = $('#id_one_water_sample').val();
+
     const BASE_URL = '/limsonewater/index.php';
 
     $(document).ready(function() {
@@ -1164,7 +1296,7 @@
             // Create the required number of inputs and labels
             for (let i = 1; i <= numberOfTubes; i++) {
                 container.append(
-                    `<div class="d-flex align-items-center mb-2">
+                    `<div class="d-flex align-items-center mb-2" style="gap: 12px;">
                         <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Growth Plate ${i}:</label>
                         <div class="d-flex align-items-center">
                             <label class="radio-inline me-2" style="margin-bottom: 0;">
@@ -1587,6 +1719,7 @@
 
             $('#mode_detResultsBiochemical').val('insert');
             $('#modal-title-biochemical').html(`<i class="fa fa-wpforms"></i> Insert | Biochemical Tube ${plateNumber} <span id="my-another-cool-loader"></span>`);
+            $('#idBiochemical_one_water_sample').val(idx_one_water_sample);
             $('#id_campy_biosolidsBiochemical').val(id_campy_biosolids);
             $('#id_result_hba1').val(data.id_result_hba);
             $('#gramlysis').val('');
@@ -1610,6 +1743,7 @@
             // Set nilai-nilai di dalam modal sesuai data yang didapat
             $('#mode_detResultsBiochemical').val('edit');
             $('#modal-title-biochemical').html('<i class="fa fa-pencil-square"></i> Update | Biochemical Tube ' + data.biochemical_tube + ' <span id="my-another-cool-loader"></span>');
+            $('#idBiochemical_one_water_sample').val(idx_one_water_sample);
             $('#id_result_biochemical').val(data.id_result_biochemical);
             $('#id_campy_biosolidsBiochemical').val(data.id_campy_biosolids);
             $('#id_result_hba1').val(data.id_result_hba);
@@ -1636,6 +1770,7 @@
         $('#addtombol_detResultsCharcoal').click(function() {
             $('#mode_detResultsCharcoal').val('insert');
             $('#modal-title-detail').html('<i class="fa fa-wpforms"></i> Insert | Results Charcoal <span id="my-another-cool-loader"></span>');
+            $('#idCharcoal_one_water_sample').val(idx_one_water_sample);
             $('#campy_assay_barcode1').val(campy_assay_barcode);
             $('#campy_assay_barcode1').attr('readonly', true);
             $('#id_campy_biosolids1').val(id_campy_biosolids);
@@ -1649,6 +1784,7 @@
             console.log(data);
             $('#mode_detResultsCharcoal').val('edit');
             $('#modal-title-detail').html('<i class="fa fa-pencil-square"></i> Update | Results Charcoal <span id="my-another-cool-loader"></span>');
+            $('#idCharcoal_one_water_sample').val(idx_one_water_sample);
             $('#id_result_charcoal').val(data.id_result_charcoal);
             $('#campy_assay_barcode1').val(data.campy_assay_barcode);
             $('#campy_assay_barcode1').attr('readonly', true);
@@ -1703,6 +1839,7 @@
                 let campy_assay_barcode = data.campy_assay_barcode;
 
                 // Parsing data ke komponen
+                $('#idHba_one_water_sample').val(idx_one_water_sample);
                 $('#campy_assay_barcodeHBA').val(campy_assay_barcode);
                 $('#id_campy_biosolidsHBA').val(id_campy_biosolids);
                 $('#campy_assay_barcodeHBA').attr('readonly', true);
@@ -1761,6 +1898,7 @@
             console.log(data);
             $('#mode_detResultsHBA').val('edit');
             $('#modal-title-HBA').html('<i class="fa fa-pencil-square"></i> Update | Results HBA <span id="my-another-cool-loader"></span>');
+            $('#idHba_one_water_sample').val(idx_one_water_sample);
             $('#id_result_hba').val(data.id_result_hba);
             $('#campy_assay_barcodeHBA').val(data.campy_assay_barcode);
             $('#campy_assay_barcodeHBA').attr('readonly', true);
@@ -1806,6 +1944,57 @@
                 );
             });
             $('#compose-modalHBA').modal('show');
+        });
+
+        // Calculate MPN form submission
+        $('#formCalculateMPN').submit(function(e) {
+            e.preventDefault();
+            
+            // Always use the same URL since we handle mode validation in the controller
+            let url = '<?php echo site_url('Campy_biosolids/saveCalculateMPN'); ?>';
+            let formData = $(this).serialize();
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        $('#compose-modalCalculateMPN').modal('hide');
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: response.message,
+                            timer: 2000,
+                            showConfirmButton: false
+                        }).then(function() {
+                            location.reload(); // Reload page to show updated data
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: response.message
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error: ' + status + error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Something went wrong. Please try again.'
+                    });
+                }
+            });
+        });
+
+        // Reset form when modal is hidden
+        $('#compose-modalCalculateMPN').on('hidden.bs.modal', function() {
+            $('#formCalculateMPN')[0].reset();
+            $('#mode_calculateMPN').val('');
+            $('#id_campy_result_mpn').val('');
         });
 
     });

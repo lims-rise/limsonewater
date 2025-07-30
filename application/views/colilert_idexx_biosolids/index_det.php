@@ -80,6 +80,45 @@
 
 					</div>
 				</form>
+                <form id="formSampleReview" method="post">
+					<input type="hidden" name="id_one_water_sample" id="id_one_water_sample" value="<?php echo $id_one_water_sample ?>">
+					<input type="hidden" id="review" name="review" value="<?php echo $review ?>">
+					<input type="hidden" id="user_review" name="user_review" value="<?php echo $user_review ?>">
+					<input type="hidden" id="user_created" name="user_created" value="<?php echo $user_created ?>">
+
+					<div class="modal-footer clearfix" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+
+						<div class="modal-footer-content" style="flex: 1; display: flex; align-items: center;">
+							<div id="textInform2" class="textInform card" style="width: auto; padding: 5px 10px; display: none;">
+								<div class="card-body">
+									<div class="card-header d-flex justify-content-between align-items-center">
+										<h5 class="card-title statusMessage mb-0"></h5>
+										<i class="fa fa-times close-card" style="cursor: pointer;"></i>
+									</div>
+									<p class="statusDescription mb-0"></p>
+								</div>
+							</div>
+						</div>
+
+						<div class="d-flex align-items-center flex-wrap" style="gap: 8px;">
+							<span class="text-muted">Status:</span>
+							<span id="review_label" class="badge bg-warning text-dark" role="button" tabindex="0" style="cursor: pointer;">
+								Unreview
+							</span>
+
+							<span class="text-muted ms-3">by:</span>
+							<span id="reviewed_by_label" style="font-style: italic; font-weight: 800; font-size: 14px;">
+								<?php echo $full_name ? $full_name : '-' ?>
+							</span>
+
+							<?php if (in_array($this->session->userdata('id_user_level'), [1, 2])): ?>
+								<button type="button" id="cancelReviewBtn" class="btn btn-danger ms-3">
+									Cancel Review
+								</button>
+							<?php endif; ?>
+						</div>
+					</div>
+				</form>
 			<div class="box-footer">
                 <!-- <div class="row"> -->
                     <div class="col-xs-12"> 
@@ -287,6 +326,297 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<style>
+
+	#review_label {
+		cursor: pointer;
+		font-size: 14px;  /* Ukuran font untuk label */
+	}
+
+	#reviewed_by_label {
+		margin-left: 10px;
+		font-style: italic;
+		font-weight: bold;
+		font-size: 12px;  /* Ukuran font kecil untuk input reviewer */
+	}
+
+	.d-flex {
+		display: flex;
+		align-items: center;
+	}
+
+	.ms-2 {
+		margin-left: 0.5rem;  /* Spacing antar elemen */
+	}
+
+    .table tbody tr.selected {
+        color: white !important;
+        background-color: #9CDCFE !important;
+    }
+
+    #formKegHidden {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1;
+    }
+
+    .hidden {
+        visibility: hidden;
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+    }
+    .sample-input {
+        margin-bottom: 10px; /* Adjust the spacing as needed */
+    }
+
+    .modal {
+    overflow-y: auto;
+    }
+
+    .modal-body {
+    max-height: 80vh;
+    overflow-y: auto;
+    }
+
+    .badge {
+        font-size: 14px;
+        padding: 8px 12px;
+        border-radius: 20px;
+        margin-top: 0px;
+    }
+
+    .badge-success {
+        background-color: #6A9C89;
+        color: white;
+    }
+
+    .badge-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .alert {
+        padding: 8px 12px;
+        border-radius: 5px;
+        font-size: 14px;
+        margin-top: 0px;
+    }
+
+    .alert-success {
+        background-color: #6A9C89;
+        color: white;
+    }
+
+    .alert-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .card {
+        border-radius: 10px;
+        margin-top: 0px;
+        padding: 8px 12px;
+        width: 100%; /* Ensures card uses available space */
+    }
+
+    .card-success {
+        border: 1px solid #28a745;
+        background-color: #d4edda;
+    }
+
+    .card-danger {
+        border: 1px solid #dc3545;
+        background-color: #f8d7da;
+    }
+
+    .card-title {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: left; /* Align title to the left */
+        margin-bottom: 0px;
+    }
+
+    .card-body {
+        font-size: 14px;
+        text-align: left; /* Align body text to the left */
+    }
+
+    .modal-footer-content {
+        float: left;
+        width: auto;
+        margin-right: 10px;
+    }
+
+    .modal-buttons {
+        float: right;
+    }
+
+    .icon-success {
+        color: #28a745;
+        margin-right: 10px;
+    }
+
+    .icon-fail {
+        color: #dc3545;
+        margin-right: 10px;
+    }
+
+    .modal-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 15px;
+    }
+
+    .modal-footer-content {
+        flex: 1;
+        display: flex;
+        align-items: center;
+    }
+
+    .modal-buttons {
+        display: flex;
+        align-items: center;
+    }
+
+    .card-body {
+        padding: 0px;
+    }
+
+    .card-title {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .card-description {
+        font-size: 14px;
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .close-card {
+        cursor: pointer;
+        font-size: 18px;
+        color: #FDAB9E; 
+    }
+
+    .close-card:hover {
+        color: #bd2130; 
+    }
+
+    .unreview {
+        color: gray !important;
+        border-color: gray !important;
+        box-shadow: none; 
+    }
+
+    /* input.form-check-label. */
+    .review {
+        color: white !important;
+        background-color: #3D8D7A;
+		border: none  !important;
+    }
+
+    .highlight {
+        background-color: rgba(0, 255, 0, 0.1) !important;
+        font-weight: bold !important;
+    }
+    .highlight-edit {
+        background-color: rgba(0, 0, 255, 0.1) !important;
+        font-weight: bold !important;
+    }
+        /* Basic button style for the span */
+        .form-check-label {
+        display: inline-block;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 12px;
+        cursor: pointer;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    /* Hover effect for the button */
+    .form-check-label:hover {
+        opacity: 0.8;
+    }
+
+    /* Focused effect to make it more accessible */
+    .form-check-label:focus {
+        outline: none;
+    }
+
+    .child-table {
+        margin-left: 50px;
+        width: 90%;
+        border-collapse: collapse;
+    }
+
+    .child-table th, .child-table td {
+        border: 1px solid #ddd;
+        padding: 5px;
+    }
+
+    /* Styling untuk container dengan scroll */
+    .child-table-container {
+        max-height: 500px; 
+        overflow-y: auto; 
+    }
+
+    /* Style untuk scrollbar itu sendiri */
+    .child-table-container::-webkit-scrollbar {
+        width: 6px; 
+    }
+
+    /* Style untuk track (background) scrollbar */
+    .child-table-container::-webkit-scrollbar-track {
+        background: #e0f2f1;
+        border-radius: 10px;
+    }
+
+    /* Style untuk thumb (pegangan scrollbar) */
+    .child-table-container::-webkit-scrollbar-thumb {
+        background: #9ACBD0; 
+        border-radius: 10px; 
+    }
+
+    /* Gaya saat thumb scrollbar di-hover */
+    .child-table-container::-webkit-scrollbar-thumb:hover {
+        background: #48A6A7;
+    }
+
+	.review-border {
+		border: 1px solid green  !important;
+		color: green  !important;
+	}
+
+	.disabled-btn {
+		background-color: #ccc; /* Ganti warna latar belakang tombol */
+		color: #666; /* Ganti warna teks tombol */
+		border: 1px solid #ddd; /* Ganti border tombol */
+		cursor: not-allowed; /* Set cursor menjadi not-allowed agar tidak bisa diklik */
+	}
+</style>
+<style>
+	#textInform2 .alert {
+		display: block !important;
+		margin-top: 20px;
+		font-size: 16px;
+		z-index: 1000; /* Pastikan info card di atas elemen lain */
+	}
+</style>
+
+<!-- SweetAlert2 CSS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
@@ -295,6 +625,7 @@
 
     let table;
     // let table1;
+    let id_one_water_sample = $('#id_one_water_sample').val();
     let colilertBarcode = $('#colilert_barcode').val();
     let idColilertBioIn = $('#id_colilert_bio_in').val();
     console.log(idColilertBioIn);
@@ -303,6 +634,260 @@
     let result;
 
     $(document).ready(function() {
+        let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
+		let userCreated = $('#user_created').val();
+		let userReview = $('#user_review').val();
+		let fullName = $('#reviewed_by_label').val();
+        $('#reviewed_by_label').val(fullName ? fullName : '-');
+
+		// Definisikan state review
+		const states = [
+			{ value: 0, label: "Unreview", class: "unreview" },
+			{ value: 1, label: "Reviewed", class: "review" }
+		];
+
+		// Ambil nilai awal dari input hidden
+		let currentState = parseInt($('#review').val());
+		if (isNaN(currentState) || currentState < 0 || currentState > 1) currentState = 0;
+
+
+		// Set tampilan awal pada label review
+		$('#review_label')
+			.text(states[currentState].label)
+			.removeClass()
+			.addClass('form-check-label ' + states[currentState].class);
+
+		// Cek apakah user login BUKAN creator
+		if (userCreated !== loggedInUser) {
+			$('#user_review').val(loggedInUser);
+
+			$('#review_label').off('click').on('click', function () {
+				if ($('#review').val() === '1') {
+					Swal.fire({
+						icon: 'info',
+						title: 'Review Locked',
+						text: 'You have already reviewed this. Further changes are not allowed.',
+						confirmButtonText: 'OK'
+					});
+					return;
+				}
+
+				Swal.fire({
+					icon: 'question',
+					title: 'Are you sure?',
+					showCancelButton: true,
+					confirmButtonText: 'OK',
+					cancelButtonText: 'Cancel',
+					reverseButtons: true
+				}).then((result) => {
+					if (result.isConfirmed) {
+
+						currentState = (currentState + 1) % states.length;
+
+						$('#review').val(states[currentState].value);
+						$('#review_label')
+							.text(states[currentState].label)
+							.removeClass()
+							.addClass('form-check-label ' + states[currentState].class);
+
+						$.ajax({
+							url: '<?php echo site_url('Colilert_idexx_biosolids/saveReview'); ?>',
+							method: 'POST',
+							data: $('#formSampleReview').serialize(),
+							dataType: 'json',
+							success: function(response) {
+								if (response.status) {
+									Swal.fire({
+										icon: 'success',
+										title: 'Review saved successfully!',
+										text: response.message,
+										timer: 1000,
+										showConfirmButton: false
+									}).then(() => {
+										location.reload();
+									});
+								} else {
+									Swal.fire({
+										icon: 'error',
+										title: 'Failed to save review',
+										text: response.message
+									});
+								}
+							},
+							error: function(xhr, status, error) {
+								console.error('AJAX Error: ' + status + error);
+								Swal.fire('Error', 'Something went wrong during submission.', 'error');
+							}
+						});
+					} else {
+						Swal.fire({
+							icon: 'info',
+							title: 'Review Not Changed',
+							text: 'No changes were made.',
+							timer: 2000
+						});
+					}
+				});
+			});
+
+			if ($('#review').val() === '1') {
+				showInfoCard(
+					'#textInform2',
+					'<i class="fa fa-times-circle"></i> You are not the creator',
+					"In this case, you can't review because it has already been reviewed.",
+
+					false
+				);
+			} else {
+				showInfoCard(
+					'#textInform2',
+					'<i class="fa fa-times-circle"></i> You are not the creator',
+					"In this case, you can review this data. Hover over the box on the right side to start the review.",
+					false
+				);
+
+			}
+
+			$('#review_label')
+			.on('mouseenter', function() {
+				if ($('#review').val() !== '1') { 
+					$(this).text('Review')
+						.addClass('review-border');
+				}
+			})
+			.on('mouseleave', function() {
+				if ($('#review').val() !== '1') { 
+					$(this).text('Unreview')
+						.removeClass('review-border');
+				}
+			});
+
+
+			$('#saveButtonDetail').prop('disabled', false);
+		} else {
+			$('#user_review').val(loggedInUser);
+
+			showInfoCard(
+				'#textInform2',
+				'<i class="fa fa-check-circle"></i> You are the creator',
+				"You have full access to edit this data but not review.",
+				true
+			);
+
+			$('#saveButtonDetail').prop('disabled', true);
+		}
+		
+		// Fungsi untuk cancel review (khusus admin user 1 & 2)
+        // Cek status review ketika halaman dimuat
+        if ($('#review').val() === '1') {
+                // Jika status review = 0 (belum di-review), disable tombol cancel
+                $('#cancelReviewBtn').prop('disabled', false).removeClass('disabled-btn');
+            } else {
+                // Jika status review = 1 (sudah di-review),  tombol bisa diklik
+                $('#cancelReviewBtn').prop('disabled', true).addClass('disabled-btn');
+            }
+
+        // Event handler ketika tombol Cancel Review diklik
+        $('#cancelReviewBtn').on('click', function () {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Cancel Review?',
+                text: 'This will reset the review status so another user can review it again.',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, cancel it',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Set review dan user_review untuk cancel
+                    $('#review').val(0);
+                    $('#user_review').val('');  // Kosongkan user review
+
+                    // Update label status menjadi Unreview
+                    $('#review_label')
+                        .text('Unreview')
+                        .removeClass()
+                        .addClass('form-check-label unreview');  // Ubah tampilan label
+
+                    // Disable the Cancel Review button after canceling the review
+                    $('#cancelReviewBtn').prop('disabled', true).addClass('disabled-btn');  // Disable tombol
+
+                    // Pastikan ID yang diperlukan ada di form
+                    let formData = $('#formSampleReview').serialize(); 
+                    console.log('Form data to be sent: ', formData); // Debugging log
+
+                    $.ajax({
+                        url: '<?php echo site_url('Colilert_idexx_biosolids/cancelReview'); ?>',
+                        method: 'POST',
+                        data: formData,
+                        dataType: 'json',
+                        success: function (response) {
+                            if (response.status) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Review canceled successfully!',
+                                    timer: 1000,
+                                    showConfirmButton: false
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Failed to cancel review',
+                                    text: response.message
+                                });
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('AJAX Error: ' + status + error);
+                            Swal.fire('Error', 'Something went wrong during cancel.', 'error');
+                        }
+                    });
+                }
+            });
+        });
+
+
+
+	  // Mouse enter/leave effects for review label
+	  $('#review_label')
+        .on('mouseenter', function() {
+            if ($('#review').val() !== '1') { 
+                $(this).text('Review')
+                    .addClass('review-border');
+            }
+        })
+        .on('mouseleave', function() {
+            if ($('#review').val() !== '1') { 
+                $(this).text('Unreview')
+                    .removeClass('review-border');
+            }
+        });
+
+
+
+        // Function to show a dynamic info card
+		function showInfoCard(target, message, description, isSuccess) {
+            // Add dynamic content to the target card
+            $(target).find('.statusMessage').html(message);
+            $(target).find('.statusDescription').text(description);
+
+            // Apply classes based on success or failure
+            if (isSuccess) {
+                $(target).removeClass('card-danger').addClass('card-success');
+            } else {
+                $(target).removeClass('card-success').addClass('card-danger');
+            }
+
+            // Show the info card
+            $(target).fadeIn();
+        }
+
+        // Close the card when the 'x' icon is clicked
+        $('.close-card').on('click', function() {
+            $('#textInform1').fadeOut(); // Fade out the card
+            $('#textInform2').fadeOut();
+        });
 
         $('#ecoli, #lowerdetection, #ecoli_largewells, #ecoli_smallwells').on("keyup change", function() {
             let eColi = parseFloat($('#ecoli').val()) || 0;

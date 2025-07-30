@@ -234,6 +234,7 @@ class Campy_liquids extends CI_Controller
 
     public function saveResultsCharcoal() {
         $mode = $this->input->post('mode_detResultsCharcoal', TRUE);
+        $id_one_water_sample = $this->input->post('idCharcoal_one_water_sample', TRUE);
         $id_campy_liquids = $this->input->post('id_campy_liquids1', TRUE);
         $id_result_charcoal_liquids = $this->input->post('id_result_charcoal_liquids', TRUE);
         $dt = new DateTime();
@@ -320,11 +321,12 @@ class Campy_liquids extends CI_Controller
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
-        redirect(site_url("campy_liquids/read/" . $id_campy_liquids));
+        redirect(site_url("campy_liquids/read/" . $id_one_water_sample));
     }
 
     public function saveResultsHBA() {
         $mode = $this->input->post('mode_detResultsHBA', TRUE);
+        $id_one_water_sample = $this->input->post('idHba_one_water_sample', TRUE);
         $id_campy_liquids = $this->input->post('id_campy_liquidsHBA', TRUE);
         $id_result_hba_liquids = $this->input->post('id_result_hba_liquids', TRUE);
 
@@ -411,7 +413,7 @@ class Campy_liquids extends CI_Controller
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
-        redirect(site_url("campy_liquids/read/" . $id_campy_liquids));
+        redirect(site_url("campy_liquids/read/" . $id_one_water_sample));
     }
 
 
@@ -425,6 +427,7 @@ class Campy_liquids extends CI_Controller
         $confirmation = $this->input->post('confirmation', TRUE);
         $sample_store = $this->input->post('sample_store', TRUE);
         $biochemical_tube = $this->input->post('biochemical_tube', TRUE);
+        $id_one_water_sample = $this->input->post('idBiochemical_one_water_sample', TRUE);
 
         if ($mode == "insert") {
             $data = array(
@@ -464,7 +467,7 @@ class Campy_liquids extends CI_Controller
             $this->Campy_liquids_model->updateResultsBiochemical($id_result_biochemical_liquids, $data);
         }
 
-        redirect(site_url("campy_liquids/read/" . $id_campy_liquids));
+        redirect(site_url("campy_liquids/read/" . $id_one_water_sample));
     }
     
 
