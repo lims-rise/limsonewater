@@ -96,11 +96,16 @@ class Colilert_idexx_water_model extends CI_Model
     {
       $response = array();
       $this->db->select('cwi.id_colilert_in, cwi.id_one_water_sample, cwi.id_person, rp.initial,
+        cwi.user_created, 
+        cwi.user_review, 
+        cwi.review, 
+        user.full_name,
         cwi.id_sampletype, rs.sampletype, cwi.colilert_barcode, cwi.date_sample, cwi.time_sample,
         cwi.volume_bottle, cwi.dilution');
       $this->db->from('colilert_water_in AS cwi');
       $this->db->join('ref_sampletype AS rs', 'cwi.id_sampletype = rs.id_sampletype', 'left');
       $this->db->join('ref_person AS rp',  'cwi.id_person = rp.id_person', 'left');
+      $this->db->join('tbl_user user', 'cwi.user_review = user.id_users', 'left');
       $this->db->where('cwi.id_one_water_sample', $id);
       $this->db->where('cwi.flag', '0');
       $q = $this->db->get();
@@ -240,6 +245,24 @@ class Colilert_idexx_water_model extends CI_Model
         ');        
         $response = $q->result_array();
         return $response;
+    }
+
+    function updateCancel($id, $data)
+    {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->update('colilert_water_in', $data);
+
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function updateSave($id, $data)
+    {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->update('colilert_water_in', $data);
     }
       
 }

@@ -1124,7 +1124,7 @@
 			ajax: {"url": "../../Biobankin/subjsonreplicate?id="+id_biobankin_detail, "type": "POST"},
 			columns: [
 				{
-                    "data": "barcode_water",
+                    "data": "barcode_tube",
                     "render": function(data, type, row) {
                         return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
                     }

@@ -368,28 +368,28 @@
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 
-	<style>
+<style>
 
-#review_label {
-    cursor: pointer;
-    font-size: 14px;  /* Ukuran font untuk label */
-}
+	#review_label {
+		cursor: pointer;
+		font-size: 14px;  /* Ukuran font untuk label */
+	}
 
-#reviewed_by_label {
-    margin-left: 10px;
-    font-style: italic;
-    font-weight: bold;
-    font-size: 12px;  /* Ukuran font kecil untuk input reviewer */
-}
+	#reviewed_by_label {
+		margin-left: 10px;
+		font-style: italic;
+		font-weight: bold;
+		font-size: 12px;  /* Ukuran font kecil untuk input reviewer */
+	}
 
-.d-flex {
-    display: flex;
-    align-items: center;
-}
+	.d-flex {
+		display: flex;
+		align-items: center;
+	}
 
-.ms-2 {
-    margin-left: 0.5rem;  /* Spacing antar elemen */
-}
+	.ms-2 {
+		margin-left: 0.5rem;  /* Spacing antar elemen */
+	}
 
     .table tbody tr.selected {
         color: white !important;
@@ -650,13 +650,11 @@
 </style>
 <style>
 	#textInform2 .alert {
-    display: block !important;
-    margin-top: 20px;
-    font-size: 16px;
-    z-index: 1000; /* Pastikan info card di atas elemen lain */
-}
-
-
+		display: block !important;
+		margin-top: 20px;
+		font-size: 16px;
+		z-index: 1000; /* Pastikan info card di atas elemen lain */
+	}
 </style>
 
 <!-- SweetAlert2 CSS -->

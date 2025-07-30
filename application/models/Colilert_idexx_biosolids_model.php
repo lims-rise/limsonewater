@@ -96,11 +96,16 @@ class Colilert_idexx_biosolids_model extends CI_Model
     {
       $response = array();
       $this->db->select('cbi.id_colilert_bio_in, cbi.id_one_water_sample, cbi.id_person, rp.initial,
+        cbi.user_created, 
+        cbi.user_review, 
+        cbi.review, 
+        user.full_name,
         cbi.id_sampletype, rs.sampletype, cbi.colilert_barcode, cbi.date_sample, cbi.time_sample, cbi.wet_weight, cbi.dry_weight_persen, cbi.sample_dry_weight, cbi.elution_volume,
         cbi.volume_bottle, cbi.dilution');
       $this->db->from('colilert_biosolids_in AS cbi');
       $this->db->join('ref_sampletype AS rs', 'cbi.id_sampletype = rs.id_sampletype', 'left');
       $this->db->join('ref_person AS rp',  'cbi.id_person = rp.id_person', 'left');
+      $this->db->join('tbl_user user', 'cbi.user_review = user.id_users', 'left');
       $this->db->where('cbi.id_one_water_sample', $id);
       $this->db->where('cbi.flag', '0');
       $q = $this->db->get();
@@ -252,6 +257,24 @@ class Colilert_idexx_biosolids_model extends CI_Model
         ');        
         $response = $q->result_array();
         return $response;
+    }
+
+    function updateCancel($id, $data)
+    {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->update('colilert_biosolids_in', $data);
+
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function updateSave($id, $data)
+    {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->update('colilert_biosolids_in', $data);
     }
 
       
