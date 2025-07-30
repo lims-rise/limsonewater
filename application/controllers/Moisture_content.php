@@ -181,7 +181,7 @@ class Moisture_content extends CI_Controller
             $dt = new DateTime();
             // var_dump($id_moisture);
             // die();
-        
+            $id_one_water_sample = $this->input->post('id24_one_water_sample', TRUE);
             $id_moisture = $this->input->post('idx_moisture24', TRUE);
             $id_moisture24 = $this->input->post('id_moisture24', TRUE);
             $date_moisture24 = $this->input->post('date_moisture24', TRUE);
@@ -236,14 +236,14 @@ class Moisture_content extends CI_Controller
                 }
             }
         
-            redirect(site_url("moisture_content/read/" . $id_moisture));
+            redirect(site_url("moisture_content/read/" . $id_one_water_sample));
     }
 
 
     public function savedetail72() {
         $mode_det72 = $this->input->post('mode_det72', TRUE);
         $dt = new DateTime();
-
+        $id_one_water_sample = $this->input->post('id27_one_water_sample', TRUE);
         $id_moisture = $this->input->post('idx_moisture72', TRUE);
         $id_moisture72 = $this->input->post('id_moisture72', TRUE);
         $date_moisture72 = $this->input->post('date_moisture72', TRUE);
@@ -301,7 +301,7 @@ class Moisture_content extends CI_Controller
             }
         }
     
-        redirect(site_url("moisture_content/read/" . $id_moisture));
+        redirect(site_url("moisture_content/read/" . $id_one_water_sample));
 
     }
   

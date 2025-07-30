@@ -153,6 +153,7 @@
                                             <input id="mode_det24" name="mode_det24" type="hidden" class="form-control input-sm">
                                             <input id="idx_moisture24" name="idx_moisture24" type="hidden" class="form-control input-sm">
                                             <input id="id_moisture24" name="id_moisture24" type="hidden" class="form-control input-sm">
+                                            <input id="id24_one_water_sample" name="id24_one_water_sample" type="hidden" class="form-control input-sm">
                                         </div>
                                     </div>
 
@@ -226,6 +227,7 @@
                                             <input id="mode_det72" name="mode_det72" type="hidden" class="form-control input-sm">
                                             <input id="idx_moisture72" name="idx_moisture72" type="hidden" class="form-control input-sm">
                                             <input id="id_moisture72" name="id_moisture72" type="hidden" class="form-control input-sm">
+                                            <input id="id27_one_water_sample" name="id27_one_water_sample" type="hidden" class="form-control input-sm">
                                         </div>
                                     </div>
 
@@ -343,6 +345,7 @@
     let table;
     let table1;
     let id_moisture = $('#id_moisture').val();
+    let id_one_water_sample = $('#id_one_water_sample').val();
     const BASE_URL = '/limsonewater/index.php';
 
     $(document).ready(function() {
@@ -626,6 +629,7 @@
         $('#addtombol_det24').click(function() {
             $('#mode_det24').val('insert');
             $('#modal-title-detail').html('<i class="fa fa-wpforms"></i> Moisture Content | 24 Hour <span id="my-another-cool-loader"></span>');
+            $('#id24_one_water_sample').val(id_one_water_sample);
             $('#barcode_tray24').val('');
             $('#barcode_tray24').attr('readonly', false);
             $('#idx_moisture24').val(id_moisture);
@@ -639,6 +643,7 @@
             let data = table.row(tr).data();
             $('#mode_det24').val('edit');
             $('#modal-title-detail').html('<i class="fa fa-pencil-square"></i> Update Moisture | 24 Hour <span id="my-another-cool-loader"></span>');
+            $('#id24_one_water_sample').val(id_one_water_sample);
             $('#idx_moisture24').val(id_moisture);
             $('#id_moisture24').val(data.id_moisture24);
             $('#date_moisture24').val(data.date_moisture24);
@@ -666,6 +671,7 @@
         $('#addtombol_det72').on('click', function() {
             $('#mode_det72').val('insert');
             $('#modal-title-detail72').html('<i class="fa fa-wpforms"></i> Moisture Content | 48 Hour <span id="my-another-cool-loader"></span>');
+            $('#id27_one_water_sample').val(id_one_water_sample);
             $('#barcode_tray72').val('');
             $('#barcode_tray72').attr('readonly', true);
             $('#barcode_tray72').attr('required', true);
@@ -696,6 +702,7 @@
             let data = table1.row(tr).data();
             $('#mode_det72').val('edit');
             $('#modal-title-detail72').html('<i class="fa fa-pencil-square"></i> Update Moisture | 48 Hour <span id="my-another-cool-loader"></span>');
+            $('#id27_one_water_sample').val(id_one_water_sample);
             $('#idx_moisture72').val(id_moisture);
             $('#id_moisture72').val(data.id_moisture72);
             $('#date_moisture72').val(data.date_moisture72);
