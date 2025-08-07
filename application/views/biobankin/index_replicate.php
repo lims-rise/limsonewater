@@ -141,7 +141,7 @@
 								<table id="examplereplicate" class="table display table-bordered table-striped" width="100%">
 									<thead>
 										<tr>
-											<th>Barcode Water</th>
+											<th>Barcode Tube</th>
 											<th>Weight (g)</th>
 											<th>Concentration (ng/uL)</th>
 											<th>Volume (mL)</th>

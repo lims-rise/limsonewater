@@ -215,7 +215,7 @@
                         <div class="form-group">
                             <label for="dna_concentration" class="col-sm-4 control-label">DNA Concentration (ng/ul)</label>
                             <div class="col-sm-8">
-                                <input id="dna_concentration" name="dna_concentration" placeholder="DNA Concentration (ng/ul)" type="number" step="0.1" class="form-control">
+                                <input id="dna_concentration" name="dna_concentration" placeholder="DNA Concentration (ng/ul)" type="number" step="any" class="form-control">
                             </div>
                         </div>
 

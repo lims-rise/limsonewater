@@ -34,17 +34,24 @@ class Sample_reception_model extends CI_Model
     
         // Kolom Action
         if ($lvl == 4) {
-            $this->datatables->add_column('action', anchor(site_url('sample_reception/read/$1'), 
-                '<i class="fa fa-th-list" aria-hidden="true"></i>', 
-                array('class' => 'btn btn-warning btn-sm')), 'id_project');
+            // Level 4 (ViewOnly) - Tidak ada button yang bisa diakses
+            $this->datatables->add_column('action', '-', 'id_project');
         } else if ($lvl == 3) {
-            $this->datatables->add_column('action', anchor(site_url('sample_reception/read/$1'), 
-                '<i class="fa fa-th-list" aria-hidden="true"></i>', 
-                array('class' => 'btn btn-warning btn-sm')) . "
+            // Level 3 (User) - Bisa akses print dan edit, tapi tidak delete
+            $this->datatables->add_column('action', 
+            anchor(site_url('sample_reception/rep_print/$1'), 
+                '<i class="fa fa-print" aria-hidden="true"></i>', 
+                array('class' => 'btn btn-warning btn-sm')) . 
+            "
+                " . anchor(site_url('sample_reception/rep_print2/$1'), 
+                '<i class="fa fa-print" aria-hidden="true"></i>', 
+                array('class' => 'btn btn-success btn-sm')) . 
+            "
                 " . '<button type="button" class="btn_edit btn btn-info btn-sm">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                 </button>', 'id_project');
         } else {
+            // Level 1 (Super Admin) dan Level 2 (Admin) - Bisa akses semua button
             $this->datatables->add_column('action', 
             anchor(site_url('sample_reception/rep_print/$1'), 
                 '<i class="fa fa-print" aria-hidden="true"></i>', 
@@ -636,17 +643,37 @@ class Sample_reception_model extends CI_Model
         $this->db->order_by('sample_reception_sample.id_sample', 'ASC');
         $query = $this->db->get()->result();
     
+        $lvl = $this->session->userdata('id_user_level');
+    
         foreach ($query as $row) {
-            $row->action = '
-                <a href="' . site_url('sample_reception/read/' . $row->id_one_water_sample) . '" class="btn btn-warning btn-sm">
-                    <i class="fa fa-eye"></i>
-                </a>
-                <button class="btn btn-info btn-sm btn_edit_sample" data-id="' . $row->id_one_water_sample . '">
-                    <i class="fa fa-pencil"></i>
-                </button>
-                <button class="btn btn-danger btn-sm btn_delete_sample" data-id="' . $row->id_one_water_sample . '">
-                    <i class="fa fa-trash"></i>
-                </button>';
+            if ($lvl == 4) {
+                // Level 4 (ViewOnly) - Tidak ada button yang bisa diakses
+                $row->action = '
+                    <a href="' . site_url('sample_reception/read/' . $row->id_one_water_sample) . '" class="btn btn-warning btn-sm">
+                        <i class="fa fa-eye"></i>
+                    </a>';
+            } else if ($lvl == 3) {
+                // Level 3 (User) - Bisa akses view dan edit, tapi tidak delete
+                $row->action = '
+                    <a href="' . site_url('sample_reception/read/' . $row->id_one_water_sample) . '" class="btn btn-warning btn-sm">
+                        <i class="fa fa-eye"></i>
+                    </a>
+                    <button class="btn btn-info btn-sm btn_edit_sample" data-id="' . $row->id_one_water_sample . '">
+                        <i class="fa fa-pencil"></i>
+                    </button>';
+            } else {
+                // Level 1 (Super Admin) dan Level 2 (Admin) - Bisa akses semua button
+                $row->action = '
+                    <a href="' . site_url('sample_reception/read/' . $row->id_one_water_sample) . '" class="btn btn-warning btn-sm">
+                        <i class="fa fa-eye"></i>
+                    </a>
+                    <button class="btn btn-info btn-sm btn_edit_sample" data-id="' . $row->id_one_water_sample . '">
+                        <i class="fa fa-pencil"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm btn_delete_sample" data-id="' . $row->id_one_water_sample . '">
+                        <i class="fa fa-trash"></i>
+                    </button>';
+            }
         }
     
         return $query;
@@ -686,9 +713,150 @@ class Sample_reception_model extends CI_Model
     
     
     
+    // Get export data for CSV with dummy data from database
+    public function get_export_data($id_project) {
+        // For now, create dummy data that simulates database results
+        // Later this can be replaced with actual JOIN queries when table structure is finalized
+        
+        // First get basic project info
+        $this->db->select('sr.*, cc.client_name, cc.address, cc.phone1, cc.email');
+        $this->db->from('sample_reception sr');
+        $this->db->join('ref_client cc', 'sr.id_client_contact = cc.id_client_contact', 'left');
+        $this->db->where('sr.id_project', $id_project);
+        $project = $this->db->get()->row_array();
+        
+        if (!$project) {
+            return [];
+        }
+        
+        // Create dummy export data array
+        $exportData = [];
+        
+        // Generate multiple rows of dummy data based on the field structure
+        for ($i = 0; $i < 5; $i++) {
+            $row = [
+                'ConfirmedRaw' => rand(15, 45),
+                'PresumptiveRaw' => rand(18, 52),
+                'PathogenID' => 'EC00' . ($i + 1),
+                'LOR' => '1',
+                'MeasurementOfUncertainty' => '±' . rand(15, 25) . '%',
+                'SURROGATE' => rand(85, 115) . '%',
+                'RPD' => rand(5, 15) . '%',
+                'RESULTCOMMENT' => $i == 2 ? 'Elevated levels detected - investigate treatment efficacy' : 'Results within acceptable limits',
+                'RESULTSTATUS' => $i == 2 ? 'EXCEEDANCE' : 'VALIDATED',
+                'LabCOANo' => 'COA-' . date('Y') . '-' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT),
+                'LabCOADate' => date('d-M-Y'),
+                'LabQAQCNo' => 'QAQC-' . date('Y') . '-' . str_pad(rand(1, 99), 2, '0', STR_PAD_LEFT),
+                'LabQAQCDate' => date('d-M-Y'),
+                'ReportComment' => 'All analysis completed within specified timeframes. Results validated according to laboratory QA/QC procedures.',
+                'SiteComment' => 'Sampling conducted during normal flow conditions. Weather: Clear, Temperature: 18°C.',
+                'License' => 'NATA-' . rand(10000, 99999),
+                'ANALYSISMETHODCATEGORY' => $i < 2 ? 'MICROBIOLOGICAL_INDICATORS' : ($i < 4 ? 'PATHOGEN_DETECTION' : 'PHYSICAL_CHEMICAL'),
+                'ANALYSISMETHOD' => $this->getAnalysisMethod($i),
+                'SAMPLEDATE' => date('d-M-Y', strtotime('-' . ($i + 1) . ' days')),
+                'LABREGISTRATIONDATE' => date('d-M-Y H:i', strtotime('-' . $i . ' days')),
+                'AnalysisDate' => date('d-M-Y', strtotime('-1 day')),
+                'ANALYSISCOMPLETIONDATE' => date('d-M-Y'),
+                'ParameterCode' => $this->getParameterCode($i),
+                'PARAMETERNAME' => $this->getParameterName($i),
+                'TEST_KEY_CODE' => 'TK00' . ($i + 1),
+                'RESULT' => $this->getResult($i),
+                'Units' => $this->getUnits($i),
+                'POSITIVECONTROL%' => rand(95, 105) . '%',
+                'SAMPLEVOLUME' => $i < 3 ? '100' : ($i == 3 ? '25' : '10'),
+                'SAMPLEVOLUMEUNITS' => $i < 3 ? 'mL' : 'g',
+                'SAMPLEPROCESSED%' => rand(88, 100) . '%',
+                'EDDVERSION' => 'EDD_v2.1',
+                'CLIENTNAME' => $project['client_name'] ?? 'ACME Water Treatment Corp',
+                'SITEAREA' => $this->getSiteArea($i),
+                'PROGRAM' => 'WATER_QUALITY_MONITORING',
+                'WorkOrderNo' => 'WO' . date('y') . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT),
+                'SUBMISSION' => 'SUB' . date('ymd') . rand(10, 99),
+                'SAMPLINGPROVIDER' => 'Environmental Sampling Ltd',
+                'SamplerName' => 'John Smith',
+                'SamplingRunRef' => 'SR' . date('ymd') . '-' . rand(10, 99),
+                'LOCATIONCODE' => 'LOC00' . ($i + 1),
+                'LocationDescription' => $this->getLocationDescription($i),
+                'AnalysisPO' => 'PO' . rand(1000, 9999),
+                'LABCODE' => 'LAB00' . ($i + 1),
+                'LABSAMPLEID' => 'LAB' . str_pad(rand(1000, 9999), 4, '0', STR_PAD_LEFT),
+                'SAMPLETYPE' => $this->getExportSampleType($i),
+                'SUBMITTEDMATRIX' => $this->getSubmittedMatrix($i),
+                'ANALYSISMATRIX' => $this->getAnalysisMatrix($i),
+                'ANALYSISSUBMATRIX' => $this->getAnalysisSubMatrix($i)
+            ];
+            
+            $exportData[] = $row;
+        }
+        
+        return $exportData;
+    }
     
+    // Helper functions for dummy data generation
+    private function getAnalysisMethod($index) {
+        $methods = ['COLILERT_MPN', 'ENTEROLERT_MPN', 'qPCR_DETECTION', 'CULTURE_METHOD', 'GRAVIMETRIC_105C'];
+        return $methods[$index] ?? 'STANDARD_METHOD';
+    }
     
-      
+    private function getParameterCode($index) {
+        $codes = ['ECOLI', 'ENTERO', 'CAMPY', 'SALM', 'MOIST'];
+        return $codes[$index] ?? 'PARAM';
+    }
+    
+    private function getParameterName($index) {
+        $names = ['E. coli', 'Enterococci', 'Campylobacter spp.', 'Salmonella spp.', 'Moisture Content'];
+        return $names[$index] ?? 'Parameter';
+    }
+    
+    private function getResult($index) {
+        if ($index == 3) return 'NEGATIVE';
+        if ($index == 2) return rand(100, 1000);
+        if ($index == 4) return rand(15, 35);
+        return rand(1, 100);
+    }
+    
+    private function getUnits($index) {
+        if ($index == 3) return '-';
+        if ($index == 2) return 'copies/g';
+        if ($index == 4) return '%';
+        return 'MPN/100mL';
+    }
+    
+    private function getSiteArea($index) {
+        $areas = ['UPSTREAM_ZONE_A', 'TREATMENT_PLANT_B', 'DOWNSTREAM_ZONE_C', 'MONITORING_POINT_D', 'EFFLUENT_ZONE_E'];
+        return $areas[$index] ?? 'SITE_AREA';
+    }
+    
+    private function getLocationDescription($index) {
+        $descriptions = [
+            'Upstream Collection Point A',
+            'Treatment Plant Effluent B', 
+            'Downstream Monitoring Point C',
+            'Secondary Treatment Outlet D',
+            'Final Discharge Point E'
+        ];
+        return $descriptions[$index] ?? 'Sample Location';
+    }
+    
+    private function getExportSampleType($index) {
+        $types = ['WATER', 'BIOSOLID', 'LIQUID', 'EFFLUENT', 'SLUDGE'];
+        return $types[$index] ?? 'SAMPLE';
+    }
+    
+    private function getSubmittedMatrix($index) {
+        $matrices = ['WATER', 'BIOSOLID', 'LIQUID', 'WASTEWATER', 'SOLID'];
+        return $matrices[$index] ?? 'MATRIX';
+    }
+    
+    private function getAnalysisMatrix($index) {
+        $matrices = ['AQUEOUS', 'SOLID', 'AQUEOUS', 'AQUEOUS', 'SOLID'];
+        return $matrices[$index] ?? 'AQUEOUS';
+    }
+    
+    private function getAnalysisSubMatrix($index) {
+        $subMatrices = ['FRESHWATER', 'TREATED_SLUDGE', 'WASTEWATER', 'EFFLUENT', 'BIOSOLID'];
+        return $subMatrices[$index] ?? 'SAMPLE_MATRIX';
+    }
 }
 
 /* End of file Tbl_delivery_model.php */

@@ -116,7 +116,7 @@
                     <img src="../../../img/onewaterlogo.png" height="40px" class="icon" style="padding: 0px; float: right;">
                 </div>
                 <div class="box-body">
-                    <div style="position: relative; height: 40px; margin-bottom: 10px;">
+                    <div style="position: relative; height: 40px; margin-bottom: 5px;">
                         <img src="../../../img/bluebar.png" 
                             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;" 
                             alt="Background" />
@@ -129,76 +129,76 @@
                     <input type='hidden' id='generated_report_number_val' value='<?php echo htmlspecialchars($report_number_display ?? ''); ?>'>
                     <input type='hidden' id='generated_report_date_val' value='<?php echo htmlspecialchars($report_date_display ?? ''); ?>'>
                     
-                    <div style="display: flex; justify-content: space-between; width: 100%;">
+                    <div style="display: flex; justify-content: space-between; width: 100%; margin-bottom: 5px;">
                         <div style="width: 49%;">
-                            <table id="report-header" width="100%" style="border:0px solid black; margin-bottom: 0; border-collapse: collapse;">
+                            <table id="report-header" width="100%" style="border:0px solid black; margin-bottom: 5px; border-collapse: collapse;">
                                 <thead>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Report Number</td>
-                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Report Number</td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">
                                             <span id="display_report_number"><?php echo htmlspecialchars($report_number_display ?? ''); ?></span>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Report issue date</td>
-                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Report issue date</td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">
                                             <span id="display_report_date"><?php echo htmlspecialchars($report_date_display ?? ''); ?></span>
                                         </td>
                                     </tr>
                                 </thead>
                             </table>
 
-                            <div style="width: 100%; border-top: 1px solid #ddd; margin: 5px 0;"></div>
+                            <div style="width: 100%; border-top: 1px solid #ddd; margin: 2px 0;"></div>
 
-                            <table id="project-details" width="100%" style="border:0px solid black; margin-top: 0; border-collapse: collapse;">
+                            <table id="project-details" width="100%" style="border:0px solid black; margin-top: 3px; border-collapse: collapse;">
                                 <thead>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Project ID</td>
-                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $id_project ?></td>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Project ID</td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $id_project ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Client</td>
-                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $client ?></td>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Client</td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $client ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Client contact details</td>
-                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $client_name ?></td>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Client contact details</td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $client_name ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"></td>
-                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $address ?></td>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $address ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"></td>
-                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $phone1 ?></td>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $phone1 ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"></td>
-                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $phone2 ?></td>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $phone2 ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"></td>
-                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $email ?></td>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $email ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Quote Number</td>
-                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $client_quote_number ?></td>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Quote Number</td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $client_quote_number ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">PO Number</td>
-                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $po_number ?></td>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">PO Number</td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $po_number ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Date of Sample Received</td>
-                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $from_date . "&nbsp &nbsp~&nbsp &nbsp" . $to_date ?></td>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Date of Sample Received</td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $from_date . "&nbsp &nbsp~&nbsp &nbsp" . $to_date ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Analysis</td>
-                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo "??" ?></td>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Analysis</td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo "??" ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Test Analyst(s)</td>
-                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $realname ?></td>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Test Analyst(s)</td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $realname ?></td>
                                     </tr>
                                 </thead>
                             </table>
@@ -217,7 +217,7 @@
                     <img src="../../../img/monash.png" height="40px" class="icon" style="padding: 0px; float: right;">
                 </div>
                 <div class="box-body">
-                    <div style="position: relative; height: 10px; margin-bottom: 10px;">
+                    <div style="position: relative; height: 8px; margin-bottom: 5px;">
                         <img src="../../../img/bluebar.png" 
                             style="position: absolute; top: 0; left: 0; width: 100%; height: 10%; object-fit: cover; z-index: 0;" 
                             alt="Background" />
@@ -225,42 +225,12 @@
 
                     <input type='hidden' id='id_project' value='<?php echo $id_project; ?>'>
 
-                    <!-- <div style="display: flex; justify-content: space-between; width: 100%;">
+                    <div style="display: flex; justify-content: space-between; width: 100%; margin-bottom: 5px;">
                         <div style="width: 30%;">
-                            <table id="report-header" width="100%" style="border:0px solid black; margin-bottom: 0; border-collapse: collapse;">
+                            <table id="report-header" width="100%" style="border:0px solid black; margin-bottom: 3px; border-collapse: collapse;">
                                 <thead>
                                     <tr>
-                                        <td width="50%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><b>Page Number</b></td>
-                                        <td width="5%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><b>:</b></td>
-                                        <td width="50%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><b><?php echo $page_counter++; ?> of X</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><b>Report Number</b></td>
-                                        <td style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><b>:</b></td>
-                                        <td style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><b>25-10299</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><b>Project ID</b></td>
-                                        <td style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><b>:</b></td>
-                                        <td style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><b><?php echo $id_project ?></b></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><b>Client</b></td>
-                                        <td style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><b>:</b></td>
-                                        <td style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><b><?php echo $client ?></b></td>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div> -->
-
-                    <!-- <div style="width: 100%; border-top: 2px solid #3c8dbc; margin: 30px 0;"></div> -->
-                    <div style="display: flex; justify-content: space-between; width: 100%;">
-                        <div style="width: 30%;">
-                            <table id="report-header" width="100%" style="border:0px solid black; margin-bottom: 0; border-collapse: collapse;">
-                                <thead>
-                                    <tr>
-                                        <td width="50%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><b>Sample Detail</b></td>
+                                        <td width="50%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><b>Sample Detail</b></td>
                                     </tr>
                                 </thead>
                             </table>
@@ -279,23 +249,23 @@
 
                     ?>
 
-                    <div style="width: 100%;">
-                        <table id="additional-info" width="100%" style="border:1px solid #3c8dbc; border-collapse: separate; border-spacing: 10px;">
+                    <div style="width: 100%; margin-bottom: 5px;">
+                        <table id="additional-info" width="100%" style="border:1px solid #3c8dbc; border-collapse: separate; border-spacing: 6px;">
                             <thead>
                                 <tr>
-                                    <td width="8%" style="border:0px solid black; padding: 3px 0; vertical-align: top; font-weight: bold;" align="left">Sample Number</td>
-                                    <td width="35%" style="border:0px solid black; padding: 3px 0; vertical-align: top; font-weight: bold;" align="left">Description</td>
-                                    <td width="10%" style="border:0px solid black; padding: 3px 0; vertical-align: top; font-weight: bold;" align="left">Sample type</td>
-                                    <td width="14%" style="border:0px solid black; padding: 3px 0; vertical-align: top; font-weight: bold;" align="left">Sampled Date</td>
-                                    <td width="14%" style="border:0px solid black; padding: 3px 0; vertical-align: top; font-weight: bold;" align="left">Sampled Time</td>
+                                    <td width="8%" style="border:0px solid black; padding: 2px 0; vertical-align: top; font-weight: bold;" align="left">Sample Number</td>
+                                    <td width="35%" style="border:0px solid black; padding: 2px 0; vertical-align: top; font-weight: bold;" align="left">Description</td>
+                                    <td width="10%" style="border:0px solid black; padding: 2px 0; vertical-align: top; font-weight: bold;" align="left">Sample type</td>
+                                    <td width="14%" style="border:0px solid black; padding: 2px 0; vertical-align: top; font-weight: bold;" align="left">Sampled Date</td>
+                                    <td width="14%" style="border:0px solid black; padding: 2px 0; vertical-align: top; font-weight: bold;" align="left">Sampled Time</td>
                                 </tr>
                                 <?php foreach ($response as $row): ?>
                                 <tr>
-                                    <td style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $row->id_one_water_sample; ?></td>
-                                    <td style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $row->comments; ?></td>
-                                    <td style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $row->sampletype; ?></td>
-                                    <td style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $row->date_collected; ?></td>
-                                    <td style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $row->time_collected; ?></td>
+                                    <td style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $row->id_one_water_sample; ?></td>
+                                    <td style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $row->comments; ?></td>
+                                    <td style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $row->sampletype; ?></td>
+                                    <td style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $row->date_collected; ?></td>
+                                    <td style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $row->time_collected; ?></td>
                                 </tr>
                                 <?php endforeach; ?>                                  
                             </thead>
@@ -316,21 +286,21 @@
                     $response2 = $q->result();
 
                     ?>
-                    <div style="width: 100%; border-top: 0px solid #ddd; margin: 20px 0;"></div>
+                    <div style="width: 100%; border-top: 0px solid #ddd; margin: 5px 0;"></div>
 
-                    <div style="width: 60%;">
-                        <table id="additional-info" width="100%" style="border:1px solid #3c8dbc; border-collapse: separate; border-spacing: 10px;">
+                    <div style="width: 60%; margin-bottom: 8px;">
+                        <table id="additional-info" width="100%" style="border:1px solid #3c8dbc; border-collapse: separate; border-spacing: 6px;">
                             <thead>
                                 <tr>
-                                    <td width="20%" style="border:0px solid black; padding: 3px 0; vertical-align: top; font-weight: bold;" align="left">Analysis - Analyte</td>
-                                    <td width="20%" style="border:0px solid black; padding: 3px 0; vertical-align: top; font-weight: bold;" align="left">Units</td>
-                                    <td width="10%" style="border:0px solid black; padding: 3px 0; vertical-align: top; font-weight: bold;" align="left">Values</td>
+                                    <td width="20%" style="border:0px solid black; padding: 2px 0; vertical-align: top; font-weight: bold;" align="left">Analysis - Analyte</td>
+                                    <td width="20%" style="border:0px solid black; padding: 2px 0; vertical-align: top; font-weight: bold;" align="left">Units</td>
+                                    <td width="10%" style="border:0px solid black; padding: 2px 0; vertical-align: top; font-weight: bold;" align="left">Values</td>
                                 </tr>
                                 <?php foreach ($response2 as $row2): ?>
                                 <tr>
-                                    <td width="20%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $row2->testing_type; ?></td>
-                                    <td width="20%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $row2->method; ?></td>
-                                    <td width="10%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $row2->testvalue; ?></td>
+                                    <td width="20%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $row2->testing_type; ?></td>
+                                    <td width="20%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $row2->method; ?></td>
+                                    <td width="10%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $row2->testvalue; ?></td>
                                 </tr>
                                 <?php endforeach; ?>                                  
                             </thead>
@@ -349,7 +319,7 @@
                     <img src="../../../img/onewaterlogo.png" height="40px" class="icon" style="padding: 0px; float: right;">
                 </div>
                 <div class="box-body">
-                    <div style="position: relative; height: 10px; margin-bottom: 10px;">
+                    <div style="position: relative; height: 8px; margin-bottom: 5px;">
                         <img src="../../../img/bluebar.png" 
                             style="position: absolute; top: 0; left: 0; width: 100%; height: 10%; object-fit: cover; z-index: 0;" 
                             alt="Background" />
@@ -398,7 +368,7 @@
                     $page_counter = 2; 
 
                     // --- GENERASI TABEL 1 (HUMAN-SPECIFIC) ---
-                    echo '<h4 style="margin-top: 0; margin-bottom: 10px;">Table 1 - Human-specific contribution within total microbial community:</h4>';
+                    echo '<h4 style="margin-top: 0; margin-bottom: 5px;">Table 1 - Human-specific contribution within total microbial community:</h4>';
                     for ($chunk_idx = 0; $chunk_idx < $num_chunks; $chunk_idx++) {
                         $start_col_idx = $chunk_idx * $samples_per_row;
                         $end_col_idx = min(($chunk_idx + 1) * $samples_per_row, $num_samples);
@@ -410,15 +380,14 @@
                             <img src="../../../img/monash.png" height="50px" class="icon" style="padding: 0px; float: left;">
                             <img src="../../../img/onewaterlogo.png" height="40px" class="icon" style="padding: 0px; float: right;">
                         </div>
-                        <div style="position: relative; height: 10px; margin-bottom: 10px;">
+                        <div style="position: relative; height: 8px; margin-bottom: 5px;">
                             <img src="../../../img/bluebar.png" 
                                 style="position: absolute; top: 0; left: 0; width: 100%; height: 10%; object-fit: cover; z-index: 0;" 
                                 alt="Background" />
                         </div>
-                        <div style="width: 100%; border-top: 2px solid #3c8dbc; margin: 30px 0;"></div>
                         <?php endif; ?>
                         
-                        <table class="report-table" style="margin-bottom: 20px;">
+                        <table class="report-table" style="margin-bottom: 8px;">
                             <thead>
                                 <tr>
                                     <th>Sources</th>
@@ -442,10 +411,9 @@
                     } // End of Human-specific chunk loop 
                     ?>
 
-                    <!-- <div class="page-break"></div>  -->
                     <?php
                     // --- GENERASI TABEL 2 (FAECAL-SPECIFIC) ---
-                    echo '<h4 style="margin-top: 0; margin-bottom: 10px;">Table 2 - Faecal-specific contribution within total microbial community:</h4>';
+                    echo '<h4 style="margin-top: 5px; margin-bottom: 5px;">Table 2 - Faecal-specific contribution within total microbial community:</h4>';
                     for ($chunk_idx = 0; $chunk_idx < $num_chunks; $chunk_idx++) {
                         $start_col_idx = $chunk_idx * $samples_per_row;
                         $end_col_idx = min(($chunk_idx + 1) * $samples_per_row, $num_samples);
@@ -457,15 +425,14 @@
                             <img src="../../../img/monash.png" height="50px" class="icon" style="padding: 0px; float: left;">
                             <img src="../../../img/onewaterlogo.png" height="40px" class="icon" style="padding: 0px; float: right;">
                         </div>
-                        <div style="position: relative; height: 10px; margin-bottom: 10px;">
+                        <div style="position: relative; height: 8px; margin-bottom: 5px;">
                             <img src="../../../img/bluebar.png" 
                                 style="position: absolute; top: 0; left: 0; width: 100%; height: 10%; object-fit: cover; z-index: 0;" 
                                 alt="Background" />
                         </div>
-                        <div style="width: 100%; border-top: 2px solid #3c8dbc; margin: 30px 0;"></div>
                         <?php endif; ?>
 
-                        <table class="report-table" style="margin-bottom: 30px;">
+                        <table class="report-table" style="margin-bottom: 8px;">
                             <thead>
                                 <tr>
                                     <th>Sources</th>
@@ -489,9 +456,8 @@
                     } // End of Faecal-specific chunk loop 
                     ?>
 
-                    <!-- <div class="page-break"></div>  -->
-                    <h4 style="margin-top: 30px; margin-bottom: 10px;">Note for interpretation of microbial community contribution report(s):</h4>
-                    <ol style="margin-left: 15px;">
+                    <h4 style="margin-top: 8px; margin-bottom: 5px;">Note for interpretation of microbial community contribution report(s):</h4>
+                    <ol style="margin-left: 15px; margin-bottom: 8px;">
                         <li>Values displayed represent significant relative median microbial community contribution (relative standard deviation <100%). The results were taken as the average of five replicate SourceTracker runs.</li>
                         <li>Values with relative standard deviation ≥100% were deemed non-significant result, and therefore omitted from the report.</li>
                         <li>Values were rounded-off to the nearest 2 decimal places.</li>
@@ -503,12 +469,11 @@
                         <img src="../../../img/monash.png" height="50px" class="icon" style="padding: 0px; float: left;">
                         <img src="../../../img/onewaterlogo.png" height="40px" class="icon" style="padding: 0px; float: right;">
                     </div>
-                    <div style="position: relative; height: 10px; margin-bottom: 10px;">
+                    <div style="position: relative; height: 8px; margin-bottom: 5px;">
                         <img src="../../../img/bluebar.png" 
                             style="position: absolute; top: 0; left: 0; width: 100%; height: 10%; object-fit: cover; z-index: 0;" 
                             alt="Background" />
                     </div>
-                    <div style="width: 100%; border-top: 2px solid #3c8dbc; margin: 30px 0;"></div>
 
                     <?php
                     // Dummy data for Table 3 - Faecal-source contribution
@@ -534,7 +499,7 @@
                     ];
                     ?>
 
-                    <h4 style="margin-top: 0; margin-bottom: 10px;">Table 3 - Faecal-source contribution within faecal component of microbial community:</h4>
+                    <h4 style="margin-top: 5px; margin-bottom: 5px;">Table 3 - Faecal-source contribution within faecal component of microbial community:</h4>
                     <?php for ($chunk_idx = 0; $chunk_idx < $num_chunks; $chunk_idx++): ?>
                         <?php
                         $start_col_idx = $chunk_idx * $samples_per_row;
@@ -547,15 +512,14 @@
                             <img src="../../../img/monash.png" height="50px" class="icon" style="padding: 0px; float: left;">
                             <img src="../../../img/onewaterlogo.png" height="40px" class="icon" style="padding: 0px; float: right;">
                         </div>
-                        <div style="position: relative; height: 10px; margin-bottom: 10px;">
+                        <div style="position: relative; height: 8px; margin-bottom: 5px;">
                             <img src="../../../img/bluebar.png" 
                                 style="position: absolute; top: 0; left: 0; width: 100%; height: 10%; object-fit: cover; z-index: 0;" 
                                 alt="Background" />
                         </div>
-                        <div style="width: 100%; border-top: 2px solid #3c8dbc; margin: 30px 0;"></div>
                         <?php endif; ?>
                         
-                        <table class="report-table" style="margin-bottom: 20px;">
+                        <table class="report-table" style="margin-bottom: 8px;">
                             <thead>
                                 <tr>
                                     <th rowspan="2">Sources</th> <th colspan="<?php echo count($current_sample_headers_chunk); ?>">Sample #</th> </tr>
@@ -580,8 +544,8 @@
                         </table>
                     <?php endfor; // End of Faecal-source chunk loop ?>
 
-                    <h4 style="margin-top: 30px; margin-bottom: 10px;">Note for faecal community contribution report(s):</h4>
-                    <ol style="margin-left: 15px;">
+                    <h4 style="margin-top: 8px; margin-bottom: 5px;">Note for faecal community contribution report(s):</h4>
+                    <ol style="margin-left: 15px; margin-bottom: 5px;">
                         <li>Values displayed represent significant relative median faecal community contribution (relative standard deviation <100%). The results were taken as the average of five replicate SourceTracker runs.</li>
                         <li>Values with relative standard deviation ≥100% were deemed non-significant result, and therefore omitted from the report.</li>
                         <li>Values were rounded-off to the nearest 2 decimal places.</li>

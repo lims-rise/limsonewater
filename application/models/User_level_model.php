@@ -21,9 +21,16 @@ class User_level_model extends CI_Model
         $this->datatables->from('tbl_user_level');
         //add this line for join
         //$this->datatables->join('table2', 'tbl_user_level.field = table2.field');
-        $this->datatables->add_column('action', anchor(site_url('userlevel/akses/$1'),'<i class="fa fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm'))." 
-            ".anchor(site_url('userlevel/update/$1'),'<i class="fa fa-pencil-square-o" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm'))." 
-                ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_user_level');
+        
+        $lvl = $this->session->userdata('id_user_level');
+        if ($lvl != 4 && $lvl != 3) {
+            $this->datatables->add_column('action', anchor(site_url('userlevel/akses/$1'),'<i class="fa fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm'))." 
+                ".anchor(site_url('userlevel/update/$1'),'<i class="fa fa-pencil-square-o" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm'))." 
+                    ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_user_level');
+        } else {
+            $this->datatables->add_column('action', '-');
+        }
+        
         return $this->datatables->generate();
     }
 

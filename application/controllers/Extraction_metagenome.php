@@ -498,8 +498,8 @@ class Extraction_metagenome extends CI_Controller
                 'cryobox' => $cryobox,
                 'id_location' => $id_loc,
                 'id_pos' => $id_pos,
-                'review' => $review,
-                'user_review' => $user_review,
+                // 'review' => $review,
+                // 'user_review' => $user_review,
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );

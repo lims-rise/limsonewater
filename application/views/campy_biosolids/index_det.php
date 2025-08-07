@@ -68,6 +68,18 @@
 							</div>
 						</div>
 
+                        <div class="form-group">
+							<label for="dry_weight_persen" class="col-sm-2 control-label">Dry Weight %</label>
+							<div class="col-sm-4">
+								<input class="form-control " id="dry_weight_persen" name="dry_weight_persen" value="<?php echo $dry_weight_persen ?>"  disabled>
+							</div>
+
+                            <label for="sample_dryweight" class="col-sm-2 control-label">Sample Dry Weight</label>
+							<div class="col-sm-4">
+								<input class="form-control " id="sample_dryweight" name="sample_dryweight" value="<?php echo $sample_dryweight ?>"  disabled>
+                                <input class="form-control " id="sample_dryweight_old" name="sample_dryweight_old" type="hidden" value="<?php echo $sample_dryweight_old ?>"  disabled>
+							</div>
+						</div>
 					</div>
 				</form>
                 <form id="formSampleReview" method="post">
@@ -186,9 +198,15 @@
                                     <button class="btn btn-success" id="exportBtn">
                                         <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS
                                     </button>
-                                    <button class="btn btn-primary" id="calculateMpnBtn" style="margin-left: 10px;">
-                                        <i class="fa fa-calculator" aria-hidden="true"></i> Calculate MPN
-                                    </button>
+                                    <?php
+                                        $lvl = $this->session->userdata('id_user_level');
+                                        if ($lvl != 4){
+                                            echo '<button class="btn btn-primary" id="calculateMpnBtn" style="margin-left: 10px; position: relative;">
+                                                    <i class="fa fa-calculator" aria-hidden="true"></i> Calculate MPN
+                                                    <span id="mpnUpdateBadge" class="badge badge-warning" style="position: absolute; top: -5px; right: -5px; background-color: #ff6b6b; color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 10px; line-height: 20px; display: none;">!</span>
+                                                  </button>';
+                                        }
+                                    ?>
                                 </div>
                                 <input id="id_campy_biosolids" name="id_campy_biosolids" type="hidden" class="form-control input-sm" value="<?php echo $id_campy_biosolids ?>">
 
@@ -225,9 +243,12 @@
                                                 <?php else: ?>
                                                     <th colspan="100%" style="text-align: center">No data available</th>
                                                 <?php endif; ?>
-                                                <th>MPN Concentration</th>
+                                                <th>Concentration MPN</th>
                                                 <th>Upper CI</th>
                                                 <th>Lower CI</th>
+                                                <th>Concentration MPN/g Dw</th>
+                                                <th>Upper CI MPN/g Dw</th>
+                                                <th>Lower CI MPN/g Dw</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -274,6 +295,9 @@
                                                         <td><?= htmlspecialchars($concentration->mpn_concentration) ?></td>
                                                         <td><?= htmlspecialchars($concentration->upper_ci) ?></td>
                                                         <td><?= htmlspecialchars($concentration->lower_ci) ?></td>
+                                                        <td><?= htmlspecialchars($concentration->mpn_concentration_dw) ?></td>
+                                                        <td><?= htmlspecialchars($concentration->upper_ci_dw) ?></td>
+                                                        <td><?= htmlspecialchars($concentration->lower_ci_dw) ?></td>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             <?php else: ?>
@@ -361,8 +385,12 @@
 
                             </div>
                             <div class="modal-footer clearfix">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
-                                <button type="button" id='cancelButton' class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                                <button type="submit" class="btn btn-primary" style="min-width: 100px; padding: 8px 16px; font-weight: 500; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,123,255,0.2); transition: all 0.3s ease;">
+                                    <i class="fa fa-save" style="margin-right: 6px;"></i> Save
+                                </button>
+                                <button type="button" class="btn btn-warning" data-dismiss="modal" style="min-width: 100px; padding: 8px 16px; font-weight: 500; border-radius: 6px; box-shadow: 0 2px 4px rgba(255,193,7,0.2); transition: all 0.3s ease;">
+                                    <i class="fa fa-times" style="margin-right: 6px;"></i> Cancel
+                                </button>
                             </div>
                         </form>
                 </div><!-- /.modal-content -->
@@ -429,8 +457,12 @@
 
                             </div>
                             <div class="modal-footer clearfix">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
-                                <button type="button" id='cancelButton' class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                                <button type="submit" class="btn btn-primary" style="min-width: 100px; padding: 8px 16px; font-weight: 500; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,123,255,0.2); transition: all 0.3s ease;">
+                                    <i class="fa fa-save" style="margin-right: 6px;"></i> Save
+                                </button>
+                                <button type="button" class="btn btn-warning" data-dismiss="modal" style="min-width: 100px; padding: 8px 16px; font-weight: 500; border-radius: 6px; box-shadow: 0 2px 4px rgba(255,193,7,0.2); transition: all 0.3s ease;">
+                                    <i class="fa fa-times" style="margin-right: 6px;"></i> Cancel
+                                </button>
                             </div>
                         </form>
                 </div><!-- /.modal-content -->
@@ -516,8 +548,12 @@
 
                 </div>
                 <div class="modal-footer clearfix">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
-                    <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                    <button type="submit" class="btn btn-primary" style="min-width: 100px; padding: 8px 16px; font-weight: 500; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,123,255,0.2); transition: all 0.3s ease;">
+                        <i class="fa fa-save" style="margin-right: 6px;"></i> Save
+                    </button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal" style="min-width: 100px; padding: 8px 16px; font-weight: 500; border-radius: 6px; box-shadow: 0 2px 4px rgba(255,193,7,0.2); transition: all 0.3s ease;">
+                        <i class="fa fa-times" style="margin-right: 6px;"></i> Cancel
+                    </button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -541,6 +577,7 @@
                     <input id="mode_calculateMPN" name="mode_calculateMPN" type="hidden" class="form-control input-sm">
                     <input id="id_campy_biosolids_mpn" name="id_campy_biosolids_mpn" type="hidden" class="form-control input-sm">
                     <input id="id_campy_result_mpn" name="id_campy_result_mpn" type="hidden" class="form-control input-sm">
+                    <input id="current_sample_dryweight" name="current_sample_dryweight" type="hidden" class="form-control input-sm">
 
                     <!-- MPN Concentration -->
                     <div class="form-group">
@@ -566,10 +603,61 @@
                         </div>
                     </div>
 
+                    <!-- Concentration MPN/g dry weight -->
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Auto-calculated Results</label>
+                        <div class="col-sm-8">
+                            <!-- Hidden inputs to store values for database -->
+                            <input id="mpn_concentration_dw" name="mpn_concentration_dw" type="hidden">
+                            <input id="upper_ci_dw" name="upper_ci_dw" type="hidden">
+                            <input id="lower_ci_dw" name="lower_ci_dw" type="hidden">
+                            
+                            <!-- Card display for auto-calculated values -->
+                            <div class="auto-calc-cards">
+                                <!-- Full width card for main concentration -->
+                                <div class="calc-card calc-card-full">
+                                    <div class="calc-card-header">
+                                        <i class="fa fa-calculator text-primary"></i>
+                                        <span class="calc-title">Concentration MPN/g dry weight</span>
+                                    </div>
+                                    <div class="calc-card-body">
+                                        <span id="display_mpn_concentration_dw" class="calc-value">-</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Two column layout for CI values -->
+                                <div class="calc-card-row">
+                                    <div class="calc-card calc-card-half">
+                                        <div class="calc-card-header">
+                                            <i class="fa fa-arrow-up text-success"></i>
+                                            <span class="calc-title">Upper CI MPN/g dw</span>
+                                        </div>
+                                        <div class="calc-card-body">
+                                            <span id="display_upper_ci_dw" class="calc-value">-</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="calc-card calc-card-half">
+                                        <div class="calc-card-header">
+                                            <i class="fa fa-arrow-down text-warning"></i>
+                                            <span class="calc-title">Lower CI MPN/g dw</span>
+                                        </div>
+                                        <div class="calc-card-body">
+                                            <span id="display_lower_ci_dw" class="calc-value">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-footer clearfix">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
-                    <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                <div class="modal-footer clearfix" style="display: flex; align-items: center; justify-content: flex-end; gap: 10px; padding: 15px 20px; border-top: 1px solid #dee2e6; background-color: #f8f9fa;">
+                    <button type="submit" class="btn btn-primary" style="min-width: 100px; padding: 8px 16px; font-weight: 500; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,123,255,0.2); transition: all 0.3s ease;">
+                        <i class="fa fa-save" style="margin-right: 6px;"></i> Save
+                    </button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal" style="min-width: 100px; padding: 8px 16px; font-weight: 500; border-radius: 6px; box-shadow: 0 2px 4px rgba(255,193,7,0.2); transition: all 0.3s ease;">
+                        <i class="fa fa-times" style="margin-right: 6px;"></i> Cancel
+                    </button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
@@ -900,6 +988,203 @@
 		border: 1px solid #ddd; /* Ganti border tombol */
 		cursor: not-allowed; /* Set cursor menjadi not-allowed agar tidak bisa diklik */
 	}
+
+    /* Auto-calculated Cards Styling */
+    .auto-calc-cards {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 15px;
+        width: 100%;
+        align-items: stretch;
+    }
+
+    /* Full width card for main concentration */
+    .calc-card-full {
+        width: 100% !important;
+        flex: none !important;
+        display: block !important;
+    }
+
+    /* Two column row for CI values */
+    .calc-card-row {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 15px;
+        flex-wrap: nowrap;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    /* Half width cards for CI values */
+    .calc-card-half {
+        flex: 1 1 calc(50% - 7.5px) !important;
+        min-width: 180px;
+        max-width: calc(50% - 7.5px);
+        box-sizing: border-box;
+    }
+
+    .calc-card {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 12px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        display: block !important;
+        width: auto !important;
+    }
+
+    .calc-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .calc-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #007bff, #28a745, #ffc107);
+        opacity: 0.8;
+    }
+
+    .calc-card-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+        gap: 6px;
+    }
+
+    .calc-title {
+        font-size: 11px;
+        font-weight: 600;
+        color: #495057;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .calc-card-body {
+        text-align: center;
+    }
+
+    .calc-value {
+        font-size: 18px;
+        font-weight: 700;
+        color: #212529;
+        display: block;
+        font-family: 'Courier New', monospace;
+        background: rgba(255,255,255,0.8);
+        padding: 4px 8px;
+        border-radius: 4px;
+        border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .calc-card:nth-child(1) .calc-value {
+        color: #007bff;
+    }
+
+    .calc-card-row .calc-card:nth-child(1) .calc-value {
+        color: #28a745;
+    }
+
+    .calc-card-row .calc-card:nth-child(2) .calc-value {
+        color: #ffc107;
+    }
+
+    @media (max-width: 768px) {
+        .calc-card-row {
+            flex-direction: column !important;
+            gap: 10px;
+        }
+        
+        .calc-card-half {
+            flex: 1 1 100% !important;
+            min-width: 100% !important;
+            max-width: 100% !important;
+        }
+    }
+
+    @media (min-width: 769px) {
+        .calc-card-row {
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+        }
+        
+        .calc-card-half {
+            flex: 1 1 calc(50% - 7.5px) !important;
+            min-width: calc(50% - 7.5px) !important;
+            max-width: calc(50% - 7.5px) !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .auto-calc-cards {
+            gap: 10px;
+        }
+        
+        .calc-card {
+            padding: 8px;
+        }
+        
+        .calc-title {
+            font-size: 10px;
+        }
+        
+        .calc-value {
+            font-size: 16px;
+        }
+    }
+
+    /* Enhanced Button Styling */
+    .modal-footer .btn {
+        transition: all 0.3s ease !important;
+        border: none !important;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 13px;
+    }
+
+    .modal-footer .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+    }
+
+    .modal-footer .btn:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+    }
+
+    .modal-footer .btn-primary:hover {
+        background-color: #0056b3 !important;
+        box-shadow: 0 4px 8px rgba(0,123,255,0.3) !important;
+    }
+
+    .modal-footer .btn-warning:hover {
+        background-color: #e0a800 !important;
+        box-shadow: 0 4px 8px rgba(255,193,7,0.3) !important;
+    }
+
+    /* Custom SweetAlert2 styling */
+    .swal-wide {
+        width: 600px !important;
+    }
+
+    .swal2-html-container {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .swal2-html-container p {
+        margin: 8px 0;
+    }
+
+    .swal2-html-container strong {
+        font-weight: 600;
+    }
 </style>
 <style>
 	#textInform2 .alert {
@@ -942,6 +1227,9 @@
                     document.getElementById('mpn_concentration').value = response.data.mpn_concentration;
                     document.getElementById('upper_ci').value = response.data.upper_ci;
                     document.getElementById('lower_ci').value = response.data.lower_ci;
+                    document.getElementById('mpn_concentration_dw').value = response.data.mpn_concentration_dw || '';
+                    document.getElementById('upper_ci_dw').value = response.data.upper_ci_dw || '';
+                    document.getElementById('lower_ci_dw').value = response.data.lower_ci_dw || '';
                     
                     // Update modal title
                     document.getElementById('modal-title-calculate-mpn').innerHTML = 'Calculate MPN | Edit';
@@ -952,6 +1240,9 @@
                     document.getElementById('mpn_concentration').value = '';
                     document.getElementById('upper_ci').value = '';
                     document.getElementById('lower_ci').value = '';
+                    document.getElementById('mpn_concentration_dw').value = '';
+                    document.getElementById('upper_ci_dw').value = '';
+                    document.getElementById('lower_ci_dw').value = '';
                     
                     // Update modal title
                     document.getElementById('modal-title-calculate-mpn').innerHTML = 'Calculate MPN | New';
@@ -969,6 +1260,9 @@
                 document.getElementById('mpn_concentration').value = '';
                 document.getElementById('upper_ci').value = '';
                 document.getElementById('lower_ci').value = '';
+                document.getElementById('mpn_concentration_dw').value = '';
+                document.getElementById('upper_ci_dw').value = '';
+                document.getElementById('lower_ci_dw').value = '';
                 document.getElementById('modal-title-calculate-mpn').innerHTML = 'Calculate MPN | New';
                 
                 // Show the modal
@@ -991,12 +1285,86 @@
     const BASE_URL = '/limsonewater/index.php';
 
     $(document).ready(function() {
-        	let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
-		let userCreated = $('#user_created').val();
-		let userReview = $('#user_review').val();
-		let fullName = $('#reviewed_by_label').val();
+        let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
+        let userCreated = $('#user_created').val();
+        let userReview = $('#user_review').val();
+        let fullName = $('#reviewed_by_label').val();
 
-		$('#reviewed_by_label').val(fullName ? fullName : '-');
+        // Store initial sample_dryweight value for comparison
+        let initialSampleDryweight = parseFloat($('#sample_dryweight_old').val()) || 0;
+        
+        // Check if MPN calculation needs to be updated
+        function checkMpnRecalculation() {
+            let currentSampleDryweight = parseFloat($('#sample_dryweight').val()) || 0;
+            
+            // If sample_dryweight has changed and MPN calculation exists
+            if (currentSampleDryweight !== initialSampleDryweight && currentSampleDryweight > 0) {
+                $.ajax({
+                    url: '<?php echo site_url('Campy_biosolids/getCalculateMPN'); ?>',
+                    type: 'GET',
+                    data: { id_campy_biosolids: id_campy_biosolids },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            // Show badge indicator
+                            $('#mpnUpdateBadge').show();
+                            
+                            // MPN calculation exists, show recalculation notification
+                            showMpnRecalculationModal();
+                        }
+                    }
+                });
+            } else if (currentSampleDryweight === initialSampleDryweight) {
+                // Hide badge if values are the same
+                $('#mpnUpdateBadge').hide();
+            }
+        }
+
+        // Function to show MPN recalculation notification
+        function showMpnRecalculationModal() {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Sample Dry Weight Changed!',
+                html: `
+                    <div style="text-align: left; margin: 15px 0;">
+                        <p><strong>The sample dry weight has been updated:</strong></p>
+                        <p>• Previous value: <span style="color: #dc3545; font-weight: bold;">${initialSampleDryweight}</span></p>
+                        <p>• New value: <span style="color: #28a745; font-weight: bold;">${$('#sample_dryweight').val()}</span></p>
+                        <br>
+                        <p style="color: #856404; background-color: #fff3cd; padding: 10px; border-radius: 5px; border-left: 4px solid #ffc107;">
+                            <i class="fa fa-exclamation-triangle"></i> 
+                            Your MPN calculations may no longer be accurate and need to be recalculated.
+                        </p>
+                    </div>
+                `,
+                showCancelButton: true,
+                confirmButtonText: '<i class="fa fa-calculator"></i> Recalculate MPN Now',
+                cancelButtonText: '<i class="fa fa-times"></i> Later',
+                confirmButtonColor: '#007bff',
+                cancelButtonColor: '#6c757d',
+                reverseButtons: true,
+                allowOutsideClick: false,
+                customClass: {
+                    popup: 'swal-wide'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Update the initial value and open MPN calculation modal
+                    initialSampleDryweight = parseFloat($('#sample_dryweight_old').val()) || 0;
+                    $('#mpnUpdateBadge').hide(); // Hide badge
+                    $('#calculateMpnBtn').click();
+                } else {
+                    // Update the initial value but don't recalculate
+                    initialSampleDryweight = parseFloat($('#sample_dryweight_old').val()) || 0;
+                    $('#mpnUpdateBadge').hide(); // Hide badge
+                }
+            });
+        }
+
+        // Check for MPN recalculation when page loads
+        setTimeout(checkMpnRecalculation, 1000);
+
+        $('#reviewed_by_label').val(fullName ? fullName : '-');
 
 		// Definisikan state review
 		const states = [
@@ -1248,7 +1616,77 @@
         });
 
 
-        // Event handler untuk mengatur nilai null saat klik pada radio button yang sudah dipilih
+        // Function to calculate MPN per gram dry weight values
+        function calculateMpnDryWeight() {
+            let mpnConcentration = parseFloat($('#mpn_concentration').val()) || 0;
+            let upperCi = parseFloat($('#upper_ci').val()) || 0;
+            let lowerCi = parseFloat($('#lower_ci').val()) || 0;
+            let sampleDryweight = parseFloat($('#sample_dryweight').val()) || 0;
+
+            if (sampleDryweight > 0) {
+                // Calculate Concentration MPN/g dry weight = mpn_concentration / sample_dryweight
+                let mpnConcentrationDw = (mpnConcentration / sampleDryweight).toFixed(4);
+                $('#mpn_concentration_dw').val(mpnConcentrationDw);
+                $('#display_mpn_concentration_dw').text(mpnConcentrationDw);
+
+                // Calculate Upper CI MPN/g dw = upper_ci / sample_dryweight
+                let upperCiDw = (upperCi / sampleDryweight).toFixed(4);
+                $('#upper_ci_dw').val(upperCiDw);
+                $('#display_upper_ci_dw').text(upperCiDw);
+
+                // Calculate Lower CI MPN/g dw = lower_ci / sample_dryweight
+                let lowerCiDw = (lowerCi / sampleDryweight).toFixed(4);
+                $('#lower_ci_dw').val(lowerCiDw);
+                $('#display_lower_ci_dw').text(lowerCiDw);
+            } else {
+                $('#mpn_concentration_dw').val('');
+                $('#upper_ci_dw').val('');
+                $('#lower_ci_dw').val('');
+                $('#display_mpn_concentration_dw').text('-');
+                $('#display_upper_ci_dw').text('-');
+                $('#display_lower_ci_dw').text('-');
+            }
+        }
+
+        // Attach the calculation function to input events
+        $('#mpn_concentration, #upper_ci, #lower_ci').on('input', calculateMpnDryWeight);
+
+        // Also trigger calculation when the modal is shown (in case data is pre-filled)
+        $('#compose-modalCalculateMPN').on('shown.bs.modal', function() {
+            calculateMpnDryWeight();
+            // Set current sample_dryweight value for syncing to database
+            $('#current_sample_dryweight').val($('#sample_dryweight').val());
+        });
+
+        // Monitor sample_dryweight changes and trigger recalculation check
+        function monitorSampleDryweightChanges() {
+            // Use MutationObserver to watch for value changes
+            const sampleDryweightInput = document.getElementById('sample_dryweight');
+            if (sampleDryweightInput) {
+                // Create observer to watch for attribute changes
+                const observer = new MutationObserver(function(mutations) {
+                    mutations.forEach(function(mutation) {
+                        if (mutation.type === 'attributes' && mutation.attributeName === 'value') {
+                            checkMpnRecalculation();
+                        }
+                    });
+                });
+                
+                // Start observing
+                observer.observe(sampleDryweightInput, {
+                    attributes: true,
+                    attributeFilter: ['value']
+                });
+                
+                // Also monitor input events
+                $(sampleDryweightInput).on('input change', function() {
+                    setTimeout(checkMpnRecalculation, 500); // Delay to avoid excessive checks
+                });
+            }
+        }
+
+        // Initialize monitoring
+        monitorSampleDryweightChanges();
         $('input[name="gramlysis"], input[name="oxidase"], input[name="catalase"]').on('click', function() {
             // Mengecek apakah radio button yang diklik sudah dipilih
             if ($(this).prop('checked') && $(this).data('clicked')) {
@@ -1267,18 +1705,22 @@
             
             let confirmationText = '';
 
-            // Jika Gram-Lysis positif
+            // Jika Gram-Lysis positive
             if (gramLysisValue === 'Positive') {
-                confirmationText = 'Not Campylobacter';
+                confirmationText = 'Campylobacter';
             } 
-            // Jika Gram-Lysis negatif, baru cek Oxidase dan Catalase
+            // Jika Gram-Lysis negative, baru cek Oxidase dan Catalase
+            else if (gramLysisValue === 'Negative') {
+                confirmationText = 'Not Campylobacter';
+            }
+            // Jika Gram-Lysis belum dipilih, cek Oxidase dan Catalase
             else {
                 if (oxidaseValue === 'Positive' && catalaseValue === 'Positive') {
                     confirmationText = 'Campylobacter';
                 } else if (oxidaseValue === 'Negative' && catalaseValue === 'Negative') {
                     confirmationText = 'Not Campylobacter';
                 } else if (oxidaseValue === 'Positive' && catalaseValue === 'Negative') {
-                    confirmationText = 'Not Campylobacter';
+                    confirmationText = 'Campylobacter';
                 } else if (oxidaseValue === 'Negative' && catalaseValue === 'Positive') {
                     confirmationText = 'Not Campylobacter';
                 } else {
@@ -1634,21 +2076,39 @@
         // Improved generateResultBiochemical function
         function generateResultBiochemical(container, numberOfPlates, id_campy_biosolids, plateNumberArray, growthPlateArray) {
             container.empty(); // Clear existing content
+            
+            // Get user level from PHP session
+            const userLevel = <?php echo $this->session->userdata('id_user_level'); ?>;
 
             // Iterate through the plateNumberArray
             for (let i = 0; i < numberOfPlates; i++) {
                 const plateNumber = plateNumberArray[i]; // Get the corresponding plate number
                 const tableId = `exampleBiochemical_${i}`; // Unique table ID
                 const buttonId = `addtombol_detResultsBiochemical_${plateNumber}`; // Unique button ID
-                const isDisabled = growthPlateArray[i] === '0' ? 'disabled' : ''; // Determine if button should be disabled
-                console.log('button biochemical tube', isDisabled);
+                
+                // Determine if button should be disabled based on growth plate and user level
+                let isDisabled = '';
+                let buttonHtml = '';
+                
+                if (userLevel != 4) {
+                    // User levels 1, 2, 3 can see button
+                    if (growthPlateArray[i] === '0') {
+                        isDisabled = 'disabled';
+                    }
+                    buttonHtml = `<button class="btn btn-primary" id="${buttonId}" data-index="${plateNumber}" ${isDisabled}>
+                        <i class="fa fa-wpforms" aria-hidden="true"></i> Biochemical Tube ${plateNumber}
+                    </button>`;
+                } else {
+                    // User level 4 (read-only) cannot see button
+                    buttonHtml = '';
+                }
+                
+                console.log('button biochemical tube', isDisabled, 'user level:', userLevel);
 
                 // Append the table and button for each plate
                 container.append(`
                     <div class="box-body pad table-responsive">
-                        <button class="btn btn-primary" id="${buttonId}" data-index="${plateNumber}" ${isDisabled}>
-                            <i class="fa fa-wpforms" aria-hidden="true"></i> Biochemical Tube ${plateNumber}
-                        </button>
+                        ${buttonHtml}
                         <table id="${tableId}" class="table display table-bordered table-striped" width="100%">
                             <thead>
                                 <tr>
@@ -1962,6 +2422,13 @@
                 success: function(response) {
                     if (response.status === 'success') {
                         $('#compose-modalCalculateMPN').modal('hide');
+                        
+                        // Update initialSampleDryweight to current value to prevent further notifications
+                        initialSampleDryweight = parseFloat($('#sample_dryweight').val()) || 0;
+                        
+                        // Hide the badge since we just updated the MPN calculation
+                        $('#mpnUpdateBadge').hide();
+                        
                         Swal.fire({
                             icon: 'success',
                             title: 'Success!',
@@ -1995,6 +2462,10 @@
             $('#formCalculateMPN')[0].reset();
             $('#mode_calculateMPN').val('');
             $('#id_campy_result_mpn').val('');
+            $('#current_sample_dryweight').val('');
+            $('#mpn_concentration_dw').val('');
+            $('#upper_ci_dw').val('');
+            $('#lower_ci_dw').val('');
         });
 
     });

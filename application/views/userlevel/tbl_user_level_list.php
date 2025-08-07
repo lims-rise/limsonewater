@@ -10,7 +10,12 @@
         
         <div class="box-body">
         <div style="padding-bottom: 10px;">
-        <?php echo anchor(site_url('userlevel/create'), '<i class="fa fa-wpforms" aria-hidden="true"></i> Add level', 'class="btn btn-primary"'); ?>
+        <?php 
+        $user_level = $this->session->userdata('id_user_level');
+        if ($user_level != 4 && $user_level != 3)  {
+            echo anchor(site_url('userlevel/create'), '<i class="fa fa-wpforms" aria-hidden="true"></i> Add level', 'class="btn btn-primary"');
+        }
+        ?>
         <table class="table table-bordered table-striped" id="mytable">
             <thead>
                 <tr>

@@ -29,6 +29,8 @@
                                             <th>Date of Sample</th>
                                             <th>Time of Sample</th>
                                             <th>Sample Wet Weight</th>
+                                            <th>Dry Weight (%)</th>
+                                            <th>Sample Dry Weight</th>
                                             <th>Elution Volume</th>
                                             <th>Volume of Sample</th>
                                             <th width="120px">Action</th>
@@ -185,14 +187,28 @@
                         <div class="form-group">
                             <label for="sample_wetweight" class="col-sm-4 control-label">Sample Wet Weight(g)</label>
                             <div class="col-sm-8">
-                                <input id="sample_wetweight" name="sample_wetweight" type="number" step="0.01" class="form-control" placeholder="Sample Wet Weight(g)" required>
+                                <input id="sample_wetweight" name="sample_wetweight" type="number" step="any" class="form-control" placeholder="Sample Wet Weight(g)" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dry_weight_persen" class="col-sm-4 control-label">Dry Weight (%)</label>
+                            <div class="col-sm-8">
+                                <input id="dry_weight_persen" name="dry_weight_persen" type="number" step="any" class="form-control" placeholder="Dry Weight (%)" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sample_dryweight" class="col-sm-4 control-label">Sample Dry Weight(g)</label>
+                            <div class="col-sm-8">
+                                <input id="sample_dryweight" name="sample_dryweight" type="number" step="any" class="form-control" placeholder="Sample Dry Weight(g)" readonly>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="elution_volume" class="col-sm-4 control-label">Elution Volume(mL)</label>
                             <div class="col-sm-8">
-                                <input id="elution_volume" name="elution_volume" type="number" step="0.01" class="form-control" placeholder="Elution Volume(mL)" required>
+                                <input id="elution_volume" name="elution_volume" type="number" step="any" class="form-control" placeholder="Elution Volume(mL)" required>
                             </div>
                         </div>
 
@@ -205,7 +221,7 @@
                         <div class="form-group" id="sampleTubeContainer">
                             <label class="col-sm-4 control-label">Volume of The Sample(mL)</label>
                             <div class="col-sm-8" id="sampleVolumeInputs">
-                                <input id="vol_sampletube1" name="vol_sampletube1" type="number" step="0.01" class="form-control" placeholder="Volume of The Sample(mL) Tube1" required>
+                                <input id="vol_sampletube1" name="vol_sampletube1" type="number" step="any" class="form-control" placeholder="Volume of The Sample(mL) Tube1" required>
                             </div>
                         </div>
 
@@ -228,7 +244,7 @@
 
                     </div>
 
-                    <div class="modal-footer clearfix" style="display: flex; align-items: center; justify-content: space-between;">
+                    <div class="modal-footer clearfix">
                         <!-- Info Card on the left side -->
                         <!-- <div class="modal-footer-content" style="flex: 1; display: flex; align-items: center;">
                             <div id="textInform2" class="textInform card" style="width: auto; padding: 5px 10px; display: none;">
@@ -243,10 +259,15 @@
                         </div> -->
 
                         <!-- Buttons on the right side -->
-                        <div class="modal-buttons">
-                            <button type="submit" class="btn btn-primary" id="saveButtonDetail"><i class="fa fa-save"></i> Save</button>
-                            <button type="button" class="btn btn-warning" id="cancelButton" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-                        </div>
+                     
+                            <!-- <button type="submit" class="btn btn-primary" id="saveButtonDetail"><i class="fa fa-save"></i> Save</button>
+                            <button type="button" class="btn btn-warning" id="cancelButton" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button> -->
+                            <button type="submit" class="btn btn-primary" id="saveButtonDetail" style="min-width: 100px; padding: 8px 16px; font-weight: 500; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,123,255,0.2); transition: all 0.3s ease;">
+                                <i class="fa fa-save" style="margin-right: 6px;"></i> Save
+                            </button>
+                            <button type="button" class="btn btn-warning" id="cancelButton" data-dismiss="modal" style="min-width: 100px; padding: 8px 16px; font-weight: 500; border-radius: 6px; box-shadow: 0 2px 4px rgba(255,193,7,0.2); transition: all 0.3s ease;">
+                                <i class="fa fa-times" style="margin-right: 6px;"></i> Cancel
+                            </button>
                     </div>
                 </form>
             </div><!-- /.modal-content -->
@@ -791,6 +812,35 @@
         font-size: 16px;
         z-index: 1000; /* Pastikan info card di atas elemen lain */
     }
+
+    /* Enhanced Button Styling */
+    .modal-footer .btn {
+        transition: all 0.3s ease !important;
+        border: none !important;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 13px;
+    }
+
+    .modal-footer .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+    }
+
+    .modal-footer .btn:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+    }
+
+    .modal-footer .btn-primary:hover {
+        background-color: #0056b3 !important;
+        box-shadow: 0 4px 8px rgba(0,123,255,0.3) !important;
+    }
+
+    .modal-footer .btn-warning:hover {
+        background-color: #e0a800 !important;
+        box-shadow: 0 4px 8px rgba(255,193,7,0.3) !important;
+    }
 </style>
 
 <!-- SweetAlert2 CSS -->
@@ -833,6 +883,8 @@
             $('#sampletype').attr('readonly', true);
             $('#tray_weight').val('');
             $('#traysample_wetweight').val('');
+            $('#dry_weight_persen').val('');
+            $('#sample_dryweight').val('');
             $('#comments').val('');
             $('#mpn_pcr_conducted').val('');
             // let sampleVolumeInputs = $('#sampleVolumeInputs');
@@ -915,6 +967,25 @@
                 );
             }
         }).trigger('change');
+
+        // Function to calculate sample dry weight
+        function calculateSampleDryWeight() {
+            let sampleWetweight = parseFloat($('#sample_wetweight').val()) || 0;
+            let dryWeightPersen = parseFloat($('#dry_weight_persen').val()) || 0;
+            
+            if (sampleWetweight > 0 && dryWeightPersen > 0) {
+                // Calculate Sample Dry Weight = sample_wetweight * dry_weight_persen / 100
+                let sampleDryweight = (sampleWetweight * dryWeightPersen / 100).toFixed(4);
+                $('#sample_dryweight').val(sampleDryweight);
+            } else {
+                $('#sample_dryweight').val('');
+            }
+        }
+
+        // Add event listeners for auto-calculation
+        $('#sample_wetweight, #dry_weight_persen').on('input', function() {
+            calculateSampleDryWeight();
+        });
 
 
         function showConfirmation(url) {
@@ -1216,6 +1287,8 @@
                 {"data": "date_sample_processed"},
                 {"data": "time_sample_processed"},
                 {"data": "sample_wetweight"},
+                {"data": "dry_weight_persen"},
+                {"data": "sample_dryweight"},
                 {"data": "elution_volume"},
                 {"data": "vol_sampletube"},
                 {
@@ -1280,6 +1353,8 @@
             $('#sampletype').attr('readonly', true);
             $('#tray_weight').val('');
             $('#traysample_wetweight').val('');
+            $('#dry_weight_persen').val('');
+            $('#sample_dryweight').val('');
             $('#comments').val('');
             $('#mpn_pcr_conducted').val('');
             let sampleVolumeInputs = $('#sampleVolumeInputs');
@@ -1396,6 +1471,8 @@
             $('#date_sample_processed').val(data.date_sample_processed);
             $('#time_sample_processed').val(data.time_sample_processed);
             $('#sample_wetweight').val(data.sample_wetweight);
+            $('#dry_weight_persen').val(data.dry_weight_persen);
+            $('#sample_dryweight').val(data.sample_dryweight);
             $('#elution_volume').val(data.elution_volume);
             $('#number_of_tubes').val(data.number_of_tubes);
             $('#number_of_tubes').prop('disabled', true);

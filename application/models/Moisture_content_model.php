@@ -69,7 +69,7 @@ class Moisture_content_model extends CI_Model
     }
 
     function subjson72($id) {
-        $this->datatables->select('m72.id_moisture72, m72.id_moisture, m72.date_moisture72, m72.time_moisture72, m72.barcode_tray, m72.dry_weight72, m72.dry_weight_persen, m72.comments72, m72.flag');
+        $this->datatables->select('m72.id_moisture72, m72.id_moisture, m72.date_moisture72, m72.time_moisture72, m72.barcode_tray, m72.dry_weight72, m72.moisture_content_persen, m72.dry_weight_persen, m72.comments72, m72.flag');
         $this->datatables->from('moisture72 AS m72');
         // $this->datatables->join('ref_testing b', 'FIND_IN_SET(b.id_testing_type, a.id_testing_type)', 'left');
         // $this->datatables->join('ref_barcode c', 'a.sample_id = c.testing_type_id', 'left');
@@ -118,11 +118,16 @@ class Moisture_content_model extends CI_Model
     {
       $response = array();
       $this->db->select('mc.id_moisture, mc.id_one_water_sample, mc.id_person, rp.initial, mc.date_start,
+        mc.user_created, 
+        mc.user_review, 
+        mc.review, 
+        user.full_name,
         mc.id_sampletype, rs.sampletype, mc.barcode_moisture_content, mc.tray_weight, mc.traysample_wetweight,
         mc.time_incubator, mc.comments');
       $this->db->from('moisture_content AS mc');
       $this->db->join('ref_sampletype AS rs', 'mc.id_sampletype = rs.id_sampletype', 'left');
       $this->db->join('ref_person AS rp',  'mc.id_person = rp.id_person', 'left');
+      $this->db->join('tbl_user user', 'mc.user_review = user.id_users', 'left');
       $this->db->where('mc.id_one_water_sample', $id);
       $this->db->where('mc.flag', '0');
       $q = $this->db->get();
@@ -286,6 +291,23 @@ class Moisture_content_model extends CI_Model
         return $response;
     }
     
+    function updateCancel($id, $data)
+    {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->update('moisture_content', $data);
+
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function updateSave($id, $data)
+    {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->update('moisture_content', $data);
+    }
 
       
 }

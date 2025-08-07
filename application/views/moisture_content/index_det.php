@@ -65,6 +65,45 @@
 
 					</div><!-- /.box-body -->
 				</form>
+                                <form id="formSampleReview" method="post">
+					<input type="hidden" name="id_one_water_sample" id="id_one_water_sample" value="<?php echo $id_one_water_sample ?>">
+					<input type="hidden" id="review" name="review" value="<?php echo $review ?>">
+					<input type="hidden" id="user_review" name="user_review" value="<?php echo $user_review ?>">
+					<input type="hidden" id="user_created" name="user_created" value="<?php echo $user_created ?>">
+
+					<div class="modal-footer clearfix" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+
+						<div class="modal-footer-content" style="flex: 1; display: flex; align-items: center;">
+							<div id="textInform2" class="textInform card" style="width: auto; padding: 5px 10px; display: none;">
+								<div class="card-body">
+									<div class="card-header d-flex justify-content-between align-items-center">
+										<h5 class="card-title statusMessage mb-0"></h5>
+										<i class="fa fa-times close-card" style="cursor: pointer;"></i>
+									</div>
+									<p class="statusDescription mb-0"></p>
+								</div>
+							</div>
+						</div>
+
+						<div class="d-flex align-items-center flex-wrap" style="gap: 8px;">
+							<span class="text-muted">Status:</span>
+							<span id="review_label" class="badge bg-warning text-dark" role="button" tabindex="0" style="cursor: pointer;">
+								Unreview
+							</span>
+
+							<span class="text-muted ms-3">by:</span>
+							<span id="reviewed_by_label" style="font-style: italic; font-weight: 800; font-size: 14px;">
+								<?php echo $full_name ? $full_name : '-' ?>
+							</span>
+
+							<?php if (in_array($this->session->userdata('id_user_level'), [1, 2])): ?>
+								<button type="button" id="cancelReviewBtn" class="btn btn-danger ms-3">
+									Cancel Review
+								</button>
+							<?php endif; ?>
+						</div>
+					</div>
+				</form>
 			<div class="box-footer">
                 <!-- <div class="row"> -->
                     <div class="col-xs-12"> 
@@ -114,6 +153,7 @@
 											<th>Time Moisture Tested</th>
                                             <th>Barcode Tray</th>
                                             <th>Dry Weight 48h (g)</th>
+                                            <th>Moisture Content %</th>
                                             <th>Dry Weight %</th>
                                             <th>Comments</th>
                                             <th>Action</th>
@@ -269,6 +309,13 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label for="moisture_content_persen" class="col-sm-4 control-label">Moisture Content %</label>
+                                        <div class="col-sm-8 dryweightcount">
+                                            <input id="moisture_content_persen" name="moisture_content_persen" type="number"  step="any"  placeholder="Moisture Content %" class="form-control" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
                                         <label for="dry_weight_persen" class="col-sm-4 control-label">Dry Weight %</label>
                                         <div class="col-sm-8">
                                             <input id="dry_weight_persen" name="dry_weight_persen" type="number"  step="any"  placeholder="Dry Weight %" class="form-control" required>
@@ -293,8 +340,8 @@
 </div>
 
 
-<!-- MODAL INFORMATION -->
-<div class="modal fade" id="confirm-modal" role="dialog" aria-hidden="true">
+    <!-- MODAL INFORMATION -->
+    <div class="modal fade" id="confirm-modal" role="dialog" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header" style="background-color: #f39c12; color: white;">
@@ -313,29 +360,328 @@
 	</div><!-- /.modal -->
 
 
-<!-- MODAL CONFIRMATION DELETE -->
-<div class="modal fade" id="confirm-modal-delete" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color: #dd4b39; color: white;">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
-                <h4 class="modal-title"></h4>
-            </div>
-            <div class="modal-body">
-                <div id="confirmation-content">
-                    <div class="modal-body">
-                        <p class="text-center" style="font-size: 15px;">Are you sure you want to delete ID <span id="id" style="font-weight: bold;"></span> ?</p>
+    <!-- MODAL CONFIRMATION DELETE -->
+    <div class="modal fade" id="confirm-modal-delete" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #dd4b39; color: white;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <div id="confirmation-content">
+                        <div class="modal-body">
+                            <p class="text-center" style="font-size: 15px;">Are you sure you want to delete ID <span id="id" style="font-weight: bold;"></span> ?</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer clearfix">
-                <button type="button" id="confirm-delete" class="btn btn-danger"><i class="fa fa-trash"></i> Yes</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> No</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+                <div class="modal-footer clearfix">
+                    <button type="button" id="confirm-delete" class="btn btn-danger"><i class="fa fa-trash"></i> Yes</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> No</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+<style>
 
+	#review_label {
+		cursor: pointer;
+		font-size: 14px;  /* Ukuran font untuk label */
+	}
+
+	#reviewed_by_label {
+		margin-left: 10px;
+		font-style: italic;
+		font-weight: bold;
+		font-size: 12px;  /* Ukuran font kecil untuk input reviewer */
+	}
+
+	.d-flex {
+		display: flex;
+		align-items: center;
+	}
+
+	.ms-2 {
+		margin-left: 0.5rem;  /* Spacing antar elemen */
+	}
+
+    .table tbody tr.selected {
+        color: white !important;
+        background-color: #9CDCFE !important;
+    }
+
+    #formKegHidden {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1;
+    }
+
+    .hidden {
+        visibility: hidden;
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+    }
+    .sample-input {
+        margin-bottom: 10px; /* Adjust the spacing as needed */
+    }
+
+    .modal {
+    overflow-y: auto;
+    }
+
+    .modal-body {
+    max-height: 80vh;
+    overflow-y: auto;
+    }
+
+    .badge {
+        font-size: 14px;
+        padding: 8px 12px;
+        border-radius: 20px;
+        margin-top: 0px;
+    }
+
+    .badge-success {
+        background-color: #6A9C89;
+        color: white;
+    }
+
+    .badge-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .alert {
+        padding: 8px 12px;
+        border-radius: 5px;
+        font-size: 14px;
+        margin-top: 0px;
+    }
+
+    .alert-success {
+        background-color: #6A9C89;
+        color: white;
+    }
+
+    .alert-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .card {
+        border-radius: 10px;
+        margin-top: 0px;
+        padding: 8px 12px;
+        width: 100%; /* Ensures card uses available space */
+    }
+
+    .card-success {
+        border: 1px solid #28a745;
+        background-color: #d4edda;
+    }
+
+    .card-danger {
+        border: 1px solid #dc3545;
+        background-color: #f8d7da;
+    }
+
+    .card-title {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: left; /* Align title to the left */
+        margin-bottom: 0px;
+    }
+
+    .card-body {
+        font-size: 14px;
+        text-align: left; /* Align body text to the left */
+    }
+
+    .modal-footer-content {
+        float: left;
+        width: auto;
+        margin-right: 10px;
+    }
+
+    .modal-buttons {
+        float: right;
+    }
+
+    .icon-success {
+        color: #28a745;
+        margin-right: 10px;
+    }
+
+    .icon-fail {
+        color: #dc3545;
+        margin-right: 10px;
+    }
+
+    .modal-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 15px;
+    }
+
+    .modal-footer-content {
+        flex: 1;
+        display: flex;
+        align-items: center;
+    }
+
+    .modal-buttons {
+        display: flex;
+        align-items: center;
+    }
+
+    .card-body {
+        padding: 0px;
+    }
+
+    .card-title {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .card-description {
+        font-size: 14px;
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .close-card {
+        cursor: pointer;
+        font-size: 18px;
+        color: #FDAB9E; 
+    }
+
+    .close-card:hover {
+        color: #bd2130; 
+    }
+
+    .unreview {
+        color: gray !important;
+        border-color: gray !important;
+        box-shadow: none; 
+    }
+
+    /* input.form-check-label. */
+    .review {
+        color: white !important;
+        background-color: #3D8D7A;
+		border: none  !important;
+    }
+
+    .highlight {
+        background-color: rgba(0, 255, 0, 0.1) !important;
+        font-weight: bold !important;
+    }
+    .highlight-edit {
+        background-color: rgba(0, 0, 255, 0.1) !important;
+        font-weight: bold !important;
+    }
+        /* Basic button style for the span */
+        .form-check-label {
+        display: inline-block;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 12px;
+        cursor: pointer;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    /* Hover effect for the button */
+    .form-check-label:hover {
+        opacity: 0.8;
+    }
+
+    /* Focused effect to make it more accessible */
+    .form-check-label:focus {
+        outline: none;
+    }
+
+    .child-table {
+        margin-left: 50px;
+        width: 90%;
+        border-collapse: collapse;
+    }
+
+    .child-table th, .child-table td {
+        border: 1px solid #ddd;
+        padding: 5px;
+    }
+
+    /* Styling untuk container dengan scroll */
+    .child-table-container {
+        max-height: 500px; 
+        overflow-y: auto; 
+    }
+
+    /* Style untuk scrollbar itu sendiri */
+    .child-table-container::-webkit-scrollbar {
+        width: 6px; 
+    }
+
+    /* Style untuk track (background) scrollbar */
+    .child-table-container::-webkit-scrollbar-track {
+        background: #e0f2f1;
+        border-radius: 10px;
+    }
+
+    /* Style untuk thumb (pegangan scrollbar) */
+    .child-table-container::-webkit-scrollbar-thumb {
+        background: #9ACBD0; 
+        border-radius: 10px; 
+    }
+
+    /* Gaya saat thumb scrollbar di-hover */
+    .child-table-container::-webkit-scrollbar-thumb:hover {
+        background: #48A6A7;
+    }
+
+	.review-border {
+		border: 1px solid green  !important;
+		color: green  !important;
+	}
+
+	.disabled-btn {
+		/* background-color: blue !important;  */
+		color: #fff !important; 
+		border: 1px solid #ddd !important; 
+		cursor: not-allowed !important; 
+		opacity: 0.6 !important;
+		/* pointer-events: none; */
+	}
+
+	.disabled-btn:hover {
+		/* background-color: #ccc !important; */
+		color: #fff !important;
+		border: 1px solid #ddd !important;
+		transform: none !important; /* Nonaktifkan hover effects */
+	}
+</style>
+<style>
+	#textInform2 .alert {
+		display: block !important;
+		margin-top: 20px;
+		font-size: 16px;
+		z-index: 1000; /* Pastikan info card di atas elemen lain */
+	}
+</style>
+
+<!-- SweetAlert2 CSS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
@@ -349,6 +695,261 @@
     const BASE_URL = '/limsonewater/index.php';
 
     $(document).ready(function() {
+          let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
+		let userCreated = $('#user_created').val();
+		let userReview = $('#user_review').val();
+		let fullName = $('#reviewed_by_label').val();
+        $('#reviewed_by_label').val(fullName ? fullName : '-');
+
+		// Definisikan state review
+		const states = [
+			{ value: 0, label: "Unreview", class: "unreview" },
+			{ value: 1, label: "Reviewed", class: "review" }
+		];
+
+		// Ambil nilai awal dari input hidden
+		let currentState = parseInt($('#review').val());
+		if (isNaN(currentState) || currentState < 0 || currentState > 1) currentState = 0;
+
+
+		// Set tampilan awal pada label review
+		$('#review_label')
+			.text(states[currentState].label)
+			.removeClass()
+			.addClass('form-check-label ' + states[currentState].class);
+
+		// Cek apakah user login BUKAN creator
+		if (userCreated !== loggedInUser) {
+			$('#user_review').val(loggedInUser);
+
+			$('#review_label').off('click').on('click', function () {
+				if ($('#review').val() === '1') {
+					Swal.fire({
+						icon: 'info',
+						title: 'Review Locked',
+						text: 'You have already reviewed this. Further changes are not allowed.',
+						confirmButtonText: 'OK'
+					});
+					return;
+				}
+
+				Swal.fire({
+					icon: 'question',
+					title: 'Are you sure?',
+					showCancelButton: true,
+					confirmButtonText: 'OK',
+					cancelButtonText: 'Cancel',
+					reverseButtons: true
+				}).then((result) => {
+					if (result.isConfirmed) {
+
+						currentState = (currentState + 1) % states.length;
+
+						$('#review').val(states[currentState].value);
+						$('#review_label')
+							.text(states[currentState].label)
+							.removeClass()
+							.addClass('form-check-label ' + states[currentState].class);
+
+						$.ajax({
+							url: '<?php echo site_url('Moisture_content/saveReview'); ?>',
+							method: 'POST',
+							data: $('#formSampleReview').serialize(),
+							dataType: 'json',
+							success: function(response) {
+								if (response.status) {
+									Swal.fire({
+										icon: 'success',
+										title: 'Review saved successfully!',
+										text: response.message,
+										timer: 1000,
+										showConfirmButton: false
+									}).then(() => {
+										location.reload();
+									});
+								} else {
+									Swal.fire({
+										icon: 'error',
+										title: 'Failed to save review',
+										text: response.message
+									});
+								}
+							},
+							error: function(xhr, status, error) {
+								console.error('AJAX Error: ' + status + error);
+								Swal.fire('Error', 'Something went wrong during submission.', 'error');
+							}
+						});
+					} else {
+						Swal.fire({
+							icon: 'info',
+							title: 'Review Not Changed',
+							text: 'No changes were made.',
+							timer: 2000
+						});
+					}
+				});
+			});
+
+			if ($('#review').val() === '1') {
+				showInfoCard(
+					'#textInform2',
+					'<i class="fa fa-times-circle"></i> You are not the creator',
+					"In this case, you can't review because it has already been reviewed.",
+
+					false
+				);
+			} else {
+				showInfoCard(
+					'#textInform2',
+					'<i class="fa fa-times-circle"></i> You are not the creator',
+					"In this case, you can review this data. Hover over the box on the right side to start the review.",
+					false
+				);
+
+			}
+
+			$('#review_label')
+			.on('mouseenter', function() {
+				if ($('#review').val() !== '1') { 
+					$(this).text('Review')
+						.addClass('review-border');
+				}
+			})
+			.on('mouseleave', function() {
+				if ($('#review').val() !== '1') { 
+					$(this).text('Unreview')
+						.removeClass('review-border');
+				}
+			});
+
+
+			$('#saveButtonDetail').prop('disabled', false);
+		} else {
+			$('#user_review').val(loggedInUser);
+
+			showInfoCard(
+				'#textInform2',
+				'<i class="fa fa-check-circle"></i> You are the creator',
+				"You have full access to edit this data but not review.",
+				true
+			);
+
+			$('#saveButtonDetail').prop('disabled', true);
+		}
+		
+		// Fungsi untuk cancel review (khusus admin user 1 & 2)
+        // Cek status review ketika halaman dimuat
+        if ($('#review').val() === '1') {
+                // Jika status review = 0 (belum di-review), disable tombol cancel
+                $('#cancelReviewBtn').prop('disabled', false).removeClass('disabled-btn');
+            } else {
+                // Jika status review = 1 (sudah di-review),  tombol bisa diklik
+                $('#cancelReviewBtn').prop('disabled', true).addClass('disabled-btn');
+            }
+
+        // Event handler ketika tombol Cancel Review diklik
+        $('#cancelReviewBtn').on('click', function () {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Cancel Review?',
+                text: 'This will reset the review status so another user can review it again.',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, cancel it',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Set review dan user_review untuk cancel
+                    $('#review').val(0);
+                    $('#user_review').val('');  // Kosongkan user review
+
+                    // Update label status menjadi Unreview
+                    $('#review_label')
+                        .text('Unreview')
+                        .removeClass()
+                        .addClass('form-check-label unreview');  // Ubah tampilan label
+
+                    // Disable the Cancel Review button after canceling the review
+                    $('#cancelReviewBtn').prop('disabled', true).addClass('disabled-btn');  // Disable tombol
+
+                    // Pastikan ID yang diperlukan ada di form
+                    let formData = $('#formSampleReview').serialize(); 
+                    console.log('Form data to be sent: ', formData); // Debugging log
+
+                    $.ajax({
+                        url: '<?php echo site_url('Moisture_content/cancelReview'); ?>',
+                        method: 'POST',
+                        data: formData,
+                        dataType: 'json',
+                        success: function (response) {
+                            if (response.status) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Review canceled successfully!',
+                                    timer: 1000,
+                                    showConfirmButton: false
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Failed to cancel review',
+                                    text: response.message
+                                });
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('AJAX Error: ' + status + error);
+                            Swal.fire('Error', 'Something went wrong during cancel.', 'error');
+                        }
+                    });
+                }
+            });
+        });
+
+
+
+	  // Mouse enter/leave effects for review label
+	  $('#review_label')
+        .on('mouseenter', function() {
+            if ($('#review').val() !== '1') { 
+                $(this).text('Review')
+                    .addClass('review-border');
+            }
+        })
+        .on('mouseleave', function() {
+            if ($('#review').val() !== '1') { 
+                $(this).text('Unreview')
+                    .removeClass('review-border');
+            }
+        });
+
+
+
+        // Function to show a dynamic info card
+		function showInfoCard(target, message, description, isSuccess) {
+            // Add dynamic content to the target card
+            $(target).find('.statusMessage').html(message);
+            $(target).find('.statusDescription').text(description);
+
+            // Apply classes based on success or failure
+            if (isSuccess) {
+                $(target).removeClass('card-danger').addClass('card-success');
+            } else {
+                $(target).removeClass('card-success').addClass('card-danger');
+            }
+
+            // Show the info card
+            $(target).fadeIn();
+        }
+
+        // Close the card when the 'x' icon is clicked
+        $('.close-card').on('click', function() {
+            $('#textInform1').fadeOut(); // Fade out the card
+            $('#textInform2').fadeOut();
+        });
+
         function showConfirmationDelete(url) {
             deleteUrl = url; // Set the URL to the variable
             $('#confirm-modal-delete').modal('show');
@@ -445,34 +1046,34 @@
             $('#dry_weight72').focus();
         });
 
-        $('#barcode_tray24').on("change", function() {
-            let barcode24 = $('#barcode_tray24').val();
-            $.ajax({
-                type: "GET",
-                url: `${BASE_URL}/Moisture_content/validate24`,
-                data: { id24: barcode24 },
-                dataType: "json",
-                success: function(data) {
-                    if (data.length == 0) {
-                        let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + barcode24 +'</strong> is not on moisture content or is not already in the system !</span>');
-                        $('.val1tip').tooltipster('content', tip);
-                        $('.val1tip').tooltipster('show');
-                        $('#barcode_tray24').focus();
-                        $('#barcode_tray24').val('');       
-                        $('#barcode_tray24').css({'background-color' : '#FFE6E7'});
-                        setTimeout(function(){
-                            $('#barcode_tray24').css({'background-color' : '#FFFFFF'});
-                            setTimeout(function(){
-                                $('#barcode_tray24').css({'background-color' : '#FFE6E7'});
-                                setTimeout(function(){
-                                    $('#barcode_tray24').css({'background-color' : '#FFFFFF'});
-                                }, 300);                            
-                            }, 300);
-                        }, 300);
-                    }
-                }
-            });
-        });
+        // $('#barcode_tray24').on("change", function() {
+        //     let barcode24 = $('#barcode_tray24').val();
+        //     $.ajax({
+        //         type: "GET",
+        //         url: `${BASE_URL}/Moisture_content/validate24`,
+        //         data: { id24: barcode24 },
+        //         dataType: "json",
+        //         success: function(data) {
+        //             if (data.length == 0) {
+        //                 let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + barcode24 +'</strong> is not on moisture content or is not already in the system !</span>');
+        //                 $('.val1tip').tooltipster('content', tip);
+        //                 $('.val1tip').tooltipster('show');
+        //                 $('#barcode_tray24').focus();
+        //                 $('#barcode_tray24').val('');       
+        //                 $('#barcode_tray24').css({'background-color' : '#FFE6E7'});
+        //                 setTimeout(function(){
+        //                     $('#barcode_tray24').css({'background-color' : '#FFFFFF'});
+        //                     setTimeout(function(){
+        //                         $('#barcode_tray24').css({'background-color' : '#FFE6E7'});
+        //                         setTimeout(function(){
+        //                             $('#barcode_tray24').css({'background-color' : '#FFFFFF'});
+        //                         }, 300);                            
+        //                     }, 300);
+        //                 }, 300);
+        //             }
+        //         }
+        //     });
+        // });
 
         $('#barcode_tray72').on("change", function() {
             let barcode72 = $('#barcode_tray72').val();
@@ -503,21 +1104,50 @@
             });
         });
 
-        // Function to calculate the dry_weight_persen
-        function updateDryWeightPersen() {
-            let traysampleWetweight = parseFloat($('#traysample_wetweight').val()) || 0; // Get the traysample wet weight
-            let dryWeight72 = parseFloat($('#dry_weight72').val()) || 0; // Get the dry weight 72h
+        // Function to calculate moisture_content_persen and dry_weight_persen
+        // function calculateMoistureAndDryWeight() {
+        //     let traysampleWetweight = parseFloat($('#traysample_wetweight').val()) || 0; // Get the traysample wet weight
+        //     let dryWeight72 = parseFloat($('#dry_weight72').val()) || 0; // Get the dry weight 72h
+        //     let trayWeight = parseFloat($('#tray_weight').val()) || 0; // Get the tray weight
 
-            if (traysampleWetweight > 0) { // Ensure traysampleWetweight is not zero to avoid division by zero
-                let dryWeightPersen = (1-(((traysampleWetweight - dryWeight72) / dryWeight72) * 100)).toFixed(2); // Calculate percentage
-                $('#dry_weight_persen').val(dryWeightPersen); // Update the percentage field
+        //     if (traysampleWetweight > 0 && dryWeight72 > 0 && trayWeight >= 0) {
+        //         // Formula for moisture_content_persen: ((traysample_wetweight - dry_weight72) / (traysample_wetweight - tray_weight) * 100)
+        //         let moistureContentPersen = ((traysampleWetweight - dryWeight72) / (traysampleWetweight - trayWeight) * 100).toFixed(2);
+        //         $('#moisture_content_persen').val(moistureContentPersen);
+                
+        //         // Formula for dry_weight_persen: (100 - moisture_content_persen)
+        //         let dryWeightPersen = (100 - parseFloat(moistureContentPersen)).toFixed(2);
+        //         $('#dry_weight_persen').val(dryWeightPersen);
+        //     } else {
+        //         $('#moisture_content_persen').val(''); // Clear the moisture content field
+        //         $('#dry_weight_persen').val(''); // Clear the dry weight percentage field
+        //     }
+        // }
+
+        function calculateMoistureAndDryWeight() {
+            const traysampleWetWeight = parseFloat($('#traysample_wetweight').val()) || 0;
+            const dryWeight72 = parseFloat($('#dry_weight72').val()) || 0;
+            const trayWeight = parseFloat($('#tray_weight').val()) || 0;
+
+            const wetSampleWeight = traysampleWetWeight - trayWeight;
+            const drySampleWeight = dryWeight72 - trayWeight;
+
+            if (traysampleWetWeight > 0 && dryWeight72 > 0 && trayWeight >= 0 && wetSampleWeight > 0) {
+                const moistureFraction = (traysampleWetWeight - dryWeight72) / wetSampleWeight;
+                const moistureContentPercent = (moistureFraction * 100).toFixed(2);
+                const dryWeightPercent = (100 - parseFloat(moistureContentPercent)).toFixed(2);
+
+                $('#moisture_content_persen').val(moistureContentPercent);
+                $('#dry_weight_persen').val(dryWeightPercent);
             } else {
-                $('#dry_weight_persen').val(''); // Clear the percentage field if traysampleWetweight is zero or invalid
+                $('#moisture_content_persen').val('');
+                $('#dry_weight_persen').val('');
             }
         }
 
+
         // Attach the function to the input event of dry_weight72
-        $('#dry_weight72').on('input', updateDryWeightPersen);
+        $('#dry_weight72').on('input', calculateMoistureAndDryWeight);
 
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
             return {
@@ -569,9 +1199,9 @@
             rowCallback: function(row, data, iDisplayIndex) {
                 let info = this.fnPagingInfo();
                 if (info.iTotal > 0) {
-                    $('#addtombol_det24').hide();
+                    $('#addtombol_det24').prop('disabled', true).addClass('disabled-btn');
                 } else {
-                    $('#addtombol_det24').show();
+                    $('#addtombol_det24').prop('disabled', false).removeClass('disabled-btn');
                 }
             }
         });
@@ -599,7 +1229,13 @@
                 {"data": "date_moisture72"},
                 {"data": "time_moisture72"}, 
                 {"data": "barcode_tray"}, 
-                {"data": "dry_weight72"}, 
+                {"data": "dry_weight72"},
+                {
+                    "data": "moisture_content_persen",
+                    "render": function(data, type, row) {
+                        return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
+                    }
+                },
                 {"data": "dry_weight_persen"},
                 {"data": "comments72"},
                 {
@@ -612,7 +1248,9 @@
             rowCallback: function(row, data, iDisplayIndex) {
                 let info = this.fnPagingInfo();
                 if (info.iTotal > 0) {
-                    $('#addtombol_det72').hide();
+                    $('#addtombol_det72').prop('disabled', true).addClass('disabled-btn');
+                } else {
+                    $('#addtombol_det72').prop('disabled', false).removeClass('disabled-btn');
                 }
             }
         });
@@ -627,6 +1265,11 @@
         });
 
         $('#addtombol_det24').click(function() {
+            // Check if button is disabled
+            if ($(this).prop('disabled') || $(this).hasClass('disabled-btn')) {
+                return false;
+            }
+            
             $('#mode_det24').val('insert');
             $('#modal-title-detail').html('<i class="fa fa-wpforms"></i> Moisture Content | 24 Hour <span id="my-another-cool-loader"></span>');
             $('#id24_one_water_sample').val(id_one_water_sample);
@@ -669,6 +1312,11 @@
         // });
 
         $('#addtombol_det72').on('click', function() {
+            // Check if button is disabled
+            if ($(this).prop('disabled') || $(this).hasClass('disabled-btn')) {
+                return false;
+            }
+            
             $('#mode_det72').val('insert');
             $('#modal-title-detail72').html('<i class="fa fa-wpforms"></i> Moisture Content | 48 Hour <span id="my-another-cool-loader"></span>');
             $('#id27_one_water_sample').val(id_one_water_sample);
@@ -677,6 +1325,7 @@
             $('#barcode_tray72').attr('required', true);
             $('#idx_moisture72').val(id_moisture);
             $('#dry_weight72').val('');
+            $('#moisture_content_persen').val('');
             $('#dry_weight_persen').val('');
             $('#comments72').val('');
 
@@ -710,6 +1359,7 @@
             $('#barcode_tray72').attr('readonly', true);
             $('#barcode_tray72').val(data.barcode_tray);
             $('#dry_weight72').val(data.dry_weight72);
+            $('#moisture_content_persen').val(data.moisture_content_persen);
             $('#dry_weight_persen').val(data.dry_weight_persen);
             $('#comments72').val(data.comments72);
             $('#compose-modal72').modal('show');

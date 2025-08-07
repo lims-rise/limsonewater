@@ -80,7 +80,7 @@ class Extraction_metagenome_model extends CI_Model
         'id_one_water_sample');
 
         if ($lvl == 4){
-            $this->datatables->add_column('action', 'id_one_water_sample');
+            $this->datatables->add_column('action', '-');
         }
         else if ($lvl == 3){
             $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
@@ -466,14 +466,24 @@ class Extraction_metagenome_model extends CI_Model
         $this->db->where('extraction_metagenome_detail.flag', '0');
         $query = $this->db->get()->result();
     
+        $lvl = $this->session->userdata('id_user_level');
         foreach ($query as $row) {
-            $row->action = '
-                <button class="btn btn-info btn-sm btn_edit_child" data-id="' . $row->barcode_sample . '">
-                    <i class="fa fa-pencil"></i>
-                </button>
-                <button class="btn btn-danger btn-sm btn_delete_child" data-id="' . $row->barcode_sample . '">
-                    <i class="fa fa-trash"></i>
-                </button>';
+            if ($lvl == 4) {
+                $row->action = '-';
+            } elseif ($lvl == 3) {
+                $row->action = '
+                    <button class="btn btn-info btn-sm btn_edit_child" data-id="' . $row->barcode_sample . '">
+                        <i class="fa fa-pencil"></i>
+                    </button>';
+            } else {
+                $row->action = '
+                    <button class="btn btn-info btn-sm btn_edit_child" data-id="' . $row->barcode_sample . '">
+                        <i class="fa fa-pencil"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm btn_delete_child" data-id="' . $row->barcode_sample . '">
+                        <i class="fa fa-trash"></i>
+                    </button>';
+            }
         }
     
         return $query;
@@ -500,9 +510,6 @@ class Extraction_metagenome_model extends CI_Model
             pos.rows1,  
             emd.comments,
             emd.user_created,
-            emd.user_review,
-            emd.review,
-            user.full_name
             
         ');
         $this->db->from('extraction_metagenome_detail emd');
@@ -510,7 +517,6 @@ class Extraction_metagenome_model extends CI_Model
         $this->db->join('ref_kit kit', 'emd.id_kit = kit.id_kit', 'left');
         $this->db->join('ref_location loc', 'emd.id_location = loc.id_location', 'left');
         $this->db->join('ref_position pos', 'emd.id_pos = pos.id_pos', 'left');
-        $this->db->join('tbl_user user', 'emd.user_review = user.id_users', 'left');
         // $this->db->join('ref_person rp', 'emd.id_person = rp.id_person', 'left');
         $this->db->where('emd.barcode_sample', $barcode_sample);
         $this->db->where('emd.flag', '0');
@@ -589,14 +595,24 @@ class Extraction_metagenome_model extends CI_Model
         $this->db->where('extraction_metagenome_detail.flag', '0');
         $query = $this->db->get()->result();
     
+        $lvl = $this->session->userdata('id_user_level');
         foreach ($query as $row) {
-            $row->action = '
-                <button class="btn btn-info btn-sm btn_edit_child" data-id="' . $row->barcode_sample . '">
-                    <i class="fa fa-pencil"></i>
-                </button>
-                <button class="btn btn-danger btn-sm btn_delete_child" data-id="' . $row->barcode_sample . '">
-                    <i class="fa fa-trash"></i>
-                </button>';
+            if ($lvl == 4) {
+                $row->action = '-';
+            } elseif ($lvl == 3) {
+                $row->action = '
+                    <button class="btn btn-info btn-sm btn_edit_child" data-id="' . $row->barcode_sample . '">
+                        <i class="fa fa-pencil"></i>
+                    </button>';
+            } else {
+                $row->action = '
+                    <button class="btn btn-info btn-sm btn_edit_child" data-id="' . $row->barcode_sample . '">
+                        <i class="fa fa-pencil"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm btn_delete_child" data-id="' . $row->barcode_sample . '">
+                        <i class="fa fa-trash"></i>
+                    </button>';
+            }
         }
     
         return $query;
