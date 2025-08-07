@@ -73,6 +73,10 @@ class Moisture_content extends CI_Controller
                 'traysample_wetweight' => $row->traysample_wetweight,
                 'time_incubator' => $row->time_incubator,
                 'comments' =>$row->comments,
+                'full_name' => $row->full_name,
+                'user_review' => $row->user_review,
+                'review' => $row->review,
+                'user_created'  => $row->user_created,
             );
 
 
@@ -250,6 +254,7 @@ class Moisture_content extends CI_Controller
         $time_moisture72 = $this->input->post('time_moisture72', TRUE);
         $barcode_tray = $this->input->post('barcode_tray72', TRUE);
         $dry_weight72 = $this->input->post('dry_weight72', TRUE);
+        $moisture_content_persen = $this->input->post('moisture_content_persen', TRUE);
         $dry_weight_persen = $this->input->post('dry_weight_persen', TRUE);
         $comments72 = $this->input->post('comments72', TRUE);
 
@@ -260,6 +265,7 @@ class Moisture_content extends CI_Controller
                 'time_moisture72' => $time_moisture72,
                 'barcode_tray' => $barcode_tray,
                 'dry_weight72' => $dry_weight72,
+                'moisture_content_persen' => $moisture_content_persen,
                 'dry_weight_persen' => $dry_weight_persen,
                 'comments72' => $comments72,
                 'flag' => '0',
@@ -283,6 +289,7 @@ class Moisture_content extends CI_Controller
                 'time_moisture72' => $time_moisture72,
                 'barcode_tray' => $barcode_tray,
                 'dry_weight72' => $dry_weight72,
+                'moisture_content_persen' => $moisture_content_persen,
                 'dry_weight_persen' => $dry_weight_persen,
                 'comments72' => $comments72,
                 'flag' => '0',
@@ -541,6 +548,85 @@ class Moisture_content extends CI_Controller
         $data = $this->Moisture_content_model->barcode_restrict($id);
         header('Content-Type: application/json');
         echo json_encode($data);
+    }
+
+    public function saveReview()
+    {
+        header('Content-Type: application/json');
+    
+        $id = $this->input->post('id_one_water_sample', true);
+        $review = $this->input->post('review', true);
+        $user_review = $this->input->post('user_review', true);
+    
+        if (!$id || $review === null || !$user_review) {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Missing required fields.'
+            ]);
+            return;
+        }
+    
+        $data = [
+            'review' => $review,
+            'user_review' => $user_review,
+            'user_updated' => $this->session->userdata('id_users'),
+            'date_updated' => date('Y-m-d H:i:s')
+        ];
+    
+        $this->load->model('Moisture_content_model');
+        $this->Moisture_content_model->updateSave($id, $data);
+        echo json_encode([
+            'status' => true,
+            'message' => 'Review saved successfully.'
+        ]);
+    }
+
+
+    public function cancelReview()
+    {
+        header('Content-Type: application/json');
+    
+        // Ambil data POST
+        $id = $this->input->post('id_one_water_sample', true);
+        $review = $this->input->post('review', true);
+        $user_review = $this->input->post('user_review', true);
+    
+        log_message('debug', "Received data: id=$id, review=$review, user_review=$user_review");
+    
+        // Cek jika data yang dibutuhkan ada
+        if (!$id || $review === null) {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Missing required fields.'
+            ]);
+            return;
+        }
+    
+        // Data yang akan diperbarui jika review dibatalkan
+        $data = [
+            'review' => 0, 
+            'user_review' => '', 
+            'user_updated' => $this->session->userdata('id_users'),
+            'date_updated' => date('Y-m-d H:i:s')
+        ];
+        // Load model dan update data review di database
+        $this->load->model('Moisture_content_model');
+        $updateResult = $this->Moisture_content_model->updateCancel($id, $data);
+
+        log_message('debug', "Update result: " . ($updateResult ? 'Success' : 'Failure'));
+    
+        // Cek apakah update berhasil
+        if ($updateResult) {
+            echo json_encode([
+                'status' => true,
+                'message' => 'Review canceled successfully.'
+            ]);
+        } else {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Failed to cancel review.'
+            ]);
+        }
     }
 
 }

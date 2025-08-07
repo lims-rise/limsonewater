@@ -1199,7 +1199,7 @@
         } else if (oxidaseValue === 'Negative' && catalaseValue === 'Negative') {
             confirmationText = 'Not Campylobacter';
         } else if (oxidaseValue === 'Positive' && catalaseValue === 'Negative') {
-            confirmationText = 'Not Campylobacter';
+            confirmationText = 'Campylobacter';
         } else if (oxidaseValue === 'Negative' && catalaseValue === 'Positive') {
             confirmationText = 'Not Campylobacter';
         } else {
@@ -1551,20 +1551,30 @@
         function generateResultBiochemical(container, numberOfPlates, id_campy_liquids, plateNumberArray, growthPlateArray) {
             container.empty(); // Clear existing content
 
+            // Get user level from PHP session
+            const userLevel = <?php echo $this->session->userdata('id_user_level'); ?>;
+
             // Iterate through the plateNumberArray
             for (let i = 0; i < numberOfPlates; i++) {
                 const plateNumber = plateNumberArray[i]; // Get the corresponding plate number
                 const tableId = `exampleBiochemical_${i}`; // Unique table ID
                 const buttonId = `addtombol_detResultsBiochemical_${plateNumber}`; // Unique button ID
-                const isDisabled = growthPlateArray[i] === '0' ? 'disabled' : ''; // Determine if button should be disabled
-                console.log('button biochemical tube', isDisabled);
+                
+                // Determine button HTML based on user level and growth plate status
+                let buttonHtml = '';
+                if (userLevel != 4) { // Level 1-3 can see buttons
+                    const isDisabled = growthPlateArray[i] === '0' ? 'disabled' : ''; // Determine if button should be disabled
+                    buttonHtml = `<button class="btn btn-primary" id="${buttonId}" data-index="${plateNumber}" ${isDisabled}>
+                                    <i class="fa fa-wpforms" aria-hidden="true"></i> Biochemical Tube ${plateNumber}
+                                  </button>`;
+                } // Level 4 (read-only) gets no button (buttonHtml remains empty)
+                
+                console.log('button biochemical tube - user level:', userLevel, 'disabled:', growthPlateArray[i] === '0');
 
                 // Append the table and button for each plate
                 container.append(`
                     <div class="box-body pad table-responsive">
-                        <button class="btn btn-primary" id="${buttonId}" data-index="${plateNumber}" ${isDisabled}>
-                            <i class="fa fa-wpforms" aria-hidden="true"></i> Biochemical Tube ${plateNumber}
-                        </button>
+                        ${buttonHtml}
                         <table id="${tableId}" class="table display table-bordered table-striped" width="100%">
                             <thead>
                                 <tr>

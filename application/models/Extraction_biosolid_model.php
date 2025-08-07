@@ -38,7 +38,7 @@ class Extraction_biosolid_model extends CI_Model
         $this->datatables->where('extraction_biosolid.flag', '0');
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 4){
-            $this->datatables->add_column('action', 'barcode_sample');
+            $this->datatables->add_column('action', '-', 'barcode_sample');
         }
         else if ($lvl == 3){
             $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'barcode_sample');

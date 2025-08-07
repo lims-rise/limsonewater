@@ -80,6 +80,9 @@ class Campy_biosolids extends CI_Controller
                 'date_sample_processed' => $row->date_sample_processed,
                 'time_sample_processed' => $row->time_sample_processed,
                 'sample_wetweight' => $row->sample_wetweight,
+                'dry_weight_persen' => $row->dry_weight_persen,
+                'sample_dryweight' => $row->sample_dryweight,
+                'sample_dryweight_old' => $row->sample_dryweight_old,
                 'elution_volume' => $row->elution_volume,
                 'vol_sampletube' => $row->vol_sampletube,
                 'tube_number' => $row->tube_number,
@@ -142,7 +145,9 @@ class Campy_biosolids extends CI_Controller
         $time_sample_processed = $this->input->post('time_sample_processed', TRUE);
         $sample_wetweight = $this->input->post('sample_wetweight', TRUE);
         $elution_volume = $this->input->post('elution_volume', TRUE);
-    
+        $dry_weight_persen = $this->input->post('dry_weight_persen', TRUE);
+        $sample_dryweight = $this->input->post('sample_dryweight', TRUE);
+
         if ($mode == "insert") {
             // Insert data into assays table
             $data = array(
@@ -155,6 +160,9 @@ class Campy_biosolids extends CI_Controller
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
                 'sample_wetweight' => $sample_wetweight,
+                'dry_weight_persen' => $dry_weight_persen,
+                'sample_dryweight' => $sample_dryweight,
+                'sample_dryweight_old' => $sample_dryweight,
                 'elution_volume' => $elution_volume,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
@@ -162,9 +170,6 @@ class Campy_biosolids extends CI_Controller
                 'user_created' => $this->session->userdata('id_users'),
                 'date_created' => $dt->format('Y-m-d H:i:s'),
             );
-
-            // var_dump($data);
-            // die();
     
             $assay_id = $this->Campy_biosolids_model->insert($data);
     
@@ -200,6 +205,8 @@ class Campy_biosolids extends CI_Controller
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
                 'sample_wetweight' => $sample_wetweight,
+                'dry_weight_persen' => $dry_weight_persen,
+                'sample_dryweight' => $sample_dryweight,
                 'elution_volume' => $elution_volume,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
@@ -970,6 +977,18 @@ class Campy_biosolids extends CI_Controller
             
             $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
             $sheet->setCellValue($columnLetter . '1', "Lower CI");
+            $tubeIndex++;
+
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $sheet->setCellValue($columnLetter . '1', "Calculation MPN/g Dw");
+            $tubeIndex++; 
+
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $sheet->setCellValue($columnLetter . '1', "Upper CI MPN/g Dw");
+            $tubeIndex++;
+
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $sheet->setCellValue($columnLetter . '1', "Lower CI MPN/g Dw");
         }
     
         // Start filling data from the second row
@@ -1032,6 +1051,18 @@ class Campy_biosolids extends CI_Controller
             
             $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
             $sheet->setCellValue($columnLetter . $numrow, $concentration->lower_ci ?? '');
+            $tubeIndex++;
+
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $sheet->setCellValue($columnLetter . $numrow, $concentration->mpn_concentration_dw ?? '');
+            $tubeIndex++;   
+
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $sheet->setCellValue($columnLetter . $numrow, $concentration->upper_ci_dw ?? '');
+            $tubeIndex++;
+
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $sheet->setCellValue($columnLetter . $numrow, $concentration->lower_ci_dw ?? '');
     
             $numrow++;
         }
@@ -1125,6 +1156,15 @@ class Campy_biosolids extends CI_Controller
         
         $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex + 2);
         $sheet->setCellValue($columnLetter . '1', "Lower CI");
+
+        $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex + 3);
+        $sheet->setCellValue($columnLetter . '1', "Concentration MPN/g Dw");
+
+        $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex + 4);
+        $sheet->setCellValue($columnLetter . '1', "Upper CI MPN/g Dw");
+
+        $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex + 5);
+        $sheet->setCellValue($columnLetter . '1', "Lower CI MPN/g Dw");
     }
     
     private function fillSheetData($sheet, $data, $numberOfTubes) {
@@ -1176,6 +1216,15 @@ class Campy_biosolids extends CI_Controller
         
         $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex + 2);
         $sheet->setCellValue($columnLetter . $numrow, $concentration->lower_ci ?? '');
+
+        $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex + 3);
+        $sheet->setCellValue($columnLetter . $numrow, $concentration->mpn_concentration_dw ?? '');
+
+        $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex + 4);
+        $sheet->setCellValue($columnLetter . $numrow, $concentration->upper_ci_dw ?? '');
+
+        $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex + 5);
+        $sheet->setCellValue($columnLetter . $numrow, $concentration->lower_ci_dw ?? '');
     
             $numrow++;
         }
@@ -1353,6 +1402,10 @@ class Campy_biosolids extends CI_Controller
             $mpn_concentration = $this->input->post('mpn_concentration', TRUE);
             $upper_ci = $this->input->post('upper_ci', TRUE);
             $lower_ci = $this->input->post('lower_ci', TRUE);
+            $mpn_concentration_dw = $this->input->post('mpn_concentration_dw', TRUE);
+            $upper_ci_dw = $this->input->post('upper_ci_dw', TRUE);
+            $lower_ci_dw = $this->input->post('lower_ci_dw', TRUE);
+            $current_sample_dryweight = $this->input->post('current_sample_dryweight', TRUE);
             
             // Validation
             if (!$mode || !in_array($mode, ['insert', 'edit'])) {
@@ -1363,7 +1416,7 @@ class Campy_biosolids extends CI_Controller
                 return;
             }
             
-            if (!$id_campy_biosolids || !$mpn_concentration || !$upper_ci || !$lower_ci) {
+            if (!$id_campy_biosolids || !$mpn_concentration || !$upper_ci || !$lower_ci || !$mpn_concentration_dw || !$upper_ci_dw || !$lower_ci_dw) {
                 echo json_encode([
                     'status' => 'error',
                     'message' => 'All fields are required.'
@@ -1382,6 +1435,9 @@ class Campy_biosolids extends CI_Controller
                     'mpn_concentration' => $mpn_concentration,
                     'upper_ci' => $upper_ci,
                     'lower_ci' => $lower_ci,
+                    'mpn_concentration_dw' => $mpn_concentration_dw,
+                    'upper_ci_dw' => $upper_ci_dw,
+                    'lower_ci_dw' => $lower_ci_dw,
                     'flag' => '0',
                     'lab' => $lab ? $lab : '1',
                     'uuid' => $this->uuid->v4(),
@@ -1392,6 +1448,14 @@ class Campy_biosolids extends CI_Controller
                 $insert_id = $this->Campy_biosolids_model->insertCalculateMPN($data);
                 
                 if ($insert_id) {
+                    // Update sample_dryweight_old in campy_biosolids table to sync with current value
+                    if ($current_sample_dryweight) {
+                        $update_biosolids_data = array(
+                            'sample_dryweight_old' => $current_sample_dryweight
+                        );
+                        $this->Campy_biosolids_model->updateCampyBiosolids($id_campy_biosolids, $update_biosolids_data);
+                    }
+                    
                     echo json_encode([
                         'status' => 'success',
                         'message' => 'MPN calculation saved successfully.',
@@ -1422,6 +1486,9 @@ class Campy_biosolids extends CI_Controller
                     'mpn_concentration' => $mpn_concentration,
                     'upper_ci' => $upper_ci,
                     'lower_ci' => $lower_ci,
+                    'mpn_concentration_dw' => $mpn_concentration_dw,
+                    'upper_ci_dw' => $upper_ci_dw,
+                    'lower_ci_dw' => $lower_ci_dw,
                     'flag' => '0',
                     'lab' => $lab ? $lab : '1',
                     'uuid' => $this->uuid->v4(),
@@ -1435,6 +1502,14 @@ class Campy_biosolids extends CI_Controller
                 $update_result = $this->Campy_biosolids_model->updateCalculateMPN($id_campy_result_mpn, $data);
                 
                 if ($update_result) {
+                    // Update sample_dryweight_old in campy_biosolids table to sync with current value
+                    if ($current_sample_dryweight) {
+                        $update_biosolids_data = array(
+                            'sample_dryweight_old' => $current_sample_dryweight
+                        );
+                        $this->Campy_biosolids_model->updateCampyBiosolids($id_campy_biosolids, $update_biosolids_data);
+                    }
+                    
                     echo json_encode([
                         'status' => 'success',
                         'message' => 'MPN calculation updated successfully.'

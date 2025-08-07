@@ -37,7 +37,7 @@ class Extraction_culture_model extends CI_Model
         'id_one_water_sample');
 
         if ($lvl == 4){
-            $this->datatables->add_column('action', 'id_one_water_sample');
+            $this->datatables->add_column('action', '-');
         }
         else if ($lvl == 3){
             $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
@@ -108,14 +108,27 @@ class Extraction_culture_model extends CI_Model
         $this->db->where('extraction_culture_plate.flag', '0');
         $query = $this->db->get()->result();
     
+        $lvl = $this->session->userdata('id_user_level');
         foreach ($query as $row) {
-            $row->action = '
-                <button class="btn btn-info btn-sm btn_edit_child" data-id="' . $row->barcode_sample . '">
-                    <i class="fa fa-pencil"></i>
-                </button>
-                <button class="btn btn-danger btn-sm btn_delete_child" data-id="' . $row->barcode_sample . '">
-                    <i class="fa fa-trash"></i>
-                </button>';
+            if ($lvl == 4) {
+                // Level 4 (read-only) gets no action buttons
+                $row->action = '-';
+            } else if ($lvl == 3) {
+                // Level 3 (user) gets only edit button
+                $row->action = '
+                    <button class="btn btn-info btn-sm btn_edit_child" data-id="' . $row->barcode_sample . '">
+                        <i class="fa fa-pencil"></i>
+                    </button>';
+            } else {
+                // Level 1-2 (admin/manager) get both edit and delete buttons
+                $row->action = '
+                    <button class="btn btn-info btn-sm btn_edit_child" data-id="' . $row->barcode_sample . '">
+                        <i class="fa fa-pencil"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm btn_delete_child" data-id="' . $row->barcode_sample . '">
+                        <i class="fa fa-trash"></i>
+                    </button>';
+            }
         }
     
         return $query;
@@ -532,14 +545,27 @@ class Extraction_culture_model extends CI_Model
         $this->db->where('extraction_culture_plate.flag', '0');
         $query = $this->db->get()->result();
     
+        $lvl = $this->session->userdata('id_user_level');
         foreach ($query as $row) {
-            $row->action = '
-                <button class="btn btn-info btn-sm btn_edit_child" data-id="' . $row->barcode_sample . '">
-                    <i class="fa fa-pencil"></i>
-                </button>
-                <button class="btn btn-danger btn-sm btn_delete_child" data-id="' . $row->barcode_sample . '">
-                    <i class="fa fa-trash"></i>
-                </button>';
+            if ($lvl == 4) {
+                // Level 4 (read-only) gets no action buttons
+                $row->action = '-';
+            } else if ($lvl == 3) {
+                // Level 3 (user) gets only edit button
+                $row->action = '
+                    <button class="btn btn-info btn-sm btn_edit_child" data-id="' . $row->barcode_sample . '">
+                        <i class="fa fa-pencil"></i>
+                    </button>';
+            } else {
+                // Level 1-2 (admin/manager) get both edit and delete buttons
+                $row->action = '
+                    <button class="btn btn-info btn-sm btn_edit_child" data-id="' . $row->barcode_sample . '">
+                        <i class="fa fa-pencil"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm btn_delete_child" data-id="' . $row->barcode_sample . '">
+                        <i class="fa fa-trash"></i>
+                    </button>';
+            }
         }
     
         return $query;

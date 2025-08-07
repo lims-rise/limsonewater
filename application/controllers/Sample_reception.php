@@ -795,8 +795,61 @@ class Sample_reception extends CI_Controller
         $writer->save('php://output');
     }
     
-
-
+    // Export CSV function for OWL Report
+    public function export_csv($id_project = null) {
+        if (!$id_project) {
+            show_404();
+            return;
+        }
+        
+        // Get export data from model
+        $data = $this->Sample_reception_model->get_export_data($id_project);
+        
+        if (empty($data)) {
+            show_error('No data found for this project', 404);
+            return;
+        }
+        
+        // Set filename
+        $filename = 'OWL_Report_' . $id_project . '_' . date('Y-m-d') . '.csv';
+        
+        // Set headers for CSV download
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+        
+        // Create file pointer
+        $output = fopen('php://output', 'w');
+        
+        // Define field order as requested
+        $fieldOrder = [
+            'EDDVERSION', 'CLIENTNAME', 'SITEAREA', 'PROGRAM', 'WorkOrderNo', 'SUBMISSION', 
+            'SAMPLINGPROVIDER', 'SamplerName', 'SamplingRunRef', 'LOCATIONCODE', 'LocationDescription', 
+            'AnalysisPO', 'LABCODE', 'LABSAMPLEID', 'SAMPLETYPE', 'SUBMITTEDMATRIX', 'ANALYSISMATRIX', 
+            'ANALYSISSUBMATRIX', 'ANALYSISMETHODCATEGORY', 'ANALYSISMETHOD', 'SAMPLEDATE', 
+            'LABREGISTRATIONDATE', 'AnalysisDate', 'ANALYSISCOMPLETIONDATE', 'ParameterCode', 
+            'PARAMETERNAME', 'TEST_KEY_CODE', 'RESULT', 'Units', 'POSITIVECONTROL%', 'SAMPLEVOLUME', 
+            'SAMPLEVOLUMEUNITS', 'SAMPLEPROCESSED%', 'ConfirmedRaw', 'PresumptiveRaw', 'PathogenID', 
+            'LOR', 'MeasurementOfUncertainty', 'SURROGATE', 'RPD', 'RESULTCOMMENT', 'RESULTSTATUS', 
+            'LabCOANo', 'LabCOADate', 'LabQAQCNo', 'LabQAQCDate', 'ReportComment', 'SiteComment', 'License'
+        ];
+        
+        // Write header row
+        fputcsv($output, $fieldOrder);
+        
+        // Write data rows
+        foreach ($data as $row) {
+            $csvRow = [];
+            foreach ($fieldOrder as $field) {
+                $csvRow[] = isset($row[$field]) ? $row[$field] : '';
+            }
+            fputcsv($output, $csvRow);
+        }
+        
+        // Close file pointer
+        fclose($output);
+        exit();
+    }
 }
 
 /* End of file Water_sample_reception.php */

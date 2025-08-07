@@ -118,6 +118,7 @@
 
     <div class="noprint">
         <div class="modal-footer clearfix">
+            <button id='export-csv' class="btn btn-success no-print"><i class="fa fa-file-excel-o"></i> Export to CSV</button>
             <button id='print' class="btn btn-primary no-print"><i class="fa fa-print"></i> Print</button>
             <button id='close' class="btn btn-warning" onclick="javascript:history.go(-1);"><i class="fa fa-times"></i> Close</button> 
         </div>
@@ -607,6 +608,18 @@
 
             $('#close').click(function () {
                 window.close();
+                return false;
+            });
+
+            // Export to CSV functionality
+            $('#export-csv').click(function() {
+                var id_project = $('#id_project').val();
+                if (id_project) {
+                    // Redirect to backend CSV export
+                    window.location.href = '<?php echo site_url('sample_reception/export_csv/'); ?>' + id_project;
+                } else {
+                    alert('Project ID not found. Cannot export CSV.');
+                }
                 return false;
             });
 

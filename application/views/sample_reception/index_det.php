@@ -75,11 +75,16 @@
                             </div>
 							<div class="box-body pad table-responsive">
 								<?php
-									$lvl = $this->session->userdata('id_user_level');
-									if ($lvl != 4){
-										echo "<button class='btn btn-primary' id='addtombol_det'><i class='fa fa-wpforms' aria-hidden='true'></i> Add Test </button>";
-									}
-								?>
+									// User Level Access Control untuk Add Test Button
+									$user_level = (int)$this->session->userdata('id_user_level');
+									$allowed_levels = [1, 2, 3]; // Super Admin, Admin, User
+									
+									if (in_array($user_level, $allowed_levels)): ?>
+										<button class='btn btn-primary' id='addtombol_det'>
+											<i class='fa fa-wpforms' aria-hidden='true'></i> Add Test
+										</button>
+								<?php endif; ?>
+								
 								<table id="example2" class="table display table-bordered table-striped" width="100%">
 									<thead>
 										<tr>
