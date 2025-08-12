@@ -1210,6 +1210,31 @@
     document.getElementById('calculateMpnBtn').addEventListener('click', function() {
         let id_campy_biosolids = document.getElementById('id_campy_biosolids').value;
         
+        // Validate sample_dryweight before proceeding
+        let sampleDryweight = document.getElementById('sample_dryweight').value;
+        
+        // Check if sample_dryweight is empty or equals 0
+        if (!sampleDryweight || sampleDryweight.trim() === '' || parseFloat(sampleDryweight) === 0) {
+            Swal.fire({
+                title: 'Sample Dry Weight Data is Empty!',
+                html: `
+                    <div style="text-align: left; margin-top: 15px;">
+                        <p><i class="fa fa-exclamation-triangle" style="color: #f39c12; margin-right: 8px;"></i><strong>Sample Dry Weight is still empty or equals 0.</strong></p>
+                        <p style="margin-top: 10px;">Please fill in the <strong>Sample Dry Weight</strong> data first to perform MPN calculation.</p>
+                        <hr style="margin: 15px 0;">
+                        <p style="font-size: 13px; color: #666;"><i class="fa fa-info-circle" style="color: #3498db; margin-right: 5px;"></i>Sample Dry Weight data is required to calculate <strong>MPN/g Dry Weight</strong>.</p>
+                    </div>
+                `,
+                icon: 'warning',
+                confirmButtonText: '<i class="fa fa-check"></i> Understood',
+                confirmButtonColor: '#f39c12',
+                customClass: {
+                    popup: 'swal-wide'
+                }
+            });
+            return; // Stop execution if sample_dryweight is empty
+        }
+        
         // Set the id_campy_biosolids value in the modal
         document.getElementById('id_campy_biosolids_mpn').value = id_campy_biosolids;
         
