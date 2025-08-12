@@ -1326,7 +1326,9 @@
             $('#idx_moisture72').val(id_moisture);
             $('#dry_weight72').val('');
             $('#moisture_content_persen').val('');
+            $('#moisture_content_persen').attr('readonly', true);
             $('#dry_weight_persen').val('');
+            $('#dry_weight_persen').attr('readonly', true);
             $('#comments72').val('');
 
             let td = $('#example2 td:first');
@@ -1360,7 +1362,9 @@
             $('#barcode_tray72').val(data.barcode_tray);
             $('#dry_weight72').val(data.dry_weight72);
             $('#moisture_content_persen').val(data.moisture_content_persen);
+            $('#moisture_content_persen').attr('readonly', true);
             $('#dry_weight_persen').val(data.dry_weight_persen);
+            $('#dry_weight_persen').attr('readonly', true);
             $('#comments72').val(data.comments72);
             $('#compose-modal72').modal('show');
         });
