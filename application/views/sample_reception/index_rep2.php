@@ -211,31 +211,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Data dummy untuk sample information -->
-                            <tr>
-                                <td>LAB<?php echo str_pad(mt_rand(1000, 9999), 4, '0', STR_PAD_LEFT); ?></td>
-                                <td>WATER</td>
-                                <td>LOC001</td>
-                                <td>Upstream Collection Point A</td>
-                                <td><?php echo date('d-M-Y', strtotime('-2 days')); ?></td>
-                                <td><?php echo date('d-M-Y H:i', strtotime('-1 day')); ?></td>
-                            </tr>
-                            <tr>
-                                <td>LAB<?php echo str_pad(mt_rand(1000, 9999), 4, '0', STR_PAD_LEFT); ?></td>
-                                <td>BIOSOLID</td>
-                                <td>LOC002</td>
-                                <td>Treatment Plant Effluent B</td>
-                                <td><?php echo date('d-M-Y', strtotime('-3 days')); ?></td>
-                                <td><?php echo date('d-M-Y H:i', strtotime('-2 days')); ?></td>
-                            </tr>
-                            <tr>
-                                <td>LAB<?php echo str_pad(mt_rand(1000, 9999), 4, '0', STR_PAD_LEFT); ?></td>
-                                <td>LIQUID</td>
-                                <td>LOC003</td>
-                                <td>Downstream Monitoring Point C</td>
-                                <td><?php echo date('d-M-Y', strtotime('-1 day')); ?></td>
-                                <td><?php echo date('d-M-Y H:i'); ?></td>
-                            </tr>
+                            <?php if (!empty($export_data)) : ?>
+                                <?php foreach ($export_data as $row) : ?>
+                                <tr>
+                                    <td><?php echo $row['LABSAMPLEID']; ?></td>
+                                    <td><?php echo $row['SAMPLETYPE']; ?></td>
+                                    <td><?php echo $row['LOCATIONCODE']; ?></td>
+                                    <td><?php echo $row['LocationDescription']; ?></td>
+                                    <td><?php echo $row['SAMPLEDATE']; ?></td>
+                                    <td><?php echo $row['LABREGISTRATIONDATE']; ?></td>
+                                </tr>
+                                <?php endforeach; ?>
+                            <?php else : ?>
+                                <tr>
+                                    <td colspan="6">No sample data available</td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
 
@@ -253,14 +244,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><?php echo isset($client_name) ? $client_name : 'ACME Water Treatment Corp'; ?></td>
-                                <td>WO<?php echo date('y') . str_pad(mt_rand(1, 999), 3, '0', STR_PAD_LEFT); ?></td>
-                                <td>SUB<?php echo date('ymd') . mt_rand(10, 99); ?></td>
-                                <td>Environmental Sampling Ltd</td>
-                                <td>John Smith</td>
-                                <td>WATER_QUALITY_MONITORING</td>
-                            </tr>
+                            <?php if (!empty($export_data)) : ?>
+                                <?php $first_row = $export_data[0]; ?>
+                                <tr>
+                                    <td><?php echo $first_row['CLIENTNAME']; ?></td>
+                                    <td><?php echo $first_row['WorkOrderNo']; ?></td>
+                                    <td><?php echo $first_row['SUBMISSION']; ?></td>
+                                    <td><?php echo $first_row['SAMPLINGPROVIDER']; ?></td>
+                                    <td><?php echo $first_row['SamplerName']; ?></td>
+                                    <td><?php echo $first_row['PROGRAM']; ?></td>
+                                </tr>
+                            <?php else : ?>
+                                <tr>
+                                    <td colspan="6">No client data available</td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
 
@@ -281,62 +279,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Data dummy untuk analysis results -->
-                            <tr>
-                                <td>LAB2501</td>
-                                <td>ECOLI</td>
-                                <td>E. coli</td>
-                                <td>COLILERT_MPN</td>
-                                <td><?php echo mt_rand(1, 100); ?></td>
-                                <td>MPN/100mL</td>
-                                <td>1</td>
-                                <td>±15%</td>
-                                <td>VALIDATED</td>
-                            </tr>
-                            <tr>
-                                <td>LAB2501</td>
-                                <td>ENTERO</td>
-                                <td>Enterococci</td>
-                                <td>ENTEROLERT_MPN</td>
-                                <td><?php echo mt_rand(1, 50); ?></td>
-                                <td>MPN/100mL</td>
-                                <td>1</td>
-                                <td>±20%</td>
-                                <td>VALIDATED</td>
-                            </tr>
-                            <tr class="highlight-row">
-                                <td>LAB2502</td>
-                                <td>CAMPY</td>
-                                <td>Campylobacter spp.</td>
-                                <td>qPCR_DETECTION</td>
-                                <td><?php echo mt_rand(100, 1000); ?></td>
-                                <td>copies/g</td>
-                                <td>10</td>
-                                <td>±25%</td>
-                                <td>EXCEEDANCE</td>
-                            </tr>
-                            <tr>
-                                <td>LAB2502</td>
-                                <td>SALM</td>
-                                <td>Salmonella spp.</td>
-                                <td>CULTURE_METHOD</td>
-                                <td>NEGATIVE</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>VALIDATED</td>
-                            </tr>
-                            <tr>
-                                <td>LAB2503</td>
-                                <td>MOIST</td>
-                                <td>Moisture Content</td>
-                                <td>GRAVIMETRIC_105C</td>
-                                <td><?php echo mt_rand(15, 35); ?></td>
-                                <td>%</td>
-                                <td>0.1</td>
-                                <td>±2%</td>
-                                <td>VALIDATED</td>
-                            </tr>
+                            <?php if (!empty($export_data)) : ?>
+                                <?php foreach ($export_data as $row) : ?>
+                                <tr <?php echo ($row['RESULTSTATUS'] == 'EXCEEDANCE') ? 'class="highlight-row"' : ''; ?>>
+                                    <td><?php echo $row['LABSAMPLEID']; ?></td>
+                                    <td><?php echo $row['ParameterCode']; ?></td>
+                                    <td><?php echo $row['PARAMETERNAME']; ?></td>
+                                    <td><?php echo $row['ANALYSISMETHOD']; ?></td>
+                                    <td><?php echo $row['RESULT']; ?></td>
+                                    <td><?php echo $row['Units']; ?></td>
+                                    <td><?php echo $row['LOR']; ?></td>
+                                    <td><?php echo $row['MeasurementOfUncertainty']; ?></td>
+                                    <td><?php echo $row['RESULTSTATUS']; ?></td>
+                                </tr>
+                                <?php endforeach; ?>
+                            <?php else : ?>
+                                <tr>
+                                    <td colspan="9">No analysis results available</td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
 
@@ -354,30 +315,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>TK001</td>
-                                <td>MICROBIOLOGICAL_INDICATORS</td>
-                                <td><?php echo date('d-M-Y', strtotime('-1 day')); ?></td>
-                                <td><?php echo date('d-M-Y'); ?></td>
-                                <td>100</td>
-                                <td>mL</td>
-                            </tr>
-                            <tr>
-                                <td>TK002</td>
-                                <td>PATHOGEN_DETECTION</td>
-                                <td><?php echo date('d-M-Y', strtotime('-2 days')); ?></td>
-                                <td><?php echo date('d-M-Y', strtotime('-1 day')); ?></td>
-                                <td>25</td>
-                                <td>g</td>
-                            </tr>
-                            <tr>
-                                <td>TK003</td>
-                                <td>PHYSICAL_CHEMICAL</td>
-                                <td><?php echo date('d-M-Y', strtotime('-1 day')); ?></td>
-                                <td><?php echo date('d-M-Y'); ?></td>
-                                <td>10</td>
-                                <td>g</td>
-                            </tr>
+                            <?php if (!empty($export_data)) : ?>
+                                <?php foreach ($export_data as $row) : ?>
+                                <tr>
+                                    <td><?php echo $row['TEST_KEY_CODE']; ?></td>
+                                    <td><?php echo $row['ANALYSISMETHODCATEGORY']; ?></td>
+                                    <td><?php echo $row['AnalysisDate']; ?></td>
+                                    <td><?php echo $row['ANALYSISCOMPLETIONDATE']; ?></td>
+                                    <td><?php echo $row['SAMPLEVOLUME']; ?></td>
+                                    <td><?php echo $row['SAMPLEVOLUMEUNITS']; ?></td>
+                                </tr>
+                                <?php endforeach; ?>
+                            <?php else : ?>
+                                <tr>
+                                    <td colspan="6">No method details available</td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
 
@@ -396,42 +349,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>ECOLI</td>
-                                <td><?php echo mt_rand(15, 45); ?></td>
-                                <td><?php echo mt_rand(18, 52); ?></td>
-                                <td><?php echo mt_rand(95, 105); ?>%</td>
-                                <td><?php echo mt_rand(5, 15); ?>%</td>
-                                <td><?php echo mt_rand(85, 115); ?>%</td>
-                                <td>EC001</td>
-                            </tr>
-                            <tr>
-                                <td>ENTERO</td>
-                                <td><?php echo mt_rand(8, 25); ?></td>
-                                <td><?php echo mt_rand(10, 30); ?></td>
-                                <td><?php echo mt_rand(92, 108); ?>%</td>
-                                <td><?php echo mt_rand(3, 12); ?>%</td>
-                                <td><?php echo mt_rand(88, 112); ?>%</td>
-                                <td>EN001</td>
-                            </tr>
-                            <tr>
-                                <td>CAMPY</td>
-                                <td><?php echo mt_rand(150, 450); ?></td>
-                                <td><?php echo mt_rand(180, 520); ?></td>
-                                <td><?php echo mt_rand(98, 102); ?>%</td>
-                                <td><?php echo mt_rand(8, 18); ?>%</td>
-                                <td><?php echo mt_rand(90, 110); ?>%</td>
-                                <td>CA001</td>
-                            </tr>
-                            <tr>
-                                <td>SALM</td>
-                                <td>NEGATIVE</td>
-                                <td>NEGATIVE</td>
-                                <td><?php echo mt_rand(96, 104); ?>%</td>
-                                <td>N/A</td>
-                                <td><?php echo mt_rand(92, 108); ?>%</td>
-                                <td>SA001</td>
-                            </tr>
+                            <?php if (!empty($export_data)) : ?>
+                                <?php foreach ($export_data as $row) : ?>
+                                <tr>
+                                    <td><?php echo $row['ParameterCode']; ?></td>
+                                    <td><?php echo $row['ConfirmedRaw']; ?></td>
+                                    <td><?php echo $row['PresumptiveRaw']; ?></td>
+                                    <td><?php echo $row['POSITIVECONTROL%']; ?></td>
+                                    <td><?php echo $row['RPD']; ?></td>
+                                    <td><?php echo $row['SURROGATE']; ?></td>
+                                    <td><?php echo $row['PathogenID']; ?></td>
+                                </tr>
+                                <?php endforeach; ?>
+                            <?php else : ?>
+                                <tr>
+                                    <td colspan="7">No quality control data available</td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
 
@@ -449,14 +383,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>COA-<?php echo date('Y') . '-' . str_pad(mt_rand(1, 999), 3, '0', STR_PAD_LEFT); ?></td>
-                                <td><?php echo date('d-M-Y'); ?></td>
-                                <td>QAQC-<?php echo date('Y') . '-' . str_pad(mt_rand(1, 99), 2, '0', STR_PAD_LEFT); ?></td>
-                                <td><?php echo date('d-M-Y'); ?></td>
-                                <td>NATA-<?php echo mt_rand(10000, 99999); ?></td>
-                                <td>EDD_v2.1</td>
-                            </tr>
+                            <?php if (!empty($export_data)) : ?>
+                                <?php $first_row = $export_data[0]; ?>
+                                <tr>
+                                    <td><?php echo $first_row['LabCOANo']; ?></td>
+                                    <td><?php echo $first_row['LabCOADate']; ?></td>
+                                    <td><?php echo $first_row['LabQAQCNo']; ?></td>
+                                    <td><?php echo $first_row['LabQAQCDate']; ?></td>
+                                    <td><?php echo $first_row['License']; ?></td>
+                                    <td><?php echo $first_row['EDDVERSION']; ?></td>
+                                </tr>
+                            <?php else : ?>
+                                <tr>
+                                    <td colspan="6">No certification data available</td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
 
@@ -475,33 +416,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>LAB001</td>
-                                <td>WATER</td>
-                                <td>AQUEOUS</td>
-                                <td>FRESHWATER</td>
-                                <td><?php echo mt_rand(95, 100); ?>%</td>
-                                <td>SR<?php echo date('ymd') . '-' . mt_rand(10, 99); ?></td>
-                                <td>PO<?php echo mt_rand(1000, 9999); ?></td>
-                            </tr>
-                            <tr>
-                                <td>LAB002</td>
-                                <td>BIOSOLID</td>
-                                <td>SOLID</td>
-                                <td>TREATED_SLUDGE</td>
-                                <td><?php echo mt_rand(90, 98); ?>%</td>
-                                <td>SR<?php echo date('ymd') . '-' . mt_rand(10, 99); ?></td>
-                                <td>PO<?php echo mt_rand(1000, 9999); ?></td>
-                            </tr>
-                            <tr>
-                                <td>LAB003</td>
-                                <td>LIQUID</td>
-                                <td>AQUEOUS</td>
-                                <td>WASTEWATER</td>
-                                <td><?php echo mt_rand(88, 96); ?>%</td>
-                                <td>SR<?php echo date('ymd') . '-' . mt_rand(10, 99); ?></td>
-                                <td>PO<?php echo mt_rand(1000, 9999); ?></td>
-                            </tr>
+                            <?php if (!empty($export_data)) : ?>
+                                <?php foreach ($export_data as $row) : ?>
+                                <tr>
+                                    <td><?php echo $row['LABCODE']; ?></td>
+                                    <td><?php echo $row['SUBMITTEDMATRIX']; ?></td>
+                                    <td><?php echo $row['ANALYSISMATRIX']; ?></td>
+                                    <td><?php echo $row['ANALYSISSUBMATRIX']; ?></td>
+                                    <td><?php echo $row['SAMPLEPROCESSED%']; ?></td>
+                                    <td><?php echo $row['SamplingRunRef']; ?></td>
+                                    <td><?php echo $row['AnalysisPO']; ?></td>
+                                </tr>
+                                <?php endforeach; ?>
+                            <?php else : ?>
+                                <tr>
+                                    <td colspan="7">No processing data available</td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
 
@@ -517,24 +448,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>UPSTREAM_ZONE_A</td>
-                                <td>All analysis completed within specified timeframes. Results validated according to laboratory QA/QC procedures.</td>
-                                <td>Sampling conducted during normal flow conditions. Weather: Clear, Temperature: 18°C.</td>
-                                <td>Results within acceptable limits for indicator organisms.</td>
-                            </tr>
-                            <tr>
-                                <td>TREATMENT_PLANT_B</td>
-                                <td>Pathogen detection analysis requires confirmation. Additional testing recommended for Campylobacter levels.</td>
-                                <td>Sample collected from final effluent discharge point. Flow rate: 2.5 ML/day.</td>
-                                <td>Elevated Campylobacter levels detected - investigate treatment efficacy.</td>
-                            </tr>
-                            <tr>
-                                <td>DOWNSTREAM_ZONE_C</td>
-                                <td>Physical-chemical parameters within normal operational ranges. Moisture content analysis completed.</td>
-                                <td>Biosolid sample from dewatering process. Solid content approximately 25%.</td>
-                                <td>Moisture content suitable for disposal/reuse applications.</td>
-                            </tr>
+                            <?php if (!empty($export_data)) : ?>
+                                <?php foreach ($export_data as $row) : ?>
+                                <tr>
+                                    <td><?php echo $row['SITEAREA']; ?></td>
+                                    <td><?php echo $row['ReportComment']; ?></td>
+                                    <td><?php echo $row['SiteComment']; ?></td>
+                                    <td><?php echo $row['RESULTCOMMENT']; ?></td>
+                                </tr>
+                                <?php endforeach; ?>
+                            <?php else : ?>
+                                <tr>
+                                    <td colspan="4">No comments data available</td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
 
@@ -543,13 +470,36 @@
                     <div style="border: 1px solid #ddd; padding: 15px; background-color: #f9f9f9;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
                             <div style="width: 48%;">
-                                <p><strong>Analysis Performed:</strong> <?php echo date('d-M-Y', strtotime('-2 days')); ?> to <?php echo date('d-M-Y'); ?></p>
-                                <p><strong>Laboratory Technician:</strong> <?php echo isset($realname) ? $realname : 'Dr. Sarah Johnson'; ?></p>
-                                <p><strong>EDDVERSION:</strong> EDD_v2.1</p>
-                                <p><strong>License Number:</strong> NATA-<?php echo mt_rand(10000, 99999); ?></p>
+                                <p><strong>Analysis Performed:</strong> 
+                                    <?php 
+                                    if (!empty($export_data)) {
+                                        $dates = array_unique(array_column($export_data, 'AnalysisDate'));
+                                        $dates = array_filter($dates, function($date) { return $date !== '-'; });
+                                        if (!empty($dates)) {
+                                            echo min($dates) . ' to ' . max($dates);
+                                        } else {
+                                            echo date('d-M-Y', strtotime('-2 days')) . ' to ' . date('d-M-Y');
+                                        }
+                                    } else {
+                                        echo date('d-M-Y', strtotime('-2 days')) . ' to ' . date('d-M-Y');
+                                    }
+                                    ?>
+                                </p>
+                                <p><strong>Laboratory Technician:</strong> <?php echo isset($realname) ? $realname : ((!empty($export_data)) ? $export_data[0]['SamplerName'] : 'Dr. Sarah Johnson'); ?></p>
+                                <p><strong>EDDVERSION:</strong> <?php echo (!empty($export_data)) ? $export_data[0]['EDDVERSION'] : 'EDD_v2.1'; ?></p>
+                                <p><strong>License Number:</strong> <?php echo (!empty($export_data)) ? $export_data[0]['License'] : 'NATA-' . mt_rand(10000, 99999); ?></p>
                             </div>
                             <div style="width: 48%;">
-                                <p><strong>ANALYSISMETHODCATEGORY:</strong> Microbiological & Pathogen Detection</p>
+                                <p><strong>ANALYSISMETHODCATEGORY:</strong> 
+                                    <?php 
+                                    if (!empty($export_data)) {
+                                        $categories = array_unique(array_column($export_data, 'ANALYSISMETHODCATEGORY'));
+                                        echo implode(', ', $categories);
+                                    } else {
+                                        echo 'Microbiological & Pathogen Detection';
+                                    }
+                                    ?>
+                                </p>
                                 <p><strong>Sample Processing:</strong> All samples processed within 24 hours of receipt</p>
                                 <p><strong>Quality Assurance:</strong> ISO 17025 accredited procedures followed</p>
                                 <p><strong>Chain of Custody:</strong> Maintained throughout analysis</p>

@@ -248,6 +248,9 @@ class Sample_reception extends CI_Controller
                 $data['report_number_to_send_ajax'] = ''; 
             }
             
+            // Get export data for the view
+            $data['export_data'] = $this->Sample_reception_model->get_export_data($id);
+            
             $this->template->load('template','sample_reception/index_rep2', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
@@ -835,7 +838,7 @@ class Sample_reception extends CI_Controller
         ];
         
         // Write header row
-        fputcsv($output, $fieldOrder);
+        fputcsv($output, $fieldOrder, '|');
         
         // Write data rows
         foreach ($data as $row) {
@@ -843,7 +846,7 @@ class Sample_reception extends CI_Controller
             foreach ($fieldOrder as $field) {
                 $csvRow[] = isset($row[$field]) ? $row[$field] : '';
             }
-            fputcsv($output, $csvRow);
+            fputcsv($output, $csvRow, '|');
         }
         
         // Close file pointer

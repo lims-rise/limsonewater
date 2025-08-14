@@ -713,77 +713,128 @@ class Sample_reception_model extends CI_Model
     
     
     
-    // Get export data for CSV with dummy data from database
+    // Get export data for CSV with real data from database
     public function get_export_data($id_project) {
-        // For now, create dummy data that simulates database results
-        // Later this can be replaced with actual JOIN queries when table structure is finalized
-        
         // First get basic project info
         $this->db->select('sr.*, cc.client_name, cc.address, cc.phone1, cc.email');
         $this->db->from('sample_reception sr');
         $this->db->join('ref_client cc', 'sr.id_client_contact = cc.id_client_contact', 'left');
         $this->db->where('sr.id_project', $id_project);
+        $this->db->where('sr.flag', '0');
+        $this->db->where('cc.flag', '0');
         $project = $this->db->get()->row_array();
         
         if (!$project) {
             return [];
         }
-        
-        // Create dummy export data array
+
+        // Get sample data with testing information
+        $this->db->select('
+            srs.id_one_water_sample,
+            srs.date_collected,
+            srs.time_collected,
+            srs.date_arrival,
+            srs.time_arrival,
+            rst.sampletype,
+            rp.initial,
+            srt.barcode,
+            srt.id_testing_type,
+            rt.testing_type,
+            rt.prefix
+        ');
+        $this->db->from('sample_reception_sample srs');
+        $this->db->join('ref_sampletype rst', 'srs.id_sampletype = rst.id_sampletype', 'left');
+        $this->db->join('ref_person rp', 'srs.id_person = rp.id_person', 'left');
+        $this->db->join('sample_reception_testing srt', 'srs.id_sample = srt.id_sample', 'left');
+        $this->db->join('ref_testing rt', 'srt.id_testing_type = rt.id_testing_type', 'left');
+        $this->db->where('srs.id_project', $id_project);
+        $this->db->where('srs.flag', '0');
+        $this->db->where('rst.flag', '0');
+        $this->db->where('rp.flag', '0');
+        $this->db->where('srt.flag', '0');
+        $this->db->where('rt.flag', '0');
+        $samples = $this->db->get()->result_array();
+
         $exportData = [];
         
-        // Generate multiple rows of dummy data based on the field structure
-        for ($i = 0; $i < 5; $i++) {
+        // If no samples found, create at least one row with project data
+        if (empty($samples)) {
+            $samples = [['id_one_water_sample' => '-', 'sampletype' => '-', 'testing_type' => '-']];
+        }
+
+        foreach ($samples as $i => $sample) {
             $row = [
-                'ConfirmedRaw' => rand(15, 45),
-                'PresumptiveRaw' => rand(18, 52),
-                'PathogenID' => 'EC00' . ($i + 1),
-                'LOR' => '1',
-                'MeasurementOfUncertainty' => '±' . rand(15, 25) . '%',
-                'SURROGATE' => rand(85, 115) . '%',
-                'RPD' => rand(5, 15) . '%',
-                'RESULTCOMMENT' => $i == 2 ? 'Elevated levels detected - investigate treatment efficacy' : 'Results within acceptable limits',
-                'RESULTSTATUS' => $i == 2 ? 'EXCEEDANCE' : 'VALIDATED',
-                'LabCOANo' => 'COA-' . date('Y') . '-' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT),
-                'LabCOADate' => date('d-M-Y'),
-                'LabQAQCNo' => 'QAQC-' . date('Y') . '-' . str_pad(rand(1, 99), 2, '0', STR_PAD_LEFT),
-                'LabQAQCDate' => date('d-M-Y'),
-                'ReportComment' => 'All analysis completed within specified timeframes. Results validated according to laboratory QA/QC procedures.',
-                'SiteComment' => 'Sampling conducted during normal flow conditions. Weather: Clear, Temperature: 18°C.',
-                'License' => 'NATA-' . rand(10000, 99999),
-                'ANALYSISMETHODCATEGORY' => $i < 2 ? 'MICROBIOLOGICAL_INDICATORS' : ($i < 4 ? 'PATHOGEN_DETECTION' : 'PHYSICAL_CHEMICAL'),
-                'ANALYSISMETHOD' => $this->getAnalysisMethod($i),
-                'SAMPLEDATE' => date('d-M-Y', strtotime('-' . ($i + 1) . ' days')),
-                'LABREGISTRATIONDATE' => date('d-M-Y H:i', strtotime('-' . $i . ' days')),
-                'AnalysisDate' => date('d-M-Y', strtotime('-1 day')),
-                'ANALYSISCOMPLETIONDATE' => date('d-M-Y'),
-                'ParameterCode' => $this->getParameterCode($i),
-                'PARAMETERNAME' => $this->getParameterName($i),
-                'TEST_KEY_CODE' => 'TK00' . ($i + 1),
-                'RESULT' => $this->getResult($i),
-                'Units' => $this->getUnits($i),
-                'POSITIVECONTROL%' => rand(95, 105) . '%',
-                'SAMPLEVOLUME' => $i < 3 ? '100' : ($i == 3 ? '25' : '10'),
-                'SAMPLEVOLUMEUNITS' => $i < 3 ? 'mL' : 'g',
-                'SAMPLEPROCESSED%' => rand(88, 100) . '%',
-                'EDDVERSION' => 'EDD_v2.1',
-                'CLIENTNAME' => $project['client_name'] ?? 'ACME Water Treatment Corp',
-                'SITEAREA' => $this->getSiteArea($i),
-                'PROGRAM' => 'WATER_QUALITY_MONITORING',
-                'WorkOrderNo' => 'WO' . date('y') . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT),
-                'SUBMISSION' => 'SUB' . date('ymd') . rand(10, 99),
-                'SAMPLINGPROVIDER' => 'Environmental Sampling Ltd',
-                'SamplerName' => 'John Smith',
-                'SamplingRunRef' => 'SR' . date('ymd') . '-' . rand(10, 99),
-                'LOCATIONCODE' => 'LOC00' . ($i + 1),
-                'LocationDescription' => $this->getLocationDescription($i),
-                'AnalysisPO' => 'PO' . rand(1000, 9999),
-                'LABCODE' => 'LAB00' . ($i + 1),
-                'LABSAMPLEID' => 'LAB' . str_pad(rand(1000, 9999), 4, '0', STR_PAD_LEFT),
-                'SAMPLETYPE' => $this->getExportSampleType($i),
-                'SUBMITTEDMATRIX' => $this->getSubmittedMatrix($i),
-                'ANALYSISMATRIX' => $this->getAnalysisMatrix($i),
-                'ANALYSISSUBMATRIX' => $this->getAnalysisSubMatrix($i)
+                'ConfirmedRaw' => isset($sample['confirmed_raw']) ? $sample['confirmed_raw'] : '-',
+                'PresumptiveRaw' => isset($sample['presumptive_raw']) ? $sample['presumptive_raw'] : '-',
+                // 'PathogenID' => isset($sample['pathogen_id']) ? $sample['pathogen_id'] : 'EC00' . ($i + 1),
+                'PathogenID' =>  '-',
+                'LOR' => isset($sample['lor']) ? $sample['lor'] : '-',
+                // 'MeasurementOfUncertainty' => isset($sample['measurement_uncertainty']) ? $sample['measurement_uncertainty'] : '±' . rand(15, 25) . '%',
+                'MeasurementOfUncertainty' => '-',
+                // 'SURROGATE' => isset($sample['surrogate']) ? $sample['surrogate'] : rand(85, 115) . '%',
+                'SURROGATE' => '-',
+                // 'RPD' => isset($sample['rpd']) ? $sample['rpd'] : rand(5, 15) . '%',
+                'RPD' => '-',
+                // 'RESULTCOMMENT' => isset($sample['result_comment']) ? $sample['result_comment'] : 'Results within acceptable limits',
+                'RESULTCOMMENT' => '-',
+                'RESULTSTATUS' => isset($sample['result_status']) ? $sample['result_status'] : '-',
+                // 'LabCOANo' => isset($sample['lab_coa_no']) ? $sample['lab_coa_no'] : 'COA-' . date('Y') . '-' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT),
+                'LabCOANo' => '-',
+                // 'LabCOADate' => isset($sample['lab_coa_date']) ? date('d-M-Y', strtotime($sample['lab_coa_date'])) : date('d-M-Y'),
+                'LabCOADate' => '-',
+                // 'LabQAQCNo' => isset($sample['lab_qaqc_no']) ? $sample['lab_qaqc_no'] : 'QAQC-' . date('Y') . '-' . str_pad(rand(1, 99), 2, '0', STR_PAD_LEFT),
+                'LabQAQCNo' => '-',
+                // 'LabQAQCDate' => isset($sample['lab_qaqc_date']) ? date('d-M-Y', strtotime($sample['lab_qaqc_date'])) : date('d-M-Y'),
+                'LabQAQCDate' => '-',
+                // 'ReportComment' => isset($sample['report_comment']) ? $sample['report_comment'] : 'All analysis completed within specified timeframes. Results validated according to laboratory QA/QC procedures.',
+                'ReportComment' => '-',
+                // 'SiteComment' => isset($sample['site_comment']) ? $sample['site_comment'] : 'Sampling conducted during normal flow conditions.',
+                'SiteComment' => '-',
+                // 'License' => isset($sample['license']) ? $sample['license'] : 'NATA-' . rand(10000, 99999),
+                'License' => '-',
+                'ANALYSISMETHODCATEGORY' => isset($sample['analysis_method_category']) ? $sample['analysis_method_category'] : $this->getAnalysisMethodCategory($sample['testing_type'] ?? ''),
+                // 'ANALYSISMETHOD' =>  '-',
+                'ANALYSISMETHOD' => isset($sample['analysis_method']) ? $sample['analysis_method'] : $this->getAnalysisMethod($sample['testing_type'] ?? ''),
+                'SAMPLEDATE' => isset($sample['date_collected']) ? date('d-M-Y', strtotime($sample['date_collected'])) : '-',
+                'LABREGISTRATIONDATE' => isset($sample['date_arrival']) && isset($sample['time_arrival']) ? 
+                    date('d-M-Y H:i', strtotime($sample['date_arrival'] . ' ' . $sample['time_arrival'])) : '-',
+                'AnalysisDate' => isset($sample['analysis_date']) ? date('d-M-Y', strtotime($sample['analysis_date'])) : '-',
+                'ANALYSISCOMPLETIONDATE' => isset($sample['analysis_completion_date']) ? date('d-M-Y', strtotime($sample['analysis_completion_date'])) : '-',
+                'ParameterCode' => isset($sample['parameter_code']) ? $sample['parameter_code'] : $this->getParameterCode($sample['testing_type'] ?? ''),
+                'PARAMETERNAME' => isset($sample['parameter_name']) ? $sample['parameter_name'] : $this->getParameterName($sample['testing_type'] ?? ''),
+                'TEST_KEY_CODE' => isset($sample['test_key_code']) ? $sample['test_key_code'] : 'TK00' . ($i + 1),
+                // 'TEST_KEY_CODE' => isset($sample['test_key_code']) ? $sample['test_key_code'] : '-',
+                'RESULT' => isset($sample['result']) ? $sample['result'] : '-',
+                'Units' => isset($sample['units']) ? $sample['units'] : $this->getUnits($sample['testing_type'] ?? ''),
+                // 'POSITIVECONTROL%' => isset($sample['positive_control']) ? $sample['positive_control'] : rand(95, 105) . '%',
+                'POSITIVECONTROL%' => '-',
+                'SAMPLEVOLUME' => isset($sample['sample_volume']) ? $sample['sample_volume'] : '-',
+                'SAMPLEVOLUMEUNITS' => isset($sample['sample_volume_units']) ? $sample['sample_volume_units'] : '-',
+                // 'SAMPLEPROCESSED%' => isset($sample['sample_processed']) ? $sample['sample_processed'] : rand(88, 100) . '%',
+                'SAMPLEPROCESSED%' => '-',
+                'EDDVERSION' => '-',
+                'CLIENTNAME' => $project['client_name'] ?? '-',
+                'SITEAREA' => isset($sample['site_area']) ? $sample['site_area'] : $this->generateSiteAreaCode($project['client_name'] ?? ''),
+                'PROGRAM' => isset($sample['program']) ? $sample['program'] : '-',
+                'WorkOrderNo' => '-',
+                // 'WorkOrderNo' => $project['client_quote_number'] ?? 'WO' . date('y') . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT),
+                'SUBMISSION' => $project['id_project'] ?? '-',
+                'SAMPLINGPROVIDER' => isset($sample['sampling_provider']) ? $sample['sampling_provider'] : '-',
+                'SamplerName' => $sample['initial'] ?? 'Lab Tech',
+                // 'SamplingRunRef' => isset($sample['sampling_run_ref']) ? $sample['sampling_run_ref'] : 'SR' . date('ymd') . '-' . rand(10, 99),
+                'SamplingRunRef' => '-',
+                // 'LOCATIONCODE' => isset($sample['location_code']) ? $sample['location_code'] : 'LOC00' . ($i + 1),
+                'LOCATIONCODE' => isset($sample['location_code']) ? $sample['location_code'] : '-',
+                'LocationDescription' => isset($sample['location_description']) ? $sample['location_description'] : '-',
+                // 'LocationDescription' => isset($sample['location_description']) ? $sample['location_description'] : 'Sample Location ' . ($i + 1),
+                // 'AnalysisPO' => isset($sample['analysis_po']) ? $sample['analysis_po'] : 'PO' . rand(1000, 9999),
+                'AnalysisPO' => '-',
+                'LABCODE' => 'MONASH-OWL-MEL',
+                'LABSAMPLEID' => $sample['id_one_water_sample'] ?? 'LAB' . str_pad(rand(1000, 9999), 4, '0', STR_PAD_LEFT),
+                'SAMPLETYPE' => $sample['sampletype'] ?? 'SAMPLE',
+                'SUBMITTEDMATRIX' => isset($sample['submitted_matrix']) ? $sample['submitted_matrix'] : $this->getSubmittedMatrix($sample['sampletype'] ?? ''),
+                'ANALYSISMATRIX' => isset($sample['analysis_matrix']) ? $sample['analysis_matrix'] : $this->getAnalysisMatrix($sample['sampletype'] ?? ''),
+                'ANALYSISSUBMATRIX' => isset($sample['analysis_submatrix']) ? $sample['analysis_submatrix'] : $this->getAnalysisSubMatrix($sample['sampletype'] ?? '')
             ];
             
             $exportData[] = $row;
@@ -792,70 +843,241 @@ class Sample_reception_model extends CI_Model
         return $exportData;
     }
     
-    // Helper functions for dummy data generation
-    private function getAnalysisMethod($index) {
-        $methods = ['COLILERT_MPN', 'ENTEROLERT_MPN', 'qPCR_DETECTION', 'CULTURE_METHOD', 'GRAVIMETRIC_105C'];
-        return $methods[$index] ?? 'STANDARD_METHOD';
+    // Helper functions for data generation based on testing type
+    private function getAnalysisMethodCategory($testing_type) {
+        $categories = [
+            'Biobank-In' => 'Biobank',
+            'Colilert-Idexx-Water' => 'Colilert-Idexx-Water',
+            'Enterolert-Idexx-Water' => 'Enterolert-Idexx-Water',
+            'Moisture_content' => 'Moisture_content',
+            'Homeflow' => 'Homeflow',
+            'Colilert-Idexx-Biosolids' => 'Colilert-Idexx-Biosolids',
+            'Enterolert-Idexx-Biosolids' => 'Enterolert-Idexx-Biosolids',
+            'Extraction-Metagenome' => 'Extraction-Metagenome',
+            'Extraction-Culture-Plate' => 'Extraction-Culture-Plate',
+            'Extraction-Liquids' => 'Extraction-Liquids',
+            'Campylobacter-Biosolids' => 'Campylobacter-Biosolids',
+            'Salmonella-Biosolids' => 'Salmonella-Biosolids',
+            'Extraction-Biosolids' => 'Extraction-Biosolids',
+            'Salmonella-Liquids' => 'Salmonella-Liquids',
+            'Campylobacter-Liquids' => 'Campylobacter-Liquids',
+            'Campylobacter-QPCR' => 'Campylobacter-QPCR',
+            'Campylobacter-P/A' => 'Campylobacter-P/A',
+            'Campylobacter-MPN' => 'Campylobacter-MPN'
+        ];
+
+        
+        foreach ($categories as $test => $category) {
+            if (stripos($testing_type, $test) !== false) {
+                return $category;
+            }
+        }
+        return 'MICROBIOLOGICAL_INDICATORS';
     }
     
-    private function getParameterCode($index) {
-        $codes = ['ECOLI', 'ENTERO', 'CAMPY', 'SALM', 'MOIST'];
-        return $codes[$index] ?? 'PARAM';
+    private function getAnalysisMethod($testing_type) {
+        $methods = [
+            'Biobank-In' => 'BIOBANKING_STORAGE',
+            'Colilert-Idexx-Water' => 'COLILERT_MPN_WATER',
+            'Enterolert-Idexx-Water' => 'ENTEROLERT_MPN_WATER',
+            'Moisture_content' => 'GRAVIMETRIC_105C',
+            'Homeflow' => 'FLOW_MEASUREMENT',
+            'Colilert-Idexx-Biosolids' => 'COLILERT_MPN_BIOSOLIDS',
+            'Enterolert-Idexx-Biosolids' => 'ENTEROLERT_MPN_BIOSOLIDS',
+            'Extraction-Metagenome' => 'DNA_EXTRACTION_METAGENOME',
+            'Extraction-Culture-Plate' => 'DNA_EXTRACTION_CULTURE',
+            'Extraction-Liquids' => 'DNA_EXTRACTION_LIQUID',
+            'Campylobacter-Biosolids' => 'CULTURE_METHOD_BIOSOLIDS',
+            'Salmonella-Biosolids' => 'CULTURE_METHOD_BIOSOLIDS',
+            'Extraction-Biosolids' => 'DNA_EXTRACTION_BIOSOLIDS',
+            'Salmonella-Liquids' => 'CULTURE_METHOD_LIQUID',
+            'Campylobacter-Liquids' => 'CULTURE_METHOD_LIQUID',
+            'Campylobacter-QPCR' => 'qPCR_REAL_TIME',
+            'Campylobacter-P/A' => 'PRESENCE_ABSENCE_METHOD',
+            'Campylobacter-MPN' => 'MPN_METHOD'
+        ];
+        
+        foreach ($methods as $test => $method) {
+            if (stripos($testing_type, $test) !== false) {
+                return $method;
+            }
+        }
+        return 'STANDARD_METHOD';
     }
     
-    private function getParameterName($index) {
-        $names = ['E. coli', 'Enterococci', 'Campylobacter spp.', 'Salmonella spp.', 'Moisture Content'];
-        return $names[$index] ?? 'Parameter';
+    private function getParameterCode($testing_type) {
+        $codes = [
+            'Biobank-In' => 'BIO',
+            'Colilert-Idexx-Water' => 'ECOLI_W',
+            'Enterolert-Idexx-Water' => 'ENTERO_W',
+            'Moisture_content' => 'MOIST',
+            'Homeflow' => 'FLOW',
+            'Colilert-Idexx-Biosolids' => 'ECOLI_B',
+            'Enterolert-Idexx-Biosolids' => 'ENTERO_B',
+            'Extraction-Metagenome' => 'META_EXT',
+            'Extraction-Culture-Plate' => 'CULT_EXT',
+            'Extraction-Liquids' => 'LIQ_EXT',
+            'Campylobacter-Biosolids' => 'CAMPY_B',
+            'Salmonella-Biosolids' => 'SALM_B',
+            'Extraction-Biosolids' => 'BIO_EXT',
+            'Salmonella-Liquids' => 'SALM_L',
+            'Campylobacter-Liquids' => 'CAMPY_L',
+            'Campylobacter-QPCR' => 'CAMPY_QPCR',
+            'Campylobacter-P/A' => 'CAMPY_PA',
+            'Campylobacter-MPN' => 'CAMPY_MPN'
+        ];
+        
+        foreach ($codes as $test => $code) {
+            if (stripos($testing_type, $test) !== false) {
+                return $code;
+            }
+        }
+        return 'PARAM';
     }
     
-    private function getResult($index) {
-        if ($index == 3) return 'NEGATIVE';
-        if ($index == 2) return rand(100, 1000);
-        if ($index == 4) return rand(15, 35);
-        return rand(1, 100);
+    private function getParameterName($testing_type) {
+        $names = [
+            'Biobank-In' => 'Biobank Storage',
+            'Colilert-Idexx-Water' => 'Escherichia coli',
+            'Enterolert-Idexx-Water' => 'Enterococci',
+            'Moisture_content' => 'Moisture Content',
+            'Homeflow' => 'Flow Rate',
+            'Colilert-Idexx-Biosolids' => 'Escherichia coli',
+            'Enterolert-Idexx-Biosolids' => 'Enterococci',
+            'Extraction-Metagenome' => 'Metagenome DNA Extraction',
+            'Extraction-Culture-Plate' => 'Culture Plate DNA Extraction',
+            'Extraction-Liquids' => 'Liquid Sample DNA Extraction',
+            'Campylobacter-Biosolids' => 'Campylobacter spp.',
+            'Salmonella-Biosolids' => 'Salmonella spp.',
+            'Extraction-Biosolids' => 'Biosolid DNA Extraction',
+            'Salmonella-Liquids' => 'Salmonella spp.',
+            'Campylobacter-Liquids' => 'Campylobacter spp.',
+            'Campylobacter-QPCR' => 'Campylobacter spp. (qPCR)',
+            'Campylobacter-P/A' => 'Campylobacter spp. (Presence/Absence)',
+            'Campylobacter-MPN' => 'Campylobacter spp. (MPN)'
+        ];
+        
+        foreach ($names as $test => $name) {
+            if (stripos($testing_type, $test) !== false) {
+                return $name;
+            }
+        }
+        return 'Parameter';
     }
     
-    private function getUnits($index) {
-        if ($index == 3) return '-';
-        if ($index == 2) return 'copies/g';
-        if ($index == 4) return '%';
+    private function getUnits($testing_type) {
+        $units = [
+            'Colilert' => 'MPN/100mL',
+            'Enterolert' => 'MPN/100mL',
+            'Campylobacter' => 'copies/g',
+            'Salmonella' => '-',
+            'Moisture' => '%'
+        ];
+        
+        foreach ($units as $test => $unit) {
+            if (stripos($testing_type, $test) !== false) {
+                return $unit;
+            }
+        }
         return 'MPN/100mL';
     }
     
-    private function getSiteArea($index) {
-        $areas = ['UPSTREAM_ZONE_A', 'TREATMENT_PLANT_B', 'DOWNSTREAM_ZONE_C', 'MONITORING_POINT_D', 'EFFLUENT_ZONE_E'];
-        return $areas[$index] ?? 'SITE_AREA';
-    }
-    
-    private function getLocationDescription($index) {
-        $descriptions = [
-            'Upstream Collection Point A',
-            'Treatment Plant Effluent B', 
-            'Downstream Monitoring Point C',
-            'Secondary Treatment Outlet D',
-            'Final Discharge Point E'
+    private function getSubmittedMatrix($sampletype) {
+        $matrices = [
+            'Faeces' => 'FECAL',
+            'Water' => 'WATER',
+            'Soil' => 'SOIL',
+            'Sediment' => 'SEDIMENT',
+            'Sewage_liquid' => 'WASTEWATER',
+            'Bird_carcass' => 'TISSUE',
+            'Culture' => 'CULTURE',
+            'Culture_plate' => 'CULTURE_PLATE',
+            'Purified DNA' => 'DNA',
+            'Sawage_biosolid' => 'BIOSOLID',
+            'Biosolid' => 'BIOSOLID',
+            'Liquid' => 'LIQUID',
+            'Wastewater' => 'WASTEWATER'
         ];
-        return $descriptions[$index] ?? 'Sample Location';
+        
+        foreach ($matrices as $type => $matrix) {
+            if (stripos($sampletype, $type) !== false) {
+                return $matrix;
+            }
+        }
+        return 'UNKNOWN_MATRIX';
     }
     
-    private function getExportSampleType($index) {
-        $types = ['WATER', 'BIOSOLID', 'LIQUID', 'EFFLUENT', 'SLUDGE'];
-        return $types[$index] ?? 'SAMPLE';
+    private function getAnalysisMatrix($sampletype) {
+        $matrices = [
+            'Faeces' => 'SOLID',
+            'Water' => 'AQUEOUS',
+            'Soil' => 'SOLID',
+            'Sediment' => 'SOLID',
+            'Sewage_liquid' => 'AQUEOUS',
+            'Bird_carcass' => 'SOLID',
+            'Culture' => 'SOLID',
+            'Culture_plate' => 'SOLID',
+            'Purified DNA' => 'AQUEOUS',
+            'Sawage_biosolid' => 'SOLID',
+            'Biosolid' => 'SOLID',
+            'Liquid' => 'AQUEOUS',
+            'Wastewater' => 'AQUEOUS'
+        ];
+        
+        foreach ($matrices as $type => $matrix) {
+            if (stripos($sampletype, $type) !== false) {
+                return $matrix;
+            }
+        }
+        return 'UNKNOWN_MATRIX';
     }
     
-    private function getSubmittedMatrix($index) {
-        $matrices = ['WATER', 'BIOSOLID', 'LIQUID', 'WASTEWATER', 'SOLID'];
-        return $matrices[$index] ?? 'MATRIX';
+    private function getAnalysisSubMatrix($sampletype) {
+        $subMatrices = [
+            'Faeces' => 'HUMAN_FECAL',
+            'Water' => 'FRESHWATER',
+            'Soil' => 'ENVIRONMENTAL_SOIL',
+            'Sediment' => 'AQUATIC_SEDIMENT',
+            'Sewage_liquid' => 'RAW_WASTEWATER',
+            'Bird_carcass' => 'AVIAN_TISSUE',
+            'Culture' => 'BACTERIAL_CULTURE',
+            'Culture_plate' => 'AGAR_CULTURE',
+            'Purified DNA' => 'EXTRACTED_DNA',
+            'Sawage_biosolid' => 'TREATED_BIOSOLID',
+            'Biosolid' => 'TREATED_SLUDGE',
+            'Liquid' => 'WASTEWATER',
+            'Wastewater' => 'EFFLUENT'
+        ];
+        
+        foreach ($subMatrices as $type => $subMatrix) {
+            if (stripos($sampletype, $type) !== false) {
+                return $subMatrix;
+            }
+        }
+        return 'UNKNOWN_SUBMATRIX';
     }
     
-    private function getAnalysisMatrix($index) {
-        $matrices = ['AQUEOUS', 'SOLID', 'AQUEOUS', 'AQUEOUS', 'SOLID'];
-        return $matrices[$index] ?? 'AQUEOUS';
-    }
-    
-    private function getAnalysisSubMatrix($index) {
-        $subMatrices = ['FRESHWATER', 'TREATED_SLUDGE', 'WASTEWATER', 'EFFLUENT', 'BIOSOLID'];
-        return $subMatrices[$index] ?? 'SAMPLE_MATRIX';
+    private function generateSiteAreaCode($client_name) {
+        if (empty($client_name) || $client_name === '-') {
+            return 'UNK';
+        }
+        
+        // Split by spaces and get first letter of each word
+        $words = explode(' ', trim($client_name));
+        $abbreviation = '';
+        
+        foreach ($words as $word) {
+            if (!empty(trim($word))) {
+                $abbreviation .= strtoupper(substr(trim($word), 0, 1));
+            }
+        }
+        
+        // If no abbreviation generated, return first 3 characters
+        if (empty($abbreviation)) {
+            return strtoupper(substr($client_name, 0, 3));
+        }
+        
+        return $abbreviation;
     }
 }
 
