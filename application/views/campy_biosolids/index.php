@@ -74,7 +74,6 @@
                     <div class="modal-body">
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
                         <input id="id_campy_biosolids" name="id_campy_biosolids" type="hidden" class="form-control input-sm">
-                        
                         <!-- <div class="form-group">
                             <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
                             <div class="col-sm-8">
@@ -98,7 +97,7 @@
                             <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
                             <div class="col-sm-8">
                                 <input id="id_one_water_sample" name="id_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control idOneWaterSampleSelect">
-                                <input id="idx_one_water_sample" name="idx_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control">
+                                <input id="idx_one_water_sample" name="idx_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control idOneWaterSampleSelect">
                                 <div class="val2tip" style="height: 1px; margin-top: 5px;"></div>
                             </div>
                         </div>
@@ -194,7 +193,14 @@
                         <div class="form-group">
                             <label for="dry_weight_persen" class="col-sm-4 control-label">Dry Weight (%)</label>
                             <div class="col-sm-8">
-                                <input id="dry_weight_persen" name="dry_weight_persen" type="number" step="any" class="form-control" placeholder="Dry Weight (%)" required>
+                                <div class="input-group">
+                                    <input id="dry_weight_persen" name="dry_weight_persen" type="number" step="any" class="form-control" placeholder="Dry Weight (%)" required>
+                                    <span class="input-group-btn">
+                                        <button id="btn_check_dry_weight" class="btn btn-info btnx_check_dry_weight" type="button">
+                                            <i class="fa fa-search"></i> Check
+                                        </button>
+                                    </span>
+                                </div>
                             </div>
                         </div>
 
@@ -884,6 +890,7 @@
             $('#tray_weight').val('');
             $('#traysample_wetweight').val('');
             $('#dry_weight_persen').val('');
+            $('#dry_weight_persen').attr('readonly', true);
             $('#sample_dryweight').val('');
             $('#comments').val('');
             $('#mpn_pcr_conducted').val('');
@@ -1116,6 +1123,86 @@
                 $('#sampletype').val('');
                 $('#tray_weight_container').hide(); 
             }
+        });
+
+        // Reusable function for dry weight check
+        function checkDryWeight(buttonElement, inputSelector) {
+            // Wait a moment to ensure DOM is fully updated
+            setTimeout(function() {
+                const $input = $(inputSelector);
+                const id_one_water_sample = $input.val();
+                
+                // Enhanced validation with trim and element existence check
+                // if (!$input.length || !id_one_water_sample || id_one_water_sample.trim() === '') {
+                //     Swal.fire({
+                //         title: 'Warning!',
+                //         text: 'Please select One Water Sample ID first.',
+                //         icon: 'warning',
+                //         confirmButtonText: 'OK'
+                //     });
+                //     return;
+                // }
+
+                // Show loading state
+                buttonElement.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Checking...');
+                
+                $.ajax({
+                    url: '<?php echo site_url('Campy_biosolids/getDryWeight'); ?>',
+                    type: 'POST',
+                    data: { id_one_water_sample: id_one_water_sample.trim() },
+                    dataType: 'json',
+                    success: function(response) {
+                        console.log('Dry weight check response:', response);
+                        
+                        if (response && response.dry_weight_persen !== null) {
+                            // Data found
+                            $('#dry_weight_persen').val(response.dry_weight_persen);
+                            
+                            // Trigger auto-calculation after setting the value
+                            calculateSampleDryWeight();
+                            
+                            Swal.fire({
+                                title: 'Success!',
+                                text: 'Dry weight data found and loaded successfully.',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            });
+                        } else {
+                            // No data found
+                            $('#dry_weight_persen').val('');
+                            Swal.fire({
+                                title: 'Data Not Available',
+                                html: '<b>Dry weight % </b>data is not yet available for <b>' + id_one_water_sample + '</b>. Please check <b>Moisture Content</b>.',
+                                icon: 'info',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('AJAX error:', textStatus, errorThrown);
+                        $('#dry_weight_persen').val('');
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'An error occurred while checking dry weight data. Please try again.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    },
+                    complete: function() {
+                        // Reset button state
+                        buttonElement.prop('disabled', false).html('<i class="fa fa-search"></i> Check');
+                    }
+                });
+            }, 10); // Small delay to ensure DOM stability
+        }
+
+        // Event handlers using the reusable function
+        $(document).on('click', '#btn_check_dry_weight', function() {
+            checkDryWeight($(this), '#id_one_water_sample');
+        });
+
+        $(document).on('click', '.btnx_check_dry_weight', function() {
+            checkDryWeight($(this), '#idx_one_water_sample');
         });
 
         $('#id_one_water_sample').on("change", function() {
@@ -1472,6 +1559,7 @@
             $('#time_sample_processed').val(data.time_sample_processed);
             $('#sample_wetweight').val(data.sample_wetweight);
             $('#dry_weight_persen').val(data.dry_weight_persen);
+            $('#dry_weight_persen').attr('readonly', true);
             $('#sample_dryweight').val(data.sample_dryweight);
             $('#elution_volume').val(data.elution_volume);
             $('#number_of_tubes').val(data.number_of_tubes);

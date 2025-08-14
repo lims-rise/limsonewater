@@ -1730,30 +1730,30 @@
             
             let confirmationText = '';
 
-            // Jika Gram-Lysis positive
-            if (gramLysisValue === 'Positive') {
-                confirmationText = 'Campylobacter';
-            } 
-            // Jika Gram-Lysis negative, baru cek Oxidase dan Catalase
-            else if (gramLysisValue === 'Negative') {
-                confirmationText = 'Not Campylobacter';
-            }
-            // Jika Gram-Lysis belum dipilih, cek Oxidase dan Catalase
-            else {
-                if (oxidaseValue === 'Positive' && catalaseValue === 'Positive') {
-                    confirmationText = 'Campylobacter';
-                } else if (oxidaseValue === 'Negative' && catalaseValue === 'Negative') {
-                    confirmationText = 'Not Campylobacter';
-                } else if (oxidaseValue === 'Positive' && catalaseValue === 'Negative') {
-                    confirmationText = 'Campylobacter';
-                } else if (oxidaseValue === 'Negative' && catalaseValue === 'Positive') {
-                    confirmationText = 'Not Campylobacter';
+            // Check if all required values are selected
+            if (gramLysisValue && oxidaseValue) {
+                // Logic based on the provided table:
+                // Grim=Yes + Oxidase=Yes = Campy (regardless of Catalase)
+                // Grim=Yes + Oxidase=No = Not Campy (regardless of Catalase)  
+                // Grim=No = Not Campy (regardless of Oxidase and Catalase)
+                
+                if (gramLysisValue === 'Positive') {
+                    // If Gram-lysis is Positive (Yes)
+                    if (oxidaseValue === 'Positive') {
+                        confirmationText = 'Campylobacter';  // Grim=Yes + Oxidase=Yes = Campy
+                    } else {
+                        confirmationText = 'Not Campylobacter';  // Grim=Yes + Oxidase=No = Not Campy
+                    }
                 } else {
-                    confirmationText = '';
+                    // If Gram-lysis is Negative (No)
+                    confirmationText = 'Not Campylobacter';  // Grim=No = Always Not Campy
                 }
+            } else {
+                // If not all required values are selected, leave confirmation empty
+                confirmationText = '';
             }
 
-            // Menampilkan hasil ke kolom confirmation
+            // Display result in confirmation field
             $('#confirmation').val(confirmationText);
         }
 

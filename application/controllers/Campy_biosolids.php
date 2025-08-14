@@ -1564,6 +1564,20 @@ class Campy_biosolids extends CI_Controller
             ]);
         }
     }
+
+    public function getDryWeight()
+    {
+        $idOneWaterSample = $this->input->post('id_one_water_sample');
+        $oneWaterSample = $this->Campy_biosolids_model->getDryWeight($idOneWaterSample);
+        
+        // Handle null response properly
+        if ($oneWaterSample) {
+            echo json_encode($oneWaterSample);
+        } else {
+            // Return a proper JSON structure when no data is found
+            echo json_encode(['dry_weight_persen' => null]);
+        }
+    }
 }
 /* End of file Campy_biosolids.php */
 /* Location: ./application/controllers/Campy_biosolids.php */
