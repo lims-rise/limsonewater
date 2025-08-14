@@ -1125,61 +1125,84 @@
             }
         });
 
-        // Reusable function for dry weight check
+        // Reusable function for dry weight check with race condition prevention
+        let isDryWeightChecking = false; // Prevent multiple simultaneous requests
         function checkDryWeight(buttonElement, inputSelector) {
+            // Prevent multiple simultaneous requests
+            if (isDryWeightChecking) {
+                console.log('Dry weight check already in progress, skipping...');
+                return;
+            }
+
             // Wait a moment to ensure DOM is fully updated
             setTimeout(function() {
                 const $input = $(inputSelector);
                 const id_one_water_sample = $input.val();
-                
-                // Enhanced validation with trim and element existence check
-                // if (!$input.length || !id_one_water_sample || id_one_water_sample.trim() === '') {
-                //     Swal.fire({
-                //         title: 'Warning!',
-                //         text: 'Please select One Water Sample ID first.',
-                //         icon: 'warning',
-                //         confirmButtonText: 'OK'
-                //     });
-                //     return;
-                // }
+
+                // Validation: element must exist and value must not be empty
+                if (!$input.length || !id_one_water_sample || id_one_water_sample.trim() === '') {
+                    Swal.fire({
+                        title: 'Warning!',
+                        text: 'Please select One Water Sample ID first.',
+                        icon: 'warning',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+
+                isDryWeightChecking = true; // lock
+
+                // Clear previous value first
+                $('#dry_weight_persen').val('');
 
                 // Show loading state
                 buttonElement.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Checking...');
-                
+
+                // Log the request for debugging
+                console.log('Sending dry weight request for ID:', id_one_water_sample.trim());
+
                 $.ajax({
                     url: '<?php echo site_url('Campy_biosolids/getDryWeight'); ?>',
                     type: 'POST',
                     data: { id_one_water_sample: id_one_water_sample.trim() },
                     dataType: 'json',
+                    cache: false,
+                    timeout: 10000,
                     success: function(response) {
-                        console.log('Dry weight check response:', response);
-                        
-                        if (response && response.dry_weight_persen !== null) {
-                            // Data found
-                            $('#dry_weight_persen').val(response.dry_weight_persen);
-                            
-                            // Trigger auto-calculation after setting the value
-                            calculateSampleDryWeight();
-                            
-                            Swal.fire({
-                                title: 'Success!',
-                                text: 'Dry weight data found and loaded successfully.',
-                                icon: 'success',
-                                confirmButtonText: 'OK'
-                            });
+                        console.log('Dry weight check response for [' + id_one_water_sample.trim() + ']:', response);
+
+                        if (response && response.dry_weight_persen !== null && response.dry_weight_persen !== undefined) {
+                            const dryWeight = parseFloat(response.dry_weight_persen);
+                            if (!isNaN(dryWeight)) {
+                                $('#dry_weight_persen').val(response.dry_weight_persen);
+                                calculateSampleDryWeight();
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'Dry weight data found: ' + response.dry_weight_persen + '%',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                });
+                            } else {
+                                $('#dry_weight_persen').val('');
+                                Swal.fire({
+                                    title: 'Invalid Data',
+                                    text: 'Dry weight data found but value is invalid.',
+                                    icon: 'warning',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
                         } else {
-                            // No data found
                             $('#dry_weight_persen').val('');
                             Swal.fire({
                                 title: 'Data Not Available',
-                                html: '<b>Dry weight % </b>data is not yet available for <b>' + id_one_water_sample + '</b>. Please check <b>Moisture Content</b>.',
+                                html: '<b>Dry weight % </b>data is not yet available for <b>' + id_one_water_sample.trim() + '</b>. Please check <b>Moisture Content</b>.',
                                 icon: 'info',
                                 confirmButtonText: 'OK'
                             });
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
-                        console.error('AJAX error:', textStatus, errorThrown);
+                        console.error('AJAX error for [' + id_one_water_sample.trim() + ']:', textStatus, errorThrown);
                         $('#dry_weight_persen').val('');
                         Swal.fire({
                             title: 'Error!',
@@ -1189,20 +1212,21 @@
                         });
                     },
                     complete: function() {
-                        // Reset button state
                         buttonElement.prop('disabled', false).html('<i class="fa fa-search"></i> Check');
+                        isDryWeightChecking = false; // unlock
+                        console.log('Dry weight check completed for:', id_one_water_sample.trim());
                     }
                 });
-            }, 10); // Small delay to ensure DOM stability
+            }, 100);
         }
 
-        // Event handlers using the reusable function
+        // Event handler using the reusable function (single binding)
         $(document).on('click', '#btn_check_dry_weight', function() {
-            checkDryWeight($(this), '#id_one_water_sample');
-        });
-
-        $(document).on('click', '.btnx_check_dry_weight', function() {
-            checkDryWeight($(this), '#idx_one_water_sample');
+            // Choose the visible/active input: use id_one or idx_one depending on modal state
+            const selector = ($('#id_one_water_sample').is(':visible') && $('#id_one_water_sample').val())
+                ? '#id_one_water_sample'
+                : '#idx_one_water_sample';
+            checkDryWeight($(this), selector);
         });
 
         $('#id_one_water_sample').on("change", function() {
