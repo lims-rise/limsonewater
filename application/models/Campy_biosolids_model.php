@@ -597,7 +597,7 @@ class Campy_biosolids_model extends CI_Model
         $q = $this->db->query('
         select id_one_water_sample
         from campy_biosolids
-        WHERE id_one_water_sample = "'.$id.'"
+        WHERE id_one_water_sample = "'.$id.'" AND flag = 0
         ');        
         $response = $q->result_array();
         return $response;
@@ -671,6 +671,23 @@ class Campy_biosolids_model extends CI_Model
         $this->db->where('id_campy_biosolids', $id_campy_biosolids);
         $this->db->where('flag', '0');
         return $this->db->get('campy_result_mpn')->row();
+    }
+
+    function getDryWeight($id_one_water_sample) {
+        $this->db->select('m48.dry_weight_persen');
+        $this->db->from('moisture_content as mc');
+        $this->db->join('moisture72 as m48', 'mc.id_moisture = m48.id_moisture', 'left');
+        $this->db->where('mc.id_moisture IS NOT NULL');
+        $this->db->where('mc.id_one_water_sample', $id_one_water_sample);
+        $this->db->where('mc.flag', '0');
+        $this->db->where('m48.flag', '0'); 
+        $query = $this->db->get();
+        
+        if ($query->num_rows() > 0) {
+            return $query->row();
+        } else {
+            return null; // Return null if no data found
+        }
     }
     
 
