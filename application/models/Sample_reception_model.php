@@ -1079,6 +1079,73 @@ class Sample_reception_model extends CI_Model
         
         return $abbreviation;
     }
+
+    /**
+     * Check if data already exists for a specific id_one_water_sample in testing module
+     * @param string $id_one_water_sample
+     * @param string $id_testing_type
+     * @param string $url
+     * @return boolean
+     */
+    function check_data_exists($id_one_water_sample, $id_testing_type, $url) {
+        // Map URL to corresponding table names
+        $table_mapping = array(
+            'biobankin' => 'biobank_in',
+            'colilert_idexx_water' => 'colilert_water_in',
+            'colilert_idexx_biosolids' => 'colilert_biosolids_in',
+            'enterolert_idexx_water' => 'enterolert_water_in',
+            'enterolert_idexx_biosolids' => 'enterolert_biosolids_in',
+            'campy_biosolids' => 'campy_biosolids',
+            'campy_liquids' => 'campy_liquids',
+            'moisture_content' => 'moisture_content',
+            'salmonella_biosolids' => 'salmonella_biosolids',
+            'salmonella_liquids' => 'salmonella_liquids',
+            'extraction_metagenome' => 'extraction_metagenome',
+            'extraction_culture' => 'extraction_culture',
+            'extraction_liquid' => 'extraction_liquid',
+            'extraction_biosolid' => 'extraction_biosolid',
+            'hemoflow' => 'hemoflow',
+            'campy_biosolids_qpcr' => 'campy_biosolids_qpcr',
+            'campy_biosolids_pa' => 'campy_biosolids_pa',
+            'freezer_in' => 'freezer_in',
+            'freezer_out' => 'freezer_out'
+        );
+
+        // Extract table name from URL
+        $table_name = null;
+        foreach ($table_mapping as $url_key => $table) {
+            if (strpos($url, $url_key) !== false) {
+                $table_name = $table;
+                break;
+            }
+        }
+
+        // If no matching table found, return false
+        if (!$table_name || !$this->db->table_exists($table_name)) {
+            return false;
+        }
+
+        // Check if data exists in the corresponding table
+        try {
+            $this->db->reset_query();
+            $this->db->select('COUNT(*) as count');
+            $this->db->from($table_name);
+            $this->db->where('id_one_water_sample', $id_one_water_sample);
+            $this->db->where('flag', '0');
+            
+            $query = $this->db->get();
+            
+            if (!$query) {
+                return false;
+            }
+            
+            $result = $query->row();
+            return ($result && $result->count > 0);
+            
+        } catch (Exception $e) {
+            return false;
+        }
+    }
 }
 
 /* End of file Tbl_delivery_model.php */

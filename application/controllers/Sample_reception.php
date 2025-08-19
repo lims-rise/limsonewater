@@ -666,6 +666,41 @@ class Sample_reception extends CI_Controller
         echo json_encode($data);
     }
 
+    public function check_existing_data() {
+        header('Content-Type: application/json');
+        
+        $id_one_water_sample = $this->input->post('id_one_water_sample', TRUE);
+        $id_testing_type = $this->input->post('id_testing_type', TRUE);
+        $url = $this->input->post('url', TRUE);
+        
+        // Validate input
+        if (empty($id_one_water_sample) || empty($url)) {
+            echo json_encode(['exists' => false, 'error' => 'Missing required parameters', 'status' => 'error']);
+            return;
+        }
+        
+        try {
+            // Check if data exists based on URL/module
+            $exists = $this->Sample_reception_model->check_data_exists($id_one_water_sample, $id_testing_type, $url);
+            
+            echo json_encode([
+                'exists' => $exists,
+                'id_one_water_sample' => $id_one_water_sample,
+                'id_testing_type' => $id_testing_type,
+                'url' => $url,
+                'status' => 'success'
+            ]);
+        } catch (Exception $e) {
+            echo json_encode([
+                'exists' => false, 
+                'error' => 'Database error occurred',
+                'status' => 'error'
+            ]);
+        }
+    }
+
+
+
     public function validateIdClientSample() {
         $id = $this->input->get('id');
         $data = $this->Sample_reception_model->validateIdClientSample($id);
