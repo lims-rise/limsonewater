@@ -304,6 +304,105 @@
   border-radius: 9999px !important;
 }
 
+/* Futuristic SweetAlert2 Styles */
+.futuristic-popup {
+	border-radius: 20px !important;
+	background: rgba(255, 255, 255, 0.95) !important;
+	backdrop-filter: blur(20px) !important;
+	border: 1px solid rgba(255, 255, 255, 0.3) !important;
+	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.2) !important;
+}
+
+.futuristic-title {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+	font-size: 24px !important;
+	margin-bottom: 20px !important;
+}
+
+.futuristic-button {
+	border-radius: 25px !important;
+	padding: 12px 30px !important;
+	font-weight: 600 !important;
+	font-size: 16px !important;
+	border: none !important;
+	background: linear-gradient(135deg, #3498db 0%, #2980b9 100%) !important;
+	box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4) !important;
+	transition: all 0.3s ease !important;
+	text-transform: none !important;
+}
+
+.futuristic-button:hover {
+	transform: translateY(-2px) !important;
+	box-shadow: 0 12px 35px rgba(52, 152, 219, 0.6) !important;
+}
+
+.futuristic-button:active {
+	transform: translateY(0px) !important;
+	box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4) !important;
+}
+
+.futuristic-button-warning {
+	border-radius: 25px !important;
+	padding: 12px 30px !important;
+	font-weight: 600 !important;
+	font-size: 16px !important;
+	border: none !important;
+	background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%) !important;
+	box-shadow: 0 8px 25px rgba(255, 154, 158, 0.4) !important;
+	transition: all 0.3s ease !important;
+	text-transform: none !important;
+}
+
+.futuristic-button-warning:hover {
+	transform: translateY(-2px) !important;
+	box-shadow: 0 12px 35px rgba(255, 154, 158, 0.6) !important;
+}
+
+.futuristic-button-warning:active {
+	transform: translateY(0px) !important;
+	box-shadow: 0 6px 20px rgba(255, 154, 158, 0.4) !important;
+}
+
+/* Animation classes */
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		transform: translate3d(0, 30px, 0);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+@keyframes fadeOutDown {
+	from {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+	to {
+		opacity: 0;
+		transform: translate3d(0, 30px, 0);
+	}
+}
+
+.animate__animated {
+	animation-duration: 0.4s;
+	animation-fill-mode: both;
+}
+
+.animate__faster {
+	animation-duration: 0.3s;
+}
+
+.animate__fadeInUp {
+	animation-name: fadeInUp;
+}
+
+.animate__fadeOutDown {
+	animation-name: fadeOutDown;
+}
+
 
 </style>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -335,7 +434,6 @@
             let id = $(this).data('id');
             let url = '<?php echo site_url('Sample_reception/delete_detail'); ?>/' + id;
             $('#confirm-modal-delete #id').text(id);
-            console.log(id);
             showConfirmationDelete(url);
         });
 
@@ -552,16 +650,321 @@
 
 
 
-		// Klik link untuk detail
+		// Klik link untuk detail dengan pengecekan data terlebih dahulu
 		$('#example2 tbody').on('click', 'a.url-link-detail', function() {
 			let barcode = $(this).data('barcode');
 			let idOneWaterSample = $(this).data('id_one_water_sample');
 			let idTestingType = $(this).data('id_testing_type');
 			let url = $(this).data('url');
+			let testingType = $(this).text().split(' - ')[0]; // Extract testing type name
 
 			if (url) {
-				let fullUrl = `${window.location.origin}/limsonewater/index.php/${url}?barcode=${barcode}&idOneWaterSample=${idOneWaterSample}&idTestingType=${idTestingType}`;
-				window.location.href = fullUrl;
+				// Show enhanced loading indicator
+				Swal.fire({
+					title: '<span style="color: #3498db; font-weight: 600;">🔍 Checking Data...</span>',
+					html: `
+						<div style="
+							background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+							border-radius: 15px;
+							padding: 30px;
+							margin: 15px 0;
+							color: white;
+							box-shadow: 0 8px 32px rgba(52, 152, 219, 0.3);
+							backdrop-filter: blur(10px);
+							border: 1px solid rgba(255, 255, 255, 0.2);
+							text-align: center;
+						">
+							<div style="
+								width: 60px;
+								height: 60px;
+								background: rgba(255, 255, 255, 0.2);
+								border-radius: 50%;
+								display: inline-flex;
+								align-items: center;
+								justify-content: center;
+								margin-bottom: 20px;
+								animation: pulse 2s infinite;
+								font-size: 28px;
+							">⚡</div>
+							<h4 style="margin: 0 0 10px 0; font-size: 20px; font-weight: 600;">Verifying Sample Data</h4>
+							<p style="margin: 0; opacity: 0.9; font-size: 14px;">
+								Checking for existing data in testing modules...
+							</p>
+							<div style="
+								margin-top: 20px;
+								height: 4px;
+								background: rgba(255, 255, 255, 0.3);
+								border-radius: 2px;
+								overflow: hidden;
+							">
+								<div style="
+									height: 100%;
+									background: linear-gradient(90deg, #ffffff, #3498db, #2980b9, #ffffff);
+									background-size: 200% 100%;
+									animation: shimmer 1.5s infinite;
+								"></div>
+							</div>
+						</div>
+						
+						<style>
+							@keyframes pulse {
+								0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+								70% { box-shadow: 0 0 0 20px rgba(255, 255, 255, 0); }
+								100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+							}
+							
+							@keyframes shimmer {
+								0% { background-position: -200% 0; }
+								100% { background-position: 200% 0; }
+							}
+						</style>
+					`,
+					allowOutsideClick: false,
+					showConfirmButton: false,
+					customClass: {
+						popup: 'futuristic-popup',
+						title: 'futuristic-title'
+					},
+					showClass: {
+						popup: 'animate__animated animate__fadeInUp animate__faster'
+					}
+				});
+
+				// Check if data already exists for this id_one_water_sample and testing type
+				$.ajax({
+					url: '<?php echo site_url('Sample_reception/check_existing_data'); ?>',
+					type: 'POST',
+					data: {
+						id_one_water_sample: idOneWaterSample,
+						id_testing_type: idTestingType,
+						url: url
+					},
+					dataType: 'json',
+					timeout: 10000, // 10 second timeout
+					success: function(response) {
+						Swal.close(); // Close loading indicator
+						
+						if (response.status === 'success' && response.exists) {
+							// Data already exists, show info modal with futuristic design
+							Swal.fire({
+								icon: 'success',
+								title: '<span style="color: #2E86AB; font-weight: 600;">✨ Data Already Available</span>',
+								html: `
+									<div style="
+										background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+										border-radius: 15px;
+										padding: 25px;
+										margin: 15px 0;
+										color: white;
+										box-shadow: 0 8px 32px rgba(52, 152, 219, 0.3);
+										backdrop-filter: blur(10px);
+										border: 1px solid rgba(255, 255, 255, 0.2);
+									">
+										<div style="
+											display: flex;
+											align-items: center;
+											margin-bottom: 20px;
+											padding-bottom: 15px;
+											border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+										">
+											<div style="
+												width: 50px;
+												height: 50px;
+												background: rgba(255, 255, 255, 0.2);
+												border-radius: 50%;
+												display: flex;
+												align-items: center;
+												justify-content: center;
+												margin-right: 15px;
+												font-size: 24px;
+											">🔬</div>
+											<div style="text-align: left;">
+												<h4 style="margin: 0; font-size: 18px; font-weight: 600;">Testing Module</h4>
+												<p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px;">${testingType}</p>
+											</div>
+										</div>
+										
+										<div style="
+											display: flex;
+											align-items: center;
+											margin-bottom: 20px;
+											padding-bottom: 15px;
+											border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+										">
+											<div style="
+												width: 50px;
+												height: 50px;
+												background: rgba(255, 255, 255, 0.2);
+												border-radius: 50%;
+												display: flex;
+												align-items: center;
+												justify-content: center;
+												margin-right: 15px;
+												font-size: 24px;
+											">💧</div>
+											<div style="text-align: left;">
+												<h4 style="margin: 0; font-size: 18px; font-weight: 600;">Sample ID</h4>
+												<p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px; font-family: monospace; letter-spacing: 1px;">${idOneWaterSample}</p>
+											</div>
+										</div>
+										
+										<div style="
+											display: flex;
+											align-items: center;
+											background: rgba(255, 255, 255, 0.15);
+											border-radius: 10px;
+											padding: 15px;
+										">
+											<div style="
+												width: 50px;
+												height: 50px;
+												background: rgba(46, 204, 113, 0.3);
+												border-radius: 50%;
+												display: flex;
+												align-items: center;
+												justify-content: center;
+												margin-right: 15px;
+												font-size: 24px;
+											">✅</div>
+											<div style="text-align: left;">
+												<h4 style="margin: 0; font-size: 18px; font-weight: 600;">Status</h4>
+												<p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px;">Data already exists in the system</p>
+											</div>
+										</div>
+									</div>
+								`,
+								confirmButtonText: '✨ Got it!',
+								confirmButtonColor: '#3498db',
+								customClass: {
+									popup: 'futuristic-popup',
+									title: 'futuristic-title',
+									confirmButton: 'futuristic-button'
+								},
+								showClass: {
+									popup: 'animate__animated animate__fadeInUp animate__faster'
+								},
+								hideClass: {
+									popup: 'animate__animated animate__fadeOutDown animate__faster'
+								}
+							});
+						} else {
+							// Data doesn't exist or status is not success, proceed to module
+							let fullUrl = `${window.location.origin}/limsonewater/index.php/${url}?barcode=${barcode}&idOneWaterSample=${idOneWaterSample}&idTestingType=${idTestingType}`;
+							window.location.href = fullUrl;
+						}
+					},
+					error: function(jqXHR, textStatus, errorThrown) {
+						Swal.close(); // Close loading indicator
+						
+						// On error, show futuristic warning message but still allow navigation
+						Swal.fire({
+							icon: 'warning',
+							title: '<span style="color: #FF6B6B; font-weight: 600;">⚠️ Connection Issue</span>',
+							html: `
+								<div style="
+									background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+									border-radius: 15px;
+									padding: 25px;
+									margin: 15px 0;
+									color: #2c3e50;
+									box-shadow: 0 8px 32px rgba(255, 107, 107, 0.3);
+									backdrop-filter: blur(10px);
+									border: 1px solid rgba(255, 255, 255, 0.2);
+								">
+									<div style="
+										display: flex;
+										align-items: center;
+										margin-bottom: 20px;
+										padding-bottom: 15px;
+										border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+									">
+										<div style="
+											width: 50px;
+											height: 50px;
+											background: rgba(255, 255, 255, 0.3);
+											border-radius: 50%;
+											display: flex;
+											align-items: center;
+											justify-content: center;
+											margin-right: 15px;
+											font-size: 24px;
+										">🔌</div>
+										<div style="text-align: left;">
+											<h4 style="margin: 0; font-size: 18px; font-weight: 600;">Network Status</h4>
+											<p style="margin: 5px 0 0 0; opacity: 0.8; font-size: 14px;">Could not verify data availability</p>
+										</div>
+									</div>
+									
+									<div style="
+										display: flex;
+										align-items: center;
+										margin-bottom: 20px;
+										padding-bottom: 15px;
+										border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+									">
+										<div style="
+											width: 50px;
+											height: 50px;
+											background: rgba(255, 255, 255, 0.3);
+											border-radius: 50%;
+											display: flex;
+											align-items: center;
+											justify-content: center;
+											margin-right: 15px;
+											font-size: 24px;
+										">⚡</div>
+										<div style="text-align: left;">
+											<h4 style="margin: 0; font-size: 18px; font-weight: 600;">Error Details</h4>
+											<p style="margin: 5px 0 0 0; opacity: 0.8; font-size: 14px;">${errorThrown || 'Network timeout or connection error'}</p>
+										</div>
+									</div>
+									
+									<div style="
+										display: flex;
+										align-items: center;
+										background: rgba(255, 255, 255, 0.2);
+										border-radius: 10px;
+										padding: 15px;
+									">
+										<div style="
+											width: 50px;
+											height: 50px;
+											background: rgba(52, 152, 219, 0.3);
+											border-radius: 50%;
+											display: flex;
+											align-items: center;
+											justify-content: center;
+											margin-right: 15px;
+											font-size: 24px;
+										">🚀</div>
+										<div style="text-align: left;">
+											<h4 style="margin: 0; font-size: 18px; font-weight: 600;">Next Action</h4>
+											<p style="margin: 5px 0 0 0; opacity: 0.8; font-size: 14px;">Proceeding to module anyway...</p>
+										</div>
+									</div>
+								</div>
+							`,
+							timer: 3000,
+							showConfirmButton: true,
+							confirmButtonText: '🚀 Continue',
+							confirmButtonColor: '#ff9a9e',
+							customClass: {
+								popup: 'futuristic-popup',
+								title: 'futuristic-title',
+								confirmButton: 'futuristic-button-warning'
+							},
+							showClass: {
+								popup: 'animate__animated animate__fadeInUp animate__faster'
+							},
+							hideClass: {
+								popup: 'animate__animated animate__fadeOutDown animate__faster'
+							}
+						}).then(() => {
+							let fullUrl = `${window.location.origin}/limsonewater/index.php/${url}?barcode=${barcode}&idOneWaterSample=${idOneWaterSample}&idTestingType=${idTestingType}`;
+							window.location.href = fullUrl;
+						});
+					}
+				});
 			}
 		});
 
@@ -674,7 +1077,6 @@
 		$('#example2').on('click', '.btn_edit_det', function() {
 			let tr = $(this).closest('tr');
 			let data = table.row(tr).data();
-			console.log(data);
 
 			$('#cancelButton').click(function() {
 				location.reload();
@@ -719,8 +1121,6 @@
 				});
 
 				$('#compose-modal').modal('show');
-			} else {
-				console.log('Error: id_testing_type is undefined or null');
 			}
 		});
 
