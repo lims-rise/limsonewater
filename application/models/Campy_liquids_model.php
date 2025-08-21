@@ -108,7 +108,7 @@ class Campy_liquids_model extends CI_Model
 
     function subjsonBiochemical($id, $biochemical_tube) {
 
-        $this->datatables->select('rbl.id_result_biochemical_liquids, rbl.id_campy_liquids, rbl.id_result_hba_liquids, cl.campy_assay_barcode, rbl.oxidase, rbl.catalase, rbl.confirmation, rbl.sample_store, rbl.biochemical_tube, rbl.flag');
+        $this->datatables->select('rbl.id_result_biochemical_liquids, rbl.id_campy_liquids, rbl.id_result_hba_liquids, cl.campy_assay_barcode, rbl.gramlysis, rbl.oxidase, rbl.catalase, rbl.confirmation, rbl.sample_store, rbl.biochemical_tube, rbl.flag');
         $this->datatables->from('campy_result_biochemical_liquids AS rbl');
         $this->datatables->join('campy_liquids AS cl', 'rbl.id_campy_liquids = cl.id_campy_liquids', 'left');
         $this->datatables->where('rbl.flag', '0');

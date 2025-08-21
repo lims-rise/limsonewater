@@ -857,25 +857,27 @@
             $('#textInform2').fadeOut();
         });
 
-        $('#enterococcus, #enterococcus_largewells, #enterococcus_smallwells').on("keyup change", function() {
-            let enterococcusMPN = parseFloat($('#enterococcus').val()) || 0;
-            let elutionVol = parseFloat($('#elution_volume').val()) || 0;
-            let sampleDryWeight = parseFloat($('#sample_dry_weight').val()) || 0;
+        //ini yang betul
+        // $('#enterococcus, #enterococcus_largewells, #enterococcus_smallwells').on("keyup change", function() {
+        //     let enterococcusMPN = parseFloat($('#enterococcus').val()) || 0;
+        //     let elutionVol = parseFloat($('#elution_volume').val()) || 0;
+        //     let sampleDryWeight = parseFloat($('#sample_dry_weight').val()) || 0;
 
-            enterococcusMPN = enterococcusMPN / 100;
-            let ecoliDryweight = (enterococcusMPN * elutionVol) / sampleDryWeight;
-            $('#ecoli_dryweight').val(ecoliDryweight.toFixed(2)); // 2 angka desimal
-        });
+        //     enterococcusMPN = enterococcusMPN / 100;
+        //     let ecoliDryweight = (enterococcusMPN * elutionVol) / sampleDryWeight;
+        //     $('#ecoli_dryweight').val(ecoliDryweight.toFixed(2)); // 2 angka desimal
+        // });
 
-        $('#enterococcus, #ecoli_dryweight, #enterococcus_largewells, #enterococcus_smallwells').on("keyup change", function() {
-            let ecoliDryweight = parseFloat($('#ecoli_dryweight').val()) || 0;
-            let elutionVol = parseFloat($('#elution_volume').val()) || 0;
-            let sampleDryWeight = parseFloat($('#sample_dry_weight').val()) || 0;
+        // $('#enterococcus, #ecoli_dryweight, #enterococcus_largewells, #enterococcus_smallwells').on("keyup change", function() {
+        //     let ecoliDryweight = parseFloat($('#ecoli_dryweight').val()) || 0;
+        //     let elutionVol = parseFloat($('#elution_volume').val()) || 0;
+        //     let sampleDryWeight = parseFloat($('#sample_dry_weight').val()) || 0;
 
-            ecoliDryweight = ecoliDryweight / 100;
-            let lowerdetectionDryweight = (ecoliDryweight * elutionVol) / sampleDryWeight;
-            $('#lowerdetection_dryweight').val(lowerdetectionDryweight.toFixed(2)); // 2 angka desimal
-        });
+        //     ecoliDryweight = ecoliDryweight / 100;
+        //     let lowerdetectionDryweight = (ecoliDryweight * elutionVol) / sampleDryWeight;
+        //     $('#lowerdetection_dryweight').val(lowerdetectionDryweight.toFixed(2)); // 2 angka desimal
+        // });
+        //end of ini yang betul
 
         // function calculateEcoliDryweight() {
         //     let enterococcusMPN = parseFloat($('#enterococcus').val()) || 0;
@@ -942,31 +944,31 @@
             return result; 
         }
 
-        $('#enterococcus_largewells').on('change keypress keyup keydown', function(event) {        
-            let empn = datachart($('#enterococcus_largewells').val(), $('#enterococcus_smallwells').val());
-            if (empn == 'Invalid'){
-                $('#enterococcus').css({'background-color' : '#FFE6E7'});
-                $('#enterococcus_largewells').val('0');
-                $('#enterococcus_smallwells').val('0');
-            }
-            else {
-                $('#enterococcus').css({'background-color' : '#EEEEEE'});
-            }
-            $("#enterococcus").val(empn);
-        });
+        // $('#enterococcus_largewells').on('change keypress keyup keydown', function(event) {        
+        //     let empn = datachart($('#enterococcus_largewells').val(), $('#enterococcus_smallwells').val());
+        //     if (empn == 'Invalid'){
+        //         $('#enterococcus').css({'background-color' : '#FFE6E7'});
+        //         $('#enterococcus_largewells').val('0');
+        //         $('#enterococcus_smallwells').val('0');
+        //     }
+        //     else {
+        //         $('#enterococcus').css({'background-color' : '#EEEEEE'});
+        //     }
+        //     $("#enterococcus").val(empn);
+        // });
 
-        $('#enterococcus_smallwells').on('change keypress keyup keydown', function(event) {        
-            let empn = datachart($('#enterococcus_largewells').val(), $('#enterococcus_smallwells').val());
-            if (empn == 'Invalid'){
-                $('#enterococcus').css({'background-color' : '#FFE6E7'});
-                $('#enterococcus_largewells').val('0');
-                $('#enterococcus_smallwells').val('0');
-            }
-            else {
-                $('#enterococcus').css({'background-color' : '#EEEEEE'});
-            }
-            $("#enterococcus").val(empn);
-        });
+        // $('#enterococcus_smallwells').on('change keypress keyup keydown', function(event) {        
+        //     let empn = datachart($('#enterococcus_largewells').val(), $('#enterococcus_smallwells').val());
+        //     if (empn == 'Invalid'){
+        //         $('#enterococcus').css({'background-color' : '#FFE6E7'});
+        //         $('#enterococcus_largewells').val('0');
+        //         $('#enterococcus_smallwells').val('0');
+        //     }
+        //     else {
+        //         $('#enterococcus').css({'background-color' : '#EEEEEE'});
+        //     }
+        //     $("#enterococcus").val(empn);
+        // });
 
         function showConfirmationDelete(url) {
             deleteUrl = url; // Set the URL to the variable
@@ -1149,11 +1151,11 @@
             $('#enterococcus_largewells').val('');
             $('#enterococcus_smallwells').val('');
             $('#enterococcus').val('0');
-            $('#enterococcus').attr('readonly', true);
+            // $('#enterococcus').attr('readonly', true);
             $('#ecoli_dryweight').val('0');
-            $('#ecoli_dryweight').attr('readonly', true);
+            // $('#ecoli_dryweight').attr('readonly', true);
             $('#lowerdetection_dryweight').val('0');
-            $('#lowerdetection_dryweight').attr('readonly', true);
+            // $('#lowerdetection_dryweight').attr('readonly', true);
             $('#remarks').val('');
             $('#compose-modal').modal('show');
         });
@@ -1175,11 +1177,11 @@
             $('#enterococcus_largewells').val(data.enterococcus_largewells);
             $('#enterococcus_smallwells').val(data.enterococcus_smallwells);
             $('#enterococcus').val(data.enterococcus);
-            $('#enterococcus').attr('readonly', true);
+            // $('#enterococcus').attr('readonly', true);
             $('#ecoli_dryweight').val(data.ecoli_dryweight);
-            $('#ecoli_dryweight').attr('readonly', true);
+            // $('#ecoli_dryweight').attr('readonly', true);
             $('#lowerdetection_dryweight').val(data.lowerdetection_dryweight);
-            $('#lowerdetection_dryweight').attr('readonly', true);
+            // $('#lowerdetection_dryweight').attr('readonly', true);
             $('#remarks').val(data.remarks);
             $('#compose-modal').modal('show');
         });
