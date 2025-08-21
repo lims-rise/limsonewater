@@ -16,11 +16,11 @@ class Sample_reception_model extends CI_Model
 
     // datatables
     public function json() {
-        $this->datatables->select('NULL AS toggle, sr.id_project, sr.client_quote_number, sr.client, sr.id_client_sample, cc.client_name, sr.id_client_contact, sr.number_sample, sr.comments, sr.files, sr.date_collected, sr.time_collected, 
+        $this->datatables->select('NULL AS toggle, sr.id_project, sr.client_quote_number, sr.client, sr.id_client_sample, COALESCE(cc.client_name, sr.client, "Unknown Client") as client_name, sr.id_client_contact, sr.number_sample, sr.comments, sr.files, sr.date_collected, sr.time_collected, 
             sr.date_created, sr.date_updated, sr.flag', FALSE);
             
         $this->datatables->from('sample_reception sr');
-        $this->datatables->join('ref_client cc', 'sr.id_client_contact = cc.id_client_contact', 'left');
+        $this->datatables->join('ref_client cc', 'sr.id_client_contact = cc.id_client_contact AND cc.flag = 0', 'left');
         $this->datatables->where('sr.flag', '0');
     
         $lvl = $this->session->userdata('id_user_level');
@@ -151,7 +151,7 @@ class Sample_reception_model extends CI_Model
     function get_rep($id)
     {
         $this->db->select('a.report_number, a.report_date, a.id_project, a.client, 
-                            d.client_name, d.address, d.phone1, d.phone2, d.email, 
+                            COALESCE(d.client_name, a.client, "Unknown Client") as client_name, d.address, d.phone1, d.phone2, d.email, 
                             a.client_quote_number, a.po_number, 
                             DATE_FORMAT(e.from_date, "%d-%b-%Y") AS from_date,
                             DATE_FORMAT(e.to_date, "%d-%b-%Y") AS to_date,
@@ -160,7 +160,7 @@ class Sample_reception_model extends CI_Model
         $this->db->from('sample_reception a');
         $this->db->join('sample_reception_sample b', 'a.id_project = b.id_project', 'left');
         $this->db->join('ref_person c', 'b.id_person = c.id_person', 'left');
-        $this->db->join('ref_client d', 'a.id_client_contact = d.id_client_contact', 'left');
+        $this->db->join('ref_client d', 'a.id_client_contact = d.id_client_contact AND d.flag = 0', 'left');
         $this->db->join('(SELECT id_project, MIN(date_arrival) AS from_date, MAX(date_arrival) AS to_date 
                            FROM sample_reception_sample
                            GROUP BY id_project) e', 'e.id_project = a.id_project', 'left');
@@ -716,12 +716,11 @@ class Sample_reception_model extends CI_Model
     // Get export data for CSV with real data from database
     public function get_export_data($id_project) {
         // First get basic project info
-        $this->db->select('sr.*, cc.client_name, cc.address, cc.phone1, cc.email');
+        $this->db->select('sr.*, COALESCE(cc.client_name, sr.client, "Unknown Client") as client_name, cc.address, cc.phone1, cc.email');
         $this->db->from('sample_reception sr');
-        $this->db->join('ref_client cc', 'sr.id_client_contact = cc.id_client_contact', 'left');
+        $this->db->join('ref_client cc', 'sr.id_client_contact = cc.id_client_contact AND cc.flag = 0', 'left');
         $this->db->where('sr.id_project', $id_project);
         $this->db->where('sr.flag', '0');
-        $this->db->where('cc.flag', '0');
         $project = $this->db->get()->row_array();
         
         if (!$project) {
@@ -735,31 +734,35 @@ class Sample_reception_model extends CI_Model
             srs.time_collected,
             srs.date_arrival,
             srs.time_arrival,
-            rst.sampletype,
-            rp.initial,
+            COALESCE(rst.sampletype, "Unknown Sample") as sampletype,
+            COALESCE(rp.initial, "Unknown") as initial,
             srt.barcode,
             srt.id_testing_type,
-            rt.testing_type,
+            COALESCE(rt.testing_type, "Unknown Test") as testing_type,
             rt.prefix
         ');
         $this->db->from('sample_reception_sample srs');
-        $this->db->join('ref_sampletype rst', 'srs.id_sampletype = rst.id_sampletype', 'left');
-        $this->db->join('ref_person rp', 'srs.id_person = rp.id_person', 'left');
-        $this->db->join('sample_reception_testing srt', 'srs.id_sample = srt.id_sample', 'left');
-        $this->db->join('ref_testing rt', 'srt.id_testing_type = rt.id_testing_type', 'left');
+        $this->db->join('ref_sampletype rst', 'srs.id_sampletype = rst.id_sampletype AND rst.flag = 0', 'left');
+        $this->db->join('ref_person rp', 'srs.id_person = rp.id_person AND rp.flag = 0', 'left');
+        $this->db->join('sample_reception_testing srt', 'srs.id_sample = srt.id_sample AND srt.flag = 0', 'left');
+        $this->db->join('ref_testing rt', 'srt.id_testing_type = rt.id_testing_type AND rt.flag = 0', 'left');
         $this->db->where('srs.id_project', $id_project);
         $this->db->where('srs.flag', '0');
-        $this->db->where('rst.flag', '0');
-        $this->db->where('rp.flag', '0');
-        $this->db->where('srt.flag', '0');
-        $this->db->where('rt.flag', '0');
         $samples = $this->db->get()->result_array();
 
         $exportData = [];
         
-        // If no samples found, create at least one row with project data
+        // If no samples found, create at least one row with project data to ensure CSV export works
         if (empty($samples)) {
-            $samples = [['id_one_water_sample' => '-', 'sampletype' => '-', 'testing_type' => '-']];
+            $samples = [[
+                'id_one_water_sample' => $project['id_project'] ?? 'NO_SAMPLES', 
+                'sampletype' => 'No Samples', 
+                'testing_type' => 'No Testing',
+                'initial' => 'Unknown',
+                'date_collected' => null,
+                'date_arrival' => null,
+                'time_arrival' => null
+            ]];
         }
 
         foreach ($samples as $i => $sample) {

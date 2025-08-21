@@ -836,7 +836,9 @@ class Sample_reception extends CI_Controller
     // Export CSV function for OWL Report
     public function export_csv($id_project = null) {
         if (!$id_project) {
-            show_404();
+            // Instead of show_404, send JSON error response or redirect back
+            $this->session->set_flashdata('error', 'Project ID is required for CSV export');
+            redirect('sample_reception');
             return;
         }
         
@@ -844,7 +846,9 @@ class Sample_reception extends CI_Controller
         $data = $this->Sample_reception_model->get_export_data($id_project);
         
         if (empty($data)) {
-            show_error('No data found for this project', 404);
+            // Instead of show_error, redirect back with error message
+            $this->session->set_flashdata('error', 'No data found for project: ' . $id_project);
+            redirect('sample_reception/rep_print2/' . $id_project);
             return;
         }
         
@@ -855,6 +859,11 @@ class Sample_reception extends CI_Controller
         header('Content-Type: text/csv; charset=utf-8');
         header('Content-Disposition: attachment; filename="' . $filename . '"');
         header('Cache-Control: max-age=0');
+        
+        // Disable output buffering to prevent issues
+        if (ob_get_level()) {
+            ob_end_clean();
+        }
         
         // Create file pointer
         $output = fopen('php://output', 'w');
@@ -887,6 +896,62 @@ class Sample_reception extends CI_Controller
         // Close file pointer
         fclose($output);
         exit();
+    }
+
+    // Check if export data exists for AJAX validation
+    public function check_export_data($id_project = null) {
+        header('Content-Type: application/json');
+        
+        if (!$id_project) {
+            echo json_encode(['has_data' => false, 'message' => 'Project ID is required']);
+            return;
+        }
+        
+        // Get export data from model
+        $data = $this->Sample_reception_model->get_export_data($id_project);
+        
+        // Return JSON response
+        echo json_encode([
+            'has_data' => !empty($data),
+            'count' => count($data),
+            'message' => empty($data) ? 'No data found for this project' : 'Data available for export'
+        ]);
+    }
+
+    // Debug method to test export data generation
+    public function test_export_data($id_project = null) {
+        if (!$id_project) {
+            echo "Project ID is required";
+            return;
+        }
+        
+        echo "<h3>Testing Export Data for Project: $id_project</h3>";
+        
+        // Get export data from model
+        $data = $this->Sample_reception_model->get_export_data($id_project);
+        
+        echo "<p>Data count: " . count($data) . "</p>";
+        
+        if (empty($data)) {
+            echo "<p style='color: red;'>No data found!</p>";
+            
+            // Test if project exists
+            $project = $this->Sample_reception_model->get_by_id($id_project);
+            if ($project) {
+                echo "<p style='color: blue;'>Project exists in database</p>";
+                echo "<pre>";
+                print_r($project);
+                echo "</pre>";
+            } else {
+                echo "<p style='color: red;'>Project not found in database</p>";
+            }
+            
+        } else {
+            echo "<p style='color: green;'>Data found successfully!</p>";
+            echo "<pre>";
+            print_r($data[0]); // Show first record
+            echo "</pre>";
+        }
     }
 }
 
