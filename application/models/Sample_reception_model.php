@@ -14,7 +14,6 @@ class Sample_reception_model extends CI_Model
         parent::__construct();
     }
 
-    // datatables
     public function json() {
         $this->datatables->select('NULL AS toggle, sr.id_project, sr.client_quote_number, sr.client, sr.id_client_sample, COALESCE(cc.client_name, sr.client, "Unknown Client") as client_name, sr.id_client_contact, sr.number_sample, sr.comments, sr.files, sr.date_collected, sr.time_collected, 
             sr.date_created, sr.date_updated, sr.flag', FALSE);
