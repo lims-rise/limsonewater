@@ -422,6 +422,7 @@ class Campy_liquids extends CI_Controller
         $id_result_biochemical_liquids = $this->input->post('id_result_biochemical_liquids', TRUE);
         $id_result_hba_liquids = $this->input->post('id_result_hba1_liquids', TRUE);
         $id_campy_liquids = $this->input->post('id_campy_liquidsBiochemical', TRUE);
+        $gramlysis = $this->input->post('gramlysis', TRUE);
         $oxidase = $this->input->post('oxidase', TRUE);
         $catalase = $this->input->post('catalase', TRUE);
         $confirmation = $this->input->post('confirmation', TRUE);
@@ -429,10 +430,16 @@ class Campy_liquids extends CI_Controller
         $biochemical_tube = $this->input->post('biochemical_tube', TRUE);
         $id_one_water_sample = $this->input->post('idBiochemical_one_water_sample', TRUE);
 
+        // Defaukt value if the attribute is null
+        if ($gramlysis === null) $gramlysis = '-';
+        if ($oxidase === null) $oxidase = '-';
+        if ($catalase === null) $catalase = '-';
+
         if ($mode == "insert") {
             $data = array(
                 'id_campy_liquids' => $id_campy_liquids,
                 'id_result_hba_liquids' => $id_result_hba_liquids,
+                'gramlysis' => $gramlysis,
                 'oxidase' => $oxidase,
                 'catalase' => $catalase,
                 'confirmation' => $confirmation,
@@ -451,6 +458,7 @@ class Campy_liquids extends CI_Controller
             $data = array(
                 'id_campy_liquids' => $id_campy_liquids,
                 'id_result_hba_liquids' => $id_result_hba_liquids,
+                'gramlysis' => $gramlysis,
                 'oxidase' => $oxidase,
                 'catalase' => $catalase,
                 'confirmation' => $confirmation,

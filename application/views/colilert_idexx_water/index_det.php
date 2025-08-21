@@ -884,59 +884,59 @@
             return result; 
         }
 
-        $('#ecoli_largewells').on('change keypress keyup keydown', function(event) {        
-            let empn = datachart($('#ecoli_largewells').val(), $('#ecoli_smallwells').val());
-            if (empn == 'Invalid'){
-                $('#ecoli').css({'background-color' : '#FFE6E7'});
-                $('#ecoli_largewells').val('0');
-                $('#ecoli_smallwells').val('0');
-            }
-            else {
-                $('#ecoli').css({'background-color' : '#EEEEEE'});
-            }
-            $("#ecoli").val(empn);
-        });
+        // $('#ecoli_largewells').on('change keypress keyup keydown', function(event) {        
+        //     let empn = datachart($('#ecoli_largewells').val(), $('#ecoli_smallwells').val());
+        //     if (empn == 'Invalid'){
+        //         $('#ecoli').css({'background-color' : '#FFE6E7'});
+        //         $('#ecoli_largewells').val('0');
+        //         $('#ecoli_smallwells').val('0');
+        //     }
+        //     else {
+        //         $('#ecoli').css({'background-color' : '#EEEEEE'});
+        //     }
+        //     $("#ecoli").val(empn);
+        // });
 
-        $('#ecoli_smallwells').on('change keypress keyup keydown', function(event) {        
-            let empn = datachart($('#ecoli_largewells').val(), $('#ecoli_smallwells').val());
-            if (empn == 'Invalid'){
-                $('#ecoli').css({'background-color' : '#FFE6E7'});
-                $('#ecoli_largewells').val('0');
-                $('#ecoli_smallwells').val('0');
-            }
-            else {
-                $('#ecoli').css({'background-color' : '#EEEEEE'});
-            }
-            $("#ecoli").val(empn);
-        });
+        // $('#ecoli_smallwells').on('change keypress keyup keydown', function(event) {        
+        //     let empn = datachart($('#ecoli_largewells').val(), $('#ecoli_smallwells').val());
+        //     if (empn == 'Invalid'){
+        //         $('#ecoli').css({'background-color' : '#FFE6E7'});
+        //         $('#ecoli_largewells').val('0');
+        //         $('#ecoli_smallwells').val('0');
+        //     }
+        //     else {
+        //         $('#ecoli').css({'background-color' : '#EEEEEE'});
+        //     }
+        //     $("#ecoli").val(empn);
+        // });
 
 
 
-        $('#coliforms_largewells').on('change keypress keyup keydown', function(event) {        
-            let empn = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
-            if (empn == 'Invalid'){
-                $('#total_coliforms').css({'background-color' : '#FFE6E7'});
-                $('#coliforms_largewells').val('0');
-                $('#coliforms_smallwells').val('0');
-            }
-            else {
-                $('#total_coliforms').css({'background-color' : '#EEEEEE'});
-            }
-            $("#total_coliforms").val(empn);
-        });
+        // $('#coliforms_largewells').on('change keypress keyup keydown', function(event) {        
+        //     let empn = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
+        //     if (empn == 'Invalid'){
+        //         $('#total_coliforms').css({'background-color' : '#FFE6E7'});
+        //         $('#coliforms_largewells').val('0');
+        //         $('#coliforms_smallwells').val('0');
+        //     }
+        //     else {
+        //         $('#total_coliforms').css({'background-color' : '#EEEEEE'});
+        //     }
+        //     $("#total_coliforms").val(empn);
+        // });
 
-        $('#coliforms_smallwells').on('change keypress keyup keydown', function(event) {        
-            let empn = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
-            if (empn == 'Invalid'){
-                $('#total_coliforms').css({'background-color' : '#FFE6E7'});
-                $('#coliforms_largewells').val('0');
-                $('#coliforms_smallwells').val('0');
-            }
-            else {
-                $('#total_coliforms').css({'background-color' : '#EEEEEE'});
-            }
-            $("#total_coliforms").val(empn);
-        });
+        // $('#coliforms_smallwells').on('change keypress keyup keydown', function(event) {        
+        //     let empn = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
+        //     if (empn == 'Invalid'){
+        //         $('#total_coliforms').css({'background-color' : '#FFE6E7'});
+        //         $('#coliforms_largewells').val('0');
+        //         $('#coliforms_smallwells').val('0');
+        //     }
+        //     else {
+        //         $('#total_coliforms').css({'background-color' : '#EEEEEE'});
+        //     }
+        //     $("#total_coliforms").val(empn);
+        // });
 
         function showConfirmationDelete(url) {
             deleteUrl = url; // Set the URL to the variable
@@ -1121,7 +1121,7 @@
             $('#ecoli_largewells').val('0');
             $('#ecoli_smallwells').val('0');
             $('#ecoli').val('');
-            $('#lowerdetection').val('');
+            $('#lowerdetection').val('0');
             $('#coliforms_largewells').val('0');
             $('#coliforms_smallwells').val('0');
             $('#total_coliforms').val('');
@@ -1146,12 +1146,12 @@
             $('#ecoli_largewells').val(data.ecoli_largewells);
             $('#ecoli_smallwells').val(data.ecoli_smallwells);
             $('#ecoli').val(data.ecoli);
-            $('#ecoli').attr('readonly', true);
+            // $('#ecoli').attr('readonly', true);
             $('#lowerdetection').val(data.lowerdetection);
             $('#coliforms_largewells').val(data.coliforms_largewells);
             $('#coliforms_smallwells').val(data.coliforms_smallwells);
             $('#total_coliforms').val(data.total_coliforms);
-            $('#total_coliforms').attr('readonly', true);
+            // $('#total_coliforms').attr('readonly', true);
             $('#remarks').val(data.remarks);
             $('#compose-modal').modal('show');
         });

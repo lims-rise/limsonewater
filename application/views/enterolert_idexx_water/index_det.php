@@ -855,31 +855,31 @@
             return result; 
         }
 
-        $('#enterococcus_largewells').on('change keypress keyup keydown', function(event) {        
-            let empn = datachart($('#enterococcus_largewells').val(), $('#enterococcus_smallwells').val());
-            if (empn == 'Invalid'){
-                $('#enterococcus').css({'background-color' : '#FFE6E7'});
-                $('#enterococcus_largewells').val('0');
-                $('#enterococcus_smallwells').val('0');
-            }
-            else {
-                $('#enterococcus').css({'background-color' : '#EEEEEE'});
-            }
-            $("#enterococcus").val(empn);
-        });
+        // $('#enterococcus_largewells').on('change keypress keyup keydown', function(event) {        
+        //     let empn = datachart($('#enterococcus_largewells').val(), $('#enterococcus_smallwells').val());
+        //     if (empn == 'Invalid'){
+        //         $('#enterococcus').css({'background-color' : '#FFE6E7'});
+        //         $('#enterococcus_largewells').val('0');
+        //         $('#enterococcus_smallwells').val('0');
+        //     }
+        //     else {
+        //         $('#enterococcus').css({'background-color' : '#EEEEEE'});
+        //     }
+        //     $("#enterococcus").val(empn);
+        // });
 
-        $('#enterococcus_smallwells').on('change keypress keyup keydown', function(event) {        
-            let empn = datachart($('#enterococcus_largewells').val(), $('#enterococcus_smallwells').val());
-            if (empn == 'Invalid'){
-                $('#enterococcus').css({'background-color' : '#FFE6E7'});
-                $('#enterococcus_largewells').val('0');
-                $('#enterococcus_smallwells').val('0');
-            }
-            else {
-                $('#enterococcus').css({'background-color' : '#EEEEEE'});
-            }
-            $("#enterococcus").val(empn);
-        });
+        // $('#enterococcus_smallwells').on('change keypress keyup keydown', function(event) {        
+        //     let empn = datachart($('#enterococcus_largewells').val(), $('#enterococcus_smallwells').val());
+        //     if (empn == 'Invalid'){
+        //         $('#enterococcus').css({'background-color' : '#FFE6E7'});
+        //         $('#enterococcus_largewells').val('0');
+        //         $('#enterococcus_smallwells').val('0');
+        //     }
+        //     else {
+        //         $('#enterococcus').css({'background-color' : '#EEEEEE'});
+        //     }
+        //     $("#enterococcus").val(empn);
+        // });
 
         function showConfirmationDelete(url) {
             deleteUrl = url; // Set the URL to the variable

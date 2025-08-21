@@ -889,26 +889,26 @@
             $('#textInform2').fadeOut();
         });
 
-        $('#ecoli, #lowerdetection, #ecoli_largewells, #ecoli_smallwells').on("keyup change", function() {
-            let eColi = parseFloat($('#ecoli').val()) || 0;
-            let loweDetection = parseFloat($('#lowerdetection').val()) || 0;
-            let elutionVol = parseFloat($('#elution_volume').val()) || 0;
-            let sampleDryWeight = parseFloat($('#sample_dry_weight').val()) || 0;
+        // $('#ecoli, #lowerdetection, #ecoli_largewells, #ecoli_smallwells').on("keyup change", function() {
+        //     let eColi = parseFloat($('#ecoli').val()) || 0;
+        //     let loweDetection = parseFloat($('#lowerdetection').val()) || 0;
+        //     let elutionVol = parseFloat($('#elution_volume').val()) || 0;
+        //     let sampleDryWeight = parseFloat($('#sample_dry_weight').val()) || 0;
 
-            eColi = eColi / 100;
-            let ecoliDryweight = (eColi * elutionVol) / sampleDryWeight;
-            $('#ecoli_dryweight').val(ecoliDryweight.toFixed(2)); // 2 angka desimal
-        });
+        //     eColi = eColi / 100;
+        //     let ecoliDryweight = (eColi * elutionVol) / sampleDryWeight;
+        //     $('#ecoli_dryweight').val(ecoliDryweight.toFixed(2)); // 2 angka desimal
+        // });
 
-        $('#ecoli, #lowerdetection, #ecoli_largewells, #ecoli_smallwells').on("keyup change", function() {
-            let loweDetection = parseFloat($('#lowerdetection').val()) || 0;
-            let elutionVol = parseFloat($('#elution_volume').val()) || 0;
-            let sampleDryWeight = parseFloat($('#sample_dry_weight').val()) || 0;
+        // $('#ecoli, #lowerdetection, #ecoli_largewells, #ecoli_smallwells').on("keyup change", function() {
+        //     let loweDetection = parseFloat($('#lowerdetection').val()) || 0;
+        //     let elutionVol = parseFloat($('#elution_volume').val()) || 0;
+        //     let sampleDryWeight = parseFloat($('#sample_dry_weight').val()) || 0;
 
-            loweDetection = loweDetection / 100;
-            let lowerdetectionDryweight = (loweDetection * elutionVol) / sampleDryWeight;
-            $('#lowerdetection_dryweight').val(lowerdetectionDryweight.toFixed(2)); // 2 angka desimal
-        });
+        //     loweDetection = loweDetection / 100;
+        //     let lowerdetectionDryweight = (loweDetection * elutionVol) / sampleDryWeight;
+        //     $('#lowerdetection_dryweight').val(lowerdetectionDryweight.toFixed(2)); // 2 angka desimal
+        // });
 
         function datachart(valueLargeWells, valueSmallWells) {
             $.ajax({
@@ -936,59 +936,59 @@
             return result; 
         }
 
-        $('#ecoli_largewells').on('change keypress keyup keydown', function(event) {        
-            let empn = datachart($('#ecoli_largewells').val(), $('#ecoli_smallwells').val());
-            if (empn == 'Invalid'){
-                $('#ecoli').css({'background-color' : '#FFE6E7'});
-                $('#ecoli_largewells').val('0');
-                $('#ecoli_smallwells').val('0');
-            }
-            else {
-                $('#ecoli').css({'background-color' : '#EEEEEE'});
-            }
-            $("#ecoli").val(empn);
-        });
+        // $('#ecoli_largewells').on('change keypress keyup keydown', function(event) {        
+        //     let empn = datachart($('#ecoli_largewells').val(), $('#ecoli_smallwells').val());
+        //     if (empn == 'Invalid'){
+        //         $('#ecoli').css({'background-color' : '#FFE6E7'});
+        //         $('#ecoli_largewells').val('0');
+        //         $('#ecoli_smallwells').val('0');
+        //     }
+        //     else {
+        //         $('#ecoli').css({'background-color' : '#EEEEEE'});
+        //     }
+        //     $("#ecoli").val(empn);
+        // });
 
-        $('#ecoli_smallwells').on('change keypress keyup keydown', function(event) {        
-            let empn = datachart($('#ecoli_largewells').val(), $('#ecoli_smallwells').val());
-            if (empn == 'Invalid'){
-                $('#ecoli').css({'background-color' : '#FFE6E7'});
-                $('#ecoli_largewells').val('0');
-                $('#ecoli_smallwells').val('0');
-            }
-            else {
-                $('#ecoli').css({'background-color' : '#EEEEEE'});
-            }
-            $("#ecoli").val(empn);
-        });
+        // $('#ecoli_smallwells').on('change keypress keyup keydown', function(event) {        
+        //     let empn = datachart($('#ecoli_largewells').val(), $('#ecoli_smallwells').val());
+        //     if (empn == 'Invalid'){
+        //         $('#ecoli').css({'background-color' : '#FFE6E7'});
+        //         $('#ecoli_largewells').val('0');
+        //         $('#ecoli_smallwells').val('0');
+        //     }
+        //     else {
+        //         $('#ecoli').css({'background-color' : '#EEEEEE'});
+        //     }
+        //     $("#ecoli").val(empn);
+        // });
 
 
 
-        $('#coliforms_largewells').on('change keypress keyup keydown', function(event) {        
-            let empn = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
-            if (empn == 'Invalid'){
-                $('#total_coliforms').css({'background-color' : '#FFE6E7'});
-                $('#coliforms_largewells').val('0');
-                $('#coliforms_smallwells').val('0');
-            }
-            else {
-                $('#total_coliforms').css({'background-color' : '#EEEEEE'});
-            }
-            $("#total_coliforms").val(empn);
-        });
+        // $('#coliforms_largewells').on('change keypress keyup keydown', function(event) {        
+        //     let empn = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
+        //     if (empn == 'Invalid'){
+        //         $('#total_coliforms').css({'background-color' : '#FFE6E7'});
+        //         $('#coliforms_largewells').val('0');
+        //         $('#coliforms_smallwells').val('0');
+        //     }
+        //     else {
+        //         $('#total_coliforms').css({'background-color' : '#EEEEEE'});
+        //     }
+        //     $("#total_coliforms").val(empn);
+        // });
 
-        $('#coliforms_smallwells').on('change keypress keyup keydown', function(event) {        
-            let empn = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
-            if (empn == 'Invalid'){
-                $('#total_coliforms').css({'background-color' : '#FFE6E7'});
-                $('#coliforms_largewells').val('0');
-                $('#coliforms_smallwells').val('0');
-            }
-            else {
-                $('#total_coliforms').css({'background-color' : '#EEEEEE'});
-            }
-            $("#total_coliforms").val(empn);
-        });
+        // $('#coliforms_smallwells').on('change keypress keyup keydown', function(event) {        
+        //     let empn = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
+        //     if (empn == 'Invalid'){
+        //         $('#total_coliforms').css({'background-color' : '#FFE6E7'});
+        //         $('#coliforms_largewells').val('0');
+        //         $('#coliforms_smallwells').val('0');
+        //     }
+        //     else {
+        //         $('#total_coliforms').css({'background-color' : '#EEEEEE'});
+        //     }
+        //     $("#total_coliforms").val(empn);
+        // });
 
         function showConfirmationDelete(url) {
             deleteUrl = url; // Set the URL to the variable
@@ -1175,16 +1175,16 @@
             $('#ecoli_largewells').val('');
             $('#ecoli_smallwells').val('');
             $('#ecoli').val('0');
-            $('#ecoli').attr('readonly', true);
+            // $('#ecoli').attr('readonly', true);
             $('#lowerdetection').val('');
             $('#ecoli_dryweight').val('');
-            $('#ecoli_dryweight').attr('readonly', true);
+            // $('#ecoli_dryweight').attr('readonly', true);
             $('#lowerdetection_dryweight').val('');
-            $('#lowerdetection_dryweight').attr('readonly', true);
+            // $('#lowerdetection_dryweight').attr('readonly', true);
             $('#coliforms_largewells').val('');
             $('#coliforms_smallwells').val('');
             $('#total_coliforms').val('0');
-            $('#total_coliforms').attr('readonly', true);
+            // $('#total_coliforms').attr('readonly', true);
             $('#remarks').val('');
             $('#compose-modal').modal('show');
         });
@@ -1206,16 +1206,16 @@
             $('#ecoli_largewells').val(data.ecoli_largewells);
             $('#ecoli_smallwells').val(data.ecoli_smallwells);
             $('#ecoli').val(data.ecoli);
-            $('#ecoli').attr('readonly', true);
+            // $('#ecoli').attr('readonly', true);
             $('#lowerdetection').val(data.lowerdetection);
             $('#ecoli_dryweight').val(data.ecoli_dryweight);
-            $('#ecoli_dryweight').attr('readonly', true);
+            // $('#ecoli_dryweight').attr('readonly', true);
             $('#lowerdetection_dryweight').val(data.lowerdetection_dryweight);
-            $('#lowerdetection_dryweight').attr('readonly', true);
+            // $('#lowerdetection_dryweight').attr('readonly', true);
             $('#coliforms_largewells').val(data.coliforms_largewells);
             $('#coliforms_smallwells').val(data.coliforms_smallwells);
             $('#total_coliforms').val(data.total_coliforms);
-            $('#total_coliforms').attr('readonly', true);
+            // $('#total_coliforms').attr('readonly', true);
             $('#remarks').val(data.remarks);
             $('#compose-modal').modal('show');
         });

@@ -311,6 +311,19 @@
 	backdrop-filter: blur(20px) !important;
 	border: 1px solid rgba(255, 255, 255, 0.3) !important;
 	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.2) !important;
+	padding: 20px !important;
+}
+
+.futuristic-popup .swal2-actions {
+	display: flex !important;
+	flex-direction: row !important;
+	gap: 12px !important;
+	justify-content: center !important;
+	align-items: center !important;
+	margin: 15px 0 10px 0 !important;
+	padding: 0 20px !important;
+	flex-wrap: nowrap !important;
+	max-width: 100% !important;
 }
 
 .futuristic-title {
@@ -319,16 +332,44 @@
 	margin-bottom: 20px !important;
 }
 
+.futuristic-button-orange {
+	border-radius: 25px !important;
+	padding: 10px 25px !important;
+	font-weight: 600 !important;
+	font-size: 14px !important;
+	border: none !important;
+	background: #f39c12 !important;
+	color: white !important;
+	box-shadow: 0 8px 25px rgba(243, 156, 18, 0.4) !important;
+	transition: all 0.3s ease !important;
+	text-transform: none !important;
+	min-width: 120px !important;
+	max-width: 140px !important;
+}
+
+.futuristic-button-orange:hover {
+	transform: translateY(-2px) !important;
+	box-shadow: 0 12px 35px rgba(243, 156, 18, 0.6) !important;
+	background: #e67e22 !important;
+}
+
+.futuristic-button-orange:active {
+	transform: translateY(0px) !important;
+	box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4) !important;
+}
+
 .futuristic-button {
 	border-radius: 25px !important;
-	padding: 12px 30px !important;
+	padding: 10px 25px !important;
 	font-weight: 600 !important;
-	font-size: 16px !important;
+	font-size: 14px !important;
 	border: none !important;
 	background: linear-gradient(135deg, #3498db 0%, #2980b9 100%) !important;
 	box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4) !important;
 	transition: all 0.3s ease !important;
 	text-transform: none !important;
+	min-width: 120px !important;
+	max-width: 140px !important;
 }
 
 .futuristic-button:hover {
@@ -343,24 +384,28 @@
 
 .futuristic-button-warning {
 	border-radius: 25px !important;
-	padding: 12px 30px !important;
+	padding: 10px 25px !important;
 	font-weight: 600 !important;
-	font-size: 16px !important;
+	font-size: 14px !important;
 	border: none !important;
-	background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%) !important;
-	box-shadow: 0 8px 25px rgba(255, 154, 158, 0.4) !important;
+	background: #f39c12 !important;
+	color: white !important;
+	box-shadow: 0 8px 25px rgba(243, 156, 18, 0.4) !important;
 	transition: all 0.3s ease !important;
 	text-transform: none !important;
+	min-width: 120px !important;
+	max-width: 140px !important;
 }
 
 .futuristic-button-warning:hover {
 	transform: translateY(-2px) !important;
-	box-shadow: 0 12px 35px rgba(255, 154, 158, 0.6) !important;
+	box-shadow: 0 12px 35px rgba(243, 156, 18, 0.6) !important;
+	background: #e67e22 !important;
 }
 
 .futuristic-button-warning:active {
 	transform: translateY(0px) !important;
-	box-shadow: 0 6px 20px rgba(255, 154, 158, 0.4) !important;
+	box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4) !important;
 }
 
 /* Animation classes */
@@ -401,6 +446,34 @@
 
 .animate__fadeOutDown {
 	animation-name: fadeOutDown;
+}
+
+/* Global SweetAlert2 button layout fix */
+.swal2-popup .swal2-actions {
+	display: flex !important;
+	flex-direction: row !important;
+	gap: 12px !important;
+	justify-content: center !important;
+	align-items: center !important;
+	margin: 15px 0 10px 0 !important;
+	padding: 0 15px !important;
+	flex-wrap: nowrap !important;
+	max-width: calc(100% - 30px) !important;
+	box-sizing: border-box !important;
+}
+
+.swal2-popup .swal2-actions button {
+	margin: 0 !important;
+	flex: 0 0 auto !important;
+	max-width: 45% !important;
+	white-space: nowrap !important;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+}
+
+.swal2-popup {
+	max-width: 500px !important;
+	width: 90% !important;
 }
 
 
@@ -968,57 +1041,206 @@
 			}
 		});
 
-		// Klik link untuk status
-		// $('#example2 tbody').on('click', 'a.url-link-status', function() {
-		// 	let idOneWaterSample = $(this).data('id_one_water_sample');
-		// 	let url = $(this).data('url');
-
-		// 	if (url) {
-		// 		let fullUrlStatus = `${window.location.origin}/limsonewater/index.php/${url}/read/${idOneWaterSample}`;
-		// 		window.location.href = fullUrlStatus;
-		// 	}
-		// });
+		// Klik link untuk status dengan fallback ke main module
 		$('#example2 tbody').on('click', 'a.url-link-status', function() {
+			let barcode = $(this).data('barcode');
 			let idOneWaterSample = $(this).data('id_one_water_sample');
+			let idTestingType = $(this).data('id_testing_type');
 			let url = $(this).data('url');
+			let testingType = $(this).text().split(' - ')[0]; // Extract testing type name
 
 			if (url) {
 				let fullUrlStatus = `${window.location.origin}/limsonewater/index.php/${url}/read/${idOneWaterSample}`;
 
-				// Menambahkan indikator loading
+				// Show enhanced loading indicator for status check
 				Swal.fire({
-					title: 'Checking...',
-					text: 'Please wait while we verify the page availability.',
-					didOpen: () => {
-						Swal.showLoading();
+					title: '<span style="color: #3498db; font-weight: 600;">📊 Checking Status...</span>',
+					html: `
+						<div style="
+							background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+							border-radius: 15px;
+							padding: 30px;
+							margin: 15px 0;
+							color: white;
+							box-shadow: 0 8px 32px rgba(52, 152, 219, 0.3);
+							backdrop-filter: blur(10px);
+							border: 1px solid rgba(255, 255, 255, 0.2);
+							text-align: center;
+						">
+							<div style="
+								width: 60px;
+								height: 60px;
+								background: rgba(255, 255, 255, 0.2);
+								border-radius: 50%;
+								display: inline-flex;
+								align-items: center;
+								justify-content: center;
+								margin-bottom: 20px;
+								animation: pulse 2s infinite;
+								font-size: 28px;
+							">📈</div>
+							<h4 style="margin: 0 0 10px 0; font-size: 20px; font-weight: 600;">Verifying Status Page</h4>
+							<p style="margin: 0; opacity: 0.9; font-size: 14px;">
+								Checking if status data is available...
+							</p>
+							<div style="
+								margin-top: 20px;
+								height: 4px;
+								background: rgba(255, 255, 255, 0.3);
+								border-radius: 2px;
+								overflow: hidden;
+							">
+								<div style="
+									height: 100%;
+									background: linear-gradient(90deg, #ffffff, #3498db, #2980b9, #ffffff);
+									background-size: 200% 100%;
+									animation: shimmer 1.5s infinite;
+								"></div>
+							</div>
+						</div>
+					`,
+					allowOutsideClick: false,
+					showConfirmButton: false,
+					customClass: {
+						popup: 'futuristic-popup',
+						title: 'futuristic-title'
+					},
+					showClass: {
+						popup: 'animate__animated animate__fadeInUp animate__faster'
 					}
 				});
 
-				// Memeriksa status halaman
+				// Check if status page exists
 				$.ajax({
 					url: fullUrlStatus,
 					type: 'HEAD',
+					timeout: 8000, // 8 second timeout
 					success: function() {
-						// Jika status 200 OK, lakukan pengalihan
+						Swal.close();
+						// If status page exists, redirect to it
 						window.location.href = fullUrlStatus;
 					},
-					error: function(xhr) {
-						// Jika status bukan 200 OK, tampilkan pesan kesalahan
+					error: function(xhr, textStatus, errorThrown) {
+						Swal.close();
+						
+						// Status page not available, offer fallback to main module
+						let mainModuleUrl = `${window.location.origin}/limsonewater/index.php/${url}?idOneWaterSample=${idOneWaterSample}`;
+						
 						Swal.fire({
-							icon: 'error',
-							title: 'Page Not Available',
-							text: 'The page you are trying to access is not available.',
-							confirmButtonText: 'OK'
+							icon: 'warning',
+							title: '<span style="color: #3498db; font-weight: 600;">📊 Status Page Not Available</span>',
+							html: `
+								<div style="
+									background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+									border-radius: 15px;
+									padding: 25px;
+									margin: 15px 0;
+									color: white;
+									box-shadow: 0 8px 32px rgba(52, 152, 219, 0.3);
+									backdrop-filter: blur(10px);
+									border: 1px solid rgba(255, 255, 255, 0.2);
+								">
+									<div style="
+										display: flex;
+										align-items: center;
+										margin-bottom: 20px;
+										padding-bottom: 15px;
+										border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+									">
+										<div style="
+											width: 50px;
+											height: 50px;
+											background: rgba(255, 255, 255, 0.2);
+											border-radius: 50%;
+											display: flex;
+											align-items: center;
+											justify-content: center;
+											margin-right: 15px;
+											font-size: 24px;
+										">📊</div>
+										<div style="text-align: left;">
+											<h4 style="margin: 0; font-size: 18px; font-weight: 600;">Status Module</h4>
+											<p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px;">${testingType} : ${idOneWaterSample} - Status View</p>
+										</div>
+									</div>
+									
+									<div style="
+										display: flex;
+										align-items: center;
+										margin-bottom: 20px;
+										padding-bottom: 15px;
+										border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+									">
+										<div style="
+											width: 50px;
+											height: 50px;
+											background: rgba(255, 255, 255, 0.2);
+											border-radius: 50%;
+											display: flex;
+											align-items: center;
+											justify-content: center;
+											margin-right: 15px;
+											font-size: 24px;
+										">⚠️</div>
+										<div style="text-align: left;">
+											<h4 style="margin: 0; font-size: 18px; font-weight: 600;">Status</h4>
+											<p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px;">${testingType} detail page is not available</p>
+										</div>
+									</div>
+									
+									<div style="
+										display: flex;
+										align-items: center;
+										background: rgba(255, 255, 255, 0.15);
+										border-radius: 10px;
+										padding: 15px;
+									">
+										<div style="
+											width: 50px;
+											height: 50px;
+											background: rgba(52, 152, 219, 0.3);
+											border-radius: 50%;
+											display: flex;
+											align-items: center;
+											justify-content: center;
+											margin-right: 15px;
+											font-size: 24px;
+										">🔗</div>
+										<div style="text-align: left;">
+											<h4 style="margin: 0; font-size: 18px; font-weight: 600;">Alternative</h4>
+											<p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px;">Redirect to main testing module instead? click cancel</p>
+										</div>
+									</div>
+								</div>
+							`,
+							showCancelButton: true,
+							confirmButtonText: '🚀 Go Main-Module',
+							cancelButtonText: '❌ Cancel',
+							confirmButtonColor: '#3498db',
+							cancelButtonColor: '#f39c12',
+							buttonsStyling: false,
+							customClass: {
+								popup: 'futuristic-popup',
+								title: 'futuristic-title',
+								confirmButton: 'futuristic-button',
+								cancelButton: 'futuristic-button-orange'
+							},
+							showClass: {
+								popup: 'animate__animated animate__fadeInUp animate__faster'
+							},
+							hideClass: {
+								popup: 'animate__animated animate__fadeOutDown animate__faster'
+							}
+						}).then((result) => {
+							if (result.isConfirmed) {
+								// Redirect to main module
+								window.location.href = mainModuleUrl;
+							}
 						});
 					}
 				});
 			}
 		});
-
-
-
-
-
 
         $('#example2 tbody').on('click', 'tr', function () {
             if ($(this).hasClass('active')) {
