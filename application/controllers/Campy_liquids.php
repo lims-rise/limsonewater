@@ -90,14 +90,13 @@ class Campy_liquids extends CI_Controller
 
             );
             
-        // Mendapatkan final concentration
-        $finalConcentration = $this->Campy_liquids_model->subjsonFinalConcentration($id);
+        // Mendapatkan final concentration menggunakan id_campy_liquids
+        $finalConcentration = $this->Campy_liquids_model->subjsonFinalConcentration($row->id_campy_liquids);
         if ($finalConcentration) {
             $data['finalConcentration'] = $finalConcentration;
         } else {
             $data['finalConcentration'] = []; // Pastikan ini tidak null
         }
-        
         // Load view with data
         $this->template->load('template','campy_liquids/index_det', $data);
 

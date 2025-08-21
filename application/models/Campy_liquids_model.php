@@ -140,6 +140,7 @@ class Campy_liquids_model extends CI_Model
         $this->db->distinct();
         $this->db->from('campy_sample_volumes_liquids');
         $this->db->where('id_campy_liquids', $id);
+        $this->db->where('flag', '0');
         $this->db->order_by('tube_number', 'ASC');
         $tube_numbers = $this->db->get()->result_array();
     
@@ -156,7 +157,7 @@ class Campy_liquids_model extends CI_Model
         }
         $case_query = implode(', ', $case_statements);
     
-        // Final query
+        // Final query - Use same structure as get_export that works
         $this->db->select("cl.id_one_water_sample, cl.id_person, rp.initial, cl.mpn_pcr_conducted, cl.number_of_tubes, cl.campy_assay_barcode, cl.date_sample_processed, cl.time_sample_processed, cl.elution_volume, rs.sampletype,
                            $case_query, 
                            GROUP_CONCAT(DISTINCT rbl.biochemical_tube ORDER BY rbl.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
@@ -166,12 +167,11 @@ class Campy_liquids_model extends CI_Model
         $this->db->join('campy_result_hba_liquids AS rhl', 'cl.id_campy_liquids = rhl.id_campy_liquids', 'left');
         $this->db->join('campy_sample_growth_plate_hba_liquids AS sgphl', 'rhl.id_result_hba_liquids = sgphl.id_result_hba_liquids', 'left');
         $this->db->join('campy_sample_volumes_liquids AS svl1', 'rhl.id_campy_liquids = svl1.id_campy_liquids', 'left');
-        $this->db->join('campy_result_biochemical_liquids AS rbl', 'sgphl.id_result_hba_liquids = rbl.id_result_hba_liquids', 'left');
+        $this->db->join('campy_result_biochemical_liquids AS rbl', 'sgphl.id_result_hba_liquids = rbl.id_result_hba_liquids AND rbl.flag = 0', 'left');
         $this->db->join('ref_sampletype AS rs', 'cl.id_sampletype = rs.id_sampletype', 'left');
-        $this->db->join('ref_person AS rp',  'cl.id_person = rp.id_person', 'left');
+        $this->db->join('ref_person AS rp', 'cl.id_person = rp.id_person', 'left');
     
-        // Conditions
-        $this->db->where('rbl.flag', '0');
+        // Conditions - Use same condition as get_export
         $this->db->where('rhl.id_campy_liquids', $id);
         $this->db->group_by('rhl.id_result_hba_liquids');
     
@@ -180,14 +180,20 @@ class Campy_liquids_model extends CI_Model
         if ($q->num_rows() > 0) {
             $response = $q->result(); // Fetch all results if available
             foreach ($response as $key => $value) {
-                $confirmations = explode(',', $value->confirmation);
-                $biochemical_tubes = explode(',', $value->biochemical_tube);
+                $confirmations = !empty($value->confirmation) ? explode(',', $value->confirmation) : [];
+                $biochemical_tubes = !empty($value->biochemical_tube) ? explode(',', $value->biochemical_tube) : [];
     
                 $confirmation_array = []; // Inisialisasi array konfirmasi
 
-                // Creating an associative array for confirmation
-                foreach ($biochemical_tubes as $index => $tube) {
-                    $confirmation_array[$tube] = explode(':', $confirmations[$index] ?? 'No Growth Plate')[1] ?? 'No Growth Plate'; // Default to "No Growth"
+                // Membuat array asosiasi untuk konfirmasi - same logic as get_export
+                if (!empty($biochemical_tubes) && !empty($confirmations)) {
+                    foreach ($biochemical_tubes as $index => $tube) {
+                        $tube = trim($tube);
+                        if (!empty($tube)) {
+                            $confirmation_parts = explode(':', $confirmations[$index] ?? 'No Growth Plate');
+                            $confirmation_array[$tube] = isset($confirmation_parts[1]) ? trim($confirmation_parts[1]) : 'No Growth Plate';
+                        }
+                    }
                 }
                 $value->confirmation = $confirmation_array; // Assign confirmation yang sudah diproses
             }
@@ -196,7 +202,6 @@ class Campy_liquids_model extends CI_Model
         return $response;
     }
 
-    
     
      
 
