@@ -116,6 +116,14 @@
 </head>
 <body>
 
+    <?php if ($this->session->flashdata('error')): ?>
+        <div class="alert alert-danger alert-dismissible" style="margin: 10px;">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-ban"></i> Error!</h4>
+            <?php echo $this->session->flashdata('error'); ?>
+        </div>
+    <?php endif; ?>
+
     <div class="noprint">
         <div class="modal-footer clearfix">
             <button id='export-csv' class="btn btn-success no-print"><i class="fa fa-file-excel-o"></i> Export to CSV</button>
@@ -561,12 +569,38 @@
                 return false;
             });
 
-            // Export to CSV functionality
+            // Export to CSV functionality with better error handling
             $('#export-csv').click(function() {
                 var id_project = $('#id_project').val();
                 if (id_project) {
-                    // Redirect to backend CSV export
-                    window.location.href = '<?php echo site_url('sample_reception/export_csv/'); ?>' + id_project;
+                    // Show loading indicator
+                    var originalText = $(this).text();
+                    $(this).text('Exporting...').prop('disabled', true);
+                    
+                    // Use AJAX to check if data exists first
+                    $.ajax({
+                        type: 'GET',
+                        url: '<?php echo site_url('sample_reception/check_export_data/'); ?>' + id_project,
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.has_data) {
+                                // Data exists, proceed with CSV export
+                                window.location.href = '<?php echo site_url('sample_reception/export_csv/'); ?>' + id_project;
+                            } else {
+                                alert('No data found for this project. Cannot export CSV.');
+                            }
+                        },
+                        error: function() {
+                            // If check fails, try direct export anyway
+                            window.location.href = '<?php echo site_url('sample_reception/export_csv/'); ?>' + id_project;
+                        },
+                        complete: function() {
+                            // Reset button state after a delay
+                            setTimeout(function() {
+                                $('#export-csv').text(originalText).prop('disabled', false);
+                            }, 2000);
+                        }
+                    });
                 } else {
                     alert('Project ID not found. Cannot export CSV.');
                 }
