@@ -79,8 +79,8 @@ class Hemoflow extends CI_Controller
         $mode = $this->input->post('mode', TRUE);
         $dt = new DateTime();
 
-        $id_one_water_sample = $this->input->post('id_one_water_sample_list', TRUE);
-        $id_one_water_sample2 = $this->input->post('id_one_water_sample', TRUE);
+        $id_one_water_sample = $this->input->post('id_one_water_sample', TRUE);
+        $idx_one_water_sample = $this->input->post('idx_one_water_sample', TRUE);
         $id_person = $this->input->post('id_person', TRUE);
         $date_processed = $this->input->post('date_processed', TRUE);
         $time_processed = $this->input->post('time_processed', TRUE);
@@ -104,6 +104,9 @@ class Hemoflow extends CI_Controller
                 'date_created' => $dt->format('Y-m-d H:i:s'),
                 'flag' => '0',
             );
+
+            // var_dump($data);
+            // die();
     
             $this->Hemoflow_model->insert($data);
  
@@ -111,6 +114,7 @@ class Hemoflow extends CI_Controller
 
         } else if ($mode == "edit") {
             $data = array(
+                'id_one_water_sample' => $idx_one_water_sample,
                 'id_person' => $id_person,
                 'date_processed' => $date_processed,
                 'time_processed' => $time_processed,
@@ -118,11 +122,16 @@ class Hemoflow extends CI_Controller
                 'volume_filter' => $volume_filter,
                 'volume_eluted' => $volume_eluted,
                 'comments' => $comments,
-                'user_updated' => $this->session->userdata('id_users'),
-                'date_updated' => $dt->format('Y-m-d H:i:s'),
+                'uuid' => $this->uuid->v4(),
+                'user_created' => $this->session->userdata('id_users'),
+                'date_created' => $dt->format('Y-m-d H:i:s'),
+                'flag' => '0',
             );
 
-            $this->Hemoflow_model->update($id_one_water_sample2, $data);
+
+            // var_dump($data);
+            // die();
+            $this->Hemoflow_model->updateHemoflow($idx_one_water_sample, $data);
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
@@ -259,6 +268,21 @@ class Hemoflow extends CI_Controller
         
         // Save the Excel file to the output stream
         $writer->save('php://output');
+    }
+
+    public function getIdOneWaterDetails()
+    {
+        $idOneWaterSample = $this->input->post('id_one_water_sample');
+        $oneWaterSample = $this->Hemoflow_model->getOneWaterSampleById($idOneWaterSample);
+        echo json_encode($oneWaterSample);
+    }
+
+    public function barcode_restrict() 
+    {
+        $id = $this->input->get('id1');
+        $data = $this->Hemoflow_model->barcode_restrict($id);
+        header('Content-Type: application/json');
+        echo json_encode($data);
     }
 
 }

@@ -84,7 +84,7 @@ class Salmonella_liquids extends CI_Controller
             );
             
             // Mendapatkan final concentration
-            $finalConcentration = $this->Salmonella_liquids_model->subjsonFinalConcentration($id);
+            $finalConcentration = $this->Salmonella_liquids_model->subjsonFinalConcentration($row->id_salmonella_liquids);
             if ($finalConcentration) {
                 $data['finalConcentration'] = $finalConcentration;
             } else {
@@ -137,7 +137,7 @@ class Salmonella_liquids extends CI_Controller
         $time_sample_processed = $this->input->post('time_sample_processed', TRUE);
         // $sample_wetweight = $this->input->post('sample_wetweight', TRUE);
         $elution_volume = $this->input->post('elution_volume', TRUE);
-        $enrichment_media = $this->input->post('enrichment_media', TRUE);
+        $enrichment_media = $this->input->post('enrichment_media', TRUE) ? '1' : '0';
         $review = $this->input->post('review', TRUE);
         $user_review = $this->input->post('user_review', TRUE);
     
@@ -341,6 +341,7 @@ class Salmonella_liquids extends CI_Controller
 
     public function saveResultsXld() {
         $mode = $this->input->post('mode_detResultsXld', TRUE);
+        $id_one_water_sample = $this->input->post('idXld_one_water_sample', TRUE);
         $id_salmonella_liquids = $this->input->post('id_salmonella_liquids1', TRUE);
         $id_result_xld = $this->input->post('id_result_xld', TRUE);
         $dt = new DateTime();
@@ -427,7 +428,7 @@ class Salmonella_liquids extends CI_Controller
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
-        redirect(site_url("salmonella_liquids/read/" . $id_salmonella_liquids));
+        redirect(site_url("salmonella_liquids/read/" . $id_one_water_sample));
     }
 
     // public function saveResultsChromagar() {
@@ -522,6 +523,7 @@ class Salmonella_liquids extends CI_Controller
     // }
     public function saveResultsChromagar() {
         $mode = $this->input->post('mode_detResultsChromagar', TRUE);
+        $id_one_water_sample = $this->input->post('idChromagar_one_water_sample', TRUE);
         $id_salmonella_liquids = $this->input->post('id_salmonella_liquidsChromagar', TRUE);
         $id_result_chromagar = $this->input->post('id_result_chromagar', TRUE);
 
@@ -608,17 +610,16 @@ class Salmonella_liquids extends CI_Controller
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
-        redirect(site_url("salmonella_liquids/read/" . $id_salmonella_liquids));
+        redirect(site_url("salmonella_liquids/read/" . $id_one_water_sample));
     }
 
 
     public function saveBiochemical() {
         $mode = $this->input->post('mode_detResultsBiochemical', TRUE);
+        $id_one_water_sample = $this->input->post('idBiochemical_one_water_sample', TRUE);
         $id_result_biochemical = $this->input->post('id_result_biochemical', TRUE);
         $id_result_chromagar = $this->input->post('id_result_chromagar1', TRUE);
         $id_salmonella_liquids = $this->input->post('id_salmonella_liquidsBiochemical', TRUE);
-        $oxidase = $this->input->post('oxidase', TRUE);
-        $catalase = $this->input->post('catalase', TRUE);
         $confirmation = $this->input->post('confirmation', TRUE);
         $sample_store = $this->input->post('sample_store', TRUE);
         $biochemical_tube = $this->input->post('biochemical_tube', TRUE);
@@ -627,10 +628,8 @@ class Salmonella_liquids extends CI_Controller
             $data = array(
                 'id_salmonella_liquids' => $id_salmonella_liquids,
                 'id_result_chromagar' => $id_result_chromagar,
-                'oxidase' => $oxidase,
-                'catalase' => $catalase,
                 'confirmation' => $confirmation,
-                'sample_store' => $sample_store,
+                // 'sample_store' => $sample_store,
                 'biochemical_tube' => $biochemical_tube,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
@@ -645,10 +644,8 @@ class Salmonella_liquids extends CI_Controller
             $data = array(
                 'id_salmonella_liquids' => $id_salmonella_liquids,
                 'id_result_chromagar' => $id_result_chromagar,
-                'oxidase' => $oxidase,
-                'catalase' => $catalase,
                 'confirmation' => $confirmation,
-                'sample_store' => $sample_store,
+                // 'sample_store' => $sample_store,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
@@ -661,7 +658,7 @@ class Salmonella_liquids extends CI_Controller
             $this->Salmonella_liquids_model->updateResultsBiochemical($id_result_biochemical, $data);
         }
 
-        redirect(site_url("salmonella_liquids/read/" . $id_salmonella_liquids));
+        redirect(site_url("salmonella_liquids/read/" . $id_one_water_sample));
     }
 
 
@@ -1051,6 +1048,156 @@ class Salmonella_liquids extends CI_Controller
             echo json_encode([
                 'status' => false,
                 'message' => 'Failed to cancel review.'
+            ]);
+        }
+    }
+
+    public function getCalculateMPN() {
+        header('Content-Type: application/json');
+        
+        $id_salmonella_liquids = $this->input->get('id_salmonella_liquids', TRUE);
+
+        if (!$id_salmonella_liquids) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'ID Salmonella Liquids is required.'
+            ]);
+            return;
+        }
+        
+        try {
+            $mpn_data = $this->Salmonella_liquids_model->get_calculate_mpn_by_salmonella_liquids($id_salmonella_liquids);
+
+            if ($mpn_data) {
+                echo json_encode([
+                    'status' => 'success',
+                    'data' => $mpn_data
+                ]);
+            } else {
+                echo json_encode([
+                    'status' => 'not_found',
+                    'message' => 'No MPN calculation found.'
+                ]);
+            }
+        } catch (Exception $e) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Error retrieving MPN calculation: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+    public function saveCalculateMPN() {
+        header('Content-Type: application/json');
+        
+        try {
+            // Get form data
+            $mode = $this->input->post('mode_calculateMPN', TRUE);
+            $id_salmonella_liquids = $this->input->post('id_salmonella_liquids_mpn', TRUE);
+            $mpn_concentration = $this->input->post('mpn_concentration', TRUE);
+            $upper_ci = $this->input->post('upper_ci', TRUE);
+            $lower_ci = $this->input->post('lower_ci', TRUE);
+            $mpn_concentration_dw = $this->input->post('mpn_concentration_dw', TRUE);
+            $upper_ci_dw = $this->input->post('upper_ci_dw', TRUE);
+            $lower_ci_dw = $this->input->post('lower_ci_dw', TRUE);
+            
+            // Validation
+            if (!$mode || !in_array($mode, ['insert', 'edit'])) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Invalid operation mode.'
+                ]);
+                return;
+            }
+            
+            if (!$id_salmonella_liquids || !$mpn_concentration || !$upper_ci || !$lower_ci) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Required fields are missing.'
+                ]);
+                return;
+            }
+            
+            $dt = new DateTime();
+            $user_id = $this->session->userdata('id_users');
+            $lab = $this->session->userdata('lab');
+            
+            if ($mode === 'insert') {
+                // Insert mode
+                $data = array(
+                    'id_salmonella_liquids' => $id_salmonella_liquids,
+                    'mpn_concentration' => $mpn_concentration,
+                    'upper_ci' => $upper_ci,
+                    'lower_ci' => $lower_ci,
+                    'mpn_concentration_dw' => $mpn_concentration_dw ?: null,
+                    'upper_ci_dw' => $upper_ci_dw ?: null,
+                    'lower_ci_dw' => $lower_ci_dw ?: null,
+                    'flag' => '0',
+                    'lab' => $lab ? $lab : '1',
+                    'uuid' => $this->uuid->v4(),
+                    'user_created' => $user_id,
+                    'date_created' => $dt->format('Y-m-d H:i:s'),
+                );
+
+                $insert_id = $this->Salmonella_liquids_model->insertCalculateMPN($data);
+
+                if ($insert_id) {
+                    echo json_encode([
+                        'status' => 'success',
+                        'message' => 'MPN calculation saved successfully.',
+                        'id' => $insert_id
+                    ]);
+                } else {
+                    echo json_encode([
+                        'status' => 'error',
+                        'message' => 'Failed to save MPN calculation.'
+                    ]);
+                }
+                
+            } else if ($mode === 'edit') {
+                // Edit mode
+                $id_salmonella_result_mpn_liquids = $this->input->post('id_salmonella_result_mpn_liquids', TRUE);
+                
+                if (!$id_salmonella_result_mpn_liquids) {
+                    echo json_encode([
+                        'status' => 'error',
+                        'message' => 'MPN calculation ID is required for update.'
+                    ]);
+                    return;
+                }
+                
+                $data = array(
+                    'id_salmonella_liquids' => $id_salmonella_liquids,
+                    'mpn_concentration' => $mpn_concentration,
+                    'upper_ci' => $upper_ci,
+                    'lower_ci' => $lower_ci,
+                    'mpn_concentration_dw' => $mpn_concentration_dw ?: null,
+                    'upper_ci_dw' => $upper_ci_dw ?: null,
+                    'lower_ci_dw' => $lower_ci_dw ?: null,
+                    'flag' => '0',
+                    'lab' => $lab ? $lab : '1',
+                    'uuid' => $this->uuid->v4(),
+                );
+
+                $result = $this->Salmonella_liquids_model->updateCalculateMPN($id_salmonella_result_mpn_liquids, $data);
+
+                if ($result) {
+                    echo json_encode([
+                        'status' => 'success',
+                        'message' => 'MPN calculation updated successfully.'
+                    ]);
+                } else {
+                    echo json_encode([
+                        'status' => 'error',
+                        'message' => 'Failed to update MPN calculation.'
+                    ]);
+                }
+            }
+            
+        } catch (Exception $e) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Error saving MPN calculation: ' . $e->getMessage()
             ]);
         }
     }

@@ -8,12 +8,12 @@
                     </div>
                     <div class="box-body">
                         <div style="padding-bottom: 10px;">
-                            <?php
+                            <!-- <?php
                                 $lvl = $this->session->userdata('id_user_level');
                                     if ($lvl != 4){
                                          echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Extraction Biosolid</button>";
                                     }
-                            ?>        
+                            ?>         -->
                             <?php echo anchor(site_url('Hemoflow/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
                         </div>
                         <div class="table-responsive">
@@ -60,27 +60,11 @@
                         <div class="form-group">
                             <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
                             <div class="col-sm-8">
-                                <input id="id_one_water_sample" name="id_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control">
-                            <!-- </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID list</label>
-                            <div class="col-sm-8"> -->
-                                <select id="id_one_water_sample_list" name="id_one_water_sample_list" class="form-control" required>
-                                    <option value="" disabled>-- Select Sample ID --</option>
-                                    <?php
-                                        foreach($id_one as $row) {
-                                            if ($id_one_water_sample == $row['id_one_water_sample']) {
-                                                echo "<option value='".$row['id_one_water_sample']."' selected='selected'>".$row['id_one_water_sample']."</option>";
-                                            } else {
-                                                echo "<option value='".$row['id_one_water_sample']."'>".$row['id_one_water_sample']."</option>";
-                                            }
-                                        }
-                                    ?>
-                                </select>
+                                <input id="id_one_water_sample" name="id_one_water_sample" placeholder="One Water Sample ID" type="text"  class="form-control idOneWaterSampleSelect">
+                                <input id="idx_one_water_sample" name="idx_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control">
+                                <div class="val2tip"></div>
                             </div>
-                        </div>
+                         </div>
 
                         <div class="form-group">
                             <label for="id_person" class="col-sm-4 control-label">Lab Tech</label>
@@ -152,14 +136,14 @@
                         <div class="form-group">
                             <label for="volume_filter" class="col-sm-4 control-label">Volume Filter (L)</label>
                             <div class="col-sm-8">
-                                <input id="volume_filter" name="volume_filter" type="number" step="1" class="form-control">
+                                <input id="volume_filter" name="volume_filter" type="number" step="any" class="form-control" placeholder="Volume Filter (L)">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="volume_eluted" class="col-sm-4 control-label">Volume Eluted (mL)</label>
                             <div class="col-sm-8">
-                                <input id="volume_eluted" name="volume_eluted" type="number" step="0.1" class="form-control">
+                                <input id="volume_eluted" name="volume_eluted" type="number" step="any" class="form-control" placeholder="Volume Eluted (mL)">
                             </div>
                         </div>
 
@@ -228,15 +212,21 @@
     $(document).ready(function() {
         const params = new URLSearchParams(window.location.search);
         const barcodeFromUrl = params.get('barcode');
+        const idOneWaterSampleFromUrl = params.get('idOneWaterSample');
+        const idTestingTypeFromUrl = params.get('idTestingType');
+
         if (barcodeFromUrl) {
             $('#mode').val('insert');
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Hemoflow | New<span id="my-another-cool-loader"></span>');
             // $('#project_idx').hide();
-            $('#id_one_water_sample').attr('readonly', false);
-            $('#id_one_water_sample').val('');
-            $('#id_one_water_sample_list').val('');
-            $('#id_one_water_sample').hide();
-            $('#id_one_water_sample_list').show();
+            // $('#id_one_water_sample').attr('readonly', false);
+            // $('#id_one_water_sample').val('');
+            // $('#id_one_water_sample_list').val('');
+            // $('#id_one_water_sample').hide();
+            // $('#id_one_water_sample_list').show();
+            $('#id_one_water_sample').attr('readonly', true);
+            $('#id_one_water_sample').val(idOneWaterSampleFromUrl || '');  // Set ID jika ada
+            $('#idx_one_water_sample').hide();
             $('#id_person').val('');
             $('#sampletype').attr('readonly', true);
             $('#sampletype').val('');
@@ -250,14 +240,26 @@
             console.log('Barcode tidak ditemukan di URL');
         }
 
+        // Pembatalan dan kembali ke halaman sebelumnya
         $(document).on('click', '#cancelButton', function() {
-            // Ambil URL asal dari document.referrer (halaman yang mengarah ke halaman ini)
-            var previousUrl = document.referrer;
+            // Get URL parameters
+            const params = new URLSearchParams(window.location.search);
+            const barcodeFromUrl = params.get('barcode');
+            const idOneWaterSampleFromUrl = params.get('idOneWaterSample');
+            const idTestingTypeFromUrl = params.get('idTestingType');
             
-            // Jika ada URL asal, arahkan kembali ke sana
-            if (previousUrl) {
-                window.location.href = previousUrl;
-            } 
+            // Check if the necessary query parameters exist
+            if (barcodeFromUrl && idOneWaterSampleFromUrl && idTestingTypeFromUrl) {
+                // If the parameters exist, redirect to the previous page
+                var previousUrl = document.referrer;
+                
+                if (previousUrl) {
+                    window.location.href = previousUrl;  // Redirect to the previous page
+                }
+            } else {
+                // If the parameters are not found, simply close the modal
+                $('#compose-modal').modal('hide');  // Close the modal
+            }
         });
 
         function showConfirmation(url) {
@@ -342,45 +344,66 @@
         });
 
 
-        $('#id_one_water_sample_list').on("change", function() {
+        $('.idOneWaterSampleSelect').change(function() {
+            let id_one_water_sample = $(this).val(); // Mendapatkan ID produk yang dipilih
+            if (id_one_water_sample) {
+                $.ajax({
+                    url: '<?php echo site_url('Hemoflow/getIdOneWaterDetails'); ?>', // URL untuk request AJAX
+                    type: 'POST',
+                    data: { id_one_water_sample: id_one_water_sample }, // Data yang dikirim ke server
+                    dataType: 'json', // Format data yang diharapkan dari server
+                    success: function(response) {
+                        // Mengisi field 'unit_of_measure' dengan nilai yang diterima dari server
+                        $('#sampletype').val(response.sampletype || '');
+                        $('#id_sampletype').val(response.id_sampletype || '');
+
+                        // Trigger input event to handle visibility of tray_weight
+                        $('#sampletype').trigger('input');
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        // Menangani error jika terjadi kesalahan dalam request
+                        console.error('AJAX error:', textStatus, errorThrown);
+                        $('#sampletype').val('');
+                    }
+                });
+            } else {
+                $('#sampletype').val('');
+                $('#tray_weight_container').hide(); 
+            }
+        });
+
+        $('#id_one_water_sample').on("change", function() {
             $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
-            data1 = $('#id_one_water_sample_list').val();
-            // // ckbar = data1.substring(0,5).toUpperCase();
-            // // ckarray = ["N-S2-", "F-S2-", "N-F0-", "F-F0-"];
-            // // ck = $.inArray(ckbar, ckarray);
-            // if (ck == -1) {
+            id_one_water_sample = $('#id_one_water_sample').val();
             $.ajax({
                 type: "GET",
-                url: "Hemoflow/barcode_check?id1="+data1,
-                // data:data1,
+                url: "Hemoflow/barcode_restrict?id1="+id_one_water_sample,
                 dataType: "json",
                 success: function(data) {
-                    // var barcode = '';
-                    if (data.length == 0) {
-                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> is not on reception or is already in the system !</span>');
+                    if (data.length > 0) {
+                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Id One Water Sample <strong> ' + id_one_water_sample +'</strong> is already in the system !</span>');
                         $('.val1tip').tooltipster('content', tip);
                         $('.val1tip').tooltipster('show');
-                        $('#id_one_water_sample_list').focus();
-                        $('#id_one_water_sample_list').val('');     
-                        $('#sampletype').val('');    
-                        $('#id_one_water_sample_list').css({'background-color' : '#FFE6E7'});
+                        $('#id_one_water_sample').focus();
+                        $('#id_one_water_sample').val('');        
+                        $('#id_one_water_sample').css({'background-color' : '#FFE6E7'});
                         setTimeout(function(){
-                            $('#id_one_water_sample_list').css({'background-color' : '#FFFFFF'});
+                            $('#id_one_water_sample').css({'background-color' : '#FFFFFF'});
                             setTimeout(function(){
-                                $('#id_one_water_sample_list').css({'background-color' : '#FFE6E7'});
+                                $('#id_one_water_sample').css({'background-color' : '#FFE6E7'});
                                 setTimeout(function(){
-                                    $('#id_one_water_sample_list').css({'background-color' : '#FFFFFF'});
+                                    $('#id_one_water_sample').css({'background-color' : '#FFFFFF'});
                                 }, 300);                            
                             }, 300);
                         }, 300);
+                        id_one_water_sample = data[0].id_one_water_sample;
+                        console.log(data);
                     }
                     else {
-                        $('#sampletype').val(data[0].sampletype);    
                     }
                 }
             });
-        // }
-        });
+        }).trigger('change');
 
         var base_url = location.hostname;
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
@@ -490,11 +513,10 @@
             $('#mode').val('edit');
             $('#modal-title').html('<i class="fa fa-pencil-square-o"></i> Hemoflow | Update<span id="my-another-cool-loader"></span>');
             // $('#project_idx').show();
-            $('#id_one_water_sample').attr('readonly', true);
-            $('#id_one_water_sample').show();
-            $('#id_one_water_sample_list').hide();
-            $('#id_one_water_sample').val(data.id_one_water_sample);
-            $('#id_one_water_sample_list').val(data.id_one_water_sample).trigger('change');
+            $('#id_one_water_sample').hide();
+            // $('#idx_one_water_sample').show();
+            $('#idx_one_water_sample').attr('readonly', true);
+            $('#idx_one_water_sample').val(data.id_one_water_sample);
             $('#id_person').val(data.id_person).trigger('change');
             $('#sampletype').attr('readonly', true);
             $('#sampletype').val(data.sampletype);

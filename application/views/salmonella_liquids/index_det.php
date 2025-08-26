@@ -190,6 +190,15 @@
                                     <button class="btn btn-success" id="exportBtn">
                                         <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS
                                     </button>
+                                    <?php
+                                        $lvl = $this->session->userdata('id_user_level');
+                                        if ($lvl != 4){
+                                            echo '<button class="btn btn-primary" id="calculateMpnBtn" style="margin-left: 10px; position: relative;">
+                                                    <i class="fa fa-calculator" aria-hidden="true"></i> Calculate MPN
+                                                    <span id="mpnUpdateBadge" class="badge badge-warning" style="position: absolute; top: -5px; right: -5px; background-color: #ff6b6b; color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 10px; line-height: 20px; display: none;">!</span>
+                                                  </button>';
+                                        }
+                                    ?>
                                 </div>
                                 <input id="id_salmonella_liquids" name="id_salmonella_liquids" type="hidden" class="form-control input-sm" value="<?php echo $id_salmonella_liquids ?>">
 
@@ -209,20 +218,27 @@
                                                 <th>Elution Volume</th>
                                                 <th>Enrichment Media</th>
                                                 <?php if (!empty($finalConcentration)): ?>
-                                                    <?php foreach ($finalConcentration[0] as $key => $value): ?>
-                                                        <?php if (strpos($key, 'Tube') === 0): ?>
-                                                            <th><?= htmlspecialchars($key) ?> Volume</th>
-                                                        <?php endif; ?>
-                                                    <?php endforeach; ?>
                                                     <?php 
-                                                    // Ambil plate_numbers dari data pertama
-                                                    $plate_numbers = explode(',', $finalConcentration[0]->plate_numbers);
-                                                    foreach ($plate_numbers as $plate_number): ?>
-                                                        <th>Tube <?= htmlspecialchars($plate_number) ?> Result</th>
-                                                    <?php endforeach; ?>
+                                                        // Tube volume headers
+                                                        foreach ($finalConcentration[0] as $key => $value): 
+                                                            if (strpos($key, 'Tube ') === 0): ?>
+                                                                <th><?= htmlspecialchars($key) ?> Volume</th>
+                                                            <?php endif;
+                                                        endforeach;
+                                                        // Plate number headers
+                                                        $plate_numbers = [];
+                                                        if (!empty($finalConcentration[0]->plate_numbers)) {
+                                                            $plate_numbers = array_map('trim', explode(',', $finalConcentration[0]->plate_numbers));
+                                                        }
+                                                        foreach ($plate_numbers as $plate_number): ?>
+                                                            <th>Tube <?= htmlspecialchars($plate_number) ?> Result</th>
+                                                        <?php endforeach; ?>
                                                 <?php else: ?>
                                                     <th colspan="100%" style="text-align: center">No data available</th>
                                                 <?php endif; ?>
+                                                <th>Concentration MPN</th>
+                                                <th>Upper CI</th>
+                                                <th>Lower CI</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -240,24 +256,36 @@
                                                         <td><?= htmlspecialchars($concentration->sample_wetweight) ?></td>
                                                         <td><?= htmlspecialchars($concentration->elution_volume) ?></td>
                                                         <td><?= htmlspecialchars($concentration->enrichment_media) ?></td>
-
-                                                        <?php foreach ($concentration as $key => $value): ?>
-                                                            <?php if (strpos($key, 'Tube') === 0): ?>
-                                                                <td><?= htmlspecialchars($value) ?></td>
-                                                            <?php endif; ?>
-                                                        <?php endforeach; ?>
-                                                        
                                                         <?php 
-                                                        // Ambil plate_numbers dari data
-                                                        $plate_numbers = explode(',', $concentration->plate_numbers);
-                                                        
-                                                        // Loop untuk setiap plate_number
+                                                        // Tube volumes
+                                                        foreach ($concentration as $key => $value): 
+                                                            if (strpos($key, 'Tube ') === 0): ?>
+                                                                <td><?= htmlspecialchars($value) ?></td>
+                                                            <?php endif;
+                                                        endforeach;
+
+                                                        // Plate numbers
+                                                        $plate_numbers = [];
+                                                        if (!empty($concentration->plate_numbers)) {
+                                                            $plate_numbers = array_map('trim', explode(',', $concentration->plate_numbers));
+                                                        }
+                                                        // Confirmation values
+                                                        $confirmation = isset($concentration->confirmation) && is_array($concentration->confirmation) ? $concentration->confirmation : [];
                                                         foreach ($plate_numbers as $plate_number): 
-                                                            // Cek jika confirmation untuk plate_number ada
-                                                            $confirmation_value = isset($concentration->confirmation[$plate_number]) ? $concentration->confirmation[$plate_number] : 'No Available'; 
+                                                            // Normalize key for confirmation lookup (remove spaces)
+                                                            $lookup_key = trim($plate_number);
+                                                            // Try direct match, fallback to match with/without space
+                                                            $confirmation_value = isset($confirmation[$lookup_key]) ? $confirmation[$lookup_key] : (
+                                                                isset($confirmation[' ' . $lookup_key]) ? $confirmation[' ' . $lookup_key] : (
+                                                                    isset($confirmation[$plate_number]) ? $confirmation[$plate_number] : 'No Available'
+                                                                )
+                                                            );
                                                         ?>
                                                             <td><?= htmlspecialchars($confirmation_value) ?></td>
                                                         <?php endforeach; ?>
+                                                        <td><?= htmlspecialchars($concentration->mpn_concentration) ?></td>
+                                                        <td><?= htmlspecialchars($concentration->upper_ci) ?></td>
+                                                        <td><?= htmlspecialchars($concentration->lower_ci) ?></td>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             <?php else: ?>
@@ -302,6 +330,7 @@
                                             <input id="id_salmonella_liquids1" name="id_salmonella_liquids1" type="hidden" class="form-control input-sm">
                                             <input id="number_of_tubes1" name="number_of_tubes1" type="hidden" class="form-control input-sm">
                                             <input id="id_result_xld" name="id_result_xld" type="hidden" class="form-control input-sm">
+                                            <input id="idXld_one_water_sample" name="idXld_one_water_sample" type="hidden" class="form-control input-sm">
                                         </div>
                                     </div>
 
@@ -373,6 +402,7 @@
                                             <input id="id_salmonella_liquidsChromagar" name="id_salmonella_liquidsChromagar" type="hidden" class="form-control input-sm">
                                             <input id="number_of_tubesChromagar" name="number_of_tubesChromagar" type="hidden" class="form-control input-sm">
                                             <input id="id_result_chromagar" name="id_result_chromagar" type="hidden" class="form-control input-sm">
+                                            <input id="idChromagar_one_water_sample" name="idChromagar_one_water_sample" type="hidden" class="form-control input-sm">
                                         </div>
                                     </div>
 
@@ -443,44 +473,23 @@
                     <input id="id_result_biochemical" name="id_result_biochemical" type="hidden" class="form-control input-sm">
                     <input id="biochemical_tube" name="biochemical_tube" type="hidden" class="form-control input-sm">
                     <input id="id_result_chromagar1" name="id_result_chromagar1" type="hidden" class="form-control input-sm">
+                    <input id="idBiochemical_one_water_sample" name="idBiochemical_one_water_sample" type="hidden" class="form-control input-sm">
                     
-
-                    <!-- Oxidase Result -->
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Oxidase Result</label>
-                        <div class="col-sm-8">
-                            <label class="radio-inline">
-                                <input type="radio" name="oxidase"  value="Positive" required> Positive
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="oxidase"  value="Negative"> Negative
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Catalase Result -->
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Catalase Result</label>
-                        <div class="col-sm-8">
-                            <label class="radio-inline">
-                                <input type="radio" name="catalase"  value="Positive" required> Positive
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="catalase" value="Negative"> Negative
-                            </label>
-                        </div>
-                    </div>
-
                     <!-- Confirmation -->
                     <div class="form-group">
-                        <label for="confirmation" class="col-sm-4 control-label">Confirmation</label>
+                        <label class="col-sm-4 control-label">Confirmation</label>
                         <div class="col-sm-8">
-                            <input id="confirmation" name="confirmation" type="text" class="form-control" placeholder="Confirmation" readonly>
+                            <label class="radio-inline">
+                                <input type="radio" name="confirmation" value="Salmonella" required> Salmonella
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="confirmation" value="Not Salmonella"> Not Salmonella
+                            </label>
                         </div>
                     </div>
 
                     <!-- Sample Store in Biobank -->
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="sample_store" class="col-sm-4 control-label">Sample Store in Biobank</label>
                         <div class="col-sm-8">
                             <select id="sample_store" name="sample_store" class="form-control" required>
@@ -489,7 +498,7 @@
                                 <option value="No">No</option>
                             </select>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
                 <div class="modal-footer clearfix">
@@ -501,7 +510,105 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<!-- MODAL FORM Calculate MPN -->
+<div class="modal fade" id="compose-modalCalculateMPN" tabindex="-1" role="dialog" aria-hidden="true" data-bs-scrollable="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #3c8dbc; color: white;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
+                <h4 class="modal-title" id="modal-title-calculate-mpn">Calculate MPN | New</h4>
+            </div>
+            <form id="formCalculateMPN" action="<?php echo site_url('Salmonella_liquids/saveCalculateMPN') ?>" method="post" class="form-horizontal">
+                <div class="modal-body">
+                    <input id="mode_calculateMPN" name="mode_calculateMPN" type="hidden" class="form-control input-sm">
+                    <input id="id_salmonella_liquids_mpn" name="id_salmonella_liquids_mpn" type="hidden" class="form-control input-sm">
+                    <input id="id_salmonella_result_mpn_liquids" name="id_salmonella_result_mpn_liquids" type="hidden" class="form-control input-sm">
+                    <!-- <input id="current_sample_dryweight" name="current_sample_dryweight" type="hidden" class="form-control input-sm"> -->
 
+                    <!-- MPN Concentration -->
+                    <div class="form-group">
+                        <label for="mpn_concentration" class="col-sm-4 control-label">MPN Concentration</label>
+                        <div class="col-sm-8">
+                            <input id="mpn_concentration" name="mpn_concentration" type="number" step="any" class="form-control" placeholder="Enter MPN concentration" required>
+                        </div>
+                    </div>
+
+                    <!-- Upper CI -->
+                    <div class="form-group">
+                        <label for="upper_ci" class="col-sm-4 control-label">Upper CI</label>
+                        <div class="col-sm-8">
+                            <input id="upper_ci" name="upper_ci" type="number" step="any" class="form-control" placeholder="Enter upper confidence interval" required>
+                        </div>
+                    </div>
+
+                    <!-- Lower CI -->
+                    <div class="form-group">
+                        <label for="lower_ci" class="col-sm-4 control-label">Lower CI</label>
+                        <div class="col-sm-8">
+                            <input id="lower_ci" name="lower_ci" type="number" step="any" class="form-control" placeholder="Enter lower confidence interval" required>
+                        </div>
+                    </div>
+
+                    <!-- Concentration MPN/g dry weight -->
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Auto-calculated Results</label>
+                        <div class="col-sm-8">
+                            <!-- Hidden inputs to store values for database -->
+                            <input id="mpn_concentration_dw" name="mpn_concentration_dw" type="hidden">
+                            <input id="upper_ci_dw" name="upper_ci_dw" type="hidden">
+                            <input id="lower_ci_dw" name="lower_ci_dw" type="hidden">
+                            
+                            <!-- Card display for auto-calculated values -->
+                            <div class="auto-calc-cards">
+                                <!-- Full width card for main concentration -->
+                                <div class="calc-card calc-card-full">
+                                    <div class="calc-card-header">
+                                        <i class="fa fa-calculator text-primary"></i>
+                                        <span class="calc-title">Concentration MPN/g dry weight</span>
+                                    </div>
+                                    <div class="calc-card-body">
+                                        <span id="display_mpn_concentration_dw" class="calc-value">-</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Two column layout for CI values -->
+                                <div class="calc-card-row">
+                                    <div class="calc-card calc-card-half">
+                                        <div class="calc-card-header">
+                                            <i class="fa fa-arrow-up text-success"></i>
+                                            <span class="calc-title">Upper CI MPN/g dw</span>
+                                        </div>
+                                        <div class="calc-card-body">
+                                            <span id="display_upper_ci_dw" class="calc-value">-</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="calc-card calc-card-half">
+                                        <div class="calc-card-header">
+                                            <i class="fa fa-arrow-down text-warning"></i>
+                                            <span class="calc-title">Lower CI MPN/g dw</span>
+                                        </div>
+                                        <div class="calc-card-body">
+                                            <span id="display_lower_ci_dw" class="calc-value">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer clearfix" style="display: flex; align-items: center; justify-content: flex-end; gap: 10px; padding: 15px 20px; border-top: 1px solid #dee2e6; background-color: #f8f9fa;">
+                    <button type="submit" class="btn btn-primary" style="min-width: 100px; padding: 8px 16px; font-weight: 500; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,123,255,0.2); transition: all 0.3s ease;">
+                        <i class="fa fa-save" style="margin-right: 6px;"></i> Save
+                    </button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal" style="min-width: 100px; padding: 8px 16px; font-weight: 500; border-radius: 6px; box-shadow: 0 2px 4px rgba(255,193,7,0.2); transition: all 0.3s ease;">
+                        <i class="fa fa-times" style="margin-right: 6px;"></i> Cancel
+                    </button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 
@@ -828,6 +935,203 @@
 		border: 1px solid #ddd; /* Ganti border tombol */
 		cursor: not-allowed; /* Set cursor menjadi not-allowed agar tidak bisa diklik */
 	}
+
+    /* Auto-calculated Cards Styling */
+    .auto-calc-cards {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 15px;
+        width: 100%;
+        align-items: stretch;
+    }
+
+    /* Full width card for main concentration */
+    .calc-card-full {
+        width: 100% !important;
+        flex: none !important;
+        display: block !important;
+    }
+
+    /* Two column row for CI values */
+    .calc-card-row {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 15px;
+        flex-wrap: nowrap;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    /* Half width cards for CI values */
+    .calc-card-half {
+        flex: 1 1 calc(50% - 7.5px) !important;
+        min-width: 180px;
+        max-width: calc(50% - 7.5px);
+        box-sizing: border-box;
+    }
+
+    .calc-card {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 12px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        display: block !important;
+        width: auto !important;
+    }
+
+    .calc-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .calc-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #007bff, #28a745, #ffc107);
+        opacity: 0.8;
+    }
+
+    .calc-card-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+        gap: 6px;
+    }
+
+    .calc-title {
+        font-size: 11px;
+        font-weight: 600;
+        color: #495057;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .calc-card-body {
+        text-align: center;
+    }
+
+    .calc-value {
+        font-size: 18px;
+        font-weight: 700;
+        color: #212529;
+        display: block;
+        font-family: 'Courier New', monospace;
+        background: rgba(255,255,255,0.8);
+        padding: 4px 8px;
+        border-radius: 4px;
+        border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .calc-card:nth-child(1) .calc-value {
+        color: #007bff;
+    }
+
+    .calc-card-row .calc-card:nth-child(1) .calc-value {
+        color: #28a745;
+    }
+
+    .calc-card-row .calc-card:nth-child(2) .calc-value {
+        color: #ffc107;
+    }
+
+    @media (max-width: 768px) {
+        .calc-card-row {
+            flex-direction: column !important;
+            gap: 10px;
+        }
+        
+        .calc-card-half {
+            flex: 1 1 100% !important;
+            min-width: 100% !important;
+            max-width: 100% !important;
+        }
+    }
+
+    @media (min-width: 769px) {
+        .calc-card-row {
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+        }
+        
+        .calc-card-half {
+            flex: 1 1 calc(50% - 7.5px) !important;
+            min-width: calc(50% - 7.5px) !important;
+            max-width: calc(50% - 7.5px) !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .auto-calc-cards {
+            gap: 10px;
+        }
+        
+        .calc-card {
+            padding: 8px;
+        }
+        
+        .calc-title {
+            font-size: 10px;
+        }
+        
+        .calc-value {
+            font-size: 16px;
+        }
+    }
+
+    /* Enhanced Button Styling */
+    .modal-footer .btn {
+        transition: all 0.3s ease !important;
+        border: none !important;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 13px;
+    }
+
+    .modal-footer .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+    }
+
+    .modal-footer .btn:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+    }
+
+    .modal-footer .btn-primary:hover {
+        background-color: #0056b3 !important;
+        box-shadow: 0 4px 8px rgba(0,123,255,0.3) !important;
+    }
+
+    .modal-footer .btn-warning:hover {
+        background-color: #e0a800 !important;
+        box-shadow: 0 4px 8px rgba(255,193,7,0.3) !important;
+    }
+
+    /* Custom SweetAlert2 styling */
+    .swal-wide {
+        width: 600px !important;
+    }
+
+    .swal2-html-container {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .swal2-html-container p {
+        margin: 8px 0;
+    }
+
+    .swal2-html-container strong {
+        font-weight: 600;
+    }
 </style>
 <style>
 	#textInform2 .alert {
@@ -850,6 +1154,97 @@
         window.location.href = '<?php echo site_url('Salmonella_liquids/excel') ?>/' + id_salmonella_liquids;
     });
 </script>
+<script>
+    // Calculate MPN button click handler
+    document.getElementById('calculateMpnBtn').addEventListener('click', function() {
+        let id_salmonella_liquids = document.getElementById('id_salmonella_liquids').value;
+
+        // Validate sample_dryweight before proceeding
+        // let sampleDryweight = document.getElementById('sample_dryweight').value;
+        
+        // Check if sample_dryweight is empty or equals 0
+        // if (!sampleDryweight || sampleDryweight.trim() === '' || parseFloat(sampleDryweight) === 0) {
+        //     Swal.fire({
+        //         title: 'Sample Dry Weight Data is Empty!',
+        //         html: `
+        //             <div style="text-align: left; margin-top: 15px;">
+        //                 <p><i class="fa fa-exclamation-triangle" style="color: #f39c12; margin-right: 8px;"></i><strong>Sample Dry Weight is still empty or equals 0.</strong></p>
+        //                 <p style="margin-top: 10px;">Please fill in the <strong>Sample Dry Weight</strong> data first to perform MPN calculation.</p>
+        //                 <hr style="margin: 15px 0;">
+        //                 <p style="font-size: 13px; color: #666;"><i class="fa fa-info-circle" style="color: #3498db; margin-right: 5px;"></i>Sample Dry Weight data is required to calculate <strong>MPN/g Dry Weight</strong>.</p>
+        //             </div>
+        //         `,
+        //         icon: 'warning',
+        //         confirmButtonText: '<i class="fa fa-check"></i> Understood',
+        //         confirmButtonColor: '#f39c12',
+        //         customClass: {
+        //             popup: 'swal-wide'
+        //         }
+        //     });
+        //     return; // Stop execution if sample_dryweight is empty
+        // }
+
+        // Set the id_salmonella_liquids value in the modal
+        document.getElementById('id_salmonella_liquids_mpn').value = id_salmonella_liquids;
+
+        // Check if MPN calculation already exists
+        $.ajax({
+            url: '<?php echo site_url('Salmonella_liquids/getCalculateMPN'); ?>',
+            type: 'GET',
+            data: { id_salmonella_liquids: id_salmonella_liquids },
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'success') {
+                    // Data exists, set to edit mode
+                    document.getElementById('mode_calculateMPN').value = 'edit';
+                    document.getElementById('id_salmonella_result_mpn_liquids').value = response.data.id_salmonella_result_mpn_liquids;
+                    document.getElementById('mpn_concentration').value = response.data.mpn_concentration;
+                    document.getElementById('upper_ci').value = response.data.upper_ci;
+                    document.getElementById('lower_ci').value = response.data.lower_ci;
+                    document.getElementById('mpn_concentration_dw').value = response.data.mpn_concentration_dw || '';
+                    document.getElementById('upper_ci_dw').value = response.data.upper_ci_dw || '';
+                    document.getElementById('lower_ci_dw').value = response.data.lower_ci_dw || '';
+                    
+                    // Update modal title
+                    document.getElementById('modal-title-calculate-mpn').innerHTML = 'Calculate MPN | Edit';
+                } else {
+                    // No data exists, set to insert mode
+                    document.getElementById('mode_calculateMPN').value = 'insert';
+                    document.getElementById('id_salmonella_result_mpn_liquids').value = '';
+                    document.getElementById('mpn_concentration').value = '';
+                    document.getElementById('upper_ci').value = '';
+                    document.getElementById('lower_ci').value = '';
+                    document.getElementById('mpn_concentration_dw').value = '';
+                    document.getElementById('upper_ci_dw').value = '';
+                    document.getElementById('lower_ci_dw').value = '';
+                    
+                    // Update modal title
+                    document.getElementById('modal-title-calculate-mpn').innerHTML = 'Calculate MPN | New';
+                }
+                
+                // Show the modal
+                $('#compose-modalCalculateMPN').modal('show');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error checking MPN calculation:', error);
+                
+                // On error, default to insert mode
+                document.getElementById('mode_calculateMPN').value = 'insert';
+                document.getElementById('id_salmonella_result_mpn_liquids').value = '';
+                document.getElementById('mpn_concentration').value = '';
+                document.getElementById('upper_ci').value = '';
+                document.getElementById('lower_ci').value = '';
+                document.getElementById('mpn_concentration_dw').value = '';
+                document.getElementById('upper_ci_dw').value = '';
+                document.getElementById('lower_ci_dw').value = '';
+                document.getElementById('modal-title-calculate-mpn').innerHTML = 'Calculate MPN | New';
+                
+                // Show the modal
+                $('#compose-modalCalculateMPN').modal('show');
+            }
+        });
+    });
+</script>
 <script type="text/javascript">
 
     let table;
@@ -860,12 +1255,139 @@
     let id_salmonella_liquids = $('#id_salmonella_liquids').val();
     let number_of_tubes = $('#number_of_tubes').val();
     const BASE_URL = '/limsonewater/index.php';
+    let idx_one_water_sample = $('#id_one_water_sample').val();
 
     $(document).ready(function() {
        	let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
 		let userCreated = $('#user_created').val();
 		let userReview = $('#user_review').val();
 		let fullName = $('#reviewed_by_label').val();
+
+        // Function to calculate MPN per gram dry weight values
+        function calculateMpnDryWeight() {
+            let mpnConcentration = parseFloat($('#mpn_concentration').val()) || 0;
+            let upperCi = parseFloat($('#upper_ci').val()) || 0;
+            let lowerCi = parseFloat($('#lower_ci').val()) || 0;
+            let sampleDryweight = parseFloat($('#sample_dryweight').val()) || 0;
+
+            if (sampleDryweight > 0) {
+                // Calculate Concentration MPN/g dry weight = mpn_concentration / sample_dryweight
+                let mpnConcentrationDw = (mpnConcentration / sampleDryweight).toFixed(4);
+                $('#mpn_concentration_dw').val(mpnConcentrationDw);
+                $('#display_mpn_concentration_dw').text(mpnConcentrationDw);
+
+                // Calculate Upper CI MPN/g dw = upper_ci / sample_dryweight
+                let upperCiDw = (upperCi / sampleDryweight).toFixed(4);
+                $('#upper_ci_dw').val(upperCiDw);
+                $('#display_upper_ci_dw').text(upperCiDw);
+
+                // Calculate Lower CI MPN/g dw = lower_ci / sample_dryweight
+                let lowerCiDw = (lowerCi / sampleDryweight).toFixed(4);
+                $('#lower_ci_dw').val(lowerCiDw);
+                $('#display_lower_ci_dw').text(lowerCiDw);
+            } else {
+                $('#mpn_concentration_dw').val('');
+                $('#upper_ci_dw').val('');
+                $('#lower_ci_dw').val('');
+                $('#display_mpn_concentration_dw').text('-');
+                $('#display_upper_ci_dw').text('-');
+                $('#display_lower_ci_dw').text('-');
+            }
+        }
+
+        // Attach the calculation function to input events
+        $('#mpn_concentration, #upper_ci, #lower_ci').on('input', calculateMpnDryWeight);
+
+        // Also trigger calculation when the modal is shown (in case data is pre-filled)
+        $('#compose-modalCalculateMPN').on('shown.bs.modal', function() {
+            calculateMpnDryWeight();
+            // Set current sample_dryweight value for syncing to database
+            // $('#current_sample_dryweight').val($('#sample_dryweight').val());
+        });
+
+        // Calculate MPN form submission
+        $('#formCalculateMPN').submit(function(e) {
+            e.preventDefault();
+            
+            // Always use the same URL since we handle mode validation in the controller
+            let url = '<?php echo site_url('Salmonella_liquids/saveCalculateMPN'); ?>';
+            let formData = $(this).serialize();
+            
+            // Debug logging
+            console.log('Form URL:', url);
+            console.log('Form Data:', formData);
+            console.log('Mode:', $('#mode_calculateMPN').val());
+            console.log('ID Salmonella Liquids:', $('#id_salmonella_liquids_mpn').val());
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                dataType: 'json',
+                success: function(response) {
+                    console.log('Success Response:', response);
+                    if (response.status === 'success') {
+                        $('#compose-modalCalculateMPN').modal('hide');
+                        
+                        // Update initialSampleDryweight to current value to prevent further notifications
+                        initialSampleDryweight = parseFloat($('#sample_dryweight').val()) || 0;
+                        
+                        // Hide the badge since we just updated the MPN calculation
+                        $('#mpnUpdateBadge').hide();
+                        
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: response.message,
+                            timer: 2000,
+                            showConfirmButton: false
+                        }).then(function() {
+                            location.reload(); // Reload page to show updated data
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: response.message || 'Unknown error occurred.'
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error Details:');
+                    console.error('Status:', status);
+                    console.error('Error:', error);
+                    console.error('Response Text:', xhr.responseText);
+                    console.error('Status Code:', xhr.status);
+                    
+                    let errorMessage = 'Something went wrong. Please try again.';
+                    if (xhr.responseText) {
+                        try {
+                            let errorResponse = JSON.parse(xhr.responseText);
+                            errorMessage = errorResponse.message || errorMessage;
+                        } catch (e) {
+                            errorMessage = 'Server error: ' + xhr.responseText.substring(0, 100);
+                        }
+                    }
+                    
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: errorMessage
+                    });
+                }
+            });
+        });
+
+        // Reset form when modal is hidden
+        $('#compose-modalCalculateMPN').on('hidden.bs.modal', function() {
+            $('#formCalculateMPN')[0].reset();
+            $('#mode_calculateMPN').val('');
+            $('#id_salmonella_result_mpn_liquids').val('');
+            // $('#current_sample_dryweight').val('');
+            $('#mpn_concentration_dw').val('');
+            $('#upper_ci_dw').val('');
+            $('#lower_ci_dw').val('');
+        });
 
 		$('#reviewed_by_label').val(fullName ? fullName : '-');
 
@@ -1117,33 +1639,6 @@
             $('#textInform1').fadeOut(); // Fade out the card
             $('#textInform2').fadeOut();
         });
-
-    // Event listener untuk radio button Oxidase
-    $('input[name="oxidase"]').on('change', updateConfirmation);
-    
-    // Event listener untuk radio button Catalase
-    $('input[name="catalase"]').on('change', updateConfirmation);
-    
-    function updateConfirmation() {
-        const oxidaseValue = $('input[name="oxidase"]:checked').val();
-        const catalaseValue = $('input[name="catalase"]:checked').val();
-        
-        let confirmationText = '';
-
-        if (oxidaseValue === 'Positive' && catalaseValue === 'Positive') {
-            confirmationText = 'Salmonella';
-        } else if (oxidaseValue === 'Negative' && catalaseValue === 'Negative') {
-            confirmationText = 'Not Salmonella';
-        } else if (oxidaseValue === 'Positive' && catalaseValue === 'Negative') {
-            confirmationText = 'Not Salmonella';
-        } else if (oxidaseValue === 'Negative' && catalaseValue === 'Positive') {
-            confirmationText = 'Not Salmonella';
-        } else {
-            confirmationText = '';
-        }
-
-        $('#confirmation').val(confirmationText);
-    }
 
     function generateColonyPlateInputs(container, numberOfTubes) {
             container.empty(); // Clear existing inputs
@@ -1452,10 +1947,7 @@
                         <table id="${tableId}" class="table display table-bordered table-striped" width="100%">
                             <thead>
                                 <tr>
-                                    <th>Oxidase Result</th>
-                                    <th>Catalase Result</th>
                                     <th>Confirmation</th>
-                                    <th>Sample Store in Biobank</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -1486,10 +1978,7 @@
                     type: "POST"
                 },
                 columns: [
-                    {"data": "oxidase"},
-                    {"data": "catalase"},
                     {"data": "confirmation"},
-                    {"data": "sample_store"},
                     {
                         "data": "action",
                         "orderable": false,
@@ -1519,12 +2008,13 @@
 
             $('#mode_detResultsBiochemical').val('insert');
             $('#modal-title-biochemical').html(`<i class="fa fa-wpforms"></i> Insert | Tube ${plateNumber} <span id="my-another-cool-loader"></span>`);
+            $('#idBiochemical_one_water_sample').val(idx_one_water_sample);
             $('#id_salmonella_liquidsBiochemical').val(id_salmonella_liquids);
             $('#id_result_chromagar1').val(data.id_result_chromagar);
-            $('#oxidase').val('');
-            $('#catalase').val('');
+            // $('#oxidase').val('');
+            // $('#catalase').val('');
             // $('#confirmation').val('');
-            $('#sample_store').val('');
+            // $('#sample_store').val('');
             $('#biochemical_tube').val(plateNumber);
             $('#compose-modalBiochemical').modal('show');
             console.log(`Button for Biochemical Tube: ${plateNumber} clicked`);
@@ -1541,16 +2031,17 @@
             // Set nilai-nilai di dalam modal sesuai data yang didapat
             $('#mode_detResultsBiochemical').val('edit');
             $('#modal-title-biochemical').html('<i class="fa fa-pencil-square"></i> Update | Tube ' + data.biochemical_tube + ' <span id="my-another-cool-loader"></span>');
+            $('#idBiochemical_one_water_sample').val(idx_one_water_sample);
             $('#id_result_biochemical').val(data.id_result_biochemical);
             $('#id_salmonella_liquidsBiochemical').val(data.id_salmonella_liquids);
             $('#id_result_chromagar1').val(data.id_result_chromagar);
             // Set radio button untuk oxidase
-            $('input[name="oxidase"][value="' + data.oxidase + '"]').prop('checked', true);
+            // $('input[name="oxidase"][value="' + data.oxidase + '"]').prop('checked', true);
             
-            // Set radio button untuk catalase
-            $('input[name="catalase"][value="' + data.catalase + '"]').prop('checked', true);
-            $('#confirmation').val(data.confirmation);
-            $('#sample_store').val(data.sample_store);
+            // Set radio button untuk confirmation
+            $('input[name="confirmation"][value="' + data.confirmation + '"]').prop('checked', true);
+            // $('#confirmation').val(data.confirmation);
+            // $('#sample_store').val(data.sample_store);
             // Tambahkan nilai lain yang diperlukan sesuai data
 
             // Tampilkan modal untuk edit
@@ -1564,6 +2055,7 @@
         $('#addtombol_detResultsXld').click(function() {
             $('#mode_detResultsXld').val('insert');
             $('#modal-title-Xld').html('<i class="fa fa-wpforms"></i> Insert | Results XLD <span id="my-another-cool-loader"></span>');
+            $('#idXld_one_water_sample').val(idx_one_water_sample);
             $('#salmonella_assay_barcode1').val(salmonella_assay_barcode);
             $('#salmonella_assay_barcode1').attr('readonly', true);
             $('#id_salmonella_liquids1').val(id_salmonella_liquids);
@@ -1577,6 +2069,7 @@
             console.log(data);
             $('#mode_detResultsXld').val('edit');
             $('#modal-title-Xld').html('<i class="fa fa-pencil-square"></i> Update | Results XLD <span id="my-another-cool-loader"></span>');
+            $('#idXld_one_water_sample').val(idx_one_water_sample);
             $('#id_result_xld').val(data.id_result_xld);
             $('#salmonella_assay_barcode1').val(data.salmonella_assay_barcode);
             $('#salmonella_assay_barcode1').attr('readonly', true);
@@ -1633,6 +2126,7 @@
                 console.log(salmonella_assay_barcode);
 
                 // Parsing data ke komponen
+                $('#idChromagar_one_water_sample').val(idx_one_water_sample);
                 $('#salmonella_assay_barcodeChromagar').val(salmonella_assay_barcode);
                 $('#id_salmonella_liquidsChromagar').val(id_salmonella_liquids);
                 $('#salmonella_assay_barcodeChromagar').attr('readonly', true);
@@ -1691,6 +2185,7 @@
             console.log(data);
             $('#mode_detResultsChromagar').val('edit');
             $('#modal-title-Chromagar').html('<i class="fa fa-pencil-square"></i> Update | Results Chromagar <span id="my-another-cool-loader"></span>');
+            $('#idChromagar_one_water_sample').val(idx_one_water_sample);
             $('#id_result_chromagar').val(data.id_result_chromagar);
             $('#salmonella_assay_barcodeChromagar').val(data.salmonella_assay_barcode);
             $('#salmonella_assay_barcodeChromagar').attr('readonly', true);
