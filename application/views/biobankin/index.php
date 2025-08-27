@@ -290,7 +290,7 @@
     <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                    <div class="modal-header box">
+                    <div class="modal-header" style="background-color: #3c8dbc; color: white;">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="modal-title">Biobank-IN | New</h4>
                     </div>

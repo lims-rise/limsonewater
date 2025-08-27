@@ -158,7 +158,14 @@ class Campy_liquids_model extends CI_Model
         $case_query = implode(', ', $case_statements);
     
         // Final query - Use same structure as get_export that works
-        $this->db->select("cl.id_one_water_sample, cl.id_person, rp.initial, cl.mpn_pcr_conducted, cl.number_of_tubes, cl.campy_assay_barcode, cl.date_sample_processed, cl.time_sample_processed, cl.elution_volume, rs.sampletype,
+        $this->db->select("cl.id_one_water_sample, cl.id_person, rp.initial, cl.mpn_pcr_conducted, cl.number_of_tubes, cl.campy_assay_barcode, 
+                        cl.date_sample_processed, 
+                        cl.time_sample_processed, 
+                        cl.elution_volume, 
+                        rs.sampletype,
+                        rml.mpn_concentration,
+                        rml.upper_ci,
+                        rml.lower_ci,
                            $case_query, 
                            GROUP_CONCAT(DISTINCT rbl.biochemical_tube ORDER BY rbl.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
                            GROUP_CONCAT(DISTINCT CONCAT(rbl.biochemical_tube, ':', rbl.confirmation) ORDER BY rbl.biochemical_tube SEPARATOR ', ') AS confirmation,
@@ -168,6 +175,7 @@ class Campy_liquids_model extends CI_Model
         $this->db->join('campy_sample_growth_plate_hba_liquids AS sgphl', 'rhl.id_result_hba_liquids = sgphl.id_result_hba_liquids', 'left');
         $this->db->join('campy_sample_volumes_liquids AS svl1', 'rhl.id_campy_liquids = svl1.id_campy_liquids', 'left');
         $this->db->join('campy_result_biochemical_liquids AS rbl', 'sgphl.id_result_hba_liquids = rbl.id_result_hba_liquids AND rbl.flag = 0', 'left');
+        $this->db->join('campy_result_mpn_liquids AS rml', 'cl.id_campy_liquids = rml.id_campy_liquids', 'left');
         $this->db->join('ref_sampletype AS rs', 'cl.id_sampletype = rs.id_sampletype', 'left');
         $this->db->join('ref_person AS rp', 'cl.id_person = rp.id_person', 'left');
     
@@ -603,6 +611,40 @@ class Campy_liquids_model extends CI_Model
         if ($this->db->affected_rows() > 0) {
             return true;
         } else {
+            return false;
+        }
+    }
+
+    function get_calculate_mpn_by_campy_liquids($id_campy_liquids) {
+        $this->db->where('id_campy_liquids', $id_campy_liquids);
+        $this->db->where('flag', '0');
+        return $this->db->get('campy_result_mpn_liquids')->row();
+    }
+
+    function insertCalculateMPN($data) {
+        $this->db->insert('campy_result_mpn_liquids', $data);
+        
+        if ($this->db->affected_rows() > 0) {
+            return $this->db->insert_id();
+        } else {
+            // Log the error for debugging
+            log_message('error', 'Failed to insert MPN calculation: ' . $this->db->last_query());
+            log_message('error', 'Database error: ' . print_r($this->db->error(), true));
+            return false;
+        }
+    }
+
+    function updateCalculateMPN($id_campy_result_mpn_liquids, $data) {
+        $this->db->where('id_campy_result_mpn_liquids', $id_campy_result_mpn_liquids);
+        $this->db->update('campy_result_mpn_liquids', $data);
+        
+        // Check if update was successful
+        if ($this->db->affected_rows() >= 0) { // Changed from > 0 to >= 0 to handle cases where data is the same
+            return true;
+        } else {
+            // Log the error for debugging
+            log_message('error', 'Failed to update MPN calculation: ' . $this->db->last_query());
+            log_message('error', 'Database error: ' . print_r($this->db->error(), true));
             return false;
         }
     }

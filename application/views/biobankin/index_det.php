@@ -139,7 +139,7 @@
 <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<div class="modal-header box">
+  			<div class="modal-header" style="background-color: #3c8dbc; color: white;">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title" id="modal-title">Biobank-IN | Sample
 				<!-- <input id="id_one_water_sample" name="id_one_water_sample" type="text" disabled>  -->
@@ -1170,7 +1170,7 @@
 			// }
 
 			$('#mode_det').val('insert');
-			$('#modal-title-detail').html('<i class="fa fa-wpforms"></i> New Replication<span id="my-another-cool-loader"></span>');
+			$('#modal-title').html('<i class="fa fa-wpforms"></i> New Sample<span id="my-another-cool-loader"></span>');
             // $('#barcode_water').attr('readonly', false);
 			// $('#barcode_water').val('');
 			$('#id_one_water_samplex').val(id_one_water_sample);
@@ -1227,7 +1227,7 @@
 
 			// var data = this.parents('tr').data();
             $('#mode_det').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Update Replication<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Update Sample<span id="my-another-cool-loader"></span>');
             // $('#id_biobankin_detail').attr('readonly', true);
 			$('#id_biobankin_detail').val(data.id_biobankin_detail);
 			$('#id_one_water_samplex').val(id_one_water_sample);

@@ -199,9 +199,11 @@
                         </div> -->
 
                         <div class="form-group">
-                            <label for="enrichment_media" class="col-sm-4 control-label">Enrichment media</label>
+                            <label class="col-sm-4 control-label">Enrichment media</label>
                             <div class="col-sm-8">
-                                <input id="enrichment_media" name="enrichment_media" placeholder="Enrichment media" type="text" class="form-control" required>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" id="enrichment_media" name="enrichment_media" value="1"> Rappaport-Vassiliadis-Soya broth (RVS)
+                                </label>
                             </div>
                         </div>
 
@@ -845,7 +847,7 @@
             $('#sampletype').attr('readonly', true);
             $('#sample_wetweight').val('');
             $('#elution_volume').val('');
-            $('#enrichment_media').val('');
+            $('#enrichment_media').prop('checked', false);
             $('#tray_weight').val('');
             $('#traysample_wetweight').val('');
             $('#comments').val('');
@@ -1216,7 +1218,7 @@
             $('#sampletype').attr('readonly', true);
             $('#sample_wetweight').val('');
             $('#elution_volume').val('');
-            $('#enrichment_media').val('');
+            $('#enrichment_media').prop('checked', false);
             $('#tray_weight').val('');
             $('#traysample_wetweight').val('');
             $('#comments').val('');
@@ -1395,7 +1397,7 @@
             $('#time_sample_processed').val(data.time_sample_processed);
             $('#sample_wetweight').val(data.sample_wetweight);
             $('#elution_volume').val(data.elution_volume);
-            $('#enrichment_media').val(data.enrichment_media);
+            $('#enrichment_media').prop('checked', data.enrichment_media == '1');
             $('#number_of_tubes').val(data.number_of_tubes);
             $('#number_of_tubes').prop('disabled', true);
             $('#number_of_tubes1').val(data.number_of_tubes);

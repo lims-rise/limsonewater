@@ -157,7 +157,18 @@ class Salmonella_biosolids_model extends CI_Model
         $case_query = implode(', ', $case_statements);
 
         // Final query
-        $this->db->select("sb.id_one_water_sample, sb.id_person, rp.initial, sb.mpn_pcr_conducted, sb.number_of_tubes, sb.salmonella_assay_barcode, sb.date_sample_processed, sb.time_sample_processed, sb.sample_wetweight, sb.elution_volume, rs.sampletype, sb.enrichment_media,
+        $this->db->select("sb.id_one_water_sample, sb.id_person, rp.initial, sb.mpn_pcr_conducted, 
+                        sb.number_of_tubes, 
+                        sb.salmonella_assay_barcode, 
+                        sb.date_sample_processed, 
+                        sb.time_sample_processed, 
+                        sb.sample_wetweight, 
+                        sb.elution_volume, 
+                        rs.sampletype, 
+                        sb.enrichment_media,
+                        srmp.mpn_concentration,
+                        srmp.upper_ci,
+                        srmp.lower_ci,
                         $case_query,
                         GROUP_CONCAT(DISTINCT srb.biochemical_tube ORDER BY srb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
                         GROUP_CONCAT(DISTINCT CONCAT(srb.biochemical_tube, ':', srb.confirmation) ORDER BY srb.biochemical_tube SEPARATOR ', ') AS confirmation,
@@ -166,12 +177,13 @@ class Salmonella_biosolids_model extends CI_Model
         $this->db->join('salmonella_result_chromagar AS src', 'sb.id_salmonella_biosolids = src.id_salmonella_biosolids', 'left');
         $this->db->join('salmonella_sample_purple_colony_plate AS ssbcpc', 'src.id_result_chromagar = ssbcpc.id_result_chromagar', 'left');
         $this->db->join('salmonella_sample_volumes AS ssv1', 'src.id_salmonella_biosolids = ssv1.id_salmonella_biosolids', 'left');
-        $this->db->join('salmonella_result_biochemical AS srb', 'ssbcpc.id_result_chromagar = srb.id_result_chromagar', 'left');
+        $this->db->join('salmonella_result_biochemical AS srb', 'ssbcpc.id_result_chromagar = srb.id_result_chromagar AND srb.flag = 0', 'left');
+        $this->db->join('salmonella_result_mpn_biosolids AS srmp', 'sb.id_salmonella_biosolids = srmp.id_salmonella_biosolids', 'left');
         $this->db->join('ref_sampletype AS rs', 'sb.id_sampletype = rs.id_sampletype', 'left');
         $this->db->join('ref_person AS rp',  'sb.id_person = rp.id_person', 'left');
 
         // Conditions
-        $this->db->where('srb.flag', '0');
+        // $this->db->where('srb.flag', '0');
         $this->db->where('src.id_salmonella_biosolids', $id);
         $this->db->group_by('src.id_result_chromagar');
 
@@ -593,6 +605,40 @@ class Salmonella_biosolids_model extends CI_Model
         if ($this->db->affected_rows() > 0) {
             return true;
         } else {
+            return false;
+        }
+    }
+
+        function get_calculate_mpn_by_salmonella_biosolids($id_salmonella_biosolids) {
+        $this->db->where('id_salmonella_biosolids', $id_salmonella_biosolids);
+        $this->db->where('flag', '0');
+        return $this->db->get('salmonella_result_mpn_biosolids')->row();
+    }
+
+    function insertCalculateMPN($data) {
+        $this->db->insert('salmonella_result_mpn_biosolids', $data);
+
+        if ($this->db->affected_rows() > 0) {
+            return $this->db->insert_id();
+        } else {
+            // Log the error for debugging
+            log_message('error', 'Failed to insert MPN calculation: ' . $this->db->last_query());
+            log_message('error', 'Database error: ' . print_r($this->db->error(), true));
+            return false;
+        }
+    }
+
+    function updateCalculateMPN($id_salmonella_result_mpn_biosolids, $data) {
+        $this->db->where('id_salmonella_result_mpn_biosolids', $id_salmonella_result_mpn_biosolids);
+        $this->db->update('salmonella_result_mpn_biosolids', $data);
+
+        // Check if update was successful
+        if ($this->db->affected_rows() >= 0) { // Changed from > 0 to >= 0 to handle cases where data is the same
+            return true;
+        } else {
+            // Log the error for debugging
+            log_message('error', 'Failed to update MPN calculation: ' . $this->db->last_query());
+            log_message('error', 'Database error: ' . print_r($this->db->error(), true));
             return false;
         }
     }

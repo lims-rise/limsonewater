@@ -180,6 +180,15 @@
                                     <button class="btn btn-success" id="exportBtn">
                                         <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS
                                     </button>
+                                    <?php
+                                        $lvl = $this->session->userdata('id_user_level');
+                                        if ($lvl != 4){
+                                            echo '<button class="btn btn-primary" id="calculateMpnBtn" style="margin-left: 10px; position: relative;">
+                                                    <i class="fa fa-calculator" aria-hidden="true"></i> Calculate MPN
+                                                    <span id="mpnUpdateBadge" class="badge badge-warning" style="position: absolute; top: -5px; right: -5px; background-color: #ff6b6b; color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 10px; line-height: 20px; display: none;">!</span>
+                                                  </button>';
+                                        }
+                                    ?>
                                 </div>
                                 <input id="id_campy_liquids" name="id_campy_liquids" type="hidden" class="form-control input-sm" value="<?php echo $id_campy_liquids ?>">
 
@@ -265,36 +274,28 @@
                                                 <th>Date Sample Processed</th>
                                                 <th>Time Sample Processed</th>
                                                 <th>Filtration Volume(mL)</th>
-                                                
-                                                <!-- Dynamically create the column headers for tubes -->
                                                 <?php if (!empty($finalConcentration)): ?>
                                                     <?php 
-                                                        // Loop through finalConcentration to create column headers for tubes
-                                                        $tube_columns = []; 
-                                                        foreach ($finalConcentration as $concentration) {
-                                                            foreach ($concentration as $key => $value) {
-                                                                if (strpos($key, 'Tube') === 0 && !in_array($key, $tube_columns)) {
-                                                                    $tube_columns[] = $key;  // Store the tube names
-                                                                }
-                                                            }
+                                                        // Tube volume headers
+                                                        foreach ($finalConcentration[0] as $key => $value): 
+                                                            if (strpos($key, 'Tube ') === 0): ?>
+                                                                <th><?= htmlspecialchars($key) ?> Volume</th>
+                                                            <?php endif;
+                                                        endforeach;
+                                                        // Plate number headers
+                                                        $plate_numbers = [];
+                                                        if (!empty($finalConcentration[0]->plate_numbers)) {
+                                                            $plate_numbers = array_map('trim', explode(',', $finalConcentration[0]->plate_numbers));
                                                         }
-                                                    ?>
-                                                    
-                                                    <!-- Loop through tube columns to create the table headers -->
-                                                    <?php foreach ($tube_columns as $tube): ?>
-                                                        <th><?= htmlspecialchars($tube) ?> Volume</th>
-                                                    <?php endforeach; ?>
-
-                                                    <?php 
-                                                        // Ambil plate_numbers dari data pertama
-                                                        $plate_numbers = explode(',', $finalConcentration[0]->plate_numbers);
                                                         foreach ($plate_numbers as $plate_number): ?>
                                                             <th>Tube <?= htmlspecialchars($plate_number) ?> Result</th>
                                                         <?php endforeach; ?>
-
                                                 <?php else: ?>
                                                     <th colspan="100%" style="text-align: center">No data available</th>
                                                 <?php endif; ?>
+                                                <th>Concentration MPN</th>
+                                                <th>Upper CI</th>
+                                                <th>Lower CI</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -310,23 +311,36 @@
                                                         <td><?= htmlspecialchars($concentration->date_sample_processed) ?></td>
                                                         <td><?= htmlspecialchars($concentration->time_sample_processed) ?></td>
                                                         <td><?= htmlspecialchars($concentration->elution_volume) ?></td>
-
-                                                        <!-- Dynamically display tube volumes -->
-                                                        <?php foreach ($tube_columns as $tube): ?>
-                                                            <td><?= htmlspecialchars($concentration->$tube) ?></td>
-                                                        <?php endforeach; ?>
-
                                                         <?php 
-                                                        // Ambil plate_numbers dari data
-                                                        $plate_numbers = explode(',', $concentration->plate_numbers);
-                                                        
-                                                        // Loop untuk setiap plate_number
+                                                        // Tube volumes
+                                                        foreach ($concentration as $key => $value): 
+                                                            if (strpos($key, 'Tube ') === 0): ?>
+                                                                <td><?= htmlspecialchars($value) ?></td>
+                                                            <?php endif;
+                                                        endforeach;
+
+                                                        // Plate numbers
+                                                        $plate_numbers = [];
+                                                        if (!empty($concentration->plate_numbers)) {
+                                                            $plate_numbers = array_map('trim', explode(',', $concentration->plate_numbers));
+                                                        }
+                                                        // Confirmation values
+                                                        $confirmation = isset($concentration->confirmation) && is_array($concentration->confirmation) ? $concentration->confirmation : [];
                                                         foreach ($plate_numbers as $plate_number): 
-                                                            // Cek jika confirmation untuk plate_number ada
-                                                            $confirmation_value = isset($concentration->confirmation[$plate_number]) ? $concentration->confirmation[$plate_number] : 'No Available'; 
+                                                            // Normalize key for confirmation lookup (remove spaces)
+                                                            $lookup_key = trim($plate_number);
+                                                            // Try direct match, fallback to match with/without space
+                                                            $confirmation_value = isset($confirmation[$lookup_key]) ? $confirmation[$lookup_key] : (
+                                                                isset($confirmation[' ' . $lookup_key]) ? $confirmation[' ' . $lookup_key] : (
+                                                                    isset($confirmation[$plate_number]) ? $confirmation[$plate_number] : 'No Available'
+                                                                )
+                                                            );
                                                         ?>
                                                             <td><?= htmlspecialchars($confirmation_value) ?></td>
                                                         <?php endforeach; ?>
+                                                        <td><?= htmlspecialchars($concentration->mpn_concentration) ?></td>
+                                                        <td><?= htmlspecialchars($concentration->upper_ci) ?></td>
+                                                        <td><?= htmlspecialchars($concentration->lower_ci) ?></td>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             <?php else: ?>
@@ -580,6 +594,105 @@
 </div><!-- /.modal -->
 
 
+<!-- MODAL FORM Calculate MPN -->
+<div class="modal fade" id="compose-modalCalculateMPN" tabindex="-1" role="dialog" aria-hidden="true" data-bs-scrollable="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #3c8dbc; color: white;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
+                <h4 class="modal-title" id="modal-title-calculate-mpn">Calculate MPN | New</h4>
+            </div>
+            <form id="formCalculateMPN" action="<?php echo site_url('Campy_liquids/saveCalculateMPN') ?>" method="post" class="form-horizontal">
+                <div class="modal-body">
+                    <input id="mode_calculateMPN" name="mode_calculateMPN" type="hidden" class="form-control input-sm">
+                    <input id="id_campy_liquids_mpn" name="id_campy_liquids_mpn" type="hidden" class="form-control input-sm">
+                    <input id="id_campy_result_mpn_liquids" name="id_campy_result_mpn_liquids" type="hidden" class="form-control input-sm">
+                    <!-- <input id="current_sample_dryweight" name="current_sample_dryweight" type="hidden" class="form-control input-sm"> -->
+
+                    <!-- MPN Concentration -->
+                    <div class="form-group">
+                        <label for="mpn_concentration" class="col-sm-4 control-label">MPN Concentration</label>
+                        <div class="col-sm-8">
+                            <input id="mpn_concentration" name="mpn_concentration" type="number" step="any" class="form-control" placeholder="Enter MPN concentration" required>
+                        </div>
+                    </div>
+
+                    <!-- Upper CI -->
+                    <div class="form-group">
+                        <label for="upper_ci" class="col-sm-4 control-label">Upper CI</label>
+                        <div class="col-sm-8">
+                            <input id="upper_ci" name="upper_ci" type="number" step="any" class="form-control" placeholder="Enter upper confidence interval" required>
+                        </div>
+                    </div>
+
+                    <!-- Lower CI -->
+                    <div class="form-group">
+                        <label for="lower_ci" class="col-sm-4 control-label">Lower CI</label>
+                        <div class="col-sm-8">
+                            <input id="lower_ci" name="lower_ci" type="number" step="any" class="form-control" placeholder="Enter lower confidence interval" required>
+                        </div>
+                    </div>
+
+                    <!-- Concentration MPN/g dry weight -->
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Auto-calculated Results</label>
+                        <div class="col-sm-8">
+                            <!-- Hidden inputs to store values for database -->
+                            <input id="mpn_concentration_dw" name="mpn_concentration_dw" type="hidden">
+                            <input id="upper_ci_dw" name="upper_ci_dw" type="hidden">
+                            <input id="lower_ci_dw" name="lower_ci_dw" type="hidden">
+                            
+                            <!-- Card display for auto-calculated values -->
+                            <div class="auto-calc-cards">
+                                <!-- Full width card for main concentration -->
+                                <div class="calc-card calc-card-full">
+                                    <div class="calc-card-header">
+                                        <i class="fa fa-calculator text-primary"></i>
+                                        <span class="calc-title">Concentration MPN/g dry weight</span>
+                                    </div>
+                                    <div class="calc-card-body">
+                                        <span id="display_mpn_concentration_dw" class="calc-value">-</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Two column layout for CI values -->
+                                <div class="calc-card-row">
+                                    <div class="calc-card calc-card-half">
+                                        <div class="calc-card-header">
+                                            <i class="fa fa-arrow-up text-success"></i>
+                                            <span class="calc-title">Upper CI MPN/g dw</span>
+                                        </div>
+                                        <div class="calc-card-body">
+                                            <span id="display_upper_ci_dw" class="calc-value">-</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="calc-card calc-card-half">
+                                        <div class="calc-card-header">
+                                            <i class="fa fa-arrow-down text-warning"></i>
+                                            <span class="calc-title">Lower CI MPN/g dw</span>
+                                        </div>
+                                        <div class="calc-card-body">
+                                            <span id="display_lower_ci_dw" class="calc-value">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer clearfix" style="display: flex; align-items: center; justify-content: flex-end; gap: 10px; padding: 15px 20px; border-top: 1px solid #dee2e6; background-color: #f8f9fa;">
+                    <button type="submit" class="btn btn-primary" style="min-width: 100px; padding: 8px 16px; font-weight: 500; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,123,255,0.2); transition: all 0.3s ease;">
+                        <i class="fa fa-save" style="margin-right: 6px;"></i> Save
+                    </button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal" style="min-width: 100px; padding: 8px 16px; font-weight: 500; border-radius: 6px; box-shadow: 0 2px 4px rgba(255,193,7,0.2); transition: all 0.3s ease;">
+                        <i class="fa fa-times" style="margin-right: 6px;"></i> Cancel
+                    </button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 
@@ -906,6 +1019,203 @@
 		border: 1px solid #ddd; /* Ganti border tombol */
 		cursor: not-allowed; /* Set cursor menjadi not-allowed agar tidak bisa diklik */
 	}
+
+    /* Auto-calculated Cards Styling */
+    .auto-calc-cards {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 15px;
+        width: 100%;
+        align-items: stretch;
+    }
+
+    /* Full width card for main concentration */
+    .calc-card-full {
+        width: 100% !important;
+        flex: none !important;
+        display: block !important;
+    }
+
+    /* Two column row for CI values */
+    .calc-card-row {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 15px;
+        flex-wrap: nowrap;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    /* Half width cards for CI values */
+    .calc-card-half {
+        flex: 1 1 calc(50% - 7.5px) !important;
+        min-width: 180px;
+        max-width: calc(50% - 7.5px);
+        box-sizing: border-box;
+    }
+
+    .calc-card {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 12px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        display: block !important;
+        width: auto !important;
+    }
+
+    .calc-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .calc-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #007bff, #28a745, #ffc107);
+        opacity: 0.8;
+    }
+
+    .calc-card-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+        gap: 6px;
+    }
+
+    .calc-title {
+        font-size: 11px;
+        font-weight: 600;
+        color: #495057;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .calc-card-body {
+        text-align: center;
+    }
+
+    .calc-value {
+        font-size: 18px;
+        font-weight: 700;
+        color: #212529;
+        display: block;
+        font-family: 'Courier New', monospace;
+        background: rgba(255,255,255,0.8);
+        padding: 4px 8px;
+        border-radius: 4px;
+        border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .calc-card:nth-child(1) .calc-value {
+        color: #007bff;
+    }
+
+    .calc-card-row .calc-card:nth-child(1) .calc-value {
+        color: #28a745;
+    }
+
+    .calc-card-row .calc-card:nth-child(2) .calc-value {
+        color: #ffc107;
+    }
+
+    @media (max-width: 768px) {
+        .calc-card-row {
+            flex-direction: column !important;
+            gap: 10px;
+        }
+        
+        .calc-card-half {
+            flex: 1 1 100% !important;
+            min-width: 100% !important;
+            max-width: 100% !important;
+        }
+    }
+
+    @media (min-width: 769px) {
+        .calc-card-row {
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+        }
+        
+        .calc-card-half {
+            flex: 1 1 calc(50% - 7.5px) !important;
+            min-width: calc(50% - 7.5px) !important;
+            max-width: calc(50% - 7.5px) !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .auto-calc-cards {
+            gap: 10px;
+        }
+        
+        .calc-card {
+            padding: 8px;
+        }
+        
+        .calc-title {
+            font-size: 10px;
+        }
+        
+        .calc-value {
+            font-size: 16px;
+        }
+    }
+
+    /* Enhanced Button Styling */
+    .modal-footer .btn {
+        transition: all 0.3s ease !important;
+        border: none !important;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 13px;
+    }
+
+    .modal-footer .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+    }
+
+    .modal-footer .btn:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+    }
+
+    .modal-footer .btn-primary:hover {
+        background-color: #0056b3 !important;
+        box-shadow: 0 4px 8px rgba(0,123,255,0.3) !important;
+    }
+
+    .modal-footer .btn-warning:hover {
+        background-color: #e0a800 !important;
+        box-shadow: 0 4px 8px rgba(255,193,7,0.3) !important;
+    }
+
+    /* Custom SweetAlert2 styling */
+    .swal-wide {
+        width: 600px !important;
+    }
+
+    .swal2-html-container {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .swal2-html-container p {
+        margin: 8px 0;
+    }
+
+    .swal2-html-container strong {
+        font-weight: 600;
+    }
 </style>
 <style>
 	#textInform2 .alert {
@@ -926,6 +1236,97 @@
         window.location.href = '<?php echo site_url('Campy_liquids/excel') ?>/' + id_campy_liquids;
     });
 </script>
+<script>
+    // Calculate MPN button click handler
+    document.getElementById('calculateMpnBtn').addEventListener('click', function() {
+        let id_campy_liquids = document.getElementById('id_campy_liquids').value;
+
+        // Validate sample_dryweight before proceeding
+        // let sampleDryweight = document.getElementById('sample_dryweight').value;
+        
+        // Check if sample_dryweight is empty or equals 0
+        // if (!sampleDryweight || sampleDryweight.trim() === '' || parseFloat(sampleDryweight) === 0) {
+        //     Swal.fire({
+        //         title: 'Sample Dry Weight Data is Empty!',
+        //         html: `
+        //             <div style="text-align: left; margin-top: 15px;">
+        //                 <p><i class="fa fa-exclamation-triangle" style="color: #f39c12; margin-right: 8px;"></i><strong>Sample Dry Weight is still empty or equals 0.</strong></p>
+        //                 <p style="margin-top: 10px;">Please fill in the <strong>Sample Dry Weight</strong> data first to perform MPN calculation.</p>
+        //                 <hr style="margin: 15px 0;">
+        //                 <p style="font-size: 13px; color: #666;"><i class="fa fa-info-circle" style="color: #3498db; margin-right: 5px;"></i>Sample Dry Weight data is required to calculate <strong>MPN/g Dry Weight</strong>.</p>
+        //             </div>
+        //         `,
+        //         icon: 'warning',
+        //         confirmButtonText: '<i class="fa fa-check"></i> Understood',
+        //         confirmButtonColor: '#f39c12',
+        //         customClass: {
+        //             popup: 'swal-wide'
+        //         }
+        //     });
+        //     return; // Stop execution if sample_dryweight is empty
+        // }
+
+        // Set the id_campy_liquids value in the modal
+        document.getElementById('id_campy_liquids_mpn').value = id_campy_liquids;
+
+        // Check if MPN calculation already exists
+        $.ajax({
+            url: '<?php echo site_url('Campy_liquids/getCalculateMPN'); ?>',
+            type: 'GET',
+            data: { id_campy_liquids: id_campy_liquids },
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'success') {
+                    // Data exists, set to edit mode
+                    document.getElementById('mode_calculateMPN').value = 'edit';
+                    document.getElementById('id_campy_result_mpn_liquids').value = response.data.id_campy_result_mpn_liquids;
+                    document.getElementById('mpn_concentration').value = response.data.mpn_concentration;
+                    document.getElementById('upper_ci').value = response.data.upper_ci;
+                    document.getElementById('lower_ci').value = response.data.lower_ci;
+                    document.getElementById('mpn_concentration_dw').value = response.data.mpn_concentration_dw || '';
+                    document.getElementById('upper_ci_dw').value = response.data.upper_ci_dw || '';
+                    document.getElementById('lower_ci_dw').value = response.data.lower_ci_dw || '';
+                    
+                    // Update modal title
+                    document.getElementById('modal-title-calculate-mpn').innerHTML = 'Calculate MPN | Edit';
+                } else {
+                    // No data exists, set to insert mode
+                    document.getElementById('mode_calculateMPN').value = 'insert';
+                    document.getElementById('id_campy_result_mpn_liquids').value = '';
+                    document.getElementById('mpn_concentration').value = '';
+                    document.getElementById('upper_ci').value = '';
+                    document.getElementById('lower_ci').value = '';
+                    document.getElementById('mpn_concentration_dw').value = '';
+                    document.getElementById('upper_ci_dw').value = '';
+                    document.getElementById('lower_ci_dw').value = '';
+                    
+                    // Update modal title
+                    document.getElementById('modal-title-calculate-mpn').innerHTML = 'Calculate MPN | New';
+                }
+                
+                // Show the modal
+                $('#compose-modalCalculateMPN').modal('show');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error checking MPN calculation:', error);
+                
+                // On error, default to insert mode
+                document.getElementById('mode_calculateMPN').value = 'insert';
+                document.getElementById('id_campy_result_mpn_liquids').value = '';
+                document.getElementById('mpn_concentration').value = '';
+                document.getElementById('upper_ci').value = '';
+                document.getElementById('lower_ci').value = '';
+                document.getElementById('mpn_concentration_dw').value = '';
+                document.getElementById('upper_ci_dw').value = '';
+                document.getElementById('lower_ci_dw').value = '';
+                document.getElementById('modal-title-calculate-mpn').innerHTML = 'Calculate MPN | New';
+                
+                // Show the modal
+                $('#compose-modalCalculateMPN').modal('show');
+            }
+        });
+    });
+</script>
 <script type="text/javascript">
 
     let table;
@@ -943,6 +1344,184 @@
 		let userCreated = $('#user_created').val();
 		let userReview = $('#user_review').val();
 		let fullName = $('#reviewed_by_label').val();
+
+        // Store initial sample_dryweight value for comparison
+        // let initialSampleDryweight = parseFloat($('#sample_dryweight_old').val()) || 0;
+
+        // Check if MPN calculation needs to be updated
+        // function checkMpnRecalculation() {
+        //     let currentSampleDryweight = parseFloat($('#sample_dryweight').val()) || 0;
+            
+        //     // If sample_dryweight has changed and MPN calculation exists
+        //     if (currentSampleDryweight !== initialSampleDryweight && currentSampleDryweight > 0) {
+        //         $.ajax({
+        //             url: '<?php echo site_url('Campy_biosolids/getCalculateMPN'); ?>',
+        //             type: 'GET',
+        //             data: { id_campy_biosolids: id_campy_biosolids },
+        //             dataType: 'json',
+        //             success: function(response) {
+        //                 if (response.status === 'success') {
+        //                     // Show badge indicator
+        //                     $('#mpnUpdateBadge').show();
+                            
+        //                     // MPN calculation exists, show recalculation notification
+        //                     showMpnRecalculationModal();
+        //                 }
+        //             }
+        //         });
+        //     } else if (currentSampleDryweight === initialSampleDryweight) {
+        //         // Hide badge if values are the same
+        //         $('#mpnUpdateBadge').hide();
+        //     }
+        // }
+
+        // Function to show MPN recalculation notification
+        // function showMpnRecalculationModal() {
+        //     Swal.fire({
+        //         icon: 'warning',
+        //         title: 'Sample Dry Weight Changed!',
+        //         html: `
+        //             <div style="text-align: left; margin: 15px 0;">
+        //                 <p><strong>The sample dry weight has been updated:</strong></p>
+        //                 <p>• Previous value: <span style="color: #dc3545; font-weight: bold;">${initialSampleDryweight}</span></p>
+        //                 <p>• New value: <span style="color: #28a745; font-weight: bold;">${$('#sample_dryweight').val()}</span></p>
+        //                 <br>
+        //                 <p style="color: #856404; background-color: #fff3cd; padding: 10px; border-radius: 5px; border-left: 4px solid #ffc107;">
+        //                     <i class="fa fa-exclamation-triangle"></i> 
+        //                     Your MPN calculations may no longer be accurate and need to be recalculated.
+        //                 </p>
+        //             </div>
+        //         `,
+        //         showCancelButton: true,
+        //         confirmButtonText: '<i class="fa fa-calculator"></i> Recalculate MPN Now',
+        //         cancelButtonText: '<i class="fa fa-times"></i> Later',
+        //         confirmButtonColor: '#007bff',
+        //         cancelButtonColor: '#6c757d',
+        //         reverseButtons: true,
+        //         allowOutsideClick: false,
+        //         customClass: {
+        //             popup: 'swal-wide'
+        //         }
+        //     }).then((result) => {
+        //         if (result.isConfirmed) {
+        //             // Update the initial value and open MPN calculation modal
+        //             initialSampleDryweight = parseFloat($('#sample_dryweight_old').val()) || 0;
+        //             $('#mpnUpdateBadge').hide(); // Hide badge
+        //             $('#calculateMpnBtn').click();
+        //         } else {
+        //             // Update the initial value but don't recalculate
+        //             initialSampleDryweight = parseFloat($('#sample_dryweight_old').val()) || 0;
+        //             $('#mpnUpdateBadge').hide(); // Hide badge
+        //         }
+        //     });
+        // }
+
+        // Check for MPN recalculation when page loads
+        // setTimeout(checkMpnRecalculation, 1000)
+
+        // Function to calculate MPN per gram dry weight values
+        function calculateMpnDryWeight() {
+            let mpnConcentration = parseFloat($('#mpn_concentration').val()) || 0;
+            let upperCi = parseFloat($('#upper_ci').val()) || 0;
+            let lowerCi = parseFloat($('#lower_ci').val()) || 0;
+            let sampleDryweight = parseFloat($('#sample_dryweight').val()) || 0;
+
+            if (sampleDryweight > 0) {
+                // Calculate Concentration MPN/g dry weight = mpn_concentration / sample_dryweight
+                let mpnConcentrationDw = (mpnConcentration / sampleDryweight).toFixed(4);
+                $('#mpn_concentration_dw').val(mpnConcentrationDw);
+                $('#display_mpn_concentration_dw').text(mpnConcentrationDw);
+
+                // Calculate Upper CI MPN/g dw = upper_ci / sample_dryweight
+                let upperCiDw = (upperCi / sampleDryweight).toFixed(4);
+                $('#upper_ci_dw').val(upperCiDw);
+                $('#display_upper_ci_dw').text(upperCiDw);
+
+                // Calculate Lower CI MPN/g dw = lower_ci / sample_dryweight
+                let lowerCiDw = (lowerCi / sampleDryweight).toFixed(4);
+                $('#lower_ci_dw').val(lowerCiDw);
+                $('#display_lower_ci_dw').text(lowerCiDw);
+            } else {
+                $('#mpn_concentration_dw').val('');
+                $('#upper_ci_dw').val('');
+                $('#lower_ci_dw').val('');
+                $('#display_mpn_concentration_dw').text('-');
+                $('#display_upper_ci_dw').text('-');
+                $('#display_lower_ci_dw').text('-');
+            }
+        }
+
+        // Attach the calculation function to input events
+        $('#mpn_concentration, #upper_ci, #lower_ci').on('input', calculateMpnDryWeight);
+
+        // Also trigger calculation when the modal is shown (in case data is pre-filled)
+        $('#compose-modalCalculateMPN').on('shown.bs.modal', function() {
+            calculateMpnDryWeight();
+            // Set current sample_dryweight value for syncing to database
+            // $('#current_sample_dryweight').val($('#sample_dryweight').val());
+        });
+
+        // Calculate MPN form submission
+        $('#formCalculateMPN').submit(function(e) {
+            e.preventDefault();
+            
+            // Always use the same URL since we handle mode validation in the controller
+            let url = '<?php echo site_url('Campy_liquids/saveCalculateMPN'); ?>';
+            let formData = $(this).serialize();
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        $('#compose-modalCalculateMPN').modal('hide');
+                        
+                        // Update initialSampleDryweight to current value to prevent further notifications
+                        initialSampleDryweight = parseFloat($('#sample_dryweight').val()) || 0;
+                        
+                        // Hide the badge since we just updated the MPN calculation
+                        $('#mpnUpdateBadge').hide();
+                        
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: response.message,
+                            timer: 2000,
+                            showConfirmButton: false
+                        }).then(function() {
+                            location.reload(); // Reload page to show updated data
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: response.message
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error: ' + status + error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Something went wrong. Please try again.'
+                    });
+                }
+            });
+        });
+
+        // Reset form when modal is hidden
+        $('#compose-modalCalculateMPN').on('hidden.bs.modal', function() {
+            $('#formCalculateMPN')[0].reset();
+            $('#mode_calculateMPN').val('');
+            $('#id_campy_result_mpn_liquids').val('');
+            // $('#current_sample_dryweight').val('');
+            $('#mpn_concentration_dw').val('');
+            $('#upper_ci_dw').val('');
+            $('#lower_ci_dw').val('');
+        });
 
 		$('#reviewed_by_label').val(fullName ? fullName : '-');
 

@@ -69,11 +69,11 @@ class Hemoflow_model extends CI_Model
     }
 
     // Function update data
-    function update($id, $data)
-    {
-        $this->db->where('id_one_water_sample', $id);
-        $this->db->update('Hemoflow', $data);
+    function updateHemoflow($id_one_water_sample, $data) {
+        $this->db->where('id_one_water_sample', $id_one_water_sample);
+        $this->db->update('hemoflow', $data);
     }
+
 
 
     // delete data
@@ -109,6 +109,27 @@ class Hemoflow_model extends CI_Model
         $response = $labTech->result_array();
         return $response;
       }
+
+    function getOneWaterSampleById($idOneWaterSample)
+    {
+        $this->db->select('sr.id_sampletype, rs.sampletype');
+        $this->db->from('sample_reception_sample sr');
+        $this->db->join('ref_sampletype rs', 'sr.id_sampletype = rs.id_sampletype', 'left');
+        $this->db->where('sr.id_one_water_sample', $idOneWaterSample);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+
+    function barcode_restrict($id){
+
+        $q = $this->db->query('
+        select id_one_water_sample
+        from hemoflow
+        WHERE id_one_water_sample = "'.$id.'"
+        ');        
+        $response = $q->result_array();
+        return $response;
+    }
 
       
 }

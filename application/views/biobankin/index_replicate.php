@@ -172,7 +172,7 @@
 <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<div class="modal-header box">
+		  	<div class="modal-header" style="background-color: #3c8dbc; color: white;">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title" id="modal-title">Biobank-IN | Replicates 
 				<!-- <input id="id_one_water_sample" name="id_one_water_sample" type="text" disabled>  -->
@@ -1186,7 +1186,7 @@
 			}
 
 			$('#mode_det').val('insert');
-			$('#modal-title-detail').html('<i class="fa fa-wpforms"></i> New Replication<span id="my-another-cool-loader"></span>');
+			$('#modal-title').html('<i class="fa fa-wpforms"></i> New Replication<span id="my-another-cool-loader"></span>');
             $('#barcode_water').attr('readonly', false);
 			$('#barcode_water').val('');
 			$('#id_biobankin_detailx').val(id_biobankin_detail);

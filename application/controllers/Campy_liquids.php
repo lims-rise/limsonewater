@@ -98,6 +98,8 @@ class Campy_liquids extends CI_Controller
             $data['finalConcentration'] = []; // Pastikan ini tidak null
         }
         // Load view with data
+        // var_dump($data['finalConcentration']);
+        // die();
         $this->template->load('template','campy_liquids/index_det', $data);
 
         }
@@ -870,6 +872,156 @@ class Campy_liquids extends CI_Controller
             echo json_encode([
                 'status' => false,
                 'message' => 'Failed to cancel review.'
+            ]);
+        }
+    }
+
+    public function getCalculateMPN() {
+        header('Content-Type: application/json');
+        
+        $id_campy_liquids = $this->input->get('id_campy_liquids', TRUE);
+
+        if (!$id_campy_liquids) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'ID Campy Liquids is required.'
+            ]);
+            return;
+        }
+        
+        try {
+            $mpn_data = $this->Campy_liquids_model->get_calculate_mpn_by_campy_liquids($id_campy_liquids);
+
+            if ($mpn_data) {
+                echo json_encode([
+                    'status' => 'success',
+                    'data' => $mpn_data
+                ]);
+            } else {
+                echo json_encode([
+                    'status' => 'not_found',
+                    'message' => 'No MPN calculation found.'
+                ]);
+            }
+        } catch (Exception $e) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Error retrieving MPN calculation: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+    public function saveCalculateMPN() {
+        header('Content-Type: application/json');
+        
+        try {
+            // Get form data
+            $mode = $this->input->post('mode_calculateMPN', TRUE);
+            $id_campy_liquids = $this->input->post('id_campy_liquids_mpn', TRUE);
+            $mpn_concentration = $this->input->post('mpn_concentration', TRUE);
+            $upper_ci = $this->input->post('upper_ci', TRUE);
+            $lower_ci = $this->input->post('lower_ci', TRUE);
+            $mpn_concentration_dw = $this->input->post('mpn_concentration_dw', TRUE);
+            $upper_ci_dw = $this->input->post('upper_ci_dw', TRUE);
+            $lower_ci_dw = $this->input->post('lower_ci_dw', TRUE);
+            
+            // Validation
+            if (!$mode || !in_array($mode, ['insert', 'edit'])) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Invalid operation mode.'
+                ]);
+                return;
+            }
+            
+            if (!$id_campy_liquids || !$mpn_concentration || !$upper_ci || !$lower_ci) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Required fields are missing.'
+                ]);
+                return;
+            }
+            
+            $dt = new DateTime();
+            $user_id = $this->session->userdata('id_users');
+            $lab = $this->session->userdata('lab');
+            
+            if ($mode === 'insert') {
+                // Insert mode
+                $data = array(
+                    'id_campy_liquids' => $id_campy_liquids,
+                    'mpn_concentration' => $mpn_concentration,
+                    'upper_ci' => $upper_ci,
+                    'lower_ci' => $lower_ci,
+                    'mpn_concentration_dw' => $mpn_concentration_dw ?: null,
+                    'upper_ci_dw' => $upper_ci_dw ?: null,
+                    'lower_ci_dw' => $lower_ci_dw ?: null,
+                    'flag' => '0',
+                    'lab' => $lab ? $lab : '1',
+                    'uuid' => $this->uuid->v4(),
+                    'user_created' => $user_id,
+                    'date_created' => $dt->format('Y-m-d H:i:s'),
+                );
+                
+                $insert_id = $this->Campy_liquids_model->insertCalculateMPN($data);
+                
+                if ($insert_id) {
+                    echo json_encode([
+                        'status' => 'success',
+                        'message' => 'MPN calculation saved successfully.',
+                        'id' => $insert_id
+                    ]);
+                } else {
+                    echo json_encode([
+                        'status' => 'error',
+                        'message' => 'Failed to save MPN calculation.'
+                    ]);
+                }
+                
+            } else if ($mode === 'edit') {
+                // Edit mode
+                $id_campy_result_mpn_liquids = $this->input->post('id_campy_result_mpn_liquids', TRUE);
+                
+                if (!$id_campy_result_mpn_liquids) {
+                    echo json_encode([
+                        'status' => 'error',
+                        'message' => 'MPN calculation ID is required for update.'
+                    ]);
+                    return;
+                }
+                
+                $data = array(
+                    'id_campy_liquids' => $id_campy_liquids,
+                    'mpn_concentration' => $mpn_concentration,
+                    'upper_ci' => $upper_ci,
+                    'lower_ci' => $lower_ci,
+                    'mpn_concentration_dw' => $mpn_concentration_dw ?: null,
+                    'upper_ci_dw' => $upper_ci_dw ?: null,
+                    'lower_ci_dw' => $lower_ci_dw ?: null,
+                    'flag' => '0',
+                    'lab' => $lab ? $lab : '1',
+                    'uuid' => $this->uuid->v4(),
+                );
+                
+                $result = $this->Campy_liquids_model->updateCalculateMPN($id_campy_result_mpn_liquids, $data);
+                
+                if ($result) {
+                    echo json_encode([
+                        'status' => 'success',
+                        'message' => 'MPN calculation updated successfully.'
+                    ]);
+                } else {
+                    echo json_encode([
+                        'status' => 'error',
+                        'message' => 'Failed to update MPN calculation.'
+                    ]);
+                }
+            }
+            
+        } catch (Exception $e) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Error saving MPN calculation: ' . $e->getMessage()
             ]);
         }
     }
