@@ -154,51 +154,51 @@
                     <input type='hidden' id='generated_report_date_val' value='<?php echo htmlspecialchars($report_date_display ?? ''); ?>'>
                     
                     <div style="display: flex; justify-content: space-between; width: 100%;">
-                        <div style="width: 49%;">
+                        <div style="width: 50%;">
                             <table id="report-header" width="100%" style="border:0px solid black; margin-bottom: 0; border-collapse: collapse;">
                                 <thead>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Report Number</td>
+                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Report Number : </td>
                                         <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">
-                                            <span id="display_report_number"><?php echo htmlspecialchars($report_number_display ?? ''); ?></span>
+                                            <span id="display_report_number"><?php echo htmlspecialchars($report_number_display ?? '-'); ?></span>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Report issue date</td>
+                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Report issue date : </td>
                                         <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">
-                                            <span id="display_report_date"><?php echo htmlspecialchars($report_date_display ?? ''); ?></span>
+                                            <span id="display_report_date"><?php echo htmlspecialchars($report_date_display ?? '-'); ?></span>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">COC Number</td>
-                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $id_project; ?></td>
+                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">COC Number : </td>
+                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $id_project ?? '-'; ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Client Quote Number</td>
-                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $client_quote_number; ?></td>
+                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Client Quote Number : </td>
+                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $client_quote_number ?? '-'; ?></td>
                                     </tr>
                                 </thead>
                             </table>
                         </div>
                         
-                        <div style="width: 49%;">
+                        <div style="width: 50%;">
                             <table width="100%" style="border:0px solid black; margin-bottom: 0; border-collapse: collapse;">
                                 <thead>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Client</td>
-                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $client_name; ?></td>
+                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Client : </td>
+                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $client_name ?? '-'; ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Address</td>
-                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $address; ?></td>
+                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Address : </td>
+                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $address ?? '-'; ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Phone</td>
-                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $phone1; ?></td>
+                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Phone :</td>
+                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $phone1 ?? '-'; ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Email</td>
-                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $email; ?></td>
+                                        <td width="40%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left">Email :</td>
+                                        <td width="60%" style="border:0px solid black; padding: 3px 0; vertical-align: top;" align="left"><?php echo $email ?? '-'; ?></td>
                                     </tr>
                                 </thead>
                             </table>
