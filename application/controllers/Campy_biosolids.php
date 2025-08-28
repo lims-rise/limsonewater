@@ -1399,9 +1399,9 @@ class Campy_biosolids extends CI_Controller
             // Get form data
             $mode = $this->input->post('mode_calculateMPN', TRUE);
             $id_campy_biosolids = $this->input->post('id_campy_biosolids_mpn', TRUE);
-            $mpn_concentration = $this->input->post('mpn_concentration', TRUE);
-            $upper_ci = $this->input->post('upper_ci', TRUE);
-            $lower_ci = $this->input->post('lower_ci', TRUE);
+            $mpn_concentration = $this->input->post('mpn_concentration', FALSE);
+            $upper_ci = $this->input->post('upper_ci', FALSE);
+            $lower_ci = $this->input->post('lower_ci', FALSE);
             // $mpn_concentration_dw = $this->input->post('mpn_concentration_dw', TRUE);
             // $upper_ci_dw = $this->input->post('upper_ci_dw', TRUE);
             // $lower_ci_dw = $this->input->post('lower_ci_dw', TRUE);
