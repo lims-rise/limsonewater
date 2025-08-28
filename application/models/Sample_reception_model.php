@@ -135,11 +135,11 @@ class Sample_reception_model extends CI_Model
     //     FROM sample_reception a
     //     LEFT JOIN sample_reception_sample b ON a.id_project = b.id_project
     //     LEFT JOIN ref_person c ON b.id_person = c.id_person
-	// 			LEFT JOIN ref_client d ON a.id_client_contact = d.id_client_contact
-	// 			LEFT JOIN 
-	// 			(SELECT id_project, MIN(date_arrival) AS from_date, MAX(date_arrival) AS to_date 
-	// 				FROM sample_reception_sample
-	// 				GROUP BY id_project) e ON e.id_project = b.id_project
+    // 			LEFT JOIN ref_client d ON a.id_client_contact = d.id_client_contact
+    // 			LEFT JOIN 
+    // 			(SELECT id_project, MIN(date_arrival) AS from_date, MAX(date_arrival) AS to_date 
+    // 				FROM sample_reception_sample
+    // 				GROUP BY id_project) e ON e.id_project = b.id_project
     //     WHERE a.id_project="'.$id.'"
     //     AND a.flag = 0 
     //     ');        
@@ -738,9 +738,12 @@ class Sample_reception_model extends CI_Model
             srt.barcode,
             srt.id_testing_type,
             COALESCE(rt.testing_type, "Unknown Test") as testing_type,
-            rt.prefix
+            rt.prefix,
+            cb.date_sample_processed, 
+            cb.time_sample_processed
         ');
         $this->db->from('sample_reception_sample srs');
+        $this->db->join('campy_biosolids cb', 'srs.id_one_water_sample = cb.id_one_water_sample AND cb.flag = 0', 'left');
         $this->db->join('ref_sampletype rst', 'srs.id_sampletype = rst.id_sampletype AND rst.flag = 0', 'left');
         $this->db->join('ref_person rp', 'srs.id_person = rp.id_person AND rp.flag = 0', 'left');
         $this->db->join('sample_reception_testing srt', 'srs.id_sample = srt.id_sample AND srt.flag = 0', 'left');
@@ -760,88 +763,96 @@ class Sample_reception_model extends CI_Model
                 'initial' => 'Unknown',
                 'date_collected' => null,
                 'date_arrival' => null,
-                'time_arrival' => null
+                'time_arrival' => null,
+                'time_collected' => null,
+                'date_sample_processed' => null,
+                'time_sample_processed' => null
             ]];
         }
 
         foreach ($samples as $i => $sample) {
             $row = [
-                'ConfirmedRaw' => isset($sample['confirmed_raw']) ? $sample['confirmed_raw'] : 'Leave empty',
-                'PresumptiveRaw' => isset($sample['presumptive_raw']) ? $sample['presumptive_raw'] : 'Leave empty',
+                'ConfirmedRaw' => isset($sample['confirmed_raw']) ? $sample['confirmed_raw'] : '',
+                'PresumptiveRaw' => isset($sample['presumptive_raw']) ? $sample['presumptive_raw'] : '',
                 // 'PathogenID' => isset($sample['pathogen_id']) ? $sample['pathogen_id'] : 'EC00' . ($i + 1),
-                'PathogenID' =>  'Leave empty',
-                'LOR' => isset($sample['lor']) ? $sample['lor'] : 'Leave empty',
+                'PathogenID' =>  '',
+                'LOR' => isset($sample['lor']) ? $sample['lor'] : '',
                 // 'MeasurementOfUncertainty' => isset($sample['measurement_uncertainty']) ? $sample['measurement_uncertainty'] : '±' . rand(15, 25) . '%',
-                'MeasurementOfUncertainty' => 'Leave empty',
+                'MeasurementOfUncertainty' => '',
                 // 'SURROGATE' => isset($sample['surrogate']) ? $sample['surrogate'] : rand(85, 115) . '%',
-                'SURROGATE' => 'Leave empty',
+                'SURROGATE' => '',
                 // 'RPD' => isset($sample['rpd']) ? $sample['rpd'] : rand(5, 15) . '%',
-                'RPD' => 'Leave empty',
+                'RPD' => '',
                 // 'RESULTCOMMENT' => isset($sample['result_comment']) ? $sample['result_comment'] : 'Results within acceptable limits',
-                'RESULTCOMMENT' => 'Leave empty',
-                'RESULTSTATUS' => isset($sample['result_status']) ? $sample['result_status'] : 'Leave empty',
+                'RESULTCOMMENT' => '',
+                'RESULTSTATUS' => isset($sample['result_status']) ? $sample['result_status'] : '',
                 // 'LabCOANo' => isset($sample['lab_coa_no']) ? $sample['lab_coa_no'] : 'COA-' . date('Y') . '-' . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT),
-                'LabCOANo' => 'Leave empty',
+                'LabCOANo' => '',
                 // 'LabCOADate' => isset($sample['lab_coa_date']) ? date('d-M-Y', strtotime($sample['lab_coa_date'])) : date('d-M-Y'),
-                'LabCOADate' => 'Leave empty',
+                'LabCOADate' => '',
                 // 'LabQAQCNo' => isset($sample['lab_qaqc_no']) ? $sample['lab_qaqc_no'] : 'QAQC-' . date('Y') . '-' . str_pad(rand(1, 99), 2, '0', STR_PAD_LEFT),
-                'LabQAQCNo' => 'Leave empty',
+                'LabQAQCNo' => '',
                 // 'LabQAQCDate' => isset($sample['lab_qaqc_date']) ? date('d-M-Y', strtotime($sample['lab_qaqc_date'])) : date('d-M-Y'),
-                'LabQAQCDate' => 'Leave empty',
+                'LabQAQCDate' => '',
                 // 'ReportComment' => isset($sample['report_comment']) ? $sample['report_comment'] : 'All analysis completed within specified timeframes. Results validated according to laboratory QA/QC procedures.',
-                'ReportComment' => 'Leave empty',
+                'ReportComment' => '',
                 // 'SiteComment' => isset($sample['site_comment']) ? $sample['site_comment'] : 'Sampling conducted during normal flow conditions.',
-                'SiteComment' => 'Leave empty',
+                'SiteComment' => '',
                 // 'License' => isset($sample['license']) ? $sample['license'] : 'NATA-' . rand(10000, 99999),
-                'License' => 'Leave empty',
+                'License' => '',
                 'ANALYSISMETHODCATEGORY' => isset($sample['analysis_method_category']) ? $sample['analysis_method_category'] : $this->getAnalysisMethodCategory($sample['testing_type'] ?? ''),
                 // 'ANALYSISMETHOD' =>  '-',
                 'ANALYSISMETHOD' => isset($sample['analysis_method']) ? $sample['analysis_method'] : $this->getAnalysisMethod($sample['testing_type'] ?? ''),
-                'SAMPLEDATE' => isset($sample['date_collected']) ? date('d-M-Y', strtotime($sample['date_collected'])) : '-',
-                'LABREGISTRATIONDATE' => isset($sample['date_arrival']) && isset($sample['time_arrival']) ? 
-                    date('d-M-Y H:i', strtotime($sample['date_arrival'] . ' ' . $sample['time_arrival'])) : '-',
-                'AnalysisDate' => isset($sample['analysis_date']) ? date('d-M-Y', strtotime($sample['analysis_date'])) : '-',
-                'ANALYSISCOMPLETIONDATE' => isset($sample['analysis_completion_date']) ? date('d-M-Y', strtotime($sample['analysis_completion_date'])) : '-',
+                'SAMPLEDATE' => isset($sample['time_collected']) ? $sample['time_collected'] : '',
+                'LABREGISTRATIONDATE' => (isset($sample['date_arrival']) && isset($sample['time_arrival']) && $sample['date_arrival'] && $sample['time_arrival']) ? 
+                    date('d/m/Y H:i', strtotime($sample['date_arrival'] . ' ' . $sample['time_arrival'])) : '',
+                'AnalysisDate' => (isset($sample['date_sample_processed']) && isset($sample['time_sample_processed']) && $sample['date_sample_processed'] && $sample['time_sample_processed'])
+                    ? date('d/m/Y H:i', strtotime($sample['date_sample_processed'] . ' ' . $sample['time_sample_processed']))
+                    : (isset($sample['date_sample_processed']) ? date('d/m/Y', strtotime($sample['date_sample_processed'])) : ''),
+                'ANALYSISCOMPLETIONDATE' => (isset($sample['date_sample_processed']) && isset($sample['time_sample_processed']) && $sample['date_sample_processed'] && $sample['time_sample_processed'])
+                    ? date('d/m/Y H:i', strtotime($sample['date_sample_processed'] . ' ' . $sample['time_sample_processed']))
+                    : (isset($sample['date_sample_processed']) ? date('d/m/Y', strtotime($sample['date_sample_processed'])) : ''),
                 // 'ParameterCode' => isset($sample['parameter_code']) ? $sample['parameter_code'] : $this->getParameterCode($sample['testing_type'] ?? ''),
-                'ParameterCode' => 'Leave empty',
+                'ParameterCode' => '',
                 'PARAMETERNAME' => isset($sample['parameter_name']) ? $sample['parameter_name'] : $this->getParameterName($sample['testing_type'] ?? ''),
                 'TEST_KEY_CODE' => isset($sample['test_key_code']) ? $sample['test_key_code'] : 'TK00' . ($i + 1),
                 // 'TEST_KEY_CODE' => isset($sample['test_key_code']) ? $sample['test_key_code'] : '-',
                 'RESULT' => isset($sample['result']) ? $sample['result'] : '-',
                 'Units' => isset($sample['units']) ? $sample['units'] : $this->getUnits($sample['testing_type'] ?? ''),
                 // 'POSITIVECONTROL%' => isset($sample['positive_control']) ? $sample['positive_control'] : rand(95, 105) . '%',
-                'POSITIVECONTROL%' => 'Leave empty',
-                'SAMPLEVOLUME' => isset($sample['sample_volume']) ? $sample['sample_volume'] : 'Leave empty',
-                'SAMPLEVOLUMEUNITS' => isset($sample['sample_volume_units']) ? $sample['sample_volume_units'] : 'Leave empty',
+                'POSITIVECONTROL%' => '',
+                'SAMPLEVOLUME' => isset($sample['sample_volume']) ? $sample['sample_volume'] : '',
+                'SAMPLEVOLUMEUNITS' => isset($sample['sample_volume_units']) ? $sample['sample_volume_units'] : '',
                 // 'SAMPLEPROCESSED%' => isset($sample['sample_processed']) ? $sample['sample_processed'] : rand(88, 100) . '%',
-                'SAMPLEPROCESSED%' => 'Leave empty',
+                'SAMPLEPROCESSED%' => '',
                 'EDDVERSION' => '3.1',
                 // 'CLIENTNAME' => $project['client_name'] ?? '-',
                 'CLIENTNAME' => 'Melbourne Water',
                 // 'SITEAREA' => isset($sample['site_area']) ? $sample['site_area'] : $this->generateSiteAreaCode($project['client_name'] ?? ''),
                 'SITEAREA' => 'Water Supply',
                 'PROGRAM' => isset($sample['program']) ? $sample['program'] : 'Scat Sampling',
-                'WorkOrderNo' => 'Leave empty',
+                'WorkOrderNo' => '',
                 // 'WorkOrderNo' => $project['client_quote_number'] ?? 'WO' . date('y') . str_pad(rand(1, 999), 3, '0', STR_PAD_LEFT),
-                'SUBMISSION' => $project['id_project'] ?? '-',
+                'SUBMISSION' => $project['id_project'] ?? '',
                 'SAMPLINGPROVIDER' => isset($sample['sampling_provider']) ? $sample['sampling_provider'] : 'Monash OWL',
                 // 'SamplerName' => $sample['initial'] ?? 'Lab Tech',
-                'SamplerName' => 'Leave empty',
+                'SamplerName' => '',
                 // 'SamplingRunRef' => isset($sample['sampling_run_ref']) ? $sample['sampling_run_ref'] : 'SR' . date('ymd') . '-' . rand(10, 99),
-                'SamplingRunRef' => 'Leave empty',
+                'SamplingRunRef' => '',
                 // 'LOCATIONCODE' => isset($sample['location_code']) ? $sample['location_code'] : 'LOC00' . ($i + 1),
-                'LOCATIONCODE' => isset($sample['location_code']) ? $sample['location_code'] : 'Leave empty',
-                'LocationDescription' => isset($sample['location_description']) ? $sample['location_description'] : 'Leave empty',
+                'LOCATIONCODE' => isset($sample['location_code']) ? $sample['location_code'] : '',
+                'LocationDescription' => isset($sample['location_description']) ? $sample['location_description'] : '',
                 // 'LocationDescription' => isset($sample['location_description']) ? $sample['location_description'] : 'Sample Location ' . ($i + 1),
                 // 'AnalysisPO' => isset($sample['analysis_po']) ? $sample['analysis_po'] : 'PO' . rand(1000, 9999),
-                'AnalysisPO' => 'Leave empty',
-                'LABCODE' => 'Leave empty',
+                'AnalysisPO' => '',
+                'LABCODE' => '',
                 'LABSAMPLEID' => $sample['id_one_water_sample'] ?? 'LAB' . str_pad(rand(1000, 9999), 4, '0', STR_PAD_LEFT),
-                'SAMPLETYPE' => $sample['sampletype'] ?? 'SAMPLE',
+                // 'SAMPLETYPE' => $sample['sampletype'] ?? 'SAMPLE',
+                'SAMPLETYPE' => 'Research',
                 'SUBMITTEDMATRIX' => isset($sample['submitted_matrix']) ? $sample['submitted_matrix'] : $this->getSubmittedMatrix($sample['sampletype'] ?? ''),
                 'ANALYSISMATRIX' => isset($sample['analysis_matrix']) ? $sample['analysis_matrix'] : $this->getAnalysisMatrix($sample['sampletype'] ?? ''),
                 // 'ANALYSISSUBMATRIX' => isset($sample['analysis_submatrix']) ? $sample['analysis_submatrix'] : $this->getAnalysisSubMatrix($sample['sampletype'] ?? '')
-                 'ANALYSISSUBMATRIX' => 'Leave empty'
+                 'ANALYSISSUBMATRIX' => ''
             ];
             
             $exportData[] = $row;
@@ -991,19 +1002,19 @@ class Sample_reception_model extends CI_Model
     
     private function getSubmittedMatrix($sampletype) {
         $matrices = [
-            'Faeces' => 'FECAL',
-            'Water' => 'WATER',
-            'Soil' => 'SOIL',
-            'Sediment' => 'SEDIMENT',
-            'Sewage_liquid' => 'WASTEWATER',
-            'Bird_carcass' => 'TISSUE',
-            'Culture' => 'CULTURE',
-            'Culture_plate' => 'CULTURE_PLATE',
-            'Purified DNA' => 'DNA',
-            'Sawage_biosolid' => 'BIOSOLID',
-            'Biosolid' => 'BIOSOLID',
-            'Liquid' => 'LIQUID',
-            'Wastewater' => 'WASTEWATER'
+            'Faeces' => 'Faeces',
+            'Water' => 'Water',
+            'Soil' => 'Soil',
+            'Sediment' => 'Sediment',
+            'Sewage_liquid' => 'Wastewater',
+            'Bird_carcass' => 'Tissue',
+            'Culture' => 'Culture',
+            'Culture_plate' => 'Culture Plate',
+            'Purified DNA' => 'Purified DNA',
+            'Sawage_biosolid' => 'Sawage_biosolid',
+            'Biosolid' => 'Biosolid',
+            'Liquid' => 'Liquid',
+            'Wastewater' => 'Wastewater'
         ];
         
         foreach ($matrices as $type => $matrix) {
@@ -1016,19 +1027,19 @@ class Sample_reception_model extends CI_Model
     
     private function getAnalysisMatrix($sampletype) {
         $matrices = [
-            'Faeces' => 'SOLID',
-            'Water' => 'AQUEOUS',
-            'Soil' => 'SOLID',
-            'Sediment' => 'SOLID',
-            'Sewage_liquid' => 'AQUEOUS',
-            'Bird_carcass' => 'SOLID',
-            'Culture' => 'SOLID',
-            'Culture_plate' => 'SOLID',
-            'Purified DNA' => 'AQUEOUS',
-            'Sawage_biosolid' => 'SOLID',
-            'Biosolid' => 'SOLID',
-            'Liquid' => 'AQUEOUS',
-            'Wastewater' => 'AQUEOUS'
+            'Faeces' => 'Faeces',
+            'Water' => 'Water',
+            'Soil' => 'Soil',
+            'Sediment' => 'Sediment',
+            'Sewage_liquid' => 'Sewage_liquid',
+            'Bird_carcass' => 'Bird_carcass',
+            'Culture' => 'Culture',
+            'Culture_plate' => 'Culture_plate',
+            'Purified DNA' => 'Purified DNA',
+            'Sawage_biosolid' => 'Sawage_biosolid',
+            'Biosolid' => 'Biosolid',
+            'Liquid' => 'Liquid',
+            'Wastewater' => 'Wastewater'
         ];
         
         foreach ($matrices as $type => $matrix) {
