@@ -554,7 +554,7 @@
                     <div class="form-group">
                         <label for="mpn_concentration" class="col-sm-4 control-label">MPN Concentration</label>
                         <div class="col-sm-8">
-                            <input id="mpn_concentration" name="mpn_concentration" type="number" step="any" class="form-control" placeholder="Enter MPN concentration" required>
+                            <input id="mpn_concentration" name="mpn_concentration" type="text" class="form-control" placeholder="Enter MPN concentration" required>
                         </div>
                     </div>
 
@@ -562,7 +562,7 @@
                     <div class="form-group">
                         <label for="upper_ci" class="col-sm-4 control-label">Upper CI</label>
                         <div class="col-sm-8">
-                            <input id="upper_ci" name="upper_ci" type="number" step="any" class="form-control" placeholder="Enter upper confidence interval" required>
+                            <input id="upper_ci" name="upper_ci" type="text" class="form-control" placeholder="Enter upper confidence interval" required>
                         </div>
                     </div>
 
@@ -570,7 +570,7 @@
                     <div class="form-group">
                         <label for="lower_ci" class="col-sm-4 control-label">Lower CI</label>
                         <div class="col-sm-8">
-                            <input id="lower_ci" name="lower_ci" type="number" step="any" class="form-control" placeholder="Enter lower confidence interval" required>
+                            <input id="lower_ci" name="lower_ci" type="text" class="form-control" placeholder="Enter lower confidence interval" required>
                         </div>
                     </div>
 
