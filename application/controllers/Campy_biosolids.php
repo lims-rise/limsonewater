@@ -1402,10 +1402,10 @@ class Campy_biosolids extends CI_Controller
             $mpn_concentration = $this->input->post('mpn_concentration', TRUE);
             $upper_ci = $this->input->post('upper_ci', TRUE);
             $lower_ci = $this->input->post('lower_ci', TRUE);
-            $mpn_concentration_dw = $this->input->post('mpn_concentration_dw', TRUE);
-            $upper_ci_dw = $this->input->post('upper_ci_dw', TRUE);
-            $lower_ci_dw = $this->input->post('lower_ci_dw', TRUE);
-            $current_sample_dryweight = $this->input->post('current_sample_dryweight', TRUE);
+            // $mpn_concentration_dw = $this->input->post('mpn_concentration_dw', TRUE);
+            // $upper_ci_dw = $this->input->post('upper_ci_dw', TRUE);
+            // $lower_ci_dw = $this->input->post('lower_ci_dw', TRUE);
+            // $current_sample_dryweight = $this->input->post('current_sample_dryweight', TRUE);
             
             // Validation
             if (!$mode || !in_array($mode, ['insert', 'edit'])) {
@@ -1416,7 +1416,7 @@ class Campy_biosolids extends CI_Controller
                 return;
             }
             
-            if (!$id_campy_biosolids || !$mpn_concentration || !$upper_ci || !$lower_ci || !$mpn_concentration_dw || !$upper_ci_dw || !$lower_ci_dw) {
+            if (!$id_campy_biosolids || !$mpn_concentration || !$upper_ci || !$lower_ci) {
                 echo json_encode([
                     'status' => 'error',
                     'message' => 'All fields are required.'
@@ -1435,9 +1435,9 @@ class Campy_biosolids extends CI_Controller
                     'mpn_concentration' => $mpn_concentration,
                     'upper_ci' => $upper_ci,
                     'lower_ci' => $lower_ci,
-                    'mpn_concentration_dw' => $mpn_concentration_dw,
-                    'upper_ci_dw' => $upper_ci_dw,
-                    'lower_ci_dw' => $lower_ci_dw,
+                    // 'mpn_concentration_dw' => $mpn_concentration_dw,
+                    // 'upper_ci_dw' => $upper_ci_dw,
+                    // 'lower_ci_dw' => $lower_ci_dw,
                     'flag' => '0',
                     'lab' => $lab ? $lab : '1',
                     'uuid' => $this->uuid->v4(),
@@ -1448,14 +1448,6 @@ class Campy_biosolids extends CI_Controller
                 $insert_id = $this->Campy_biosolids_model->insertCalculateMPN($data);
                 
                 if ($insert_id) {
-                    // Update sample_dryweight_old in campy_biosolids table to sync with current value
-                    if ($current_sample_dryweight) {
-                        $update_biosolids_data = array(
-                            'sample_dryweight_old' => $current_sample_dryweight
-                        );
-                        $this->Campy_biosolids_model->updateCampyBiosolids($id_campy_biosolids, $update_biosolids_data);
-                    }
-                    
                     echo json_encode([
                         'status' => 'success',
                         'message' => 'MPN calculation saved successfully.',
@@ -1486,30 +1478,18 @@ class Campy_biosolids extends CI_Controller
                     'mpn_concentration' => $mpn_concentration,
                     'upper_ci' => $upper_ci,
                     'lower_ci' => $lower_ci,
-                    'mpn_concentration_dw' => $mpn_concentration_dw,
-                    'upper_ci_dw' => $upper_ci_dw,
-                    'lower_ci_dw' => $lower_ci_dw,
+                    // 'mpn_concentration_dw' => $mpn_concentration_dw,
+                    // 'upper_ci_dw' => $upper_ci_dw,
+                    // 'lower_ci_dw' => $lower_ci_dw,
                     'flag' => '0',
                     'lab' => $lab ? $lab : '1',
                     'uuid' => $this->uuid->v4(),
                     // Remove date_updated and user_updated as they don't exist in the table
                 );
                 
-                // Debug logging - you can remove this later
-                log_message('debug', 'Update MPN Data: ' . json_encode($data));
-                log_message('debug', 'Update MPN ID: ' . $id_campy_result_mpn);
-                
                 $update_result = $this->Campy_biosolids_model->updateCalculateMPN($id_campy_result_mpn, $data);
                 
                 if ($update_result) {
-                    // Update sample_dryweight_old in campy_biosolids table to sync with current value
-                    if ($current_sample_dryweight) {
-                        $update_biosolids_data = array(
-                            'sample_dryweight_old' => $current_sample_dryweight
-                        );
-                        $this->Campy_biosolids_model->updateCampyBiosolids($id_campy_biosolids, $update_biosolids_data);
-                    }
-                    
                     echo json_encode([
                         'status' => 'success',
                         'message' => 'MPN calculation updated successfully.'

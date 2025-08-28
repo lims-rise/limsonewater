@@ -246,9 +246,9 @@
                                                 <th>Concentration MPN</th>
                                                 <th>Upper CI</th>
                                                 <th>Lower CI</th>
-                                                <th>Concentration MPN/g Dw</th>
+                                                <!-- <th>Concentration MPN/g Dw</th>
                                                 <th>Upper CI MPN/g Dw</th>
-                                                <th>Lower CI MPN/g Dw</th>
+                                                <th>Lower CI MPN/g Dw</th> -->
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -295,9 +295,9 @@
                                                         <td><?= htmlspecialchars($concentration->mpn_concentration) ?></td>
                                                         <td><?= htmlspecialchars($concentration->upper_ci) ?></td>
                                                         <td><?= htmlspecialchars($concentration->lower_ci) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->mpn_concentration_dw) ?></td>
+                                                        <!-- <td><?= htmlspecialchars($concentration->mpn_concentration_dw) ?></td>
                                                         <td><?= htmlspecialchars($concentration->upper_ci_dw) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->lower_ci_dw) ?></td>
+                                                        <td><?= htmlspecialchars($concentration->lower_ci_dw) ?></td> -->
                                                     </tr>
                                                 <?php endforeach; ?>
                                             <?php else: ?>
@@ -577,7 +577,7 @@
                     <input id="mode_calculateMPN" name="mode_calculateMPN" type="hidden" class="form-control input-sm">
                     <input id="id_campy_biosolids_mpn" name="id_campy_biosolids_mpn" type="hidden" class="form-control input-sm">
                     <input id="id_campy_result_mpn" name="id_campy_result_mpn" type="hidden" class="form-control input-sm">
-                    <input id="current_sample_dryweight" name="current_sample_dryweight" type="hidden" class="form-control input-sm">
+                    <!-- <input id="current_sample_dryweight" name="current_sample_dryweight" type="hidden" class="form-control input-sm"> -->
 
                     <!-- MPN Concentration -->
                     <div class="form-group">
@@ -604,17 +604,16 @@
                     </div>
 
                     <!-- Concentration MPN/g dry weight -->
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label class="col-sm-4 control-label">Auto-calculated Results</label>
                         <div class="col-sm-8">
-                            <!-- Hidden inputs to store values for database -->
+                      
                             <input id="mpn_concentration_dw" name="mpn_concentration_dw" type="hidden">
                             <input id="upper_ci_dw" name="upper_ci_dw" type="hidden">
                             <input id="lower_ci_dw" name="lower_ci_dw" type="hidden">
                             
-                            <!-- Card display for auto-calculated values -->
+              
                             <div class="auto-calc-cards">
-                                <!-- Full width card for main concentration -->
                                 <div class="calc-card calc-card-full">
                                     <div class="calc-card-header">
                                         <i class="fa fa-calculator text-primary"></i>
@@ -625,7 +624,6 @@
                                     </div>
                                 </div>
                                 
-                                <!-- Two column layout for CI values -->
                                 <div class="calc-card-row">
                                     <div class="calc-card calc-card-half">
                                         <div class="calc-card-header">
@@ -649,7 +647,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="modal-footer clearfix" style="display: flex; align-items: center; justify-content: flex-end; gap: 10px; padding: 15px 20px; border-top: 1px solid #dee2e6; background-color: #f8f9fa;">
                     <button type="submit" class="btn btn-primary" style="min-width: 100px; padding: 8px 16px; font-weight: 500; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,123,255,0.2); transition: all 0.3s ease;">
@@ -1252,9 +1250,9 @@
                     document.getElementById('mpn_concentration').value = response.data.mpn_concentration;
                     document.getElementById('upper_ci').value = response.data.upper_ci;
                     document.getElementById('lower_ci').value = response.data.lower_ci;
-                    document.getElementById('mpn_concentration_dw').value = response.data.mpn_concentration_dw || '';
-                    document.getElementById('upper_ci_dw').value = response.data.upper_ci_dw || '';
-                    document.getElementById('lower_ci_dw').value = response.data.lower_ci_dw || '';
+                    // document.getElementById('mpn_concentration_dw').value = response.data.mpn_concentration_dw || '';
+                    // document.getElementById('upper_ci_dw').value = response.data.upper_ci_dw || '';
+                    // document.getElementById('lower_ci_dw').value = response.data.lower_ci_dw || '';
                     
                     // Update modal title
                     document.getElementById('modal-title-calculate-mpn').innerHTML = 'Calculate MPN | Edit';
@@ -1265,9 +1263,9 @@
                     document.getElementById('mpn_concentration').value = '';
                     document.getElementById('upper_ci').value = '';
                     document.getElementById('lower_ci').value = '';
-                    document.getElementById('mpn_concentration_dw').value = '';
-                    document.getElementById('upper_ci_dw').value = '';
-                    document.getElementById('lower_ci_dw').value = '';
+                    // document.getElementById('mpn_concentration_dw').value = '';
+                    // document.getElementById('upper_ci_dw').value = '';
+                    // document.getElementById('lower_ci_dw').value = '';
                     
                     // Update modal title
                     document.getElementById('modal-title-calculate-mpn').innerHTML = 'Calculate MPN | New';
@@ -1285,9 +1283,9 @@
                 document.getElementById('mpn_concentration').value = '';
                 document.getElementById('upper_ci').value = '';
                 document.getElementById('lower_ci').value = '';
-                document.getElementById('mpn_concentration_dw').value = '';
-                document.getElementById('upper_ci_dw').value = '';
-                document.getElementById('lower_ci_dw').value = '';
+                // document.getElementById('mpn_concentration_dw').value = '';
+                // document.getElementById('upper_ci_dw').value = '';
+                // document.getElementById('lower_ci_dw').value = '';
                 document.getElementById('modal-title-calculate-mpn').innerHTML = 'Calculate MPN | New';
                 
                 // Show the modal
@@ -1642,46 +1640,45 @@
 
 
         // Function to calculate MPN per gram dry weight values
-        function calculateMpnDryWeight() {
-            let mpnConcentration = parseFloat($('#mpn_concentration').val()) || 0;
-            let upperCi = parseFloat($('#upper_ci').val()) || 0;
-            let lowerCi = parseFloat($('#lower_ci').val()) || 0;
-            let sampleDryweight = parseFloat($('#sample_dryweight').val()) || 0;
+        // function calculateMpnDryWeight() {
+        //     let mpnConcentration = parseFloat($('#mpn_concentration').val()) || 0;
+        //     let upperCi = parseFloat($('#upper_ci').val()) || 0;
+        //     let lowerCi = parseFloat($('#lower_ci').val()) || 0;
+        //     let sampleDryweight = parseFloat($('#sample_dryweight').val()) || 0;
 
-            if (sampleDryweight > 0) {
-                // Calculate Concentration MPN/g dry weight = mpn_concentration / sample_dryweight
-                let mpnConcentrationDw = (mpnConcentration / sampleDryweight).toFixed(4);
-                $('#mpn_concentration_dw').val(mpnConcentrationDw);
-                $('#display_mpn_concentration_dw').text(mpnConcentrationDw);
+        //     if (sampleDryweight > 0) {
+        //         // Calculate Concentration MPN/g dry weight = mpn_concentration / sample_dryweight
+        //         let mpnConcentrationDw = (mpnConcentration / sampleDryweight).toFixed(4);
+        //         $('#mpn_concentration_dw').val(mpnConcentrationDw);
+        //         $('#display_mpn_concentration_dw').text(mpnConcentrationDw);
 
-                // Calculate Upper CI MPN/g dw = upper_ci / sample_dryweight
-                let upperCiDw = (upperCi / sampleDryweight).toFixed(4);
-                $('#upper_ci_dw').val(upperCiDw);
-                $('#display_upper_ci_dw').text(upperCiDw);
+        //         // Calculate Upper CI MPN/g dw = upper_ci / sample_dryweight
+        //         let upperCiDw = (upperCi / sampleDryweight).toFixed(4);
+        //         $('#upper_ci_dw').val(upperCiDw);
+        //         $('#display_upper_ci_dw').text(upperCiDw);
 
-                // Calculate Lower CI MPN/g dw = lower_ci / sample_dryweight
-                let lowerCiDw = (lowerCi / sampleDryweight).toFixed(4);
-                $('#lower_ci_dw').val(lowerCiDw);
-                $('#display_lower_ci_dw').text(lowerCiDw);
-            } else {
-                $('#mpn_concentration_dw').val('');
-                $('#upper_ci_dw').val('');
-                $('#lower_ci_dw').val('');
-                $('#display_mpn_concentration_dw').text('-');
-                $('#display_upper_ci_dw').text('-');
-                $('#display_lower_ci_dw').text('-');
-            }
-        }
+        //         // Calculate Lower CI MPN/g dw = lower_ci / sample_dryweight
+        //         let lowerCiDw = (lowerCi / sampleDryweight).toFixed(4);
+        //         $('#lower_ci_dw').val(lowerCiDw);
+        //         $('#display_lower_ci_dw').text(lowerCiDw);
+        //     } else {
+        //         $('#mpn_concentration_dw').val('');
+        //         $('#upper_ci_dw').val('');
+        //         $('#lower_ci_dw').val('');
+        //         $('#display_mpn_concentration_dw').text('-');
+        //         $('#display_upper_ci_dw').text('-');
+        //         $('#display_lower_ci_dw').text('-');
+        //     }
+        // }
 
         // Attach the calculation function to input events
-        $('#mpn_concentration, #upper_ci, #lower_ci').on('input', calculateMpnDryWeight);
+        // $('#mpn_concentration, #upper_ci, #lower_ci').on('input', calculateMpnDryWeight);
 
         // Also trigger calculation when the modal is shown (in case data is pre-filled)
-        $('#compose-modalCalculateMPN').on('shown.bs.modal', function() {
-            calculateMpnDryWeight();
-            // Set current sample_dryweight value for syncing to database
-            $('#current_sample_dryweight').val($('#sample_dryweight').val());
-        });
+        // $('#compose-modalCalculateMPN').on('shown.bs.modal', function() {
+        //     calculateMpnDryWeight();
+        //     $('#current_sample_dryweight').val($('#sample_dryweight').val());
+        // });
 
         // Monitor sample_dryweight changes and trigger recalculation check
         function monitorSampleDryweightChanges() {
@@ -2487,10 +2484,10 @@
             $('#formCalculateMPN')[0].reset();
             $('#mode_calculateMPN').val('');
             $('#id_campy_result_mpn').val('');
-            $('#current_sample_dryweight').val('');
-            $('#mpn_concentration_dw').val('');
-            $('#upper_ci_dw').val('');
-            $('#lower_ci_dw').val('');
+            // $('#current_sample_dryweight').val('');
+            // $('#mpn_concentration_dw').val('');
+            // $('#upper_ci_dw').val('');
+            // $('#lower_ci_dw').val('');
         });
 
     });
