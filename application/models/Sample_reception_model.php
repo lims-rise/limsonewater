@@ -771,6 +771,11 @@ class Sample_reception_model extends CI_Model
         }
 
         foreach ($samples as $i => $sample) {
+                $submittedMatrix = isset($sample['submitted_matrix']) ? $sample['submitted_matrix'] : $this->getSubmittedMatrix($sample['sampletype'] ?? '');
+                $analysisMatrix = isset($sample['analysis_matrix']) ? $sample['analysis_matrix'] : $this->getAnalysisMatrix($sample['sampletype'] ?? '');
+                $analysisMethodCategory = isset($sample['analysis_method_category']) ? $sample['analysis_method_category'] : $this->getAnalysisMethodCategory($sample['testing_type'] ?? '');
+                $parameterName = isset($sample['parameter_name']) ? $sample['parameter_name'] : $this->getParameterName($sample['testing_type'] ?? '');
+                $testKeyCode = substr($submittedMatrix, 0, 1) . '=' . substr($analysisMatrix, 0, 1) . '-' . $analysisMethodCategory . '/' . $parameterName;
             $row = [
                 'ConfirmedRaw' => isset($sample['confirmed_raw']) ? $sample['confirmed_raw'] : '',
                 'PresumptiveRaw' => isset($sample['presumptive_raw']) ? $sample['presumptive_raw'] : '',
@@ -803,7 +808,9 @@ class Sample_reception_model extends CI_Model
                 'ANALYSISMETHODCATEGORY' => isset($sample['analysis_method_category']) ? $sample['analysis_method_category'] : $this->getAnalysisMethodCategory($sample['testing_type'] ?? ''),
                 // 'ANALYSISMETHOD' =>  '-',
                 'ANALYSISMETHOD' => isset($sample['analysis_method']) ? $sample['analysis_method'] : $this->getAnalysisMethod($sample['testing_type'] ?? ''),
-                'SAMPLEDATE' => isset($sample['time_collected']) ? $sample['time_collected'] : '',
+                // 'SAMPLEDATE' => isset($sample['time_collected']) ? $sample['time_collected'] : '',
+                'SAMPLEDATE' => (isset($sample['date_collected']) && isset($sample['time_collected']) && $sample['date_collected'] && $sample['time_collected']) ? 
+                    date('d/m/Y H:i', strtotime($sample['date_collected'] . ' ' . $sample['time_collected'])) : '',
                 'LABREGISTRATIONDATE' => (isset($sample['date_arrival']) && isset($sample['time_arrival']) && $sample['date_arrival'] && $sample['time_arrival']) ? 
                     date('d/m/Y H:i', strtotime($sample['date_arrival'] . ' ' . $sample['time_arrival'])) : '',
                 'AnalysisDate' => (isset($sample['date_sample_processed']) && isset($sample['time_sample_processed']) && $sample['date_sample_processed'] && $sample['time_sample_processed'])
@@ -815,7 +822,7 @@ class Sample_reception_model extends CI_Model
                 // 'ParameterCode' => isset($sample['parameter_code']) ? $sample['parameter_code'] : $this->getParameterCode($sample['testing_type'] ?? ''),
                 'ParameterCode' => '',
                 'PARAMETERNAME' => isset($sample['parameter_name']) ? $sample['parameter_name'] : $this->getParameterName($sample['testing_type'] ?? ''),
-                'TEST_KEY_CODE' => isset($sample['test_key_code']) ? $sample['test_key_code'] : 'TK00' . ($i + 1),
+                'TEST_KEY_CODE' => $testKeyCode,
                 // 'TEST_KEY_CODE' => isset($sample['test_key_code']) ? $sample['test_key_code'] : '-',
                 'RESULT' => isset($sample['result']) ? $sample['result'] : '-',
                 'Units' => isset($sample['units']) ? $sample['units'] : $this->getUnits($sample['testing_type'] ?? ''),

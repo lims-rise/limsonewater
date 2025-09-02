@@ -503,13 +503,8 @@
                     <!-- Confirmation -->
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Confirmation</label>
-                        <div class="col-sm-8">
-                            <label class="radio-inline">
-                                <input type="radio" name="confirmation" value="Salmonella" required> Salmonella
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="confirmation" value="Not Salmonella"> Not Salmonella
-                            </label>
+                        <div class="col-sm-8" id="confirmation-options">
+                            <!-- Dynamic content will be inserted here based on XLD and Chromagar values -->
                         </div>
                     </div>
 
@@ -731,6 +726,31 @@
     .modal-body {
     max-height: 80vh;
     overflow-y: auto;
+    }
+
+    /* Styling for confirmation options */
+    .checkbox-inline {
+        display: inline-block;
+        margin-bottom: 0;
+        margin-right: 15px;
+        font-weight: normal;
+        cursor: pointer;
+    }
+
+    .checkbox-inline input[type="checkbox"] {
+        margin-right: 5px;
+    }
+
+    .radio-inline {
+        display: inline-block;
+        margin-bottom: 0;
+        margin-right: 15px;
+        font-weight: normal;
+        cursor: pointer;
+    }
+
+    .radio-inline input[type="radio"] {
+        margin-right: 5px;
     }
 
     .badge {
@@ -1686,6 +1706,49 @@
     //     $('#confirmation').val(confirmationText);
     // }
 
+    // Function to update confirmation options based on XLD and Chromagar values
+    function updateConfirmationOptions(xldValue, chromagarValue) {
+        const confirmationContainer = $('#confirmation-options');
+        confirmationContainer.empty(); // Clear existing options
+        
+        // Convert string values to integers for comparison
+        const xld = parseInt(xldValue) || 0;
+        const chromagar = parseInt(chromagarValue) || 0;
+        
+        console.log(`Updating confirmation options: XLD=${xld}, Chromagar=${chromagar}`);
+        
+        if (xld === 0 && chromagar === 0) {
+            // XLD = 0, Chromagar = 0 → checkbox with "Not Salmonella" option only
+            confirmationContainer.html(`
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="confirmation" value="Not Salmonella" required> Not Salmonella
+                </label>
+            `);
+        } else if (xld === 1 && chromagar === 0) {
+            // XLD = 1, Chromagar = 0 → checkbox with "Not Salmonella" option only
+            confirmationContainer.html(`
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="confirmation" value="Not Salmonella" required> Not Salmonella
+                </label>
+            `);
+        } else if (xld === 1 && chromagar === 1) {
+            // XLD = 1, Chromagar = 1 → checkbox with "Salmonella" option only
+            confirmationContainer.html(`
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="confirmation" value="Salmonella" required> Salmonella
+                </label>
+            `);
+        } else {
+            // Unexpected case - log for debugging and default to "Not Salmonella"
+            console.warn(`Unexpected XLD/Chromagar combination: XLD=${xld}, Chromagar=${chromagar}. Defaulting to "Not Salmonella"`);
+            confirmationContainer.html(`
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="confirmation" value="Not Salmonella" required> Not Salmonella
+                </label>
+            `);
+        }
+    }
+
     function generateColonyPlateInputs(container, numberOfTubes) {
             container.empty(); // Clear existing inputs
 
@@ -1957,15 +2020,24 @@
 
         table1.ajax.reload(function() {
             let td = $('#exampleChromagar td:first');
-            let data = table1.row(td).data();
-            console.log(data);
+            let dataChromagar = table1.row(td).data();
+            console.log(dataChromagar);
 
-            if (data) {
-                const purpleColonyPlateArray = data.purple_colony_plate.split(', ');
-                const plateNumberArray = data.plate_number.split(', ');
+            if (dataChromagar) {
+                const purpleColonyPlateArray = dataChromagar.purple_colony_plate.split(', ');
+                const plateNumberArray = dataChromagar.plate_number.split(', ');
 
-                // Generate the biochemical results for all plate numbers
-                generateResultBiochemical($('#content-result-biochemical'), plateNumberArray.length, data.id_salmonella_biosolids, plateNumberArray, purpleColonyPlateArray);
+                // Get XLD data as well
+                let tdXld = $('#example2 td:first');
+                let dataXld = table.row(tdXld).data();
+                
+                let blackColonyPlateArray = [];
+                if (dataXld && dataXld.black_colony_plate) {
+                    blackColonyPlateArray = dataXld.black_colony_plate.split(', ');
+                }
+
+                // Generate the biochemical results for all plate numbers with both XLD and Chromagar data
+                generateResultBiochemical($('#content-result-biochemical'), plateNumberArray.length, dataChromagar.id_salmonella_biosolids, plateNumberArray, purpleColonyPlateArray, blackColonyPlateArray);
             } else {
                 console.log('Data belum tersedia');
                 $('#content-result-biochemical').empty().append('<p class="text-center">No data available</p>');
@@ -1973,7 +2045,7 @@
         });
 
         // Improved generateResultBiochemical function
-        function generateResultBiochemical(container, numberOfPlates, id_salmonella_biosolids, plateNumberArray, purpleColonyPlateArray) {
+        function generateResultBiochemical(container, numberOfPlates, id_salmonella_biosolids, plateNumberArray, purpleColonyPlateArray, blackColonyPlateArray = []) {
             container.empty(); // Clear existing content
 
             // Iterate through the plateNumberArray
@@ -1981,13 +2053,20 @@
                 const plateNumber = plateNumberArray[i]; // Get the corresponding plate number
                 const tableId = `exampleBiochemical_${i}`; // Unique table ID
                 const buttonId = `addtombol_detResultsBiochemical_${plateNumber}`; // Unique button ID
-                const isDisabled = purpleColonyPlateArray[i] === '0' ? 'disabled' : ''; // Determine if button should be disabled
-                console.log('button biochemical tube', isDisabled);
+                
+                // Get XLD and Chromagar values for this plate
+                const xldValue = blackColonyPlateArray[i] || '0';
+                const chromagarValue = purpleColonyPlateArray[i] || '0';
+                
+                // Tombol tetap aktif berdasarkan instruksi baru
+                const isDisabled = ''; // Semua tombol tetap aktif
+                
+                // console.log(`Plate ${plateNumber}: XLD=${xldValue}, Chromagar=${chromagarValue}`);
 
                 // Append the table and button for each plate
                 container.append(`
                     <div class="box-body pad table-responsive">
-                        <button class="btn btn-primary" id="${buttonId}" data-index="${plateNumber}" ${isDisabled}>
+                        <button class="btn btn-primary" id="${buttonId}" data-index="${plateNumber}" data-xld="${xldValue}" data-chromagar="${chromagarValue}" ${isDisabled}>
                             <i class="fa fa-wpforms" aria-hidden="true"></i> Tube ${plateNumber}
                         </button>
                         <table id="${tableId}" class="table display table-bordered table-striped" width="100%">
@@ -2048,9 +2127,43 @@
         // Event listener untuk tombol "New Data"
         $(document).on('click', '[id^=addtombol_detResultsBiochemical_]', function() {
             const plateNumber = $(this).data('index'); // Get the plate number directly
+            // const xldValue = $(this).data('xld'); // Get XLD value
+            // const chromagarValue = $(this).data('chromagar'); // Get Chromagar value
+            
+            // Always get fresh data from tables instead of using potentially stale button data
+            let xldValue = '0';
+            let chromagarValue = '0';
+            
+            // Get fresh Chromagar data
+            let tdChromagar = $('#exampleChromagar td:first');
+            let dataChromagar = table1.row(tdChromagar).data();
+            
+            // Get fresh XLD data
+            let tdXld = $('#example2 td:first');
+            let dataXld = table.row(tdXld).data();
+            
+            if (dataChromagar && dataChromagar.purple_colony_plate) {
+                const purpleColonyPlateArray = dataChromagar.purple_colony_plate.split(', ');
+                const plateNumberArray = dataChromagar.plate_number.split(', ');
+                const tubeIndex = plateNumberArray.indexOf(plateNumber.toString());
+                if (tubeIndex !== -1) {
+                    chromagarValue = purpleColonyPlateArray[tubeIndex] || '0';
+                }
+            }
+            
+            if (dataXld && dataXld.black_colony_plate) {
+                const blackColonyPlateArray = dataXld.black_colony_plate.split(', ');
+                const plateNumberArray = dataXld.plate_number.split(', ');
+                const tubeIndex = plateNumberArray.indexOf(plateNumber.toString());
+                if (tubeIndex !== -1) {
+                    xldValue = blackColonyPlateArray[tubeIndex] || '0';
+                }
+            }
+            
             let td = $('#exampleChromagar td:first');
             let data = table1.row(td).data();
             console.log('datanya', data.id_result_chromagar);
+            console.log(`Tube ${plateNumber}: XLD=${xldValue}, Chromagar=${chromagarValue}`);
 
             $('#mode_detResultsBiochemical').val('insert');
             $('#modal-title-biochemical').html(`<i class="fa fa-wpforms"></i> Insert | Tube ${plateNumber} <span id="my-another-cool-loader"></span>`);
@@ -2059,9 +2172,12 @@
             $('#id_result_chromagar1').val(data.id_result_chromagar);
             $('#oxidase').val('');
             $('#catalase').val('');
-            // $('#confirmation').val('');
             $('#sample_store').val('');
             $('#biochemical_tube').val(plateNumber);
+            
+            // Update confirmation options based on XLD and Chromagar values
+            updateConfirmationOptions(xldValue, chromagarValue);
+            
             $('#compose-modalBiochemical').modal('show');
             console.log(`Button for Biochemical Tube: ${plateNumber} clicked`);
         });
@@ -2073,6 +2189,35 @@
             let tableId = $(this).closest('.box-body').find('table').attr('id'); // Dapatkan ID tabel dari konteks
             let data = $(`#${tableId}`).DataTable().row(tr).data(); // Dapatkan data dari DataTable yang sesuai
             console.log(data);
+
+            // Get XLD and Chromagar values for this tube
+            let tubeNumber = data.biochemical_tube;
+            let xldValue = '0';
+            let chromagarValue = '0';
+            
+            // Always get fresh data from tables for consistency
+            let tdChromagar = $('#exampleChromagar td:first');
+            let dataChromagar = table1.row(tdChromagar).data();
+            let tdXld = $('#example2 td:first');
+            let dataXld = table.row(tdXld).data();
+            
+            if (dataChromagar && dataChromagar.purple_colony_plate) {
+                const purpleColonyPlateArray = dataChromagar.purple_colony_plate.split(', ');
+                const plateNumberArray = dataChromagar.plate_number.split(', ');
+                const tubeIndex = plateNumberArray.indexOf(tubeNumber.toString());
+                if (tubeIndex !== -1) {
+                    chromagarValue = purpleColonyPlateArray[tubeIndex] || '0';
+                }
+            }
+            
+            if (dataXld && dataXld.black_colony_plate) {
+                const blackColonyPlateArray = dataXld.black_colony_plate.split(', ');
+                const plateNumberArray = dataXld.plate_number.split(', ');
+                const tubeIndex = plateNumberArray.indexOf(tubeNumber.toString());
+                if (tubeIndex !== -1) {
+                    xldValue = blackColonyPlateArray[tubeIndex] || '0';
+                }
+            }
 
             // Set nilai-nilai di dalam modal sesuai data yang didapat
             $('#mode_detResultsBiochemical').val('edit');
@@ -2086,9 +2231,17 @@
             
             // Set radio button untuk catalase
             $('input[name="catalase"][value="' + data.catalase + '"]').prop('checked', true);
-            $('#confirmation').val(data.confirmation);
             $('#sample_store').val(data.sample_store);
-            // Tambahkan nilai lain yang diperlukan sesuai data
+            
+            // Update confirmation options based on XLD and Chromagar values
+            updateConfirmationOptions(xldValue, chromagarValue);
+            
+            // Set the confirmation value after updating the options
+            setTimeout(function() {
+                if (data.confirmation) {
+                    $('input[name="confirmation"][value="' + data.confirmation + '"]').prop('checked', true);
+                }
+            }, 100);
 
             // Tampilkan modal untuk edit
             $('#compose-modalBiochemical').modal('show');
