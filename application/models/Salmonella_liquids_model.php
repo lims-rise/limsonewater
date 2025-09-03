@@ -641,6 +641,58 @@ class Salmonella_liquids_model extends CI_Model
             return false;
         }
     }
+
+    /**
+     * Check if a specific tube already has biochemical data
+     */
+    function checkTubeExists($id_salmonella_liquids, $biochemical_tube) {
+        $this->db->where('id_salmonella_liquids', $id_salmonella_liquids);
+        $this->db->where('biochemical_tube', $biochemical_tube);
+        $this->db->where('flag', '0');
+        $query = $this->db->get('salmonella_result_biochemical_liquids');
+        
+        return $query->num_rows() > 0;
+    }
+
+    /**
+     * Check if a specific tube needs update (exists but with different confirmation value)
+     */
+    function checkTubeNeedsUpdate($id_salmonella_liquids, $biochemical_tube, $expected_confirmation) {
+        $this->db->select('confirmation, id_result_biochemical');
+        $this->db->where('id_salmonella_liquids', $id_salmonella_liquids);
+        $this->db->where('biochemical_tube', $biochemical_tube);
+        $this->db->where('flag', '0');
+        $query = $this->db->get('salmonella_result_biochemical_liquids');
+        
+        if ($query->num_rows() > 0) {
+            $result = $query->row();
+            // Return true if current confirmation is different from expected
+            return [
+                'exists' => true,
+                'needs_update' => $result->confirmation !== $expected_confirmation,
+                'current_confirmation' => $result->confirmation,
+                'id_result_biochemical' => $result->id_result_biochemical
+            ];
+        }
+        
+        return [
+            'exists' => false,
+            'needs_update' => false,
+            'current_confirmation' => null,
+            'id_result_biochemical' => null
+        ];
+    }
+
+    /**
+     * Check if any tube has biochemical data for monitoring sync status
+     */
+    function checkAnyTubeExists($id_salmonella_liquids) {
+        $this->db->where('id_salmonella_liquids', $id_salmonella_liquids);
+        $this->db->where('flag', '0');
+        $query = $this->db->get('salmonella_result_biochemical_liquids');
+        
+        return $query->num_rows() > 0;
+    }
     
 
       

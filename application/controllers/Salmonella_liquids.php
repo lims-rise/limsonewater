@@ -615,6 +615,11 @@ class Salmonella_liquids extends CI_Controller
 
 
     public function saveBiochemical() {
+        // Set JSON header for AJAX requests
+        if ($this->input->is_ajax_request()) {
+            header('Content-Type: application/json');
+        }
+        
         $mode = $this->input->post('mode_detResultsBiochemical', TRUE);
         $id_one_water_sample = $this->input->post('idBiochemical_one_water_sample', TRUE);
         $id_result_biochemical = $this->input->post('id_result_biochemical', TRUE);
@@ -624,41 +629,107 @@ class Salmonella_liquids extends CI_Controller
         $sample_store = $this->input->post('sample_store', TRUE);
         $biochemical_tube = $this->input->post('biochemical_tube', TRUE);
 
-        if ($mode == "insert") {
-            $data = array(
-                'id_salmonella_liquids' => $id_salmonella_liquids,
-                'id_result_chromagar' => $id_result_chromagar,
-                'confirmation' => $confirmation,
-                // 'sample_store' => $sample_store,
-                'biochemical_tube' => $biochemical_tube,
-                'flag' => '0',
-                'lab' => $this->session->userdata('lab'),
-                'uuid' => $this->uuid->v4(),
-                'user_created' => $this->session->userdata('id_users'),
-                'date_created' => date('Y-m-d H:i:s'),
-            );
-            // var_dump($data);
-            // die();
-            $this->Salmonella_liquids_model->insertResultsBiochemical($data);
-        } else if ($mode == "edit") {
-            $data = array(
-                'id_salmonella_liquids' => $id_salmonella_liquids,
-                'id_result_chromagar' => $id_result_chromagar,
-                'confirmation' => $confirmation,
-                // 'sample_store' => $sample_store,
-                'flag' => '0',
-                'lab' => $this->session->userdata('lab'),
-                'uuid' => $this->uuid->v4(),
-                'user_updated' => $this->session->userdata('id_users'),
-                'date_updated' => date('Y-m-d H:i:s'),
-            );
+        // Check if this is an AJAX request
+        $is_ajax = $this->input->is_ajax_request();
 
-            // var_dump($data);
-            // die();
-            $this->Salmonella_liquids_model->updateResultsBiochemical($id_result_biochemical, $data);
+        // Validation for required fields
+        if (!$mode || !$id_salmonella_liquids || !$confirmation || !$biochemical_tube) {
+            if ($is_ajax) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Missing required fields.',
+                    'tube' => $biochemical_tube,
+                    'debug' => [
+                        'mode' => $mode,
+                        'id_salmonella_liquids' => $id_salmonella_liquids,
+                        'confirmation' => $confirmation,
+                        'biochemical_tube' => $biochemical_tube
+                    ]
+                ]);
+                return;
+            } else {
+                $this->session->set_flashdata('error', 'Missing required fields.');
+                redirect(site_url("salmonella_liquids/read/" . $id_one_water_sample));
+                return;
+            }
         }
 
-        redirect(site_url("salmonella_liquids/read/" . $id_one_water_sample));
+        try {
+            if ($mode == "insert") {
+                $data = array(
+                    'id_salmonella_liquids' => $id_salmonella_liquids,
+                    'id_result_chromagar' => $id_result_chromagar,
+                    'confirmation' => $confirmation,
+                    // 'sample_store' => $sample_store,
+                    'biochemical_tube' => $biochemical_tube,
+                    'flag' => '0',
+                    'lab' => $this->session->userdata('lab'),
+                    'uuid' => $this->uuid->v4(),
+                    'user_created' => $this->session->userdata('id_users'),
+                    'date_created' => date('Y-m-d H:i:s'),
+                );
+                
+                $result = $this->Salmonella_liquids_model->insertResultsBiochemical($data);
+                
+                if ($is_ajax) {
+                    if ($result && $result > 0) {
+                        echo json_encode([
+                            'status' => 'success',
+                            'message' => 'Biochemical result saved successfully.',
+                            'tube' => $biochemical_tube,
+                            'id' => $result
+                        ]);
+                    } else {
+                        echo json_encode([
+                            'status' => 'error',
+                            'message' => 'Failed to save biochemical result.',
+                            'tube' => $biochemical_tube
+                        ]);
+                    }
+                    return;
+                }
+                
+            } else if ($mode == "edit") {
+                $data = array(
+                    'id_salmonella_liquids' => $id_salmonella_liquids,
+                    'id_result_chromagar' => $id_result_chromagar,
+                    'confirmation' => $confirmation,
+                    // 'sample_store' => $sample_store,
+                    'flag' => '0',
+                    'lab' => $this->session->userdata('lab'),
+                    'uuid' => $this->uuid->v4(),
+                    'user_updated' => $this->session->userdata('id_users'),
+                    'date_updated' => date('Y-m-d H:i:s'),
+                );
+
+                $this->Salmonella_liquids_model->updateResultsBiochemical($id_result_biochemical, $data);
+                
+                if ($is_ajax) {
+                    echo json_encode([
+                        'status' => 'success',
+                        'message' => 'Biochemical result updated successfully.',
+                        'tube' => $biochemical_tube
+                    ]);
+                    return;
+                }
+            }
+
+            // For non-AJAX requests (traditional form submission)
+            redirect(site_url("salmonella_liquids/read/" . $id_one_water_sample));
+            
+        } catch (Exception $e) {
+            if ($is_ajax) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Error saving biochemical result: ' . $e->getMessage(),
+                    'tube' => $biochemical_tube
+                ]);
+                return;
+            } else {
+                $this->session->set_flashdata('error', 'Error saving biochemical result: ' . $e->getMessage());
+                redirect(site_url("salmonella_liquids/read/" . $id_one_water_sample));
+            }
+        }
     }
 
 
@@ -1198,6 +1269,112 @@ class Salmonella_liquids extends CI_Controller
             echo json_encode([
                 'status' => 'error',
                 'message' => 'Error saving MPN calculation: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+    /**
+     * Check if a specific tube already has biochemical data
+     */
+    public function checkTubeExists() {
+        try {
+            $id_salmonella_liquids = $this->input->post('id_salmonella_liquids');
+            $biochemical_tube = $this->input->post('biochemical_tube');
+            
+            if (!$id_salmonella_liquids || !$biochemical_tube) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Missing required parameters.',
+                    'exists' => false
+                ]);
+                return;
+            }
+            
+            $exists = $this->Salmonella_liquids_model->checkTubeExists($id_salmonella_liquids, $biochemical_tube);
+            
+            echo json_encode([
+                'status' => 'success',
+                'exists' => $exists
+            ]);
+            
+        } catch (Exception $e) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Error checking tube existence: ' . $e->getMessage(),
+                'exists' => false
+            ]);
+        }
+    }
+
+    /**
+     * Check if a specific tube needs update based on new confirmation value
+     */
+    public function checkTubeNeedsUpdate() {
+        header('Content-Type: application/json');
+        
+        try {
+            $id_salmonella_liquids = $this->input->post('id_salmonella_liquids');
+            $biochemical_tube = $this->input->post('biochemical_tube');
+            $expected_confirmation = $this->input->post('expected_confirmation');
+            
+            if (!$id_salmonella_liquids || !$biochemical_tube || !$expected_confirmation) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Missing required parameters.',
+                    'exists' => false,
+                    'needs_update' => false
+                ]);
+                return;
+            }
+            
+            $result = $this->Salmonella_liquids_model->checkTubeNeedsUpdate($id_salmonella_liquids, $biochemical_tube, $expected_confirmation);
+            
+            echo json_encode([
+                'status' => 'success',
+                'exists' => $result['exists'],
+                'needs_update' => $result['needs_update'],
+                'current_confirmation' => $result['current_confirmation'],
+                'id_result_biochemical' => $result['id_result_biochemical']
+            ]);
+            
+        } catch (Exception $e) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Error checking tube update status: ' . $e->getMessage(),
+                'exists' => false,
+                'needs_update' => false
+            ]);
+        }
+    }
+
+    /**
+     * Check if any tube has biochemical data for monitoring sync status
+     */
+    public function checkAnyTubeExists() {
+        try {
+            $id_salmonella_liquids = $this->input->post('id_salmonella_liquids');
+            
+            if (!$id_salmonella_liquids) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Missing required parameters.',
+                    'hasData' => false
+                ]);
+                return;
+            }
+            
+            $hasData = $this->Salmonella_liquids_model->checkAnyTubeExists($id_salmonella_liquids);
+            
+            echo json_encode([
+                'status' => 'success',
+                'hasData' => $hasData
+            ]);
+            
+        } catch (Exception $e) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Error checking tube data: ' . $e->getMessage(),
+                'hasData' => false
             ]);
         }
     }
