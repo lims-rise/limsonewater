@@ -783,15 +783,15 @@ class Salmonella_liquids extends CI_Controller
             $existing = $this->Salmonella_liquids_model->checkBiochemicalExists($id_salmonella_liquids, $id_result_chromagar, $tube);
             
             if (!$existing) {
-                // Insert new biochemical result
+                // Insert new biochemical result with default oxidase/catalase values for auto-processing
                 $data = array(
                     'id_salmonella_liquids' => $id_salmonella_liquids,
                     'id_result_chromagar' => $id_result_chromagar,
                     'confirmation' => $confirmation,
                     'biochemical_tube' => $tube,
-                    'oxidase' => null,
-                    'catalase' => null,
-                    'sample_store' => null,
+                    'oxidase' => '',  // Salmonella is typically oxidase negative
+                    'catalase' => '', // Salmonella is typically catalase positive
+                    'sample_store' => '',     // Empty string instead of null
                     'flag' => '0',
                     'lab' => $this->session->userdata('lab'),
                     'uuid' => $this->uuid->v4(),
