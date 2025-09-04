@@ -169,27 +169,6 @@
                         </div>
                     </div>
 
-                    <div class="col-xs-12"> 
-                        <div class="box box-primary box-solid" role="dialog" aria-hidden="true" data-bs-scrollable="true">
-                            <div class="box-header">
-                                <h3 class="box-title">Results</h3>
-                            </div>
-                            <div class="box" style="padding: 10px 10px 10px 0px;">
-                                    <?php
-                                        $lvl = $this->session->userdata('id_user_level');
-                                        if ($lvl != 4){
-                                            echo '<button class="btn btn-success" id="acceptAllTubesBtn" style="margin-left: 10px; position: relative;" disabled>
-                                                    <i class="fa fa-check-circle" aria-hidden="true"></i> Accept All Tubes
-                                                  </button>';
-                                        }
-                                    ?>
-                            </div>
-                            <div id="content-result-biochemical">
-
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="col-xs-12">
                         <div class="box box-primary box-solid">
                             <div class="box-header">
@@ -1335,20 +1314,10 @@
     });
 </script>
 <script>
-    // Accept All Tubes button click handler
-    document.getElementById('acceptAllTubesBtn').addEventListener('click', function() {
-        let id_salmonella_biosolids = document.getElementById('id_salmonella_biosolids').value;
-
-        // Validate that both XLD and Chromagar data exist
-        let tdChromagar = $('#exampleChromagar td:first');
-        let dataChromagar = table1.row(tdChromagar).data();
-        
-        let tdXld = $('#example2 td:first');
-        let dataXld = table.row(tdXld).data();
-
-        if (!dataChromagar || !dataXld) {
-            Swal.fire({
-                title: 'Data Missing!',
+    // Accept All Tubes functionality removed - auto-processing implemented
+    // document.getElementById('acceptAllTubesBtn').addEventListener('click', function() {
+    // Auto-processing: Biochemical results are generated automatically after ChroMagar save
+    console.log('Accept All Tubes button functionality replaced with auto-processing');
                 html: `
                     <div style="text-align: left; margin-top: 15px;">
                         <p><i class="fa fa-exclamation-triangle" style="color: #f39c12; margin-right: 8px;"></i><strong>XLD or Chromagar data is missing.</strong></p>
@@ -1435,8 +1404,10 @@
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                // Proceed with batch processing
-                processBatchTubes(dataChromagar, dataXld);
+                // Auto-processing: No manual batch processing needed
+                // Biochemical results are automatically generated after ChroMagar save
+                console.log('Auto-processing workflow - no manual tube processing required');
+                // processBatchTubes(dataChromagar, dataXld); // Commented out - auto-processing handles this
             }
         });
     });
@@ -1662,45 +1633,11 @@
         });
     }
 
-    // Function to check if Accept All Tubes button should be enabled and monitor for changes
+    // Function kept for compatibility - Auto-processing handles biochemical results
     function checkAcceptAllTubesStatus() {
-        let tdChromagar = $('#exampleChromagar td:first');
-        let dataChromagar = table1.row(tdChromagar).data();
-        
-        let tdXld = $('#example2 td:first');
-        let dataXld = table.row(tdXld).data();
-
-        const acceptBtn = $('#acceptAllTubesBtn');
-        const badge = $('#tubesUpdateBadge');
-
-        if (dataChromagar && dataXld && dataChromagar.purple_colony_plate && dataXld.black_colony_plate) {
-            // Both data exist, enable button
-            acceptBtn.prop('disabled', false).removeClass('btn-secondary').addClass('btn-success');
-            
-            // Check if any tube data might be out of sync by checking if any biochemical data exists
-            $.ajax({
-                url: '<?php echo site_url('Salmonella_biosolids/checkAnyTubeExists'); ?>',
-                type: 'POST',
-                data: { id_salmonella_biosolids: id_salmonella_biosolids },
-                dataType: 'json',
-                success: function(response) {
-                    if (response.hasData) {
-                        // Some tubes have data, show badge but keep button green
-                        badge.show();
-                        // Keep button green - don't change to warning
-                        acceptBtn.removeClass('btn-secondary').addClass('btn-success');
-                    } else {
-                        // No tube data exists yet
-                        badge.hide();
-                        acceptBtn.removeClass('btn-secondary').addClass('btn-success');
-                    }
-                }
-            });
-        } else {
-            // Missing data, disable button
-            acceptBtn.prop('disabled', true).removeClass('btn-success').addClass('btn-secondary');
-            badge.hide();
-        }
+        // Auto-processing: No manual tube acceptance needed
+        // Biochemical results are automatically generated after ChroMagar save
+        console.log('Auto-processing enabled - no manual tube acceptance required');
     }
 </script>
 <script type="text/javascript">
@@ -2383,8 +2320,8 @@
                 }
             },
             drawCallback: function(settings) {
-                // Check Accept All Tubes button status when XLD table is updated
-                checkAcceptAllTubesStatus();
+                // Auto-processing: No button status checks needed
+                console.log('XLD table updated - auto-processing handles biochemical results');
             }
         });
 
@@ -2428,8 +2365,8 @@
                 }
             },
             drawCallback: function(settings) {
-                // Check Accept All Tubes button status when Chromagar table is updated
-                checkAcceptAllTubesStatus();
+                // Auto-processing: No button status checks needed
+                console.log('ChroMagar table updated - auto-processing handles biochemical results');
             }
         });
 
@@ -2461,13 +2398,12 @@
                     blackColonyPlateArray = dataXld.black_colony_plate.split(', ');
                 }
 
-                // Generate the biochemical results for all plate numbers with both XLD and Chromagar data
-                generateResultBiochemical($('#content-result-biochemical'), plateNumberArray.length, dataChromagar.id_salmonella_biosolids, plateNumberArray, purpleColonyPlateArray, blackColonyPlateArray);
-                checkAcceptAllTubesStatus();
+                // Auto-processing: Biochemical results are now generated automatically after ChroMagar save
+                // No manual entry needed - results will be available in Final Concentration
+                console.log('Biochemical results will be auto-generated after ChroMagar save');
             } else {
                 console.log('Data belum tersedia');
-                $('#content-result-biochemical').empty().append('<p class="text-center">No data available</p>');
-                checkAcceptAllTubesStatus();
+                // No manual biochemical entry needed with auto-processing
             }
         });
 
@@ -2856,10 +2792,8 @@
             $('#compose-modalChroMagar').modal('show');
         });
 
-        // Initial check for Accept All Tubes button status when page loads
-        setTimeout(function() {
-            checkAcceptAllTubesStatus();
-        }, 1000); // Small delay to ensure tables are loaded
+        // Auto-processing: No button status checks needed on page load
+        console.log('Page loaded - auto-processing enabled for biochemical results');
 
 
     });
