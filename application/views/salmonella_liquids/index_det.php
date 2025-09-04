@@ -169,7 +169,7 @@
                         </div>
                     </div>
 
-                    <div class="col-xs-12"> 
+                    <!-- <div class="col-xs-12"> 
                         <div class="box box-primary box-solid" role="dialog" aria-hidden="true" data-bs-scrollable="true">
                             <div class="box-header">
                                 <h3 class="box-title">Results</h3>
@@ -178,9 +178,9 @@
                                     <?php
                                         $lvl = $this->session->userdata('id_user_level');
                                         if ($lvl != 4){
-                                            echo '<button class="btn btn-success" id="acceptAllTubesBtn" style="margin-left: 10px; position: relative;" disabled>
-                                                    <i class="fa fa-check-circle" aria-hidden="true"></i> Accept All Tubes
-                                                  </button>';
+                                            echo '<div class="alert alert-info" style="margin-left: 10px; margin-bottom: 0; padding: 8px 12px;">
+                                                    <i class="fa fa-magic" aria-hidden="true"></i> Auto-Processing Active: Results automatically generated when ChroMagar data is saved
+                                                  </div>';
                                         }
                                     ?>
                             </div>
@@ -188,7 +188,7 @@
 
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="col-xs-12">
                         <div class="box box-primary box-solid">
@@ -1152,32 +1152,6 @@
         background-color: #e0a800 !important;
         box-shadow: 0 4px 8px rgba(255,193,7,0.3) !important;
     }
-
-    /* Accept All Tubes Button Styling */
-    #acceptAllTubesBtn {
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
-
-    #acceptAllTubesBtn:disabled {
-        background-color: #6c757d !important;
-        border-color: #6c757d !important;
-        color: #fff !important;
-        opacity: 0.6;
-        cursor: not-allowed;
-    }
-
-    #acceptAllTubesBtn.btn-success {
-        background-color: #28a745 !important;
-        border-color: #28a745 !important;
-        color: #fff !important;
-    }
-
-    #acceptAllTubesBtn.btn-success:hover:not(:disabled) {
-        background-color: #218838 !important;
-        border-color: #1e7e34 !important;
-        transform: translateY(-2px);
         box-shadow: 0 4px 8px rgba(40,167,69,0.3) !important;
     }
 
@@ -1321,373 +1295,26 @@
         });
     });
 </script>
-<script>
-    // Accept All Tubes button click handler
-    document.getElementById('acceptAllTubesBtn').addEventListener('click', function() {
-        let id_salmonella_liquids = document.getElementById('id_salmonella_liquids').value;
+<!-- Auto-processing enabled: Biochemical results automatically generated after XLD and Chromagar save -->
+<script type="text/javascript">
+    let table;
+    let table1;
+    let table2;
+    let id_moisture = $('#id_moisture').val();
+    let salmonella_assay_barcode = $('#salmonella_assay_barcode').val();
+    let id_salmonella_liquids = $('#id_salmonella_liquids').val();
+    let number_of_tubes = $('#number_of_tubes').val();
+    const BASE_URL = '/limsonewater/index.php';
+    let idx_one_water_sample = $('#id_one_water_sample').val();
 
-        // Validate that both XLD and Chromagar data exist
-        let tdChromagar = $('#exampleChromagar td:first');
-        let dataChromagar = table1.row(tdChromagar).data();
-        
-        let tdXld = $('#example2 td:first');
-        let dataXld = table.row(tdXld).data();
+    $(document).ready(function() {
+       	let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
+		let userCreated = $('#user_created').val();
+		let userReview = $('#user_review').val();
+		let fullName = $('#reviewed_by_label').val();
 
-        if (!dataChromagar || !dataXld) {
-            Swal.fire({
-                title: 'Data Missing!',
-                html: `
-                    <div style="text-align: left; margin-top: 15px;">
-                        <p><i class="fa fa-exclamation-triangle" style="color: #f39c12; margin-right: 8px;"></i><strong>XLD or Chromagar data is missing.</strong></p>
-                        <p style="margin-top: 10px;">Please complete both <strong>Results XLD</strong> and <strong>Results Chromagar</strong> data first.</p>
-                    </div>
-                `,
-                icon: 'warning',
-                confirmButtonText: '<i class="fa fa-check"></i> Understood',
-                confirmButtonColor: '#f39c12'
-            });
-            return;
-        }
-
-        // Get arrays from the data
-        const purpleColonyPlateArray = dataChromagar.purple_colony_plate.split(', ');
-        const plateNumberArray = dataChromagar.plate_number.split(', ');
-        const blackColonyPlateArray = dataXld.black_colony_plate.split(', ');
-
-        // Prepare confirmation dialog
-        let tubeDetails = '';
-        let totalTubes = plateNumberArray.length;
-        let salmonellaTubes = 0;
-        let notSalmonellaTubes = 0;
-
-        for (let i = 0; i < totalTubes; i++) {
-            const tubeNumber = plateNumberArray[i];
-            const xldValue = blackColonyPlateArray[i] || '0';
-            const chromagarValue = purpleColonyPlateArray[i] || '0';
-            
-            let confirmation = '';
-            if ((parseInt(xldValue) === 0 && parseInt(chromagarValue) === 0) || 
-                (parseInt(xldValue) === 1 && parseInt(chromagarValue) === 0) || (parseInt(xldValue) === 0 && parseInt(chromagarValue) === 1)) {
-                confirmation = 'Not Salmonella';
-                notSalmonellaTubes++;
-            } else if (parseInt(xldValue) === 1 && parseInt(chromagarValue) === 1) {
-                confirmation = 'Salmonella';
-                salmonellaTubes++;
-            }
-            
-            tubeDetails += `<tr>
-                <td style="text-align: center;">Tube ${tubeNumber}</td>
-                <td style="text-align: center;">XLD: ${xldValue}, Chromagar: ${chromagarValue}</td>
-                <td style="text-align: center;"><span class="badge ${confirmation === 'Not Salmonella' ? 'badge-danger' : 'badge-success'}">${confirmation}</span></td>
-            </tr>`;
-        }
-
-        Swal.fire({
-            title: 'Accept All Tubes?',
-            html: `
-                <div style="text-align: left; margin-top: 15px;">
-                    <p><i class="fa fa-info-circle" style="color: #3498db; margin-right: 8px;"></i><strong>You are about to process ${totalTubes} tubes automatically:</strong></p>
-                    <div style="margin: 15px 0;">
-                        <span class="badge badge-success" style="margin-right: 10px;">${salmonellaTubes} Salmonella</span>
-                        <span class="badge badge-danger">${notSalmonellaTubes} Not Salmonella</span>
-                    </div>
-                    
-                    <div style="max-height: 300px; overflow-y: auto; margin-top: 15px;">
-                        <table class="table table-bordered table-sm">
-                            <thead>
-                                <tr style="background-color: #f5f5f5;">
-                                    <th style="text-align: center;">Tube</th>
-                                    <th style="text-align: center;">Values</th>
-                                    <th style="text-align: center;">Result</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${tubeDetails}
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <hr style="margin: 15px 0;">
-                    <p style="font-size: 13px; color: #666;"><i class="fa fa-warning" style="color: #f39c12; margin-right: 5px;"></i>This action will create biochemical results for all tubes that don't already have data.</p>
-                </div>
-            `,
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: '<i class="fa fa-check"></i> Accept All Tubes',
-            cancelButtonText: '<i class="fa fa-times"></i> Cancel',
-            confirmButtonColor: '#28a745',
-            cancelButtonColor: '#6c757d',
-            customClass: {
-                popup: 'swal-wide'
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Proceed with batch processing
-                processBatchTubes(dataChromagar, dataXld);
-            }
+        // Function to calculate MPN per gram dry weight values
         });
-    });
-
-    // Function to process all tubes in batch
-    function processBatchTubes(dataChromagar, dataXld) {
-        const purpleColonyPlateArray = dataChromagar.purple_colony_plate.split(', ');
-        const plateNumberArray = dataChromagar.plate_number.split(', ');
-        const blackColonyPlateArray = dataXld.black_colony_plate.split(', ');
-        
-        let processedCount = 0;
-        let totalTubes = plateNumberArray.length;
-        let successCount = 0;
-        let errorCount = 0;
-        let skippedCount = 0;
-        let updatedCount = 0;
-        let errorDetails = [];
-
-        // Show progress
-        Swal.fire({
-            title: 'Processing Tubes...',
-            html: `<div id="progressText">Processing tube 1 of ${totalTubes}...</div>`,
-            icon: 'info',
-            allowOutsideClick: false,
-            showConfirmButton: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
-        });
-
-        // Process each tube
-        plateNumberArray.forEach((tubeNumber, index) => {
-            const xldValue = blackColonyPlateArray[index] || '0';
-            const chromagarValue = purpleColonyPlateArray[index] || '0';
-            
-            let confirmation = '';
-            if ((parseInt(xldValue) === 0 && parseInt(chromagarValue) === 0) || 
-                (parseInt(xldValue) === 1 && parseInt(chromagarValue) === 0) || (parseInt(xldValue) === 0 && parseInt(chromagarValue) === 1)) {
-                confirmation = 'Not Salmonella';
-            } else if (parseInt(xldValue) === 1 && parseInt(chromagarValue) === 1) {
-                confirmation = 'Salmonella';
-            }
-
-            // Update progress
-            document.getElementById('progressText').innerHTML = `Processing tube ${index + 1} of ${totalTubes}... (Tube ${tubeNumber})`;
-
-            // Check if tube needs update instead of just checking existence
-            $.ajax({
-                url: '<?php echo site_url('Salmonella_liquids/checkTubeNeedsUpdate'); ?>',
-                type: 'POST',
-                data: {
-                    id_salmonella_liquids: id_salmonella_liquids,
-                    biochemical_tube: tubeNumber,
-                    expected_confirmation: confirmation
-                },
-                dataType: 'json',
-                async: false, // Process synchronously for better progress tracking
-                success: function(checkResponse) {
-                    if (checkResponse.exists && !checkResponse.needs_update) {
-                        // Tube exists and confirmation is already correct, skip
-                        skippedCount++;
-                        processedCount++;
-                        console.log(`Tube ${tubeNumber} already has correct data (${checkResponse.current_confirmation}), skipped`);
-                    } else if (checkResponse.exists && checkResponse.needs_update) {
-                        // Tube exists but needs update
-                        console.log(`Tube ${tubeNumber} needs update: ${checkResponse.current_confirmation} → ${confirmation}`);
-                        
-                        $.ajax({
-                            url: '<?php echo site_url('Salmonella_liquids/saveBiochemical'); ?>',
-                            type: 'POST',
-                            data: {
-                                mode_detResultsBiochemical: 'edit',
-                                id_result_biochemical: checkResponse.id_result_biochemical,
-                                idBiochemical_one_water_sample: idx_one_water_sample,
-                                id_salmonella_liquidsBiochemical: id_salmonella_liquids,
-                                id_result_chromagar1: dataChromagar.id_result_chromagar,
-                                biochemical_tube: tubeNumber,
-                                confirmation: confirmation
-                            },
-                            dataType: 'json',
-                            async: false,
-                            success: function(saveResponse) {
-                                console.log(`Update response for tube ${tubeNumber}:`, saveResponse);
-                                
-                                if (typeof saveResponse === 'object' && saveResponse !== null) {
-                                    if (saveResponse.status === 'success') {
-                                        updatedCount++;
-                                        console.log(`Tube ${tubeNumber} updated successfully`);
-                                    } else {
-                                        errorCount++;
-                                        errorDetails.push(`Tube ${tubeNumber} (update): ${saveResponse.message || 'Unknown error'}`);
-                                        console.error(`Error updating tube ${tubeNumber}:`, saveResponse.message);
-                                    }
-                                } else {
-                                    errorCount++;
-                                    errorDetails.push(`Tube ${tubeNumber} (update): Invalid server response (not JSON)`);
-                                    console.error(`Invalid update response for tube ${tubeNumber}:`, saveResponse);
-                                }
-                                processedCount++;
-                            },
-                            error: function(xhr, status, error) {
-                                errorCount++;
-                                errorDetails.push(`Tube ${tubeNumber} (update): AJAX error - ${error}`);
-                                console.error(`AJAX error updating tube ${tubeNumber}:`, xhr.responseText);
-                                processedCount++;
-                            }
-                        });
-                    } else {
-                        // Tube doesn't exist, create new
-                        console.log(`Tube ${tubeNumber} doesn't exist, creating new with: ${confirmation}`);
-                        
-                        $.ajax({
-                            url: '<?php echo site_url('Salmonella_liquids/saveBiochemical'); ?>',
-                            type: 'POST',
-                            data: {
-                                mode_detResultsBiochemical: 'insert',
-                                idBiochemical_one_water_sample: idx_one_water_sample,
-                                id_salmonella_liquidsBiochemical: id_salmonella_liquids,
-                                id_result_chromagar1: dataChromagar.id_result_chromagar,
-                                biochemical_tube: tubeNumber,
-                                confirmation: confirmation
-                            },
-                            dataType: 'json',
-                            async: false,
-                            success: function(saveResponse) {
-                                console.log(`Insert response for tube ${tubeNumber}:`, saveResponse);
-                                
-                                if (typeof saveResponse === 'object' && saveResponse !== null) {
-                                    if (saveResponse.status === 'success') {
-                                        successCount++;
-                                        console.log(`Tube ${tubeNumber} created successfully`);
-                                    } else {
-                                        errorCount++;
-                                        errorDetails.push(`Tube ${tubeNumber} (insert): ${saveResponse.message || 'Unknown error'}`);
-                                        console.error(`Error creating tube ${tubeNumber}:`, saveResponse.message);
-                                    }
-                                } else {
-                                    errorCount++;
-                                    errorDetails.push(`Tube ${tubeNumber} (insert): Invalid server response (not JSON)`);
-                                    console.error(`Invalid insert response for tube ${tubeNumber}:`, saveResponse);
-                                }
-                                processedCount++;
-                            },
-                            error: function(xhr, status, error) {
-                                errorCount++;
-                                errorDetails.push(`Tube ${tubeNumber} (insert): AJAX error - ${error}`);
-                                console.error(`AJAX error creating tube ${tubeNumber}:`, xhr.responseText);
-                                processedCount++;
-                            }
-                        });
-                    }
-
-                    // Check if all tubes are processed
-                    if (processedCount === totalTubes) {
-                        // All tubes processed, show final result
-                        let resultHtml = `
-                            <div style="text-align: left; margin-top: 15px;">
-                                <p><i class="fa fa-check-circle" style="color: #28a745; margin-right: 8px;"></i><strong>Processing Summary:</strong></p>
-                                <ul style="list-style: none; padding-left: 0;">
-                                    <li><i class="fa fa-plus" style="color: #28a745; margin-right: 8px;"></i>New tubes created: <strong>${successCount}</strong></li>
-                                    <li><i class="fa fa-edit" style="color: #ffc107; margin-right: 8px;"></i>Existing tubes updated: <strong>${updatedCount}</strong></li>
-                                    <li><i class="fa fa-info" style="color: #17a2b8; margin-right: 8px;"></i>Skipped (already correct): <strong>${skippedCount}</strong> tubes</li>
-                                    ${errorCount > 0 ? `<li><i class="fa fa-times" style="color: #dc3545; margin-right: 8px;"></i>Errors: <strong>${errorCount}</strong> tubes</li>` : ''}
-                                </ul>`;
-                        
-                        if (errorDetails.length > 0) {
-                            resultHtml += `
-                                <hr style="margin: 15px 0;">
-                                <p><strong>Error Details:</strong></p>
-                                <ul style="font-size: 12px; color: #dc3545; max-height: 150px; overflow-y: auto;">
-                                    ${errorDetails.map(detail => `<li>${detail}</li>`).join('')}
-                                </ul>`;
-                        }
-                        
-                        resultHtml += `
-                                <hr style="margin: 15px 0;">
-                                <p style="font-size: 13px; color: #666;"><i class="fa fa-info-circle" style="color: #3498db; margin-right: 5px;"></i>The page will reload to show updated data.</p>
-                            </div>
-                        `;
-
-                        Swal.fire({
-                            title: 'Batch Processing Complete!',
-                            html: resultHtml,
-                            icon: (successCount > 0 || updatedCount > 0) ? (errorCount > 0 ? 'warning' : 'success') : 'info',
-                            confirmButtonText: '<i class="fa fa-check"></i> OK',
-                            confirmButtonColor: '#28a745',
-                            width: '600px',
-                            timer: 3000, // Auto close after 3 seconds
-                            timerProgressBar: true,
-                            showConfirmButton: true,
-                            allowOutsideClick: true
-                        }).then(() => {
-                            // Reload page to show updated data
-                            location.reload();
-                        });
-                    }
-                },
-                error: function(xhr, status, error) {
-                    errorCount++;
-                    errorDetails.push(`Tube ${tubeNumber}: Check update status failed - ${error}`);
-                    processedCount++;
-                    console.error(`Error checking tube ${tubeNumber} update status:`, xhr.responseText);
-                    
-                    if (processedCount === totalTubes) {
-                        Swal.fire({
-                            title: 'Processing Complete with Errors',
-                            html: `
-                                <p>New: ${successCount}, Updated: ${updatedCount}, Errors: ${errorCount}, Skipped: ${skippedCount}</p>
-                                ${errorDetails.length > 0 ? `<hr><p><strong>Error Details:</strong></p><ul style="text-align: left; font-size: 12px;">${errorDetails.map(detail => `<li>${detail}</li>`).join('')}</ul>` : ''}
-                            `,
-                            icon: 'warning',
-                            width: '600px',
-                            timer: 5000, // Auto close after 5 seconds for errors
-                            timerProgressBar: true,
-                            showConfirmButton: true,
-                            allowOutsideClick: true
-                        }).then(() => {
-                            location.reload();
-                        });
-                    }
-                }
-            });
-        });
-    }
-
-    // Function to check if Accept All Tubes button should be enabled and monitor for changes
-    function checkAcceptAllTubesStatus() {
-        let tdChromagar = $('#exampleChromagar td:first');
-        let dataChromagar = table1.row(tdChromagar).data();
-        
-        let tdXld = $('#example2 td:first');
-        let dataXld = table.row(tdXld).data();
-
-        const acceptBtn = $('#acceptAllTubesBtn');
-        const badge = $('#tubesUpdateBadge');
-
-        if (dataChromagar && dataXld && dataChromagar.purple_colony_plate && dataXld.black_colony_plate) {
-            // Both data exist, enable button
-            acceptBtn.prop('disabled', false).removeClass('btn-secondary').addClass('btn-success');
-            
-            // Check if any tube data might be out of sync by checking if any biochemical data exists
-            $.ajax({
-                url: '<?php echo site_url('Salmonella_liquids/checkAnyTubeExists'); ?>',
-                type: 'POST',
-                data: { id_salmonella_liquids: id_salmonella_liquids },
-                dataType: 'json',
-                success: function(response) {
-                    if (response.hasData) {
-                        // Some tubes have data, show badge but keep button green
-                        badge.show();
-                        // Keep button green - don't change to warning
-                        acceptBtn.removeClass('btn-secondary').addClass('btn-success');
-                    } else {
-                        // No tube data exists yet
-                        badge.hide();
-                        acceptBtn.removeClass('btn-secondary').addClass('btn-success');
-                    }
-                }
-            });
-        } else {
-            // Missing data, disable button
-            acceptBtn.prop('disabled', true).removeClass('btn-success').addClass('btn-secondary');
-            badge.hide();
-        }
     }
 </script>
 <script type="text/javascript">
@@ -2346,8 +1973,8 @@
                 }
             },
             drawCallback: function(settings) {
-                // Check Accept All Tubes button status when XLD table is updated
-                checkAcceptAllTubesStatus();
+                // Auto-processing: biochemical results are automatically updated when XLD data changes
+                console.log('XLD table updated - auto-processing will handle biochemical updates');
             }
         });
 
@@ -2391,8 +2018,8 @@
                 }
             },
             drawCallback: function(settings) {
-                // Check Accept All Tubes button status when Chromagar table is updated
-                checkAcceptAllTubesStatus();
+                // Auto-processing: biochemical results are automatically generated when ChroMagar data is saved
+                console.log('ChroMagar table updated - auto-processing will handle biochemical results');
             }
         });
 
@@ -2443,223 +2070,68 @@
                 // Generate the biochemical results for all plate numbers with both XLD and Chromagar data
                 generateResultBiochemical($('#content-result-biochemical'), plateNumberArray.length, dataChromagar.id_salmonella_liquids, plateNumberArray, purpleColonyPlateArray, blackColonyPlateArray);
                 
-                // Check Accept All Tubes button status after data is loaded
-                checkAcceptAllTubesStatus();
+                // Auto-processing: biochemical results are automatically generated/updated
+                console.log('Data loaded - auto-processing active for biochemical results');
             } else {
                 console.log('Data belum tersedia');
-                $('#content-result-biochemical').empty().append('<p class="text-center">No data available</p>');
-                checkAcceptAllTubesStatus();
+                $('#content-result-biochemical').empty().append(`
+                    <div class="box-body pad">
+                        <div class="alert alert-warning">
+                            <h4><i class="icon fa fa-info"></i> No Data Available</h4>
+                            Please save XLD and ChroMagar data first. Biochemical results will be automatically generated.
+                        </div>
+                    </div>
+                `);
+                console.log('No data available - auto-processing will activate when data is saved');
             }
         });
 
-        // Improved generateResultBiochemical function
+        // Improved generateResultBiochemical function - Auto-processing enabled
         function generateResultBiochemical(container, numberOfPlates, id_salmonella_liquids, plateNumberArray, purpleColonyPlateArray, blackColonyPlateArray = []) {
             container.empty(); // Clear existing content
 
-            // Iterate through the plateNumberArray
-            for (let i = 0; i < numberOfPlates; i++) {
-                const plateNumber = plateNumberArray[i]; // Get the corresponding plate number
-                const tableId = `exampleBiochemical_${i}`; // Unique table ID
-                const buttonId = `addtombol_detResultsBiochemical_${plateNumber}`; // Unique button ID
-                // const isDisabled = purpleColonyPlateArray[i] === '0' ? 'disabled' : '';
-
-                // Get XLD and Chromagar values for this plate
-                const xldValue = blackColonyPlateArray[i] || '0';
-                const chromagarValue = purpleColonyPlateArray[i] || '0';
-
-                // Tombol tetap aktif berdasarkan instruksi baru
-                const isDisabled = ''; // Semua tombol tetap aktif
-
-                // Append the table and button for each plate
-                // container.append(`
-                //     <div class="box-body pad table-responsive">
-                //         <button class="btn btn-primary" id="${buttonId}" data-index="${plateNumber}" ${isDisabled}>
-                //             <i class="fa fa-wpforms" aria-hidden="true"></i> Tube ${plateNumber}
-                //         </button>
-                //         <table id="${tableId}" class="table display table-bordered table-striped" width="100%">
-                //             <thead>
-                //                 <tr>
-                //                     <th>Confirmation</th>
-                //                     <th>Action</th>
-                //                 </tr>
-                //             </thead>
-                //         </table>
-                //     </div>
-                // `);
-                container.append(`
-                    <div class="box-body pad table-responsive">
-                        <button class="btn btn-primary" id="${buttonId}" data-index="${plateNumber}" data-xld="${xldValue}" data-chromagar="${chromagarValue}" ${isDisabled}>
-                            <i class="fa fa-wpforms" aria-hidden="true"></i> Tube ${plateNumber}
-                        </button>
-                        <table id="${tableId}" class="table display table-bordered table-striped" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>Confirmation</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                        </table>
+            // Auto-processing message instead of manual tube buttons
+            container.append(`
+                <div class="box-body pad">
+                    <div class="alert alert-info">
+                        <h4><i class="icon fa fa-check"></i> Auto-Processing Enabled!</h4>
+                        Biochemical results are automatically generated based on XLD and ChroMagar data. 
+                        No manual entry required - results are available in the Final Concentration section.
+                        <br><br>
+                        <strong>Auto-Processing Logic:</strong><br>
+                        • XLD=1 AND ChroMagar=1 → Salmonella<br>
+                        • All other combinations → Not Salmonella
                     </div>
-                `);
+                </div>
+            `);
 
-                // Initialize DataTable for the newly created table, passing the plate number
-                initializeDataTable(tableId, id_salmonella_liquids, plateNumber); // Pass the actual plate number
-            }
+            console.log('Auto-processing enabled - biochemical results generated automatically');
         }
 
 
-        // Fungsi untuk menginisialisasi DataTable
-        function initializeDataTable(tableId, id_salmonella_liquids, tubeIndex) {
-            console.log(`Tube index: ${tubeIndex}`);
-            $(`#${tableId}`).DataTable({
-                oLanguage: {
-                    sProcessing: "Loading data, please wait..."
-                },
-                processing: true,
-                serverSide: true,
-                paging: false,
-                info: false,
-                bFilter: false,
-                ajax: {
-                    url: `../../Salmonella_liquids/subjsonBiochemical?idBiochemical=${id_salmonella_liquids}&biochemical_tube=${tubeIndex}`,
-                    type: "POST"
-                },
-                columns: [
-                    {"data": "confirmation"},
-                    {
-                        "data": "action",
-                        "orderable": false,
-                        "className": "text-center"
-                    }
-                ],
-                order: [[0, 'asc']],
-                // Tambahkan callback ini untuk menyimpan status tombol saat data dimuat
-                initComplete: function(settings, json) {
-                // Disable the button if there's data
-                if (json.data.length > 0) {
-                    $(`#addtombol_detResultsBiochemical_${tubeIndex}`).prop("disabled", true);
-                }
-                    }
-                });
-        }
+        // Auto-processing: No manual DataTable initialization needed
+        // function initializeDataTable(tableId, id_salmonella_liquids, tubeIndex) {
+        //     console.log(`Tube index: ${tubeIndex}`);
+        //     // DataTable initialization removed - auto-processing handles biochemical results
+        // }
 
         
   
      
-        // Event listener untuk tombol "New Data"
-        $(document).on('click', '[id^=addtombol_detResultsBiochemical_]', function() {
-            const plateNumber = $(this).data('index'); // Get the plate number directly
-            
-            // Always get fresh data from tables instead of using potentially stale button data
-            let xldValue = '0';
-            let chromagarValue = '0';
-            
-            // Get fresh Chromagar data
-            let tdChromagar = $('#exampleChromagar td:first');
-            let dataChromagar = table1.row(tdChromagar).data();
-            
-            // Get fresh XLD data
-            let tdXld = $('#example2 td:first');
-            let dataXld = table.row(tdXld).data();
-            
-            if (dataChromagar && dataChromagar.purple_colony_plate) {
-                const purpleColonyPlateArray = dataChromagar.purple_colony_plate.split(', ');
-                const plateNumberArray = dataChromagar.plate_number.split(', ');
-                const tubeIndex = plateNumberArray.indexOf(plateNumber.toString());
-                if (tubeIndex !== -1) {
-                    chromagarValue = purpleColonyPlateArray[tubeIndex] || '0';
-                }
-            }
-            
-            if (dataXld && dataXld.black_colony_plate) {
-                const blackColonyPlateArray = dataXld.black_colony_plate.split(', ');
-                const plateNumberArray = dataXld.plate_number.split(', ');
-                const tubeIndex = plateNumberArray.indexOf(plateNumber.toString());
-                if (tubeIndex !== -1) {
-                    xldValue = blackColonyPlateArray[tubeIndex] || '0';
-                }
-            }
-
-            let td = $('#exampleChromagar td:first');
-            let data = table1.row(td).data();
-            console.log('datanya', data.id_result_chromagar);
-            console.log(`Tube ${plateNumber}: XLD=${xldValue}, Chromagar=${chromagarValue}`);
-
-            $('#mode_detResultsBiochemical').val('insert');
-            $('#modal-title-biochemical').html(`<i class="fa fa-wpforms"></i> Insert | Tube ${plateNumber} <span id="my-another-cool-loader"></span>`);
-            $('#idBiochemical_one_water_sample').val(idx_one_water_sample);
-            $('#id_salmonella_liquidsBiochemical').val(id_salmonella_liquids);
-            $('#id_result_chromagar1').val(data.id_result_chromagar);
-            $('#biochemical_tube').val(plateNumber);
-
-            // Update confirmation options based on fresh XLD and Chromagar values
-            updateConfirmationOptions(xldValue, chromagarValue);
-
-            $('#compose-modalBiochemical').modal('show');
-            console.log(`Button for Biochemical Tube: ${plateNumber} clicked`);
-        });
+        // Auto-processing: No manual tube buttons needed
+        // Event listeners for tube buttons removed - auto-processing handles biochemical results
+        // $(document).on('click', '[id^=addtombol_detResultsBiochemical_]', function() {
+        //     // Auto-processing handles biochemical results automatically
+        //     console.log('Auto-processing enabled - no manual tube input required');
+        // });
 
 
-        // Event listener untuk tombol edit
-        $(document).on('click', '.btn_edit_detResultsBiochemical', function() {
-            let tr = $(this).closest('tr'); // Dapatkan elemen baris
-            let tableId = $(this).closest('.box-body').find('table').attr('id'); // Dapatkan ID tabel dari konteks
-            let data = $(`#${tableId}`).DataTable().row(tr).data(); // Dapatkan data dari DataTable yang sesuai
-            console.log(data);
-
-            // Get XLD and Chromagar values for this tube - always get fresh data
-            let tubeNumber = data.biochemical_tube;
-            let xldValue = '0';
-            let chromagarValue = '0';
-            
-            // Always get fresh data from tables for consistency
-            let tdChromagar = $('#exampleChromagar td:first');
-            let dataChromagar = table1.row(tdChromagar).data();
-            
-            let tdXld = $('#example2 td:first');
-            let dataXld = table.row(tdXld).data();
-            
-            if (dataChromagar && dataChromagar.purple_colony_plate) {
-                const purpleColonyPlateArray = dataChromagar.purple_colony_plate.split(', ');
-                const plateNumberArray = dataChromagar.plate_number.split(', ');
-                const tubeIndex = plateNumberArray.indexOf(tubeNumber.toString());
-                if (tubeIndex !== -1) {
-                    chromagarValue = purpleColonyPlateArray[tubeIndex] || '0';
-                }
-            }
-            
-            if (dataXld && dataXld.black_colony_plate) {
-                const blackColonyPlateArray = dataXld.black_colony_plate.split(', ');
-                const plateNumberArray = dataXld.plate_number.split(', ');
-                const tubeIndex = plateNumberArray.indexOf(tubeNumber.toString());
-                if (tubeIndex !== -1) {
-                    xldValue = blackColonyPlateArray[tubeIndex] || '0';
-                }
-            }
-            
-            console.log(`Edit mode - Tube ${tubeNumber}: XLD=${xldValue}, Chromagar=${chromagarValue} (fresh from tables)`);
-
-            // Set nilai-nilai di dalam modal sesuai data yang didapat
-            $('#mode_detResultsBiochemical').val('edit');
-            $('#modal-title-biochemical').html('<i class="fa fa-pencil-square"></i> Update | Tube ' + data.biochemical_tube + ' <span id="my-another-cool-loader"></span>');
-            $('#idBiochemical_one_water_sample').val(idx_one_water_sample);
-            $('#id_result_biochemical').val(data.id_result_biochemical);
-            $('#id_salmonella_liquidsBiochemical').val(data.id_salmonella_liquids);
-            $('#id_result_chromagar1').val(data.id_result_chromagar);
-
-            // Update confirmation options based on fresh XLD and Chromagar values
-            updateConfirmationOptions(xldValue, chromagarValue);
-            
-            // Set the confirmation value after updating the options
-            setTimeout(function() {
-                if (data.confirmation) {
-                    $('input[name="confirmation"][value="' + data.confirmation + '"]').prop('checked', true);
-                }
-            }, 100);
-
-            // Tampilkan modal untuk edit
-            $('#compose-modalBiochemical').modal('show');
-        });
+        // Auto-processing: No manual edit buttons needed
+        // Event listeners for edit biochemical buttons removed - auto-processing handles updates
+        // $(document).on('click', '.btn_edit_detResultsBiochemical', function() {
+        //     // Auto-processing handles biochemical updates automatically
+        //     console.log('Auto-processing enabled - biochemical results updated automatically');
+        // });
 
 
 
@@ -2843,9 +2315,9 @@
             $('#compose-modalChroMagar').modal('show');
         });
 
-        // Initial check for Accept All Tubes button status when page loads
+        // Auto-processing: biochemical results are automatically handled by the system
         setTimeout(function() {
-            checkAcceptAllTubesStatus();
+            console.log('Page loaded - auto-processing system is active for biochemical results');
         }, 1000); // Small delay to ensure tables are loaded
 
     });

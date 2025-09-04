@@ -385,6 +385,9 @@ class Salmonella_liquids extends CI_Controller
             }
     
             $this->session->set_flashdata('message', 'Create Record Success');
+
+            // Auto-update biochemical results when XLD data is created
+            $this->autoUpdateBiochemicalFromXldChange($id_salmonella_liquids, $number_of_tubes);
     
         } else if ($mode == "edit") {
             // Update data in assays table
@@ -427,6 +430,9 @@ class Salmonella_liquids extends CI_Controller
     
             $this->session->set_flashdata('message', 'Update Record Success');
         }
+
+        // Auto-update biochemical results when XLD data changes
+        $this->autoUpdateBiochemicalFromXldChange($id_salmonella_liquids, $number_of_tubes);
     
         redirect(site_url("salmonella_liquids/read/" . $id_one_water_sample));
     }
@@ -609,6 +615,13 @@ class Salmonella_liquids extends CI_Controller
     
             $this->session->set_flashdata('message', 'Update Record Success');
         }
+
+        // Auto-generate biochemical results after ChroMagar data is saved
+        if ($mode == "insert") {
+            $this->autoGenerateBiochemicalResults($id_salmonella_liquids, $assay_id, $number_of_tubes);
+        } else if ($mode == "edit") {
+            $this->autoGenerateBiochemicalResults($id_salmonella_liquids, $id_result_chromagar, $number_of_tubes);
+        }
     
         redirect(site_url("salmonella_liquids/read/" . $id_one_water_sample));
     }
@@ -729,6 +742,160 @@ class Salmonella_liquids extends CI_Controller
                 $this->session->set_flashdata('error', 'Error saving biochemical result: ' . $e->getMessage());
                 redirect(site_url("salmonella_liquids/read/" . $id_one_water_sample));
             }
+        }
+    }
+
+    /**
+     * Auto-generate biochemical results based on XLD and ChroMagar data
+     */
+    private function autoGenerateBiochemicalResults($id_salmonella_liquids, $id_result_chromagar, $number_of_tubes) {
+        $dt = new DateTime();
+        
+        // Get XLD results for this sample
+        $xld_results = $this->Salmonella_liquids_model->getXldResults($id_salmonella_liquids);
+        
+        // Get ChroMagar results for this result set
+        $chromagar_results = $this->Salmonella_liquids_model->getPurpleColonyPlates($id_result_chromagar);
+        
+        for ($tube = 1; $tube <= $number_of_tubes; $tube++) {
+            // Get XLD value for this tube
+            $xld_value = 0;
+            foreach ($xld_results as $xld) {
+                if ($xld->plate_number == $tube) {
+                    $xld_value = $xld->colony_plate;
+                    break;
+                }
+            }
+            
+            // Get ChroMagar value for this tube (plate)
+            $chromagar_value = 0;
+            foreach ($chromagar_results as $chromagar) {
+                if ($chromagar->plate_number == $tube) {
+                    $chromagar_value = $chromagar->purple_colony_plate;
+                    break;
+                }
+            }
+            
+            // Calculate confirmation based on XLD + ChroMagar logic
+            $confirmation = $this->calculateConfirmation($xld_value, $chromagar_value);
+            
+            // Check if biochemical result already exists for this tube
+            $existing = $this->Salmonella_liquids_model->checkBiochemicalExists($id_salmonella_liquids, $id_result_chromagar, $tube);
+            
+            if (!$existing) {
+                // Insert new biochemical result
+                $data = array(
+                    'id_salmonella_liquids' => $id_salmonella_liquids,
+                    'id_result_chromagar' => $id_result_chromagar,
+                    'confirmation' => $confirmation,
+                    'biochemical_tube' => $tube,
+                    'oxidase' => null,
+                    'catalase' => null,
+                    'sample_store' => null,
+                    'flag' => '0',
+                    'lab' => $this->session->userdata('lab'),
+                    'uuid' => $this->uuid->v4(),
+                    'user_created' => $this->session->userdata('id_users'),
+                    'date_created' => $dt->format('Y-m-d H:i:s'),
+                );
+                
+                $this->Salmonella_liquids_model->insertResultsBiochemical($data);
+            } else {
+                // Update existing biochemical result with new confirmation
+                $data = array(
+                    'confirmation' => $confirmation,
+                    'user_updated' => $this->session->userdata('id_users'),
+                    'date_updated' => $dt->format('Y-m-d H:i:s'),
+                );
+                
+                $this->Salmonella_liquids_model->updateBiochemicalResult($existing->id_result_biochemical, $data);
+            }
+        }
+    }
+
+    /**
+     * Auto-update biochemical results when XLD data changes
+     */
+    private function autoUpdateBiochemicalFromXldChange($id_salmonella_liquids, $number_of_tubes) {
+        $dt = new DateTime();
+        
+        // Get all ChroMagar results for this sample
+        $chromagar_results_list = $this->Salmonella_liquids_model->getAllChroMagarResults($id_salmonella_liquids);
+        
+        if (empty($chromagar_results_list)) {
+            // No ChroMagar data exists yet, nothing to update
+            return;
+        }
+        
+        // Get updated XLD results
+        $xld_results = $this->Salmonella_liquids_model->getXldResults($id_salmonella_liquids);
+        
+        // Process each ChroMagar result set
+        foreach ($chromagar_results_list as $chromagar_result) {
+            $id_result_chromagar = $chromagar_result->id_result_chromagar;
+            
+            // Get ChroMagar plates for this specific result
+            $chromagar_plates = $this->Salmonella_liquids_model->getPurpleColonyPlates($id_result_chromagar);
+            
+            // Update biochemical results for all tubes
+            for ($tube = 1; $tube <= $number_of_tubes; $tube++) {
+                // Get XLD value for this tube
+                $xld_value = 0;
+                foreach ($xld_results as $xld) {
+                    if ($xld->plate_number == $tube) {
+                        $xld_value = $xld->colony_plate;
+                        break;
+                    }
+                }
+                
+                // Get ChroMagar value for this tube
+                $chromagar_value = 0;
+                foreach ($chromagar_plates as $chromagar) {
+                    if ($chromagar->plate_number == $tube) {
+                        $chromagar_value = $chromagar->purple_colony_plate;
+                        break;
+                    }
+                }
+                
+                // Calculate new confirmation
+                $confirmation = $this->calculateConfirmation($xld_value, $chromagar_value);
+                
+                // Check if biochemical result exists for this tube and ChroMagar result
+                $existing = $this->Salmonella_liquids_model->checkBiochemicalExists($id_salmonella_liquids, $id_result_chromagar, $tube);
+                
+                if ($existing) {
+                    // Update existing biochemical result with new confirmation
+                    $data = array(
+                        'confirmation' => $confirmation,
+                        'user_updated' => $this->session->userdata('id_users'),
+                        'date_updated' => $dt->format('Y-m-d H:i:s'),
+                    );
+                    
+                    $this->Salmonella_liquids_model->updateBiochemicalResult($existing->id_result_biochemical, $data);
+                }
+                // Note: We don't create new biochemical results here since they should only be created when ChroMagar is saved
+            }
+        }
+    }
+
+    /**
+     * Calculate confirmation based on XLD and ChroMagar values
+     */
+    private function calculateConfirmation($xld_value, $chromagar_value) {
+        // Convert to integers
+        $xld = intval($xld_value);
+        $chromagar = intval($chromagar_value);
+        
+        // Apply the same logic as in salmonella_liquids
+        if ($xld === 0 && $chromagar === 0) {
+            return 'Not Salmonella';
+        } else if ($xld === 1 && $chromagar === 0) {
+            return 'Not Salmonella';
+        } else if ($xld === 1 && $chromagar === 1) {
+            return 'Salmonella';
+        } else {
+            // Default to "Not Salmonella" for unexpected cases
+            return 'Not Salmonella';
         }
     }
 

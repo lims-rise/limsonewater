@@ -694,6 +694,63 @@ class Salmonella_biosolids_model extends CI_Model
 
         return $query->num_rows() > 0;
     }
+
+    /**
+     * Get XLD results for a specific sample
+     */
+    function getXldResults($id_salmonella_biosolids) {
+        $this->db->select('sspcl.plate_number, sspcl.black_colony_plate as colony_plate');
+        $this->db->from('salmonella_result_xld AS srx');
+        $this->db->join('salmonella_sample_black_colony_plate AS sspcl', 'srx.id_result_xld = sspcl.id_result_xld', 'left');
+        $this->db->where('srx.id_salmonella_biosolids', $id_salmonella_biosolids);
+        $this->db->where('srx.flag', '0');
+        $this->db->where('sspcl.flag', '0');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    /**
+     * Get purple colony plates for a specific ChroMagar result
+     */
+    function getPurpleColonyPlates($id_result_chromagar) {
+        $this->db->select('plate_number, purple_colony_plate');
+        $this->db->where('id_result_chromagar', $id_result_chromagar);
+        $this->db->where('flag', '0');
+        $query = $this->db->get('salmonella_sample_purple_colony_plate');
+        return $query->result();
+    }
+
+    /**
+     * Get all ChroMagar results for a specific sample
+     */
+    function getAllChroMagarResults($id_salmonella_biosolids) {
+        $this->db->select('id_result_chromagar');
+        $this->db->where('id_salmonella_biosolids', $id_salmonella_biosolids);
+        $this->db->where('flag', '0');
+        $query = $this->db->get('salmonella_result_chromagar');
+        return $query->result();
+    }
+
+    /**
+     * Check if biochemical result exists for a specific tube
+     */
+    function checkBiochemicalExists($id_salmonella_biosolids, $id_result_chromagar, $biochemical_tube) {
+        $this->db->where('id_salmonella_biosolids', $id_salmonella_biosolids);
+        $this->db->where('id_result_chromagar', $id_result_chromagar);
+        $this->db->where('biochemical_tube', $biochemical_tube);
+        $this->db->where('flag', '0');
+        $query = $this->db->get('salmonella_result_biochemical');
+        return $query->row();
+    }
+
+    /**
+     * Update biochemical result
+     */
+    function updateBiochemicalResult($id_result_biochemical, $data) {
+        $this->db->where('id_result_biochemical', $id_result_biochemical);
+        $this->db->update('salmonella_result_biochemical', $data);
+        return $this->db->affected_rows();
+    }
       
 }
 
