@@ -82,8 +82,8 @@ class Sample_reception_model extends CI_Model
             testing.barcode, 
             retest.testing_type AS testing_type, 
             retest.url, 
-            COALESCE(bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review, ec.user_review, el.user_review, em.user_review, cb.user_review, mc.user_review, ewi.user_review, ebi.user_review, cbi.user_review, cwi.user_review) AS user_review, 
-            COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review) AS review, 
+            COALESCE(bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review, ec.user_review, el.user_review, em.user_review, cb.user_review, mc.user_review, ewi.user_review, ebi.user_review, cbi.user_review, cwi.user_review, pr.user_review) AS user_review, 
+            COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review) AS review, 
             tbl_user.full_name, 
             testing.flag
         ");
@@ -103,7 +103,8 @@ class Sample_reception_model extends CI_Model
         $this->datatables->join('enterolert_biosolids_in ebi', 'ebi.enterolert_barcode = testing.barcode', 'left');
         $this->datatables->join('colilert_biosolids_in cbi', 'cbi.colilert_barcode = testing.barcode', 'left');
         $this->datatables->join('colilert_water_in cwi', 'cwi.colilert_barcode = testing.barcode', 'left');
-        $this->datatables->join('tbl_user', 'tbl_user.id_users = COALESCE(bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review, ec.user_review, el.user_review, em.user_review, cb.user_review, mc.user_review, ewi.user_review, ebi.user_review, cbi.user_review, cwi.user_review)', 'left');
+        $this->datatables->join('protozoa pr', 'pr.protozoa_barcode = testing.barcode', 'left');
+        $this->datatables->join('tbl_user', 'tbl_user.id_users = COALESCE(bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review, ec.user_review, el.user_review, em.user_review, cb.user_review, mc.user_review, ewi.user_review, ebi.user_review, cbi.user_review, cwi.user_review, pr.user_review)', 'left');
         $this->datatables->where('testing.flag', '0');
         $this->datatables->where('testing.id_sample', $id);
         $this->datatables->group_by('testing.id_testing');
@@ -1133,7 +1134,8 @@ class Sample_reception_model extends CI_Model
             'campy_biosolids_qpcr' => 'campy_biosolids_qpcr',
             'campy_biosolids_pa' => 'campy_biosolids_pa',
             'freezer_in' => 'freezer_in',
-            'freezer_out' => 'freezer_out'
+            'freezer_out' => 'freezer_out',
+            'protozoa' => 'protozoa'
         );
 
         // Extract table name from URL
