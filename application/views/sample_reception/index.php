@@ -38,7 +38,7 @@
                                         <th></th> <!-- Kolom kosong untuk ikon toggle -->
                                         <th>Coc</th>
                                         <th>Client Quote Number</th>
-                                        <th>Client Sample ID</th>
+                                        <th>Description</th>
                                         <th>Client (As On CoC)</th>
                                         <th>Number of Samples</th>
                                         <th>Client Contact</th>
@@ -156,9 +156,9 @@
                             </div> -->
                             
                             <div class="form-group">
-                                <label for="id_client_sample" class="col-sm-4 control-label">Client ID</label>
+                                <label for="id_client_sample" class="col-sm-4 control-label">Description</label>
                                 <div class="col-sm-8">
-                                    <input id="id_client_sample" name="id_client_sample" placeholder="Client ID" type="text" class="form-control" required>
+                                    <input id="id_client_sample" name="id_client_sample" placeholder="Description" type="text" class="form-control" required>
                                     <div class="val1tip"></div>
                                 </div>
                             </div>
@@ -447,6 +447,14 @@
                                                 <span id="quality_check_label" class="form-check-label unchecked" role="button">
                                                     Unchecked
                                                 </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="client_id" class="col-sm-4 control-label">Client ID</label>
+                                            <div class="col-sm-8">
+                                                <input id="client_id" name="client_id" placeholder="Client ID" type="text" class="form-control" required>
+                                                <div class="val1tip"></div>
                                             </div>
                                         </div>
 
@@ -977,7 +985,7 @@
                     type: "GET",
                     dataType: "json",
                     success: function (data) {
-                        let tableContent = `<div class="child-table-container"><table class="child-table table table-bordered table-sm"><thead class="bg-light"><tr><th>Water Sample ID</th><th>Type of Sample</th><th>Receiving Lab</th><th>Date Arrived</th><th>Time Arrived</th><th>Date Collected</th><th>Time Collected</th><th>Quality Check</th><th>Description</th><th>Action</th></tr></thead><tbody>`;
+                        let tableContent = `<div class="child-table-container"><table class="child-table table table-bordered table-sm"><thead class="bg-light"><tr><th>Water Sample ID</th><th>Type of Sample</th><th>Receiving Lab</th><th>Date Arrived</th><th>Time Arrived</th><th>Date Collected</th><th>Time Collected</th><th>Quality Check</th><th>Client ID</th><th>Description</th><th>Action</th></tr></thead><tbody>`;
 
                         if (data.length > 0) {
                             $.each(data, function (index, sample) {
@@ -986,10 +994,10 @@
                                 else if (sample.quality_check == 1) qualityCheckIcon = '<i class="fa fa-check-square-o" style="color: green;"></i>';
                                 else if (sample.quality_check == 2) qualityCheckIcon = '<i class="fa fa-times-circle-o" style="color: red;"></i>';
 
-                                tableContent += `<tr><td>${sample.id_one_water_sample ?? '-'}</td><td>${sample.sampletype ?? '-'}</td><td>${sample.initial ?? '-'}</td><td>${sample.date_arrival ?? '-'}</td><td>${sample.time_arrival ?? '-'}</td><td>${sample.date_collected ?? '-'}</td><td>${sample.time_collected ?? '-'}</td><td>${qualityCheckIcon ?? '-'}</td><td>${sample.comments ?? '-'}</td><td>${sample.action ?? '-'}</td></tr>`;
+                                tableContent += `<tr><td>${sample.id_one_water_sample ?? '-'}</td><td>${sample.sampletype ?? '-'}</td><td>${sample.initial ?? '-'}</td><td>${sample.date_arrival ?? '-'}</td><td>${sample.time_arrival ?? '-'}</td><td>${sample.date_collected ?? '-'}</td><td>${sample.time_collected ?? '-'}</td><td>${qualityCheckIcon ?? '-'}</td><td>${sample.client_id ?? '-'}</td><td>${sample.comments ?? '-'}</td><td>${sample.action ?? '-'}</td></tr>`;
                             });
                         } else {
-                            tableContent += `<tr><td colspan="10" class="text-center">No samples available</td></tr>`;
+                            tableContent += `<tr><td colspan="11" class="text-center">No samples available</td></tr>`;
                         }
 
                         tableContent += `</tbody></table></div>`;
@@ -1036,6 +1044,7 @@
                                             <th>Date Collected</th>
                                             <th>Time Collected</th>
                                             <th>Quality Check</th>
+                                            <th>Client ID</th>
                                             <th>Note</th>
                                             <th>Action</th>
                                         </tr>
@@ -1065,6 +1074,7 @@
                                         <td>${sample.date_collected ?? '-'}</td>
                                         <td>${sample.time_collected ?? '-'}</td>
                                         <td>${qualityCheckIcon ?? '-'}</td>
+                                        <td>${sample.client_id ?? '-'}</td>
                                         <td>${sample.comments ?? '-'}</td>
                                         <td>${sample.action ?? '-'}</td>
                                     </tr>
@@ -1144,6 +1154,7 @@
                     }
                     $('#quality_check').val(data.quality_check);
                     $('#time_collected_sample').val(data.time_collected).trigger('change');
+                    $('#client_id').val(data.client_id);
                     $('#comments_sample').val(data.comments);
                             
                     

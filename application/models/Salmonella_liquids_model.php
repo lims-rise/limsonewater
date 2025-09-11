@@ -182,7 +182,7 @@ class Salmonella_liquids_model extends CI_Model
         $this->db->join('ref_person AS rp',  'sl.id_person = rp.id_person', 'left');
 
         // Conditions
-        // $this->db->where('srbl.flag', '0');
+        $this->db->where('srcl.flag', '0');
         $this->db->where('srcl.id_salmonella_liquids', $id);
         $this->db->group_by('srcl.id_result_chromagar');
 

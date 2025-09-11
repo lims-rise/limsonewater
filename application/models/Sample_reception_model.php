@@ -257,7 +257,7 @@ class Sample_reception_model extends CI_Model
     {
       $response = array();
       $this->db->select('sample_reception_sample.id_sample, sample_reception_sample.id_project,sample_reception_sample.id_one_water_sample, sample_reception_sample.date_collected, sample_reception_sample.time_collected, sample_reception_sample.date_created,
-        ref_person.initial, ref_sampletype.sampletype, sample_reception_sample.quality_check, sample_reception_sample.comments, sample_reception_sample.date_arrival, sample_reception_sample.time_arrival');
+        ref_person.initial, ref_sampletype.sampletype, sample_reception_sample.quality_check, sample_reception_sample.client_id, sample_reception_sample.comments, sample_reception_sample.date_arrival, sample_reception_sample.time_arrival');
       $this->db->join('ref_sampletype', 'sample_reception_sample.id_sampletype = ref_sampletype.id_sampletype', 'left');
       $this->db->join('ref_person', 'sample_reception_sample.id_person=ref_person.id_person', 'left');
       $this->db->where('sample_reception_sample.id_one_water_sample', $id);
@@ -609,6 +609,7 @@ class Sample_reception_model extends CI_Model
             srs.time_collected, 
             srs.comments as note,
             (CASE srs.quality_check WHEN 0 THEN "unchecked" WHEN 1 THEN "checked" WHEN 2 THEN "crossed" ELSE "unknown" END) AS quality_checked,
+            srs.client_id,
             srt.barcode, 
             rt.testing_type
         ');
@@ -634,7 +635,7 @@ class Sample_reception_model extends CI_Model
 
     public function get_samples_by_project($id_project) {
         $this->db->select('sample_reception_sample.id_one_water_sample, sample_reception_sample.id_project, sample_reception_sample.date_collected, sample_reception_sample.time_collected, sample_reception_sample.date_created,
-        ref_person.initial, ref_sampletype.sampletype, sample_reception_sample.quality_check, sample_reception_sample.comments, sample_reception_sample.date_arrival, sample_reception_sample.time_arrival');
+        ref_person.initial, ref_sampletype.sampletype, sample_reception_sample.quality_check, sample_reception_sample.client_id, sample_reception_sample.comments, sample_reception_sample.date_arrival, sample_reception_sample.time_arrival');
         $this->db->join('ref_sampletype', 'sample_reception_sample.id_sampletype = ref_sampletype.id_sampletype', 'left');
         $this->db->join('ref_person', 'sample_reception_sample.id_person=ref_person.id_person', 'left');
         $this->db->from('sample_reception_sample');
@@ -682,7 +683,7 @@ class Sample_reception_model extends CI_Model
 
     public function get_sample_detail($id_one_water_sample) {
         $this->db->select('srs.id_one_water_sample, srs.date_arrival, srs.time_arrival,  srs.date_collected, srs.time_collected,
-            srs.quality_check, srs.comments, srs.id_sampletype, 
+            srs.quality_check, srs.client_id, srs.comments, srs.id_sampletype, 
             rst.sampletype, srs.id_person, rp.initial');
         $this->db->from('sample_reception_sample srs');
         $this->db->join('ref_sampletype rst', 'srs.id_sampletype = rst.id_sampletype', 'left');

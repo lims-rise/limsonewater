@@ -148,6 +148,13 @@
                                 <h3 class="box-title">Results ChroMagar</h3>
                             </div>
 							<div class="box-body pad table-responsive">
+                                <?php if ($this->session->flashdata('auto_chromagar')): ?>
+                                    <div class="alert alert-success alert-dismissible" id="auto-processing-alert" style="margin-bottom: 15px;">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                        <h4><i class="icon fa fa-check"></i> Auto-Processing Complete!</h4>
+                                        <?php echo $this->session->flashdata('auto_chromagar'); ?>
+                                    </div>
+                                <?php endif; ?>
 								<?php
 									$lvl = $this->session->userdata('id_user_level');
 									if ($lvl != 4){
@@ -1211,8 +1218,12 @@
 </style>
 <!-- SweetAlert2 CSS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
+<script>
+    // Auto-hide alert after 5 seconds
+    setTimeout(function() {
+        $('#auto-processing-alert').fadeOut('slow');
+    }, 3500);
+</script>
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
@@ -2360,8 +2371,26 @@
                 let info = this.fnPagingInfo();
                 if (info.iTotal > 0) {
                     $('#addtombol_detResultsChromagar').prop("disabled", true);
-                } else {
-                    $('#addtombol_detResultsChromagar').show();
+                }  else {
+                    // Check if all XLD results are 0 to decide if button should be available
+                    let tdXld = $('#example2 td:first');
+                    let dataXld = table.row(tdXld).data();
+                    
+                    if (dataXld && dataXld.black_colony_plate) {
+                        const xldArray = dataXld.black_colony_plate.split(', ');
+                        const allZero = xldArray.every(value => value === '0');
+                        
+                        if (allZero) {
+                            // If all XLD are 0, disable button as auto-save will handle it
+                            $('#addtombol_detResultsChromagar').prop("disabled", true);
+                            $('#addtombol_detResultsChromagar').attr('title', 'Auto-processing: ChroMagar automatically saved (all XLD results are 0)');
+                        } else {
+                            $('#addtombol_detResultsChromagar').prop("disabled", false);
+                            $('#addtombol_detResultsChromagar').attr('title', 'Add new ChroMagar data');
+                        }
+                    } else {
+                        $('#addtombol_detResultsChromagar').show();
+                    }
                 }
             },
             drawCallback: function(settings) {
@@ -2685,6 +2714,32 @@
             if (data && data.salmonella_assay_barcode) {
                 let salmonella_assay_barcode = data.salmonella_assay_barcode;
                 console.log(salmonella_assay_barcode);
+                
+                // Check if XLD results are all zero
+                const purpleColonyPlateArray = data.black_colony_plate.split(', ');
+                const allZero = purpleColonyPlateArray.every(value => value === '0');
+
+                if (allZero) {
+                    // Show information that ChroMagar will be auto-saved
+                    Swal.fire({
+                        title: 'Auto-Processing Enabled',
+                        html: `
+                            <div style="text-align: left; margin-top: 15px;">
+                                <p><i class="fa fa-info-circle" style="color: #3498db; margin-right: 8px;"></i><strong>All XLD results are 0 (zero).</strong></p>
+                                <p style="margin-top: 10px;">ChroMagar results will be automatically saved with value 0 for all tubes.</p>
+                                <hr style="margin: 15px 0;">
+                                <p style="font-size: 13px; color: #666;"><i class="fa fa-magic" style="color: #9b59b6; margin-right: 5px;"></i>Auto-processing: <strong>No manual input required</strong></p>
+                            </div>
+                        `,
+                        icon: 'info',
+                        confirmButtonText: '<i class="fa fa-check"></i> I Understand',
+                        confirmButtonColor: '#3498db',
+                        customClass: {
+                            popup: 'swal-wide'
+                        }
+                    });
+                    return; // Don't show the modal
+                }
 
                 // Parsing data ke komponen
                 $('#idChromagar_one_water_sample').val(idx_one_water_sample);
@@ -2698,7 +2753,7 @@
                 purpleColonyPlateInputs.empty();
 
                 // split the string into an array
-                const purpleColonyPlateArray = data.black_colony_plate.split(', ');
+                // const purpleColonyPlateArray = data.black_colony_plate.split(', ');
                 const plateNumberArray = data.plate_number.split(', ');
 
                 // console.log('purpleColonyPlateArray:', purpleColonyPlateArray);
@@ -2792,8 +2847,17 @@
             $('#compose-modalChroMagar').modal('show');
         });
 
-        // Auto-processing: No button status checks needed on page load
-        console.log('Page loaded - auto-processing enabled for biochemical results');
+        // Auto-processing: biochemical results are automatically handled by the system
+        setTimeout(function() {
+            console.log('Page loaded - auto-processing system is active for biochemical results');
+            
+            // Check if auto-save notification exists and reload tables if needed
+            if ($('.alert-success:contains("Auto-Processing Complete")').length > 0) {
+                console.log('Auto-save detected - reloading tables');
+                table.ajax.reload();
+                table1.ajax.reload();
+            }
+        }, 1000); // Small delay to ensure tables are loaded
 
 
     });

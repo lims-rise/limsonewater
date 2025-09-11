@@ -75,6 +75,7 @@ class Sample_reception extends CI_Controller
                 'time_collected' => $row->time_collected,
                 'sampletype' => $row->sampletype,
                 'quality_check' => $row->quality_check,
+                'client_id' => $row->client_id,
                 'comments' => $row->comments,
                 'testing_type' => $this->Sample_reception_model->getTest(),
                 // 'barcode' => $this->Water_sample_reception_model->getBarcode(),
@@ -437,6 +438,7 @@ class Sample_reception extends CI_Controller
         $time_collected = $this->input->post('time_collected_sample',TRUE);
         $quality_check = $this->input->post('quality_check', TRUE);
         $comments = $this->input->post('comments_sample', TRUE);
+        $client_id = $this->input->post('client_id', TRUE);
         $dt = new DateTime();
     
         if ($mode == "edit") {
@@ -453,6 +455,7 @@ class Sample_reception extends CI_Controller
                 'date_collected' => $date_collected,
                 'time_collected' => $time_collected,
                 'quality_check' => $quality_check,
+                'client_id' => $client_id,
                 'comments' => $comments,
                 'flag' => '0',
                 'user_created' => $this->session->userdata('id_users'),
