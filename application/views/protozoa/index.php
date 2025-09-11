@@ -106,16 +106,18 @@
                         <div class="form-group">
                             <label for="target" class="col-sm-4 control-label">Target</label>
                             <div class="col-sm-8">
-                                <div class="radio">
+                                <div class="checkbox">
                                     <label>
-                                        <input type="radio" name="target" value="Giardia" id="target_giardia"> Giardia
+                                        <input type="checkbox" name="target[]" value="Giardia" id="target_giardia"> Giardia
                                     </label>
                                 </div>
-                                <div class="radio">
+                                <div class="checkbox">
                                     <label>
-                                        <input type="radio" name="target" value="Cryptosporidium" id="target_cryptosporidium"> Cryptosporidium
+                                        <input type="checkbox" name="target[]" value="Cryptosporidium" id="target_cryptosporidium"> Cryptosporidium
                                     </label>
                                 </div>
+                                <!-- Hidden input to store the combined target value -->
+                                <input type="hidden" id="target_combined" name="target" value="">
                             </div>
                         </div>
 
@@ -152,28 +154,14 @@
                         <div class="form-group">
                             <label for="weight" class="col-sm-4 control-label">Weight (g)</label>
                             <div class="col-sm-8">
-                                <div class="input-group">
-                                    <input id="weight" name="weight" type="number" step="any" class="form-control" placeholder="Weight (g)" required>
-                                    <span class="input-group-btn">
-                                        <button id="btn_check_weight" class="btn btn-info btnx_check_weight" type="button">
-                                            <i class="fa fa-search"></i> Check
-                                        </button>
-                                    </span>
-                                </div>
+                                <input id="weight" name="weight" type="number" step="any" class="form-control" placeholder="Weight (g)" required readonly>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="dry_weight_persen" class="col-sm-4 control-label">Dry Weight (%)</label>
                             <div class="col-sm-8">
-                                <div class="input-group">
-                                    <input id="dry_weight_persen" name="dry_weight_persen" type="number" step="any" class="form-control" placeholder="Dry Weight (%)" required>
-                                    <span class="input-group-btn">
-                                        <button id="btn_check_dry_weight" class="btn btn-info btnx_check_dry_weight" type="button">
-                                            <i class="fa fa-search"></i> Check
-                                        </button>
-                                    </span>
-                                </div>
+                                <input id="dry_weight_persen" name="dry_weight_persen" type="number" step="any" class="form-control" placeholder="Dry Weight (%)" required readonly>
                             </div>
                         </div>
 
@@ -575,7 +563,8 @@
             $('#id_person').val('');
             $('#sampletype').attr('readonly', true);
             $('#sampletype').val('');
-            $('input[name="target"]').prop('checked', false);
+            $('input[name="target[]"]').prop('checked', false);
+            $('#target_combined').val('');
             // $('#date_processed').val('');
             // $('#time_processed').val('');
             $('#volume_analysed').val('');
@@ -589,6 +578,13 @@
             $('#concentration_copies_g_dw').val('');
             $('#comments').val('');
             $('#compose-modal').modal('show');
+            
+            // Auto fetch weight and dry weight data when modal opens with One Water Sample ID
+            setTimeout(function() {
+                if ($('#id_one_water_sample').val()) {
+                    autoFetchWeightData('#id_one_water_sample');
+                }
+            }, 500);
         } else {
             console.log('Barcode tidak ditemukan di URL');
         }
@@ -696,6 +692,26 @@
             }, 3000);                            
         });
 
+        // Handle target checkbox changes
+        $('input[name="target[]"]').change(function() {
+            updateTargetCombined();
+        });
+
+        // Function to update combined target value
+        function updateTargetCombined() {
+            const selectedTargets = [];
+            $('input[name="target[]"]:checked').each(function() {
+                selectedTargets.push($(this).val());
+            });
+            $('#target_combined').val(selectedTargets.join(','));
+            console.log('Updated target combined:', selectedTargets.join(','));
+        }
+
+        // Handle form submission to ensure target value is updated
+        $('#formSample').on('submit', function() {
+            updateTargetCombined();
+        });
+
 
         $('.idOneWaterSampleSelect').change(function() {
             let id_one_water_sample = $(this).val(); // Mendapatkan ID produk yang dipilih
@@ -712,6 +728,9 @@
 
                         // Trigger input event to handle visibility of tray_weight
                         $('#sampletype').trigger('input');
+                        
+                        // Auto fetch weight and dry weight data
+                        autoFetchWeightData('#id_one_water_sample');
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         // Menangani error jika terjadi kesalahan dalam request
@@ -725,213 +744,91 @@
             }
         });
 
-        // Reusable function for weight check with race condition prevention
-        let isWeightChecking = false; // Prevent multiple simultaneous requests
-        function checkWeight(buttonElement, inputSelector) {
-            // Prevent multiple simultaneous requests
-            if (isWeightChecking) {
-                console.log('Weight check already in progress, skipping...');
+        // Auto fetch weight and dry weight data
+        function autoFetchWeightData(inputSelector) {
+            const $input = $(inputSelector);
+            const id_one_water_sample = $input.val();
+
+            // Validation: element must exist and value must not be empty
+            if (!$input.length || !id_one_water_sample || id_one_water_sample.trim() === '') {
+                // Set default values to 0 if no sample ID
+                $('#weight').val('0');
+                $('#dry_weight_persen').val('0');
+                calculateMassAnalysed();
                 return;
             }
 
-            // Wait a moment to ensure DOM is fully updated
-            setTimeout(function() {
-                const $input = $(inputSelector);
-                const id_one_water_sample = $input.val();
+            // Clear previous values first
+            $('#weight').val('');
+            $('#dry_weight_persen').val('');
 
-                // Validation: element must exist and value must not be empty
-                if (!$input.length || !id_one_water_sample || id_one_water_sample.trim() === '') {
-                    Swal.fire({
-                        title: 'Warning!',
-                        text: 'Please select One Water Sample ID first.',
-                        icon: 'warning',
-                        confirmButtonText: 'OK'
-                    });
-                    return;
-                }
+            // Log the request for debugging
+            console.log('Auto fetching weight data for ID:', id_one_water_sample.trim());
 
-                isWeightChecking = true; // lock
+            // Fetch weight data
+            $.ajax({
+                url: '<?php echo site_url('Protozoa/getWeight'); ?>',
+                type: 'POST',
+                data: { id_one_water_sample: id_one_water_sample.trim() },
+                dataType: 'json',
+                cache: false,
+                timeout: 10000,
+                success: function(response) {
+                    console.log('Weight fetch response for [' + id_one_water_sample.trim() + ']:', response);
 
-                // Clear previous value first
-                $('#weight').val('');
-
-                // Show loading state
-                buttonElement.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Checking...');
-
-                // Log the request for debugging
-                console.log('Sending weight request for ID:', id_one_water_sample.trim());
-
-                $.ajax({
-                    url: '<?php echo site_url('Protozoa/getWeight'); ?>',
-                    type: 'POST',
-                    data: { id_one_water_sample: id_one_water_sample.trim() },
-                    dataType: 'json',
-                    cache: false,
-                    timeout: 10000,
-                    success: function(response) {
-                        console.log('Weight check response for [' + id_one_water_sample.trim() + ']:', response);
-
-                        if (response && response.weight !== null && response.weight !== undefined) {
-                            const weight = parseFloat(response.weight);
-                            if (!isNaN(weight)) {
-                                $('#weight').val(response.weight);
-                                calculateMassAnalysed(); // Auto calculate after weight is set
-                                Swal.fire({
-                                    title: 'Success!',
-                                    text: 'Weight data found: ' + response.weight + 'g',
-                                    icon: 'success',
-                                    confirmButtonText: 'OK'
-                                });
-                            } else {
-                                $('#weight').val('');
-                                Swal.fire({
-                                    title: 'Invalid Data',
-                                    text: 'Weight data found but value is invalid.',
-                                    icon: 'warning',
-                                    confirmButtonText: 'OK'
-                                });
-                            }
+                    if (response && response.weight !== null && response.weight !== undefined) {
+                        const weight = parseFloat(response.weight);
+                        if (!isNaN(weight)) {
+                            $('#weight').val(response.weight);
                         } else {
-                            $('#weight').val('');
-                            Swal.fire({
-                                title: 'Data Not Available',
-                                html: '<b>Weight % </b>data is not yet available for <b>' + id_one_water_sample.trim() + '</b>. Please check <b>Extraction Biosolid</b>.',
-                                icon: 'info',
-                                confirmButtonText: 'OK'
-                            });
+                            $('#weight').val('0'); // Default to 0 if invalid
                         }
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.error('AJAX error for [' + id_one_water_sample.trim() + ']:', textStatus, errorThrown);
-                        $('#weight').val('');
-                        Swal.fire({
-                            title: 'Error!',
-                            text: 'An error occurred while checking weight data. Please try again.',
-                            icon: 'error',
-                            confirmButtonText: 'OK'
-                        });
-                    },
-                    complete: function() {
-                        buttonElement.prop('disabled', false).html('<i class="fa fa-search"></i> Check');
-                        isWeightChecking = false; // unlock
-                        console.log('Weight check completed for:', id_one_water_sample.trim());
+                    } else {
+                        $('#weight').val('0'); // Default to 0 if no data
                     }
-                });
-            }, 100);
-        }
-
-        // Event handler using the reusable function (single binding)
-        $(document).on('click', '#btn_check_weight', function() {
-            // Choose the visible/active input: use id_one or idx_one depending on modal state
-            const selector = ($('#id_one_water_sample').is(':visible') && $('#id_one_water_sample').val())
-                ? '#id_one_water_sample'
-                : '#idx_one_water_sample';
-            checkWeight($(this), selector);
-        });
-
-        // Reusable function for dry weight check with race condition prevention
-        let isDryWeightChecking = false; // Prevent multiple simultaneous requests
-        function checkDryWeight(buttonElement, inputSelector) {
-            // Prevent multiple simultaneous requests
-            if (isDryWeightChecking) {
-                console.log('Dry weight check already in progress, skipping...');
-                return;
-            }
-
-            // Wait a moment to ensure DOM is fully updated
-            setTimeout(function() {
-                const $input = $(inputSelector);
-                const id_one_water_sample = $input.val();
-
-                // Validation: element must exist and value must not be empty
-                if (!$input.length || !id_one_water_sample || id_one_water_sample.trim() === '') {
-                    Swal.fire({
-                        title: 'Warning!',
-                        text: 'Please select One Water Sample ID first.',
-                        icon: 'warning',
-                        confirmButtonText: 'OK'
-                    });
-                    return;
+                    
+                    // After weight is set, calculate mass analysed
+                    calculateMassAnalysed();
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('AJAX error for weight [' + id_one_water_sample.trim() + ']:', textStatus, errorThrown);
+                    $('#weight').val('0'); // Default to 0 on error
+                    calculateMassAnalysed();
                 }
+            });
 
-                isDryWeightChecking = true; // lock
+            // Fetch dry weight data
+            $.ajax({
+                url: '<?php echo site_url('Protozoa/getDryWeight'); ?>',
+                type: 'POST',
+                data: { id_one_water_sample: id_one_water_sample.trim() },
+                dataType: 'json',
+                cache: false,
+                timeout: 10000,
+                success: function(response) {
+                    console.log('Dry weight fetch response for [' + id_one_water_sample.trim() + ']:', response);
 
-                // Clear previous value first
-                $('#dry_weight_persen').val('');
-
-                // Show loading state
-                buttonElement.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Checking...');
-
-                // Log the request for debugging
-                console.log('Sending dry weight request for ID:', id_one_water_sample.trim());
-
-                $.ajax({
-                    url: '<?php echo site_url('Protozoa/getDryWeight'); ?>',
-                    type: 'POST',
-                    data: { id_one_water_sample: id_one_water_sample.trim() },
-                    dataType: 'json',
-                    cache: false,
-                    timeout: 10000,
-                    success: function(response) {
-                        console.log('Dry weight check response for [' + id_one_water_sample.trim() + ']:', response);
-
-                        if (response && response.dry_weight_persen !== null && response.dry_weight_persen !== undefined) {
-                            const dryWeight = parseFloat(response.dry_weight_persen);
-                            if (!isNaN(dryWeight)) {
-                                $('#dry_weight_persen').val(response.dry_weight_persen);
-                                calculateMassAnalysed(); // Auto calculate after dry weight is set
-                                Swal.fire({
-                                    title: 'Success!',
-                                    text: 'Dry weight data found: ' + response.dry_weight_persen + '%',
-                                    icon: 'success',
-                                    confirmButtonText: 'OK'
-                                });
-                            } else {
-                                $('#dry_weight_persen').val('');
-                                Swal.fire({
-                                    title: 'Invalid Data',
-                                    text: 'Dry weight data found but value is invalid.',
-                                    icon: 'warning',
-                                    confirmButtonText: 'OK'
-                                });
-                            }
+                    if (response && response.dry_weight_persen !== null && response.dry_weight_persen !== undefined) {
+                        const dryWeight = parseFloat(response.dry_weight_persen);
+                        if (!isNaN(dryWeight)) {
+                            $('#dry_weight_persen').val(response.dry_weight_persen);
                         } else {
-                            $('#dry_weight_persen').val('');
-                            Swal.fire({
-                                title: 'Data Not Available',
-                                html: '<b>Dry weight % </b>data is not yet available for <b>' + id_one_water_sample.trim() + '</b>. Please check <b>Moisture Content</b>.',
-                                icon: 'info',
-                                confirmButtonText: 'OK'
-                            });
+                            $('#dry_weight_persen').val('0'); // Default to 0 if invalid
                         }
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.error('AJAX error for [' + id_one_water_sample.trim() + ']:', textStatus, errorThrown);
-                        $('#dry_weight_persen').val('');
-                        Swal.fire({
-                            title: 'Error!',
-                            text: 'An error occurred while checking dry weight data. Please try again.',
-                            icon: 'error',
-                            confirmButtonText: 'OK'
-                        });
-                    },
-                    complete: function() {
-                        buttonElement.prop('disabled', false).html('<i class="fa fa-search"></i> Check');
-                        isDryWeightChecking = false; // unlock
-                        console.log('Dry weight check completed for:', id_one_water_sample.trim());
+                    } else {
+                        $('#dry_weight_persen').val('0'); // Default to 0 if no data
                     }
-                });
-            }, 100);
+                    
+                    // After dry weight is set, calculate mass analysed
+                    calculateMassAnalysed();
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('AJAX error for dry weight [' + id_one_water_sample.trim() + ']:', textStatus, errorThrown);
+                    $('#dry_weight_persen').val('0'); // Default to 0 on error
+                    calculateMassAnalysed();
+                }
+            });
         }
-
-        // Event handler using the reusable function (single binding)
-        $(document).on('click', '#btn_check_dry_weight', function() {
-            // Choose the visible/active input: use id_one or idx_one depending on modal state
-            const selector = ($('#id_one_water_sample').is(':visible') && $('#id_one_water_sample').val())
-                ? '#id_one_water_sample'
-                : '#idx_one_water_sample';
-            checkDryWeight($(this), selector);
-        });
 
         // Auto calculate mass_analysed function
         function calculateMassAnalysed() {
@@ -942,11 +839,8 @@
             const massAnalysed = weight * dryWeightPersen;
             
             // Update the mass_analysed field with calculated value
-            if (weight > 0 && dryWeightPersen > 0) {
-                $('#mass_analysed').val(massAnalysed.toFixed(6)); // 6 decimal places for precision
-            } else {
-                $('#mass_analysed').val(''); // Clear if either value is 0 or empty
-            }
+            // Always show the calculated result, even if it's 0
+            $('#mass_analysed').val(massAnalysed.toFixed(6)); // 6 decimal places for precision
             
             console.log('Auto calculate: weight =', weight, ', dry_weight_persen =', dryWeightPersen, ', mass_analysed =', massAnalysed);
         }
@@ -955,14 +849,6 @@
         $('#weight, #dry_weight_persen').on('input change keyup', function() {
             calculateMassAnalysed();
         });
-
-        // Also trigger calculation when Check buttons successfully populate data
-        $(document).on('DOMSubtreeModified', '#weight, #dry_weight_persen', function() {
-            calculateMassAnalysed();
-        });
-
-        // Alternative approach: trigger calculation after AJAX success in check functions
-        // by modifying the success callbacks to trigger calculateMassAnalysed()
 
 
         $('#id_one_water_sample').on("change", function() {
@@ -993,6 +879,8 @@
                         console.log(data);
                     }
                     else {
+                        // Auto fetch weight and dry weight data when validation passes
+                        autoFetchWeightData('#id_one_water_sample');
                     }
                 }
             });
@@ -1073,7 +961,8 @@
             $('#id_person').val('');
             $('#sampletype').attr('readonly', true);
             $('#sampletype').val('');
-            $('input[name="target"]').prop('checked', false);
+            $('input[name="target[]"]').prop('checked', false);
+            $('#target_combined').val('');
             $('#id_person_proc').val('');
             // $('#date_processed').val('');
             $('#volume_filter').val('');
@@ -1102,10 +991,18 @@
             $('#id_sampletype').val(data.id_sampletype);
             $('#sampletype').val(data.sampletype);
             $('#tartget').val(data.target);
-            // Handle target radio buttons
-            $('input[name="target"]').prop('checked', false);
+            // Handle target checkboxes
+            $('input[name="target[]"]').prop('checked', false);
             if (data.target) {
-                $('input[name="target"][value="' + data.target + '"]').prop('checked', true);
+                // Split comma-separated values and check each checkbox
+                const targets = data.target.split(',');
+                targets.forEach(function(target) {
+                    $('input[name="target[]"][value="' + target.trim() + '"]').prop('checked', true);
+                });
+                // Update the hidden input with combined value
+                $('#target_combined').val(data.target);
+            } else {
+                $('#target_combined').val('');
             }
             $('#date_processed').val(data.date_processed).trigger('change');
             $('#time_processed').val(data.time_processed).trigger('change');

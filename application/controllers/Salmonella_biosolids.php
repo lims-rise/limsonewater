@@ -295,6 +295,9 @@ class Salmonella_biosolids extends CI_Controller
     
             $this->session->set_flashdata('message', 'Create Record Success');
 
+            // Check if all XLD results are 0 for auto-save ChroMagar logic
+            $this->autoSaveChromagarIfAllZero($id_salmonella_biosolids, $number_of_tubes, $date_sample_processed, $time_sample_processed);
+
             // Auto-update biochemical results when XLD data is created
             $this->autoUpdateBiochemicalFromXldChange($id_salmonella_biosolids, $number_of_tubes);
     
@@ -339,6 +342,9 @@ class Salmonella_biosolids extends CI_Controller
     
             $this->session->set_flashdata('message', 'Update Record Success');
         }
+
+        // Check if all XLD results are 0 for auto-save ChroMagar logic
+        $this->autoSaveChromagarIfAllZero($id_salmonella_biosolids, $number_of_tubes, $date_sample_processed, $time_sample_processed);
 
         // Auto-update biochemical results when XLD data changes
         $this->autoUpdateBiochemicalFromXldChange($id_salmonella_biosolids, $number_of_tubes);
@@ -574,6 +580,72 @@ class Salmonella_biosolids extends CI_Controller
                     $this->Salmonella_biosolids_model->updateBiochemicalResult($existing->id_result_biochemical, $data);
                 }
                 // Note: We don't create new biochemical results here since they should only be created when ChroMagar is saved
+            }
+        }
+    }
+
+    /**
+     * Auto-save ChroMagar results if all XLD results are 0
+     */
+    private function autoSaveChromagarIfAllZero($id_salmonella_biosolids, $number_of_tubes, $date_sample_processed, $time_sample_processed) {
+        $dt = new DateTime();
+        
+        // Get current XLD results
+        $xld_results = $this->Salmonella_biosolids_model->getXldResults($id_salmonella_biosolids);
+
+        if (empty($xld_results)) {
+            return; // No XLD data, nothing to process
+        }
+        
+        // Check if ALL XLD results are 0
+        $all_zero = true;
+        foreach ($xld_results as $xld) {
+            if ($xld->colony_plate != '0') {
+                $all_zero = false;
+                break;
+            }
+        }
+        
+        // If all XLD results are 0, auto-save ChroMagar with same values
+        if ($all_zero) {
+            // Check if ChroMagar data already exists
+            $existing_chromagar = $this->Salmonella_biosolids_model->getAllChroMagarResults($id_salmonella_biosolids);
+
+            if (empty($existing_chromagar)) {
+                // Create new ChroMagar record
+                $chromagar_data = array(
+                    'id_salmonella_biosolids' => $id_salmonella_biosolids,
+                    'date_sample_processed' => $date_sample_processed,
+                    'time_sample_processed' => $time_sample_processed,
+                    'flag' => '0',
+                    'lab' => $this->session->userdata('lab'),
+                    'uuid' => $this->uuid->v4(),
+                    'user_created' => $this->session->userdata('id_users'),
+                    'date_created' => $dt->format('Y-m-d H:i:s'),
+                );
+                
+                $chromagar_id = $this->Salmonella_biosolids_model->insertResultsChromagar($chromagar_data);
+                
+                // Insert purple colony plates with value 0 for all tubes
+                for ($i = 1; $i <= $number_of_tubes; $i++) {
+                    $plate_data = array(
+                        'id_result_chromagar' => $chromagar_id,
+                        'plate_number' => $i,
+                        'purple_colony_plate' => '0', // Auto-set to 0 since all XLD are 0
+                        'flag' => '0',
+                        'lab' => $this->session->userdata('lab'),
+                        'uuid' => $this->uuid->v4(),
+                        'user_created' => $this->session->userdata('id_users'),
+                        'date_created' => $dt->format('Y-m-d H:i:s'),
+                    );
+                    $this->Salmonella_biosolids_model->insert_purple_colony_plate($plate_data);
+                }
+                
+                // Auto-generate biochemical results
+                $this->autoGenerateBiochemicalResults($id_salmonella_biosolids, $chromagar_id, $number_of_tubes);
+
+                // Set flash message to indicate auto-save
+                $this->session->set_flashdata('auto_chromagar', 'ChroMagar results auto-saved with value 0 (all XLD results are 0)');
             }
         }
     }

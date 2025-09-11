@@ -183,7 +183,7 @@ class Salmonella_biosolids_model extends CI_Model
         $this->db->join('ref_person AS rp',  'sb.id_person = rp.id_person', 'left');
 
         // Conditions
-        // $this->db->where('srb.flag', '0');
+        $this->db->where('src.flag', '0');
         $this->db->where('src.id_salmonella_biosolids', $id);
         $this->db->group_by('src.id_result_chromagar');
 
