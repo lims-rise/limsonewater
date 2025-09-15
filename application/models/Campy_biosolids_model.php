@@ -168,10 +168,13 @@ class Campy_biosolids_model extends CI_Model
                         rm.mpn_concentration,
                         rm.upper_ci,
                         rm.lower_ci,
-                           $case_query, 
-                           GROUP_CONCAT(DISTINCT rb.biochemical_tube ORDER BY rb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
-                           GROUP_CONCAT(DISTINCT CONCAT(rb.biochemical_tube, ':', rb.confirmation) ORDER BY rb.biochemical_tube SEPARATOR ', ') AS confirmation,
-                           GROUP_CONCAT(DISTINCT sgph.plate_number ORDER BY sgph.plate_number SEPARATOR ', ') AS plate_numbers");
+                        rm.mpn_concentration_dw,
+                        rm.upper_ci_dw,
+                        rm.lower_ci_dw,
+                        $case_query, 
+                        GROUP_CONCAT(DISTINCT rb.biochemical_tube ORDER BY rb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
+                        GROUP_CONCAT(DISTINCT CONCAT(rb.biochemical_tube, ':', rb.confirmation) ORDER BY rb.biochemical_tube SEPARATOR ', ') AS confirmation,
+                        GROUP_CONCAT(DISTINCT sgph.plate_number ORDER BY sgph.plate_number SEPARATOR ', ') AS plate_numbers");
         $this->db->from('campy_biosolids AS cb');
         $this->db->join('campy_result_hba AS rh', 'cb.id_campy_biosolids = rh.id_campy_biosolids', 'left');
         $this->db->join('campy_sample_growth_plate_hba AS sgph', 'rh.id_result_hba = sgph.id_result_hba', 'left');
