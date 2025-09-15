@@ -246,9 +246,9 @@
                                                 <th>Concentration MPN</th>
                                                 <th>Upper CI</th>
                                                 <th>Lower CI</th>
-                                                <!-- <th>Concentration MPN/g Dw</th>
+                                                <th>Concentration MPN/g Dw</th>
                                                 <th>Upper CI MPN/g Dw</th>
-                                                <th>Lower CI MPN/g Dw</th> -->
+                                                <th>Lower CI MPN/g Dw</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -295,9 +295,9 @@
                                                         <td><?= htmlspecialchars($concentration->mpn_concentration) ?></td>
                                                         <td><?= htmlspecialchars($concentration->upper_ci) ?></td>
                                                         <td><?= htmlspecialchars($concentration->lower_ci) ?></td>
-                                                        <!-- <td><?= htmlspecialchars($concentration->mpn_concentration_dw) ?></td>
+                                                        <td><?= htmlspecialchars($concentration->mpn_concentration_dw) ?></td>
                                                         <td><?= htmlspecialchars($concentration->upper_ci_dw) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->lower_ci_dw) ?></td> -->
+                                                        <td><?= htmlspecialchars($concentration->lower_ci_dw) ?></td>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             <?php else: ?>
@@ -577,13 +577,17 @@
                     <input id="mode_calculateMPN" name="mode_calculateMPN" type="hidden" class="form-control input-sm">
                     <input id="id_campy_biosolids_mpn" name="id_campy_biosolids_mpn" type="hidden" class="form-control input-sm">
                     <input id="id_campy_result_mpn" name="id_campy_result_mpn" type="hidden" class="form-control input-sm">
-                    <!-- <input id="current_sample_dryweight" name="current_sample_dryweight" type="hidden" class="form-control input-sm"> -->
+                    <input id="current_sample_dryweight" name="current_sample_dryweight" type="hidden" class="form-control input-sm">
 
                     <!-- MPN Concentration -->
                     <div class="form-group">
                         <label for="mpn_concentration" class="col-sm-4 control-label">MPN Concentration</label>
                         <div class="col-sm-8">
-                            <input id="mpn_concentration" name="mpn_concentration" type="text" class="form-control" placeholder="Enter MPN concentration" required>
+                            <input id="mpn_concentration" name="mpn_concentration" type="text" class="form-control" placeholder="e.g., 1.08 or <1.08" required>
+                            <div class="help-block" style="font-size: 11px; color: #666; margin-top: 2px;">
+                                <i class="fa fa-lightbulb-o"></i> You can enter values with symbols (e.g., &lt;1.08, &gt;2.5). 
+                                The original value will be saved, but numeric part will be used for calculations.
+                            </div>
                         </div>
                     </div>
 
@@ -604,7 +608,7 @@
                     </div>
 
                     <!-- Concentration MPN/g dry weight -->
-                    <!-- <div class="form-group">
+                    <div class="form-group">
                         <label class="col-sm-4 control-label">Auto-calculated Results</label>
                         <div class="col-sm-8">
                       
@@ -647,7 +651,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
                 <div class="modal-footer clearfix" style="display: flex; align-items: center; justify-content: flex-end; gap: 10px; padding: 15px 20px; border-top: 1px solid #dee2e6; background-color: #f8f9fa;">
                     <button type="submit" class="btn btn-primary" style="min-width: 100px; padding: 8px 16px; font-weight: 500; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,123,255,0.2); transition: all 0.3s ease;">
@@ -1183,6 +1187,24 @@
     .swal2-html-container strong {
         font-weight: 600;
     }
+
+    /* Styling for MPN concentration field with symbol values */
+    .has-symbol-value {
+        border-left: 3px solid #28a745 !important;
+        background-color: rgba(40, 167, 69, 0.05) !important;
+    }
+
+    .symbol-feedback {
+        background-color: rgba(40, 167, 69, 0.1);
+        border: 1px solid rgba(40, 167, 69, 0.3);
+        border-radius: 4px;
+        padding: 5px 8px;
+        margin-top: 3px;
+    }
+
+    .symbol-feedback i {
+        margin-right: 4px;
+    }
 </style>
 <style>
 	#textInform2 .alert {
@@ -1639,46 +1661,157 @@
         });
 
 
+        /**
+         * Function to parse numeric value from strings that may contain comparison symbols
+         * 
+         * This function handles MPN concentration values that may include symbols like:
+         * - <1.08 (less than)
+         * - >2.5 (greater than) 
+         * - ≤0.75 (less than or equal)
+         * - ≥1.2 (greater than or equal)
+         * 
+         * The original value (with symbols) is preserved for database storage,
+         * while the numeric part is extracted for mathematical calculations.
+         * 
+         * @param {string|number} value - The input value to parse
+         * @returns {number} - The numeric part of the value, or 0 if invalid
+         * 
+         * Examples:
+         * parseNumericValue("<1.08") returns 1.08
+         * parseNumericValue("≥2.5") returns 2.5
+         * parseNumericValue("1.08") returns 1.08
+         * parseNumericValue("") returns 0
+         */
+        function parseNumericValue(value) {
+            if (!value || value.trim() === '') return 0;
+            
+            // Convert to string and trim whitespace
+            let stringValue = String(value).trim();
+            
+            // Extract numeric part using regex
+            // This regex matches optional symbols (including Unicode symbols) followed by numbers
+            let match = stringValue.match(/^([<>≤≥≦≧⩽⩾]*)(\d+(?:\.\d+)?)/);
+            
+            if (match && match[2]) {
+                return parseFloat(match[2]) || 0;
+            }
+            
+            // Fallback: try direct parseFloat for normal numeric values
+            return parseFloat(stringValue) || 0;
+        }
+
         // Function to calculate MPN per gram dry weight values
-        // function calculateMpnDryWeight() {
-        //     let mpnConcentration = parseFloat($('#mpn_concentration').val()) || 0;
-        //     let upperCi = parseFloat($('#upper_ci').val()) || 0;
-        //     let lowerCi = parseFloat($('#lower_ci').val()) || 0;
-        //     let sampleDryweight = parseFloat($('#sample_dryweight').val()) || 0;
+        function calculateMpnDryWeight() {
+            // Use custom parser for mpn_concentration to handle values with symbols
+            let mpnConcentration = parseNumericValue($('#mpn_concentration').val());
+            let upperCi = parseFloat($('#upper_ci').val()) || 0;
+            let lowerCi = parseFloat($('#lower_ci').val()) || 0;
+            let sampleDryweight = parseFloat($('#sample_dryweight').val()) || 0;
 
-        //     if (sampleDryweight > 0) {
-        //         // Calculate Concentration MPN/g dry weight = mpn_concentration / sample_dryweight
-        //         let mpnConcentrationDw = (mpnConcentration / sampleDryweight).toFixed(4);
-        //         $('#mpn_concentration_dw').val(mpnConcentrationDw);
-        //         $('#display_mpn_concentration_dw').text(mpnConcentrationDw);
+            if (sampleDryweight > 0) {
+                // Calculate Concentration MPN/g dry weight = mpn_concentration / sample_dryweight
+                let mpnConcentrationDw = (mpnConcentration / sampleDryweight).toFixed(4);
+                $('#mpn_concentration_dw').val(mpnConcentrationDw);
+                $('#display_mpn_concentration_dw').text(mpnConcentrationDw);
 
-        //         // Calculate Upper CI MPN/g dw = upper_ci / sample_dryweight
-        //         let upperCiDw = (upperCi / sampleDryweight).toFixed(4);
-        //         $('#upper_ci_dw').val(upperCiDw);
-        //         $('#display_upper_ci_dw').text(upperCiDw);
+                // Calculate Upper CI MPN/g dw = upper_ci / sample_dryweight
+                let upperCiDw = (upperCi / sampleDryweight).toFixed(4);
+                $('#upper_ci_dw').val(upperCiDw);
+                $('#display_upper_ci_dw').text(upperCiDw);
 
-        //         // Calculate Lower CI MPN/g dw = lower_ci / sample_dryweight
-        //         let lowerCiDw = (lowerCi / sampleDryweight).toFixed(4);
-        //         $('#lower_ci_dw').val(lowerCiDw);
-        //         $('#display_lower_ci_dw').text(lowerCiDw);
-        //     } else {
-        //         $('#mpn_concentration_dw').val('');
-        //         $('#upper_ci_dw').val('');
-        //         $('#lower_ci_dw').val('');
-        //         $('#display_mpn_concentration_dw').text('-');
-        //         $('#display_upper_ci_dw').text('-');
-        //         $('#display_lower_ci_dw').text('-');
-        //     }
-        // }
+                // Calculate Lower CI MPN/g dw = lower_ci / sample_dryweight
+                let lowerCiDw = (lowerCi / sampleDryweight).toFixed(4);
+                $('#lower_ci_dw').val(lowerCiDw);
+                $('#display_lower_ci_dw').text(lowerCiDw);
+            } else {
+                $('#mpn_concentration_dw').val('');
+                $('#upper_ci_dw').val('');
+                $('#lower_ci_dw').val('');
+                $('#display_mpn_concentration_dw').text('-');
+                $('#display_upper_ci_dw').text('-');
+                $('#display_lower_ci_dw').text('-');
+            }
+        }
 
         // Attach the calculation function to input events
-        // $('#mpn_concentration, #upper_ci, #lower_ci').on('input', calculateMpnDryWeight);
+        $('#mpn_concentration, #upper_ci, #lower_ci').on('input', calculateMpnDryWeight);
+
+        // Add visual feedback for mpn_concentration field when symbols are detected
+        $('#mpn_concentration').on('input', function() {
+            let value = $(this).val().trim();
+            let $field = $(this);
+            let $parent = $field.parent();
+            
+            // Remove existing feedback
+            $parent.find('.symbol-feedback').remove();
+            $field.removeClass('has-symbol-value');
+            
+            // Check if value contains symbols
+            // if (value && /^[<>≤≥≦≧⩽⩾]/.test(value)) {
+            //     $field.addClass('has-symbol-value');
+                
+            //     // Add visual feedback
+            //     let numericValue = parseNumericValue(value);
+            //     let feedbackHtml = `
+            //         <div class="symbol-feedback" style="font-size: 11px; color: #28a745; margin-top: 3px;">
+            //             <i class="fa fa-info-circle"></i> 
+            //             Value with symbol detected. Using numeric part (${numericValue}) for calculation.
+            //             <br>Original value "${value}" will be saved to database.
+            //         </div>
+            //     `;
+            //     $parent.append(feedbackHtml);
+            // }
+        });
 
         // Also trigger calculation when the modal is shown (in case data is pre-filled)
-        // $('#compose-modalCalculateMPN').on('shown.bs.modal', function() {
-        //     calculateMpnDryWeight();
-        //     $('#current_sample_dryweight').val($('#sample_dryweight').val());
-        // });
+        $('#compose-modalCalculateMPN').on('shown.bs.modal', function() {
+            calculateMpnDryWeight();
+            $('#current_sample_dryweight').val($('#sample_dryweight').val());
+            
+            // Trigger symbol detection for pre-filled values
+            $('#mpn_concentration').trigger('input');
+        });
+
+        // Form validation for Calculate MPN
+        $('#formCalculateMPN').on('submit', function(e) {
+            let mpnConcentrationValue = $('#mpn_concentration').val().trim();
+            
+            // Validate that MPN concentration is not empty
+            if (!mpnConcentrationValue) {
+                e.preventDefault();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error',
+                    text: 'MPN Concentration is required.',
+                    confirmButtonColor: '#dc3545'
+                });
+                return false;
+            }
+            
+            // Validate that we can extract a numeric value
+            let numericValue = parseNumericValue(mpnConcentrationValue);
+            if (numericValue === 0 && mpnConcentrationValue !== '0') {
+                e.preventDefault();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid Format',
+                    html: `
+                        <div style="text-align: left;">
+                            <p>The MPN Concentration value "${mpnConcentrationValue}" is not in a valid format.</p>
+                            <p><strong>Valid formats:</strong></p>
+                            <ul style="margin: 10px 0;">
+                                <li>Numeric values: 1.08, 2.5, 0.75</li>
+                                <li>Values with symbols: &lt;1.08, &gt;2.5, ≤0.75, ≥1.2</li>
+                            </ul>
+                        </div>
+                    `,
+                    confirmButtonColor: '#dc3545'
+                });
+                return false;
+            }
+            
+            return true;
+        });
 
         // Monitor sample_dryweight changes and trigger recalculation check
         function monitorSampleDryweightChanges() {
@@ -2484,10 +2617,10 @@
             $('#formCalculateMPN')[0].reset();
             $('#mode_calculateMPN').val('');
             $('#id_campy_result_mpn').val('');
-            // $('#current_sample_dryweight').val('');
-            // $('#mpn_concentration_dw').val('');
-            // $('#upper_ci_dw').val('');
-            // $('#lower_ci_dw').val('');
+            $('#current_sample_dryweight').val('');
+            $('#mpn_concentration_dw').val('');
+            $('#upper_ci_dw').val('');
+            $('#lower_ci_dw').val('');
         });
 
     });
