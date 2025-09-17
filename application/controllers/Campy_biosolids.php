@@ -300,11 +300,21 @@ class Campy_biosolids extends CI_Controller
     
             $assay_id = $this->Campy_biosolids_model->insertResultsCharcoal($data);
     
-            // Insert sample volumes
+            // Insert sample volumes and check if all growth plates are 0
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
+            $all_plates_zero = true;
+            $growth_plate_data = array();
+            
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $plate = $this->input->post("growth_plate{$i}", TRUE);
                 if ($plate !== null) {
+                    $growth_plate_data[$i] = $plate;
+                    
+                    // Check if this plate is not zero
+                    if ($plate != '0') {
+                        $all_plates_zero = false;
+                    }
+                    
                     $this->Campy_biosolids_model->insert_growth_plate(array(
                         'id_result_charcoal' => $assay_id,
                         'plate_number' => $i,
@@ -317,8 +327,23 @@ class Campy_biosolids extends CI_Controller
                     ));
                 }
             }
-    
-            $this->session->set_flashdata('message', 'Create Record Success');
+            
+            // Auto-generate HBA results if all growth plates are 0
+            if ($all_plates_zero && count($growth_plate_data) > 0) {
+                try {
+                    $hba_result = $this->autoGenerateHBAResults($id_campy_biosolids, $assay_id, $date_sample_processed, $time_sample_processed, $growth_plate_data, $dt);
+                    if ($hba_result) {
+                        $this->session->set_flashdata('message', 'Create Record Success - HBA Results auto-generated');
+                    } else {
+                        $this->session->set_flashdata('message', 'Create Record Success - Note: HBA auto-generation failed, please create manually');
+                    }
+                } catch (Exception $e) {
+                    log_message('error', 'HBA auto-generation failed: ' . $e->getMessage());
+                    $this->session->set_flashdata('message', 'Create Record Success - Note: HBA auto-generation failed, please create manually');
+                }
+            } else {
+                $this->session->set_flashdata('message', 'Create Record Success');
+            }
     
         } else if ($mode == "edit") {
             // Update data in assays table
@@ -338,13 +363,23 @@ class Campy_biosolids extends CI_Controller
     
             $this->Campy_biosolids_model->updateResultsCharcoal($id_result_charcoal, $data);
 
-            // Update sample volumes
+            // Update sample volumes and check if all growth plates are 0
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
             $this->Campy_biosolids_model->delete_growth_plates($id_result_charcoal); // Hapus volume yang ada
 
+            $all_plates_zero = true;
+            $growth_plate_data = array();
+            
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $plate = $this->input->post("growth_plate{$i}", TRUE);
                 if ($plate !== null) {
+                    $growth_plate_data[$i] = $plate;
+                    
+                    // Check if this plate is not zero
+                    if ($plate != '0') {
+                        $all_plates_zero = false;
+                    }
+                    
                     $data_plate = array(
                         'id_result_charcoal' => $id_result_charcoal,
                         'plate_number' => $i,
@@ -358,11 +393,82 @@ class Campy_biosolids extends CI_Controller
                     $this->Campy_biosolids_model->insert_growth_plate($data_plate);
                 }
             }
-    
-            $this->session->set_flashdata('message', 'Update Record Success');
+            
+            // Auto-generate or update HBA results if all growth plates are 0
+            if ($all_plates_zero && count($growth_plate_data) > 0) {
+                // Check if HBA data already exists for this charcoal result
+                $existing_hba = $this->Campy_biosolids_model->get_hba_by_campy_biosolids($id_campy_biosolids);
+                
+                if (!$existing_hba) {
+                    try {
+                        // Auto-generate new HBA results
+                        $hba_result = $this->autoGenerateHBAResults($id_campy_biosolids, $id_result_charcoal, $date_sample_processed, $time_sample_processed, $growth_plate_data, $dt);
+                        if ($hba_result) {
+                            $this->session->set_flashdata('message', 'Update Record Success - HBA Results auto-generated');
+                        } else {
+                            $this->session->set_flashdata('message', 'Update Record Success - Note: HBA auto-generation failed, please create manually');
+                        }
+                    } catch (Exception $e) {
+                        log_message('error', 'HBA auto-generation failed in edit mode: ' . $e->getMessage());
+                        $this->session->set_flashdata('message', 'Update Record Success - Note: HBA auto-generation failed, please create manually');
+                    }
+                } else {
+                    $this->session->set_flashdata('message', 'Update Record Success');
+                }
+            } else {
+                $this->session->set_flashdata('message', 'Update Record Success');
+            }
         }
     
         redirect(site_url("campy_biosolids/read/" . $id_one_water_sample));
+    }
+
+    /**
+     * Auto-generate HBA results when all growth plates in Charcoal are 0
+     * This improves efficiency by eliminating the need for manual HBA data entry
+     * when the outcome is predictable (all zeros)
+     */
+    private function autoGenerateHBAResults($id_campy_biosolids, $id_result_charcoal, $date_sample_processed, $time_sample_processed, $growth_plate_data, $dt) {
+        try {
+            // Insert HBA result with same basic data as Charcoal (without campy_assay_barcode)
+            $hba_data = array(
+                'id_campy_biosolids' => $id_campy_biosolids,
+                'date_sample_processed' => $date_sample_processed,
+                'time_sample_processed' => $time_sample_processed,
+                'flag' => '0',
+                'lab' => $this->session->userdata('lab'),
+                'uuid' => $this->uuid->v4(),
+                'user_created' => $this->session->userdata('id_users'),
+                'date_created' => $dt->format('Y-m-d H:i:s'),
+            );
+            
+            $hba_assay_id = $this->Campy_biosolids_model->insertResultsHba($hba_data);
+            
+            // Insert HBA growth plates (all will be 0 since Charcoal was all 0)
+            foreach ($growth_plate_data as $plate_number => $plate_value) {
+                $hba_plate_data = array(
+                    'id_result_hba' => $hba_assay_id,
+                    'plate_number' => $plate_number,
+                    'growth_plate' => '0', // Always 0 when auto-generated
+                    'flag' => '0',
+                    'lab' => $this->session->userdata('lab'),
+                    'uuid' => $this->uuid->v4(),
+                    'user_created' => $this->session->userdata('id_users'),
+                    'date_created' => $dt->format('Y-m-d H:i:s'),
+                );
+                $this->Campy_biosolids_model->insert_growth_plate_hba($hba_plate_data);
+            }
+            
+            // Log the auto-generation for audit purposes
+            log_message('info', "Auto-generated HBA results for Campy Biosolids ID: {$id_campy_biosolids}");
+            
+            return $hba_assay_id;
+            
+        } catch (Exception $e) {
+            // Log error but don't break the main process
+            log_message('error', "Failed to auto-generate HBA results: " . $e->getMessage());
+            throw $e; // Re-throw to be caught by calling method
+        }
     }
 
     public function saveResultsHBA() {
@@ -685,19 +791,59 @@ class Campy_biosolids extends CI_Controller
     public function delete_detailCharcoal($id) {
         $row = $this->Campy_biosolids_model->get_by_id_charcoal($id);
         if ($row) {
-            $id_parent = $row->id_result_charcoal; // Retrieve project_id before updating the record
+            $id_campy_biosolids = $row->id_campy_biosolids;
             $data = array(
                 'flag' => 1,
             );
-    
+
+            // Step 1: Get all HBA results related to this campy_biosolids
+            $hba_results = $this->Campy_biosolids_model->get_hba_by_charcoal_id($id_campy_biosolids);
+            $total_biochemical_deleted = 0;
+            $total_hba_deleted = 0;
+
+            // Step 2: For each HBA, delete related biochemical results
+            foreach ($hba_results as $hba) {
+                $biochemical_results = $this->Campy_biosolids_model->get_biochemical_by_hba_id($hba->id_result_hba);
+                $biochemical_count = count($biochemical_results);
+                
+                if ($biochemical_count > 0) {
+                    $this->Campy_biosolids_model->delete_biochemical_by_hba_id($hba->id_result_hba);
+                    $total_biochemical_deleted += $biochemical_count;
+                    
+                    // Log the cascade delete
+                    log_message('info', "Cascade delete: Deleted {$biochemical_count} biochemical results for HBA ID {$hba->id_result_hba}");
+                }
+                
+                $total_hba_deleted++;
+            }
+
+            // Step 3: Delete all HBA results for this campy_biosolids
+            if ($total_hba_deleted > 0) {
+                $this->Campy_biosolids_model->delete_hba_by_campy_biosolids($id_campy_biosolids);
+                log_message('info', "Cascade delete: Deleted {$total_hba_deleted} HBA results for campy_biosolids ID {$id_campy_biosolids}");
+            }
+
+            // Step 4: Delete the charcoal results
             $this->Campy_biosolids_model->updateResultsCharcoal($id, $data);
             $this->Campy_biosolids_model->updateResultsGrowthPlate($id, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
+            
+            // Create detailed success message
+            $message = 'Charcoal result deleted successfully';
+            if ($total_hba_deleted > 0) {
+                $message .= " (Also deleted {$total_hba_deleted} HBA result(s)";
+                if ($total_biochemical_deleted > 0) {
+                    $message .= " and {$total_biochemical_deleted} biochemical result(s)";
+                }
+                $message .= ')';
+            }
+            
+            $this->session->set_flashdata('message', $message);
+            log_message('info', "Cascade delete completed: Charcoal ID {$id} - {$message}");
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
-    
-        redirect(site_url('campy_biosolids/read/'.$id_parent));
+
+        redirect(site_url('campy_biosolids/read/'.$row->id_campy_biosolids));
     }
 
     public function delete_detailHba($id) {
@@ -708,9 +854,31 @@ class Campy_biosolids extends CI_Controller
                 'flag' => 1,
             );
     
+            // First, check if there are any biochemical results related to this HBA
+            $biochemical_results = $this->Campy_biosolids_model->get_biochemical_by_hba_id($id);
+            $biochemical_count = count($biochemical_results);
+            
+            // Delete HBA results (growth plates and main record)
             $this->Campy_biosolids_model->updateResultsHba($id, $data);
             $this->Campy_biosolids_model->updateResultsGrowthPlateHba($id, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
+            
+            // Cascade delete: Delete all related biochemical results
+            if ($biochemical_count > 0) {
+                $biochemical_deleted = $this->Campy_biosolids_model->delete_biochemical_by_hba_id($id);
+                if ($biochemical_deleted) {
+                    $this->session->set_flashdata('message', 
+                        "Delete Record Success - HBA and {$biochemical_count} related Biochemical test(s) deleted to maintain data integrity");
+                } else {
+                    $this->session->set_flashdata('message', 
+                        'HBA deleted successfully, but failed to delete related Biochemical tests. Please check data consistency.');
+                }
+            } else {
+                $this->session->set_flashdata('message', 'Delete Record Success');
+            }
+            
+            // Log the cascade delete for audit purposes
+            log_message('info', "HBA Record deleted (ID: {$id}) with cascade delete of {$biochemical_count} biochemical records");
+            
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }

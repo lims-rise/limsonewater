@@ -698,7 +698,7 @@
 			<div class="modal-content">
 				<div class="modal-header" style="background-color: #f39c12; color: white;">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
-					<h4 class="modal-title">Campy Biosolids | Information</h4>
+					<h4 class="modal-title">Campy Liquids | Information</h4>
 				</div>
                 <div id="confirmation-content">
                     <div class="modal-body">
@@ -1212,6 +1212,22 @@
     .swal2-html-container strong {
         font-weight: 600;
     }
+
+    /* Auto-generated HBA Results Visual Indicator */
+    .auto-generated-hba {
+        background-color: rgba(40, 167, 69, 0.1) !important;
+        border-left: 4px solid #28a745 !important;
+        position: relative;
+    }
+
+    .auto-generated-hba td:first-child {
+        padding-left: 25px !important;
+    }
+
+    .auto-generated-hba:hover {
+        background-color: rgba(40, 167, 69, 0.2) !important;
+        cursor: help;
+    }
 </style>
 <style>
 	#textInform2 .alert {
@@ -1229,7 +1245,7 @@
 <script>
     document.getElementById('exportBtn').addEventListener('click', function() {
         let id_campy_liquids = document.getElementById('id_campy_liquids').value;
-        window.location.href = '<?php echo site_url('Campy_liquids/excel') ?>/' + id_campy_liquids;
+        window.location.href = '<?php echo site_url("Campy_liquids/excel") ?>/' + id_campy_liquids;
     });
 </script>
 <script>
@@ -1267,7 +1283,7 @@
 
         // Check if MPN calculation already exists
         $.ajax({
-            url: '<?php echo site_url('Campy_liquids/getCalculateMPN'); ?>',
+            url: '<?php echo site_url("Campy_liquids/getCalculateMPN"); ?>',
             type: 'GET',
             data: { id_campy_liquids: id_campy_liquids },
             dataType: 'json',
@@ -1336,6 +1352,45 @@
     let idx_one_water_sample = $('#id_one_water_sample').val();
 
     $(document).ready(function() {
+
+        // Check for flash messages from controller
+        <?php if ($this->session->flashdata('message')): ?>
+            let flashMessage = '<?php echo $this->session->flashdata('message'); ?>';
+            
+            if (flashMessage.includes('HBA Results auto-generated')) {
+                // Show special notification for auto-generated HBA
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    // html: `
+                    //     <div style="text-align: left; margin: 15px 0;">
+                    //         <p><i class="fa fa-magic" style="color: #28a745; margin-right: 8px;"></i><strong>All growth plates in Results Charcoal were 0</strong></p>
+                    //         <p style="margin-top: 10px;">✅ <strong>Results HBA has been automatically generated</strong> with all plates = 0</p>
+                    //         <p style="margin-top: 10px;">🚀 This saves you time by eliminating manual HBA data entry when the outcome is predictable.</p>
+                    //         <hr style="margin: 15px 0;">
+                    //         <p style="font-size: 13px; color: #666;"><i class="fa fa-info-circle" style="color: #3498db; margin-right: 5px;"></i>You can now proceed directly to Results Biochemical if needed.</p>
+                    //     </div>
+                    // `,
+                    confirmButtonText: '<i class="fa fa-check"></i> Got it!',
+                    confirmButtonColor: '#28a745',
+                    timer: 1500,
+                    timerProgressBar: true,
+                    customClass: {
+                        popup: 'swal-wide'
+                    }
+                });
+            } else {
+                // Show regular success message
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: flashMessage,
+                    timer: 3000,
+                    showConfirmButton: false
+                });
+            }
+        <?php endif; ?>
+
     	let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
 		let userCreated = $('#user_created').val();
 		let userReview = $('#user_review').val();
@@ -1351,9 +1406,9 @@
         //     // If sample_dryweight has changed and MPN calculation exists
         //     if (currentSampleDryweight !== initialSampleDryweight && currentSampleDryweight > 0) {
         //         $.ajax({
-        //             url: '<?php echo site_url('Campy_biosolids/getCalculateMPN'); ?>',
+        //             url: '<?php echo site_url('Campy_liquids/getCalculateMPN'); ?>',
         //             type: 'GET',
-        //             data: { id_campy_biosolids: id_campy_biosolids },
+        //             data: { id_campy_liquids: id_campy_liquids },
         //             dataType: 'json',
         //             success: function(response) {
         //                 if (response.status === 'success') {
@@ -1460,7 +1515,7 @@
             e.preventDefault();
             
             // Always use the same URL since we handle mode validation in the controller
-            let url = '<?php echo site_url('Campy_liquids/saveCalculateMPN'); ?>';
+            let url = '<?php echo site_url("Campy_liquids/saveCalculateMPN"); ?>';
             let formData = $(this).serialize();
 
             $.ajax({
@@ -1570,7 +1625,7 @@
 							.addClass('form-check-label ' + states[currentState].class);
 
 						$.ajax({
-							url: '<?php echo site_url('Campy_liquids/saveReview'); ?>',
+							url: '<?php echo site_url("Campy_liquids/saveReview"); ?>',
 							method: 'POST',
 							data: $('#formSampleReview').serialize(),
 							dataType: 'json',
@@ -1695,7 +1750,7 @@
                 console.log('Form data to be sent: ', formData); // Debugging log
 
                 $.ajax({
-                    url: '<?php echo site_url('Campy_liquids/cancelReview'); ?>',
+                    url: '<?php echo site_url("Campy_liquids/cancelReview"); ?>',
                     method: 'POST',
                     data: formData,
                     dataType: 'json',
@@ -1901,17 +1956,39 @@
             let id = $(this).data('id');
             let url;
             if ($(this).hasClass('btn_deleteCharcoal')) {
-                url = '<?php echo site_url('Campy_liquids/delete_detailCharcoal'); ?>/' + id;
+                url = '<?php echo site_url("Campy_liquids/delete_detailCharcoal"); ?>/' + id;
                 $('.modal-title').html('<i class="fa fa-trash"></i> Result Charcoal | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
+
+                // Add warning about cascade delete for Charcoal
+                $('#confirm-modal-delete .modal-body').html(
+                    '<p><strong>⚠️ Critical Warning:</strong> Deleting this Charcoal result will also delete ALL related data including:</p>' +
+                    '<ul style="margin: 10px 0; padding-left: 20px;">' +
+                    '<li><strong>All HBA results</strong> associated with this sample</li>' +
+                    '<li><strong>All Biochemical test results</strong> related to those HBA results</li>' +
+                    '</ul>' +
+                    '<p style="color: #dc3545;"><strong>This action cannot be undone and will remove the entire data chain!</strong></p>' +
+                    '<p>Are you sure you want to delete Result Charcoal <strong>' + id + '</strong> and all its related data?</p>'
+                );
             } else if ($(this).hasClass('btn_deleteHba')) {
-                url = '<?php echo site_url('Campy_liquids/delete_detailHba'); ?>/' + id;
+                url = '<?php echo site_url("Campy_liquids/delete_detailHba"); ?>/' + id;
                 $('.modal-title').html('<i class="fa fa-trash"></i> Result HBA | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
+
+                // Add warning about cascade delete
+                $('#confirm-modal-delete .modal-body').html(
+                    '<p><strong>⚠️ Warning:</strong> Deleting this HBA result will also delete all related Biochemical test results to maintain data integrity.</p>' +
+                    '<p>This action cannot be undone. Are you sure you want to delete Result HBA <strong>' + id + '</strong> and all its related data?</p>'
+                );
             } else if ($(this).hasClass('btn_deleteBiochemical')) {
-                url = '<?php echo site_url('Campy_liquids/delete_detailBiochemical'); ?>/' + id;
+                url = '<?php echo site_url("Campy_liquids/delete_detailBiochemical"); ?>/' + id;
                 $('.modal-title').html('<i class="fa fa-trash"></i> Result Biochemical | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
+
+                // Reset modal body to default
+                $('#confirm-modal-delete .modal-body').html(
+                    '<p>Are you sure you want to delete Result Biochemical <strong>' + id + '</strong>?</p>'
+                );
             }
 
             showConfirmationDelete(url);
@@ -2147,6 +2224,17 @@
                     $('#addtombol_detResultsHBA').prop("disabled", true);
                 } else {
                     $('#addtombol_detResultsHBA').show();
+                }
+
+                // Add visual indicator for auto-generated HBA
+                if (data.growth_plate) {
+                    const growthPlates = data.growth_plate.split(', ');
+                    const allZero = growthPlates.every(plate => plate.trim() === '0');
+                    
+                    if (allZero) {
+                        $(row).addClass('auto-generated-hba');
+                        $(row).attr('title', 'Auto-generated from Results Charcoal');
+                    }
                 }
             }
         });
