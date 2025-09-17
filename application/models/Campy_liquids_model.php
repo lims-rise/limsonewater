@@ -180,6 +180,7 @@ class Campy_liquids_model extends CI_Model
         $this->db->join('ref_person AS rp', 'cl.id_person = rp.id_person', 'left');
     
         // Conditions - Use same condition as get_export
+        $this->db->where('rhl.flag', '0');
         $this->db->where('rhl.id_campy_liquids', $id);
         $this->db->group_by('rhl.id_result_hba_liquids');
     
@@ -516,14 +517,14 @@ class Campy_liquids_model extends CI_Model
 
     function get_by_id_charcoal($id)
     {
-        $this->db->where('id_result_charcoal', $id);
+        $this->db->where('id_result_charcoal_liquids', $id);
         $this->db->where('flag', '0');
-        return $this->db->get('result_charcoal')->row();
+        return $this->db->get('campy_result_charcoal_liquids')->row();
     }
 
     function updateResultsGrowthPlate($id, $data) {
-        $this->db->where('id_result_charcoal', $id);
-        $this->db->update('sample_growth_plate', $data);
+        $this->db->where('id_result_charcoal_liquids', $id);
+        $this->db->update('campy_sample_growth_plate_liquids', $data);
     }
 
     function get_by_id_campyliquids($id)
@@ -559,14 +560,14 @@ class Campy_liquids_model extends CI_Model
 
     function get_by_id_hba($id)
     {
-        $this->db->where('id_result_hba', $id);
+        $this->db->where('id_result_hba_liquids', $id);
         $this->db->where('flag', '0');
-        return $this->db->get('result_hba')->row();
+        return $this->db->get('campy_result_hba_liquids')->row();
     }
 
     function updateResultsGrowthPlateHba($id, $data) {
-        $this->db->where('id_result_hba', $id);
-        $this->db->update('sample_growth_plate_hba', $data);
+        $this->db->where('id_result_hba_liquids', $id);
+        $this->db->update('campy_sample_growth_plate_hba_liquids', $data);
     }
 
     function insertResultsBiochemical($data) {
@@ -649,6 +650,68 @@ class Campy_liquids_model extends CI_Model
         }
     }
 
+
+    /**
+     * Get HBA results by campy_liquids ID
+     * Used to check if HBA data already exists before auto-generation
+     */
+    function get_hba_by_campy_liquids($id_campy_liquids) {
+        $this->db->where('id_campy_liquids', $id_campy_liquids);
+        $this->db->where('flag', '0');
+        return $this->db->get('campy_result_hba_liquids')->row();
+    }
+
+    /**
+     * Get biochemical results by HBA ID
+     * Used for cascade delete when HBA is deleted
+     */
+    function get_biochemical_by_hba_id($id_result_hba_liquids) {
+        $this->db->where('id_result_hba_liquids', $id_result_hba_liquids);
+        $this->db->where('flag', '0');
+        return $this->db->get('campy_result_biochemical_liquids')->result();
+    }
+
+    /**
+     * Delete biochemical results by HBA ID (cascade delete)
+     * Sets flag = 1 for all biochemical results related to specific HBA
+     */
+    function delete_biochemical_by_hba_id($id_result_hba_liquids) {
+        $data = array('flag' => 1);
+        $this->db->where('id_result_hba_liquids', $id_result_hba_liquids);
+        $this->db->update('campy_result_biochemical_liquids', $data);
+
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Get HBA results by Charcoal ID
+     * Used for cascade delete when Charcoal is deleted
+     */
+    function get_hba_by_charcoal_id($id_campy_liquids) {
+        $this->db->where('id_campy_liquids', $id_campy_liquids);
+        $this->db->where('flag', '0');
+        return $this->db->get('campy_result_hba_liquids')->result();
+    }
+
+    /**
+     * Delete HBA results by campy_liquids ID (cascade delete)
+     * Sets flag = 1 for all HBA results related to specific campy_liquids
+     */
+    function delete_hba_by_campy_liquids($id_campy_liquids) {
+        $data = array('flag' => 1);
+        $this->db->where('id_campy_liquids', $id_campy_liquids);
+        $this->db->update('campy_result_hba_liquids', $data);
+
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
       
 }
 

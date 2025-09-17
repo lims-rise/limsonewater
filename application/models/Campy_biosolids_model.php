@@ -185,6 +185,7 @@ class Campy_biosolids_model extends CI_Model
         $this->db->join('ref_person AS rp',  'cb.id_person = rp.id_person', 'left');
     
         // Conditions
+        $this->db->where('rh.flag', '0');
         $this->db->where('rh.id_campy_biosolids', $id);
         $this->db->group_by('rh.id_result_hba');
     
@@ -689,9 +690,68 @@ class Campy_biosolids_model extends CI_Model
             return null; // Return null if no data found
         }
     }
-    
 
-      
+    /**
+     * Get HBA results by campy_biosolids ID
+     * Used to check if HBA data already exists before auto-generation
+     */
+    function get_hba_by_campy_biosolids($id_campy_biosolids) {
+        $this->db->where('id_campy_biosolids', $id_campy_biosolids);
+        $this->db->where('flag', '0');
+        return $this->db->get('campy_result_hba')->row();
+    }
+
+    /**
+     * Get biochemical results by HBA ID
+     * Used for cascade delete when HBA is deleted
+     */
+    function get_biochemical_by_hba_id($id_result_hba) {
+        $this->db->where('id_result_hba', $id_result_hba);
+        $this->db->where('flag', '0');
+        return $this->db->get('campy_result_biochemical')->result();
+    }
+
+    /**
+     * Delete biochemical results by HBA ID (cascade delete)
+     * Sets flag = 1 for all biochemical results related to specific HBA
+     */
+    function delete_biochemical_by_hba_id($id_result_hba) {
+        $data = array('flag' => 1);
+        $this->db->where('id_result_hba', $id_result_hba);
+        $this->db->update('campy_result_biochemical', $data);
+        
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Get HBA results by Charcoal ID
+     * Used for cascade delete when Charcoal is deleted
+     */
+    function get_hba_by_charcoal_id($id_campy_biosolids) {
+        $this->db->where('id_campy_biosolids', $id_campy_biosolids);
+        $this->db->where('flag', '0');
+        return $this->db->get('campy_result_hba')->result();
+    }
+
+    /**
+     * Delete HBA results by campy_biosolids ID (cascade delete)
+     * Sets flag = 1 for all HBA results related to specific campy_biosolids
+     */
+    function delete_hba_by_campy_biosolids($id_campy_biosolids) {
+        $data = array('flag' => 1);
+        $this->db->where('id_campy_biosolids', $id_campy_biosolids);
+        $this->db->update('campy_result_hba', $data);
+        
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 /* End of file Tbl_delivery_model.php */
