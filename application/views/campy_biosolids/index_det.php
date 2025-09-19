@@ -1756,17 +1756,27 @@
 
         // Function to calculate MPN per gram dry weight values
         function calculateMpnDryWeight() {
-            // Use custom parser for mpn_concentration to handle values with symbols
-            let mpnConcentration = parseNumericValue($('#mpn_concentration').val());
+            // Get original mpn_concentration value with potential symbols
+            let mpnConcentrationOriginal = $('#mpn_concentration').val().trim();
             let upperCi = parseFloat($('#upper_ci').val()) || 0;
             let lowerCi = parseFloat($('#lower_ci').val()) || 0;
             let sampleDryweight = parseFloat($('#sample_dryweight').val()) || 0;
 
+            // Extract symbol from mpn_concentration (if any)
+            let symbolMatch = mpnConcentrationOriginal.match(/^([<>≤≥≦≧⩽⩾]*)/);
+            let symbol = symbolMatch ? symbolMatch[1] : '';
+            
+            // Use custom parser for mpn_concentration to handle values with symbols
+            let mpnConcentration = parseNumericValue(mpnConcentrationOriginal);
+
             if (sampleDryweight > 0) {
                 // Calculate Concentration MPN/g dry weight = mpn_concentration / sample_dryweight
                 let mpnConcentrationDw = (mpnConcentration / sampleDryweight).toFixed(4);
-                $('#mpn_concentration_dw').val(mpnConcentrationDw);
-                $('#display_mpn_concentration_dw').text(mpnConcentrationDw);
+                
+                // Display with symbol if original value had symbol
+                let displayValue = symbol + mpnConcentrationDw;
+                $('#mpn_concentration_dw').val(displayValue);
+                $('#display_mpn_concentration_dw').text(displayValue);
 
                 // Calculate Upper CI MPN/g dw = upper_ci / sample_dryweight
                 let upperCiDw = (upperCi / sampleDryweight).toFixed(4);

@@ -18,8 +18,8 @@ class Protozoa_model extends CI_Model
     // datatables
     function json() {
         // Simplified query for debugging
-        $this->datatables->select('a.id_one_water_sample, a.id_person, a.target, a.id_sampletype, b.initial, c.sampletype, a.date_processed, a.time_processed, a.volume_analysed, a.weight, a.dry_weight_persen, a.mass_analysed,
-        a.concentration_copies_l, a.concentration_copies_g_dw, a.comments, a.review, a.user_review, a.user_created, a.protozoa_barcode');
+        $this->datatables->select('a.id_one_water_sample, a.id_person, a.id_protozoa, a.target, a.id_sampletype, b.initial, c.sampletype, a.date_processed, a.time_processed, a.volume_analysed, a.weight, a.dry_weight_persen, a.mass_analysed,
+        a.conc_copies_per_L_giardia, a.conc_copies_per_L_crypto, a.conc_copies_per_g_dw_giardia, a.conc_copies_per_g_dw_crypto, a.comments, a.review, a.user_review, a.user_created, a.protozoa_barcode');
         $this->datatables->from('protozoa a');
         $this->datatables->join('ref_person b', 'a.id_person = b.id_person', 'left');
         $this->datatables->join('ref_sampletype c', 'a.id_sampletype = c.id_sampletype', 'left');
@@ -67,6 +67,11 @@ class Protozoa_model extends CI_Model
     // Function update data
     function updateProtozoa($id_one_water_sample, $data) {
         $this->db->where('id_one_water_sample', $id_one_water_sample);
+        $this->db->update('protozoa', $data);
+    }
+
+    function updateProtozoaData($id_protozoa, $data) {
+        $this->db->where('id_protozoa', $id_protozoa);
         $this->db->update('protozoa', $data);
     }
 
