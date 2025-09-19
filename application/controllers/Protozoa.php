@@ -78,7 +78,7 @@ class Protozoa extends CI_Controller
     public function save() {
         $mode = $this->input->post('mode', TRUE);
         $dt = new DateTime();
-
+        $id_protozoa = $this->input->post('id_protozoa', TRUE);
         $id_one_water_sample = $this->input->post('id_one_water_sample', TRUE);
         $idx_one_water_sample = $this->input->post('idx_one_water_sample', TRUE);
         $id_person = $this->input->post('id_person', TRUE);
@@ -94,8 +94,10 @@ class Protozoa extends CI_Controller
         $weight = $this->input->post('weight', TRUE);
         $dry_weight_persen = $this->input->post('dry_weight_persen', TRUE);
         $mass_analysed = $this->input->post('mass_analysed', TRUE);
-        $concentration_copies_l = $this->input->post('concentration_copies_l', TRUE);
-        $concentration_copies_g_dw = $this->input->post('concentration_copies_g_dw', TRUE);
+        $conc_copies_per_L_giardia = $this->input->post('conc_copies_per_L_giardia', FALSE);
+        $conc_copies_per_L_crypto = $this->input->post('conc_copies_per_L_crypto', FALSE);
+        $conc_copies_per_g_dw_giardia = $this->input->post('conc_copies_per_g_dw_giardia', FALSE);
+        $conc_copies_per_g_dw_crypto = $this->input->post('conc_copies_per_g_dw_crypto', FALSE);
         $comments = $this->input->post('comments', TRUE);
         $protozoa_barcode = $this->input->post('protozoa_barcode', TRUE);
 
@@ -112,8 +114,10 @@ class Protozoa extends CI_Controller
                 'weight' => $weight,
                 'dry_weight_persen' => $dry_weight_persen,
                 'mass_analysed' => $mass_analysed,
-                'concentration_copies_l' => $concentration_copies_l,
-                'concentration_copies_g_dw' => $concentration_copies_g_dw,
+                'conc_copies_per_L_giardia' => $conc_copies_per_L_giardia,
+                'conc_copies_per_L_crypto' => $conc_copies_per_L_crypto,
+                'conc_copies_per_g_dw_giardia' => $conc_copies_per_g_dw_giardia,
+                'conc_copies_per_g_dw_crypto' => $conc_copies_per_g_dw_crypto,
                 'comments' => $comments,
                 'uuid' => $this->uuid->v4(),
                 'user_created' => $this->session->userdata('id_users'),
@@ -141,8 +145,10 @@ class Protozoa extends CI_Controller
                 'weight' => $weight,
                 'dry_weight_persen' => $dry_weight_persen,
                 'mass_analysed' => $mass_analysed,
-                'concentration_copies_l' => $concentration_copies_l,
-                'concentration_copies_g_dw' => $concentration_copies_g_dw,
+                'conc_copies_per_L_giardia' => $conc_copies_per_L_giardia,
+                'conc_copies_per_L_crypto' => $conc_copies_per_L_crypto,
+                'conc_copies_per_g_dw_giardia' => $conc_copies_per_g_dw_giardia,
+                'conc_copies_per_g_dw_crypto' => $conc_copies_per_g_dw_crypto,
                 'comments' => $comments,
                 'uuid' => $this->uuid->v4(),
                 'user_created' => $this->session->userdata('id_users'),
@@ -153,7 +159,7 @@ class Protozoa extends CI_Controller
 
             // var_dump($data);
             // die();
-            $this->Protozoa_model->updateProtozoa($idx_one_water_sample, $data);
+            $this->Protozoa_model->updateProtozoaData($id_protozoa, $data);
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     

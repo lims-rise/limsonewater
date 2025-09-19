@@ -28,8 +28,10 @@
                                         <th>Time Processed</th>
                                         <th>Volume Analyzed</th>
                                         <th>Mass Analyzed</th>
-                                        <th>Concentration Copies L</th>
-                                        <th>Concentration Copies G/DW</th>
+                                        <th>Conc Copies/L Giard</th>
+                                        <th>Conc Copies/L Crypto</th>
+                                        <th>Conc Copies/G DW Giard</th>
+                                        <th>Conc Copies/G DW Crypto</th>
                                         <th>Comment</th>
                                         <th width="120px">Action</th>
                                     </tr>
@@ -59,7 +61,7 @@
                 <form id="formSample"  action= <?php echo site_url('Protozoa/save') ?> method="post" class="form-horizontal">
                     <div class="modal-body">
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
-                        <!-- <input id="id_req" name="id_req" type="hidden" class="form-control input-sm"> -->
+                        <input id="id_protozoa" name="id_protozoa" type="hidden" class="form-control input-sm">
 
                         <div class="form-group">
                             <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
@@ -173,16 +175,30 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="concentration_copies_l" class="col-sm-4 control-label">Concentration (copies/L)</label>
+                            <label for="conc_copies_per_L_giardia" class="col-sm-4 control-label">Concentration (copies/L) (Giardia)</label>
                             <div class="col-sm-8">
-                                <input id="concentration_copies_l" name="concentration_copies_l" type="number" step="any" class="form-control" placeholder="Concentration (copies/L)">
+                                <input id="conc_copies_per_L_giardia" name="conc_copies_per_L_giardia" type="text" step="any" class="form-control" placeholder="Concentration (copies/L) (Giardia)">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="concentration_copies_g_dw" class="col-sm-4 control-label">Concentration (copies/g DW)</label>
+                            <label for="conc_copies_per_L_crypto" class="col-sm-4 control-label">Concentration (copies/L) (Crypto)</label>
                             <div class="col-sm-8">
-                                <input id="concentration_copies_g_dw" name="concentration_copies_g_dw" type="number" step="any" class="form-control" placeholder="Concentration (copies/g DW)">
+                                <input id="conc_copies_per_L_crypto" name="conc_copies_per_L_crypto" type="text" step="any" class="form-control" placeholder="Concentration (copies/L) (Crypto)">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="conc_copies_per_g_dw_giardia" class="col-sm-4 control-label">Concentration (copies/g DW) (Giardia)</label>
+                            <div class="col-sm-8">
+                                <input id="conc_copies_per_g_dw_giardia" name="conc_copies_per_g_dw_giardia" type="text" step="any" class="form-control" placeholder="Concentration (copies/g DW) (Giardia)">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="conc_copies_per_g_dw_crypto" class="col-sm-4 control-label">Concentration (copies/g DW) (Crypto)</label>
+                            <div class="col-sm-8">
+                                <input id="conc_copies_per_g_dw_crypto" name="conc_copies_per_g_dw_crypto" type="text" step="any" class="form-control" placeholder="Concentration (copies/g DW) (Crypto)">
                             </div>
                         </div>
 
@@ -523,6 +539,23 @@
         padding-bottom: 8px;
         margin-bottom: 15px;
     }
+
+    /* Target checkbox disabled styling */
+    input[name="target[]"]:disabled + label {
+        color: #6c757d !important;
+        cursor: not-allowed;
+    }
+    
+    input[name="target[]"]:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+    
+    .target-edit-info {
+        font-style: italic;
+        color: #6c757d;
+        font-size: 11px;
+    }
 </style>
 <!-- SweetAlert2 CSS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -565,6 +598,12 @@
             $('#sampletype').val('');
             $('input[name="target[]"]').prop('checked', false);
             $('#target_combined').val('');
+            
+            // Enable target checkboxes for add mode (URL-based modal)
+            $('input[name="target[]"]').prop('disabled', false);
+            $('input[name="target[]"]').closest('.checkbox').removeClass('text-muted');
+            $('.target-edit-info').remove();
+            
             // $('#date_processed').val('');
             // $('#time_processed').val('');
             $('#volume_analysed').val('');
@@ -574,8 +613,10 @@
             $('#weight').attr('readonly', true);
             $('#dry_weight_persen').attr('readonly', true);
             $('#mass_analysed').attr('readonly', true);
-            $('#concentration_copies_l').val('');
-            $('#concentration_copies_g_dw').val('');
+            $('#conc_copies_per_L_giardia').val('');
+            $('#conc_copies_per_L_crypto').val('');
+            $('#conc_copies_per_g_dw_giardia').val('');
+            $('#conc_copies_per_g_dw_crypto').val('');
             $('#comments').val('');
             $('#compose-modal').modal('show');
             
@@ -695,6 +736,12 @@
         // Handle target checkbox changes
         $('input[name="target[]"]').change(function() {
             updateTargetCombined();
+            
+            // Update concentration fields visibility when target selection changes
+            const currentSampletype = $('#sampletype').val();
+            if (currentSampletype) {
+                handleConcentrationFieldsVisibility(currentSampletype);
+            }
         });
 
         // Function to update combined target value
@@ -713,6 +760,151 @@
         });
 
 
+        // Function to handle concentration fields visibility based on sampletype and target selection
+        function handleConcentrationFieldsVisibility(sampletype, targetSelection = null) {
+            // Get current target selection if not provided
+            if (!targetSelection) {
+                const selectedTargets = [];
+                $('input[name="target[]"]:checked').each(function() {
+                    selectedTargets.push($(this).val());
+                });
+                targetSelection = selectedTargets;
+            }
+            
+            // Ensure targetSelection is an array
+            if (typeof targetSelection === 'string') {
+                targetSelection = targetSelection.split(',').map(t => t.trim());
+            }
+            
+            if (!sampletype) {
+                // If no sampletype, show all concentration fields by default
+                $('#conc_copies_per_L_giardia').closest('.form-group').show();
+                $('#conc_copies_per_L_crypto').closest('.form-group').show();
+                $('#conc_copies_per_g_dw_giardia').closest('.form-group').show();
+                $('#conc_copies_per_g_dw_crypto').closest('.form-group').show();
+                return;
+            }
+
+            // Convert to lowercase for case-insensitive comparison
+            const sampletypeLower = sampletype.toLowerCase();
+            const hasGiardia = targetSelection.includes('Giardia') || targetSelection.includes('giardia');
+            const hasCrypto = targetSelection.includes('Cryptosporidium') || targetSelection.includes('cryptosporidium');
+
+            // Hide all fields first
+            $('#conc_copies_per_L_giardia').closest('.form-group').hide();
+            $('#conc_copies_per_L_giardia').val('');
+            $('#conc_copies_per_L_crypto').closest('.form-group').hide();
+            $('#conc_copies_per_L_crypto').val('');
+            $('#conc_copies_per_g_dw_giardia').closest('.form-group').hide();
+            $('#conc_copies_per_g_dw_giardia').val('');
+            $('#conc_copies_per_g_dw_crypto').closest('.form-group').hide();
+            $('#conc_copies_per_g_dw_crypto').val('');
+
+            if (sampletypeLower === 'biosolids' || sampletypeLower === 'biosolid') {
+                // For biosolids: show conc_copies_per_g_dw fields based on target selection
+                if (hasGiardia && hasCrypto) {
+                    // Both targets selected: show both g/dw fields
+                    $('#conc_copies_per_g_dw_giardia').closest('.form-group').show();
+                    $('#conc_copies_per_g_dw_crypto').closest('.form-group').show();
+                } else if (hasGiardia) {
+                    // Only giardia selected: show only giardia g/dw field
+                    $('#conc_copies_per_g_dw_giardia').closest('.form-group').show();
+                } else if (hasCrypto) {
+                    // Only crypto selected: show only crypto g/dw field
+                    $('#conc_copies_per_g_dw_crypto').closest('.form-group').show();
+                } else {
+                    // No target selected: show both g/dw fields by default
+                    $('#conc_copies_per_L_giardia').closest('.form-group').show();
+                    $('#conc_copies_per_L_crypto').closest('.form-group').show();
+                    $('#conc_copies_per_g_dw_giardia').closest('.form-group').show();
+                    $('#conc_copies_per_g_dw_crypto').closest('.form-group').show();
+                }
+            } else if (sampletypeLower === 'liquids' || sampletypeLower === 'liquid') {
+                // For liquids: show conc_copies_per_L fields based on target selection
+                if (hasGiardia && hasCrypto) {
+                    // Both targets selected: show both L fields
+                    $('#conc_copies_per_L_giardia').closest('.form-group').show();
+                    $('#conc_copies_per_L_crypto').closest('.form-group').show();
+                } else if (hasGiardia) {
+                    // Only giardia selected: show only giardia L field
+                    $('#conc_copies_per_L_giardia').closest('.form-group').show();
+                } else if (hasCrypto) {
+                    // Only crypto selected: show only crypto L field
+                    $('#conc_copies_per_L_crypto').closest('.form-group').show();
+                } else {
+                    // No target selected: show both L fields by default
+                    $('#conc_copies_per_L_giardia').closest('.form-group').show();
+                    $('#conc_copies_per_L_crypto').closest('.form-group').show();
+                    $('#conc_copies_per_g_dw_giardia').closest('.form-group').show();
+                    $('#conc_copies_per_g_dw_crypto').closest('.form-group').show();
+                }
+            } else {
+                // For other sample types: show all fields based on target selection
+                if (hasGiardia && hasCrypto) {
+                    // Both targets selected: show all fields
+                    $('#conc_copies_per_L_giardia').closest('.form-group').show();
+                    $('#conc_copies_per_L_crypto').closest('.form-group').show();
+                    $('#conc_copies_per_g_dw_giardia').closest('.form-group').show();
+                    $('#conc_copies_per_g_dw_crypto').closest('.form-group').show();
+                } else if (hasGiardia) {
+                    // Only giardia selected: show only giardia fields
+                    $('#conc_copies_per_L_giardia').closest('.form-group').show();
+                    $('#conc_copies_per_g_dw_giardia').closest('.form-group').show();
+                } else if (hasCrypto) {
+                    // Only crypto selected: show only crypto fields
+                    $('#conc_copies_per_L_crypto').closest('.form-group').show();
+                    $('#conc_copies_per_g_dw_crypto').closest('.form-group').show();
+                } else {
+                    // No target selected: show all fields by default
+                    $('#conc_copies_per_L_giardia').closest('.form-group').show();
+                    $('#conc_copies_per_L_crypto').closest('.form-group').show();
+                    $('#conc_copies_per_g_dw_giardia').closest('.form-group').show();
+                    $('#conc_copies_per_g_dw_crypto').closest('.form-group').show();
+                }
+            }
+        }
+
+        
+        // Function to handle volume_analysed visibility based on sampletype
+        function handleVolumeAnalysedVisibility(sampletype) {
+            if (!sampletype) {
+                // If no sampletype, show all components by default
+                $('#volume_analysed').closest('.form-group').show();
+                $('#weight').closest('.form-group').show();
+                $('#dry_weight_persen').closest('.form-group').show();
+                $('#mass_analysed').closest('.form-group').show();
+                return;
+            }
+            
+            // Convert to lowercase for case-insensitive comparison
+            const sampletypeLower = sampletype.toLowerCase();
+            
+            if (sampletypeLower === 'biosolids' || sampletypeLower === 'biosolid') {
+                // Hide volume_analysed for biosolids, show weight-related fields
+                $('#volume_analysed').closest('.form-group').hide();
+                $('#volume_analysed').val(''); // Clear the value when hidden
+                $('#weight').closest('.form-group').show();
+                $('#dry_weight_persen').closest('.form-group').show();
+                $('#mass_analysed').closest('.form-group').show();
+            } else if (sampletypeLower === 'liquids' || sampletypeLower === 'liquid'){
+                // Hide weight-related fields for liquids, show volume_analysed
+                $('#volume_analysed').closest('.form-group').show();
+                $('#weight').closest('.form-group').hide();
+                $('#weight').val('');
+                $('#dry_weight_persen').closest('.form-group').hide();
+                $('#dry_weight_persen').val('');
+                $('#mass_analysed').closest('.form-group').hide();
+                $('#mass_analysed').val('');
+            } else {
+                // Show all components for other sample types
+                $('#volume_analysed').closest('.form-group').show();
+                $('#weight').closest('.form-group').show();
+                $('#dry_weight_persen').closest('.form-group').show();
+                $('#mass_analysed').closest('.form-group').show();
+            }
+        }
+
+
         $('.idOneWaterSampleSelect').change(function() {
             let id_one_water_sample = $(this).val(); // Mendapatkan ID produk yang dipilih
             if (id_one_water_sample) {
@@ -728,6 +920,12 @@
 
                         // Trigger input event to handle visibility of tray_weight
                         $('#sampletype').trigger('input');
+                        
+                        // Handle volume_analysed visibility based on sampletype
+                        handleVolumeAnalysedVisibility(response.sampletype);
+                        
+                        // Handle concentration fields visibility based on sampletype
+                        handleConcentrationFieldsVisibility(response.sampletype);
                         
                         // Auto fetch weight and dry weight data
                         autoFetchWeightData('#id_one_water_sample');
@@ -917,8 +1115,10 @@
                 {"data": "time_processed"},
                 {"data": "volume_analysed"},
                 {"data": "mass_analysed"},
-                {"data": "concentration_copies_l"},
-                {"data": "concentration_copies_g_dw"},
+                {"data": "conc_copies_per_L_giardia"},
+                {"data": "conc_copies_per_L_crypto"},
+                {"data": "conc_copies_per_g_dw_giardia"},
+                {"data": "conc_copies_per_g_dw_crypto"},
                 {"data": "comments"},
                 {
                     "data" : "action",
@@ -963,6 +1163,12 @@
             $('#sampletype').val('');
             $('input[name="target[]"]').prop('checked', false);
             $('#target_combined').val('');
+            
+            // Enable target checkboxes in add mode
+            $('input[name="target[]"]').prop('disabled', false);
+            $('input[name="target[]"]').closest('.checkbox').removeClass('text-muted');
+            $('.target-edit-info').remove(); // Remove edit mode info text
+            
             $('#id_person_proc').val('');
             // $('#date_processed').val('');
             $('#volume_filter').val('');
@@ -984,12 +1190,17 @@
             $('#id_one_water_sample').hide();
             $('#idx_one_water_sample').attr('readonly', true);
             $('#idx_one_water_sample').val(data.id_one_water_sample);
+            $('#id_protozoa').val(data.id_protozoa);
             $('#protozoa_barcode').val(data.protozoa_barcode);
             $('#protozoa_barcode').attr('readonly', true);
             $('#id_person').val(data.id_person).trigger('change');
             $('#sampletype').attr('readonly', true);
             $('#id_sampletype').val(data.id_sampletype);
             $('#sampletype').val(data.sampletype);
+            
+            // Handle volume_analysed visibility based on sampletype in edit mode
+            handleVolumeAnalysedVisibility(data.sampletype);
+            
             $('#tartget').val(data.target);
             // Handle target checkboxes
             $('input[name="target[]"]').prop('checked', false);
@@ -1004,6 +1215,31 @@
             } else {
                 $('#target_combined').val('');
             }
+            
+            // Handle concentration fields visibility based on sampletype and target in edit mode
+            handleConcentrationFieldsVisibility(data.sampletype, data.target);
+            
+            // Set concentration values AFTER fields are shown/hidden to prevent data loss
+            $('#conc_copies_per_L_giardia').val(data.conc_copies_per_L_giardia);
+            $('#conc_copies_per_L_crypto').val(data.conc_copies_per_L_crypto);
+            $('#conc_copies_per_g_dw_giardia').val(data.conc_copies_per_g_dw_giardia);
+            $('#conc_copies_per_g_dw_crypto').val(data.conc_copies_per_g_dw_crypto);
+            
+            // Disable target checkboxes in edit mode to prevent data inconsistency
+            $('input[name="target[]"]').prop('disabled', true);
+            
+            // Add visual indication that targets cannot be changed
+            $('input[name="target[]"]').closest('.checkbox').addClass('text-muted');
+            
+            // Add info text if not already exists
+            if (!$('.target-edit-info').length) {
+                $('input[name="target[]"]').closest('.checkbox').last().after(
+                    '<small class="text-muted target-edit-info" style="display: block; margin-top: 5px;">' +
+                    '<i class="fa fa-info-circle"></i> Target selection cannot be changed in edit mode to preserve data integrity' +
+                    '</small>'
+                );
+            }
+            
             $('#date_processed').val(data.date_processed).trigger('change');
             $('#time_processed').val(data.time_processed).trigger('change');
             $('#volume_analysed').val(data.volume_analysed);
@@ -1018,9 +1254,7 @@
             setTimeout(function() {
                 calculateMassAnalysed();
             }, 100);
-            
-            $('#concentration_copies_l').val(data.concentration_copies_l);
-            $('#concentration_copies_g_dw').val(data.concentration_copies_g_dw);
+
             $('#comments').val(data.comments);
 
             // Show review section and populate review data
@@ -1360,6 +1594,11 @@
         $("#compose-modal").on('hide.bs.modal', function(){
             $('#review-section').hide();
             $('#textInformReview').hide();
+            
+            // Reset target checkboxes to enabled state when modal closes
+            $('input[name="target[]"]').prop('disabled', false);
+            $('input[name="target[]"]').closest('.checkbox').removeClass('text-muted');
+            $('.target-edit-info').remove();
         });  
 
         $('#mytable tbody').on('click', 'tr', function () {
@@ -1369,7 +1608,9 @@
                 table.$('tr.active').removeClass('active');
                 $(this).addClass('active');
             }
-        })   
+        });
+
+
                             
     });
 </script>
