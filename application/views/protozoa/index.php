@@ -205,9 +205,9 @@
                         </div>
 
                         <div class="form-group">
-                                <label for="comments" class="col-sm-4 control-label">Comments</label>
+                                <label for="comments" class="col-sm-4 control-label">Comment</label>
                                 <div class="col-sm-8">
-                                    <textarea id="comments" name="comments" class="form-control" placeholder="Comments"> </textarea>
+                                    <textarea id="comments" name="comments" class="form-control" placeholder="Comment"> </textarea>
                                 </div>
                         </div>
 
