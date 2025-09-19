@@ -27,6 +27,8 @@
                                         <th>Date Processed</th>
                                         <th>Time Processed</th>
                                         <th>Volume Analyzed</th>
+                                        <th>Weight</th>
+                                        <th>Dry Weight %</th>
                                         <th>Mass Analyzed</th>
                                         <th>Conc Copies/L Giard</th>
                                         <th>Conc Copies/L Crypto</th>
@@ -1113,12 +1115,54 @@
                 {"data": "target"},
                 {"data": "date_processed"},
                 {"data": "time_processed"},
-                {"data": "volume_analysed"},
-                {"data": "mass_analysed"},
-                {"data": "conc_copies_per_L_giardia"},
-                {"data": "conc_copies_per_L_crypto"},
-                {"data": "conc_copies_per_g_dw_giardia"},
-                {"data": "conc_copies_per_g_dw_crypto"},
+                {
+                    "data": "volume_analysed",
+                    "render": function(data, type, row) {
+                        return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
+                    }
+                },
+                {
+                    "data": "weight",
+                    "render": function(data, type, row) {
+                        return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
+                    }
+                },
+                {
+                    "data": "dry_weight_persen",
+                    "render": function(data, type, row) {
+                        return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
+                    }
+                },
+                {
+                    "data": "mass_analysed",
+                    "render": function(data, type, row) {
+                        return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
+                    }
+                },
+                {
+                    "data": "conc_copies_per_L_giardia",
+                    "render": function(data, type, row) {
+                        return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
+                    }
+                },
+                {
+                    "data": "conc_copies_per_L_crypto",
+                    "render": function(data, type, row) {
+                        return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
+                    }
+                },
+                {
+                    "data": "conc_copies_per_g_dw_giardia",
+                    "render": function(data, type, row) {
+                        return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
+                    }
+                },
+                {
+                    "data": "conc_copies_per_g_dw_crypto",
+                    "render": function(data, type, row) {
+                        return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
+                    }
+                },
                 {"data": "comments"},
                 {
                     "data" : "action",
