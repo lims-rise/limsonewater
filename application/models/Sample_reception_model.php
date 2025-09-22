@@ -1132,8 +1132,8 @@ class Sample_reception_model extends CI_Model
             'extraction_liquid' => 'extraction_liquid',
             'extraction_biosolid' => 'extraction_biosolid',
             'hemoflow' => 'hemoflow',
-            'campy_biosolids_qpcr' => 'campy_biosolids_qpcr',
-            'campy_biosolids_pa' => 'campy_biosolids_pa',
+            'campy_qpcr' => 'campy_pa',
+            'campy_pa' => 'campy_pa',
             'freezer_in' => 'freezer_in',
             'freezer_out' => 'freezer_out',
             'protozoa' => 'protozoa'

@@ -4,17 +4,17 @@
             <div class="col-xs-12">
                 <div class="box box-black box-solid">
                     <div class="box-header">
-                        <h3 class="box-title">Processing | Campy Biosolids PA </h3>
+                        <h3 class="box-title">Processing | Campy PA </h3>
                     </div>
                     <div class="box-body">
                         <div style="padding-bottom: 10px;">
                             <!-- <?php
                                     $lvl = $this->session->userdata('id_user_level');
                                     if ($lvl != 4){
-                                        echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Campy Biosolids PA</button>";
+                                        echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Campy PA</button>";
                                     }
                             ?>         -->
-                            <?php echo anchor(site_url('Campy_biosolids_pa/excel_all'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
+                            <?php echo anchor(site_url('Campy_pa/excel_all'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
                         </div>
                             <div class="table-responsive">
                                 <table class="table ho table-bordered table-striped tbody" id="mytable" style="width:100%">
@@ -68,12 +68,12 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
                     <h4 class="modal-title" id="modal-title">Moisture Content | New</h4>
                 </div>
-                <form id="formSample" action="<?php echo site_url('Campy_biosolids_pa/save') ?>" method="post" class="form-horizontal">
+                <form id="formSample" action="<?php echo site_url('Campy_pa/save') ?>" method="post" class="form-horizontal">
                     <div class="modal-body">
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
-                        <input id="id_campy_biosolids_pa" name="id_campy_biosolids_pa" type="hidden" class="form-control input-sm">
+                        <input id="id_campy_pa" name="id_campy_pa" type="hidden" class="form-control input-sm">
                         
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
                             <div class="col-sm-8">
                                 <input id="idx_one_water_sample" name="idx_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control">
@@ -89,6 +89,15 @@
                                             }
                                     ?>
                                 </select>
+                            </div>
+                        </div> -->
+
+                        <div class="form-group">
+                            <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
+                            <div class="col-sm-8">
+                                <input id="id_one_water_sample" name="id_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control idOneWaterSampleSelect">
+                                <input id="idx_one_water_sample" name="idx_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control">
+                                <div class="val2tip" style="height: 1px; margin-top: 5px;"></div>
                             </div>
                         </div>
 
@@ -187,10 +196,16 @@
                             </div>
                         </div>
 
-                        <div class="form-group" id="sampleTubeContainer">
+                        <!-- <div class="form-group" id="sampleTubeContainer">
                             <label class="col-sm-4 control-label">Volume of The Sample(uL)</label>
                             <div class="col-sm-8" id="sampleVolumeInputs">
                                 <input id="vol_sampletube1" name="vol_sampletube1" type="number" step="0.01" class="form-control" placeholder="Volume of The Sample(uL) Tube1" required>
+                            </div>
+                        </div> -->
+                        <div class="form-group" id="sampleTubeContainer">
+                            <label class="col-sm-4 control-label">Volume of The Sample(uL)</label>
+                            <div class="col-sm-8" id="sampleVolumeInputs">
+                                <input id="vol_sampletube1" name="vol_sampletube1" type="number" step="any" class="form-control" placeholder="Volume of The Sample(uL) Tube1" required>
                             </div>
                         </div>
 
@@ -249,7 +264,8 @@
     }
 
 </style>
-
+<!-- SweetAlert2 CSS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
@@ -257,6 +273,7 @@
 
     let table;
     let deleteUrl; // Variable to hold the delete URL
+    let id_one_water_sample = $('#id_one_water_sample').val();
 
     function getQueryParam(param) {
         const urlParams = new URLSearchParams(window.location.search);
@@ -267,12 +284,17 @@
     $(document).ready(function() {
         const params = new URLSearchParams(window.location.search);
         const barcodeFromUrl = params.get('barcode');
+        const idOneWaterSampleFromUrl = params.get('idOneWaterSample');
+        const idTestingTypeFromUrl = params.get('idTestingType');
 
-        if (barcodeFromUrl) {
+        if (barcodeFromUrl && idOneWaterSampleFromUrl) {
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> Campy Biosolids PA | New<span id="my-another-cool-loader"></span>');
-            $('#id_one_water_sample').val('');
-            $('#id_one_water_sample').show();
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Campy PA | New<span id="my-another-cool-loader"></span>');
+            // $('#id_one_water_sample').val('');
+            // $('#id_one_water_sample').show();
+            // $('#idx_one_water_sample').hide();
+            $('#id_one_water_sample').attr('readonly', true);
+            $('#id_one_water_sample').val(idOneWaterSampleFromUrl || '');  // Set ID jika ada);
             $('#idx_one_water_sample').hide();
             $('#id_person').val('');
             $('#number_of_tubes').val('');
@@ -291,6 +313,29 @@
                 sampleVolumeInputs.append('<input id="vol_sampletube1" name="vol_sampletube1" type="number" step="0.01" class="form-control sample-input" placeholder="Volume of The Sample(uL) Tube1" disabled required>');
             }
             $('#barcode_moisture_content').val('');
+            
+            // MANUAL AJAX CALL untuk mengisi sampletype karena input readonly tidak trigger change event
+            if (idOneWaterSampleFromUrl) {
+                $.ajax({
+                    url: '<?php echo site_url('Campy_pa/getIdOneWaterDetails'); ?>',
+                    type: 'POST',
+                    data: { id_one_water_sample: idOneWaterSampleFromUrl },
+                    dataType: 'json',
+                    success: function(response) {
+                        console.log('Auto-fill sampletype from URL:', response);
+                        $('#sampletype').val(response.sampletype || '');
+                        $('#id_sampletype').val(response.id_sampletype || '');
+                        $('#sampletype').trigger('input');
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('Auto-fill AJAX error:', textStatus, errorThrown);
+                    }
+                });
+            }
+            
+            // TAMBAHAN: Trigger change event setelah set value untuk memastikan event handler berjalan
+            $('#id_one_water_sample').trigger('change');
+            
             $('#compose-modal').modal('show');
         } else {
             console.log('Barcode tidak ditemukan di URL');
@@ -298,13 +343,24 @@
 
         // Pembatalan dan kembali ke halaman sebelumnya
         $(document).on('click', '#cancelButton', function() {
-            // Ambil URL asal dari document.referrer (halaman yang mengarah ke halaman ini)
-            var previousUrl = document.referrer;
+            // Get URL parameters
+            const params = new URLSearchParams(window.location.search);
+            const barcodeFromUrl = params.get('barcode');
+            const idOneWaterSampleFromUrl = params.get('idOneWaterSample');
+            const idTestingTypeFromUrl = params.get('idTestingType');
             
-            // Jika ada URL asal, arahkan kembali ke sana
-            if (previousUrl) {
-                window.location.href = previousUrl;
-            } 
+            // Check if the necessary query parameters exist
+            if (barcodeFromUrl && idOneWaterSampleFromUrl && idTestingTypeFromUrl) {
+                // If the parameters exist, redirect to the previous page
+                var previousUrl = document.referrer;
+                
+                if (previousUrl) {
+                    window.location.href = previousUrl;  // Redirect to the previous page
+                }
+            } else {
+                // If the parameters are not found, simply close the modal
+                $('#compose-modal').modal('hide');  // Close the modal
+            }
         });
 
         $('#compose-modal').on('hide.bs.modal', function () {
@@ -312,6 +368,21 @@
         });
 
 
+        // $('#number_of_tubes').change(function() {
+        //     let numberOfTubes = parseInt($(this).val()); // Get the selected value as an integer
+        //     let sampleVolumeInputs = $('#sampleVolumeInputs');
+        //     sampleVolumeInputs.empty(); // Clear existing inputs
+
+        //     // Create the required number of inputs and labels
+        //     for (let i = 1; i <= numberOfTubes; i++) {
+        //         sampleVolumeInputs.append(
+        //             `<div class="form-group">
+        //                 <label for="vol_sampletube${i}" class="control-label">Volume of The Sample(uL) Tube ${i}</label>
+        //                 <input id="vol_sampletube${i}" name="vol_sampletube${i}" type="number" step="0.01" class="form-control sample-input" placeholder="Volume of The Sample(uL) Tube ${i}" required>
+        //             </div>`
+        //         );
+        //     }
+        // }).trigger('change');
         $('#number_of_tubes').change(function() {
             let numberOfTubes = parseInt($(this).val()); // Get the selected value as an integer
             let sampleVolumeInputs = $('#sampleVolumeInputs');
@@ -321,13 +392,14 @@
             for (let i = 1; i <= numberOfTubes; i++) {
                 sampleVolumeInputs.append(
                     `<div class="form-group">
-                        <label for="vol_sampletube${i}" class="control-label">Volume of The Sample(uL) Tube ${i}</label>
-                        <input id="vol_sampletube${i}" name="vol_sampletube${i}" type="number" step="0.01" class="form-control sample-input" placeholder="Volume of The Sample(uL) Tube ${i}" required>
+                        <label for="vol_sampletube${i}" class="col-sm control-label">Tube ${i}</label>
+                        <div class="col-sm-8">
+                            <input id="vol_sampletube${i}" name="vol_sampletube${i}" type="number" step="0.01" class="form-control sample-input" placeholder="Volume of The Sample(uL) Tube ${i}" required>
+                        </div>
                     </div>`
                 );
             }
         }).trigger('change');
-
 
 
         function showConfirmation(url) {
@@ -338,7 +410,7 @@
         // Handle the delete button click
         $(document).on('click', '.btn_deleteCampyBiosolids', function() {
             let id = $(this).data('id');
-            let url = '<?php echo site_url('Campy_biosolids_pa/delete_campyBiosolids'); ?>/' + id;
+            let url = '<?php echo site_url('Campy_pa/delete_campyBiosolids'); ?>/' + id;
             $('#confirm-modal #id').text(id);
             console.log(id);
             showConfirmation(url);
@@ -362,35 +434,6 @@
                     location.reload();
                 }
             });
-        });
-
-
-        $('.idOneWaterSampleSelect').change(function() {
-            let id_one_water_sample = $(this).val(); // Mendapatkan ID produk yang dipilih
-            if (id_one_water_sample) {
-                $.ajax({
-                    url: '<?php echo site_url('Moisture_content/getIdOneWaterDetails'); ?>', // URL untuk request AJAX
-                    type: 'POST',
-                    data: { id_one_water_sample: id_one_water_sample }, // Data yang dikirim ke server
-                    dataType: 'json', // Format data yang diharapkan dari server
-                    success: function(response) {
-                        // Mengisi field 'unit_of_measure' dengan nilai yang diterima dari server
-                        $('#sampletype').val(response.sampletype || '');
-                        $('#id_sampletype').val(response.id_sampletype || '');
-
-                        // Trigger input event to handle visibility of tray_weight
-                        $('#sampletype').trigger('input');
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        // Menangani error jika terjadi kesalahan dalam request
-                        console.error('AJAX error:', textStatus, errorThrown);
-                        $('#sampletype').val('');
-                    }
-                });
-            } else {
-                $('#sampletype').val('');
-                $('#tray_weight_container').hide(); 
-            }
         });
 
         $('.clockpicker').clockpicker({
@@ -441,12 +484,43 @@
             }, 3000);                            
         });
 
+
+        // $('.idOneWaterSampleSelect').change(function() {
+        //     let id_one_water_sample = $(this).val(); // Mendapatkan ID produk yang dipilih
+        //     console.log('test'+ id_one_water_sample)
+        //     if (id_one_water_sample) {
+        //         $.ajax({
+        //             url: '<?php echo site_url('Campy_pa/getIdOneWaterDetails'); ?>', // URL untuk request AJAX
+        //             type: 'POST',
+        //             data: { id_one_water_sample: id_one_water_sample }, // Data yang dikirim ke server
+        //             dataType: 'json', // Format data yang diharapkan dari server
+        //             success: function(response) {
+        //                 console.log('ceks:',response);
+        //                 // Mengisi field 'unit_of_measure' dengan nilai yang diterima dari server
+        //                 $('#sampletype').val(response.sampletype || '');
+        //                 $('#id_sampletype').val(response.id_sampletype || '');
+
+        //                 // Trigger input event to handle visibility of tray_weight
+        //                 $('#sampletype').trigger('input');
+        //             },
+        //             error: function(jqXHR, textStatus, errorThrown) {
+        //                 // Menangani error jika terjadi kesalahan dalam request
+        //                 console.error('AJAX error:', textStatus, errorThrown);
+        //                 $('#sampletype').val('');
+        //             }
+        //         });
+        //     } else {
+        //         $('#sampletype').val('');
+        //         $('#tray_weight_container').hide(); 
+        //     }
+        // });
+
         $('#campy_assay_barcode').on("change", function() {
             let campyAssayBarcode = $('#campy_assay_barcode').val();
             console.log(campyAssayBarcode);
             $.ajax({
                 type: "GET",
-                url: "Campy_biosolids_pa/validateCampyAssayBarcode",
+                url: "Campy_pa/validateCampyAssayBarcode",
                 data: { id: campyAssayBarcode },
                 dataType: "json",
                 success: function(data) {
@@ -507,7 +581,7 @@
             },
             processing: true,
             serverSide: true,
-            ajax: {"url": "Campy_biosolids_pa/json", "type": "POST"},
+            ajax: {"url": "Campy_pa/json", "type": "POST"},
             columns: [
                 {"data": "id_one_water_sample"},
                 {"data": "initial"},
@@ -562,44 +636,44 @@
         // Event handler untuk klik pada baris
         $('#mytable tbody').on('click', 'tr', function() {
             let rowData = table.row(this).data();
-            let rowId = rowData.id_campy_biosolids_pa;
+            let rowId = rowData.id_campy_pa;
             $(this).removeClass('highlight');
             $(this).removeClass('highlight-edit');
         });
 
-        $('#addtombol').click(function() {
-            $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> Campy Biosolids PA | New<span id="my-another-cool-loader"></span>');
-            $('#id_one_water_sample').val('');
-            $('#id_one_water_sample').show();
-            $('#idx_one_water_sample').hide();
-            $('#id_person').val('');
-            $('#number_of_tubes').val('');
-            $('#number_of_tubes').prop('disabled', false);
-            $('#campy_assay_barcode').val('');
-            $('#campy_assay_barcode').attr('readonly', false);
-            $('#sampletype').val('');
-            $('#sampletype').attr('readonly', true);
-            $('#tray_weight').val('');
-            $('#traysample_wetweight').val('');
-            $('#comments').val('');
-            $('#mpn_pcr_conducted').val('');
-            let sampleVolumeInputs = $('#sampleVolumeInputs');
-            if (sampleVolumeInputs.children().length > 1) {
-                sampleVolumeInputs.empty();
-                sampleVolumeInputs.append('<input id="vol_sampletube1" name="vol_sampletube1" type="number" step="0.01" class="form-control sample-input" placeholder="Volume of The Sample(uL) Tube1" disabled required>');
-            }
-            $('#barcode_moisture_content').val('');
-            $('#compose-modal').modal('show');
-        });
+        // $('#addtombol').click(function() {
+        //     $('#mode').val('insert');
+        //     $('#modal-title').html('<i class="fa fa-wpforms"></i> Campy PA | New<span id="my-another-cool-loader"></span>');
+        //     $('#id_one_water_sample').val('');
+        //     $('#id_one_water_sample').show();
+        //     $('#idx_one_water_sample').hide();
+        //     $('#id_person').val('');
+        //     $('#number_of_tubes').val('');
+        //     $('#number_of_tubes').prop('disabled', false);
+        //     $('#campy_assay_barcode').val('');
+        //     $('#campy_assay_barcode').attr('readonly', false);
+        //     $('#sampletype').val('');
+        //     $('#sampletype').attr('readonly', true);
+        //     $('#tray_weight').val('');
+        //     $('#traysample_wetweight').val('');
+        //     $('#comments').val('');
+        //     $('#mpn_pcr_conducted').val('');
+        //     let sampleVolumeInputs = $('#sampleVolumeInputs');
+        //     if (sampleVolumeInputs.children().length > 1) {
+        //         sampleVolumeInputs.empty();
+        //         sampleVolumeInputs.append('<input id="vol_sampletube1" name="vol_sampletube1" type="number" step="0.01" class="form-control sample-input" placeholder="Volume of The Sample(uL) Tube1" disabled required>');
+        //     }
+        //     $('#barcode_moisture_content').val('');
+        //     $('#compose-modal').modal('show');
+        // });
 
         $('#mytable').on('click', '.btn_edit', function(){
             let tr = $(this).parent().parent();
             let data = table.row(tr).data();
             console.log(data);
             $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Campy Biosolids PA | Update<span id="my-another-cool-loader"></span>');
-            $('#id_campy_biosolids_pa').val(data.id_campy_biosolids_pa);
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Campy PA | Update<span id="my-another-cool-loader"></span>');
+            $('#id_campy_pa').val(data.id_campy_pa);
             $('#id_one_water_sample').hide();
             $('#idx_one_water_sample').show();
             $('#idx_one_water_sample').attr('readonly', true);
@@ -644,8 +718,10 @@
                 const volume = volSampletubeArray[index] || ''; // Dapatkan volume yang sesuai atau kosong jika tidak ada
                 sampleVolumeInputs.append(
                     `<div class="form-group">
-                        <label for="vol_sampletube${tubeNumber}" class="control-label">Volume of The Sample(uL) Tube ${tubeNumber}</label>
-                        <input id="vol_sampletube${tubeNumber}" name="vol_sampletube${tubeNumber}" type="number" step="0.01" class="form-control sample-input" placeholder="Volume of The Sample(uL) Tube ${tubeNumber}" value="${volume}" required>
+                        <label for="vol_sampletube${tubeNumber}" class="col-sm control-label">Tube ${tubeNumber}</label>
+                        <div class="col-sm-8">
+                            <input id="vol_sampletube${tubeNumber}" name="vol_sampletube${tubeNumber}" type="number" step="0.01" class="form-control sample-input" placeholder="Volume of The Sample(uL) Tube ${tubeNumber}" value="${volume}" required>
+                        </div>
                     </div>`
                 );
             });
