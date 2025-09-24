@@ -14,13 +14,13 @@ if (!defined('BASEPATH'))
 // use PhpOffice\PhpSpreadsheet\Spreadsheet;
 // use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
     
-class Campy_biosolids_pa extends CI_Controller
+class Campy_pa extends CI_Controller
 {
     function __construct()
     {
         parent::__construct();
         is_login();
-        $this->load->model('Campy_biosolids_pa_model');
+        $this->load->model('Campy_pa_model');
         $this->load->library('form_validation');        
 	    $this->load->library('datatables');
 	    $this->load->library('uuid');
@@ -28,50 +28,50 @@ class Campy_biosolids_pa extends CI_Controller
 
     public function index()
     {
-        $data['id_one'] = $this->Campy_biosolids_pa_model->getID_one();
-        $data['sampletype'] = $this->Campy_biosolids_pa_model->getSampleType();
-        $data['labtech'] = $this->Campy_biosolids_pa_model->getLabTech();
-        $data['tubes'] = $this->Campy_biosolids_pa_model->getTubes();
+        $data['id_one'] = $this->Campy_pa_model->getID_one();
+        $data['sampletype'] = $this->Campy_pa_model->getSampleType();
+        $data['labtech'] = $this->Campy_pa_model->getLabTech();
+        $data['tubes'] = $this->Campy_pa_model->getTubes();
         // var_dump($data['id_one']);
         // die();
         // $data['id_project'] = $this->Moisture_content_model->generate_project_id();
         // $data['client'] = $this->Moisture_content_model->generate_client();
         // $data['id_one_water_sample'] = $this->Moisture_content_model->generate_one_water_sample_id();
-        $this->template->load('template','campy_biosolids_pa/index', $data);
+        $this->template->load('template','campy_pa/index', $data);
     } 
     
     public function json() {
         header('Content-Type: application/json');
-        echo $this->Campy_biosolids_pa_model->json();
+        echo $this->Campy_pa_model->json();
     }
 
     public function subjsonCharcoal() {
         $id = $this->input->get('idCharcoal',TRUE);
         header('Content-Type: application/json');
-        echo $this->Campy_biosolids_pa_model->subjsonCharcoal($id);
+        echo $this->Campy_pa_model->subjsonCharcoal($id);
     }
 
     public function subjsonHba() {
         $id = $this->input->get('idHba',TRUE);
         header('Content-Type: application/json');
-        echo $this->Campy_biosolids_pa_model->subjsonHba($id);
+        echo $this->Campy_pa_model->subjsonHba($id);
     }
 
     public function subjsonBiochemical() {
         $id = $this->input->get('idBiochemical',TRUE);
         $biochemical_tube = $this->input->get('biochemical_tube', TRUE);
         header('Content-Type: application/json');
-        echo $this->Campy_biosolids_pa_model->subjsonBiochemical($id, $biochemical_tube);
+        echo $this->Campy_pa_model->subjsonBiochemical($id, $biochemical_tube);
     }
 
     public function read($id)
     {
-        $row = $this->Campy_biosolids_pa_model->get_detail($id);
+        $row = $this->Campy_pa_model->get_detail($id);
 
         if ($row) {
             $data = array(
 
-                'id_campy_biosolids_pa' => $row->id_campy_biosolids_pa,
+                'id_campy_pa' => $row->id_campy_pa,
                 'id_one_water_sample' => $row->id_one_water_sample,
                 'initial' => $row->initial,
                 'sampletype' => $row->sampletype,
@@ -84,11 +84,15 @@ class Campy_biosolids_pa extends CI_Controller
                 'elution_volume' => $row->elution_volume,
                 'vol_sampletube' => $row->vol_sampletube,
                 'tube_number' => $row->tube_number,
+                'full_name' => $row->full_name,
+                'user_review' => $row->user_review,
+                'review' => $row->review,
+                'user_created' => $row->user_created,
                 
             );
             
             // Mendapatkan final concentration
-            $finalConcentration = $this->Campy_biosolids_pa_model->subjsonFinalConcentration($id);
+            $finalConcentration = $this->Campy_pa_model->subjsonFinalConcentration($row->id_campy_pa);
             if ($finalConcentration) {
                 $data['finalConcentration'] = $finalConcentration;
             } else {
@@ -96,7 +100,7 @@ class Campy_biosolids_pa extends CI_Controller
             }
             // var_dump($data);
             // die();
-            $this->template->load('template','campy_biosolids_pa/index_det', $data);
+            $this->template->load('template','campy_pa/index_det', $data);
 
         }
         else {
@@ -107,16 +111,16 @@ class Campy_biosolids_pa extends CI_Controller
 
     public function read2($id)
     {
-        $data['test'] = $this->Campy_biosolids_pa_model->getTest();
-        $row = $this->Campy_biosolids_pa_model->get_detail2($id);
+        $data['test'] = $this->Campy_pa_model->getTest();
+        $row = $this->Campy_pa_model->get_detail2($id);
         if ($row) {
             $data = array(
                 'id_project' => $row->id_project,
                 'id_sample' => $row->id_sample,
                 'sample_description' => $row->sample_description,
-                'test' => $this->Campy_biosolids_pa_model->getTest(),
+                'test' => $this->Campy_pa_model->getTest(),
                 );
-                $this->template->load('template','campy_biosolids_pa/index_det2', $data);
+                $this->template->load('template','campy_pa/index_det2', $data);
         }
         else {
             // $this->template->load('template','Water_sample_reception/index_det');
@@ -126,7 +130,7 @@ class Campy_biosolids_pa extends CI_Controller
 
     public function save() {
         $mode = $this->input->post('mode', TRUE);
-        $id_campy_biosolids_pa = $this->input->post('id_campy_biosolids_pa', TRUE);
+        $id_campy_pa = $this->input->post('id_campy_pa', TRUE);
         $dt = new DateTime();
     
         $id_one_water_sample = $this->input->post('id_one_water_sample', TRUE);
@@ -165,15 +169,15 @@ class Campy_biosolids_pa extends CI_Controller
             // var_dump($data);
             // die();
     
-            $assay_id = $this->Campy_biosolids_pa_model->insert($data);
+            $assay_id = $this->Campy_pa_model->insert($data);
     
             // Insert sample volumes
             $number_of_tubes = $this->input->post('number_of_tubes', TRUE);
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $volume = $this->input->post("vol_sampletube{$i}", TRUE);
-                if ($volume) {
-                    $this->Campy_biosolids_pa_model->insert_sample_volume(array(
-                        'id_campy_biosolids_pa' => $assay_id,
+                if ($volume !== null) {
+                    $this->Campy_pa_model->insert_sample_volume(array(
+                        'id_campy_pa' => $assay_id,
                         'tube_number' => $i,
                         'vol_sampletube' => $volume,
                         'flag' => '0',
@@ -210,21 +214,21 @@ class Campy_biosolids_pa extends CI_Controller
             // var_dump($data);
             // die();
     
-            $this->Campy_biosolids_pa_model->updateCampyBiosolids($id_campy_biosolids_pa, $data);
+            $this->Campy_pa_model->updateCampyBiosolids($id_campy_pa, $data);
     
             // Update sample volumes
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
             // var_dump($number_of_tubes); // var dump jumlah tube
             // die();
-            $this->Campy_biosolids_pa_model->delete_sample_volumes($id_campy_biosolids_pa); // Hapus volume yang ada
+            $this->Campy_pa_model->delete_sample_volumes($id_campy_pa); // Hapus volume yang ada
 
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $volume = $this->input->post("vol_sampletube{$i}", TRUE);
                 // var_dump($volume); // var dump volume pada setiap tube
 
-                if ($volume) {
+                if ($volume !== null) {
                     $data_volume = array(
-                        'id_campy_biosolids_pa' => $id_campy_biosolids_pa,
+                        'id_campy_pa' => $id_campy_pa,
                         'tube_number' => $i,
                         'vol_sampletube' => $volume,
                         'flag' => '0',
@@ -235,30 +239,33 @@ class Campy_biosolids_pa extends CI_Controller
                     );
                     // var_dump($data_volume); // var dump data volume sebelum diinsert
                     // die();
-                    $this->Campy_biosolids_pa_model->insert_sample_volume($data_volume);
+                    $this->Campy_pa_model->insert_sample_volume($data_volume);
                 }
             }
     
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
-        redirect(site_url("campy_biosolids_pa"));
+        redirect(site_url("campy_pa"));
     }
 
     public function saveResultsCharcoal() {
         $mode = $this->input->post('mode_detResultsCharcoal', TRUE);
-        $id_campy_biosolids_pa = $this->input->post('id_campy_biosolids_pa1', TRUE);
+        $id_one_water_sample = $this->input->post('idCharcoal_one_water_sample', TRUE);
+        $id_campy_pa = $this->input->post('id_campy_pa1', TRUE);
         $id_result_charcoal_pa = $this->input->post('id_result_charcoal_pa', TRUE);
         $dt = new DateTime();
         $date_sample_processed = $this->input->post('date_sample_processed1', TRUE);
         $time_sample_processed = $this->input->post('time_sample_processed1', TRUE);
+        $quality_control = $this->input->post('quality_control', TRUE) ? 1 : 0; // Convert checkbox to integer
     
         if ($mode == "insert") {
             // Insert data into assays table
             $data = array(
-                'id_campy_biosolids_pa' => $id_campy_biosolids_pa,
+                'id_campy_pa' => $id_campy_pa,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
+                'quality_control' => $quality_control,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
@@ -269,14 +276,14 @@ class Campy_biosolids_pa extends CI_Controller
             // var_dump($data);
             // die();
     
-            $assay_id = $this->Campy_biosolids_pa_model->insertResultsCharcoal($data);
+            $assay_id = $this->Campy_pa_model->insertResultsCharcoal($data);
     
             // Insert sample volumes
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $plate = $this->input->post("growth_plate{$i}", TRUE);
-                if ($plate) {
-                    $this->Campy_biosolids_pa_model->insert_growth_plate(array(
+                if ($plate !== null) {
+                    $this->Campy_pa_model->insert_growth_plate(array(
                         'id_result_charcoal_pa' => $assay_id,
                         'plate_number' => $i,
                         'growth_plate' => $plate,
@@ -294,9 +301,10 @@ class Campy_biosolids_pa extends CI_Controller
         } else if ($mode == "edit") {
             // Update data in assays table
             $data = array(
-                'id_campy_biosolids_pa' => $id_campy_biosolids_pa,
+                'id_campy_pa' => $id_campy_pa,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
+                'quality_control' => $quality_control,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
@@ -307,15 +315,15 @@ class Campy_biosolids_pa extends CI_Controller
             // var_dump($data);
             // die();
     
-            $this->Campy_biosolids_pa_model->updateResultsCharcoal($id_result_charcoal_pa, $data);
+            $this->Campy_pa_model->updateResultsCharcoal($id_result_charcoal_pa, $data);
 
             // Update sample volumes
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
-            $this->Campy_biosolids_pa_model->delete_growth_plates($id_result_charcoal_pa); // Hapus volume yang ada
+            $this->Campy_pa_model->delete_growth_plates($id_result_charcoal_pa); // Hapus volume yang ada
 
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $plate = $this->input->post("growth_plate{$i}", TRUE);
-                if ($plate) {
+                if ($plate !== null) {
                     $data_plate = array(
                         'id_result_charcoal_pa' => $id_result_charcoal_pa,
                         'plate_number' => $i,
@@ -326,31 +334,123 @@ class Campy_biosolids_pa extends CI_Controller
                         'user_created' => $this->session->userdata('id_users'),
                         'date_created' => $dt->format('Y-m-d H:i:s'),
                     );
-                    $this->Campy_biosolids_pa_model->insert_growth_plate($data_plate);
+                    $this->Campy_pa_model->insert_growth_plate($data_plate);
                 }
             }
     
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
-        redirect(site_url("campy_biosolids_pa/read/" . $id_campy_biosolids_pa));
+        // Check if auto-generation of HBA results is needed
+        $hba_auto_generated = false;
+        if ($mode == "insert") {
+            $hba_auto_generated = $this->autoGenerateHBAResults($assay_id, $id_campy_pa);
+        } else if ($mode == "edit") {
+            $hba_auto_generated = $this->autoGenerateHBAResults($id_result_charcoal_pa, $id_campy_pa);
+        }
+
+        // Set appropriate flash message
+        if ($hba_auto_generated) {
+            if ($mode == "insert") {
+                $this->session->set_flashdata('message', 'Create Record Success - HBA Results auto-generated');
+            } else {
+                $this->session->set_flashdata('message', 'Update Record Success - HBA Results auto-generated');
+            }
+        }
+
+        redirect(site_url("campy_pa/read/" . $id_one_water_sample));
+    }
+
+    /**
+     * Auto-generate HBA results when all growth plates are 0
+     * Based on campy_biosolids implementation
+     * Returns true if HBA was auto-generated, false otherwise
+     */
+    private function autoGenerateHBAResults($id_result_charcoal_pa, $id_campy_pa) {
+        // Get all growth plates for this charcoal result
+        $growth_plates = $this->Campy_pa_model->get_growth_plates_by_charcoal($id_result_charcoal_pa);
+        
+        if (empty($growth_plates)) {
+            return false; // No plates found, nothing to do
+        }
+        
+        // Check if all growth plates are 0
+        $all_plates_zero = true;
+        foreach ($growth_plates as $plate) {
+            if ($plate->growth_plate != '0') {
+                $all_plates_zero = false;
+                break;
+            }
+        }
+        
+        if (!$all_plates_zero) {
+            return false; // Not all plates are 0, no auto-generation needed
+        }
+        
+        // Check if HBA results already exist for this campy_pa
+        $existing_hba = $this->Campy_pa_model->get_hba_by_campy_pa($id_campy_pa);
+        if (!empty($existing_hba)) {
+            return false; // HBA results already exist, don't auto-generate
+        }
+        
+        $dt = new DateTime();
+        
+        // Auto-generate HBA result
+        $hba_data = array(
+            'id_campy_pa' => $id_campy_pa,
+            'date_sample_processed' => date('Y-m-d'),
+            'time_sample_processed' => date('H:i:s'),
+            'quality_control' => 0, // Default 0 for auto-generated HBA
+            'flag' => '0',
+            'lab' => $this->session->userdata('lab'),
+            'uuid' => $this->uuid->v4(),
+            'user_created' => $this->session->userdata('id_users'),
+            'date_created' => $dt->format('Y-m-d H:i:s'),
+        );
+        
+        $hba_id = $this->Campy_pa_model->insertResultsHba($hba_data);
+        
+        if ($hba_id) {
+            // Auto-generate HBA growth plates (all 0 since parent plates were all 0)
+            $number_of_plates = count($growth_plates);
+            for ($i = 1; $i <= $number_of_plates; $i++) {
+                $this->Campy_pa_model->insert_growth_plate_hba(array(
+                    'id_result_hba_pa' => $hba_id,
+                    'plate_number' => $i,
+                    'growth_plate' => '0',
+                    'flag' => '0',
+                    'lab' => $this->session->userdata('lab'),
+                    'uuid' => $this->uuid->v4(),
+                    'user_created' => $this->session->userdata('id_users'),
+                    'date_created' => $dt->format('Y-m-d H:i:s'),
+                ));
+            }
+            
+            log_message('info', "Auto-generated HBA results for campy_pa ID {$id_campy_pa} with {$number_of_plates} plates (all 0)");
+            return true; // Auto-generation successful
+        }
+        
+        return false; // Auto-generation failed
     }
 
     public function saveResultsHBA() {
         $mode = $this->input->post('mode_detResultsHBA', TRUE);
-        $id_campy_biosolids_pa = $this->input->post('id_campy_biosolids_paHBA', TRUE);
+        $id_one_water_sample = $this->input->post('idHba_one_water_sample', TRUE);
+        $id_campy_pa = $this->input->post('id_campy_paHBA', TRUE);
         $id_result_hba_pa = $this->input->post('id_result_hba_pa', TRUE);
 
         $dt = new DateTime();
         $date_sample_processed = $this->input->post('date_sample_processedHBA', TRUE);
         $time_sample_processed = $this->input->post('time_sample_processedHBA', TRUE);
+        $quality_control = $this->input->post('quality_control_hba', TRUE) ? 1 : 0; // Convert checkbox to integer
     
         if ($mode == "insert") {
             // Insert data into assays table
             $data = array(
-                'id_campy_biosolids_pa' => $id_campy_biosolids_pa,
+                'id_campy_pa' => $id_campy_pa,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
+                'quality_control' => $quality_control,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
@@ -361,15 +461,15 @@ class Campy_biosolids_pa extends CI_Controller
             // var_dump($data);
             // die();
     
-            $assay_id = $this->Campy_biosolids_pa_model->insertResultsHba($data);
+            $assay_id = $this->Campy_pa_model->insertResultsHba($data);
     
             // Insert sample volumes
             $number_of_tubes = $this->input->post('number_of_tubesHba', TRUE);
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $plate = $this->input->post("growth_plate{$i}", TRUE);
 
-                if ($plate) {
-                    $this->Campy_biosolids_pa_model->insert_growth_plate_hba(array(
+                if ($plate !== null) {
+                    $this->Campy_pa_model->insert_growth_plate_hba(array(
                         'id_result_hba_pa' => $assay_id,
                         'plate_number' => $i,
                         'growth_plate' => $plate,
@@ -388,9 +488,10 @@ class Campy_biosolids_pa extends CI_Controller
         } else if ($mode == "edit") {
             // Update data in assays table
             $data = array(
-                'id_campy_biosolids_pa' => $id_campy_biosolids_pa,
+                'id_campy_pa' => $id_campy_pa,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
+                'quality_control' => $quality_control,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
@@ -398,15 +499,15 @@ class Campy_biosolids_pa extends CI_Controller
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
     
-            $this->Campy_biosolids_pa_model->updateResultsHba($id_result_hba_pa, $data);
+            $this->Campy_pa_model->updateResultsHba($id_result_hba_pa, $data);
     
             // Update sample volumes
             $number_of_tubes = $this->input->post('number_of_tubesHba', TRUE);
-            $this->Campy_biosolids_pa_model->delete_growth_plates_hba($id_result_hba_pa); // Hapus volume yang ada
+            $this->Campy_pa_model->delete_growth_plates_hba($id_result_hba_pa); // Hapus volume yang ada
     
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $plate = $this->input->post("growth_plate{$i}", TRUE);
-                if ($plate) {
+                if ($plate !== null) {
                     $data_plate = array(
                         'id_result_hba_pa' => $id_result_hba_pa,
                         'plate_number' => $i,
@@ -417,14 +518,14 @@ class Campy_biosolids_pa extends CI_Controller
                         'user_created' => $this->session->userdata('id_users'),
                         'date_created' => $dt->format('Y-m-d H:i:s'),
                     );
-                    $this->Campy_biosolids_pa_model->insert_growth_plate_hba($data_plate);
+                    $this->Campy_pa_model->insert_growth_plate_hba($data_plate);
                 }
             }
     
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
-        redirect(site_url("campy_biosolids_pa/read/" . $id_campy_biosolids_pa));
+        redirect(site_url("campy_pa/read/" . $id_one_water_sample));
     }
 
 
@@ -432,16 +533,17 @@ class Campy_biosolids_pa extends CI_Controller
         $mode = $this->input->post('mode_detResultsBiochemical', TRUE);
         $id_result_biochemical_pa = $this->input->post('id_result_biochemical_pa', TRUE);
         $id_result_hba_pa = $this->input->post('id_result_hba_pa1', TRUE);
-        $id_campy_biosolids_pa = $this->input->post('id_campy_biosolids_paBiochemical', TRUE);
+        $id_campy_pa = $this->input->post('id_campy_paBiochemical', TRUE);
         $oxidase = $this->input->post('oxidase', TRUE);
         $catalase = $this->input->post('catalase', TRUE);
         $confirmation = $this->input->post('confirmation', TRUE);
         $sample_store = $this->input->post('sample_store', TRUE);
         $biochemical_tube = $this->input->post('biochemical_tube', TRUE);
+        $id_one_water_sample = $this->input->post('idBiochemical_one_water_sample', TRUE);
 
         if ($mode == "insert") {
             $data = array(
-                'id_campy_biosolids_pa' => $id_campy_biosolids_pa,
+                'id_campy_pa' => $id_campy_pa,
                 'id_result_hba_pa' => $id_result_hba_pa,
                 'oxidase' => $oxidase,
                 'catalase' => $catalase,
@@ -456,10 +558,10 @@ class Campy_biosolids_pa extends CI_Controller
             );
             // var_dump($data);
             // die();
-            $this->Campy_biosolids_pa_model->insertResultsBiochemical($data);
+            $this->Campy_pa_model->insertResultsBiochemical($data);
         } else if ($mode == "edit") {
             $data = array(
-                'id_campy_biosolids_pa' => $id_campy_biosolids_pa,
+                'id_campy_pa' => $id_campy_pa,
                 'id_result_hba_pa' => $id_result_hba_pa,
                 'oxidase' => $oxidase,
                 'catalase' => $catalase,
@@ -474,102 +576,164 @@ class Campy_biosolids_pa extends CI_Controller
 
             // var_dump($data);
             // die();
-            $this->Campy_biosolids_pa_model->updateResultsBiochemical($id_result_biochemical_pa, $data);
+            $this->Campy_pa_model->updateResultsBiochemical($id_result_biochemical_pa, $data);
         }
 
-        redirect(site_url("campy_biosolids_pa/read/" . $id_campy_biosolids_pa));
+        redirect(site_url("campy_pa/read/" . $id_one_water_sample));
     }
 
 
     public function delete_campyBiosolids($id) {
-        $row = $this->Campy_biosolids_pa_model->get_by_id_campybiosolids($id);
+        $row = $this->Campy_pa_model->get_by_id_campybiosolids($id);
         if ($row) {
             $id_parent = $row->id_result_charcoal_pa; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
     
-            $this->Campy_biosolids_pa_model->updateCampyBiosolids($id, $data);
-            $this->Campy_biosolids_pa_model->updateSampleVolume($id, $data);
+            $this->Campy_pa_model->updateCampyBiosolids($id, $data);
+            $this->Campy_pa_model->updateSampleVolume($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
     
-        redirect(site_url('campy_biosolids_pa/read/'.$id_parent));
+        redirect(site_url('campy_pa/read/'.$id_parent));
     }
     
     public function delete_detailCharcoal($id) {
-        $row = $this->Campy_biosolids_pa_model->get_by_id_charcoal($id);
+        $row = $this->Campy_pa_model->get_by_id_charcoal($id);
         if ($row) {
-            $id_parent = $row->id_result_charcoal_pa; // Retrieve project_id before updating the record
+            $id_campy_pa = $row->id_campy_pa;
             $data = array(
                 'flag' => 1,
             );
-    
-            $this->Campy_biosolids_pa_model->updateResultsCharcoal($id, $data);
-            $this->Campy_biosolids_pa_model->updateResultsGrowthPlate($id, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
+
+            // Step 1: Get all HBA results related to this campy_pa
+            $hba_results = $this->Campy_pa_model->get_hba_by_charcoal_id($id_campy_pa);
+            $total_biochemical_deleted = 0;
+            $total_hba_deleted = 0;
+
+            // Step 2: For each HBA, delete related biochemical results
+            foreach ($hba_results as $hba) {
+                $biochemical_results = $this->Campy_pa_model->get_biochemical_by_hba_id($hba->id_result_hba_pa);
+                $biochemical_count = count($biochemical_results);
+                
+                if ($biochemical_count > 0) {
+                    $this->Campy_pa_model->delete_biochemical_by_hba_id($hba->id_result_hba_pa);
+                    $total_biochemical_deleted += $biochemical_count;
+                    
+                    // Log the cascade delete
+                    log_message('info', "Cascade delete: Deleted {$biochemical_count} biochemical results for HBA ID {$hba->id_result_hba_pa}");
+                }
+                
+                $total_hba_deleted++;
+            }
+
+            // Step 3: Delete all HBA results for this campy_pa
+            if ($total_hba_deleted > 0) {
+                $this->Campy_pa_model->delete_hba_by_campy_pa($id_campy_pa);
+                log_message('info', "Cascade delete: Deleted {$total_hba_deleted} HBA results for campy_pa ID {$id_campy_pa}");
+            }
+
+            // Step 4: Delete the charcoal results
+            $this->Campy_pa_model->updateResultsCharcoal($id, $data);
+            $this->Campy_pa_model->updateResultsGrowthPlate($id, $data);
+            
+            // Create detailed success message
+            $message = 'Charcoal result deleted successfully';
+            if ($total_hba_deleted > 0) {
+                $message .= " (Also deleted {$total_hba_deleted} HBA result(s)";
+                if ($total_biochemical_deleted > 0) {
+                    $message .= " and {$total_biochemical_deleted} biochemical result(s)";
+                }
+                $message .= ')';
+            }
+            
+            $this->session->set_flashdata('message', $message);
+            log_message('info', "Cascade delete completed: Charcoal ID {$id} - {$message}");
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
-    
-        redirect(site_url('campy_biosolids_pa/read/'.$id_parent));
+
+        redirect(site_url('campy_pa/read/'.$row->id_campy_pa));
     }
 
     public function delete_detailHba($id) {
-        $row = $this->Campy_biosolids_pa_model->get_by_id_hba($id);
+        $row = $this->Campy_pa_model->get_by_id_hba($id);
         if ($row) {
-            $id_parent = $row->id_result_charcoal_pa; // Retrieve project_id before updating the record
+            $id_campy_pa = $row->id_campy_pa; // Get campy_pa ID for redirect
             $data = array(
                 'flag' => 1,
             );
     
-            $this->Campy_biosolids_pa_model->updateResultsHba($id, $data);
-            $this->Campy_biosolids_pa_model->updateResultsGrowthPlateHba($id, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
+            // First, check if there are any biochemical results related to this HBA
+            $biochemical_results = $this->Campy_pa_model->get_biochemical_by_hba_id($id);
+            $biochemical_count = count($biochemical_results);
+            
+            // Delete HBA results (growth plates and main record)
+            $this->Campy_pa_model->updateResultsHba($id, $data);
+            $this->Campy_pa_model->updateResultsGrowthPlateHba($id, $data);
+            
+            // Cascade delete: Delete all related biochemical results
+            if ($biochemical_count > 0) {
+                $biochemical_deleted = $this->Campy_pa_model->delete_biochemical_by_hba_id($id);
+                if ($biochemical_deleted) {
+                    $this->session->set_flashdata('message', 
+                        "Delete Record Success - HBA and {$biochemical_count} related Biochemical test(s) deleted to maintain data integrity");
+                } else {
+                    $this->session->set_flashdata('message', 
+                        'HBA deleted successfully, but failed to delete related Biochemical tests. Please check data consistency.');
+                }
+            } else {
+                $this->session->set_flashdata('message', 'Delete Record Success');
+            }
+            
+            // Log the cascade delete for audit purposes
+            log_message('info', "HBA Record deleted (ID: {$id}) with cascade delete of {$biochemical_count} biochemical records");
+            
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
     
-        redirect(site_url('campy_biosolids_pa/read/'.$id_parent));
+        redirect(site_url('campy_pa/read/'.$id_campy_pa));
     }
 
     public function delete_detailBiochemical($id) {
-        $row = $this->Campy_biosolids_pa_model->get_by_id_biochemical($id);
+        $row = $this->Campy_pa_model->get_by_id_biochemical($id);
         if ($row) {
             $id_parent = $row->id_result_charcoal_pa; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
     
-            $this->Campy_biosolids_pa_model->updateResultsBiochemical($id, $data);
+            $this->Campy_pa_model->updateResultsBiochemical($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
     
-        redirect(site_url('campy_biosolids_pa/read/'.$id_parent));
+        redirect(site_url('campy_pa/read/'.$id_parent));
     }
 
 
     public function getIdOneWaterDetails()
     {
         $idOneWaterSample = $this->input->post('id_one_water_sample');
-        $oneWaterSample = $this->Campy_biosolids_pa_model->getOneWaterSampleById($idOneWaterSample);
+        $oneWaterSample = $this->Campy_pa_model->getOneWaterSampleById($idOneWaterSample);
         echo json_encode($oneWaterSample);
     }
 
     public function validate24() {
         $id = $this->input->get('id24');
-        $data = $this->Campy_biosolids_pa_model->validate24($id);
+        $data = $this->Campy_pa_model->validate24($id);
         header('Content-Type: application/json');
         echo json_encode($data);
     }
 
     public function validate72() {
         $id = $this->input->get('id72');
-        $data = $this->Campy_biosolids_pa_model->validate72($id);
+        $data = $this->Campy_pa_model->validate72($id);
         header('Content-Type: application/json');
         echo json_encode($data);
     }
@@ -592,7 +756,7 @@ class Campy_biosolids_pa extends CI_Controller
         $sheet->setCellValue('J1', "Elution Volume");
     
         // Fetch the concentration data
-        $finalConcentration = $this->Campy_biosolids_pa_model->get_export($id);
+        $finalConcentration = $this->Campy_pa_model->get_export($id);
     
         if (!empty($finalConcentration)) {
             // Initialize tube index for volumes
@@ -668,7 +832,7 @@ class Campy_biosolids_pa extends CI_Controller
 
     public function excel_all() {
         $spreadsheet = new Spreadsheet();
-        $finalConcentration = $this->Campy_biosolids_pa_model->get_all_export();
+        $finalConcentration = $this->Campy_pa_model->get_all_export();
         // var_dump($finalConcentration);
         // die();
         // Array untuk menyimpan data berdasarkan jumlah tabung
@@ -777,21 +941,98 @@ class Campy_biosolids_pa extends CI_Controller
         }
     }
     
-    
-    
-    
-    
-    
-    
-
-    
-
-
     public function validateCampyAssayBarcode() {
         $id = $this->input->get('id');
-        $data = $this->Campy_biosolids_pa_model->validateCampyAssayBarcode($id);
+        $data = $this->Campy_pa_model->validateCampyAssayBarcode($id);
         header('Content-Type: application/json');
         echo json_encode($data);
+    }
+
+    public function saveReview() {
+        header('Content-Type: application/json');
+    
+        $id = $this->input->post('id_one_water_sample', true);
+        $review = $this->input->post('review', true);
+        $user_review = $this->input->post('user_review', true);
+    
+        if (!$id || $review === null || !$user_review) {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Missing required fields.'
+            ]);
+            return;
+        }
+    
+        $data = [
+            'review' => $review,
+            'user_review' => $user_review,
+            'user_updated' => $this->session->userdata('id_users'),
+            'date_updated' => date('Y-m-d H:i:s')
+        ];
+    
+        $this->load->model('Campy_pa_model');
+    
+        try {
+            $this->Campy_pa_model->update_campy_pa($id, $data);
+            echo json_encode([
+                'status' => true,
+                'message' => 'Review saved successfully.'
+            ]);
+        } catch (Exception $e) {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Error saving review: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+    public function cancelReview() {
+        header('Content-Type: application/json');
+    
+        // Ambil data POST
+        $id = $this->input->post('id_one_water_sample', true);
+        $review = $this->input->post('review', true);
+        $user_review = $this->input->post('user_review', true);
+    
+        // Debug log untuk memastikan data yang diterima
+        log_message('debug', "Received data: id=$id, review=$review, user_review=$user_review");
+    
+        // Cek jika data yang dibutuhkan ada
+        if (!$id || $review === null) {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Missing required fields.'
+            ]);
+            return;
+        }
+    
+        // Data yang akan diperbarui jika review dibatalkan
+        $data = [
+            'review' => 0,  // Reset status review
+            'user_review' => '', // Kosongkan user review
+            'user_updated' => $this->session->userdata('id_users'),
+            'date_updated' => date('Y-m-d H:i:s')
+        ];
+
+        // Load model dan update data review di database
+        $this->load->model('Campy_pa_model');
+        $updateResult = $this->Campy_pa_model->updateCancel($id, $data);
+
+        // Debug log untuk memeriksa hasil update
+        log_message('debug', "Update result: " . ($updateResult ? 'Success' : 'Failure'));
+    
+        // Cek apakah update berhasil
+        if ($updateResult) {
+            echo json_encode([
+                'status' => true,
+                'message' => 'Review canceled successfully.'
+            ]);
+        } else {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Failed to cancel review.'
+            ]);
+        }
     }
 
 }

@@ -13,14 +13,14 @@ if (!defined('BASEPATH'))
 
 // use PhpOffice\PhpSpreadsheet\Spreadsheet;
 // use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-    
-class Campy_liquids extends CI_Controller
+
+class Salmonella_pa extends CI_Controller
 {
     function __construct()
     {
         parent::__construct();
         is_login();
-        $this->load->model('Campy_liquids_model');
+        $this->load->model('Salmonella_pa_model');
         $this->load->library('form_validation');        
 	    $this->load->library('datatables');
 	    $this->load->library('uuid');
@@ -28,79 +28,80 @@ class Campy_liquids extends CI_Controller
 
     public function index()
     {
-        $data['id_one'] = $this->Campy_liquids_model->getID_one();
-        $data['sampletype'] = $this->Campy_liquids_model->getSampleType();
-        $data['labtech'] = $this->Campy_liquids_model->getLabTech();
-        $data['tubes'] = $this->Campy_liquids_model->getTubes();
+        $data['id_one'] = $this->Salmonella_pa_model->getID_one();
+        $data['sampletype'] = $this->Salmonella_pa_model->getSampleType();
+        $data['labtech'] = $this->Salmonella_pa_model->getLabTech();
+        $data['tubes'] = $this->Salmonella_pa_model->getTubes();
         // var_dump($data['id_one']);
         // die();
         // $data['id_project'] = $this->Moisture_content_model->generate_project_id();
         // $data['client'] = $this->Moisture_content_model->generate_client();
         // $data['id_one_water_sample'] = $this->Moisture_content_model->generate_one_water_sample_id();
-        $this->template->load('template','campy_liquids/index', $data);
+        $this->template->load('template','salmonella_pa/index', $data);
     } 
     
     public function json() {
         header('Content-Type: application/json');
-        echo $this->Campy_liquids_model->json();
+        echo $this->Salmonella_pa_model->json();
     }
 
-    public function subjsonCharcoal() {
-        $id = $this->input->get('idCharcoal',TRUE);
+    public function subjsonXldAgar() {
+        $id = $this->input->get('idXldAgar',TRUE);
         header('Content-Type: application/json');
-        echo $this->Campy_liquids_model->subjsonCharcoal($id);
+        echo $this->Salmonella_pa_model->subjsonXldAgar($id);
     }
 
-    public function subjsonHba() {
-        $id = $this->input->get('idHba',TRUE);
+    public function subjsonChromagar() {
+        $id = $this->input->get('idChromagar',TRUE);
         header('Content-Type: application/json');
-        echo $this->Campy_liquids_model->subjsonHba($id);
+        echo $this->Salmonella_pa_model->subjsonChromagar($id);
     }
 
     public function subjsonBiochemical() {
         $id = $this->input->get('idBiochemical',TRUE);
         $biochemical_tube = $this->input->get('biochemical_tube', TRUE);
         header('Content-Type: application/json');
-        echo $this->Campy_liquids_model->subjsonBiochemical($id, $biochemical_tube);
+        echo $this->Salmonella_pa_model->subjsonBiochemical($id, $biochemical_tube);
     }
 
     public function read($id)
     {
-        $row = $this->Campy_liquids_model->get_detail($id);
+        $row = $this->Salmonella_pa_model->get_detail($id);
 
         if ($row) {
             $data = array(
 
-                'id_campy_liquids' => $row->id_campy_liquids,
+                'id_salmonella_pa' => $row->id_salmonella_pa,
                 'id_one_water_sample' => $row->id_one_water_sample,
                 'initial' => $row->initial,
                 'sampletype' => $row->sampletype,
                 'number_of_tubes' => $row->number_of_tubes,
                 'mpn_pcr_conducted' => $row->mpn_pcr_conducted,
-                'campy_assay_barcode' => $row->campy_assay_barcode,
+                'salmonella_assay_barcode' => $row->salmonella_assay_barcode,
                 'date_sample_processed' => $row->date_sample_processed,
                 'time_sample_processed' => $row->time_sample_processed,
-                'elution_volume' => $row->elution_volume,
+                'sample_wetweight' => $row->sample_wetweight,
+                // 'elution_volume' => $row->elution_volume,
+                'enrichment_media' => $row->enrichment_media,
                 'vol_sampletube' => $row->vol_sampletube,
                 'tube_number' => $row->tube_number,
                 'full_name' => $row->full_name,
                 'user_review' => $row->user_review,
                 'review' => $row->review,
                 'user_created' => $row->user_created,
-
+                
             );
             
-        // Mendapatkan final concentration menggunakan id_campy_liquids
-        $finalConcentration = $this->Campy_liquids_model->subjsonFinalConcentration($row->id_campy_liquids);
-        if ($finalConcentration) {
-            $data['finalConcentration'] = $finalConcentration;
-        } else {
-            $data['finalConcentration'] = []; // Pastikan ini tidak null
-        }
-        // Load view with data
-        // var_dump($data['finalConcentration']);
-        // die();
-        $this->template->load('template','campy_liquids/index_det', $data);
+            // Mendapatkan final concentration
+            $finalConcentration = $this->Salmonella_pa_model->subjsonFinalConcentration($row->id_salmonella_pa);
+            if ($finalConcentration) {
+                $data['finalConcentration'] = $finalConcentration;
+            } else {
+                $data['finalConcentration'] = []; // Pastikan ini tidak null
+            }
+            // var_dump($data);
+            // die();
+            $this->template->load('template','salmonella_pa/index_det', $data);
 
         }
         else {
@@ -109,10 +110,28 @@ class Campy_liquids extends CI_Controller
 
     } 
 
+    public function read2($id)
+    {
+        $data['test'] = $this->Salmonella_pa_model->getTest();
+        $row = $this->Salmonella_pa_model->get_detail2($id);
+        if ($row) {
+            $data = array(
+                'id_project' => $row->id_project,
+                'id_sample' => $row->id_sample,
+                'sample_description' => $row->sample_description,
+                'test' => $this->Salmonella_pa_model->getTest(),
+                );
+                $this->template->load('template','salmonella_pa/index_det2', $data);
+        }
+        else {
+            // $this->template->load('template','Water_sample_reception/index_det');
+        }
+    }     
+
 
     public function save() {
         $mode = $this->input->post('mode', TRUE);
-        $id_campy_liquids = $this->input->post('id_campy_liquids', TRUE);
+        $id_salmonella_pa = $this->input->post('id_salmonella_pa', TRUE);
         $dt = new DateTime();
     
         $id_one_water_sample = $this->input->post('id_one_water_sample', TRUE);
@@ -122,12 +141,12 @@ class Campy_liquids extends CI_Controller
         $number_of_tubes = $this->input->post('number_of_tubes', TRUE);
         $number_of_tubes1 = $this->input->post('number_of_tubes1', TRUE);
         $mpn_pcr_conducted = $this->input->post('mpn_pcr_conducted', TRUE);
-        $campy_assay_barcode = $this->input->post('campy_assay_barcode', TRUE);
+        $salmonella_assay_barcode = $this->input->post('salmonella_assay_barcode', TRUE);
         $date_sample_processed = $this->input->post('date_sample_processed', TRUE);
         $time_sample_processed = $this->input->post('time_sample_processed', TRUE);
-        $elution_volume = $this->input->post('elution_volume', TRUE);
-        $review = $this->input->post('review', TRUE);
-        $user_review = $this->input->post('user_review', TRUE);
+        $sample_wetweight = $this->input->post('sample_wetweight', TRUE);
+        // $elution_volume = $this->input->post('elution_volume', TRUE);
+        $enrichment_media = $this->input->post('enrichment_media', TRUE) ? '1' : '0';
     
         if ($mode == "insert") {
             // Insert data into assays table
@@ -137,10 +156,12 @@ class Campy_liquids extends CI_Controller
                 'id_sampletype' => $id_sampletype,
                 'number_of_tubes' => $number_of_tubes,
                 'mpn_pcr_conducted' => $mpn_pcr_conducted,
-                'campy_assay_barcode' => $campy_assay_barcode,
+                'salmonella_assay_barcode' => $salmonella_assay_barcode,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
-                'elution_volume' => $elution_volume,
+                'sample_wetweight' => $sample_wetweight,
+                // 'elution_volume' => $elution_volume,
+                'enrichment_media' => $enrichment_media,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
@@ -151,15 +172,15 @@ class Campy_liquids extends CI_Controller
             // var_dump($data);
             // die();
     
-            $assay_id = $this->Campy_liquids_model->insert($data);
+            $assay_id = $this->Salmonella_pa_model->insert($data);
     
             // Insert sample volumes
             $number_of_tubes = $this->input->post('number_of_tubes', TRUE);
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $volume = $this->input->post("vol_sampletube{$i}", TRUE);
-                if ($volume) {
-                    $this->Campy_liquids_model->insert_sample_volume_liquids(array(
-                        'id_campy_liquids' => $assay_id,
+                if ($volume !== null) {
+                    $this->Salmonella_pa_model->insert_sample_volume(array(
+                        'id_salmonella_pa' => $assay_id,
                         'tube_number' => $i,
                         'vol_sampletube' => $volume,
                         'flag' => '0',
@@ -181,12 +202,12 @@ class Campy_liquids extends CI_Controller
                 'id_sampletype' => $id_sampletype,
                 'number_of_tubes' => $number_of_tubes1,
                 'mpn_pcr_conducted' => $mpn_pcr_conducted,
-                'campy_assay_barcode' => $campy_assay_barcode,
+                'salmonella_assay_barcode' => $salmonella_assay_barcode,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
-                'elution_volume' => $elution_volume,
-                // 'review' => $review,
-                // 'user_review' => $user_review,
+                'sample_wetweight' => $sample_wetweight,
+                // 'elution_volume' => $elution_volume,
+                'enrichment_media' => $enrichment_media,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
@@ -196,22 +217,22 @@ class Campy_liquids extends CI_Controller
 
             // var_dump($data);
             // die();
-    
-            $this->Campy_liquids_model->updateCampyLiquids($id_campy_liquids, $data);
-    
+
+            $this->Salmonella_pa_model->updateSalmonella($id_salmonella_pa, $data);
+
             // Update sample volumes
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
             // var_dump($number_of_tubes); // var dump jumlah tube
             // die();
-            $this->Campy_liquids_model->delete_sample_volumes_liquids($id_campy_liquids); // Hapus volume yang ada
+            $this->Salmonella_pa_model->delete_sample_volumes($id_salmonella_pa); // Hapus volume yang ada
 
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $volume = $this->input->post("vol_sampletube{$i}", TRUE);
                 // var_dump($volume); // var dump volume pada setiap tube
 
-                if ($volume) {
+                if ($volume !== null) {
                     $data_volume = array(
-                        'id_campy_liquids' => $id_campy_liquids,
+                        'id_salmonella_pa' => $id_salmonella_pa,
                         'tube_number' => $i,
                         'vol_sampletube' => $volume,
                         'flag' => '0',
@@ -222,22 +243,21 @@ class Campy_liquids extends CI_Controller
                     );
                     // var_dump($data_volume); // var dump data volume sebelum diinsert
                     // die();
-                    $this->Campy_liquids_model->insert_sample_volume_liquids($data_volume);
+                    $this->Salmonella_pa_model->insert_sample_volume($data_volume);
                 }
             }
     
             $this->session->set_flashdata('message', 'Update Record Success');
         }
-    
-        redirect(site_url("campy_liquids"));
+
+        redirect(site_url("salmonella_pa"));
     }
 
-
-    public function saveResultsCharcoal() {
-        $mode = $this->input->post('mode_detResultsCharcoal', TRUE);
-        $id_one_water_sample = $this->input->post('idCharcoal_one_water_sample', TRUE);
-        $id_campy_liquids = $this->input->post('id_campy_liquids1', TRUE);
-        $id_result_charcoal_liquids = $this->input->post('id_result_charcoal_liquids', TRUE);
+    public function saveResultsXldAgar() {
+        $mode = $this->input->post('mode_detResultsXldAgar', TRUE);
+        $id_one_water_sample = $this->input->post('idXldAgar_one_water_sample', TRUE);
+        $id_salmonella_pa = $this->input->post('id_salmonella_pa1', TRUE);
+        $id_result_xld_agar_pa = $this->input->post('id_result_xld_agar_pa', TRUE);
         $dt = new DateTime();
         $date_sample_processed = $this->input->post('date_sample_processed1', TRUE);
         $time_sample_processed = $this->input->post('time_sample_processed1', TRUE);
@@ -246,7 +266,7 @@ class Campy_liquids extends CI_Controller
         if ($mode == "insert") {
             // Insert data into assays table
             $data = array(
-                'id_campy_liquids' => $id_campy_liquids,
+                'id_salmonella_pa' => $id_salmonella_pa,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
                 'quality_control' => $quality_control,
@@ -259,28 +279,18 @@ class Campy_liquids extends CI_Controller
 
             // var_dump($data);
             // die();
-    
-            $assay_id = $this->Campy_liquids_model->insertResultsCharcoal($data);
-    
-           // Insert sample volumes and check if all growth plates are 0
+
+            $assay_id = $this->Salmonella_pa_model->insertResultsXldAgar($data);
+
+            // Insert sample volumes
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
-            $all_plates_zero = true;
-            $growth_plate_data = array();
-
             for ($i = 1; $i <= $number_of_tubes; $i++) {
-                $plate = $this->input->post("growth_plate{$i}", TRUE);
+                $plate = $this->input->post("colony_plate{$i}", TRUE);
                 if ($plate !== null) {
-                    $growth_plate_data[$i] = $plate;
-                    
-                    // Check if this plate is not zero
-                    if ($plate != '0') {
-                        $all_plates_zero = false;
-                    }
-
-                    $this->Campy_liquids_model->insert_growth_plate(array(
-                        'id_result_charcoal_liquids' => $assay_id,
+                    $this->Salmonella_pa_model->insert_black_plate(array(
+                        'id_result_xld_agar_pa' => $assay_id,
                         'plate_number' => $i,
-                        'growth_plate' => $plate,
+                        'black_colony_plate' => $plate,
                         'flag' => '0',
                         'lab' => $this->session->userdata('lab'),
                         'uuid' => $this->uuid->v4(),
@@ -289,28 +299,13 @@ class Campy_liquids extends CI_Controller
                     ));
                 }
             }
-
-            // Auto-generate HBA results if all growth plates are 0
-            if ($all_plates_zero && count($growth_plate_data) > 0) {
-                try {
-                    $hba_result = $this->autoGenerateHBAResults($id_campy_liquids, $assay_id, $date_sample_processed, $time_sample_processed, $growth_plate_data, $dt);
-                    if ($hba_result) {
-                        $this->session->set_flashdata('message', 'Create Record Success - HBA Results auto-generated');
-                    } else {
-                        $this->session->set_flashdata('message', 'Create Record Success - Note: HBA auto-generation failed, please create manually');
-                    }
-                } catch (Exception $e) {
-                    log_message('error', 'HBA auto-generation failed: ' . $e->getMessage());
-                    $this->session->set_flashdata('message', 'Create Record Success - Note: HBA auto-generation failed, please create manually');
-                }
-            } else {
-                $this->session->set_flashdata('message', 'Create Record Success');
-            }
+    
+            $this->session->set_flashdata('message', 'Create Record Success');
     
         } else if ($mode == "edit") {
             // Update data in assays table
             $data = array(
-                'id_campy_liquids' => $id_campy_liquids,
+                'id_salmonella_pa' => $id_salmonella_pa,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
                 'quality_control' => $quality_control,
@@ -323,132 +318,160 @@ class Campy_liquids extends CI_Controller
 
             // var_dump($data);
             // die();
-    
-            $this->Campy_liquids_model->updateResultsCharcoal($id_result_charcoal_liquids, $data);
 
-            // Update sample volumes and check if all growth plates are 0
+            $this->Salmonella_pa_model->updateResultsXldAgar($id_result_xld_agar_pa, $data);
+
+            // Update sample volumes
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
-            $this->Campy_liquids_model->delete_growth_plates($id_result_charcoal_liquids); // Hapus volume yang ada
-
-            $all_plates_zero = true;
-            $growth_plate_data = array();
+            $this->Salmonella_pa_model->delete_black_plates($id_result_xld_agar_pa); // Hapus volume yang ada
 
             for ($i = 1; $i <= $number_of_tubes; $i++) {
-                $plate = $this->input->post("growth_plate{$i}", TRUE);
+                $plate = $this->input->post("black_colony_plate{$i}", TRUE);
                 if ($plate !== null) {
-                    $growth_plate_data[$i] = $plate;
-
-                    // Check if this plate is not zero
-                    if ($plate != '0') {
-                        $all_plates_zero = false;
-                    }
-
                     $data_plate = array(
-                        'id_result_charcoal_liquids' => $id_result_charcoal_liquids,
+                        'id_result_xld_agar_pa' => $id_result_xld_agar_pa,
                         'plate_number' => $i,
-                        'growth_plate' => $plate,
+                        'black_colony_plate' => $plate,
                         'flag' => '0',
                         'lab' => $this->session->userdata('lab'),
                         'uuid' => $this->uuid->v4(),
                         'user_created' => $this->session->userdata('id_users'),
                         'date_created' => $dt->format('Y-m-d H:i:s'),
                     );
-                    $this->Campy_liquids_model->insert_growth_plate($data_plate);
+                    $this->Salmonella_pa_model->insert_black_plate($data_plate);
                 }
             }
-
-            // Auto-generate or update HBA results if all growth plates are 0
-            if ($all_plates_zero && count($growth_plate_data) > 0) {
-                // Check if HBA data already exists for this charcoal result
-                $existing_hba = $this->Campy_liquids_model->get_hba_by_campy_liquids($id_campy_liquids);
-
-                if (!$existing_hba) {
-                    try {
-                        // Auto-generate new HBA results
-                        $hba_result = $this->autoGenerateHBAResults($id_campy_liquids, $id_result_charcoal, $date_sample_processed, $time_sample_processed, $growth_plate_data, $dt);
-                        if ($hba_result) {
-                            $this->session->set_flashdata('message', 'Update Record Success - HBA Results auto-generated');
-                        } else {
-                            $this->session->set_flashdata('message', 'Update Record Success - Note: HBA auto-generation failed, please create manually');
-                        }
-                    } catch (Exception $e) {
-                        log_message('error', 'HBA auto-generation failed in edit mode: ' . $e->getMessage());
-                        $this->session->set_flashdata('message', 'Update Record Success - Note: HBA auto-generation failed, please create manually');
-                    }
-                } else {
-                    $this->session->set_flashdata('message', 'Update Record Success');
-                }
-            } else {
-                $this->session->set_flashdata('message', 'Update Record Success');
-            }
+    
+            $this->session->set_flashdata('message', 'Update Record Success');
         }
     
-        redirect(site_url("campy_liquids/read/" . $id_one_water_sample));
+        // Check if auto-generation of Chromagar results is needed
+        $chromagar_auto_generated = false;
+        if ($mode == "insert") {
+            $chromagar_auto_generated = $this->autoGenerateChromagarResults($assay_id, $id_salmonella_pa);
+        } else if ($mode == "edit") {
+            $chromagar_auto_generated = $this->autoGenerateChromagarResults($id_result_xld_agar_pa, $id_salmonella_pa);
+        }
+
+        // Set appropriate flash message
+        if ($chromagar_auto_generated) {
+            if ($mode == "insert") {
+                $this->session->set_flashdata('message', 'Create Record Success - Chromagar Results auto-generated');
+            } else {
+                $this->session->set_flashdata('message', 'Update Record Success - Chromagar Results auto-generated');
+            }
+        }
+
+        // Try to auto-generate biochemical results if both XLD and Chromagar data exist
+        $biochemical_result = $this->Salmonella_pa_model->checkAndAutoGenerateBiochemical($id_salmonella_pa);
+        if ($biochemical_result) {
+            if ($chromagar_auto_generated) {
+                // Update flash message to include biochemical auto-generation
+                if ($mode == "insert") {
+                    $this->session->set_flashdata('message', 'Create Record Success - Chromagar and Biochemical Results auto-generated');
+                } else {
+                    $this->session->set_flashdata('message', 'Update Record Success - Chromagar and Biochemical Results auto-generated');
+                }
+            } else {
+                // Just biochemical was auto-generated
+                if ($mode == "insert") {
+                    $this->session->set_flashdata('message', 'Create Record Success - Biochemical Results auto-generated');
+                } else {
+                    $this->session->set_flashdata('message', 'Update Record Success - Biochemical Results auto-generated');
+                }
+            }
+        }
+
+        redirect(site_url("salmonella_pa/read/" . $id_one_water_sample));
     }
 
     /**
-     * Auto-generate HBA results when all growth plates in Charcoal are 0
-     * This improves efficiency by eliminating the need for manual HBA data entry
-     * when the outcome is predictable (all zeros)
+     * Auto-generate Chromagar results when all purple plates are 0
+     * Based on salmonella_pa implementation
+     * Returns true if Chromagar was auto-generated, false otherwise
      */
-    private function autoGenerateHBAResults($id_campy_liquids, $id_result_charcoal, $date_sample_processed, $time_sample_processed, $growth_plate_data, $dt) {
-        try {
-            // Insert HBA result with same basic data as Charcoal (without campy_assay_barcode)
-            $hba_data = array(
-                'id_campy_liquids' => $id_campy_liquids,
-                'date_sample_processed' => $date_sample_processed,
-                'time_sample_processed' => $time_sample_processed,
-                'flag' => '0',
-                'lab' => $this->session->userdata('lab'),
-                'uuid' => $this->uuid->v4(),
-                'user_created' => $this->session->userdata('id_users'),
-                'date_created' => $dt->format('Y-m-d H:i:s'),
-            );
+    private function autoGenerateChromagarResults($id_result_xld_agar_pa, $id_salmonella_pa) {
+        // Get all purple plates for this xld agar result
+        $black_plates = $this->Salmonella_pa_model->get_black_plates_by_xld_agar($id_result_xld_agar_pa);
 
-            $hba_assay_id = $this->Campy_liquids_model->insertResultsHba($hba_data);
+        if (empty($black_plates)) {
+            return false; // No plates found, nothing to do
+        }
 
-            // Insert HBA growth plates (all will be 0 since Charcoal was all 0)
-            foreach ($growth_plate_data as $plate_number => $plate_value) {
-                $hba_plate_data = array(
-                    'id_result_hba_liquids' => $hba_assay_id,
-                    'plate_number' => $plate_number,
-                    'growth_plate' => '0', // Always 0 when auto-generated
+        // Check if all black plates are 0
+        $all_plates_zero = true;
+        foreach ($black_plates as $plate) {
+            if ($plate->black_colony_plate != '0') {
+                $all_plates_zero = false;
+                break;
+            }
+        }
+        
+        if (!$all_plates_zero) {
+            return false; // Not all plates are 0, no auto-generation needed
+        }
+
+        // Check if Chromagar results already exist for this salmonella_pa
+        $existing_chromagar = $this->Salmonella_pa_model->get_chromagar_by_salmonella_pa($id_salmonella_pa);
+        if (!empty($existing_chromagar)) {
+            return false; // Chromagar results already exist, don't auto-generate
+        }
+        
+        $dt = new DateTime();
+
+        // Auto-generate Chromagar result
+        $chromagar_data = array(
+            'id_salmonella_pa' => $id_salmonella_pa,
+            'date_sample_processed' => date('Y-m-d'),
+            'time_sample_processed' => date('H:i:s'),
+            'quality_control' => 0, // Default 0 for auto-generated Chromagar
+            'flag' => '0',
+            'lab' => $this->session->userdata('lab'),
+            'uuid' => $this->uuid->v4(),
+            'user_created' => $this->session->userdata('id_users'),
+            'date_created' => $dt->format('Y-m-d H:i:s'),
+        );
+
+        $chromagar_id = $this->Salmonella_pa_model->insertResultsChromagar($chromagar_data);
+
+        if ($chromagar_id) {
+            // Auto-generate Chromagar black plates (all 0 since parent plates were all 0)
+            $number_of_plates = count($black_plates);
+            for ($i = 1; $i <= $number_of_plates; $i++) {
+                $this->Salmonella_pa_model->insert_purple_plate_chromagar(array(
+                    'id_result_chromagar_pa' => $chromagar_id,
+                    'plate_number' => $i,
+                    'purple_colony_plate' => '0',
                     'flag' => '0',
                     'lab' => $this->session->userdata('lab'),
                     'uuid' => $this->uuid->v4(),
                     'user_created' => $this->session->userdata('id_users'),
                     'date_created' => $dt->format('Y-m-d H:i:s'),
-                );
-                $this->Campy_liquids_model->insert_growth_plate_hba($hba_plate_data);
+                ));
             }
-            
-            // Log the auto-generation for audit purposes
-            log_message('info', "Auto-generated HBA results for Campy Liquids ID: {$id_campy_liquids}");
 
-            return $hba_assay_id;
-            
-        } catch (Exception $e) {
-            // Log error but don't break the main process
-            log_message('error', "Failed to auto-generate HBA results: " . $e->getMessage());
-            throw $e; // Re-throw to be caught by calling method
+            log_message('info', "Auto-generated Chromagar results for salmonella_pa ID {$id_salmonella_pa} with {$number_of_plates} plates (all 0)");
+            return true; // Auto-generation successful
         }
+        
+        return false; // Auto-generation failed
     }
 
-    public function saveResultsHBA() {
-        $mode = $this->input->post('mode_detResultsHBA', TRUE);
-        $id_one_water_sample = $this->input->post('idHba_one_water_sample', TRUE);
-        $id_campy_liquids = $this->input->post('id_campy_liquidsHBA', TRUE);
-        $id_result_hba_liquids = $this->input->post('id_result_hba_liquids', TRUE);
+    public function saveResultsChromagar() {
+        $mode = $this->input->post('mode_detResultsChromagar', TRUE);
+        $id_one_water_sample = $this->input->post('idChromagar_one_water_sample', TRUE);
+        $id_salmonella_pa = $this->input->post('id_salmonella_paChromagar', TRUE);
+        $id_result_chromagar_pa = $this->input->post('id_result_chromagar_pa', TRUE);
 
         $dt = new DateTime();
-        $date_sample_processed = $this->input->post('date_sample_processedHBA', TRUE);
-        $time_sample_processed = $this->input->post('time_sample_processedHBA', TRUE);
-        $quality_control = $this->input->post('quality_control_hba', TRUE) ? 1 : 0; // Convert checkbox to integer
+        $date_sample_processed = $this->input->post('date_sample_processedChromagar', TRUE);
+        $time_sample_processed = $this->input->post('time_sample_processedChromagar', TRUE);
+        $quality_control = $this->input->post('quality_control_chromagar', TRUE) ? 1 : 0; // Convert checkbox to integer
     
         if ($mode == "insert") {
             // Insert data into assays table
             $data = array(
-                'id_campy_liquids' => $id_campy_liquids,
+                'id_salmonella_pa' => $id_salmonella_pa,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
                 'quality_control' => $quality_control,
@@ -461,19 +484,19 @@ class Campy_liquids extends CI_Controller
 
             // var_dump($data);
             // die();
-    
-            $assay_id = $this->Campy_liquids_model->insertResultsHba($data);
-    
+
+            $assay_id = $this->Salmonella_pa_model->insertResultsChromagar($data);
+
             // Insert sample volumes
-            $number_of_tubes = $this->input->post('number_of_tubesHba', TRUE);
+            $number_of_tubes = $this->input->post('number_of_tubesChromagar', TRUE);
             for ($i = 1; $i <= $number_of_tubes; $i++) {
-                $plate = $this->input->post("growth_plate{$i}", TRUE);
+                $plate = $this->input->post("purple_colony_plate{$i}", TRUE);
 
                 if ($plate !== null) {
-                    $this->Campy_liquids_model->insert_growth_plate_hba(array(
-                        'id_result_hba_liquids' => $assay_id,
+                    $this->Salmonella_pa_model->insert_purple_plate_chromagar(array(
+                        'id_result_chromagar_pa' => $assay_id,
                         'plate_number' => $i,
-                        'growth_plate' => $plate,
+                        'purple_colony_plate' => $plate,
                         'flag' => '0',
                         'lab' => $this->session->userdata('lab'),
                         'uuid' => $this->uuid->v4(),
@@ -489,7 +512,7 @@ class Campy_liquids extends CI_Controller
         } else if ($mode == "edit") {
             // Update data in assays table
             $data = array(
-                'id_campy_liquids' => $id_campy_liquids,
+                'id_salmonella_pa' => $id_salmonella_pa,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
                 'quality_control' => $quality_control,
@@ -499,64 +522,65 @@ class Campy_liquids extends CI_Controller
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
-    
-            $this->Campy_liquids_model->updateResultsHba($id_result_hba_liquids, $data);
-    
+
+            // var_dump($data);
+            // die();
+
+            $this->Salmonella_pa_model->updateResultsChromagar($id_result_chromagar_pa, $data);
+
             // Update sample volumes
-            $number_of_tubes = $this->input->post('number_of_tubesHba', TRUE);
-            $this->Campy_liquids_model->delete_growth_plates_hba($id_result_hba_liquids); // Hapus volume yang ada
-    
+            $number_of_tubes = $this->input->post('number_of_tubesChromagar', TRUE);
+            $this->Salmonella_pa_model->delete_purple_plates_chromagar($id_result_chromagar_pa); // Hapus volume yang ada
+
             for ($i = 1; $i <= $number_of_tubes; $i++) {
-                $plate = $this->input->post("growth_plate{$i}", TRUE);
+                $plate = $this->input->post("purple_colony_plate{$i}", TRUE);
                 if ($plate !== null) {
                     $data_plate = array(
-                        'id_result_hba_liquids' => $id_result_hba_liquids,
+                        'id_result_chromagar_pa' => $id_result_chromagar_pa,
                         'plate_number' => $i,
-                        'growth_plate' => $plate,
+                        'purple_colony_plate' => $plate,
                         'flag' => '0',
                         'lab' => $this->session->userdata('lab'),
                         'uuid' => $this->uuid->v4(),
                         'user_created' => $this->session->userdata('id_users'),
                         'date_created' => $dt->format('Y-m-d H:i:s'),
                     );
-                    $this->Campy_liquids_model->insert_growth_plate_hba($data_plate);
+                    $this->Salmonella_pa_model->insert_purple_plate_chromagar($data_plate);
                 }
             }
     
             $this->session->set_flashdata('message', 'Update Record Success');
         }
-    
-        redirect(site_url("campy_liquids/read/" . $id_one_water_sample));
+
+        // Try to auto-generate biochemical results if both XLD and Chromagar data exist
+        $biochemical_result = $this->Salmonella_pa_model->checkAndAutoGenerateBiochemical($id_salmonella_pa);
+        if ($biochemical_result) {
+            // Update flash message to include biochemical auto-generation
+            if ($mode == "insert") {
+                $this->session->set_flashdata('message', 'Create Record Success - Biochemical Results auto-generated');
+            } else {
+                $this->session->set_flashdata('message', 'Update Record Success - Biochemical Results auto-generated');
+            }
+        }
+
+        redirect(site_url("salmonella_pa/read/" . $id_one_water_sample));
     }
 
 
     public function saveBiochemical() {
         $mode = $this->input->post('mode_detResultsBiochemical', TRUE);
-        $id_result_biochemical_liquids = $this->input->post('id_result_biochemical_liquids', TRUE);
-        $id_result_hba_liquids = $this->input->post('id_result_hba1_liquids', TRUE);
-        $id_campy_liquids = $this->input->post('id_campy_liquidsBiochemical', TRUE);
-        $gramlysis = $this->input->post('gramlysis', TRUE);
-        $oxidase = $this->input->post('oxidase', TRUE);
-        $catalase = $this->input->post('catalase', TRUE);
+        $id_result_biochemical_pa = $this->input->post('id_result_biochemical_pa', TRUE);
+        $id_result_chromagar_pa = $this->input->post('id_result_chromagar_pa1', TRUE);
+        $id_salmonella_pa = $this->input->post('id_salmonella_paBiochemical', TRUE);
         $confirmation = $this->input->post('confirmation', TRUE);
-        $sample_store = $this->input->post('sample_store', TRUE);
         $biochemical_tube = $this->input->post('biochemical_tube', TRUE);
         $id_one_water_sample = $this->input->post('idBiochemical_one_water_sample', TRUE);
 
-        // Defaukt value if the attribute is null
-        if ($gramlysis === null) $gramlysis = '-';
-        if ($oxidase === null) $oxidase = '-';
-        if ($catalase === null) $catalase = '-';
-
         if ($mode == "insert") {
             $data = array(
-                'id_campy_liquids' => $id_campy_liquids,
-                'id_result_hba_liquids' => $id_result_hba_liquids,
-                'gramlysis' => $gramlysis,
-                'oxidase' => $oxidase,
-                'catalase' => $catalase,
+                'id_salmonella_pa' => $id_salmonella_pa,
+                'id_result_chromagar_pa' => $id_result_chromagar_pa,
                 'confirmation' => $confirmation,
-                'sample_store' => $sample_store,
                 'biochemical_tube' => $biochemical_tube,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
@@ -566,16 +590,12 @@ class Campy_liquids extends CI_Controller
             );
             // var_dump($data);
             // die();
-            $this->Campy_liquids_model->insertResultsBiochemical($data);
+            $this->Salmonella_pa_model->insertResultsBiochemical($data);
         } else if ($mode == "edit") {
             $data = array(
-                'id_campy_liquids' => $id_campy_liquids,
-                'id_result_hba_liquids' => $id_result_hba_liquids,
-                'gramlysis' => $gramlysis,
-                'oxidase' => $oxidase,
-                'catalase' => $catalase,
+                'id_salmonella_pa' => $id_salmonella_pa,
+                'id_result_chromagar_pa' => $id_result_chromagar_pa,
                 'confirmation' => $confirmation,
-                'sample_store' => $sample_store,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
@@ -585,167 +605,256 @@ class Campy_liquids extends CI_Controller
 
             // var_dump($data);
             // die();
-            $this->Campy_liquids_model->updateResultsBiochemical($id_result_biochemical_liquids, $data);
+            $this->Salmonella_pa_model->updateResultsBiochemical($id_result_biochemical_pa, $data);
         }
 
-        redirect(site_url("campy_liquids/read/" . $id_one_water_sample));
+        redirect(site_url("salmonella_pa/read/" . $id_one_water_sample));
     }
-    
 
-    public function delete_campyLiquids($id) {
-        $row = $this->Campy_liquids_model->get_by_id_campyliquids($id);
+    public function getBiochemicalData() {
+        $id_salmonella_pa = $this->input->post('id_salmonella_pa', TRUE);
+        
+        if (empty($id_salmonella_pa)) {
+            echo json_encode(array('success' => false, 'message' => 'Missing Salmonella PA ID'));
+            return;
+        }
+
+        try {
+            // Get XLD Agar results (black colony values)
+            $xld_results = $this->Salmonella_pa_model->getXldAgarResults($id_salmonella_pa);
+            
+            // Get Chromagar results (purple colony values)  
+            $chromagar_results = $this->Salmonella_pa_model->getChromagarResults($id_salmonella_pa);
+            
+            if (empty($xld_results) || empty($chromagar_results)) {
+                echo json_encode(array(
+                    'success' => false, 
+                    'message' => 'Missing XLD Agar or Chromagar results. Please complete these first.'
+                ));
+                return;
+            }
+
+            // Get the first result as we need one to determine biochemical values
+            $xld_black_colony = 0;
+            $chrom_purple_colony = 0;
+
+            // Check if any XLD result has black colony = 1
+            foreach ($xld_results as $xld) {
+                if (!empty($xld->black_colony_plate)) {
+                    $black_colonies = explode(', ', $xld->black_colony_plate);
+                    if (in_array('1', $black_colonies)) {
+                        $xld_black_colony = 1;
+                        break;
+                    }
+                }
+            }
+
+            // Check if any Chromagar result has purple colony = 1  
+            foreach ($chromagar_results as $chromagar) {
+                if (!empty($chromagar->purple_colony_plate)) {
+                    $purple_colonies = explode(', ', $chromagar->purple_colony_plate);
+                    if (in_array('1', $purple_colonies)) {
+                        $chrom_purple_colony = 1;
+                        break;
+                    }
+                }
+            }
+
+            echo json_encode(array(
+                'success' => true,
+                'xld_black_colony' => $xld_black_colony,
+                'chrom_purple_colony' => $chrom_purple_colony,
+                'message' => 'Data retrieved successfully'
+            ));
+
+        } catch (Exception $e) {
+            echo json_encode(array(
+                'success' => false, 
+                'message' => 'Error fetching data: ' . $e->getMessage()
+            ));
+        }
+    }
+
+    public function triggerBiochemicalAutoGeneration() {
+        $id_salmonella_pa = $this->input->post('id_salmonella_pa', TRUE);
+        
+        if (empty($id_salmonella_pa)) {
+            echo json_encode(array('success' => false, 'message' => 'Missing Salmonella PA ID'));
+            return;
+        }
+
+        $result = $this->Salmonella_pa_model->checkAndAutoGenerateBiochemical($id_salmonella_pa);
+        
+        if ($result) {
+            echo json_encode(array(
+                'success' => true, 
+                'message' => 'Biochemical results auto-generated successfully',
+                'action' => $result
+            ));
+        } else {
+            echo json_encode(array(
+                'success' => false, 
+                'message' => 'Cannot auto-generate biochemical results. Both XLD and Chromagar results are required.'
+            ));
+        }
+    }
+
+
+    public function delete_salmonellaPA($id) {
+        $row = $this->Salmonella_pa_model->get_by_id_salmonella_pa($id);
         if ($row) {
-            $id_parent = $row->id_result_charcoal; // Retrieve project_id before updating the record
+            $id_parent = $row->id_result_xld_agar_pa; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
-    
-            $this->Campy_liquids_model->updateCampyLiquids($id, $data);
-            $this->Campy_liquids_model->updateSampleVolume($id, $data);
+
+            $this->Salmonella_pa_model->updateSalmonellaPA($id, $data);
+            $this->Salmonella_pa_model->updateSampleVolume($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
-    
-        redirect(site_url('campy_liquids/read/'.$id_parent));
+
+        redirect(site_url('salmonella_pa/read/'.$id_parent));
     }
-    
-    public function delete_detailCharcoal($id) {
-        $row = $this->Campy_liquids_model->get_by_id_charcoal($id);
+
+    public function delete_detailXldAgar($id) {
+        $row = $this->Salmonella_pa_model->get_by_id_xld_agar($id);
         if ($row) {
-            $id_campy_liquids = $row->id_campy_liquids;
+            $id_salmonella_pa = $row->id_salmonella_pa;
             $data = array(
                 'flag' => 1,
             );
 
-            // Step 1: Get all HBA results related to this campy_liquids
-            $hba_results = $this->Campy_liquids_model->get_hba_by_charcoal_id($id_campy_liquids);
+            // Step 1: Get all Chromagar results related to this salmonella_pa
+            $chromagar_results = $this->Salmonella_pa_model->get_chromagar_by_xld_agar_id($id_salmonella_pa);
             $total_biochemical_deleted = 0;
-            $total_hba_deleted = 0;
+            $total_chromagar_deleted = 0;
 
-            // Step 2: For each HBA, delete related biochemical results
-            foreach ($hba_results as $hba) {
-                $biochemical_results = $this->Campy_liquids_model->get_biochemical_by_hba_id($hba->id_result_hba_liquids);
+            // Step 2: For each Chromagar, delete related biochemical results
+            foreach ($chromagar_results as $chromagar) {
+                $biochemical_results = $this->Salmonella_pa_model->get_biochemical_by_chromagar_id($chromagar->id_result_chromagar_pa);
                 $biochemical_count = count($biochemical_results);
                 
                 if ($biochemical_count > 0) {
-                    $this->Campy_liquids_model->delete_biochemical_by_hba_id($hba->id_result_hba_liquids);
+                    $this->Salmonella_pa_model->delete_biochemical_by_chromagar_id($chromagar->id_result_chromagar_pa);
                     $total_biochemical_deleted += $biochemical_count;
                     
                     // Log the cascade delete
-                    log_message('info', "Cascade delete: Deleted {$biochemical_count} biochemical results for HBA ID {$hba->id_result_hba_liquids}");
+                    log_message('info', "Cascade delete: Deleted {$biochemical_count} biochemical results for Chromagar ID {$chromagar->id_result_chromagar_pa}");
                 }
-                
-                $total_hba_deleted++;
+
+                $total_chromagar_deleted++;
             }
 
-            // Step 3: Delete all HBA results for this campy_liquids
-            if ($total_hba_deleted > 0) {
-                $this->Campy_liquids_model->delete_hba_by_campy_liquids($id_campy_liquids);
-                log_message('info', "Cascade delete: Deleted {$total_hba_deleted} HBA results for campy_liquids ID {$id_campy_liquids}");
+            // Step 3: Delete all Chromagar results for this salmonella_pa
+            if ($total_chromagar_deleted > 0) {
+                $this->Salmonella_pa_model->delete_chromagar_by_salmonella_pa($id_salmonella_pa);
+                log_message('info', "Cascade delete: Deleted {$total_chromagar_deleted} Chromagar results for salmonella_pa ID {$id_salmonella_pa}");
             }
-                
-            // Step 4: Delete the charcoal results
-            $this->Campy_liquids_model->updateResultsCharcoal($id, $data);
-            $this->Campy_liquids_model->updateResultsGrowthPlate($id, $data);
 
+            // Step 4: Delete the xld_agar results
+            $this->Salmonella_pa_model->updateResultsXldAgar($id, $data);
+            $this->Salmonella_pa_model->updateResultsGrowthPlate($id, $data);
+            
             // Create detailed success message
-            $message = 'Charcoal result deleted successfully';
-            if ($total_hba_deleted > 0) {
-                $message .= " (Also deleted {$total_hba_deleted} HBA result(s)";
+            $message = 'XLD Agar result deleted successfully';
+            if ($total_chromagar_deleted > 0) {
+                $message .= " (Also deleted {$total_chromagar_deleted} Chromagar result(s)";
                 if ($total_biochemical_deleted > 0) {
                     $message .= " and {$total_biochemical_deleted} biochemical result(s)";
                 }
                 $message .= ')';
             }
-            $this->session->set_flashdata('message', 'Delete Record Success');
-            log_message('info', "Cascade delete completed: Charcoal ID {$id} - {$message}");
+            
+            $this->session->set_flashdata('message', $message);
+            log_message('info', "Cascade delete completed: XldAgar ID {$id} - {$message}");
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
 
-        redirect(site_url('campy_liquids/read/'.$row->id_campy_liquids));
+        redirect(site_url('salmonella_pa/read/'.$row->id_salmonella_pa));
     }
 
-    public function delete_detailHba($id) {
-        $row = $this->Campy_liquids_model->get_by_id_hba($id);
+    public function delete_detailChromagar($id) {
+        $row = $this->Salmonella_pa_model->get_by_id_chromagar($id);
         if ($row) {
-            $id_parent = $row->id_result_charcoal; // Retrieve project_id before updating the record
+            $id_salmonella_pa = $row->id_salmonella_pa; // Get salmonella_pa ID for redirect
             $data = array(
                 'flag' => 1,
             );
 
-            // First, check if there are any biochemical results related to this HBA
-            $biochemical_results = $this->Campy_liquids_model->get_biochemical_by_hba_id($id);
+            // First, check if there are any biochemical results related to this Chromagar
+            $biochemical_results = $this->Salmonella_pa_model->get_biochemical_by_chromagar_id($id);
             $biochemical_count = count($biochemical_results);
-    
-            // Delete HBA results (growth plates and main record)
-            $this->Campy_liquids_model->updateResultsHba($id, $data);
-            $this->Campy_liquids_model->updateResultsGrowthPlateHba($id, $data);
+
+            // Delete Chromagar results (purple plates and main record)
+            $this->Salmonella_pa_model->updateResultsChromagar($id, $data);
+            $this->Salmonella_pa_model->updateResultsPurplePlateChromagar($id, $data);
 
             // Cascade delete: Delete all related biochemical results
             if ($biochemical_count > 0) {
-                $biochemical_deleted = $this->Campy_liquids_model->delete_biochemical_by_hba_id($id);
+                $biochemical_deleted = $this->Salmonella_pa_model->delete_biochemical_by_chromagar_id($id);
                 if ($biochemical_deleted) {
                     $this->session->set_flashdata('message', 
-                        "Delete Record Success - HBA and {$biochemical_count} related Biochemical test(s) deleted to maintain data integrity");
+                        "Delete Record Success - Chromagar and {$biochemical_count} related Biochemical test(s) deleted to maintain data integrity");
                 } else {
                     $this->session->set_flashdata('message', 
-                        'HBA deleted successfully, but failed to delete related Biochemical tests. Please check data consistency.');
+                        'Chromagar deleted successfully, but failed to delete related Biochemical tests. Please check data consistency.');
                 }
             } else {
                 $this->session->set_flashdata('message', 'Delete Record Success');
             }
             
             // Log the cascade delete for audit purposes
-            log_message('info', "HBA Record deleted (ID: {$id}) with cascade delete of {$biochemical_count} biochemical records");
-
+            log_message('info', "Chromagar Record deleted (ID: {$id}) with cascade delete of {$biochemical_count} biochemical records");
+            
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
-    
-        redirect(site_url('campy_liquids/read/'.$id_parent));
+
+        redirect(site_url('salmonella_pa/read/'.$id_salmonella_pa));
     }
 
     public function delete_detailBiochemical($id) {
-        $row = $this->Campy_liquids_model->get_by_id_biochemical($id);
+        $row = $this->Salmonella_pa_model->get_by_id_biochemical($id);
         if ($row) {
-            $id_parent = $row->id_result_charcoal; // Retrieve project_id before updating the record
+            $id_parent = $row->id_result_xld_agar_pa; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
     
-            $this->Campy_liquids_model->updateResultsBiochemical($id, $data);
+            $this->Salmonella_pa_model->updateResultsBiochemical($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
-    
-        redirect(site_url('campy_liquids/read/'.$id_parent));
+
+        redirect(site_url('salmonella_pa/read/'.$id_parent));
     }
 
 
     public function getIdOneWaterDetails()
     {
         $idOneWaterSample = $this->input->post('id_one_water_sample');
-        $oneWaterSample = $this->Campy_liquids_model->getOneWaterSampleById($idOneWaterSample);
+        $oneWaterSample = $this->Salmonella_pa_model->getOneWaterSampleById($idOneWaterSample);
         echo json_encode($oneWaterSample);
     }
 
     public function validate24() {
         $id = $this->input->get('id24');
-        $data = $this->Campy_liquids_model->validate24($id);
+        $data = $this->Salmonella_pa_model->validate24($id);
         header('Content-Type: application/json');
         echo json_encode($data);
     }
 
     public function validate72() {
         $id = $this->input->get('id72');
-        $data = $this->Campy_liquids_model->validate72($id);
+        $data = $this->Salmonella_pa_model->validate72($id);
         header('Content-Type: application/json');
         echo json_encode($data);
     }
-    
+
 
     public function excel($id) {
         $spreadsheet = new Spreadsheet();    
@@ -753,17 +862,18 @@ class Campy_liquids extends CI_Controller
     
         // Set the headers
         $sheet->setCellValue('A1', "ID One Water Sample");
-        $sheet->setCellValue('B1', "Campy Assay Barcode");
+        $sheet->setCellValue('B1', "Salmonella Assay Barcode");
         $sheet->setCellValue('C1', "Initial");
         $sheet->setCellValue('D1', "Sample Type");
         $sheet->setCellValue('E1', "Number of Tubes");
         $sheet->setCellValue('F1', "MPN PCR Conducted");
         $sheet->setCellValue('G1', "Date Sample Processed");
         $sheet->setCellValue('H1', "Time Sample Processed");
-        $sheet->setCellValue('I1', "Filtration  Volume(mL)");
+        $sheet->setCellValue('I1', "Sample Wet Weight");
+        $sheet->setCellValue('J1', "Elution Volume");
     
         // Fetch the concentration data
-        $finalConcentration = $this->Campy_liquids_model->get_export($id);
+        $finalConcentration = $this->Salmonella_pa_model->get_export($id);
     
         if (!empty($finalConcentration)) {
             // Initialize tube index for volumes
@@ -772,7 +882,7 @@ class Campy_liquids extends CI_Controller
             // Add Tube Volume headers
             foreach ($finalConcentration[0] as $key => $value) {
                 if (strpos($key, 'Tube') === 0) {
-                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
+                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
                     $sheet->setCellValue($columnLetter . '1', "$key Volume");
                     $tubeIndex++;
                 }
@@ -781,7 +891,7 @@ class Campy_liquids extends CI_Controller
             // Add Tube Result headers
             $plate_numbers = explode(',', $finalConcentration[0]->plate_numbers);
             foreach ($plate_numbers as $plate_number) {
-                $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
+                $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
                 $sheet->setCellValue($columnLetter . '1', "Tube $plate_number Result");
                 $tubeIndex++;
             }
@@ -792,20 +902,21 @@ class Campy_liquids extends CI_Controller
         foreach ($finalConcentration as $concentration) {
             // Basic information
             $sheet->setCellValue('A' . $numrow, $concentration->id_one_water_sample ?? '');
-            $sheet->setCellValue('B' . $numrow, $concentration->campy_assay_barcode ?? '');
+            $sheet->setCellValue('B' . $numrow, $concentration->salmonella_assay_barcode ?? '');
             $sheet->setCellValue('C' . $numrow, $concentration->initial ?? '');
             $sheet->setCellValue('D' . $numrow, $concentration->sampletype ?? '');
             $sheet->setCellValue('E' . $numrow, $concentration->number_of_tubes ?? '');
             $sheet->setCellValue('F' . $numrow, $concentration->mpn_pcr_conducted ?? '');
             $sheet->setCellValue('G' . $numrow, $concentration->date_sample_processed ?? '');
             $sheet->setCellValue('H' . $numrow, $concentration->time_sample_processed ?? '');
-            $sheet->setCellValue('I' . $numrow, $concentration->elution_volume ?? '');
+            $sheet->setCellValue('I' . $numrow, $concentration->sample_wetweight ?? '');
+            $sheet->setCellValue('J' . $numrow, $concentration->enrichment_media ?? '');
     
             // Fill tube volumes
             $tubeIndex = 0;
             foreach ($concentration as $key => $value) {
                 if (strpos($key, 'Tube') === 0) {
-                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
+                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
                     $sheet->setCellValue($columnLetter . $numrow, $value ?? '');
                     $tubeIndex++;
                 }
@@ -818,7 +929,7 @@ class Campy_liquids extends CI_Controller
                 $confirmation_value = isset($concentration->confirmation[$plate_number]) ? $concentration->confirmation[$plate_number] : 'No Growth'; 
                 
                 // Calculate the column letter dynamically
-                $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
+                $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
                 $sheet->setCellValue($columnLetter . $numrow, $confirmation_value);
                 $tubeIndex++;
             }
@@ -828,7 +939,7 @@ class Campy_liquids extends CI_Controller
     
         // Set header for the Excel file
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="Report_Liquids_Final_Concentrations.xlsx"');
+        header('Content-Disposition: attachment;filename="Report_PA_Final_Concentrations.xlsx"');
         header('Cache-Control: max-age=0');
     
         // Output the Excel file
@@ -838,7 +949,7 @@ class Campy_liquids extends CI_Controller
 
     public function excel_all() {
         $spreadsheet = new Spreadsheet();
-        $finalConcentration = $this->Campy_liquids_model->get_all_export();
+        $finalConcentration = $this->Salmonella_pa_model->get_all_export();
         // var_dump($finalConcentration);
         // die();
         // Array untuk menyimpan data berdasarkan jumlah tabung
@@ -863,7 +974,7 @@ class Campy_liquids extends CI_Controller
     
         // Set header untuk file Excel
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="Report_All_Liquids_Final_Concentrations.xlsx"');
+        header('Content-Disposition: attachment;filename="Report_All_PA_Final_Concentrations.xlsx"');
         header('Cache-Control: max-age=0');
     
         ob_clean();
@@ -882,24 +993,25 @@ class Campy_liquids extends CI_Controller
     private function setSheetHeaders($sheet, $data, $numberOfTubes) {
         // Set the headers
         $sheet->setCellValue('A1', "ID One Water Sample");
-        $sheet->setCellValue('B1', "Campy Assay Barcode");
+        $sheet->setCellValue('B1', "Salmonella Assay Barcode");
         $sheet->setCellValue('C1', "Initial");
         $sheet->setCellValue('D1', "Sample Type");
         $sheet->setCellValue('E1', "Number of Tubes");
         $sheet->setCellValue('F1', "MPN PCR Conducted");
         $sheet->setCellValue('G1', "Date Sample Processed");
         $sheet->setCellValue('H1', "Time Sample Processed");
-        $sheet->setCellValue('I1', "Filtration  Volume(mL)");
+        $sheet->setCellValue('I1', "Sample Wet Weight");
+        $sheet->setCellValue('J1', "Elution Volume");
     
         // Add Tube Volume headers
         for ($i = 1; $i <= $numberOfTubes; $i++) {
-            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(9 + $i);
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $i);
             $sheet->setCellValue($columnLetter . '1', "Tube $i Volume");
         }
     
         // Add Tube Result headers
         for ($i = 1; $i <= $numberOfTubes; $i++) {
-            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(9 + $numberOfTubes + $i);
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $numberOfTubes + $i);
             $sheet->setCellValue($columnLetter . '1', "Tube $i Result");
         }
     }
@@ -910,20 +1022,21 @@ class Campy_liquids extends CI_Controller
         foreach ($data as $concentration) {
             // Informasi dasar
             $sheet->setCellValue('A' . $numrow, $concentration->id_one_water_sample ?? '');
-            $sheet->setCellValue('B' . $numrow, $concentration->campy_assay_barcode ?? '');
+            $sheet->setCellValue('B' . $numrow, $concentration->salmonella_assay_barcode ?? '');
             $sheet->setCellValue('C' . $numrow, $concentration->initial ?? '');
             $sheet->setCellValue('D' . $numrow, $concentration->sampletype ?? '');
             $sheet->setCellValue('E' . $numrow, $concentration->number_of_tubes ?? '');
             $sheet->setCellValue('F' . $numrow, $concentration->mpn_pcr_conducted ?? '');
             $sheet->setCellValue('G' . $numrow, $concentration->date_sample_processed ?? '');
             $sheet->setCellValue('H' . $numrow, $concentration->time_sample_processed ?? '');
-            $sheet->setCellValue('I' . $numrow, $concentration->elution_volume ?? '');
+            $sheet->setCellValue('I' . $numrow, $concentration->sample_wetweight ?? '');
+            $sheet->setCellValue('J' . $numrow, $concentration->enrichment_media ?? '');
     
             // Mengisi volume tabung
             $tubeIndex = 0;
             foreach ($concentration as $key => $value) {
                 if (strpos($key, 'Tube') === 0) {
-                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
+                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
                     $sheet->setCellValue($columnLetter . $numrow, $value ?? '');
                     $tubeIndex++;
                 }
@@ -931,7 +1044,7 @@ class Campy_liquids extends CI_Controller
     
         // Mengisi hasil tabung
         for ($i = 1; $i <= $numberOfTubes; $i++) {
-            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $numberOfTubes + ($i - 1));
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $numberOfTubes + ($i - 1));
 
             // Mengakses nilai konfirmasi dengan indeks tabung
             $confirmation_value = $concentration->confirmation[$i] ?? 'No Growth'; // Nilai default jika tidak ada konfirmasi
@@ -945,23 +1058,14 @@ class Campy_liquids extends CI_Controller
         }
     }
 
-    public function validateCampyAssayBarcode() {
+    public function validateSalmonellaAssayBarcode() {
         $id = $this->input->get('id');
-        $data = $this->Campy_liquids_model->validateCampyAssayBarcode($id);
+        $data = $this->Salmonella_pa_model->validateSalmonellaAssayBarcode($id);
         header('Content-Type: application/json');
         echo json_encode($data);
     }
 
-    public function barcode_restrict() 
-    {
-        $id = $this->input->get('id1');
-        $data = $this->Campy_liquids_model->barcode_restrict($id);
-        header('Content-Type: application/json');
-        echo json_encode($data);
-    }
-
-    public function saveReview()
-    {
+    public function saveReview() {
         header('Content-Type: application/json');
     
         $id = $this->input->post('id_one_water_sample', true);
@@ -982,11 +1086,11 @@ class Campy_liquids extends CI_Controller
             'user_updated' => $this->session->userdata('id_users'),
             'date_updated' => date('Y-m-d H:i:s')
         ];
-    
-        $this->load->model('Campy_liquids_model');
-    
+
+        $this->load->model('Salmonella_pa_model');
+
         try {
-            $this->Campy_liquids_model->update_campy_liquids($id, $data);
+            $this->Salmonella_pa_model->update_salmonella_pa($id, $data);
             echo json_encode([
                 'status' => true,
                 'message' => 'Review saved successfully.'
@@ -999,8 +1103,7 @@ class Campy_liquids extends CI_Controller
         }
     }
 
-    public function cancelReview()
-    {
+    public function cancelReview() {
         header('Content-Type: application/json');
     
         // Ambil data POST
@@ -1029,9 +1132,9 @@ class Campy_liquids extends CI_Controller
         ];
 
         // Load model dan update data review di database
-        $this->load->model('Campy_liquids_model');
-        $updateResult = $this->Campy_liquids_model->updateCancel($id, $data);
-    
+        $this->load->model('Salmonella_pa_model');
+        $updateResult = $this->Salmonella_pa_model->updateCancel($id, $data);
+
         // Debug log untuk memeriksa hasil update
         log_message('debug', "Update result: " . ($updateResult ? 'Success' : 'Failure'));
     
@@ -1045,156 +1148,6 @@ class Campy_liquids extends CI_Controller
             echo json_encode([
                 'status' => false,
                 'message' => 'Failed to cancel review.'
-            ]);
-        }
-    }
-
-    public function getCalculateMPN() {
-        header('Content-Type: application/json');
-        
-        $id_campy_liquids = $this->input->get('id_campy_liquids', TRUE);
-
-        if (!$id_campy_liquids) {
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'ID Campy Liquids is required.'
-            ]);
-            return;
-        }
-        
-        try {
-            $mpn_data = $this->Campy_liquids_model->get_calculate_mpn_by_campy_liquids($id_campy_liquids);
-
-            if ($mpn_data) {
-                echo json_encode([
-                    'status' => 'success',
-                    'data' => $mpn_data
-                ]);
-            } else {
-                echo json_encode([
-                    'status' => 'not_found',
-                    'message' => 'No MPN calculation found.'
-                ]);
-            }
-        } catch (Exception $e) {
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Error retrieving MPN calculation: ' . $e->getMessage()
-            ]);
-        }
-    }
-
-    public function saveCalculateMPN() {
-        header('Content-Type: application/json');
-        
-        try {
-            // Get form data
-            $mode = $this->input->post('mode_calculateMPN', TRUE);
-            $id_campy_liquids = $this->input->post('id_campy_liquids_mpn', TRUE);
-            $mpn_concentration = $this->input->post('mpn_concentration', FALSE);
-            $upper_ci = $this->input->post('upper_ci', FALSE);
-            $lower_ci = $this->input->post('lower_ci', FALSE);
-            $mpn_concentration_dw = $this->input->post('mpn_concentration_dw', TRUE);
-            $upper_ci_dw = $this->input->post('upper_ci_dw', TRUE);
-            $lower_ci_dw = $this->input->post('lower_ci_dw', TRUE);
-            
-            // Validation
-            if (!$mode || !in_array($mode, ['insert', 'edit'])) {
-                echo json_encode([
-                    'status' => 'error',
-                    'message' => 'Invalid operation mode.'
-                ]);
-                return;
-            }
-            
-            if (!$id_campy_liquids || !$mpn_concentration || !$upper_ci || !$lower_ci) {
-                echo json_encode([
-                    'status' => 'error',
-                    'message' => 'Required fields are missing.'
-                ]);
-                return;
-            }
-            
-            $dt = new DateTime();
-            $user_id = $this->session->userdata('id_users');
-            $lab = $this->session->userdata('lab');
-            
-            if ($mode === 'insert') {
-                // Insert mode
-                $data = array(
-                    'id_campy_liquids' => $id_campy_liquids,
-                    'mpn_concentration' => $mpn_concentration,
-                    'upper_ci' => $upper_ci,
-                    'lower_ci' => $lower_ci,
-                    'mpn_concentration_dw' => $mpn_concentration_dw ?: null,
-                    'upper_ci_dw' => $upper_ci_dw ?: null,
-                    'lower_ci_dw' => $lower_ci_dw ?: null,
-                    'flag' => '0',
-                    'lab' => $lab ? $lab : '1',
-                    'uuid' => $this->uuid->v4(),
-                    'user_created' => $user_id,
-                    'date_created' => $dt->format('Y-m-d H:i:s'),
-                );
-                
-                $insert_id = $this->Campy_liquids_model->insertCalculateMPN($data);
-                
-                if ($insert_id) {
-                    echo json_encode([
-                        'status' => 'success',
-                        'message' => 'MPN calculation saved successfully.',
-                        'id' => $insert_id
-                    ]);
-                } else {
-                    echo json_encode([
-                        'status' => 'error',
-                        'message' => 'Failed to save MPN calculation.'
-                    ]);
-                }
-                
-            } else if ($mode === 'edit') {
-                // Edit mode
-                $id_campy_result_mpn_liquids = $this->input->post('id_campy_result_mpn_liquids', TRUE);
-                
-                if (!$id_campy_result_mpn_liquids) {
-                    echo json_encode([
-                        'status' => 'error',
-                        'message' => 'MPN calculation ID is required for update.'
-                    ]);
-                    return;
-                }
-                
-                $data = array(
-                    'id_campy_liquids' => $id_campy_liquids,
-                    'mpn_concentration' => $mpn_concentration,
-                    'upper_ci' => $upper_ci,
-                    'lower_ci' => $lower_ci,
-                    'mpn_concentration_dw' => $mpn_concentration_dw ?: null,
-                    'upper_ci_dw' => $upper_ci_dw ?: null,
-                    'lower_ci_dw' => $lower_ci_dw ?: null,
-                    'flag' => '0',
-                    'lab' => $lab ? $lab : '1',
-                    'uuid' => $this->uuid->v4(),
-                );
-                
-                $result = $this->Campy_liquids_model->updateCalculateMPN($id_campy_result_mpn_liquids, $data);
-                
-                if ($result) {
-                    echo json_encode([
-                        'status' => 'success',
-                        'message' => 'MPN calculation updated successfully.'
-                    ]);
-                } else {
-                    echo json_encode([
-                        'status' => 'error',
-                        'message' => 'Failed to update MPN calculation.'
-                    ]);
-                }
-            }
-            
-        } catch (Exception $e) {
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Error saving MPN calculation: ' . $e->getMessage()
             ]);
         }
     }

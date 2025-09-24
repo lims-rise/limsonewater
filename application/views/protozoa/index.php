@@ -35,6 +35,7 @@
                                         <th>Conc Copies/G DW Giard</th>
                                         <th>Conc Copies/G DW Crypto</th>
                                         <th>Comment</th>
+                                        <th>Quality Control</th>
                                         <th width="120px">Action</th>
                                     </tr>
                                 </thead>
@@ -173,6 +174,18 @@
                             <label for="mass_analysed" class="col-sm-4 control-label">Mass Analysed (g/dw)</label>
                             <div class="col-sm-8">
                                 <input id="mass_analysed" name="mass_analysed" type="number" step="any" class="form-control" placeholder="Mass Analysed (g/dw)">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Quality Control</label>
+                            <div class="col-sm-8">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="quality_control_protozoa" name="quality_control_protozoa" value="1">
+                                        <strong>Pass</strong> <span class="text-muted">(Check if quality control passed)</span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
 
@@ -558,6 +571,16 @@
         color: #6c757d;
         font-size: 11px;
     }
+
+    .badge-success {
+        background-color: #6A9C89;
+        color: white;
+    }
+
+    .badge-danger {
+        background-color: #dc3545;
+        color: white;
+    }
 </style>
 <!-- SweetAlert2 CSS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -615,6 +638,8 @@
             $('#weight').attr('readonly', true);
             $('#dry_weight_persen').attr('readonly', true);
             $('#mass_analysed').attr('readonly', true);
+            // Reset quality control checkbox for new record
+            $('#quality_control_protozoa').prop('checked', false);
             $('#conc_copies_per_L_giardia').val('');
             $('#conc_copies_per_L_crypto').val('');
             $('#conc_copies_per_g_dw_giardia').val('');
@@ -1165,6 +1190,13 @@
                 },
                 {"data": "comments"},
                 {
+                    "data": "quality_control",
+                    "render": function(data, type, row) {
+                        return data == '1' ? '<span class="badge badge-success"><i class="fa fa-check"></i> Pass</span>' : '<span class="badge badge-danger"><i class="fa fa-times"></i> Not Pass</span>';
+                    },
+                    "className": "text-center"
+                },
+                {
                     "data" : "action",
                     "orderable": false,
                     "className" : "text-center"
@@ -1220,6 +1252,8 @@
             $('#weight').val('');
             $('#dry_weight_persen').val('');
             $('#mass_analysed').val('');
+            // Reset quality control checkbox for new record
+            $('#quality_control_protozoa').prop('checked', false);
             $('#comments').val('');
             $('#compose-modal').modal('show');
         });
@@ -1290,6 +1324,8 @@
             $('#weight').val(data.weight);
             $('#dry_weight_persen').val(data.dry_weight_persen);
             $('#mass_analysed').val(data.mass_analysed);
+            // Set quality control checkbox
+            $('#quality_control_protozoa').prop('checked', data.quality_control == '1');
             $('#weight').attr('readonly', true);
             $('#dry_weight_persen').attr('readonly', true);
             $('#mass_analysed').attr('readonly', true);

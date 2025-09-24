@@ -256,6 +256,7 @@ class Salmonella_biosolids extends CI_Controller
         $dt = new DateTime();
         $date_sample_processed = $this->input->post('date_sample_processed1', TRUE);
         $time_sample_processed = $this->input->post('time_sample_processed1', TRUE);
+        $quality_control = $this->input->post('quality_control_xld', TRUE) ? 1 : 0; // Convert checkbox to integer
     
         if ($mode == "insert") {
             // Insert data into assays table
@@ -263,6 +264,7 @@ class Salmonella_biosolids extends CI_Controller
                 'id_salmonella_biosolids' => $id_salmonella_biosolids,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
+                'quality_control' => $quality_control,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
@@ -307,6 +309,7 @@ class Salmonella_biosolids extends CI_Controller
                 'id_salmonella_biosolids' => $id_salmonella_biosolids,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
+                'quality_control' => $quality_control,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
@@ -361,6 +364,7 @@ class Salmonella_biosolids extends CI_Controller
         $dt = new DateTime();
         $date_sample_processed = $this->input->post('date_sample_processedChromagar', TRUE);
         $time_sample_processed = $this->input->post('time_sample_processedChromagar', TRUE);
+        $quality_control = $this->input->post('quality_control_chromagar', TRUE) ? 1 : 0; // Convert checkbox to integer
     
         if ($mode == "insert") {
             // Insert data into assays table
@@ -368,6 +372,7 @@ class Salmonella_biosolids extends CI_Controller
                 'id_salmonella_biosolids' => $id_salmonella_biosolids,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
+                'quality_control' => $quality_control,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
@@ -408,6 +413,7 @@ class Salmonella_biosolids extends CI_Controller
                 'id_salmonella_biosolids' => $id_salmonella_biosolids,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
+                'quality_control' => $quality_control,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
