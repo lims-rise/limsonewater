@@ -141,6 +141,7 @@
                                             <th>Date of Sample</th>
                                             <th>Time of Sample</th>
                                             <th>Growth Plate</th>
+                                            <th>Quality Control</th>
                                             <th>Action</th>
 										</tr>
 									</thead>
@@ -168,6 +169,7 @@
                                             <th>Date of Sample</th>
                                             <th>Time of Sample</th>
                                             <th>Growth Plate</th>
+                                            <th>Quality Control</th>
                                             <th>Action</th>
 										</tr>
 									</thead>
@@ -382,6 +384,18 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Quality Control</label>
+                                        <div class="col-sm-8">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" id="quality_control" name="quality_control" value="1">
+                                                    <strong>Pass</strong> <span class="text-muted">(Check if quality control passed)</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
 
                             </div>
                             <div class="modal-footer clearfix">
@@ -451,6 +465,21 @@
                                         <label class="col-sm-4 control-label">Growth Plate</label>
                                         <div class="col-sm-8" id="growthPlateInputsHBA">
                                             <!-- Radio buttons akan dihasilkan di sini -->
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Quality Control</label>
+                                        <div class="col-sm-8">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" id="quality_control_hba" name="quality_control_hba" value="1">
+                                                    <strong>Pass</strong> <span class="text-muted">(Check if quality control passed)</span>
+                                                </label>
+                                                <div id="qc_hba_auto_notice" class="text-warning" style="display: none; margin-top: 5px;">
+                                                    <small><em><i class="fa fa-info-circle"></i> Quality Control automatically set to "Not Pass" for auto-generated HBA results</em></small>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -1345,6 +1374,19 @@
 
     const BASE_URL = '/limsonewater/index.php';
 
+    // Simple function to ensure HBA Quality Control is always enabled
+    window.updateHBAQualityControlLogic = function() {
+        // Check if HBA modal is open
+        if ($('#compose-modalHBA').hasClass('in') || $('#compose-modalHBA').is(':visible')) {
+            const qualityControlCheckbox = $('#quality_control_hba');
+            const qcNotice = $('#qc_hba_auto_notice');
+            
+            // Always enable Quality Control - not affected by any growth plates
+            qualityControlCheckbox.prop('disabled', false);
+            qcNotice.hide();
+        }
+    };
+
     $(document).ready(function() {
         // Check for flash messages from controller
         <?php if ($this->session->flashdata('message')): ?>
@@ -2230,6 +2272,13 @@
                 {"data": "time_sample_processed"},
                 {"data": "growth_plate"},
                 {
+                    "data": "quality_control",
+                    "render": function(data, type, row) {
+                        return data == '1' ? '<span class="badge badge-success"><i class="fa fa-check"></i> Pass</span>' : '<span class="badge badge-danger"><i class="fa fa-times"></i> Not Pass</span>';
+                    },
+                    "className": "text-center"
+                },
+                {
                     "data" : "action",
                     "orderable": false,
                     "className" : "text-center"
@@ -2270,6 +2319,17 @@
                 {"data": "date_sample_processed"},
                 {"data": "time_sample_processed"},
                 {"data": "growth_plate"},
+                {
+                    "data": "quality_control",
+                    "render": function(data, type, row) {
+                        if (data == '1') {
+                            return '<span class="badge badge-success"><i class="fa fa-check"></i> Pass</span>';
+                        } else {
+                            return '<span class="badge badge-danger"><i class="fa fa-times"></i> Not Pass</span>';
+                        }
+                    },
+                    "className": "text-center"
+                },
                 {
                     "data" : "action",
                     "orderable": false,
@@ -2486,6 +2546,8 @@
             $('#campy_assay_barcode1').attr('readonly', true);
             $('#id_campy_biosolids1').val(id_campy_biosolids);
             $('#number_of_tubes1').val(number_of_tubes);
+            // Reset quality control checkbox for new record
+            $('#quality_control').prop('checked', false);
             $('#compose-modal').modal('show');
         });
 
@@ -2503,6 +2565,8 @@
             $('#date_sample_processed1').val(data.date_sample_processed);
             $('#time_sample_processed1').val(data.time_sample_processed);
             $('#number_of_tubes1').val(number_of_tubes);
+            // Set quality control checkbox
+            $('#quality_control').prop('checked', data.quality_control == '1');
 
             // Clear existing growthPlateInputs
             let growthPlateInputs = $('#growthPlateInputs');
@@ -2556,6 +2620,11 @@
                 $('#campy_assay_barcodeHBA').attr('readonly', true);
                 $('#number_of_tubesHba').val(number_of_tubes);
 
+                // Reset quality control checkbox for new record
+                $('#quality_control_hba').prop('checked', false);
+                $('#quality_control_hba').prop('disabled', false);
+                $('#qc_hba_auto_notice').hide();
+
                 // Clear existing growthPlateInputs
                 let growthPlateInputsHba = $('#growthPlateInputsHBA');
                 growthPlateInputsHba.empty();
@@ -2592,6 +2661,14 @@
                     );
                 });
 
+                // Quality Control is always enabled for HBA
+                const qualityControlCheckbox = $('#quality_control_hba');
+                const qcNotice = $('#qc_hba_auto_notice');
+
+                // Always enable Quality Control - not affected by charcoal growth plates
+                qualityControlCheckbox.prop('disabled', false);
+                qcNotice.hide();
+
                 $('#compose-modalHBA').modal('show');
             } else {
                 // Tampilkan modal konfirmasi
@@ -2617,6 +2694,9 @@
             $('#date_sample_processedHBA').val(data.date_sample_processed);
             $('#time_sample_processedHBA').val(data.time_sample_processed);
             $('#number_of_tubesHba').val(number_of_tubes);
+
+            // Set quality control checkbox
+            $('#quality_control_hba').prop('checked', data.quality_control == '1');
 
             // Clear existing growthPlateInputs
             let growthPlateInputsHba = $('#growthPlateInputsHBA');
@@ -2654,6 +2734,13 @@
                     </div>`
                 );
             });
+
+            // Quality Control is always enabled - not affected by growth plates
+            const qualityControlCheckbox = $('#quality_control_hba');
+            const qcNotice = $('#qc_hba_auto_notice');
+            
+            qualityControlCheckbox.prop('disabled', false);
+            qcNotice.hide();
             $('#compose-modalHBA').modal('show');
         });
 

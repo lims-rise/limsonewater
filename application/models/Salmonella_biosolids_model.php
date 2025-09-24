@@ -47,7 +47,7 @@ class Salmonella_biosolids_model extends CI_Model
     }
 
     function subjsonXld($id) {
-        $this->datatables->select('srx.id_result_xld, sb.salmonella_assay_barcode, srx.id_salmonella_biosolids, srx.date_sample_processed, srx.time_sample_processed,
+        $this->datatables->select('srx.id_result_xld, sb.salmonella_assay_barcode, srx.id_salmonella_biosolids, srx.date_sample_processed, srx.time_sample_processed, srx.quality_control,
         GROUP_CONCAT(sspcl.black_colony_plate ORDER BY sspcl.plate_number SEPARATOR ", ") AS black_colony_plate, GROUP_CONCAT(sspcl.plate_number ORDER BY sspcl.plate_number SEPARATOR ", ") AS plate_number, srx.flag');
         $this->datatables->from('salmonella_result_xld AS srx');
         $this->datatables->join('salmonella_biosolids AS sb', 'srx.id_salmonella_biosolids = sb.id_salmonella_biosolids', 'left');
@@ -77,7 +77,7 @@ class Salmonella_biosolids_model extends CI_Model
     }
 
     function subjsonChroMagar($id) {
-        $this->datatables->select('src.id_result_chromagar, sb.salmonella_assay_barcode, src.id_salmonella_biosolids, src.date_sample_processed, src.time_sample_processed, 
+        $this->datatables->select('src.id_result_chromagar, sb.salmonella_assay_barcode, src.id_salmonella_biosolids, src.date_sample_processed, src.time_sample_processed, src.quality_control,
         GROUP_CONCAT(ssbcpc.purple_colony_plate ORDER BY ssbcpc.plate_number SEPARATOR ", ") AS purple_colony_plate, GROUP_CONCAT(ssbcpc.plate_number ORDER BY ssbcpc.plate_number SEPARATOR ", ") AS plate_number, src.flag, ssbcpc.id_sample_purple_plate');
         $this->datatables->from('salmonella_result_chromagar AS src');
         $this->datatables->join('salmonella_biosolids AS sb', 'src.id_salmonella_biosolids = sb.id_salmonella_biosolids', 'left');

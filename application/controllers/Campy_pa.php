@@ -84,6 +84,10 @@ class Campy_pa extends CI_Controller
                 'elution_volume' => $row->elution_volume,
                 'vol_sampletube' => $row->vol_sampletube,
                 'tube_number' => $row->tube_number,
+                'full_name' => $row->full_name,
+                'user_review' => $row->user_review,
+                'review' => $row->review,
+                'user_created' => $row->user_created,
                 
             );
             
@@ -253,6 +257,7 @@ class Campy_pa extends CI_Controller
         $dt = new DateTime();
         $date_sample_processed = $this->input->post('date_sample_processed1', TRUE);
         $time_sample_processed = $this->input->post('time_sample_processed1', TRUE);
+        $quality_control = $this->input->post('quality_control', TRUE) ? 1 : 0; // Convert checkbox to integer
     
         if ($mode == "insert") {
             // Insert data into assays table
@@ -260,6 +265,7 @@ class Campy_pa extends CI_Controller
                 'id_campy_pa' => $id_campy_pa,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
+                'quality_control' => $quality_control,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
@@ -298,6 +304,7 @@ class Campy_pa extends CI_Controller
                 'id_campy_pa' => $id_campy_pa,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
+                'quality_control' => $quality_control,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
@@ -334,7 +341,96 @@ class Campy_pa extends CI_Controller
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
+        // Check if auto-generation of HBA results is needed
+        $hba_auto_generated = false;
+        if ($mode == "insert") {
+            $hba_auto_generated = $this->autoGenerateHBAResults($assay_id, $id_campy_pa);
+        } else if ($mode == "edit") {
+            $hba_auto_generated = $this->autoGenerateHBAResults($id_result_charcoal_pa, $id_campy_pa);
+        }
+
+        // Set appropriate flash message
+        if ($hba_auto_generated) {
+            if ($mode == "insert") {
+                $this->session->set_flashdata('message', 'Create Record Success - HBA Results auto-generated');
+            } else {
+                $this->session->set_flashdata('message', 'Update Record Success - HBA Results auto-generated');
+            }
+        }
+
         redirect(site_url("campy_pa/read/" . $id_one_water_sample));
+    }
+
+    /**
+     * Auto-generate HBA results when all growth plates are 0
+     * Based on campy_biosolids implementation
+     * Returns true if HBA was auto-generated, false otherwise
+     */
+    private function autoGenerateHBAResults($id_result_charcoal_pa, $id_campy_pa) {
+        // Get all growth plates for this charcoal result
+        $growth_plates = $this->Campy_pa_model->get_growth_plates_by_charcoal($id_result_charcoal_pa);
+        
+        if (empty($growth_plates)) {
+            return false; // No plates found, nothing to do
+        }
+        
+        // Check if all growth plates are 0
+        $all_plates_zero = true;
+        foreach ($growth_plates as $plate) {
+            if ($plate->growth_plate != '0') {
+                $all_plates_zero = false;
+                break;
+            }
+        }
+        
+        if (!$all_plates_zero) {
+            return false; // Not all plates are 0, no auto-generation needed
+        }
+        
+        // Check if HBA results already exist for this campy_pa
+        $existing_hba = $this->Campy_pa_model->get_hba_by_campy_pa($id_campy_pa);
+        if (!empty($existing_hba)) {
+            return false; // HBA results already exist, don't auto-generate
+        }
+        
+        $dt = new DateTime();
+        
+        // Auto-generate HBA result
+        $hba_data = array(
+            'id_campy_pa' => $id_campy_pa,
+            'date_sample_processed' => date('Y-m-d'),
+            'time_sample_processed' => date('H:i:s'),
+            'quality_control' => 0, // Default 0 for auto-generated HBA
+            'flag' => '0',
+            'lab' => $this->session->userdata('lab'),
+            'uuid' => $this->uuid->v4(),
+            'user_created' => $this->session->userdata('id_users'),
+            'date_created' => $dt->format('Y-m-d H:i:s'),
+        );
+        
+        $hba_id = $this->Campy_pa_model->insertResultsHba($hba_data);
+        
+        if ($hba_id) {
+            // Auto-generate HBA growth plates (all 0 since parent plates were all 0)
+            $number_of_plates = count($growth_plates);
+            for ($i = 1; $i <= $number_of_plates; $i++) {
+                $this->Campy_pa_model->insert_growth_plate_hba(array(
+                    'id_result_hba_pa' => $hba_id,
+                    'plate_number' => $i,
+                    'growth_plate' => '0',
+                    'flag' => '0',
+                    'lab' => $this->session->userdata('lab'),
+                    'uuid' => $this->uuid->v4(),
+                    'user_created' => $this->session->userdata('id_users'),
+                    'date_created' => $dt->format('Y-m-d H:i:s'),
+                ));
+            }
+            
+            log_message('info', "Auto-generated HBA results for campy_pa ID {$id_campy_pa} with {$number_of_plates} plates (all 0)");
+            return true; // Auto-generation successful
+        }
+        
+        return false; // Auto-generation failed
     }
 
     public function saveResultsHBA() {
@@ -346,6 +442,7 @@ class Campy_pa extends CI_Controller
         $dt = new DateTime();
         $date_sample_processed = $this->input->post('date_sample_processedHBA', TRUE);
         $time_sample_processed = $this->input->post('time_sample_processedHBA', TRUE);
+        $quality_control = $this->input->post('quality_control_hba', TRUE) ? 1 : 0; // Convert checkbox to integer
     
         if ($mode == "insert") {
             // Insert data into assays table
@@ -353,6 +450,7 @@ class Campy_pa extends CI_Controller
                 'id_campy_pa' => $id_campy_pa,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
+                'quality_control' => $quality_control,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
@@ -393,6 +491,7 @@ class Campy_pa extends CI_Controller
                 'id_campy_pa' => $id_campy_pa,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
+                'quality_control' => $quality_control,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
@@ -505,37 +604,99 @@ class Campy_pa extends CI_Controller
     public function delete_detailCharcoal($id) {
         $row = $this->Campy_pa_model->get_by_id_charcoal($id);
         if ($row) {
-            $id_parent = $row->id_result_charcoal_pa; // Retrieve project_id before updating the record
+            $id_campy_pa = $row->id_campy_pa;
             $data = array(
                 'flag' => 1,
             );
-    
+
+            // Step 1: Get all HBA results related to this campy_pa
+            $hba_results = $this->Campy_pa_model->get_hba_by_charcoal_id($id_campy_pa);
+            $total_biochemical_deleted = 0;
+            $total_hba_deleted = 0;
+
+            // Step 2: For each HBA, delete related biochemical results
+            foreach ($hba_results as $hba) {
+                $biochemical_results = $this->Campy_pa_model->get_biochemical_by_hba_id($hba->id_result_hba_pa);
+                $biochemical_count = count($biochemical_results);
+                
+                if ($biochemical_count > 0) {
+                    $this->Campy_pa_model->delete_biochemical_by_hba_id($hba->id_result_hba_pa);
+                    $total_biochemical_deleted += $biochemical_count;
+                    
+                    // Log the cascade delete
+                    log_message('info', "Cascade delete: Deleted {$biochemical_count} biochemical results for HBA ID {$hba->id_result_hba_pa}");
+                }
+                
+                $total_hba_deleted++;
+            }
+
+            // Step 3: Delete all HBA results for this campy_pa
+            if ($total_hba_deleted > 0) {
+                $this->Campy_pa_model->delete_hba_by_campy_pa($id_campy_pa);
+                log_message('info', "Cascade delete: Deleted {$total_hba_deleted} HBA results for campy_pa ID {$id_campy_pa}");
+            }
+
+            // Step 4: Delete the charcoal results
             $this->Campy_pa_model->updateResultsCharcoal($id, $data);
             $this->Campy_pa_model->updateResultsGrowthPlate($id, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
+            
+            // Create detailed success message
+            $message = 'Charcoal result deleted successfully';
+            if ($total_hba_deleted > 0) {
+                $message .= " (Also deleted {$total_hba_deleted} HBA result(s)";
+                if ($total_biochemical_deleted > 0) {
+                    $message .= " and {$total_biochemical_deleted} biochemical result(s)";
+                }
+                $message .= ')';
+            }
+            
+            $this->session->set_flashdata('message', $message);
+            log_message('info', "Cascade delete completed: Charcoal ID {$id} - {$message}");
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
-    
-        redirect(site_url('campy_pa/read/'.$id_parent));
+
+        redirect(site_url('campy_pa/read/'.$row->id_campy_pa));
     }
 
     public function delete_detailHba($id) {
         $row = $this->Campy_pa_model->get_by_id_hba($id);
         if ($row) {
-            $id_parent = $row->id_result_charcoal_pa; // Retrieve project_id before updating the record
+            $id_campy_pa = $row->id_campy_pa; // Get campy_pa ID for redirect
             $data = array(
                 'flag' => 1,
             );
     
+            // First, check if there are any biochemical results related to this HBA
+            $biochemical_results = $this->Campy_pa_model->get_biochemical_by_hba_id($id);
+            $biochemical_count = count($biochemical_results);
+            
+            // Delete HBA results (growth plates and main record)
             $this->Campy_pa_model->updateResultsHba($id, $data);
             $this->Campy_pa_model->updateResultsGrowthPlateHba($id, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
+            
+            // Cascade delete: Delete all related biochemical results
+            if ($biochemical_count > 0) {
+                $biochemical_deleted = $this->Campy_pa_model->delete_biochemical_by_hba_id($id);
+                if ($biochemical_deleted) {
+                    $this->session->set_flashdata('message', 
+                        "Delete Record Success - HBA and {$biochemical_count} related Biochemical test(s) deleted to maintain data integrity");
+                } else {
+                    $this->session->set_flashdata('message', 
+                        'HBA deleted successfully, but failed to delete related Biochemical tests. Please check data consistency.');
+                }
+            } else {
+                $this->session->set_flashdata('message', 'Delete Record Success');
+            }
+            
+            // Log the cascade delete for audit purposes
+            log_message('info', "HBA Record deleted (ID: {$id}) with cascade delete of {$biochemical_count} biochemical records");
+            
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
     
-        redirect(site_url('campy_pa/read/'.$id_parent));
+        redirect(site_url('campy_pa/read/'.$id_campy_pa));
     }
 
     public function delete_detailBiochemical($id) {

@@ -134,6 +134,7 @@
                                             <th>Date of Sample</th>
                                             <th>Time of Sample</th>
                                             <th>Black Colony Plate</th>
+                                            <th>Quality Control</th>
                                             <th>Action</th>
 										</tr>
 									</thead>
@@ -168,6 +169,7 @@
                                             <th>Date of Sample</th>
                                             <th>Time of Sample</th>
                                             <th>Purple Colony Plate</th>
+                                            <th>Quality Control</th>
                                             <th>Action</th>
 										</tr>
 									</thead>
@@ -370,6 +372,18 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Quality Control</label>
+                                        <div class="col-sm-8">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" id="quality_control_xld" name="quality_control_xld" value="1">
+                                                    <strong>Pass</strong> <span class="text-muted">(Check if quality control passed)</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
                             </div>
                             <div class="modal-footer clearfix">
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
@@ -438,6 +452,21 @@
                                         <label class="col-sm-4 control-label"> Purple Colony Plate</label>
                                         <div class="col-sm-8" id="purpleColonyPlateInputs">
                                             <!-- Radio buttons akan dihasilkan di sini -->
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Quality Control</label>
+                                        <div class="col-sm-8">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" id="quality_control_chromagar" name="quality_control_chromagar" value="1">
+                                                    <strong>Pass</strong> <span class="text-muted">(Check if quality control passed)</span>
+                                                </label>
+                                                <div id="qc_chromagar_auto_notice" class="text-warning" style="display: none; margin-top: 5px;">
+                                                    <small><em><i class="fa fa-info-circle"></i> Quality Control automatically set to "Not Pass" for auto-generated Chromagar results</em></small>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -1328,100 +1357,100 @@
     // Accept All Tubes functionality removed - auto-processing implemented
     // document.getElementById('acceptAllTubesBtn').addEventListener('click', function() {
     // Auto-processing: Biochemical results are generated automatically after ChroMagar save
-    console.log('Accept All Tubes button functionality replaced with auto-processing');
-                html: `
-                    <div style="text-align: left; margin-top: 15px;">
-                        <p><i class="fa fa-exclamation-triangle" style="color: #f39c12; margin-right: 8px;"></i><strong>XLD or Chromagar data is missing.</strong></p>
-                        <p style="margin-top: 10px;">Please complete both <strong>Results XLD</strong> and <strong>Results Chromagar</strong> data first.</p>
-                    </div>
-                `,
-                icon: 'warning',
-                confirmButtonText: '<i class="fa fa-check"></i> Understood',
-                confirmButtonColor: '#f39c12'
-            });
-            return;
-        }
+    // console.log('Accept All Tubes button functionality replaced with auto-processing');
+    //             html: `
+    //                 <div style="text-align: left; margin-top: 15px;">
+    //                     <p><i class="fa fa-exclamation-triangle" style="color: #f39c12; margin-right: 8px;"></i><strong>XLD or Chromagar data is missing.</strong></p>
+    //                     <p style="margin-top: 10px;">Please complete both <strong>Results XLD</strong> and <strong>Results Chromagar</strong> data first.</p>
+    //                 </div>
+    //             `,
+    //             icon: 'warning',
+    //             confirmButtonText: '<i class="fa fa-check"></i> Understood',
+    //             confirmButtonColor: '#f39c12'
+    //         });
+    //         return;
+    //     }
 
         // Get arrays from the data
-        const purpleColonyPlateArray = dataChromagar.purple_colony_plate.split(', ');
-        const plateNumberArray = dataChromagar.plate_number.split(', ');
-        const blackColonyPlateArray = dataXld.black_colony_plate.split(', ');
+    //     const purpleColonyPlateArray = dataChromagar.purple_colony_plate.split(', ');
+    //     const plateNumberArray = dataChromagar.plate_number.split(', ');
+    //     const blackColonyPlateArray = dataXld.black_colony_plate.split(', ');
 
-        // Prepare confirmation dialog
-        let tubeDetails = '';
-        let totalTubes = plateNumberArray.length;
-        let salmonellaTubes = 0;
-        let notSalmonellaTubes = 0;
+    //     // Prepare confirmation dialog
+    //     let tubeDetails = '';
+    //     let totalTubes = plateNumberArray.length;
+    //     let salmonellaTubes = 0;
+    //     let notSalmonellaTubes = 0;
 
-        for (let i = 0; i < totalTubes; i++) {
-            const tubeNumber = plateNumberArray[i];
-            const xldValue = blackColonyPlateArray[i] || '0';
-            const chromagarValue = purpleColonyPlateArray[i] || '0';
+    //     for (let i = 0; i < totalTubes; i++) {
+    //         const tubeNumber = plateNumberArray[i];
+    //         const xldValue = blackColonyPlateArray[i] || '0';
+    //         const chromagarValue = purpleColonyPlateArray[i] || '0';
             
-            let confirmation = '';
-            if ((parseInt(xldValue) === 0 && parseInt(chromagarValue) === 0) || 
-                (parseInt(xldValue) === 1 && parseInt(chromagarValue) === 0) || (parseInt(xldValue) === 0 && parseInt(chromagarValue) === 1)) {
-                confirmation = 'Not Salmonella';
-                notSalmonellaTubes++;
-            } else if (parseInt(xldValue) === 1 && parseInt(chromagarValue) === 1) {
-                confirmation = 'Salmonella';
-                salmonellaTubes++;
-            }
+    //         let confirmation = '';
+    //         if ((parseInt(xldValue) === 0 && parseInt(chromagarValue) === 0) || 
+    //             (parseInt(xldValue) === 1 && parseInt(chromagarValue) === 0) || (parseInt(xldValue) === 0 && parseInt(chromagarValue) === 1)) {
+    //             confirmation = 'Not Salmonella';
+    //             notSalmonellaTubes++;
+    //         } else if (parseInt(xldValue) === 1 && parseInt(chromagarValue) === 1) {
+    //             confirmation = 'Salmonella';
+    //             salmonellaTubes++;
+    //         }
             
-            tubeDetails += `<tr>
-                <td style="text-align: center;">Tube ${tubeNumber}</td>
-                <td style="text-align: center;">XLD: ${xldValue}, Chromagar: ${chromagarValue}</td>
-                <td style="text-align: center;"><span class="badge ${confirmation === 'Not Salmonella' ? 'badge-danger' : 'badge-success'}">${confirmation}</span></td>
-            </tr>`;
-        }
+    //         tubeDetails += `<tr>
+    //             <td style="text-align: center;">Tube ${tubeNumber}</td>
+    //             <td style="text-align: center;">XLD: ${xldValue}, Chromagar: ${chromagarValue}</td>
+    //             <td style="text-align: center;"><span class="badge ${confirmation === 'Not Salmonella' ? 'badge-danger' : 'badge-success'}">${confirmation}</span></td>
+    //         </tr>`;
+    //     }
 
-        Swal.fire({
-            title: 'Accept All Tubes?',
-            html: `
-                <div style="text-align: left; margin-top: 15px;">
-                    <p><i class="fa fa-info-circle" style="color: #3498db; margin-right: 8px;"></i><strong>You are about to process ${totalTubes} tubes automatically:</strong></p>
-                    <div style="margin: 15px 0;">
-                        <span class="badge badge-success" style="margin-right: 10px;">${salmonellaTubes} Salmonella</span>
-                        <span class="badge badge-danger">${notSalmonellaTubes} Not Salmonella</span>
-                    </div>
+    //     Swal.fire({
+    //         title: 'Accept All Tubes?',
+    //         html: `
+    //             <div style="text-align: left; margin-top: 15px;">
+    //                 <p><i class="fa fa-info-circle" style="color: #3498db; margin-right: 8px;"></i><strong>You are about to process ${totalTubes} tubes automatically:</strong></p>
+    //                 <div style="margin: 15px 0;">
+    //                     <span class="badge badge-success" style="margin-right: 10px;">${salmonellaTubes} Salmonella</span>
+    //                     <span class="badge badge-danger">${notSalmonellaTubes} Not Salmonella</span>
+    //                 </div>
                     
-                    <div style="max-height: 300px; overflow-y: auto; margin-top: 15px;">
-                        <table class="table table-bordered table-sm">
-                            <thead>
-                                <tr style="background-color: #f5f5f5;">
-                                    <th style="text-align: center;">Tube</th>
-                                    <th style="text-align: center;">Values</th>
-                                    <th style="text-align: center;">Result</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${tubeDetails}
-                            </tbody>
-                        </table>
-                    </div>
+    //                 <div style="max-height: 300px; overflow-y: auto; margin-top: 15px;">
+    //                     <table class="table table-bordered table-sm">
+    //                         <thead>
+    //                             <tr style="background-color: #f5f5f5;">
+    //                                 <th style="text-align: center;">Tube</th>
+    //                                 <th style="text-align: center;">Values</th>
+    //                                 <th style="text-align: center;">Result</th>
+    //                             </tr>
+    //                         </thead>
+    //                         <tbody>
+    //                             ${tubeDetails}
+    //                         </tbody>
+    //                     </table>
+    //                 </div>
                     
-                    <hr style="margin: 15px 0;">
-                    <p style="font-size: 13px; color: #666;"><i class="fa fa-warning" style="color: #f39c12; margin-right: 5px;"></i>This action will create biochemical results for all tubes that don't already have data.</p>
-                </div>
-            `,
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: '<i class="fa fa-check"></i> Accept All Tubes',
-            cancelButtonText: '<i class="fa fa-times"></i> Cancel',
-            confirmButtonColor: '#28a745',
-            cancelButtonColor: '#6c757d',
-            customClass: {
-                popup: 'swal-wide'
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Auto-processing: No manual batch processing needed
-                // Biochemical results are automatically generated after ChroMagar save
-                console.log('Auto-processing workflow - no manual tube processing required');
-                // processBatchTubes(dataChromagar, dataXld); // Commented out - auto-processing handles this
-            }
-        });
-    });
+    //                 <hr style="margin: 15px 0;">
+    //                 <p style="font-size: 13px; color: #666;"><i class="fa fa-warning" style="color: #f39c12; margin-right: 5px;"></i>This action will create biochemical results for all tubes that don't already have data.</p>
+    //             </div>
+    //         `,
+    //         icon: 'question',
+    //         showCancelButton: true,
+    //         confirmButtonText: '<i class="fa fa-check"></i> Accept All Tubes',
+    //         cancelButtonText: '<i class="fa fa-times"></i> Cancel',
+    //         confirmButtonColor: '#28a745',
+    //         cancelButtonColor: '#6c757d',
+    //         customClass: {
+    //             popup: 'swal-wide'
+    //         }
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             // Auto-processing: No manual batch processing needed
+    //             // Biochemical results are automatically generated after ChroMagar save
+    //             console.log('Auto-processing workflow - no manual tube processing required');
+    //             // processBatchTubes(dataChromagar, dataXld); // Commented out - auto-processing handles this
+    //         }
+    //     });
+    // });
 
     // Function to process all tubes in batch
     function processBatchTubes(dataChromagar, dataXld) {
@@ -1662,6 +1691,19 @@
     let number_of_tubes = $('#number_of_tubes').val();
     const BASE_URL = '/limsonewater/index.php';
     let idx_one_water_sample = $('#id_one_water_sample').val();
+
+    // Simple function to ensure HBA Quality Control is always enabled
+    window.updateHBAQualityControlLogic = function() {
+        // Check if HBA modal is open
+        if ($('#compose-modalChromagar').hasClass('in') || $('#compose-modalChromagar').is(':visible')) {
+            const qualityControlCheckbox = $('#quality_control_chromagar');
+            const qcNotice = $('#qc_chromagar_auto_notice');
+            
+            // Always enable Quality Control - not affected by any growth plates
+            qualityControlCheckbox.prop('disabled', false);
+            qcNotice.hide();
+        }
+    };
 
     $(document).ready(function() {
        	let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
@@ -2316,6 +2358,13 @@
                 {"data": "time_sample_processed"},
                 {"data": "black_colony_plate"},
                 {
+                    "data": "quality_control",
+                    "render": function(data, type, row) {
+                        return data == '1' ? '<span class="badge badge-success"><i class="fa fa-check"></i> Pass</span>' : '<span class="badge badge-danger"><i class="fa fa-times"></i> Not Pass</span>';
+                    },
+                    "className": "text-center"
+                },
+                {
                     "data" : "action",
                     "orderable": false,
                     "className" : "text-center"
@@ -2360,6 +2409,17 @@
                 {"data": "date_sample_processed"},
                 {"data": "time_sample_processed"},
                 {"data": "purple_colony_plate"},
+                {
+                    "data": "quality_control",
+                    "render": function(data, type, row) {
+                        if (data == '1') {
+                            return '<span class="badge badge-success"><i class="fa fa-check"></i> Pass</span>';
+                        } else {
+                            return '<span class="badge badge-danger"><i class="fa fa-times"></i> Not Pass</span>';
+                        }
+                    },
+                    "className": "text-center"
+                },
                 {
                     "data" : "action",
                     "orderable": false,
@@ -2651,6 +2711,8 @@
             $('#salmonella_assay_barcode1').attr('readonly', true);
             $('#id_salmonella_biosolids1').val(id_salmonella_biosolids);
             $('#number_of_tubes1').val(number_of_tubes);
+            // Reset quality control checkbox for new record
+            $('#quality_control_xld').prop('checked', false);
             $('#compose-modal').modal('show');
         });
 
@@ -2668,6 +2730,9 @@
             $('#date_sample_processed1').val(data.date_sample_processed);
             $('#time_sample_processed1').val(data.time_sample_processed);
             $('#number_of_tubes1').val(number_of_tubes);
+
+            // Set quality control checkbox
+            $('#quality_control_xld').prop('checked', data.quality_control == '1');
 
             // Clear existing blackColonyPlateInputs
             let blackColonyPlateInputs = $('#blackColonyPlateInputs');
@@ -2748,6 +2813,11 @@
                 $('#salmonella_assay_barcodeChromagar').attr('readonly', true);
                 $('#number_of_tubesChromagar').val(number_of_tubes);
 
+                // Reset quality control checkbox for new record
+                $('#quality_control_chromagar').prop('checked', false);
+                $('#quality_control_chromagar').prop('disabled', false);
+                $('#qc_chromagar_auto_notice').hide();
+
                 // Clear existing purpleColonyPlateInputs
                 let purpleColonyPlateInputs = $('#purpleColonyPlateInputs');
                 purpleColonyPlateInputs.empty();
@@ -2784,6 +2854,14 @@
                     );
                 });
 
+                // Quality Control is always enabled for Chromagar
+                const qualityControlCheckbox = $('#quality_control_chromagar');
+                const qcNotice = $('#qc_chromagar_auto_notice');
+
+                // Always enable Quality Control - not affected by charcoal growth plates
+                qualityControlCheckbox.prop('disabled', false);
+                qcNotice.hide();
+
                 $('#compose-modalChroMagar').modal('show');
             } else {
                 // Tampilkan modal konfirmasi
@@ -2809,6 +2887,9 @@
             $('#date_sample_processedChromagar').val(data.date_sample_processed);
             $('#time_sample_processedChromagar').val(data.time_sample_processed);
             $('#number_of_tubesChromagar').val(number_of_tubes);
+
+            // Set quality control checkbox
+            $('#quality_control_chromagar').prop('checked', data.quality_control == '1');
 
             // Clear existing purpleColonyPlateInputs
             let purpleColonyPlateInputs = $('#purpleColonyPlateInputs');
@@ -2844,6 +2925,13 @@
                     </div>`
                 );
             });
+
+            // Quality Control is always enabled - not affected by growth plates
+            const qualityControlCheckbox = $('#quality_control_chromagar');
+            const qcNotice = $('#qc_chromagar_auto_notice');
+
+            qualityControlCheckbox.prop('disabled', false);
+            qcNotice.hide();
             $('#compose-modalChroMagar').modal('show');
         });
 

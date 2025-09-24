@@ -134,6 +134,7 @@
                                             <th>Date of Sample</th>
                                             <th>Time of Sample</th>
                                             <th>Black Colony Plate</th>
+                                            <th>Quality Control</th>
                                             <th>Action</th>
 										</tr>
 									</thead>
@@ -168,6 +169,7 @@
                                             <th>Date of Sample</th>
                                             <th>Time of Sample</th>
                                             <th>Purple Colony Plate</th>
+                                            <th>Quality Control</th>
                                             <th>Action</th>
 										</tr>
 									</thead>
@@ -391,6 +393,18 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Quality Control</label>
+                                        <div class="col-sm-8">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" id="quality_control_xld" name="quality_control_xld" value="1">
+                                                    <strong>Pass</strong> <span class="text-muted">(Check if quality control passed)</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
 
                             </div>
                             <div class="modal-footer clearfix">
@@ -460,6 +474,21 @@
                                         <label class="col-sm-4 control-label"> Purple Colony Plate</label>
                                         <div class="col-sm-8" id="purpleColonyPlateInputs">
                                             <!-- Radio buttons akan dihasilkan di sini -->
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Quality Control</label>
+                                        <div class="col-sm-8">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" id="quality_control_chromagar" name="quality_control_chromagar" value="1">
+                                                    <strong>Pass</strong> <span class="text-muted">(Check if quality control passed)</span>
+                                                </label>
+                                                <div id="qc_chromagar_auto_notice" class="text-warning" style="display: none; margin-top: 5px;">
+                                                    <small><em><i class="fa fa-info-circle"></i> Quality Control automatically set to "Not Pass" for auto-generated Chromagar results</em></small>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -1309,7 +1338,7 @@
     });
 </script>
 <!-- Auto-processing enabled: Biochemical results automatically generated after XLD and Chromagar save -->
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     let table;
     let table1;
     let table2;
@@ -1329,7 +1358,7 @@
         // Function to calculate MPN per gram dry weight values
         });
     }
-</script>
+</script> -->
 <script type="text/javascript">
 
     let table;
@@ -1341,6 +1370,19 @@
     let number_of_tubes = $('#number_of_tubes').val();
     const BASE_URL = '/limsonewater/index.php';
     let idx_one_water_sample = $('#id_one_water_sample').val();
+
+    // Simple function to ensure HBA Quality Control is always enabled
+    window.updateHBAQualityControlLogic = function() {
+        // Check if HBA modal is open
+        if ($('#compose-modalChromagar').hasClass('in') || $('#compose-modalChromagar').is(':visible')) {
+            const qualityControlCheckbox = $('#quality_control_chromagar');
+            const qcNotice = $('#qc_chromagar_auto_notice');
+            
+            // Always enable Quality Control - not affected by any growth plates
+            qualityControlCheckbox.prop('disabled', false);
+            qcNotice.hide();
+        }
+    };
 
     $(document).ready(function() {
        	let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
@@ -1971,6 +2013,13 @@
                 {"data": "time_sample_processed"},
                 {"data": "black_colony_plate"},
                 {
+                    "data": "quality_control",
+                    "render": function(data, type, row) {
+                        return data == '1' ? '<span class="badge badge-success"><i class="fa fa-check"></i> Pass</span>' : '<span class="badge badge-danger"><i class="fa fa-times"></i> Not Pass</span>';
+                    },
+                    "className": "text-center"
+                },
+                {
                     "data" : "action",
                     "orderable": false,
                     "className" : "text-center"
@@ -2015,6 +2064,17 @@
                 {"data": "date_sample_processed"},
                 {"data": "time_sample_processed"},
                 {"data": "purple_colony_plate"},
+                {
+                    "data": "quality_control",
+                    "render": function(data, type, row) {
+                        if (data == '1') {
+                            return '<span class="badge badge-success"><i class="fa fa-check"></i> Pass</span>';
+                        } else {
+                            return '<span class="badge badge-danger"><i class="fa fa-times"></i> Not Pass</span>';
+                        }
+                    },
+                    "className": "text-center"
+                },
                 {
                     "data" : "action",
                     "orderable": false,
@@ -2176,6 +2236,8 @@
             $('#salmonella_assay_barcode1').attr('readonly', true);
             $('#id_salmonella_liquids1').val(id_salmonella_liquids);
             $('#number_of_tubes1').val(number_of_tubes);
+            // Reset quality control checkbox for new record
+            $('#quality_control_xld').prop('checked', false);
             $('#compose-modal').modal('show');
         });
 
@@ -2193,6 +2255,9 @@
             $('#date_sample_processed1').val(data.date_sample_processed);
             $('#time_sample_processed1').val(data.time_sample_processed);
             $('#number_of_tubes1').val(number_of_tubes);
+
+            // Set quality control checkbox
+            $('#quality_control_xld').prop('checked', data.quality_control == '1');
 
             // Clear existing blackColonyPlateInputs
             let blackColonyPlateInputs = $('#blackColonyPlateInputs');
@@ -2274,6 +2339,11 @@
                 $('#salmonella_assay_barcodeChromagar').attr('readonly', true);
                 $('#number_of_tubesChromagar').val(number_of_tubes);
 
+                // Reset quality control checkbox for new record
+                $('#quality_control_chromagar').prop('checked', false);
+                $('#quality_control_chromagar').prop('disabled', false);
+                $('#qc_chromagar_auto_notice').hide();
+
                 // Clear existing purpleColonyPlateInputs
                 let purpleColonyPlateInputs = $('#purpleColonyPlateInputs');
                 purpleColonyPlateInputs.empty();
@@ -2309,6 +2379,14 @@
                     );
                 });
 
+                // Quality Control is always enabled for Chromagar
+                const qualityControlCheckbox = $('#quality_control_chromagar');
+                const qcNotice = $('#qc_chromagar_auto_notice');
+
+                // Always enable Quality Control - not affected by charcoal growth plates
+                qualityControlCheckbox.prop('disabled', false);
+                qcNotice.hide();
+
                 $('#compose-modalChroMagar').modal('show');
             } else {
                 // Tampilkan modal konfirmasi
@@ -2334,6 +2412,9 @@
             $('#date_sample_processedChromagar').val(data.date_sample_processed);
             $('#time_sample_processedChromagar').val(data.time_sample_processed);
             $('#number_of_tubesChromagar').val(number_of_tubes);
+
+            // Set quality control checkbox
+            $('#quality_control_chromagar').prop('checked', data.quality_control == '1');
 
             // Clear existing purpleColonyPlateInputs
             let purpleColonyPlateInputs = $('#purpleColonyPlateInputs');
@@ -2368,6 +2449,13 @@
                     </div>`
                 );
             });
+
+            // Quality Control is always enabled - not affected by growth plates
+            const qualityControlCheckbox = $('#quality_control_chromagar');
+            const qcNotice = $('#qc_chromagar_auto_notice');
+
+            qualityControlCheckbox.prop('disabled', false);
+            qcNotice.hide();
             $('#compose-modalChroMagar').modal('show');
         });
 

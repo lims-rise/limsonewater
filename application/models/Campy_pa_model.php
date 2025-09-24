@@ -45,7 +45,7 @@ class Campy_pa_model extends CI_Model
 
     function subjsonCharcoal($id) {
         $this->datatables->select('rcp.id_result_charcoal_pa, cbp.campy_assay_barcode, rcp.id_campy_pa, rcp.date_sample_processed, rcp.time_sample_processed,
-        GROUP_CONCAT(sgpp.growth_plate ORDER BY sgpp.plate_number SEPARATOR ", ") AS growth_plate, GROUP_CONCAT(sgpp.plate_number ORDER BY sgpp.plate_number SEPARATOR ", ") AS plate_number, rcp.flag');
+        GROUP_CONCAT(sgpp.growth_plate ORDER BY sgpp.plate_number SEPARATOR ", ") AS growth_plate, GROUP_CONCAT(sgpp.plate_number ORDER BY sgpp.plate_number SEPARATOR ", ") AS plate_number, rcp.flag, rcp.quality_control');
         $this->datatables->from('campy_result_charcoal_pa AS rcp');
         $this->datatables->join('campy_pa AS cbp', 'rcp.id_campy_pa = cbp.id_campy_pa', 'left');
         $this->datatables->join('campy_sample_growth_plate_pa AS sgpp', 'rcp.id_result_charcoal_pa = sgpp.id_result_charcoal_pa', 'left');
@@ -75,7 +75,7 @@ class Campy_pa_model extends CI_Model
 
     function subjsonHba($id) {
         $this->datatables->select('rhp.id_result_hba_pa, cbp.campy_assay_barcode, rhp.id_campy_pa, rhp.date_sample_processed, rhp.time_sample_processed, 
-        GROUP_CONCAT(sgphp.growth_plate ORDER BY sgphp.plate_number SEPARATOR ", ") AS growth_plate, GROUP_CONCAT(sgphp.plate_number ORDER BY sgphp.plate_number SEPARATOR ", ") AS plate_number, rhp.flag, sgphp.id_sample_plate_hba_pa');
+        GROUP_CONCAT(sgphp.growth_plate ORDER BY sgphp.plate_number SEPARATOR ", ") AS growth_plate, GROUP_CONCAT(sgphp.plate_number ORDER BY sgphp.plate_number SEPARATOR ", ") AS plate_number, rhp.flag, sgphp.id_sample_plate_hba_pa, rhp.quality_control');
         $this->datatables->from('campy_result_hba_pa AS rhp');
         $this->datatables->join('campy_pa AS cbp', 'rhp.id_campy_pa = cbp.id_campy_pa', 'left');
         $this->datatables->join('campy_sample_growth_plate_hba_pa AS sgphp', 'rhp.id_result_hba_pa = sgphp.id_result_hba_pa', 'left');
@@ -128,23 +128,154 @@ class Campy_pa_model extends CI_Model
         return $this->datatables->generate();
     }
 
+    // function subjsonFinalConcentration($id)
+    // {
+    //     $response = array();
+    
+    //     // Step 1: Get unique tube_number
+    //     $this->db->select('tube_number');
+    //     $this->db->distinct();
+    //     $this->db->from('campy_sample_volumes_pa');
+    //     $this->db->where('id_campy_pa', $id);
+    //     $this->db->order_by('tube_number', 'ASC'); // Tambahkan pengurutan
+    //     $tube_numbers = $this->db->get()->result_array();
+    
+    //     // Check if tube numbers are empty
+    //     if (empty($tube_numbers)) {
+    //         return []; // Handle case where no tube numbers found
+    //     }
+    
+    //     // Step 2: Create case query for pivot
+    //     $case_statements = [];
+    //     foreach ($tube_numbers as $row) {
+    //         $tube_number = $row['tube_number'];
+    //         $case_statements[] = "MAX(CASE WHEN svp1.tube_number = {$tube_number} THEN svp1.vol_sampletube END) AS `Tube {$tube_number}`";
+    //     }
+    //     $case_query = implode(', ', $case_statements);
+    
+    //     // Final query
+    //     $this->db->select("cbp.id_one_water_sample, cbp.id_person, rp.initial, cbp.mpn_pcr_conducted, cbp.number_of_tubes, cbp.campy_assay_barcode, 
+    //                     cbp.date_sample_processed, 
+    //                     cbp.time_sample_processed, 
+    //                     cbp.sample_wetweight, 
+    //                     cbp.elution_volume, 
+    //                     rs.sampletype,
+    //                        $case_query, 
+    //                        GROUP_CONCAT(DISTINCT rbp.biochemical_tube ORDER BY rbp.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
+    //                        GROUP_CONCAT(DISTINCT CONCAT(rbp.biochemical_tube, ':', rbp.confirmation) ORDER BY rbp.biochemical_tube SEPARATOR ', ') AS confirmation,
+    //                        GROUP_CONCAT(DISTINCT sgphp.plate_number ORDER BY sgphp.plate_number SEPARATOR ', ') AS plate_numbers");
+    //     $this->db->from('campy_pa AS cbp');
+    //     $this->db->join('campy_result_hba_pa AS rhp', 'cbp.id_campy_pa = rhp.id_campy_pa', 'left');
+    //     $this->db->join('campy_sample_growth_plate_hba_pa AS sgphp', 'rhp.id_result_hba_pa = sgphp.id_result_hba_pa', 'left');
+    //     $this->db->join('campy_sample_volumes_pa AS svp1', 'rhp.id_campy_pa = svp1.id_campy_pa', 'left');
+    //     $this->db->join('campy_result_biochemical_pa AS rbp', 'sgphp.id_result_hba_pa = rbp.id_result_hba_pa AND rbp.flag = 0', 'left');
+    //     $this->db->join('ref_sampletype AS rs', 'cbp.id_sampletype = rs.id_sampletype', 'left');
+    //     $this->db->join('ref_person AS rp',  'cbp.id_person = rp.id_person', 'left');
+    
+    //     // Conditions
+    //     $this->db->where('rhp.flag', '0');
+    //     $this->db->where('rhp.id_campy_pa', $id);
+    //     $this->db->group_by('rhp.id_result_hba_pa');
+    
+    //     $q = $this->db->get();
+    
+    //     if ($q->num_rows() > 0) {
+    //         $response = $q->result(); // Fetch all results if available
+    //         foreach ($response as $key => $value) {
+    //             $confirmations = !empty($value->confirmation) ? explode(',', $value->confirmation) : [];
+    //             $biochemical_tubes = !empty($value->biochemical_tube) ? explode(',', $value->biochemical_tube) : [];
+    
+    //             $confirmation_array = []; // Inisialisasi array konfirmasi
+
+    //             // Membuat array asosiasi untuk konfirmasi
+    //             if (!empty($biochemical_tubes) && !empty($confirmations)) {
+    //                 foreach ($biochemical_tubes as $index => $tube) {
+    //                     $confirmation_array[$tube] = explode(':', $confirmations[$index] ?? 'No Growth Plate')[1] ?? 'No Growth Plate'; // Menyediakan default
+    //                 }
+    //             }
+    //             $value->confirmation = $confirmation_array; // Assign confirmation yang sudah diproses
+    //         }
+    //     }
+    
+    //     return $response;
+    // }
+
     function subjsonFinalConcentration($id)
     {
         $response = array();
-    
-        // Step 1: Get unique tube_number
+
+        // Step 1: Cek apakah ada data HBA/Biochemical
+        $this->db->select('COUNT(*) as count');
+        $this->db->from('campy_result_hba_pa');
+        $this->db->where('id_campy_pa', $id);
+        $has_hba_data = $this->db->get()->row()->count > 0;
+
+        // Step 2: Query berdasarkan ketersediaan data
+        if ($has_hba_data) {
+            // Gunakan query lengkap seperti sekarang
+            return $this->getFullConcentrationData($id);
+        } else {
+            // Gunakan query basic untuk menampilkan struktur table
+            return $this->getBasicConcentrationData($id);
+        }
+    }
+
+    private function getBasicConcentrationData($id) 
+    {
+        // Step 1: Get unique tube_number untuk membuat case query
         $this->db->select('tube_number');
         $this->db->distinct();
         $this->db->from('campy_sample_volumes_pa');
         $this->db->where('id_campy_pa', $id);
-        $this->db->order_by('tube_number', 'ASC'); // Tambahkan pengurutan
+        $this->db->order_by('tube_number', 'ASC');
         $tube_numbers = $this->db->get()->result_array();
-    
+
+        // Step 2: Create case query for pivot (sama seperti di getFullConcentrationData)
+        $case_statements = [];
+        foreach ($tube_numbers as $row) {
+            $tube_number = $row['tube_number'];
+            $case_statements[] = "MAX(CASE WHEN svp1.tube_number = {$tube_number} THEN svp1.vol_sampletube END) AS `Tube {$tube_number}`";
+        }
+        $case_query = implode(', ', $case_statements);
+
+        // Step 3: Query yang hanya mengambil data dari tabel utama + volumes
+        // Tanpa bergantung pada HBA/Biochemical
+        $this->db->select("cbp.id_one_water_sample, cbp.id_person, rp.initial, 
+                        cbp.mpn_pcr_conducted, cbp.number_of_tubes, cbp.campy_assay_barcode, 
+                        cbp.date_sample_processed, cbp.time_sample_processed, 
+                        cbp.sample_wetweight, cbp.elution_volume, rs.sampletype,
+                        {$case_query},
+                        '' AS biochemical_tube,
+                        '' AS confirmation,
+                        '' AS plate_numbers");
+        $this->db->from('campy_pa AS cbp');
+        $this->db->join('campy_sample_volumes_pa AS svp1', 'cbp.id_campy_pa = svp1.id_campy_pa', 'left');
+        $this->db->join('ref_sampletype AS rs', 'cbp.id_sampletype = rs.id_sampletype', 'left');
+        $this->db->join('ref_person AS rp', 'cbp.id_person = rp.id_person', 'left');
+        $this->db->where('cbp.id_campy_pa', $id);
+        $this->db->group_by('cbp.id_campy_pa'); // Group by main table, bukan HBA
+        
+        return $this->db->get()->result();
+    }
+
+
+    private function getFullConcentrationData($id)
+    {
+        $response = array();
+
+        // Step 1: Get unique tube_number terlebih dahulu
+        $this->db->select('tube_number');
+        $this->db->distinct();
+        $this->db->from('campy_sample_volumes_pa');
+        $this->db->where('id_campy_pa', $id);
+        $this->db->order_by('tube_number', 'ASC');
+        $tube_numbers = $this->db->get()->result_array();
+
         // Check if tube numbers are empty
         if (empty($tube_numbers)) {
-            return []; // Handle case where no tube numbers found
+            return [];
         }
-    
+
         // Step 2: Create case query for pivot
         $case_statements = [];
         foreach ($tube_numbers as $row) {
@@ -152,18 +283,18 @@ class Campy_pa_model extends CI_Model
             $case_statements[] = "MAX(CASE WHEN svp1.tube_number = {$tube_number} THEN svp1.vol_sampletube END) AS `Tube {$tube_number}`";
         }
         $case_query = implode(', ', $case_statements);
-    
-        // Final query
+
+        // Step 3: Final query lengkap dengan semua JOIN
         $this->db->select("cbp.id_one_water_sample, cbp.id_person, rp.initial, cbp.mpn_pcr_conducted, cbp.number_of_tubes, cbp.campy_assay_barcode, 
                         cbp.date_sample_processed, 
                         cbp.time_sample_processed, 
                         cbp.sample_wetweight, 
                         cbp.elution_volume, 
                         rs.sampletype,
-                           $case_query, 
-                           GROUP_CONCAT(DISTINCT rbp.biochemical_tube ORDER BY rbp.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
-                           GROUP_CONCAT(DISTINCT CONCAT(rbp.biochemical_tube, ':', rbp.confirmation) ORDER BY rbp.biochemical_tube SEPARATOR ', ') AS confirmation,
-                           GROUP_CONCAT(DISTINCT sgphp.plate_number ORDER BY sgphp.plate_number SEPARATOR ', ') AS plate_numbers");
+                        $case_query, 
+                        GROUP_CONCAT(DISTINCT rbp.biochemical_tube ORDER BY rbp.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
+                        GROUP_CONCAT(DISTINCT CONCAT(rbp.biochemical_tube, ':', rbp.confirmation) ORDER BY rbp.biochemical_tube SEPARATOR ', ') AS confirmation,
+                        GROUP_CONCAT(DISTINCT sgphp.plate_number ORDER BY sgphp.plate_number SEPARATOR ', ') AS plate_numbers");
         $this->db->from('campy_pa AS cbp');
         $this->db->join('campy_result_hba_pa AS rhp', 'cbp.id_campy_pa = rhp.id_campy_pa', 'left');
         $this->db->join('campy_sample_growth_plate_hba_pa AS sgphp', 'rhp.id_result_hba_pa = sgphp.id_result_hba_pa', 'left');
@@ -171,35 +302,34 @@ class Campy_pa_model extends CI_Model
         $this->db->join('campy_result_biochemical_pa AS rbp', 'sgphp.id_result_hba_pa = rbp.id_result_hba_pa AND rbp.flag = 0', 'left');
         $this->db->join('ref_sampletype AS rs', 'cbp.id_sampletype = rs.id_sampletype', 'left');
         $this->db->join('ref_person AS rp',  'cbp.id_person = rp.id_person', 'left');
-    
+
         // Conditions
-        $this->db->where('rbp.flag', '0');
+        $this->db->where('rhp.flag', '0');
         $this->db->where('rhp.id_campy_pa', $id);
         $this->db->group_by('rhp.id_result_hba_pa');
-    
+
         $q = $this->db->get();
-    
+
         if ($q->num_rows() > 0) {
-            $response = $q->result(); // Fetch all results if available
+            $response = $q->result();
             foreach ($response as $key => $value) {
                 $confirmations = !empty($value->confirmation) ? explode(',', $value->confirmation) : [];
                 $biochemical_tubes = !empty($value->biochemical_tube) ? explode(',', $value->biochemical_tube) : [];
-    
+
                 $confirmation_array = []; // Inisialisasi array konfirmasi
 
                 // Membuat array asosiasi untuk konfirmasi
                 if (!empty($biochemical_tubes) && !empty($confirmations)) {
                     foreach ($biochemical_tubes as $index => $tube) {
-                        $confirmation_array[$tube] = explode(':', $confirmations[$index] ?? 'No Growth Plate')[1] ?? 'No Growth Plate'; // Menyediakan default
+                        $confirmation_array[$tube] = explode(':', $confirmations[$index] ?? 'No Growth Plate')[1] ?? 'No Growth Plate';
                     }
                 }
                 $value->confirmation = $confirmation_array; // Assign confirmation yang sudah diproses
             }
         }
-    
+
         return $response;
     }
-
 
 
     function get_export($id) {
@@ -366,11 +496,16 @@ class Campy_pa_model extends CI_Model
       $this->db->select('cbp.id_campy_pa, cbp.id_one_water_sample, cbp.id_person, rp.initial, cbp.number_of_tubes,
         cbp.id_sampletype, rs.sampletype, cbp.mpn_pcr_conducted, cbp.campy_assay_barcode, cbp.date_sample_processed,
         cbp.time_sample_processed, cbp.time_sample_processed, cbp.sample_wetweight, cbp.elution_volume,
+        cbp.user_review, 
+        cbp.review, 
+        user.full_name,
+        cbp.user_created, 
         GROUP_CONCAT(svp.vol_sampletube ORDER BY svp.tube_number SEPARATOR ", ") AS vol_sampletube, GROUP_CONCAT(svp.tube_number ORDER BY svp.tube_number SEPARATOR ", ") AS tube_number');
       $this->db->from('campy_pa AS cbp');
       $this->db->join('ref_sampletype AS rs', 'cbp.id_sampletype = rs.id_sampletype', 'left');
       $this->datatables->join('campy_sample_volumes_pa AS svp', 'cbp.id_campy_pa = svp.id_campy_pa', 'left');
       $this->db->join('ref_person AS rp',  'cbp.id_person = rp.id_person', 'left');
+      $this->db->join('tbl_user user', 'cbp.user_review = user.id_users', 'left');
       $this->db->where('cbp.id_one_water_sample', $id);
       $this->db->where('cbp.flag', '0');
       $q = $this->db->get();
@@ -566,6 +701,76 @@ class Campy_pa_model extends CI_Model
         $this->db->update('campy_result_biochemical_pa', $data);
     }
 
+    function update_campy_pa($id_one_water_sample, $data)
+    {
+        $this->db->where('id_one_water_sample', $id_one_water_sample);
+        $this->db->update('campy_pa', $data);
+    }
+
+    function updateCancel($id, $data)
+    {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->update('campy_pa', $data);
+
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Methods for autoGenerateHBAResults functionality
+    function get_growth_plates_by_charcoal($id_result_charcoal_pa) {
+        $this->db->where('id_result_charcoal_pa', $id_result_charcoal_pa);
+        $this->db->where('flag', '0');
+        return $this->db->get('campy_sample_growth_plate_pa')->result();
+    }
+
+    function get_hba_by_campy_pa($id_campy_pa) {
+        $this->db->where('id_campy_pa', $id_campy_pa);
+        $this->db->where('flag', '0');
+        return $this->db->get('campy_result_hba_pa')->result();
+    }
+
+    // Methods for cascade delete functionality
+    function get_hba_by_charcoal_id($id_campy_pa) {
+        $this->db->where('id_campy_pa', $id_campy_pa);
+        $this->db->where('flag', '0');
+        return $this->db->get('campy_result_hba_pa')->result();
+    }
+
+    function get_biochemical_by_hba_id($id_result_hba_pa) {
+        $this->db->where('id_result_hba_pa', $id_result_hba_pa);
+        $this->db->where('flag', '0');
+        return $this->db->get('campy_result_biochemical_pa')->result();
+    }
+
+    function delete_hba_by_campy_pa($id_campy_pa) {
+        $data = array('flag' => 1);
+        
+        // Get all HBA results first before updating
+        $hba_results = $this->get_hba_by_campy_pa($id_campy_pa);
+        
+        // Delete HBA records
+        $this->db->where('id_campy_pa', $id_campy_pa);
+        $this->db->where('flag', '0');
+        $this->db->update('campy_result_hba_pa', $data);
+        
+        // Delete growth plates for each HBA using existing method
+        foreach ($hba_results as $hba) {
+            $this->delete_growth_plates_hba($hba->id_result_hba_pa);
+        }
+        
+        return count($hba_results);
+    }
+
+    function delete_biochemical_by_hba_id($id_result_hba_pa) {
+        $data = array('flag' => 1);
+        $this->db->where('id_result_hba_pa', $id_result_hba_pa);
+        $this->db->where('flag', '0');
+        $this->db->update('campy_result_biochemical_pa', $data);
+        return $this->db->affected_rows();
+    }
       
 }
 

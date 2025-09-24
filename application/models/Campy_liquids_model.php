@@ -47,7 +47,7 @@ class Campy_liquids_model extends CI_Model
     }
 
     function subjsonCharcoal($id) {
-        $this->datatables->select('rcl.id_result_charcoal_liquids, cl.campy_assay_barcode, rcl.id_campy_liquids, rcl.date_sample_processed, rcl.time_sample_processed,
+        $this->datatables->select('rcl.id_result_charcoal_liquids, cl.campy_assay_barcode, rcl.id_campy_liquids, rcl.date_sample_processed, rcl.time_sample_processed, rcl.quality_control,
         GROUP_CONCAT(sgpl.growth_plate ORDER BY sgpl.plate_number SEPARATOR ", ") AS growth_plate, GROUP_CONCAT(sgpl.plate_number ORDER BY sgpl.plate_number SEPARATOR ", ") AS plate_number, rcl.flag');
         $this->datatables->from('campy_result_charcoal_liquids AS rcl');
         $this->datatables->join('campy_liquids AS cl', 'rcl.id_campy_liquids = cl.id_campy_liquids', 'left');
@@ -77,7 +77,7 @@ class Campy_liquids_model extends CI_Model
     }
 
     function subjsonHba($id) {
-        $this->datatables->select('rhl.id_result_hba_liquids, cl.campy_assay_barcode, rhl.id_campy_liquids, rhl.date_sample_processed, rhl.time_sample_processed, 
+        $this->datatables->select('rhl.id_result_hba_liquids, cl.campy_assay_barcode, rhl.id_campy_liquids, rhl.date_sample_processed, rhl.time_sample_processed, rhl.quality_control,
         GROUP_CONCAT(sgphl.growth_plate ORDER BY sgphl.plate_number SEPARATOR ", ") AS growth_plate, GROUP_CONCAT(sgphl.plate_number ORDER BY sgphl.plate_number SEPARATOR ", ") AS plate_number, rhl.flag, sgphl.id_sample_plate_hba_liquids');
         $this->datatables->from('campy_result_hba_liquids AS rhl');
         $this->datatables->join('campy_liquids AS cl', 'rhl.id_campy_liquids = cl.id_campy_liquids', 'left');
