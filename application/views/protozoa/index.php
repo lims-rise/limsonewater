@@ -30,12 +30,13 @@
                                         <th>Weight</th>
                                         <th>Dry Weight %</th>
                                         <th>Mass Analyzed</th>
-                                        <th>Conc Copies/L Giard</th>
-                                        <th>Conc Copies/L Crypto</th>
-                                        <th>Conc Copies/G DW Giard</th>
-                                        <th>Conc Copies/G DW Crypto</th>
+                                        <th>Conc Cp/L Giard</th>
+                                        <th>Conc Cp/G DW Giard</th>
+                                         <th>Giardia QC</th>
+                                        <th>Conc Cp/L Crypto</th>
+                                        <th>Conc Cp/G DW Crypto</th>
+                                        <th>Crypto QC</th>
                                         <th>Comment</th>
-                                        <th>Quality Control</th>
                                         <th width="120px">Action</th>
                                     </tr>
                                 </thead>
@@ -178,28 +179,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Quality Control</label>
-                            <div class="col-sm-8">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="quality_control_protozoa" name="quality_control_protozoa" value="1">
-                                        <strong>Pass</strong> <span class="text-muted">(Check if quality control passed)</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
                             <label for="conc_copies_per_L_giardia" class="col-sm-4 control-label">Concentration (copies/L) (Giardia)</label>
                             <div class="col-sm-8">
                                 <input id="conc_copies_per_L_giardia" name="conc_copies_per_L_giardia" type="text" step="any" class="form-control" placeholder="Concentration (copies/L) (Giardia)">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="conc_copies_per_L_crypto" class="col-sm-4 control-label">Concentration (copies/L) (Crypto)</label>
-                            <div class="col-sm-8">
-                                <input id="conc_copies_per_L_crypto" name="conc_copies_per_L_crypto" type="text" step="any" class="form-control" placeholder="Concentration (copies/L) (Crypto)">
                             </div>
                         </div>
 
@@ -211,9 +193,40 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-sm-4 control-label">Giardia Quality Control</label>
+                            <div class="col-sm-8">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="quality_control_giardia" name="quality_control_giardia" value="1">
+                                        <strong>Pass</strong> <span class="text-muted">(Check if quality control passed)</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="conc_copies_per_L_crypto" class="col-sm-4 control-label">Concentration (copies/L) (Crypto)</label>
+                            <div class="col-sm-8">
+                                <input id="conc_copies_per_L_crypto" name="conc_copies_per_L_crypto" type="text" step="any" class="form-control" placeholder="Concentration (copies/L) (Crypto)">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label for="conc_copies_per_g_dw_crypto" class="col-sm-4 control-label">Concentration (copies/g DW) (Crypto)</label>
                             <div class="col-sm-8">
                                 <input id="conc_copies_per_g_dw_crypto" name="conc_copies_per_g_dw_crypto" type="text" step="any" class="form-control" placeholder="Concentration (copies/g DW) (Crypto)">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Crypto Quality Control</label>
+                            <div class="col-sm-8">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="quality_control_crypto" name="quality_control_crypto" value="1">
+                                        <strong>Pass</strong> <span class="text-muted">(Check if quality control passed)</span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
 
@@ -414,6 +427,16 @@
         justify-content: center;
     }
 
+    .badge-success {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .badge-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
     .bg-warning {
         background-color: #ffc107 !important;
         color: #212529 !important;
@@ -555,31 +578,25 @@
         margin-bottom: 15px;
     }
 
-    /* Target checkbox disabled styling */
-    input[name="target[]"]:disabled + label {
-        color: #6c757d !important;
-        cursor: not-allowed;
-    }
-    
-    input[name="target[]"]:disabled {
-        cursor: not-allowed;
-        opacity: 0.6;
-    }
-    
-    .target-edit-info {
-        font-style: italic;
-        color: #6c757d;
-        font-size: 11px;
+    .badge1 {
+        font-size: 12px;
+        padding: 6px 12px;
+        border-radius: 20px;
+        margin-top: 0px;
+        width: 80px;
+        text-align: center;
+        display: inline-block;
+        min-width: 80px;
     }
 
-    .badge-success {
-        background-color: #6A9C89;
-        color: white;
+    .badge1-success {
+        background-color: #c3e6c3;
+        color: #2d5a2d;
     }
 
-    .badge-danger {
-        background-color: #dc3545;
-        color: white;
+    .badge1-danger {
+        background-color: rgba(248, 113, 113, 0.3);
+        color: #b91c1c;
     }
 </style>
 <!-- SweetAlert2 CSS -->
@@ -624,11 +641,6 @@
             $('input[name="target[]"]').prop('checked', false);
             $('#target_combined').val('');
             
-            // Enable target checkboxes for add mode (URL-based modal)
-            $('input[name="target[]"]').prop('disabled', false);
-            $('input[name="target[]"]').closest('.checkbox').removeClass('text-muted');
-            $('.target-edit-info').remove();
-            
             // $('#date_processed').val('');
             // $('#time_processed').val('');
             $('#volume_analysed').val('');
@@ -638,14 +650,18 @@
             $('#weight').attr('readonly', true);
             $('#dry_weight_persen').attr('readonly', true);
             $('#mass_analysed').attr('readonly', true);
-            // Reset quality control checkbox for new record
-            $('#quality_control_protozoa').prop('checked', false);
+            // Reset quality control checkboxes for new record
+            $('#quality_control_giardia').prop('checked', false);
+            $('#quality_control_crypto').prop('checked', false);
             $('#conc_copies_per_L_giardia').val('');
             $('#conc_copies_per_L_crypto').val('');
             $('#conc_copies_per_g_dw_giardia').val('');
             $('#conc_copies_per_g_dw_crypto').val('');
             $('#comments').val('');
             $('#compose-modal').modal('show');
+            
+            // Initialize quality control visibility (hide all by default when no target selected)
+            handleQualityControlVisibility();
             
             // Auto fetch weight and dry weight data when modal opens with One Water Sample ID
             setTimeout(function() {
@@ -760,16 +776,82 @@
             }, 3000);                            
         });
 
-        // Handle target checkbox changes
+        // Handle target checkbox changes with data safety warning
         $('input[name="target[]"]').change(function() {
+            const $checkbox = $(this);
+            const targetValue = $checkbox.val();
+            const isChecked = $checkbox.is(':checked');
+            const isEditMode = $('#id_protozoa').val() && $('#id_protozoa').val() !== '';
+            
+            // If checkbox is being unchecked in edit mode, check if related fields have data
+            if (!isChecked && isEditMode && hasTargetRelatedData(targetValue)) {
+                // Show warning dialog
+                const targetDisplayName = targetValue === 'Giardia' ? 'Giardia' : 'Cryptosporidium';
+                
+                Swal.fire({
+                    title: 'Data will be deleted!',
+                    html: `Removing target <strong>${targetDisplayName}</strong> will delete the following data:<br/>
+                           • Quality Control ${targetDisplayName}<br/>
+                           • Concentration (copies/L) (${targetDisplayName})<br/>
+                           • Concentration (copies/g DW) (${targetDisplayName})<br/><br/>
+                           Data will be deleted after <strong>Save</strong>.<br/>
+                           Do you want to proceed?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes!',
+                    cancelButtonText: 'Cancel',
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // User confirmed, clear the data and proceed with normal flow
+                        clearTargetRelatedData(targetValue);
+                        
+                        // Continue with normal target change logic
+                        proceedWithTargetChange(isEditMode);
+                        
+                        // Show success message
+                        Swal.fire({
+                            title: 'Success!',
+                            text: `${targetDisplayName} data has been cleared.`,
+                            icon: 'success',
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        // User cancelled, restore checkbox to checked state
+                        $checkbox.prop('checked', true);
+                        
+                        // Show cancellation message
+                        Swal.fire({
+                            title: 'Cancelled',
+                            text: `${targetDisplayName} data has been preserved.`,
+                            icon: 'info',
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+                    }
+                });
+            } else {
+                // No data to worry about, proceed normally
+                proceedWithTargetChange(isEditMode);
+            }
+        });
+
+        // Function to handle normal target change logic
+        function proceedWithTargetChange(isEditMode) {
             updateTargetCombined();
+            
+            // Update quality control fields visibility when target selection changes
+            handleQualityControlVisibility(null, isEditMode);
             
             // Update concentration fields visibility when target selection changes
             const currentSampletype = $('#sampletype').val();
             if (currentSampletype) {
-                handleConcentrationFieldsVisibility(currentSampletype);
+                handleConcentrationFieldsVisibility(currentSampletype, null, isEditMode);
             }
-        });
+        }
 
         // Function to update combined target value
         function updateTargetCombined() {
@@ -788,7 +870,7 @@
 
 
         // Function to handle concentration fields visibility based on sampletype and target selection
-        function handleConcentrationFieldsVisibility(sampletype, targetSelection = null) {
+        function handleConcentrationFieldsVisibility(sampletype, targetSelection = null, preserveValues = false) {
             // Get current target selection if not provided
             if (!targetSelection) {
                 const selectedTargets = [];
@@ -819,13 +901,21 @@
 
             // Hide all fields first
             $('#conc_copies_per_L_giardia').closest('.form-group').hide();
-            $('#conc_copies_per_L_giardia').val('');
+            if (!preserveValues) {
+                $('#conc_copies_per_L_giardia').val('');
+            }
             $('#conc_copies_per_L_crypto').closest('.form-group').hide();
-            $('#conc_copies_per_L_crypto').val('');
+            if (!preserveValues) {
+                $('#conc_copies_per_L_crypto').val('');
+            }
             $('#conc_copies_per_g_dw_giardia').closest('.form-group').hide();
-            $('#conc_copies_per_g_dw_giardia').val('');
+            if (!preserveValues) {
+                $('#conc_copies_per_g_dw_giardia').val('');
+            }
             $('#conc_copies_per_g_dw_crypto').closest('.form-group').hide();
-            $('#conc_copies_per_g_dw_crypto').val('');
+            if (!preserveValues) {
+                $('#conc_copies_per_g_dw_crypto').val('');
+            }
 
             if (sampletypeLower === 'biosolids' || sampletypeLower === 'biosolid') {
                 // For biosolids: show conc_copies_per_g_dw fields based on target selection
@@ -841,10 +931,10 @@
                     $('#conc_copies_per_g_dw_crypto').closest('.form-group').show();
                 } else {
                     // No target selected: show both g/dw fields by default
-                    $('#conc_copies_per_L_giardia').closest('.form-group').show();
-                    $('#conc_copies_per_L_crypto').closest('.form-group').show();
-                    $('#conc_copies_per_g_dw_giardia').closest('.form-group').show();
-                    $('#conc_copies_per_g_dw_crypto').closest('.form-group').show();
+                    // $('#conc_copies_per_L_giardia').closest('.form-group').show();
+                    // $('#conc_copies_per_L_crypto').closest('.form-group').show();
+                    // $('#conc_copies_per_g_dw_giardia').closest('.form-group').show();
+                    // $('#conc_copies_per_g_dw_crypto').closest('.form-group').show();
                 }
             } else if (sampletypeLower === 'liquids' || sampletypeLower === 'liquid') {
                 // For liquids: show conc_copies_per_L fields based on target selection
@@ -860,10 +950,10 @@
                     $('#conc_copies_per_L_crypto').closest('.form-group').show();
                 } else {
                     // No target selected: show both L fields by default
-                    $('#conc_copies_per_L_giardia').closest('.form-group').show();
-                    $('#conc_copies_per_L_crypto').closest('.form-group').show();
-                    $('#conc_copies_per_g_dw_giardia').closest('.form-group').show();
-                    $('#conc_copies_per_g_dw_crypto').closest('.form-group').show();
+                    // $('#conc_copies_per_L_giardia').closest('.form-group').show();
+                    // $('#conc_copies_per_L_crypto').closest('.form-group').show();
+                    // $('#conc_copies_per_g_dw_giardia').closest('.form-group').show();
+                    // $('#conc_copies_per_g_dw_crypto').closest('.form-group').show();
                 }
             } else {
                 // For other sample types: show all fields based on target selection
@@ -883,11 +973,104 @@
                     $('#conc_copies_per_g_dw_crypto').closest('.form-group').show();
                 } else {
                     // No target selected: show all fields by default
-                    $('#conc_copies_per_L_giardia').closest('.form-group').show();
-                    $('#conc_copies_per_L_crypto').closest('.form-group').show();
-                    $('#conc_copies_per_g_dw_giardia').closest('.form-group').show();
-                    $('#conc_copies_per_g_dw_crypto').closest('.form-group').show();
+                    // $('#conc_copies_per_L_giardia').closest('.form-group').show();
+                    // $('#conc_copies_per_L_crypto').closest('.form-group').show();
+                    // $('#conc_copies_per_g_dw_giardia').closest('.form-group').show();
+                    // $('#conc_copies_per_g_dw_crypto').closest('.form-group').show();
                 }
+            }
+        }
+
+        // Function to handle quality control visibility based on target selection
+        function handleQualityControlVisibility(targetSelection = null, preserveValues = false) {
+            // Get current target selection if not provided
+            if (!targetSelection) {
+                const selectedTargets = [];
+                $('input[name="target[]"]:checked').each(function() {
+                    selectedTargets.push($(this).val());
+                });
+                targetSelection = selectedTargets;
+            }
+            
+            // Ensure targetSelection is an array
+            if (typeof targetSelection === 'string') {
+                targetSelection = targetSelection.split(',').map(t => t.trim());
+            }
+            
+            const hasGiardia = targetSelection.includes('Giardia') || targetSelection.includes('giardia');
+            const hasCrypto = targetSelection.includes('Cryptosporidium') || targetSelection.includes('cryptosporidium');
+
+            // Hide all quality control fields by default and reset values (unless preserveValues is true)
+            $('#quality_control_giardia').closest('.form-group').hide();
+            if (!preserveValues) {
+                $('#quality_control_giardia').prop('checked', false);
+            }
+            $('#quality_control_crypto').closest('.form-group').hide();
+            if (!preserveValues) {
+                $('#quality_control_crypto').prop('checked', false);
+            }
+
+            if (hasGiardia && hasCrypto) {
+                // Both targets selected: show both quality control fields
+                $('#quality_control_giardia').closest('.form-group').show();
+                $('#quality_control_crypto').closest('.form-group').show();
+                console.log('Quality Control Visibility: Both Giardia and Crypto shown');
+            } else if (hasGiardia) {
+                // Only Giardia selected: show only Giardia quality control
+                $('#quality_control_giardia').closest('.form-group').show();
+                // In edit mode with preserveValues, only clear crypto if it's not visible
+                if (!preserveValues) {
+                    $('#quality_control_crypto').prop('checked', false);
+                }
+                console.log('Quality Control Visibility: Only Giardia shown');
+            } else if (hasCrypto) {
+                // Only Cryptosporidium selected: show only Crypto quality control
+                $('#quality_control_crypto').closest('.form-group').show();
+                // In edit mode with preserveValues, only clear giardia if it's not visible  
+                if (!preserveValues) {
+                    $('#quality_control_giardia').prop('checked', false);
+                }
+                console.log('Quality Control Visibility: Only Crypto shown');
+            } else {
+                // No target selected: hide both quality control fields
+                console.log('Quality Control Visibility: All hidden (no target selected)');
+            }
+        }
+
+        // Function to check if target-related fields have data
+        function hasTargetRelatedData(target) {
+            if (target === 'Giardia' || target === 'giardia') {
+                // Check Giardia-related fields
+                const hasQualityControl = $('#quality_control_giardia').is(':checked');
+                const hasConcentrationL = $('#conc_copies_per_L_giardia').val() && $('#conc_copies_per_L_giardia').val().trim() !== '';
+                const hasConcentrationGDW = $('#conc_copies_per_g_dw_giardia').val() && $('#conc_copies_per_g_dw_giardia').val().trim() !== '';
+                
+                return hasQualityControl || hasConcentrationL || hasConcentrationGDW;
+            } else if (target === 'Cryptosporidium' || target === 'cryptosporidium') {
+                // Check Crypto-related fields
+                const hasQualityControl = $('#quality_control_crypto').is(':checked');
+                const hasConcentrationL = $('#conc_copies_per_L_crypto').val() && $('#conc_copies_per_L_crypto').val().trim() !== '';
+                const hasConcentrationGDW = $('#conc_copies_per_g_dw_crypto').val() && $('#conc_copies_per_g_dw_crypto').val().trim() !== '';
+                
+                return hasQualityControl || hasConcentrationL || hasConcentrationGDW;
+            }
+            return false;
+        }
+
+        // Function to clear all data related to a specific target
+        function clearTargetRelatedData(target) {
+            if (target === 'Giardia' || target === 'giardia') {
+                // Clear Giardia-related data
+                $('#quality_control_giardia').prop('checked', false);
+                $('#conc_copies_per_L_giardia').val('');
+                $('#conc_copies_per_g_dw_giardia').val('');
+                console.log('Cleared all Giardia-related data');
+            } else if (target === 'Cryptosporidium' || target === 'cryptosporidium') {
+                // Clear Crypto-related data
+                $('#quality_control_crypto').prop('checked', false);
+                $('#conc_copies_per_L_crypto').val('');
+                $('#conc_copies_per_g_dw_crypto').val('');
+                console.log('Cleared all Crypto-related data');
             }
         }
 
@@ -952,7 +1135,9 @@
                         handleVolumeAnalysedVisibility(response.sampletype);
                         
                         // Handle concentration fields visibility based on sampletype
-                        handleConcentrationFieldsVisibility(response.sampletype);
+                        // Check if we're in edit mode to preserve values
+                        const isEditMode = $('#id_protozoa').val() && $('#id_protozoa').val() !== '';
+                        handleConcentrationFieldsVisibility(response.sampletype, null, isEditMode);
                         
                         // Auto fetch weight and dry weight data
                         autoFetchWeightData('#id_one_water_sample');
@@ -1171,13 +1356,20 @@
                     }
                 },
                 {
-                    "data": "conc_copies_per_L_crypto",
+                    "data": "conc_copies_per_g_dw_giardia",
                     "render": function(data, type, row) {
                         return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
                     }
                 },
                 {
-                    "data": "conc_copies_per_g_dw_giardia",
+                    "data": "quality_control_giardia",
+                    "render": function(data, type, row) {
+                        return data == '1' ? '<span class="badge1 badge1-success"><i class="fa fa-check"></i></span>' : '<span class="badge1 badge1-danger"><i class="fa fa-times"></i></span>';
+                    },
+                    "className": "text-center"
+                },
+                {
+                    "data": "conc_copies_per_L_crypto",
                     "render": function(data, type, row) {
                         return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
                     }
@@ -1188,14 +1380,14 @@
                         return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
                     }
                 },
-                {"data": "comments"},
                 {
-                    "data": "quality_control",
+                    "data": "quality_control_crypto",
                     "render": function(data, type, row) {
-                        return data == '1' ? '<span class="badge badge-success"><i class="fa fa-check"></i> Pass</span>' : '<span class="badge badge-danger"><i class="fa fa-times"></i> Not Pass</span>';
+                        return data == '1' ? '<span class="badge1 badge1-success"><i class="fa fa-check"></i></span>' : '<span class="badge1 badge1-danger"><i class="fa fa-times"></i></span>';
                     },
                     "className": "text-center"
                 },
+                {"data": "comments"},
                 {
                     "data" : "action",
                     "orderable": false,
@@ -1240,10 +1432,6 @@
             $('input[name="target[]"]').prop('checked', false);
             $('#target_combined').val('');
             
-            // Enable target checkboxes in add mode
-            $('input[name="target[]"]').prop('disabled', false);
-            $('input[name="target[]"]').closest('.checkbox').removeClass('text-muted');
-            $('.target-edit-info').remove(); // Remove edit mode info text
             
             $('#id_person_proc').val('');
             // $('#date_processed').val('');
@@ -1252,10 +1440,14 @@
             $('#weight').val('');
             $('#dry_weight_persen').val('');
             $('#mass_analysed').val('');
-            // Reset quality control checkbox for new record
-            $('#quality_control_protozoa').prop('checked', false);
+            // Reset quality control checkboxes for new record
+            $('#quality_control_giardia').prop('checked', false);
+            $('#quality_control_crypto').prop('checked', false);
             $('#comments').val('');
             $('#compose-modal').modal('show');
+            
+            // Initialize quality control visibility (hide all by default when no target selected)
+            handleQualityControlVisibility();
         });
 
         $('#mytable').on('click', '.btn_edit', function(){
@@ -1295,7 +1487,7 @@
             }
             
             // Handle concentration fields visibility based on sampletype and target in edit mode
-            handleConcentrationFieldsVisibility(data.sampletype, data.target);
+            handleConcentrationFieldsVisibility(data.sampletype, data.target, true);
             
             // Set concentration values AFTER fields are shown/hidden to prevent data loss
             $('#conc_copies_per_L_giardia').val(data.conc_copies_per_L_giardia);
@@ -1303,20 +1495,8 @@
             $('#conc_copies_per_g_dw_giardia').val(data.conc_copies_per_g_dw_giardia);
             $('#conc_copies_per_g_dw_crypto').val(data.conc_copies_per_g_dw_crypto);
             
-            // Disable target checkboxes in edit mode to prevent data inconsistency
-            $('input[name="target[]"]').prop('disabled', true);
-            
-            // Add visual indication that targets cannot be changed
-            $('input[name="target[]"]').closest('.checkbox').addClass('text-muted');
-            
-            // Add info text if not already exists
-            if (!$('.target-edit-info').length) {
-                $('input[name="target[]"]').closest('.checkbox').last().after(
-                    '<small class="text-muted target-edit-info" style="display: block; margin-top: 5px;">' +
-                    '<i class="fa fa-info-circle"></i> Target selection cannot be changed in edit mode to preserve data integrity' +
-                    '</small>'
-                );
-            }
+            // Update quality control visibility based on loaded target selection  
+            handleQualityControlVisibility(data.target, true);
             
             $('#date_processed').val(data.date_processed).trigger('change');
             $('#time_processed').val(data.time_processed).trigger('change');
@@ -1324,8 +1504,9 @@
             $('#weight').val(data.weight);
             $('#dry_weight_persen').val(data.dry_weight_persen);
             $('#mass_analysed').val(data.mass_analysed);
-            // Set quality control checkbox
-            $('#quality_control_protozoa').prop('checked', data.quality_control == '1');
+            // Set quality control checkboxes
+            $('#quality_control_giardia').prop('checked', data.quality_control_giardia == '1');
+            $('#quality_control_crypto').prop('checked', data.quality_control_crypto == '1');
             $('#weight').attr('readonly', true);
             $('#dry_weight_persen').attr('readonly', true);
             $('#mass_analysed').attr('readonly', true);
@@ -1674,11 +1855,6 @@
         $("#compose-modal").on('hide.bs.modal', function(){
             $('#review-section').hide();
             $('#textInformReview').hide();
-            
-            // Reset target checkboxes to enabled state when modal closes
-            $('input[name="target[]"]').prop('disabled', false);
-            $('input[name="target[]"]').closest('.checkbox').removeClass('text-muted');
-            $('.target-edit-info').remove();
         });  
 
         $('#mytable tbody').on('click', 'tr', function () {

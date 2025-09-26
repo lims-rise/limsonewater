@@ -175,6 +175,7 @@ class Enterolert_idexx_water extends CI_Controller
             $lowerdetection = $this->input->post('lowerdetection', TRUE);
             $remarks = $this->input->post('remarks', TRUE);
             $id_one_water_sample = $this->input->post('idx_one_water_sample', TRUE);
+            $quality_control = $this->input->post('quality_control_eiw', TRUE) ? 1 : 0; // Convert checkbox to integer
         
             if($mode_det == "insert") {
                 $data = array(
@@ -187,6 +188,7 @@ class Enterolert_idexx_water extends CI_Controller
                     'enterococcus' => $enterococcus,
                     'lowerdetection' => $lowerdetection,
                     'remarks' => $remarks,
+                    'quality_control' => $quality_control,
                     'flag' => '0',
                     'lab' => $this->session->userdata('lab'),
                     'uuid' => $this->uuid->v4(),
@@ -212,6 +214,7 @@ class Enterolert_idexx_water extends CI_Controller
                     'enterococcus' => $enterococcus,
                     'lowerdetection' => $lowerdetection,
                     'remarks' => $remarks,
+                    'quality_control' => $quality_control,
                     'flag' => '0',
                     'lab' => $this->session->userdata('lab'),
                     // 'uuid' => $this->uuid->v4(),

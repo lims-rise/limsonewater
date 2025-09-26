@@ -50,7 +50,7 @@ class Colilert_idexx_water_model extends CI_Model
 
     function subjson($id) {
         $this->datatables->select('cwo.id_colilert_out, cwo.colilert_barcode, cwo.date_sample, cwo.time_sample, cwo.ecoli_largewells, cwo.ecoli_smallwells, 
-        cwo.ecoli, cwo.lowerdetection, cwo.coliforms_largewells, cwo.coliforms_smallwells, cwo.total_coliforms, cwo.remarks, cwo.flag');
+        cwo.ecoli, cwo.lowerdetection, cwo.coliforms_largewells, cwo.coliforms_smallwells, cwo.total_coliforms, cwo.remarks, cwo.quality_control, cwo.flag');
         $this->datatables->from('colilert_water_out AS cwo');
         // $this->datatables->join('ref_testing b', 'FIND_IN_SET(b.id_testing_type, a.id_testing_type)', 'left');
         // $this->datatables->join('ref_barcode c', 'a.sample_id = c.testing_type_id', 'left');

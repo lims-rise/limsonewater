@@ -1188,8 +1188,6 @@
         background-color: #e0a800 !important;
         box-shadow: 0 4px 8px rgba(255,193,7,0.3) !important;
     }
-        box-shadow: 0 4px 8px rgba(40,167,69,0.3) !important;
-    }
 
     .badge-warning {
         animation: pulse-badge 1.5s infinite;
@@ -1225,6 +1223,27 @@
         margin-top: 20px;
         font-size: 16px;
         z-index: 1000; /* Pastikan info card di atas elemen lain */
+    }
+
+    .badge1 {
+        font-size: 12px;
+        padding: 6px 12px;
+        border-radius: 20px;
+        margin-top: 0px;
+        width: 80px;
+        text-align: center;
+        display: inline-block;
+        min-width: 80px;
+    }
+
+    .badge1-success {
+        background-color: #c3e6c3;
+        color: #2d5a2d;
+    }
+
+    .badge1-danger {
+        background-color: rgba(248, 113, 113, 0.3);
+        color: #b91c1c;
     }
 </style>
 <!-- SweetAlert2 CSS -->
@@ -2015,7 +2034,7 @@
                 {
                     "data": "quality_control",
                     "render": function(data, type, row) {
-                        return data == '1' ? '<span class="badge badge-success"><i class="fa fa-check"></i> Pass</span>' : '<span class="badge badge-danger"><i class="fa fa-times"></i> Not Pass</span>';
+                        return data == '1' ? '<span class="badge1 badge1-success"><i class="fa fa-check"></i></span>' : '<span class="badge1 badge1-danger"><i class="fa fa-times"></i></span>';
                     },
                     "className": "text-center"
                 },
@@ -2068,9 +2087,9 @@
                     "data": "quality_control",
                     "render": function(data, type, row) {
                         if (data == '1') {
-                            return '<span class="badge badge-success"><i class="fa fa-check"></i> Pass</span>';
+                            return '<span class="badge1 badge1-success"><i class="fa fa-check"></i></span>';
                         } else {
-                            return '<span class="badge badge-danger"><i class="fa fa-times"></i> Not Pass</span>';
+                            return '<span class="badge1 badge1-danger"><i class="fa fa-times"></i></span>';
                         }
                     },
                     "className": "text-center"

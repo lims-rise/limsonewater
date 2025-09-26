@@ -100,7 +100,9 @@ class Protozoa extends CI_Controller
         $conc_copies_per_g_dw_crypto = $this->input->post('conc_copies_per_g_dw_crypto', FALSE);
         $comments = $this->input->post('comments', TRUE);
         $protozoa_barcode = $this->input->post('protozoa_barcode', TRUE);
-        $quality_control = $this->input->post('quality_control_protozoa', TRUE) ? 1 : 0; // Convert checkbox to integer
+        $quality_control_giardia = $this->input->post('quality_control_giardia', TRUE) ? 1 : 0; // Convert checkbox to integer
+        $quality_control_crypto = $this->input->post('quality_control_crypto', TRUE) ? 1 : 0; // Convert checkbox to integer
+
 
         if ($mode == "insert") {
             $data = array(
@@ -115,7 +117,8 @@ class Protozoa extends CI_Controller
                 'weight' => $weight,
                 'dry_weight_persen' => $dry_weight_persen,
                 'mass_analysed' => $mass_analysed,
-                'quality_control' => $quality_control,
+                'quality_control_giardia' => $quality_control_giardia,
+                'quality_control_crypto' => $quality_control_crypto,
                 'conc_copies_per_L_giardia' => $conc_copies_per_L_giardia,
                 'conc_copies_per_L_crypto' => $conc_copies_per_L_crypto,
                 'conc_copies_per_g_dw_giardia' => $conc_copies_per_g_dw_giardia,
@@ -147,7 +150,8 @@ class Protozoa extends CI_Controller
                 'weight' => $weight,
                 'dry_weight_persen' => $dry_weight_persen,
                 'mass_analysed' => $mass_analysed,
-                'quality_control' => $quality_control,
+                'quality_control_giardia' => $quality_control_giardia,
+                'quality_control_crypto' => $quality_control_crypto,
                 'conc_copies_per_L_giardia' => $conc_copies_per_L_giardia,
                 'conc_copies_per_L_crypto' => $conc_copies_per_L_crypto,
                 'conc_copies_per_g_dw_giardia' => $conc_copies_per_g_dw_giardia,

@@ -453,7 +453,7 @@
                                         <div class="form-group">
                                             <label for="client_id" class="col-sm-4 control-label">Client ID</label>
                                             <div class="col-sm-8">
-                                                <input id="client_id" name="client_id" placeholder="Client ID" type="text" class="form-control" required>
+                                                <input id="client_id" name="client_id" placeholder="Client ID" type="text" class="form-control">
                                                 <div class="val1tip"></div>
                                             </div>
                                         </div>
@@ -1074,7 +1074,7 @@
                                         <td>${sample.date_collected ?? '-'}</td>
                                         <td>${sample.time_collected ?? '-'}</td>
                                         <td>${qualityCheckIcon ?? '-'}</td>
-                                        <td>${sample.client_id ?? '-'}</td>
+                                        <td>${sample.client_id || '-'}</td>
                                         <td>${sample.comments ?? '-'}</td>
                                         <td>${sample.action ?? '-'}</td>
                                     </tr>
