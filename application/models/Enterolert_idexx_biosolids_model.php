@@ -50,7 +50,8 @@ class Enterolert_idexx_biosolids_model extends CI_Model
     }
 
     function subjson($id) {
-        $this->datatables->select('ebo.id_enterolert_bio_out, ebo.enterolert_barcode, ebo.date_sample, ebo.time_sample, ebo.enterococcus_largewells, ebo.enterococcus_smallwells, ebo.enterococcus, ebo.ecoli_dryweight, ebo.lowerdetection_dryweight, ebo.remarks, ebo.flag');
+        $this->datatables->select('ebo.id_enterolert_bio_out, ebo.enterolert_barcode, ebo.date_sample, ebo.time_sample, ebo.enterococcus_largewells,
+        ebo.enterococcus_smallwells, ebo.enterococcus, ebo.ecoli_dryweight, ebo.lowerdetection_dryweight, ebo.remarks, ebo.quality_control, ebo.flag');
         $this->datatables->from('enterolert_biosolids_out AS ebo');
         // $this->datatables->join('ref_testing b', 'FIND_IN_SET(b.id_testing_type, a.id_testing_type)', 'left');
         // $this->datatables->join('ref_barcode c', 'a.sample_id = c.testing_type_id', 'left');

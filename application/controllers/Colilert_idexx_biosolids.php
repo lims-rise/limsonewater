@@ -195,6 +195,7 @@ class Colilert_idexx_biosolids extends CI_Controller
             $total_coliforms = $this->input->post('total_coliforms', TRUE);
             $remarks = $this->input->post('remarks', TRUE);
             $id_one_water_sample = $this->input->post('idx_one_water_sample', TRUE);
+            $quality_control = $this->input->post('quality_control_cib', TRUE) ? 1 : 0; // Convert checkbox to integer
         
             if($mode_det == "insert") {
                 $data = array(
@@ -212,6 +213,7 @@ class Colilert_idexx_biosolids extends CI_Controller
                     'coliforms_smallwells' => $coliforms_smallwells,
                     'total_coliforms' => $total_coliforms,
                     'remarks' => $remarks,
+                    'quality_control' => $quality_control,
                     'flag' => '0',
                     'lab' => $this->session->userdata('lab'),
                     'uuid' => $this->uuid->v4(),
@@ -243,6 +245,7 @@ class Colilert_idexx_biosolids extends CI_Controller
                     'coliforms_smallwells' => $coliforms_smallwells,
                     'total_coliforms' => $total_coliforms,
                     'remarks' => $remarks,
+                    'quality_control' => $quality_control,
                     'flag' => '0',
                     'lab' => $this->session->userdata('lab'),
                     // 'uuid' => $this->uuid->v4(),

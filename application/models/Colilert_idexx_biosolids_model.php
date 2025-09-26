@@ -50,7 +50,7 @@ class Colilert_idexx_biosolids_model extends CI_Model
 
     function subjson($id) {
         $this->datatables->select('cbo.id_colilert_bio_out, cbo.colilert_barcode, cbo.date_sample, cbo.time_sample, cbo.ecoli_largewells, cbo.ecoli_smallwells, 
-        cbo.ecoli, cbo.lowerdetection, cbo.ecoli_dryweight, cbo.lowerdetection_dryweight, cbo.coliforms_largewells, cbo.coliforms_smallwells, cbo.total_coliforms, cbo.remarks, cbo.flag');
+        cbo.ecoli, cbo.lowerdetection, cbo.ecoli_dryweight, cbo.lowerdetection_dryweight, cbo.coliforms_largewells, cbo.coliforms_smallwells, cbo.total_coliforms, cbo.remarks, cbo.quality_control, cbo.flag');
         $this->datatables->from('colilert_biosolids_out AS cbo');
         // $this->datatables->join('ref_testing b', 'FIND_IN_SET(b.id_testing_type, a.id_testing_type)', 'left');
         // $this->datatables->join('ref_barcode c', 'a.sample_id = c.testing_type_id', 'left');
