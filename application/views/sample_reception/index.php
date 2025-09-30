@@ -159,7 +159,7 @@
                                 <label for="id_client_sample" class="col-sm-4 control-label">Description</label>
                                 <div class="col-sm-8">
                                     <input id="id_client_sample" name="id_client_sample" placeholder="Description" type="text" class="form-control" required>
-                                    <div class="val1tip"></div>
+                                    <!-- <div class="val1tip"></div> -->
                                 </div>
                             </div>
 
@@ -732,38 +732,38 @@
             $('.val1tip').tooltipster('hide'); 
         });
 
-        $('#id_client_sample').click(function() {
-            $('.val1tip').tooltipster('hide');   
-        });
+        // $('#id_client_sample').click(function() {
+        //     $('.val1tip').tooltipster('hide');   
+        // });
         
-        $('#id_client_sample').on("change", function() {
-            let idClientSample = $('#id_client_sample').val();
-            $.ajax({
-                type: "GET",
-                url: "Sample_reception/validateIdClientSample",
-                data: { id: idClientSample },
-                dataType: "json",
-                success: function(data) {
-                    if (data.length == 1) {
-                        let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Client Sample <strong> ' + idClientSample +'</strong> is already in the system !</span>');
-                        $('.val1tip').tooltipster('content', tip);
-                        $('.val1tip').tooltipster('show');
-                        $('#id_client_sample').focus();
-                        $('#id_client_sample').val('');       
-                        $('#id_client_sample').css({'background-color' : '#FFE6E7'});
-                        setTimeout(function(){
-                            $('#id_client_sample').css({'background-color' : '#FFFFFF'});
-                            setTimeout(function(){
-                                $('#id_client_sample').css({'background-color' : '#FFE6E7'});
-                                setTimeout(function(){
-                                    $('#id_client_sample').css({'background-color' : '#FFFFFF'});
-                                }, 300);                            
-                            }, 300);
-                        }, 300);
-                    }
-                }
-            });
-        });
+        // $('#id_client_sample').on("change", function() {
+        //     let idClientSample = $('#id_client_sample').val();
+        //     $.ajax({
+        //         type: "GET",
+        //         url: "Sample_reception/validateIdClientSample",
+        //         data: { id: idClientSample },
+        //         dataType: "json",
+        //         success: function(data) {
+        //             if (data.length == 1) {
+        //                 let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Client Sample <strong> ' + idClientSample +'</strong> is already in the system !</span>');
+        //                 $('.val1tip').tooltipster('content', tip);
+        //                 $('.val1tip').tooltipster('show');
+        //                 $('#id_client_sample').focus();
+        //                 $('#id_client_sample').val('');       
+        //                 $('#id_client_sample').css({'background-color' : '#FFE6E7'});
+        //                 setTimeout(function(){
+        //                     $('#id_client_sample').css({'background-color' : '#FFFFFF'});
+        //                     setTimeout(function(){
+        //                         $('#id_client_sample').css({'background-color' : '#FFE6E7'});
+        //                         setTimeout(function(){
+        //                             $('#id_client_sample').css({'background-color' : '#FFFFFF'});
+        //                         }, 300);                            
+        //                     }, 300);
+        //                 }, 300);
+        //             }
+        //         }
+        //     });
+        // });
 
         let base_url = location.hostname;
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
