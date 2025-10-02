@@ -141,7 +141,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="id_sampletype" class="col-sm-4 control-label">Sample Type</label>
                             <div class="col-sm-8" >
                             <select id='id_sampletype' name="id_sampletype" class="form-control" required>
@@ -158,7 +158,14 @@
                                 ?>
                             </select>
                             </div>
-                        </div>
+                        </div> -->
+                        <div class="form-group">
+                                <label for="sampletype" class="col-sm-4 control-label">Sample Type</label>
+                                <div class="col-sm-8">
+                                    <input id="id_sampletype" name="id_sampletype" placeholder="Sample Type" type="hidden" class="form-control">
+                                    <input id="sampletype" name="sampletype" placeholder="Sample Type" type="text" class="form-control smple">
+                                </div>
+                            </div>
 
                         <hr>
 
@@ -172,11 +179,25 @@
                         <div class="form-group">
                             <label for="membrane_filter" class="col-sm-4 control-label">Membrane filter (µM)</label>
                             <div class="col-sm-8">
-                                <input id="membrane_filter" name="membrane_filter" placeholder="Membrane filter (µM)" type="number" step="0.1" class="form-control">
+                                <div class="membrane-filter-container">
+                                    <div style="flex: 1;">
+                                        <select id="membrane_filter_dropdown" name="membrane_filter_dropdown" class="form-control">
+                                            <option value="" disabled selected>-- Select Standard --</option>
+                                            <option value="0.45">0.45µM</option>
+                                            <option value="0.22">0.22µM</option>
+                                        </select>
+                                    </div>
+                                    <span class="membrane-filter-or">OR</span>
+                                    <div style="flex: 1;">
+                                        <input id="membrane_filter_freetext" name="membrane_filter_freetext" placeholder="Enter custom value" type="text" step="any" class="form-control">
+                                    </div>
+                                </div>
                             </div>
+                            <!-- Hidden field to store the final value -->
+                            <input type="hidden" id="membrane_filter" name="membrane_filter" value="">
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="dilution" class="col-sm-4 control-label">Dilution (uL)</label>
                             <div class="col-sm-8">
                                 <select id="dilution" name="dilution" class="form-control" required>
@@ -191,9 +212,9 @@
                                     <option value="30">30</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="culture_media" class="col-sm-4 control-label">Culture media</label>
                             <div class="col-sm-8">
                                 <select id="culture_media" name="culture_media" class="form-control" required>
@@ -202,7 +223,7 @@
                                     <option value="XLD">XLD</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <label for="date_extraction" class="col-sm-4 control-label">Date Extraction</label>
@@ -442,20 +463,27 @@
     }
 
     .child-table {
-        margin-left: 50px;
-        width: 90%;
+        margin-left: 20px;
+        margin-right: 20px;
+        width: calc(100% - 40px);
         border-collapse: collapse;
+        table-layout: fixed;
     }
 
     .child-table th, .child-table td {
         border: 1px solid #ddd;
         padding: 5px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 
     /* Styling untuk container dengan scroll */
     .child-table-container {
-        max-height: 500px; /* Atur tinggi maksimal sesuai kebutuhan */
-        overflow-y: auto;  /* Aktifkan scroll vertikal */
+        max-height: 500px;
+        overflow-y: auto;
+        overflow-x: auto;
+        padding: 10px 0;
+        width: 100%;
     }
 
     /* Style untuk scrollbar itu sendiri */
@@ -512,35 +540,6 @@
     .alert-danger {
         background-color: #dc3545;
         color: white;
-    }
-
-    .card {
-        border-radius: 10px;
-        margin-top: 0px;
-        padding: 8px 12px;
-        width: 100%; /* Ensures card uses available space */
-    }
-
-    .card-success {
-        border: 1px solid #28a745;
-        background-color: #d4edda;
-    }
-
-    .card-danger {
-        border: 1px solid #dc3545;
-        background-color: #f8d7da;
-    }
-
-    .card-title {
-        font-size: 16px;
-        font-weight: bold;
-        text-align: left; /* Align title to the left */
-        margin-bottom: 0px;
-    }
-
-    .card-body {
-        font-size: 14px;
-        text-align: left; /* Align body text to the left */
     }
 
     .modal-footer-content {
@@ -721,7 +720,7 @@
         border-radius: 10px;
         margin-top: 0px;
         padding: 8px 12px;
-        width: 100%; /* Ensures card uses available space */
+        width: 25%; /* Ensures card uses available space */
     }
 
     .card-success {
@@ -857,20 +856,27 @@
     }
 
     .child-table {
-        margin-left: 50px;
-        width: 90%;
+        margin-left: 20px;
+        margin-right: 20px;
+        width: calc(100% - 40px);
         border-collapse: collapse;
+        table-layout: fixed;
     }
 
     .child-table th, .child-table td {
         border: 1px solid #ddd;
         padding: 5px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 
     /* Styling untuk container dengan scroll */
     .child-table-container {
-        max-height: 500px; 
-        overflow-y: auto; 
+        max-height: 500px;
+        overflow-y: auto;
+        overflow-x: auto;
+        padding: 10px 0;
+        width: 100%;
     }
 
     /* Style untuk scrollbar itu sendiri */
@@ -899,6 +905,126 @@
 		border: 1px solid green  !important;
 		color: green  !important;
 	}
+
+    /* Membrane filter styling */
+    #membrane_filter_dropdown:disabled {
+        background-color: #f5f5f5;
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    #membrane_filter_freetext:disabled {
+        background-color: #f5f5f5;
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    .membrane-filter-container {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .membrane-filter-or {
+        font-style: italic;
+        color: #666;
+        margin: 0 5px;
+        font-size: 12px;
+    }
+
+    /* Parent table container constraints */
+    #mytable_wrapper {
+        overflow-x: auto;
+    }
+
+    /* DataTable row child content container */
+    .dataTables_wrapper .child {
+        overflow: hidden;
+    }
+
+    /* Ensure child table doesn't exceed parent boundaries */
+    .child-table-wrapper {
+        overflow: hidden;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Child table column width distribution */
+    .child-table th:nth-child(1),
+    .child-table td:nth-child(1) {
+        width: 15%;
+        min-width: 100px;
+    }
+
+    .child-table th:nth-child(2),
+    .child-table td:nth-child(2) {
+        width: 15%;
+        min-width: 100px;
+    }
+
+    .child-table th:nth-child(3),
+    .child-table td:nth-child(3) {
+        width: 12%;
+        min-width: 80px;
+    }
+
+    .child-table th:nth-child(4),
+    .child-table td:nth-child(4) {
+        width: 10%;
+        min-width: 70px;
+    }
+
+    .child-table th:nth-child(5),
+    .child-table td:nth-child(5) {
+        width: 10%;
+        min-width: 70px;
+    }
+
+    .child-table th:nth-child(6),
+    .child-table td:nth-child(6) {
+        width: 12%;
+        min-width: 80px;
+    }
+
+    .child-table th:nth-child(7),
+    .child-table td:nth-child(7) {
+        width: 16%;
+        min-width: 100px;
+    }
+
+    .child-table th:nth-child(8),
+    .child-table td:nth-child(8) {
+        width: 10%;
+        min-width: 70px;
+    }
+
+    /* Additional constraints to prevent overflow */
+    .dataTables_scrollBody {
+        overflow-x: hidden !important;
+    }
+
+    /* Ensure DataTable wrapper doesn't overflow */
+    .dataTables_wrapper {
+        overflow: hidden;
+    }
+
+    /* Force child content to stay within parent boundaries */
+    td.dataTables_empty,
+    td.child {
+        overflow: hidden !important;
+        max-width: 100% !important;
+    }
+
+    /* Constrain the entire child row content */
+    tr.child td {
+        padding: 0 !important;
+        overflow: hidden !important;
+    }
+
+    tr.child td > div {
+        overflow: hidden !important;
+        max-width: 100% !important;
+    }
 </style>
 <style>
 	#textInform2 .alert {
@@ -1155,6 +1281,45 @@
             get_freez($('#id_freez').val(), $('#id_shelf').val(), $('#id_rack').val(), $('#id_tray').val())
         });
 
+        // Membrane filter functionality - mutual disable between dropdown and freetext
+        $('#membrane_filter_dropdown').on('change', function() {
+            var dropdownValue = $(this).val();
+            if (dropdownValue) {
+                // Disable freetext input and set hidden field value
+                $('#membrane_filter_freetext').prop('disabled', true).val('');
+                $('#membrane_filter').val(dropdownValue);
+            } else {
+                // Enable freetext input and clear hidden field
+                $('#membrane_filter_freetext').prop('disabled', false);
+                $('#membrane_filter').val('');
+            }
+        });
+
+        $('#membrane_filter_freetext').on('input', function() {
+            var freetextValue = $(this).val();
+            if (freetextValue) {
+                // Disable dropdown and set hidden field value
+                $('#membrane_filter_dropdown').prop('disabled', true).val('');
+                $('#membrane_filter').val(freetextValue);
+            } else {
+                // Enable dropdown and clear hidden field
+                $('#membrane_filter_dropdown').prop('disabled', false);
+                $('#membrane_filter').val('');
+            }
+        });
+
+        // Reset function for membrane filter
+        function resetMembraneFilter() {
+            $('#membrane_filter_dropdown').prop('disabled', false).val('');
+            $('#membrane_filter_freetext').prop('disabled', false).val('');
+            $('#membrane_filter').val('');
+        }
+
+        // Reset membrane filter when modal is hidden
+        $('#compose-modal-child').on('hidden.bs.modal', function() {
+            resetMembraneFilter();
+        });
+
         let lastIdProject = localStorage.getItem('last_id_extraction_liquid');
         let lastPage = localStorage.getItem('last_page_extraction_liquid');
         table = $("#mytable").DataTable({
@@ -1292,14 +1457,14 @@
                     success: function (data) {
                         let uniqueId = `review_${id_one_water_sample}`;
                         let tableContent = `
-                            <div class="child-table-container">
-                                <table class="child-table table table-bordered table-sm">
+                            <div class="child-table-wrapper">
+                                <div class="child-table-container">
+                                    <table class="child-table table table-bordered table-sm">
                                     <thead class="bg-light">
                                         <tr>
                                             <th>Barcode Sample</th>
                                             <th>Barcode Tube</th>
                                             <th>Sample Type</th>
-                                            <th>Culture Media</th>
                                             <th>Cryobox</th>
                                             <th>Kit Lot</th>
                                             <th>Date Extraction</th>
@@ -1316,7 +1481,6 @@
                                         <td>${extraction.barcode_sample ?? '-'}</td>
                                         <td>${extraction.barcode_tube ?? '-'}</td>
                                         <td>${extraction.sampletype ?? '-'}</td>
-                                        <td>${extraction.culture_media ?? '-'}</td>
                                         <td>${extraction.cryobox ?? '-'}</td>
                                         <td>${extraction.kit_lot ?? '-'}</td>
                                         <td>${extraction.date_extraction ?? '-'}</td>
@@ -1407,14 +1571,14 @@
                     success: function (data) {
                         let uniqueId = `review_${id_one_water_sample}`;
                         let tableContent = `
-                            <div class="child-table-container">
-                                <table class="child-table table table-bordered table-sm">
+                            <div class="child-table-wrapper">
+                                <div class="child-table-container">
+                                    <table class="child-table table table-bordered table-sm">
                                     <thead class="bg-light">
                                         <tr>
                                             <th>Barcode Sample</th>
                                             <th>Barcode Tube</th>
                                             <th>Sample Type</th>
-                                            <th>Culture Media</th>
                                             <th>Cryobox</th>
                                             <th>Kit Lot</th>
                                             <th>Date Extraction</th>
@@ -1431,7 +1595,6 @@
                                         <td>${extraction.barcode_sample ?? '-'}</td>
                                         <td>${extraction.barcode_tube ?? '-'}</td>
                                         <td>${extraction.sampletype ?? '-'}</td>
-                                        <td>${extraction.culture_media ?? '-'}</td>
                                         <td>${extraction.cryobox ?? '-'}</td>
                                         <td>${extraction.kit_lot ?? '-'}</td>
                                         <td>${extraction.date_extraction ?? '-'}</td>
@@ -1730,11 +1893,28 @@
                     $('#barcode_sample1').val(data.barcode_sample);
                     $('#barcode_sample1').attr('readonly', true);
                     $('#id_sampletype').val(data.id_sampletype);
+                    $('#sampletype').val(data.sampletype);
+                    $('#sampletype').attr('readonly', true);
                     $('#date_extraction').val(data.date_extraction).trigger('change');
                     $('#filtration_volume').val(data.filtration_volume);
-                    $('#membrane_filter').val(data.membrane_filter);
-                    $('#dilution').val(data.dilution).trigger('change');
-                    $('#culture_media').val(data.culture_media).trigger('change');
+                    
+                    // Handle membrane filter for edit mode
+                    resetMembraneFilter(); // Reset both fields first
+                    if (data.membrane_filter) {
+                        // Check if the value matches dropdown options
+                        if (data.membrane_filter === '0.45' || data.membrane_filter === '0.22') {
+                            $('#membrane_filter_dropdown').val(data.membrane_filter);
+                            $('#membrane_filter_freetext').prop('disabled', true);
+                        } else {
+                            // Custom value, use freetext
+                            $('#membrane_filter_freetext').val(data.membrane_filter);
+                            $('#membrane_filter_dropdown').prop('disabled', true);
+                        }
+                        $('#membrane_filter').val(data.membrane_filter);
+                    }
+                    
+                    // $('#dilution').val(data.dilution).trigger('change');
+                    // $('#culture_media').val(data.culture_media).trigger('change');
                     $('#id_kit').val(data.id_kit).trigger('change');
                     $('#kit_lot').val(data.kit_lot);
                     $('#barcode_tube').val(data.barcode_tube);

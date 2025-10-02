@@ -776,7 +776,7 @@
         border-radius: 10px;
         margin-top: 0px;
         padding: 8px 12px;
-        width: 100%; /* Ensures card uses available space */
+        width: 25%; /* Ensures card uses available space */
     }
 
     .card-success {
