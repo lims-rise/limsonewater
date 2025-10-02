@@ -414,7 +414,6 @@ class Extraction_liquid_model extends CI_Model
             extraction_liquid_detail.id_one_water_sample, 
             extraction_liquid_detail.barcode_sample, 
             extraction_liquid_detail.date_extraction, 
-            extraction_liquid_detail.culture_media,
             ref_sampletype.sampletype,
             extraction_liquid_detail.barcode_tube,
             extraction_liquid_detail.cryobox,
@@ -458,13 +457,11 @@ class Extraction_liquid_model extends CI_Model
             eld.id_one_water_sample, 
             eld.barcode_sample, 
             rst.sampletype, 
-            eld.id_sampletype,
+            srs.id_sampletype,
             eld.id_location,
             eld.date_extraction,
-            eld.culture_media,
             eld.membrane_filter,
             eld.filtration_volume,
-            eld.dilution,
             eld.id_kit,
             eld.kit_lot,
             eld.barcode_tube,
@@ -481,7 +478,8 @@ class Extraction_liquid_model extends CI_Model
             eld.user_created
         ');
         $this->db->from('extraction_liquid_detail eld');
-        $this->db->join('ref_sampletype rst', 'eld.id_sampletype = rst.id_sampletype', 'left');
+        $this->db->join('sample_reception_sample srs', 'eld.id_one_water_sample = srs.id_one_water_sample', 'left');
+        $this->db->join('ref_sampletype rst', 'srs.id_sampletype = rst.id_sampletype', 'left');
         $this->db->join('ref_kit kit', 'eld.id_kit = kit.id_kit', 'left');
         $this->db->join('ref_location loc', 'eld.id_location = loc.id_location', 'left');
         $this->db->join('ref_position pos', 'eld.id_pos = pos.id_pos', 'left');
@@ -559,7 +557,6 @@ class Extraction_liquid_model extends CI_Model
             extraction_liquid_detail.id_one_water_sample, 
             extraction_liquid_detail.barcode_sample, 
             extraction_liquid_detail.date_extraction, 
-            extraction_liquid_detail.culture_media,
             ref_sampletype.sampletype,
             extraction_liquid_detail.barcode_tube,
             extraction_liquid_detail.cryobox,

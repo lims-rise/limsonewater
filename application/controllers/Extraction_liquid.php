@@ -266,12 +266,27 @@ class Extraction_liquid extends CI_Controller
 
         $barcode_sample = $this->input->post('barcode_sample1', TRUE);
         $id_sampletype = $this->input->post('id_sampletype', TRUE);
-        $culture_media = $this->input->post('culture_media', TRUE);
+        // $culture_media = $this->input->post('culture_media', TRUE);
         $date_extraction = $this->input->post('date_extraction', TRUE);
         $id_kit = $this->input->post('id_kit', TRUE);
         $filtration_volume = $this->input->post('filtration_volume', TRUE);
+        
+        // Handle membrane filter - get value from either dropdown or freetext
+        $membrane_filter_dropdown = $this->input->post('membrane_filter_dropdown', TRUE);
+        $membrane_filter_freetext = $this->input->post('membrane_filter_freetext', TRUE);
         $membrane_filter = $this->input->post('membrane_filter', TRUE);
-        $dilution = $this->input->post('dilution', TRUE);
+        
+        // Use the hidden field value which is set by JavaScript
+        if (empty($membrane_filter)) {
+            // Fallback logic if JavaScript didn't work
+            if (!empty($membrane_filter_dropdown)) {
+                $membrane_filter = $membrane_filter_dropdown;
+            } elseif (!empty($membrane_filter_freetext)) {
+                $membrane_filter = $membrane_filter_freetext;
+            }
+        }
+        
+        // $dilution = $this->input->post('dilution', TRUE);
         $kit_lot = $this->input->post('kit_lot', TRUE);
         $comments = $this->input->post('comments', TRUE);
         $barcode_tube = $this->input->post('barcode_tube', TRUE);
@@ -300,11 +315,11 @@ class Extraction_liquid extends CI_Controller
                 // 'id_one_water_sample' => $id_one_water_sample,
                 'id_sampletype' => $id_sampletype,
                 // 'id_person' => $id_person,
-                'culture_media' => $culture_media,
+                // 'culture_media' => $culture_media,
                 'date_extraction' => $date_extraction,
                 'filtration_volume' => $filtration_volume,
                 'membrane_filter' => $membrane_filter,
-                'dilution' => $dilution,
+                // 'dilution' => $dilution,
                 'id_kit' => $id_kit,
                 'kit_lot' => $kit_lot,
                 'comments' => $comments,
@@ -314,8 +329,8 @@ class Extraction_liquid extends CI_Controller
                 'cryobox' => $cryobox,
                 'id_location' => $id_loc,
                 'id_pos' => $id_pos,
-                'review' => $review,
-                'user_review' => $user_review,
+                // 'review' => $review,
+                // 'user_review' => $user_review,
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
@@ -461,8 +476,7 @@ class Extraction_liquid extends CI_Controller
                 'Extraction_liquid',
                 'SELECT a.id_one_water_sample AS ID_one_water_sample, a.barcode_sample AS Barcode_sample, b.realname AS Lab_tech, 
                         a.date_extraction AS Date_extraction, a.filtration_volume AS `Filtration_volume_(ml)`, a.membrane_filter AS `Membrane_filter_(µM)`, 
-                        a.dilution AS `Dilution_(ul)`, 
-                        a.culture_media AS Culture_media, d.kit AS Kit, a.kit_lot AS Kit_lot, 
+                        d.kit AS Kit, a.kit_lot AS Kit_lot, 
                         a.comments AS Comments, a.barcode_tube AS Barcode_tube, a.fin_volume AS `Final_volume_(uL)`, a.dna_concentration AS `DNA_concentration_(ng/ul)`, 
                         a.cryobox AS Cryobox, 
                         CONCAT("F",e.freezer,"-S",e.shelf,"-R",e.rack,"-T",e.tray) AS Freezer_location,
@@ -474,8 +488,8 @@ class Extraction_liquid extends CI_Controller
                         LEFT JOIN ref_location e ON a.id_location = e.id_location
                         LEFT JOIN ref_position f ON a.id_pos=f.id_pos
                 ',
-                array('ID_one_water_sample', 'Barcode_sample', 'Lab_tech', 'Date_extraction', 'Filtration_volume_(ml)', 'Membrane_filter_(µM)',
-                'Dilution_(ul)', 'Culture_media', 'Kit', 'Kit_lot', 'Comments', 'Barcode_tube', 'Final_volume_(uL)', 'DNA_concentration_(ng/ul)',
+                array('ID_one_water_sample', 'Barcode_sample', 'Lab_tech', 'Date_extraction', 'Filtration_volume_(ml)', 'Membrane_filter_(µM)', 
+                'Kit', 'Kit_lot', 'Comments', 'Barcode_tube', 'Final_volume_(uL)', 'DNA_concentration_(ng/ul)',
                 'Cryobox', 'Freezer_location', 'Position_in_box'), // Columns for Sheet1
             ),
             // array(

@@ -1045,7 +1045,7 @@
                                             <th>Time Collected</th>
                                             <th>Quality Check</th>
                                             <th>Client ID</th>
-                                            <th>Note</th>
+                                            <th>Description</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
