@@ -1705,6 +1705,9 @@
                                             text: response.message,
                                             timer: 1000,
                                             showConfirmButton: false
+                                        }).then(() => {
+                                            // Refresh halaman setelah review berhasil untuk update data
+                                            location.reload();
                                         });
                                     } else {
                                         Swal.fire({
@@ -1748,26 +1751,119 @@
                     false
                 );
             } else {
-                showInfoCard(
-                    `#textInform_${uniqueId}`,
-                    '<i class="fa fa-check-circle"></i> You are the creator',
-                    "You have full access to edit this data but not review.",
-                    true
-                );
+                // OLD CODE (COMMENTED OUT - RESTORED IF NEEDED):
+                // showInfoCard(
+                //     `#textInform_${uniqueId}`,
+                //     '<i class="fa fa-check-circle"></i> You are the creator',
+                //     "You have full access to edit this data but not review.",
+                //     true
+                // );
 
+                // $label.off('click').on('click', function () {
+                //     Swal.fire({
+                //         icon: 'info',
+                //         title: 'Action Not Allowed',
+                //         text: 'You are the creator of this data and cannot perform a review.',
+                //         confirmButtonText: 'OK'
+                //     });
+                // });
+
+                // NEW CODE: Allow creators to also perform reviews
                 $label.off('click').on('click', function () {
+                    if (currentState === 1) {
+                        Swal.fire('Review Locked', 'Already reviewed. No changes allowed.', 'info');
+                        return;
+                    }
+
                     Swal.fire({
-                        icon: 'info',
-                        title: 'Action Not Allowed',
-                        text: 'You are the creator of this data and cannot perform a review.',
-                        confirmButtonText: 'OK'
+                        title: 'Review this data?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes'
+                    }).then(result => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: '<?php echo site_url('Extraction_culture/saveReview'); ?>',
+                                method: 'POST',
+                                data: {
+                                    id_one_water_sample: uniqueId.replace('review_', ''),
+                                    user_review: loggedInUser,
+                                    review: 1
+                                },
+                                dataType: 'json',
+                                success: function (response) {
+                                    if (response.status) {
+                                        currentState = 1;
+
+                                        $label
+                                            .text(states[currentState].label)
+                                            .removeClass(colorClasses.join(' '))
+                                            .addClass(states[currentState].class);
+
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Review saved successfully!',
+                                            text: response.message,
+                                            timer: 1500,
+                                            showConfirmButton: false
+                                        }).then(() => {
+                                            // Refresh halaman setelah review berhasil untuk update data
+                                            location.reload();
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Failed to save review',
+                                            text: response.message
+                                        });
+                                    }
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error('AJAX Error: ' + status + error);
+                                    Swal.fire('Error', 'Something went wrong during submission.', 'error');
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'info',
+                                title: 'Review Not Changed',
+                                text: 'No changes were made.',
+                                timer: 2000
+                            });
+                        }
                     });
                 });
+
+                $label.hover(
+                    function () {
+                        if (currentState === 0) $(this).text('Click to Review');
+                    },
+                    function () {
+                        if (currentState === 0) $(this).text('Unreview');
+                    }
+                );
+
+                // Show different info message for creators
+                if (currentState === 1) {
+                    showInfoCard(
+                        `#textInform_${uniqueId}`,
+                        '<i class="fa fa-check-circle"></i> You are the creator',
+                        "You have already reviewed this data as the creator.",
+                        true
+                    );
+                } else {
+                    showInfoCard(
+                        `#textInform_${uniqueId}`,
+                        '<i class="fa fa-check-circle"></i> You are the creator',
+                        "You have full access to edit and review this data. Hover over the box on the right side to start the review.",
+                        true
+                    );
+                }
             }
 
-                $card.find('.close-card').on('click', function () {
-                    $card.fadeOut();
-                });
+            $card.find('.close-card').on('click', function () {
+                $card.fadeOut();
+            });
         }
 
         function showInfoCard(targetSelector, message, description, isSuccess) {
