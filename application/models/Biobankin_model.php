@@ -51,6 +51,7 @@ class Biobankin_model extends CI_Model
                 ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
                 ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
         }
+        $this->db->order_by('id_one_water_sample', 'DESC');
         return $this->datatables->generate();
     }
 
