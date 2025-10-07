@@ -956,6 +956,33 @@ class Sample_reception extends CI_Controller
             echo "</pre>";
         }
     }
+
+    public function get_project_status_ajax($id_project) {
+        header('Content-Type: application/json');
+        
+        try {
+            // Validate input
+            if (empty($id_project)) {
+                throw new Exception('Project ID is required');
+            }
+            
+            $status = $this->Sample_reception_model->get_project_status($id_project);
+            
+            echo json_encode(array(
+                'success' => true,
+                'data' => $status
+            ));
+        } catch (Exception $e) {
+            // Log the error for debugging
+            log_message('error', 'Error in get_project_status_ajax: ' . $e->getMessage());
+            
+            echo json_encode(array(
+                'success' => false,
+                'message' => 'Error getting project status',
+                'debug' => $e->getMessage() // Remove this in production
+            ));
+        }
+    }
 }
 
 /* End of file Water_sample_reception.php */

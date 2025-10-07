@@ -7,12 +7,20 @@ class Welcome extends CI_Controller {
     function __construct()
     {
         parent::__construct();
-        $this->load->model(['Welcome_model']);
+        // is_login();
+        $this->load->model(['Welcome_model', 'Dashboard_model']);
     }
 
 
     public function index() {
-        $this->template->load('template', 'welcome');
+        // Get dashboard data
+        $data['summary'] = $this->Dashboard_model->get_dashboard_summary();
+        $data['module_statistics'] = $this->Dashboard_model->get_module_statistics();
+        $data['recent_activities'] = $this->Dashboard_model->get_recent_activities(8);
+        $data['workflow_status'] = $this->Dashboard_model->get_workflow_status();
+        $data['monthly_statistics'] = $this->Dashboard_model->get_monthly_statistics();
+        
+        $this->template->load('template', 'welcome', $data);
     }
 
     public function form() {

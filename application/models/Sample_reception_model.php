@@ -73,6 +73,102 @@ class Sample_reception_model extends CI_Model
         return $this->datatables->generate();
     }
 
+    // Method to get project status for a specific project
+    public function get_project_status($id_project) {
+        // Get project statistics using similar logic as Dashboard_model
+        $sql = "SELECT 
+                    sr.id_project,
+                    sr.id_client_sample,
+                    COUNT(srs.id_sample) as total_samples,
+                    COUNT(srt.id_testing) as total_tests,
+                    COUNT(CASE WHEN COALESCE(
+                        bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
+                        ec.review, el.review, em.review, cb.review, mc.review, 
+                        ewi.review, ebi.review, cbi.review, cwi.review, 
+                        pr.review, cp.review, sp.review
+                    ) = 1 THEN 1 END) as completed_tests
+                FROM sample_reception sr
+                LEFT JOIN sample_reception_sample srs ON sr.id_project = srs.id_project AND srs.flag = 0
+                LEFT JOIN sample_reception_testing srt ON srs.id_sample = srt.id_sample AND srt.flag = 0
+                LEFT JOIN biobank_in bank ON bank.biobankin_barcode = srt.barcode AND bank.flag = 0
+                LEFT JOIN campy_liquids campy ON campy.campy_assay_barcode = srt.barcode AND campy.flag = 0
+                LEFT JOIN salmonella_liquids salmonellaL ON salmonellaL.salmonella_assay_barcode = srt.barcode AND salmonellaL.flag = 0
+                LEFT JOIN salmonella_biosolids salmonellaB ON salmonellaB.salmonella_assay_barcode = srt.barcode AND salmonellaB.flag = 0
+                LEFT JOIN extraction_culture ec ON ec.extraction_barcode = srt.barcode AND ec.flag = 0
+                LEFT JOIN extraction_liquid el ON el.extraction_barcode = srt.barcode AND el.flag = 0
+                LEFT JOIN extraction_metagenome em ON em.extraction_barcode = srt.barcode AND em.flag = 0
+                LEFT JOIN campy_biosolids cb ON cb.campy_assay_barcode = srt.barcode AND cb.flag = 0
+                LEFT JOIN moisture_content mc ON mc.barcode_moisture_content = srt.barcode AND mc.flag = 0
+                LEFT JOIN enterolert_water_in ewi ON ewi.enterolert_barcode = srt.barcode AND ewi.flag = 0
+                LEFT JOIN enterolert_biosolids_in ebi ON ebi.enterolert_barcode = srt.barcode AND ebi.flag = 0
+                LEFT JOIN colilert_biosolids_in cbi ON cbi.colilert_barcode = srt.barcode AND cbi.flag = 0
+                LEFT JOIN colilert_water_in cwi ON cwi.colilert_barcode = srt.barcode AND cwi.flag = 0
+                LEFT JOIN protozoa pr ON pr.protozoa_barcode = srt.barcode AND pr.flag = 0
+                LEFT JOIN campy_pa cp ON cp.campy_assay_barcode = srt.barcode AND cp.flag = 0
+                LEFT JOIN salmonella_pa sp ON sp.salmonella_assay_barcode = srt.barcode AND sp.flag = 0
+                WHERE sr.id_project = ? AND sr.flag = 0
+                GROUP BY sr.id_project";
+
+        $query = $this->db->query($sql, array($id_project));
+        $result = $query->row();
+        
+        // Handle case when project not found
+        if (!$result) {
+            return array(
+                'status' => 'Not Found', 
+                'completion_rate' => 0,
+                'total_samples' => 0,
+                'total_tests' => 0,
+                'completed_tests' => 0,
+                'class' => 'status-icon-not-found',
+                'icon' => 'fa-question',
+                'color' => '#6b7280'
+            );
+        }
+
+        // Calculate completion rate
+        $completion_rate = $result->total_tests > 0 ? round(($result->completed_tests / $result->total_tests) * 100, 1) : 0;
+        
+        // Determine status based on completion rate
+        $status = 'pending';
+        $class = 'status-icon-pending';
+        $icon = 'fa-clock-o';
+        $color = '#f39c12';
+
+        if ($result->total_samples == 0) {
+            $status = 'No Samples';
+            $class = 'status-icon-no-samples';
+            $icon = 'fa-times';
+            $color = '#6b7280';
+        } elseif ($result->total_tests == 0) {
+            $status = 'No Tests';
+            $class = 'status-icon-no-tests';
+            $icon = 'fa-exclamation-triangle';
+            $color = '#e67e22';
+        } elseif ($completion_rate == 100) {
+            $status = 'Completed';
+            $class = 'status-icon-completed';
+            $icon = 'fa-check-circle';
+            $color = '#22c55e';
+        } elseif ($completion_rate > 0) {
+            $status = 'In Progress';
+            $class = 'status-icon-in-progress';
+            $icon = 'fa-spinner';
+            $color = '#3498db';
+        }
+
+        return array(
+            'status' => $status,
+            'completion_rate' => $completion_rate,
+            'total_samples' => (int)$result->total_samples,
+            'total_tests' => (int)$result->total_tests,
+            'completed_tests' => (int)$result->completed_tests,
+            'class' => $class,
+            'icon' => $icon,
+            'color' => $color
+        );
+    }
+
     function subjson($id) {
             $this->datatables->select("
             testing.id_testing, 
@@ -637,18 +733,53 @@ class Sample_reception_model extends CI_Model
 
     public function get_samples_by_project($id_project) {
         $this->db->select('sample_reception_sample.id_one_water_sample, sample_reception_sample.id_project, sample_reception_sample.date_collected, sample_reception_sample.time_collected, sample_reception_sample.date_created,
-        ref_person.initial, ref_sampletype.sampletype, sample_reception_sample.quality_check, sample_reception_sample.client_id, sample_reception_sample.comments, sample_reception_sample.date_arrival, sample_reception_sample.time_arrival');
+        ref_person.initial, ref_sampletype.sampletype, sample_reception_sample.quality_check, sample_reception_sample.client_id, sample_reception_sample.comments, sample_reception_sample.date_arrival, 
+        sample_reception_sample.time_arrival,
+        COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, 0) AS review,
+        CASE 
+            WHEN COUNT(testing.id_testing) = 0 THEN "No Tests"
+            WHEN COUNT(CASE WHEN COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review) = 1 THEN 1 END) = COUNT(testing.id_testing) THEN "Complete"
+            WHEN COUNT(CASE WHEN COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review) = 1 THEN 1 END) > 0 THEN "Partial"
+            ELSE "Incomplete"
+        END AS review_status
+        ');
+        $this->db->from('sample_reception_sample');
+        $this->db->join('sample_reception_testing testing', 'sample_reception_sample.id_sample = testing.id_sample and testing.flag = 0', 'left');
+        $this->db->join('biobank_in bank', 'bank.biobankin_barcode = testing.barcode and bank.flag = 0', 'left');
+        $this->db->join('campy_liquids campy', 'campy.campy_assay_barcode = testing.barcode and campy.flag = 0', 'left');
+        $this->db->join('salmonella_liquids salmonellaL', 'salmonellaL.salmonella_assay_barcode = testing.barcode and salmonellaL.flag = 0', 'left');
+        $this->db->join('salmonella_biosolids salmonellaB', 'salmonellaB.salmonella_assay_barcode = testing.barcode and salmonellaB.flag = 0', 'left');
+        $this->db->join('extraction_culture ec', 'ec.extraction_barcode = testing.barcode and ec.flag = 0', 'left');
+        $this->db->join('extraction_liquid el', 'el.extraction_barcode = testing.barcode and el.flag = 0', 'left');
+        $this->db->join('extraction_metagenome em', 'em.extraction_barcode = testing.barcode and em.flag = 0', 'left');
+        $this->db->join('campy_biosolids cb', 'cb.campy_assay_barcode = testing.barcode and cb.flag = 0', 'left');
+        $this->db->join('moisture_content mc', 'mc.barcode_moisture_content = testing.barcode and mc.flag = 0', 'left');
+        $this->db->join('enterolert_water_in ewi', 'ewi.enterolert_barcode = testing.barcode and ewi.flag = 0', 'left');
+        $this->db->join('enterolert_biosolids_in ebi', 'ebi.enterolert_barcode = testing.barcode and ebi.flag = 0', 'left');
+        $this->db->join('colilert_biosolids_in cbi', 'cbi.colilert_barcode = testing.barcode and cbi.flag = 0', 'left');
+        $this->db->join('colilert_water_in cwi', 'cwi.colilert_barcode = testing.barcode and cwi.flag = 0', 'left');
+        $this->db->join('protozoa pr', 'pr.protozoa_barcode = testing.barcode and pr.flag = 0', 'left');
+        $this->db->join('campy_pa cp', 'cp.campy_assay_barcode = testing.barcode and cp.flag = 0', 'left');
+        $this->db->join('salmonella_pa sp', 'sp.salmonella_assay_barcode = testing.barcode and sp.flag = 0', 'left');
         $this->db->join('ref_sampletype', 'sample_reception_sample.id_sampletype = ref_sampletype.id_sampletype', 'left');
         $this->db->join('ref_person', 'sample_reception_sample.id_person=ref_person.id_person', 'left');
-        $this->db->from('sample_reception_sample');
         $this->db->where('sample_reception_sample.id_project', $id_project);
         $this->db->where('sample_reception_sample.flag', '0');
+        $this->db->group_by('sample_reception_sample.id_one_water_sample');
         $this->db->order_by('sample_reception_sample.id_sample', 'ASC');
         $query = $this->db->get()->result();
     
         $lvl = $this->session->userdata('id_user_level');
     
         foreach ($query as $row) {
+            // Add styled review status
+            $status_class = 'btn-status-' . $row->review_status;
+            $row->review_status_styled = '<div style="text-align: center;">
+                <button type="button" class="' . $status_class . '" style="padding: 4px 8px; font-size: 11px; border-radius: 50px; border: none; min-width: 80px;">
+                    ' . $row->review_status . '
+                </button>
+            </div>';
+            
             if ($lvl == 4) {
                 // Level 4 (ViewOnly) - Tidak ada button yang bisa diakses
                 $row->action = '

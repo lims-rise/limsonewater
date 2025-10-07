@@ -36,6 +36,7 @@
                                 <thead>
                                     <tr>
                                         <th></th> <!-- Kolom kosong untuk ikon toggle -->
+                                        <th class="text-center">Project</th>
                                         <th>Coc</th>
                                         <th>Client Quote Number</th>
                                         <th>Description</th>
@@ -550,6 +551,158 @@
         background: #48A6A7; /* Warna hijau toska yang lebih gelap saat hover */
     }
 
+    /* Review Status Buttons - Enhanced UI/UX */
+    .btn-status-Complete {
+        background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+        border: 1px solid #16a34a;
+        color: white;
+        font-weight: 600;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 4px rgba(34, 197, 94, 0.2);
+    }
+
+    /* .btn-status-Complete:hover {
+        background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+        box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
+        transform: translateY(-1px);
+    } */
+
+    .btn-status-Incomplete {
+        background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+        border: 1px solid #dc2626;
+        color: white;
+        font-weight: 600;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+    }
+
+    /* .btn-status-Incomplete:hover {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+        transform: translateY(-1px);
+    } */
+
+    .btn-status-Partial {
+        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        border: 1px solid #d97706;
+        color: #92400e;
+        font-weight: 600;
+        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+        box-shadow: 0 2px 4px rgba(245, 158, 11, 0.2);
+    }
+
+    /* .btn-status-Partial:hover {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        box-shadow: 0 4px 8px rgba(245, 158, 11, 0.3);
+        transform: translateY(-1px);
+        color: #78350f;
+    } */
+
+    .btn-status-No\ Tests {
+        background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+        border: 1px solid #4b5563;
+        color: white;
+        font-weight: 600;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 4px rgba(107, 114, 128, 0.2);
+    }
+
+    /* .btn-status-No\ Tests:hover {
+        background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+        box-shadow: 0 4px 8px rgba(107, 114, 128, 0.3);
+        transform: translateY(-1px);
+    } */
+
+    /* General button enhancements */
+    [class*="btn-status-"] {
+        position: relative;
+        overflow: hidden;
+        cursor: default;
+        border-radius: 20px !important;
+        font-size: 11px !important;
+        padding: 6px 12px !important;
+        min-width: 85px !important;
+        text-align: center !important;
+        display: inline-block !important;
+        letter-spacing: 0.5px;
+    }
+
+    /* Ripple effect on click (optional) */
+    /* [class*="btn-status-"]:active {
+        transform: translateY(0) scale(0.98);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    } */
+
+    /* Focus states for accessibility */
+    /* [class*="btn-status-"]:focus {
+        outline: 3px solid rgba(59, 130, 246, 0.5);
+        outline-offset: 2px;
+    } */
+
+    .container {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Modern Icon-based Project Status Styles */
+    .status-icon-done {
+        color: #22c55e !important;
+        filter: drop-shadow(0 2px 4px rgba(34, 197, 94, 0.3));
+    }
+
+    .status-icon-not-done {
+        color: #ef4444 !important;
+        filter: drop-shadow(0 2px 4px rgba(239, 68, 68, 0.3));
+    }
+
+    .status-icon-no-samples {
+        color: #6b7280 !important;
+        filter: drop-shadow(0 2px 4px rgba(107, 114, 128, 0.3));
+    }
+
+    .status-icon-loading {
+        color: #9ca3af !important;
+        animation: pulse 2s infinite;
+    }
+
+    /* @keyframes pulse {
+        0%, 100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.5;
+        }
+    } */
+
+    /* Add subtle background circle for better visibility */
+    .status-icon-done,
+    .status-icon-not-done,
+    .status-icon-no-samples {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 10%;
+        width: 32px;
+        height: 32px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid transparent;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .status-icon-done {
+        /* border-color: rgba(34, 197, 94, 0.2); */
+        background: rgba(34, 197, 94, 0.1);
+    }
+
+    .status-icon-not-done {
+        /* border-color: rgba(239, 68, 68, 0.2); */
+        background: rgba(239, 68, 68, 0.1);
+    }
+
+    .status-icon-no-samples {
+        /* border-color: rgba(107, 114, 128, 0.2); */
+        background: rgba(107, 114, 128, 0.1);
+    }
 
 
 </style>
@@ -645,6 +798,14 @@
 
     $(document).ready(function() {
 
+        // Check if new_modal parameter is present in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('new_modal') === '1') {
+            // Simulate click on Add button to open modal
+            setTimeout(function() {
+                $('#addtombol').trigger('click');
+            }, 500); // Small delay to ensure page is fully loaded
+        }
 
         function showConfirmation(url) {
             deleteUrl = url; // Set the URL to the variable
@@ -791,6 +952,88 @@
             displayStart: lastPage ? (parseInt(lastPage) * 10) : 0, // <-- ini di sini ya!
             columns: [
                 { "data": "toggle", "orderable": false, "searchable": false }, // Ikon toggle di awal
+                {
+                    "data": null, 
+                    "orderable": false, 
+                    "searchable": false,
+                    "render": function(data, type, row) {
+                        // Create a unique ID for this cell
+                        let cellId = 'project-status-' + row.id_project;
+                        
+                        // Return loading placeholder with spinner icon
+                        let html = '<div id="' + cellId + '" style="text-align: center; padding: 8px;">' +
+                                  '<i class="fa fa-spinner fa-spin" style="color: #9ca3af; font-size: 12px;"></i> ' +
+                                  '<span style="font-size: 11px; color: #666;">Loading...</span></div>';
+                        
+                        // Load project status asynchronously
+                        setTimeout(function() {
+                            $.ajax({
+                                url: 'Sample_reception/get_project_status_ajax/' + row.id_project,
+                                type: 'GET',
+                                dataType: 'json',
+                                success: function(response) {
+                                    if (response.success) {
+                                        let data = response.data;
+                                        let statusClass = data.class;
+                                        let statusIcon = data.icon;
+                                        let statusColor = data.color;
+                                        let statusText = data.status;
+                                        let completionRate = data.completion_rate || 0;
+                                        let totalTests = data.total_tests || 0;
+                                        let completedTests = data.completed_tests || 0;
+                                        
+                                        // Determine progress bar color based on completion rate
+                                        let progressColor = '#d32f2f'; // red for low completion
+                                        if (completionRate >= 80) progressColor = '#388e3c'; // green
+                                        else if (completionRate >= 50) progressColor = '#f57c00'; // orange
+                                        
+                                        // Build comprehensive status HTML
+                                        let statusHtml = '<div style="text-align: center; padding: 4px;">' +
+                                                        '<div style="margin-bottom: 4px;">' +
+                                                        '<i class="fa ' + statusIcon + '" style="color: ' + statusColor + '; font-size: 12px; margin-right: 4px;"></i>' +
+                                                        '<span style="font-size: 11px; font-weight: 600; color: ' + statusColor + ';">' + statusText + '</span>' +
+                                                        '</div>';
+                                        
+                                        // Add progress bar and completion info if there are tests
+                                        if (totalTests > 0) {
+                                            statusHtml += '<div style="margin-bottom: 3px;">' +
+                                                         '<div style="background-color: #e0e0e0; height: 4px; border-radius: 2px; overflow: hidden;">' +
+                                                         '<div style="background-color: ' + progressColor + '; height: 100%; width: ' + completionRate + '%; transition: width 0.3s;"></div>' +
+                                                         '</div>' +
+                                                         '</div>' +
+                                                         '<div style="font-size: 9px; color: #666; line-height: 1;">' +
+                                                         completionRate + '% (' + completedTests + '/' + totalTests + ')' +
+                                                         '</div>';
+                                        } else {
+                                            statusHtml += '<div style="font-size: 9px; color: #666;">No tests</div>';
+                                        }
+                                        
+                                        statusHtml += '</div>';
+                                        
+                                        // Create tooltip with detailed information
+                                        let tooltipText = statusText + '\\n' +
+                                                         'Completion: ' + completionRate + '%\\n' +
+                                                         'Tests: ' + completedTests + ' of ' + totalTests + ' completed';
+                                        
+                                        $('#' + cellId).html(statusHtml).attr('title', tooltipText);
+                                        
+                                        // Initialize tooltip
+                                        $('#' + cellId).tooltip({
+                                            placement: 'top',
+                                            html: false
+                                        });
+                                    }
+                                },
+                                error: function() {
+                                    $('#' + cellId).html('<div style="text-align: center; color: #d32f2f; font-size: 11px;">' +
+                                                        '<i class="fa fa-exclamation-triangle"></i> Error</div>');
+                                }
+                            });
+                        }, 100);
+                        
+                        return html;
+                    }
+                },
                 {"data": "id_project"},
                 {
                     "data": "client_quote_number",
@@ -841,18 +1084,6 @@
                                 </a>`;
                     }
                 },
-                // {
-                //     "data": "files",
-                //     "render": function(data, type, row) {
-                //         if (!data || data === "null") return `<button type="button" class="btn btn-sm btn-light" disabled>
-                //                     <i class="fa fa-times"></i> No scan yet
-                //                 </button>`;
-                //         return `<button type="button" class="btn btn-sm btn-success" disabled>
-                //                     <i class="fa fa-check"></i> Scanning
-                      // <i class="fa fa-file-pdf-o"></i> Lihat File
-                //                 </button>`;
-                //     }
-                // },
                 { "data": "action", "orderable": false, "searchable": false }
             ],
             columnDefs: [
@@ -985,7 +1216,7 @@
                     type: "GET",
                     dataType: "json",
                     success: function (data) {
-                        let tableContent = `<div class="child-table-container"><table class="child-table table table-bordered table-sm"><thead class="bg-light"><tr><th>Water Sample ID</th><th>Type of Sample</th><th>Receiving Lab</th><th>Date Arrived</th><th>Time Arrived</th><th>Date Collected</th><th>Time Collected</th><th>Quality Check</th><th>Client ID</th><th>Description</th><th>Action</th></tr></thead><tbody>`;
+                        let tableContent = `<div class="child-table-container"><table class="child-table table table-bordered table-sm"><thead class="bg-light"><tr><th>Water Sample ID</th><th>Type of Sample</th><th>Receiving Lab</th><th>Date Arrived</th><th>Time Arrived</th><th>Date Collected</th><th>Time Collected</th><th>Quality Check</th><th>Client ID</th><th>Description</th><th>Status</th><th>Action</th></tr></thead><tbody>`;
 
                         if (data.length > 0) {
                             $.each(data, function (index, sample) {
@@ -994,7 +1225,7 @@
                                 else if (sample.quality_check == 1) qualityCheckIcon = '<i class="fa fa-check-square-o" style="color: green;"></i>';
                                 else if (sample.quality_check == 2) qualityCheckIcon = '<i class="fa fa-times-circle-o" style="color: red;"></i>';
 
-                                tableContent += `<tr><td>${sample.id_one_water_sample ?? '-'}</td><td>${sample.sampletype ?? '-'}</td><td>${sample.initial ?? '-'}</td><td>${sample.date_arrival ?? '-'}</td><td>${sample.time_arrival ?? '-'}</td><td>${sample.date_collected ?? '-'}</td><td>${sample.time_collected ?? '-'}</td><td>${qualityCheckIcon ?? '-'}</td><td>${sample.client_id ?? '-'}</td><td>${sample.comments ?? '-'}</td><td>${sample.action ?? '-'}</td></tr>`;
+                                tableContent += `<tr><td>${sample.id_one_water_sample ?? '-'}</td><td>${sample.sampletype ?? '-'}</td><td>${sample.initial ?? '-'}</td><td>${sample.date_arrival ?? '-'}</td><td>${sample.time_arrival ?? '-'}</td><td>${sample.date_collected ?? '-'}</td><td>${sample.time_collected ?? '-'}</td><td>${qualityCheckIcon ?? '-'}</td><td>${sample.client_id ?? '-'}</td><td>${sample.comments ?? '-'}</td><td>${sample.review_status_styled ?? '-'}</td><td>${sample.action ?? '-'}</td></tr>`;
                             });
                         } else {
                             tableContent += `<tr><td colspan="11" class="text-center">No samples available</td></tr>`;
@@ -1046,6 +1277,7 @@
                                             <th>Quality Check</th>
                                             <th>Client ID</th>
                                             <th>Description</th>
+                                            <th>Review Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -1076,6 +1308,7 @@
                                         <td>${qualityCheckIcon ?? '-'}</td>
                                         <td>${sample.client_id || '-'}</td>
                                         <td>${sample.comments ?? '-'}</td>
+                                        <td>${sample.review_status_styled ?? '-'}</td>
                                         <td>${sample.action ?? '-'}</td>
                                     </tr>
                                 `;
@@ -1428,3 +1661,71 @@ window.addEventListener("message", function(event) {
     }
 });
 </script>
+
+<style>
+/* Project Status Column Styling */
+#mytable td:nth-child(2) {
+    width: 120px !important;
+    min-width: 120px !important;
+    max-width: 120px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Status Icons */
+.status-icon-completed { color: #22c55e !important; }
+.status-icon-in-progress { color: #3498db !important; }
+.status-icon-pending { color: #f39c12 !important; }
+.status-icon-no-samples { color: #6b7280 !important; }
+.status-icon-no-tests { color: #e67e22 !important; }
+.status-icon-not-found { color: #6b7280 !important; }
+
+/* Progress Bar Animation */
+.project-progress-bar {
+    transition: width 0.5s ease-in-out;
+}
+
+/* Status Text */
+.project-status-text {
+    font-weight: 600;
+    font-size: 11px;
+    line-height: 1.2;
+}
+
+/* Completion Rate Text */
+.completion-rate-text {
+    font-size: 9px;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Hover Effects */
+.project-status-container {
+    transition: all 0.2s ease;
+    border-radius: 3px;
+    padding: 4px;
+}
+
+.project-status-container:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: scale(1.02);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #mytable td:nth-child(2) {
+        width: 100px !important;
+        min-width: 100px !important;
+        max-width: 100px !important;
+    }
+    
+    .project-status-text {
+        font-size: 10px;
+    }
+    
+    .completion-rate-text {
+        font-size: 8px;
+    }
+}
+</style>

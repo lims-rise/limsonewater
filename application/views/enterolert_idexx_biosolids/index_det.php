@@ -660,123 +660,319 @@
 			.addClass('form-check-label ' + states[currentState].class);
 
 		// Cek apakah user login BUKAN creator
-		if (userCreated !== loggedInUser) {
-			$('#user_review').val(loggedInUser);
+		// if (userCreated !== loggedInUser) {
+		// 	$('#user_review').val(loggedInUser);
 
+		// 	$('#review_label').off('click').on('click', function () {
+		// 		if ($('#review').val() === '1') {
+		// 			Swal.fire({
+		// 				icon: 'info',
+		// 				title: 'Review Locked',
+		// 				text: 'You have already reviewed this. Further changes are not allowed.',
+		// 				confirmButtonText: 'OK'
+		// 			});
+		// 			return;
+		// 		}
+
+		// 		Swal.fire({
+		// 			icon: 'question',
+		// 			title: 'Are you sure?',
+		// 			showCancelButton: true,
+		// 			confirmButtonText: 'OK',
+		// 			cancelButtonText: 'Cancel',
+		// 			reverseButtons: true
+		// 		}).then((result) => {
+		// 			if (result.isConfirmed) {
+
+		// 				currentState = (currentState + 1) % states.length;
+
+		// 				$('#review').val(states[currentState].value);
+		// 				$('#review_label')
+		// 					.text(states[currentState].label)
+		// 					.removeClass()
+		// 					.addClass('form-check-label ' + states[currentState].class);
+
+		// 				$.ajax({
+		// 					url: '<?php echo site_url('Enterolert_idexx_biosolids/saveReview'); ?>',
+		// 					method: 'POST',
+		// 					data: $('#formSampleReview').serialize(),
+		// 					dataType: 'json',
+		// 					success: function(response) {
+		// 						if (response.status) {
+		// 							Swal.fire({
+		// 								icon: 'success',
+		// 								title: 'Review saved successfully!',
+		// 								text: response.message,
+		// 								timer: 1000,
+		// 								showConfirmButton: false
+		// 							}).then(() => {
+		// 								location.reload();
+		// 							});
+		// 						} else {
+		// 							Swal.fire({
+		// 								icon: 'error',
+		// 								title: 'Failed to save review',
+		// 								text: response.message
+		// 							});
+		// 						}
+		// 					},
+		// 					error: function(xhr, status, error) {
+		// 						console.error('AJAX Error: ' + status + error);
+		// 						Swal.fire('Error', 'Something went wrong during submission.', 'error');
+		// 					}
+		// 				});
+		// 			} else {
+		// 				Swal.fire({
+		// 					icon: 'info',
+		// 					title: 'Review Not Changed',
+		// 					text: 'No changes were made.',
+		// 					timer: 2000
+		// 				});
+		// 			}
+		// 		});
+		// 	});
+
+		// 	if ($('#review').val() === '1') {
+		// 		showInfoCard(
+		// 			'#textInform2',
+		// 			'<i class="fa fa-times-circle"></i> You are not the creator',
+		// 			"In this case, you can't review because it has already been reviewed.",
+
+		// 			false
+		// 		);
+		// 	} else {
+		// 		showInfoCard(
+		// 			'#textInform2',
+		// 			'<i class="fa fa-times-circle"></i> You are not the creator',
+		// 			"In this case, you can review this data. Hover over the box on the right side to start the review.",
+		// 			false
+		// 		);
+
+		// 	}
+
+		// 	$('#review_label')
+		// 	.on('mouseenter', function() {
+		// 		if ($('#review').val() !== '1') { 
+		// 			$(this).text('Review')
+		// 				.addClass('review-border');
+		// 		}
+		// 	})
+		// 	.on('mouseleave', function() {
+		// 		if ($('#review').val() !== '1') { 
+		// 			$(this).text('Unreview')
+		// 				.removeClass('review-border');
+		// 		}
+		// 	});
+
+
+		// 	$('#saveButtonDetail').prop('disabled', false);
+		// } else {
+		// 	$('#user_review').val(loggedInUser);
+
+		// 	showInfoCard(
+		// 		'#textInform2',
+		// 		'<i class="fa fa-check-circle"></i> You are the creator',
+		// 		"You have full access to edit this data but not review.",
+		// 		true
+		// 	);
+
+		// 	$('#saveButtonDetail').prop('disabled', true);
+		// }
+
+		// Configuration based on user role
+		const isCreator = userCreated === loggedInUser;
+		const canReview = !isCreator;
+		
+		// Set user review value
+		$('#user_review').val(loggedInUser);
+		
+		// Configure UI based on user role
+		configureUserInterface(isCreator, canReview);
+		
+		// Setup review click handler (common for both creator and non-creator)
+		setupReviewClickHandler();
+		
+		// Setup hover effects for review label
+		setupReviewHoverEffects();
+		
+		/**
+		 * Configure UI elements based on user role
+		 */
+		function configureUserInterface(isCreator, canReview) {
+			if (canReview) {
+				// Non-creator: Can review
+				const reviewStatus = $('#review').val();
+				const message = reviewStatus === '1' 
+					? "In this case, you can't review because it has already been reviewed."
+					: "In this case, you can review this data. Hover over the box on the right side to start the review.";
+				
+				showInfoCard(
+					'#textInform2',
+					'<i class="fa fa-times-circle"></i> You are not the creator',
+					message,
+					false
+				);
+				
+				$('#saveButtonDetail').prop('disabled', false);
+			} else {
+				// Creator: Cannot review
+				showInfoCard(
+					'#textInform2',
+					'<i class="fa fa-check-circle"></i> You are the creator',
+					// "You have full access to edit this data but not review.",
+					"You have full access to edit this data and review.",
+					true
+				);
+				
+				$('#saveButtonDetail').prop('disabled', true);
+			}
+		}
+		
+		/**
+		 * Setup click handler for review label
+		 */
+		function setupReviewClickHandler() {
 			$('#review_label').off('click').on('click', function () {
+				// Check if review is already locked
 				if ($('#review').val() === '1') {
-					Swal.fire({
-						icon: 'info',
-						title: 'Review Locked',
-						text: 'You have already reviewed this. Further changes are not allowed.',
-						confirmButtonText: 'OK'
-					});
+					showReviewLockedAlert();
 					return;
 				}
-
-				Swal.fire({
-					icon: 'question',
-					title: 'Are you sure?',
-					showCancelButton: true,
-					confirmButtonText: 'OK',
-					cancelButtonText: 'Cancel',
-					reverseButtons: true
-				}).then((result) => {
-					if (result.isConfirmed) {
-
-						currentState = (currentState + 1) % states.length;
-
-						$('#review').val(states[currentState].value);
-						$('#review_label')
-							.text(states[currentState].label)
-							.removeClass()
-							.addClass('form-check-label ' + states[currentState].class);
-
-						$.ajax({
-							url: '<?php echo site_url('Enterolert_idexx_biosolids/saveReview'); ?>',
-							method: 'POST',
-							data: $('#formSampleReview').serialize(),
-							dataType: 'json',
-							success: function(response) {
-								if (response.status) {
-									Swal.fire({
-										icon: 'success',
-										title: 'Review saved successfully!',
-										text: response.message,
-										timer: 1000,
-										showConfirmButton: false
-									}).then(() => {
-										location.reload();
-									});
-								} else {
-									Swal.fire({
-										icon: 'error',
-										title: 'Failed to save review',
-										text: response.message
-									});
-								}
-							},
-							error: function(xhr, status, error) {
-								console.error('AJAX Error: ' + status + error);
-								Swal.fire('Error', 'Something went wrong during submission.', 'error');
-							}
-						});
-					} else {
-						Swal.fire({
-							icon: 'info',
-							title: 'Review Not Changed',
-							text: 'No changes were made.',
-							timer: 2000
-						});
+				
+				// Show confirmation dialog
+				showReviewConfirmation();
+			});
+		}
+		
+		/**
+		 * Setup hover effects for review label
+		 */
+		function setupReviewHoverEffects() {
+			$('#review_label')
+				.on('mouseenter', function() {
+					if ($('#review').val() !== '1') { 
+						$(this).text('Review').addClass('review-border');
+					}
+				})
+				.on('mouseleave', function() {
+					if ($('#review').val() !== '1') { 
+						$(this).text('Unreview').removeClass('review-border');
 					}
 				});
+		}
+		
+		/**
+		 * Show review locked alert
+		 */
+		function showReviewLockedAlert() {
+			Swal.fire({
+				icon: 'info',
+				title: 'Review Locked',
+				text: 'You have already reviewed this. Further changes are not allowed.',
+				confirmButtonText: 'OK'
 			});
-
-			if ($('#review').val() === '1') {
-				showInfoCard(
-					'#textInform2',
-					'<i class="fa fa-times-circle"></i> You are not the creator',
-					"In this case, you can't review because it has already been reviewed.",
-
-					false
-				);
-			} else {
-				showInfoCard(
-					'#textInform2',
-					'<i class="fa fa-times-circle"></i> You are not the creator',
-					"In this case, you can review this data. Hover over the box on the right side to start the review.",
-					false
-				);
-
-			}
-
+		}
+		
+		/**
+		 * Show review confirmation dialog
+		 */
+		function showReviewConfirmation() {
+			Swal.fire({
+				icon: 'question',
+				title: 'Are you sure?',
+				showCancelButton: true,
+				confirmButtonText: 'OK',
+				cancelButtonText: 'Cancel',
+				reverseButtons: true
+			}).then((result) => {
+				if (result.isConfirmed) {
+					processReviewUpdate();
+				} else {
+					showReviewCancelledAlert();
+				}
+			});
+		}
+		
+		/**
+		 * Process review update
+		 */
+		function processReviewUpdate() {
+			// Update current state
+			currentState = (currentState + 1) % states.length;
+			
+			// Update UI elements
+			updateReviewUI();
+			
+			// Save review via AJAX
+			saveReviewData();
+		}
+		
+		/**
+		 * Update review UI elements
+		 */
+		function updateReviewUI() {
+			$('#review').val(states[currentState].value);
 			$('#review_label')
-			.on('mouseenter', function() {
-				if ($('#review').val() !== '1') { 
-					$(this).text('Review')
-						.addClass('review-border');
-				}
-			})
-			.on('mouseleave', function() {
-				if ($('#review').val() !== '1') { 
-					$(this).text('Unreview')
-						.removeClass('review-border');
-				}
+				.text(states[currentState].label)
+				.removeClass()
+				.addClass('form-check-label ' + states[currentState].class);
+		}
+		
+		/**
+		 * Save review data via AJAX
+		 */
+		function saveReviewData() {
+			$.ajax({
+				url: '<?php echo site_url('Enterolert_idexx_biosolids/saveReview'); ?>',
+				method: 'POST',
+				data: $('#formSampleReview').serialize(),
+				dataType: 'json',
+				success: handleReviewSaveSuccess,
+				error: handleReviewSaveError
 			});
-
-
-			$('#saveButtonDetail').prop('disabled', false);
-		} else {
-			$('#user_review').val(loggedInUser);
-
-			showInfoCard(
-				'#textInform2',
-				'<i class="fa fa-check-circle"></i> You are the creator',
-				"You have full access to edit this data but not review.",
-				true
-			);
-
-			$('#saveButtonDetail').prop('disabled', true);
+		}
+		
+		/**
+		 * Handle successful review save
+		 */
+		function handleReviewSaveSuccess(response) {
+			if (response.status) {
+				Swal.fire({
+					icon: 'success',
+					title: 'Review saved successfully!',
+					text: response.message,
+					timer: 1000,
+					showConfirmButton: false
+				}).then(() => {
+					location.reload();
+				});
+			} else {
+				Swal.fire({
+					icon: 'error',
+					title: 'Failed to save review',
+					text: response.message
+				});
+			}
+		}
+		
+		/**
+		 * Handle review save error
+		 */
+		function handleReviewSaveError(xhr, status, error) {
+			console.error('AJAX Error: ' + status + error);
+			Swal.fire('Error', 'Something went wrong during submission.', 'error');
+		}
+		
+		/**
+		 * Show review cancelled alert
+		 */
+		function showReviewCancelledAlert() {
+			Swal.fire({
+				icon: 'info',
+				title: 'Review Not Changed',
+				text: 'No changes were made.',
+				timer: 2000
+			});
 		}
 		
 		// Fungsi untuk cancel review (khusus admin user 1 & 2)

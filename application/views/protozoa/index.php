@@ -1577,53 +1577,54 @@
                 .removeClass()
                 .addClass('badge review-badge ' + (currentState === 1 ? 'bg-success review' : 'bg-warning unreview'));
 
-            // Check if logged in user is NOT the creator
-            if (userCreated !== loggedInUser) {
-                $('#user_review').val(loggedInUser);
+            // Allow both creators and non-creators to perform reviews
+            $('#user_review').val(loggedInUser);
 
-                $('#review_label').off('click').on('click', function () {
-                    if ($('#review').val() === '1') {
+            $('#review_label').off('click').on('click', function () {
+                if ($('#review').val() === '1') {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Review Locked',
+                        text: 'You have already reviewed this. Further changes are not allowed.',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Review Sample',
+                    text: 'Are you sure you want to review this sample?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, Review',
+                    cancelButtonText: 'Cancel',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        currentState = (currentState + 1) % states.length;
+
+                        $('#review').val(states[currentState].value);
+                        $('#review_label')
+                            .text(states[currentState].label)
+                            .removeClass()
+                            .addClass('badge review-badge ' + (currentState === 1 ? 'bg-success review' : 'bg-warning unreview'));
+
+                        // Save review via AJAX
+                        saveReviewData();
+                    } else {
                         Swal.fire({
                             icon: 'info',
-                            title: 'Review Locked',
-                            text: 'You have already reviewed this. Further changes are not allowed.',
-                            confirmButtonText: 'OK'
+                            title: 'Review Not Changed',
+                            text: 'No changes were made.',
+                            timer: 2000,
+                            showConfirmButton: false
                         });
-                        return;
                     }
-
-                    Swal.fire({
-                        icon: 'question',
-                        title: 'Review Sample',
-                        text: 'Are you sure you want to review this sample?',
-                        showCancelButton: true,
-                        confirmButtonText: 'Yes, Review',
-                        cancelButtonText: 'Cancel',
-                        reverseButtons: true
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            currentState = (currentState + 1) % states.length;
-
-                            $('#review').val(states[currentState].value);
-                            $('#review_label')
-                                .text(states[currentState].label)
-                                .removeClass()
-                                .addClass('badge review-badge ' + (currentState === 1 ? 'bg-success review' : 'bg-warning unreview'));
-
-                            // Save review via AJAX
-                            saveReviewData();
-                        } else {
-                            Swal.fire({
-                                icon: 'info',
-                                title: 'Review Not Changed',
-                                text: 'No changes were made.',
-                                timer: 2000,
-                                showConfirmButton: false
-                            });
-                        }
-                    });
                 });
+            });
 
+            // Display different messages for creators vs non-creators
+            if (userCreated !== loggedInUser) {
                 if ($('#review').val() === '1') {
                     showReviewInfoCard(
                         '#textInformReview',
@@ -1639,32 +1640,38 @@
                         false
                     );
                 }
-
-                // Mouse enter/leave effects for review label
-                $('#review_label')
-                .on('mouseenter', function() {
-                    if ($('#review').val() !== '1') { 
-                        $(this).text('Review')
-                            .addClass('review-border');
-                    }
-                })
-                .on('mouseleave', function() {
-                    if ($('#review').val() !== '1') { 
-                        $(this).text('Unreview')
-                            .removeClass('review-border');
-                    }
-                });
-
             } else {
-                $('#user_review').val(loggedInUser);
-
-                showReviewInfoCard(
-                    '#textInformReview',
-                    '<i class="fa fa-check-circle"></i> You are the creator',
-                    "You have full access to edit this data but not review.",
-                    true
-                );
+                if ($('#review').val() === '1') {
+                    showReviewInfoCard(
+                        '#textInformReview',
+                        '<i class="fa fa-check-circle"></i> You are the creator',
+                        "You have already reviewed this data as the creator.",
+                        true
+                    );
+                } else {
+                    showReviewInfoCard(
+                        '#textInformReview',
+                        '<i class="fa fa-check-circle"></i> You are the creator',
+                        "You have full access to edit and review this data. Hover over the box on the top side to start the review.",
+                        true
+                    );
+                }
             }
+
+            // Mouse enter/leave effects for review label
+            $('#review_label')
+            .on('mouseenter', function() {
+                if ($('#review').val() !== '1') { 
+                    $(this).text('Review')
+                        .addClass('review-border');
+                }
+            })
+            .on('mouseleave', function() {
+                if ($('#review').val() !== '1') { 
+                    $(this).text('Unreview')
+                        .removeClass('review-border');
+                }
+            });
 
             // Handle cancel review button (for admin users level 1 & 2)
             const currentUserLevel = '<?php echo $this->session->userdata('id_user_level'); ?>';
