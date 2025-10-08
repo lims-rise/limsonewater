@@ -983,6 +983,33 @@ class Sample_reception extends CI_Controller
             ));
         }
     }
+    
+    public function global_search() {
+        // Log the request
+        log_message('info', 'Global search called with POST data: ' . json_encode($_POST));
+        
+        $search_term = $this->input->post('search_term');
+        
+        if (empty($search_term)) {
+            log_message('warning', 'Global search called with empty search term');
+            echo json_encode(array('success' => false, 'message' => 'Search term is required'));
+            return;
+        }
+        
+        try {
+            log_message('info', 'Performing global search for: ' . $search_term);
+            $result = $this->Sample_reception_model->global_search($search_term);
+            log_message('info', 'Global search result: ' . json_encode($result));
+            echo json_encode($result);
+        } catch (Exception $e) {
+            log_message('error', 'Global search error: ' . $e->getMessage());
+            echo json_encode(array(
+                'success' => false,
+                'message' => 'Search failed',
+                'debug' => $e->getMessage()
+            ));
+        }
+    }
 }
 
 /* End of file Water_sample_reception.php */

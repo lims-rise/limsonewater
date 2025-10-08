@@ -940,6 +940,18 @@
             };
         };
 
+        // Handle search parameters from URL
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        let searchProject = getUrlParameter('project_id');
+        let searchSample = getUrlParameter('sample_id');
+        let generalSearch = getUrlParameter('search');
+
         let lastIdProject = localStorage.getItem('last_id_project');
         let lastPage = localStorage.getItem('last_page');
         table = $("#mytable").DataTable({
@@ -1175,6 +1187,82 @@
                 }
             }
         });
+
+        // Apply search filters if URL parameters exist
+        if (searchProject || searchSample || generalSearch) {
+            let searchTerm = searchProject || searchSample || generalSearch;
+            let searchApplied = false;
+            
+            // Apply search once after table initialization
+            setTimeout(function() {
+                if (!searchApplied) {
+                    searchApplied = true;
+                    table.search(searchTerm).draw();
+                    
+                    // Set up one-time event handler for highlighting after search is applied
+                    table.one('draw.dt', function() {
+                        setTimeout(function() {
+                            table.rows().every(function() {
+                                let data = this.data();
+                                let node = this.node();
+                                
+                                if ((searchProject && data.id_project === searchProject) ||
+                                    (generalSearch && (
+                                        data.id_project.toLowerCase().includes(generalSearch.toLowerCase()) ||
+                                        data.client.toLowerCase().includes(generalSearch.toLowerCase()) ||
+                                        (data.id_client_sample && data.id_client_sample.toLowerCase().includes(generalSearch.toLowerCase()))
+                                    ))) {
+                                    $(node).addClass('highlight');
+                                    $('html, body').animate({
+                                        scrollTop: $(node).offset().top - 100
+                                    }, 1000);
+                                    
+                                    // Auto-expand child row for project matches or when searching for a sample
+                                    if ((searchProject && data.id_project === searchProject) || searchSample) {
+                                        openChildRow($(node), data);
+                                        
+                                        // If we're searching for a specific sample, highlight it in the child rows
+                                        if (searchSample) {
+                                            setTimeout(function() {
+                                                highlightSampleInChildRows(searchSample);
+                                            }, 1000);
+                                        }
+                                    }
+                                }
+                            });
+                            
+                            // Keep URL parameters for better user experience
+                            // Allows bookmarking, sharing, and proper browser navigation
+                        }, 300);
+                    });
+                }
+            }, 500);
+        }
+        
+        // Function to highlight specific sample in child rows
+        function highlightSampleInChildRows(sampleId) {
+            $('.child-table tbody tr').each(function() {
+                let $row = $(this);
+                let firstCell = $row.find('td:first').text().trim();
+                
+                if (firstCell === sampleId) {
+                    $row.addClass('highlight');
+                    $row.css({
+                        'background-color': '#d4edda',
+                        'border': '2px solid #28a745',
+                        'font-weight': 'bold'
+                    });
+                    
+                    // Scroll to the highlighted sample within the child table
+                    let $container = $row.closest('.child-table-container');
+                    if ($container.length) {
+                        $container.animate({
+                            scrollTop: $row.position().top - 50
+                        }, 500);
+                    }
+                }
+            });
+        }
 
         $('#mytable tbody').on('click', 'tr', function () {
             const table = $('#mytable').DataTable();

@@ -61,6 +61,21 @@
         /* cursor: pointer; */
     }
 
+    /* Global Search - Ensure no interference with sidebar */
+    #global-search-input, #global-search-btn {
+        pointer-events: auto;
+        z-index: 999;
+    }
+    
+    /* Ensure sidebar has higher priority */
+    .main-sidebar {
+        z-index: 1001 !important;
+    }
+    
+    .sidebar-toggle {
+        z-index: 1002 !important;
+    }
+
     </style>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -152,6 +167,20 @@
                                 <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                             </li>
                         </ul>
+                    </div>
+
+                     <!-- Global Search Component -->
+                    <div class="navbar-form navbar-right" style="margin-top: 8px; margin-right: 10px; z-index: 999; position: relative;">
+                        <div class="form-group">
+                            <div class="input-group" style="width: 280px;">
+                                <input type="text" id="global-search-input" class="form-control" placeholder="Search Project ID or Sample ID..." style="border-radius: 15px 0 0 15px;" autocomplete="on">
+                                <span class="input-group-btn">
+                                    <button type="button" id="global-search-btn" class="btn btn-primary" style="border-radius: 0 15px 15px 0; height: 34px;" tabindex="-1">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                     <!-- <marquee behavior="scroll" direction="left" scrollamount="30">
                         <h6><i class='fa fa-qrcode'></i><b> Indonesia</b> Lab data </h6>
@@ -463,6 +492,80 @@
 
         });
             //================
+            
+            // Global Search Functionality - Isolated to prevent sidebar interference
+            $('#global-search-btn').on('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var searchTerm = $('#global-search-input').val().trim();
+                if (searchTerm !== '') {
+                    performGlobalSearch(searchTerm);
+                }
+            });
+            
+            $('#global-search-input').on('keypress', function(e) {
+                if (e.which === 13) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    var searchTerm = $(this).val().trim();
+                    if (searchTerm !== '') {
+                        performGlobalSearch(searchTerm);
+                    }
+                }
+            });
+            
+            // Prevent search input from interfering with other elements
+            $('#global-search-input').on('focus blur', function(e) {
+                e.stopPropagation();
+            });
+            
+            function performGlobalSearch(searchTerm) {
+                console.log('Performing search for:', searchTerm);
+                $.ajax({
+                    url: '<?php echo site_url('Sample_reception/global_search'); ?>',
+                    type: 'POST',
+                    data: { search_term: searchTerm },
+                    dataType: 'json',
+                    beforeSend: function() {
+                        console.log('Sending request to global_search');
+                        $('#global-search-btn').prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i>');
+                    },
+                    success: function(response) {
+                        console.log('Search response:', response);
+                        if (response.success) {
+                            if (response.type === 'project') {
+                                // Redirect to sample reception with project filter
+                                window.location.href = '<?php echo base_url(); ?>index.php/sample_reception?project_id=' + encodeURIComponent(searchTerm);
+                            } else if (response.type === 'sample') {
+                                // Redirect to the project that contains this sample
+                                window.location.href = '<?php echo base_url(); ?>index.php/sample_reception?project_id=' + encodeURIComponent(response.data.id_project) + '&sample_id=' + encodeURIComponent(searchTerm);
+                            } else if (response.type === 'partial') {
+                                // Show partial results in modal or redirect with general search
+                                if (response.data.length === 1) {
+                                    // Single partial match - redirect to that project
+                                    window.location.href = '<?php echo base_url(); ?>index.php/sample_reception?project_id=' + encodeURIComponent(response.data[0].id_project);
+                                } else {
+                                    // Multiple partial matches - general search
+                                    window.location.href = '<?php echo base_url(); ?>index.php/sample_reception?search=' + encodeURIComponent(searchTerm);
+                                }
+                            } else {
+                                // General redirect for any other matches
+                                window.location.href = '<?php echo base_url(); ?>index.php/sample_reception?search=' + encodeURIComponent(searchTerm);
+                            }
+                        } else {
+                            alert('No results found for: ' + searchTerm);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('Search error:', xhr, status, error);
+                        console.log('Response text:', xhr.responseText);
+                        alert('Search failed. Please try again. Error: ' + status);
+                    },
+                    complete: function() {
+                        $('#global-search-btn').prop('disabled', false).html('<i class="fa fa-search"></i>');
+                    }
+                });
+            }
 
             // $(function () {
             //     $('.select2').select2()
