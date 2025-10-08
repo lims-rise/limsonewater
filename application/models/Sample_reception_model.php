@@ -20,6 +20,16 @@ class Sample_reception_model extends CI_Model
             
         $this->datatables->from('sample_reception sr');
         $this->datatables->join('ref_client cc', 'sr.id_client_contact = cc.id_client_contact AND cc.flag = 0', 'left');
+        
+        // Handle search filters from URL parameters
+        $sample_id = $this->input->get('sample_id');
+        $project_id = $this->input->get('project_id');
+        
+        if (!empty($project_id)) {
+            // Filter by project ID (this covers both direct project searches and sample searches)
+            $this->datatables->where('sr.id_project', $project_id);
+        }
+        
         $this->datatables->where('sr.flag', '0');
     
         $lvl = $this->session->userdata('id_user_level');
@@ -1308,6 +1318,81 @@ class Sample_reception_model extends CI_Model
         } catch (Exception $e) {
             return false;
         }
+    }
+    
+    /**
+     * Global search function to search for id_project and id_one_water_sample
+     */
+    public function global_search($search_term) {
+        $search_term = trim($search_term);
+        
+        // First, check if it matches an id_project
+        $this->db->select('id_project, client, id_client_sample, comments, number_sample');
+        $this->db->from('sample_reception');
+        $this->db->where('id_project', $search_term);
+        $this->db->where('flag', '0');
+        $this->db->limit(1);
+        
+        $project_result = $this->db->get();
+        
+        if ($project_result->num_rows() > 0) {
+            return array(
+                'success' => true,
+                'type' => 'project',
+                'data' => $project_result->row(),
+                'message' => 'Project found'
+            );
+        }
+        
+        // If not found as project, check if it's a sample ID in sample_reception_sample table
+        $this->db->select('srs.id_one_water_sample, srs.id_project, sr.client, sr.id_client_sample, sr.comments as project_comments, srs.id_sampletype, srs.date_collected, srs.time_collected, srs.date_arrival, srs.time_arrival, srs.quality_check, srs.client_id, srs.comments as sample_comments');
+        $this->db->from('sample_reception_sample srs');
+        $this->db->join('sample_reception sr', 'srs.id_project = sr.id_project AND sr.flag = 0', 'left');
+        $this->db->where('srs.id_one_water_sample', $search_term);
+        $this->db->where('srs.flag', '0');
+        $this->db->limit(1);
+        
+        $sample_result = $this->db->get();
+        
+        if ($sample_result->num_rows() > 0) {
+            return array(
+                'success' => true,
+                'type' => 'sample',
+                'data' => $sample_result->row(),
+                'message' => 'Sample found'
+            );
+        }
+        
+        // If exact match not found, try partial search on projects
+        $this->db->select('id_project, client, id_client_sample, comments, COUNT(*) as sample_count');
+        $this->db->from('sample_reception');
+        $this->db->group_start();
+        $this->db->like('client', $search_term);
+        $this->db->or_like('id_project', $search_term);
+        $this->db->or_like('id_client_sample', $search_term);
+        $this->db->or_like('comments', $search_term);
+        $this->db->group_end();
+        $this->db->where('flag', '0');
+        $this->db->group_by('id_project, client, id_client_sample, comments');
+        $this->db->limit(5);
+        
+        $partial_result = $this->db->get();
+        
+        if ($partial_result->num_rows() > 0) {
+            return array(
+                'success' => true,
+                'type' => 'partial',
+                'data' => $partial_result->result(),
+                'message' => 'Partial matches found'
+            );
+        }
+        
+        // No results found
+        return array(
+            'success' => false,
+            'type' => 'none',
+            'message' => 'No results found for: ' . $search_term
+        );
     }
 }
 
