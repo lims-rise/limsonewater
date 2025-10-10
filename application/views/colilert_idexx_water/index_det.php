@@ -180,17 +180,17 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="date_sample" class="col-sm-4 control-label">Date Sample</label>
+                                        <label for="date_sample_out" class="col-sm-4 control-label">Date Sample</label>
                                         <div class="col-sm-8">
-                                            <input id="date_sample" name="date_sample" type="date" class="form-control" placeholder="Date Sample" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
+                                            <input id="date_sample_out" name="date_sample_out" type="date" class="form-control" placeholder="Date Sample" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="time_sample" class="col-sm-4 control-label">Time Sample</label>
+                                        <label for="time_sample_out" class="col-sm-4 control-label">Time Sample</label>
                                         <div class="col-sm-8">
                                             <div class="input-group clockpicker">
-                                            <input id="time_sample" name="time_sample" class="form-control" placeholder="Time Sample" value="<?php 
+                                            <input id="time_sample_out" name="time_sample_out" class="form-control" placeholder="Time Sample" value="<?php 
                                             $datetime = new DateTime();
                                             echo $datetime->format( 'H:i' );
                                             ?>">
@@ -1380,8 +1380,8 @@
             $('#id_colilert_out').val(data.id_colilert_out);
             $('#colilert_barcodex').val(data.colilert_barcode);
             $('#colilert_barcodex').attr('readonly', true);
-            $('#date_sample').val(data.date_sample);
-            $('#time_sample').val(data.time_sample);
+            $('#date_sample_out').val(data.date_sample);
+            $('#time_sample_out').val(data.time_sample);
             $('#ecoli_largewells').val(data.ecoli_largewells);
             $('#ecoli_smallwells').val(data.ecoli_smallwells);
             $('#ecoli').val(data.ecoli);

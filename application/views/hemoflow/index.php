@@ -67,6 +67,13 @@
                          </div>
 
                         <div class="form-group">
+                            <label for="hemoflow_barcode" class="col-sm-4 control-label">Hemoflow Barcode</label>
+                            <div class="col-sm-8">
+                                <input id="hemoflow_barcode" name="hemoflow_barcode" type="text" class="form-control" placeholder="Hemoflow Barcode" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label for="id_person" class="col-sm-4 control-label">Lab Tech</label>
                             <div class="col-sm-8">
                                 <select id="id_person" name="id_person" class="form-control" required>
@@ -153,6 +160,58 @@
                                     <textarea id="comments" name="comments" class="form-control" placeholder="Comments"> </textarea>
                                 </div>
                         </div>
+
+                        <!-- Review Component - Only visible in update mode -->
+                        <div id="review-section" style="display: none; padding: 15px;">
+                            <!-- <hr style="border-top: 1px solid #ddd; margin: 25px 0 20px 0;"> -->
+                            
+                            <!-- Hidden fields for review data -->
+                            <input type="hidden" id="review" name="review" value="">
+                            <input type="hidden" id="user_review" name="user_review" value="">
+                            <input type="hidden" id="user_created" name="user_created" value="">
+                            
+                            <!-- Review Section Header -->
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <h5 style="color: #3c8dbc; font-weight: 600; margin-bottom: 15px;">
+                                        <i class="fa fa-check-circle" style="margin-right: 8px;"></i>Review Status
+                                    </h5>
+                                    <!-- Review Status Display -->
+                                    <div class="form-group">
+                                        <!-- <label class="col-sm-4 control-label">Review Status</label> -->
+                                        <div class="col-sm-12">
+                                            <div class="review-status-container">
+                                                <span id="review_label" class="badge bg-warning text-dark review-badge" role="button" tabindex="0">
+                                                    Unreview
+                                                </span>
+                                                <span class="review-info">
+                                                    <span class="text-muted">by:</span>
+                                                    <span id="reviewed_by_label" class="reviewer-name">-</span>
+                                                </span>
+                                                <!-- Cancel Review Button (Admin Only) -->
+                                                <button type="button" id="cancelReviewBtn" class="btn btn-danger btn-sm cancel-review-btn" style="display: none;">
+                                                    <i class="fa fa-times"></i> Cancel Review
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Info Card -->
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div id="textInformReview" class="textInform review-info-card" style="display: none;">
+                                        <div class="card-body">
+                                            <div class="card-header d-flex justify-content-between align-items-center">
+                                                <h6 class="card-title statusMessage mb-0"></h6>
+                                                <i class="fa fa-times close-card" style="cursor: pointer;"></i>
+                                            </div>
+                                            <p class="statusDescription mb-0"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
             
                     </div>
                     <div class="modal-footer clearfix">
@@ -193,7 +252,280 @@
         background-color: rgba(0, 255, 0, 0.1) !important;
         font-volume_filter: bold !important;
     }
+
+    /* Review Component Styling */
+    #review_label {
+        cursor: pointer;
+        font-size: 13px;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        min-width: 80px;
+        height: 32px;
+        text-align: center;
+    }
+
+    #review_label:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    #reviewed_by_label {
+        font-style: italic;
+        font-weight: 600;
+        font-size: 12px;
+        color: #495057;
+    }
+
+    .review-status-container {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        padding: 4px 0;
+    }
+
+    .review-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        margin-left: 5px;
+    }
+
+    .reviewer-name {
+        /* background: #f8f9fa; */
+        padding: 4px 10px;
+        border-radius: 20px;
+        /* border: 1px solid #e9ecef; */
+        min-width: 70px;
+        text-align: center;
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    .cancel-review-btn {
+        padding: 6px 14px;
+        font-size: 13px;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        min-width: 80px;
+        height: 32px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cancel-review-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(220,53,69,0.25);
+    }
+
+    .d-flex {
+        display: flex;
+        align-items: center;
+    }
+
+    .ms-2 {
+        margin-left: 0.5rem;
+    }
+
+    .ms-3 {
+        margin-left: 1rem;
+    }
+
+    .badge {
+        font-size: 13px;
+        padding: 6px 14px;
+        border-radius: 20px;
+        margin-top: 0px;
+        font-weight: 500;
+        min-width: 80px;
+        height: 32px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .badge-success {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .badge-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .bg-warning {
+        background-color: #ffc107 !important;
+        color: #212529 !important;
+        border: 1px solid #f0ad4e;
+    }
+
+    .bg-success {
+        background-color: #28a745 !important;
+        color: white !important;
+        border: 1px solid #1e7e34;
+    }
+
+    .review-info-card {
+        border-radius: 6px;
+        margin-top: 0px;
+        padding: 12px 16px;
+        width: 100%;
+        border-left: 4px solid #3c8dbc;
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+    }
+
+    .card-success {
+        border-left-color: #28a745 !important;
+        background-color: #d4edda !important;
+        border-color: #c3e6cb !important;
+    }
+
+    .card-danger {
+        border-left-color: #dc3545 !important;
+        background-color: #f8d7da !important;
+        border-color: #f5c6cb !important;
+    }
+
+    .card-title {
+        font-size: 14px;
+        font-weight: 600;
+        text-align: left;
+        margin-bottom: 4px;
+        color: #495057;
+    }
+
+    .card-body {
+        font-size: 13px;
+        text-align: left;
+        padding: 0px;
+        line-height: 1.4;
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+
+    .close-card {
+        cursor: pointer;
+        font-size: 16px;
+        color: #6c757d;
+        opacity: 0.7;
+        transition: all 0.2s ease;
+    }
+
+    .close-card:hover {
+        color: #dc3545;
+        opacity: 1;
+        transform: scale(1.1);
+    }
+
+    .unreview {
+        color: #856404 !important;
+        background-color: #fff3cd !important;
+        border-color: #ffeaa7 !important;
+    }
+
+    .review {
+        color: white !important;
+        background-color: #28a745 !important;
+        border-color: #1e7e34 !important;
+    }
+
+    .review-border {
+        border: 2px solid #28a745 !important;
+        color: #28a745 !important;
+        background-color: #f8fff9 !important;
+        box-shadow: 0 0 8px rgba(40, 167, 69, 0.25);
+    }
+
+    .textInform {
+        margin-bottom: 12px;
+        animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    #textInformReview .statusDescription {
+        color: #6c757d;
+        margin-top: 4px;
+        font-size: 12px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .review-status-container {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        
+        .review-info {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+        }
+        
+        .cancel-review-btn {
+            width: 100%;
+            text-align: center;
+        }
+    }
+
+    /* Form group spacing for review section */
+    #review-section .form-group {
+        margin-bottom: 15px;
+    }
+
+    #review-section .form-group:last-child {
+        margin-bottom: 10px;
+    }
+
+    /* Review section header styling */
+    #review-section h5 {
+        border-bottom: 1px solid #e9ecef;
+        padding-bottom: 8px;
+        margin-bottom: 15px;
+    }
+
+    .badge1 {
+        font-size: 12px;
+        padding: 6px 12px;
+        border-radius: 20px;
+        margin-top: 0px;
+        width: 80px;
+        text-align: center;
+        display: inline-block;
+        min-width: 80px;
+    }
+
+    .badge1-success {
+        background-color: #c3e6c3;
+        color: #2d5a2d;
+    }
+
+    .badge1-danger {
+        background-color: rgba(248, 113, 113, 0.3);
+        color: #b91c1c;
+    }
 </style>
+<!-- SweetAlert2 CSS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
@@ -227,6 +559,8 @@
             $('#id_one_water_sample').attr('readonly', true);
             $('#id_one_water_sample').val(idOneWaterSampleFromUrl || '');  // Set ID jika ada
             $('#idx_one_water_sample').hide();
+            $('#hemoflow_barcode').val(barcodeFromUrl);
+            $('#hemoflow_barcode').attr('readonly', true);
             $('#id_person').val('');
             $('#sampletype').attr('readonly', true);
             $('#sampletype').val('');
@@ -518,6 +852,8 @@
             $('#idx_one_water_sample').attr('readonly', true);
             $('#idx_one_water_sample').val(data.id_one_water_sample);
             $('#id_person').val(data.id_person).trigger('change');
+            $('#hemoflow_barcode').val(data.hemoflow_barcode);
+            $('#hemoflow_barcode').attr('readonly', true);
             $('#sampletype').attr('readonly', true);
             $('#sampletype').val(data.sampletype);
             $('#date_processed').val(data.date_processed).trigger('change');
@@ -526,7 +862,349 @@
             $('#volume_filter').val(data.volume_filter);
             $('#volume_eluted').val(data.volume_eluted);
             $('#comments').val(data.comments);
+            // Show review section and populate review data
+            $('#review-section').show();
+            setupReviewComponent(data);
             $('#compose-modal').modal('show');
+        });  
+
+                // Setup review component with data
+        function setupReviewComponent(data) {
+            $('#review').val(data.review || 0);
+            $('#user_review').val(data.user_review || '');
+            $('#user_created').val(data.user_created || '');
+            
+            // Initialize review system with the same logic as campy_biosolids
+            initializeReviewSystem(data);
+        }
+
+        // Initialize review system with complete logic from campy_biosolids
+        function initializeReviewSystem(data) {
+            let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
+            let userCreated = data.user_created || '';
+            let userReview = data.user_review || '';
+            let fullName = ''; // Will be fetched if needed
+
+            // Get reviewer name if exists
+            if (userReview) {
+                $.ajax({
+                    url: '<?php echo site_url('Hemoflow/getReviewer'); ?>',
+                    type: 'POST',
+                    data: { user_review: userReview },
+                    dataType: 'json',
+                    success: function(response) {
+                        fullName = response.full_name || '-';
+                        $('#reviewed_by_label').text(fullName);
+                    },
+                    error: function() {
+                        $('#reviewed_by_label').text('-');
+                    }
+                });
+            } else {
+                $('#reviewed_by_label').text('-');
+            }
+
+            // Define review states
+            const states = [
+                { value: 0, label: "Unreview", class: "unreview" },
+                { value: 1, label: "Reviewed", class: "review" }
+            ];
+
+            // Get initial state from hidden input
+            let currentState = parseInt($('#review').val());
+            if (isNaN(currentState) || currentState < 0 || currentState > 1) currentState = 0;
+
+            // Set initial display on review label
+            $('#review_label')
+                .text(states[currentState].label)
+                .removeClass()
+                .addClass('badge review-badge ' + (currentState === 1 ? 'bg-success review' : 'bg-warning unreview'));
+
+            // Allow both creators and non-creators to perform reviews
+            $('#user_review').val(loggedInUser);
+
+            $('#review_label').off('click').on('click', function () {
+                if ($('#review').val() === '1') {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Review Locked',
+                        text: 'You have already reviewed this. Further changes are not allowed.',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+
+                Swal.fire({
+                    icon: 'question',
+                    title: 'Review Sample',
+                    text: 'Are you sure you want to review this sample?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, Review',
+                    cancelButtonText: 'Cancel',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        currentState = (currentState + 1) % states.length;
+
+                        $('#review').val(states[currentState].value);
+                        $('#review_label')
+                            .text(states[currentState].label)
+                            .removeClass()
+                            .addClass('badge review-badge ' + (currentState === 1 ? 'bg-success review' : 'bg-warning unreview'));
+
+                        // Save review via AJAX
+                        saveReviewData();
+                    } else {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Review Not Changed',
+                            text: 'No changes were made.',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    }
+                });
+            });
+
+            // Display different messages for creators vs non-creators
+            if (userCreated !== loggedInUser) {
+                if ($('#review').val() === '1') {
+                    showReviewInfoCard(
+                        '#textInformReview',
+                        '<i class="fa fa-times-circle"></i> You are not the creator',
+                        "In this case, you can't review because it has already been reviewed.",
+                        false
+                    );
+                } else {
+                    showReviewInfoCard(
+                        '#textInformReview',
+                        '<i class="fa fa-times-circle"></i> You are not the creator',
+                        "In this case, you can review this data. Hover over the box on the top side to start the review.",
+                        false
+                    );
+                }
+            } else {
+                if ($('#review').val() === '1') {
+                    showReviewInfoCard(
+                        '#textInformReview',
+                        '<i class="fa fa-check-circle"></i> You are the creator',
+                        "You have already reviewed this data as the creator.",
+                        true
+                    );
+                } else {
+                    showReviewInfoCard(
+                        '#textInformReview',
+                        '<i class="fa fa-check-circle"></i> You are the creator',
+                        "You have full access to edit and review this data. Hover over the box on the top side to start the review.",
+                        true
+                    );
+                }
+            }
+
+            // Mouse enter/leave effects for review label
+            $('#review_label')
+            .on('mouseenter', function() {
+                if ($('#review').val() !== '1') { 
+                    $(this).text('Review')
+                        .addClass('review-border');
+                }
+            })
+            .on('mouseleave', function() {
+                if ($('#review').val() !== '1') { 
+                    $(this).text('Unreview')
+                        .removeClass('review-border');
+                }
+            });
+
+            // Handle cancel review button (for admin users level 1 & 2)
+            const currentUserLevel = '<?php echo $this->session->userdata('id_user_level'); ?>';
+            
+            // Check review status when page loads
+            if ($('#review').val() === '1') {
+                // If review status = 1 (reviewed), enable cancel button for admin
+                if (currentUserLevel == 1 || currentUserLevel == 2) {
+                    $('#cancelReviewBtn').show().prop('disabled', false).removeClass('disabled-btn');
+                }
+            } else {
+                // If review status = 0 (not reviewed), disable cancel button
+                $('#cancelReviewBtn').hide().prop('disabled', true).addClass('disabled-btn');
+            }
+
+            // Event handler for Cancel Review button
+            $('#cancelReviewBtn').off('click').on('click', function () {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Cancel Review?',
+                    text: 'This will reset the review status so another user can review it again.',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, cancel it',
+                    cancelButtonText: 'No'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Set review and user_review for cancel
+                        $('#review').val(0);
+                        $('#user_review').val('');
+
+                        // Update label status to Unreview
+                        $('#review_label')
+                            .text('Unreview')
+                            .removeClass()
+                            .addClass('badge review-badge bg-warning unreview');
+
+                        // Disable the Cancel Review button after canceling
+                        $('#cancelReviewBtn').hide().prop('disabled', true).addClass('disabled-btn');
+
+                        // Cancel review via AJAX
+                        cancelReviewData();
+                    }
+                });
+            });
+        }
+
+        // Save review data function
+        function saveReviewData() {
+            const idOneWaterSample = $('#idx_one_water_sample').val();
+            const review = $('#review').val();
+            const userReview = $('#user_review').val();
+
+            $.ajax({
+                url: '<?php echo site_url('Hemoflow/saveReview'); ?>',
+                method: 'POST',
+                data: {
+                    id_one_water_sample: idOneWaterSample,
+                    review: review,
+                    user_review: userReview
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Review saved successfully!',
+                            text: response.message,
+                            timer: 1000,
+                            showConfirmButton: false
+                        }).then(() => {
+                            // Refresh the DataTable and close modal
+                            table.ajax.reload(null, false);
+                            $('#compose-modal').modal('hide');
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed to save review',
+                            text: response.message
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error: ' + status + error);
+                    Swal.fire('Error', 'Something went wrong during submission.', 'error');
+                }
+            });
+        }
+
+        // Cancel review data function
+        function cancelReviewData() {
+            const idOneWaterSample = $('#idx_one_water_sample').val();
+
+            $.ajax({
+                url: '<?php echo site_url('Hemoflow/cancelReview'); ?>',
+                method: 'POST',
+                data: {
+                    id_one_water_sample: idOneWaterSample
+                },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Review canceled successfully!',
+                            timer: 1000,
+                            showConfirmButton: false
+                        }).then(() => {
+                            // Refresh the DataTable and close modal
+                            table.ajax.reload(null, false);
+                            $('#compose-modal').modal('hide');
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed to cancel review',
+                            text: response.message
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('AJAX Error: ' + status + error);
+                    Swal.fire('Error', 'Something went wrong during cancel.', 'error');
+                }
+            });
+        }
+
+        // Function to show dynamic info card for review
+        function showReviewInfoCard(target, message, description, isSuccess) {
+            // Add dynamic content to the target card
+            $(target).find('.statusMessage').html(message);
+            $(target).find('.statusDescription').text(description);
+
+            // Apply classes based on success or failure
+            if (isSuccess) {
+                $(target).removeClass('card-danger').addClass('card-success');
+            } else {
+                $(target).removeClass('card-success').addClass('card-danger');
+            }
+
+            // Show the info card
+            $(target).fadeIn();
+        }
+
+        // Update review display (simplified version, main logic in initializeReviewSystem)
+        function updateReviewDisplay(review, userReview) {
+            if (review == 1) {
+                $('#review_label').removeClass('bg-warning unreview').addClass('bg-success review').text('Reviewed');
+                
+                // Show cancel button for admin users (level 1 & 2)
+                const currentUserLevel = '<?php echo $this->session->userdata('id_user_level'); ?>';
+                if (currentUserLevel == 1 || currentUserLevel == 2) {
+                    $('#cancelReviewBtn').show();
+                } else {
+                    $('#cancelReviewBtn').hide();
+                }
+                
+                // Update reviewer name display
+                if (userReview) {
+                    $.ajax({
+                        url: '<?php echo site_url('Hemoflow/getReviewer'); ?>',
+                        type: 'POST',
+                        data: { user_review: userReview },
+                        dataType: 'json',
+                        success: function(response) {
+                            $('#reviewed_by_label').text(response.full_name || '-');
+                        },
+                        error: function() {
+                            $('#reviewed_by_label').text('-');
+                        }
+                    });
+                } else {
+                    $('#reviewed_by_label').text('-');
+                }
+            } else {
+                $('#review_label').removeClass('bg-success review').addClass('bg-warning unreview').text('Unreview');
+                $('#reviewed_by_label').text('-');
+                $('#cancelReviewBtn').hide();
+            }
+        }
+
+        // Close card handler
+        $(document).on('click', '.close-card', function() {
+            $(this).closest('.textInform').hide();
+        });
+
+        // Hide review section when modal is hidden
+        $("#compose-modal").on('hide.bs.modal', function(){
+            $('#review-section').hide();
+            $('#textInformReview').hide();
         });  
 
         $('#mytable tbody').on('click', 'tr', function () {
