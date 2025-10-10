@@ -183,8 +183,8 @@ class Enterolert_idexx_biosolids extends CI_Controller
             $idx_enterolert_bio_in = $this->input->post('idx_enterolert_bio_in', TRUE);
             $id_enterolert_bio_out = $this->input->post('id_enterolert_bio_out', TRUE);
             $enterolert_barcode = $this->input->post('enterolert_barcodex', TRUE);
-            $date_sample = $this->input->post('date_sample', TRUE);
-            $time_sample = $this->input->post('time_sample', TRUE);
+            $date_sample = $this->input->post('date_sample_out', TRUE);
+            $time_sample = $this->input->post('time_sample_out', TRUE);
             $enterococcus_largewells = $this->input->post('enterococcus_largewells', TRUE);
             $enterococcus_smallwells = $this->input->post('enterococcus_smallwells', TRUE);
             $enterococcus = $this->input->post('enterococcus', TRUE);

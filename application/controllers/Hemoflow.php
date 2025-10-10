@@ -87,11 +87,13 @@ class Hemoflow extends CI_Controller
         $id_person_proc = $this->input->post('id_person_proc', TRUE);
         $volume_filter = $this->input->post('volume_filter', TRUE);
         $volume_eluted = $this->input->post('volume_eluted', TRUE);
+        $hemoflow_barcode = $this->input->post('hemoflow_barcode', TRUE);
         $comments = $this->input->post('comments', TRUE);
 
         if ($mode == "insert") {
             $data = array(
                 'id_one_water_sample' => $id_one_water_sample,
+                'hemoflow_barcode' => $hemoflow_barcode,
                 'id_person' => $id_person,
                 'date_processed' => $date_processed,
                 'time_processed' => $time_processed,
@@ -115,6 +117,7 @@ class Hemoflow extends CI_Controller
         } else if ($mode == "edit") {
             $data = array(
                 'id_one_water_sample' => $idx_one_water_sample,
+                'hemoflow_barcode' => $hemoflow_barcode,
                 'id_person' => $id_person,
                 'date_processed' => $date_processed,
                 'time_processed' => $time_processed,
@@ -283,6 +286,88 @@ class Hemoflow extends CI_Controller
         $data = $this->Hemoflow_model->barcode_restrict($id);
         header('Content-Type: application/json');
         echo json_encode($data);
+    }
+
+    public function getReviewer()
+    {
+        $userReview = $this->input->post('user_review');
+        $reviewer = $this->Hemoflow_model->getReviewer($userReview);
+        
+        echo json_encode(['realname' => $reviewer, 'full_name' => $reviewer]);
+    }
+
+    public function saveReview() {
+        header('Content-Type: application/json');
+        
+        $id = $this->input->post('id_one_water_sample', true);
+        $review = $this->input->post('review', true);
+        $user_review = $this->input->post('user_review', true);
+        
+        if (!$id || $review === null || !$user_review) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Invalid request data.'
+            ]);
+            return;
+        }
+        
+        try {
+            $data = array(
+                'review' => $review,
+                'user_review' => $user_review,
+                'user_updated' => $this->session->userdata('id_users'),
+                'date_updated' => date('Y-m-d H:i:s')
+            );
+
+            $this->Hemoflow_model->updateHemoflowReview($id, $data);
+
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Review saved successfully.'
+            ]);
+        } catch (Exception $e) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Error saving review: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+    public function cancelReview() {
+        header('Content-Type: application/json');
+        
+        $id = $this->input->post('id_one_water_sample', true);
+        $review = $this->input->post('review', true);
+        $user_review = $this->input->post('user_review', true);
+        
+        if (!$id) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Invalid request data.'
+            ]);
+            return;
+        }
+        
+        try {
+            $data = array(
+                'review' => 0,
+                'user_review' => null,
+                'user_updated' => $this->session->userdata('id_users'),
+                'date_updated' => date('Y-m-d H:i:s')
+            );
+
+            $this->Hemoflow_model->updateHemoflowReview($id, $data);
+
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Review cancelled successfully.'
+            ]);
+        } catch (Exception $e) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Error cancelling review: ' . $e->getMessage()
+            ]);
+        }
     }
 
 }

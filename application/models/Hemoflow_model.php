@@ -19,8 +19,8 @@ class Hemoflow_model extends CI_Model
     function json() {
         $this->datatables->select('a.id_one_water_sample, b.initial,
         d.sampletype, a.date_processed, a.time_processed, e.initial AS initial_proc, a.volume_filter,
-        a.volume_eluted, a.comments, a.flag, 
-        a.id_person, a.id_person_proc
+        a.volume_eluted, a.comments, a.flag, a.review, a.user_review, a.user_created,
+        a.id_person, a.id_person_proc, a.hemoflow_barcode
         ');
         $this->datatables->from('hemoflow a');
         $this->datatables->join('ref_person b', 'a.id_person = b.id_person', 'left');
@@ -129,6 +129,24 @@ class Hemoflow_model extends CI_Model
         ');        
         $response = $q->result_array();
         return $response;
+    }
+
+    function getReviewer($user_review) {
+        $this->db->select('full_name');
+        $this->db->from('tbl_user');
+        $this->db->where('id_users', $user_review);
+        $query = $this->db->get();
+        
+        if ($query->num_rows() > 0) {
+            return $query->row()->full_name;
+        } else {
+            return null;
+        }
+    }
+
+    function updateHemoflowReview($id_one_water_sample, $data) {
+        $this->db->where('id_one_water_sample', $id_one_water_sample);
+        $this->db->update('hemoflow', $data);
     }
 
       

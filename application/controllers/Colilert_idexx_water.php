@@ -166,8 +166,8 @@ class Colilert_idexx_water extends CI_Controller
             $idx_colilert_in = $this->input->post('idx_colilert_in', TRUE);
             $id_colilert_out = $this->input->post('id_colilert_out', TRUE);
             $colilert_barcode = $this->input->post('colilert_barcodex', TRUE);
-            $date_sample = $this->input->post('date_sample', TRUE);
-            $time_sample = $this->input->post('time_sample', TRUE);
+            $date_sample = $this->input->post('date_sample_out', TRUE);
+            $time_sample = $this->input->post('time_sample_out', TRUE);
             $ecoli_largewells = $this->input->post('ecoli_largewells', TRUE);
             $ecoli_smallwells = $this->input->post('ecoli_smallwells', TRUE);
             $ecoli = $this->input->post('ecoli', TRUE);
