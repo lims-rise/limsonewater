@@ -95,7 +95,7 @@ class Sample_reception_model extends CI_Model
                         bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
                         ec.review, el.review, em.review, cb.review, mc.review, 
                         ewi.review, ebi.review, cbi.review, cwi.review, 
-                        pr.review, cp.review, sp.review
+                        pr.review, cp.review, sp.review, hem.review
                     ) = 1 THEN 1 END) as completed_tests
                 FROM sample_reception sr
                 LEFT JOIN sample_reception_sample srs ON sr.id_project = srs.id_project AND srs.flag = 0
@@ -116,6 +116,7 @@ class Sample_reception_model extends CI_Model
                 LEFT JOIN protozoa pr ON pr.protozoa_barcode = srt.barcode AND pr.flag = 0
                 LEFT JOIN campy_pa cp ON cp.campy_assay_barcode = srt.barcode AND cp.flag = 0
                 LEFT JOIN salmonella_pa sp ON sp.salmonella_assay_barcode = srt.barcode AND sp.flag = 0
+                LEFT JOIN hemoflow hem ON hem.hemoflow_barcode = srt.barcode AND hem.flag = 0
                 WHERE sr.id_project = ? AND sr.flag = 0
                 GROUP BY sr.id_project";
 
@@ -746,11 +747,11 @@ class Sample_reception_model extends CI_Model
         $this->db->select('sample_reception_sample.id_one_water_sample, sample_reception_sample.id_project, sample_reception_sample.date_collected, sample_reception_sample.time_collected, sample_reception_sample.date_created,
         ref_person.initial, ref_sampletype.sampletype, sample_reception_sample.quality_check, sample_reception_sample.client_id, sample_reception_sample.comments, sample_reception_sample.date_arrival, 
         sample_reception_sample.time_arrival,
-        COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, 0) AS review,
+        COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, 0) AS review,
         CASE 
             WHEN COUNT(testing.id_testing) = 0 THEN "No Tests"
-            WHEN COUNT(CASE WHEN COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review) = 1 THEN 1 END) = COUNT(testing.id_testing) THEN "Complete"
-            WHEN COUNT(CASE WHEN COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review) = 1 THEN 1 END) > 0 THEN "Partial"
+            WHEN COUNT(CASE WHEN COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review) = 1 THEN 1 END) = COUNT(testing.id_testing) THEN "Complete"
+            WHEN COUNT(CASE WHEN COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review) = 1 THEN 1 END) > 0 THEN "Partial"
             ELSE "Incomplete"
         END AS review_status
         ');
@@ -772,6 +773,7 @@ class Sample_reception_model extends CI_Model
         $this->db->join('protozoa pr', 'pr.protozoa_barcode = testing.barcode and pr.flag = 0', 'left');
         $this->db->join('campy_pa cp', 'cp.campy_assay_barcode = testing.barcode and cp.flag = 0', 'left');
         $this->db->join('salmonella_pa sp', 'sp.salmonella_assay_barcode = testing.barcode and sp.flag = 0', 'left');
+        $this->db->join('hemoflow hem', 'hem.hemoflow_barcode = testing.barcode and hem.flag = 0', 'left');
         $this->db->join('ref_sampletype', 'sample_reception_sample.id_sampletype = ref_sampletype.id_sampletype', 'left');
         $this->db->join('ref_person', 'sample_reception_sample.id_person=ref_person.id_person', 'left');
         $this->db->where('sample_reception_sample.id_project', $id_project);
