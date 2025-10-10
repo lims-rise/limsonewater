@@ -60,7 +60,8 @@ class Dashboard_model extends CI_Model
             'enterolert_biosolids_in' => 'Enterolert (Biosolids)',
             'colilert_biosolids_in' => 'Colilert (Biosolids)',
             'colilert_water_in' => 'Colilert (Water)',
-            'protozoa' => 'Protozoa Analysis'
+            'protozoa' => 'Protozoa Analysis',
+            'hemoflow' => 'HemoFlow Analysis'
         );
 
         $statistics = array();
@@ -172,7 +173,7 @@ class Dashboard_model extends CI_Model
                         bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
                         ec.review, el.review, em.review, cb.review, mc.review, 
                         ewi.review, ebi.review, cbi.review, cwi.review, 
-                        pr.review, cp.review, sp.review
+                        pr.review, cp.review, sp.review, hem.review
                     ) = 1 THEN 1 END) as completed_tests,
                     sr.date_created
                 FROM sample_reception sr
@@ -194,6 +195,7 @@ class Dashboard_model extends CI_Model
                 LEFT JOIN protozoa pr ON pr.protozoa_barcode = srt.barcode AND pr.flag = 0
                 LEFT JOIN campy_pa cp ON cp.campy_assay_barcode = srt.barcode AND cp.flag = 0
                 LEFT JOIN salmonella_pa sp ON sp.salmonella_assay_barcode = srt.barcode AND sp.flag = 0
+                LEFT JOIN hemoflow hem ON hem.hemoflow_barcode = srt.barcode AND hem.flag = 0
                 WHERE sr.flag = 0
                 GROUP BY sr.id_project
                 ORDER BY sr.date_created DESC";
