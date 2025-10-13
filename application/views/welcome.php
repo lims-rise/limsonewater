@@ -329,15 +329,15 @@
 
 <!-- Modal for Pending Items Detail -->
 <div class="modal fade" id="pendingModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header" style="background-color: #f39c12; color: white;">
                 <button type="button" class="close" data-dismiss="modal" style="color: white;">&times;</button>
                 <h4 class="modal-title">
-                    <i class="fa fa-clock-o"></i>Pending Items (<span id="pendingItemsCount">0</span>) - <span id="modalModuleName"></span>
+                    <i class="fa fa-clock-o"></i> Pending Items - <span id="modalModuleName"></span>
                 </h4>
             </div>
-            <div class="modal-body" style="max-height: 70vh; padding: 0;">
+            <div class="modal-body" style="max-height: 75vh; padding: 0;">
                 <div id="pendingItemsLoader" class="modern-loader">
                     <div class="loader-animation">
                         <div class="pulse-loader"></div>
@@ -819,7 +819,7 @@ $(document).ready(function() {
     }
     
     .modern-table-container {
-        max-height: 300px;
+        max-height: 00px;
     }
     
     #pendingModal .modal-body {
