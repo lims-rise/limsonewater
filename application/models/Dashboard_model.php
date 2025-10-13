@@ -276,4 +276,97 @@ class Dashboard_model extends CI_Model
 
         return $months;
     }
+    
+    // Get pending items by module for detailed view
+    public function get_pending_items_by_module($module_name) {
+        // Module to table mapping (same as in get_module_statistics)
+        $modules = array(
+            'Biobank Storage' => 'biobank_in',
+            'Moisture Content' => 'moisture_content', 
+            'Campylobacter (Biosolids)' => 'campy_biosolids',
+            'Campylobacter (Liquids)' => 'campy_liquids',
+            'Campylobacter P/A' => 'campy_pa',
+            'Salmonella (Liquids)' => 'salmonella_liquids',
+            'Salmonella (Biosolids)' => 'salmonella_biosolids',
+            'Salmonella P/A' => 'salmonella_pa',
+            'DNA Extraction (Culture)' => 'extraction_culture',
+            'DNA Extraction (Liquid)' => 'extraction_liquid',
+            'DNA Extraction (Metagenome)' => 'extraction_metagenome',
+            'DNA Extraction (Biosolid)' => 'extraction_biosolid',
+            'Enterolert (Water)' => 'enterolert_water_in',
+            'Enterolert (Biosolids)' => 'enterolert_biosolids_in',
+            'Colilert (Biosolids)' => 'colilert_biosolids_in',
+            'Colilert (Water)' => 'colilert_water_in',
+            'Protozoa Analysis' => 'protozoa',
+            'HemoFlow Analysis' => 'hemoflow'
+        );
+        
+        // Module to controller mapping 
+        $module_controllers = array(
+            'Biobank Storage' => 'biobankin',
+            'Moisture Content' => 'moisture_content', 
+            'Campylobacter (Biosolids)' => 'campy_biosolids',
+            'Campylobacter (Liquids)' => 'campy_liquids',
+            'Campylobacter P/A' => 'campy_pa',
+            'Salmonella (Liquids)' => 'salmonella_liquids',
+            'Salmonella (Biosolids)' => 'salmonella_biosolids',
+            'Salmonella P/A' => 'salmonella_pa',
+            'DNA Extraction (Culture)' => 'extraction_culture',
+            'DNA Extraction (Liquid)' => 'extraction_liquid',
+            'DNA Extraction (Metagenome)' => 'extraction_metagenome',
+            'DNA Extraction (Biosolid)' => 'extraction_biosolid',
+            'Enterolert (Water)' => 'enterolert_idexx_water',
+            'Enterolert (Biosolids)' => 'enterolert_idexx_biosolids',
+            'Colilert (Biosolids)' => 'colilert_idexx_biosolids',
+            'Colilert (Water)' => 'colilert_idexx_water',
+            'Protozoa Analysis' => 'protozoa',
+            'HemoFlow Analysis' => 'hemoflow'
+        );
+
+        if (!isset($modules[$module_name])) {
+            return array(); // Module not found
+        }
+
+        $table = $modules[$module_name];
+        
+        if (!$this->db->table_exists($table)) {
+            return array(); // Table doesn't exist
+        }
+
+        // Get pending items (where review != 1)
+        $controller_name = isset($module_controllers[$module_name]) ? $module_controllers[$module_name] : '';
+        
+        $this->db->select("
+            {$table}.id_one_water_sample as sample_id,
+            sr.id_project as project_id, 
+            sr.client,
+            {$table}.date_created,
+            '{$module_name}' as module_name,
+            '{$table}' as table_name,
+            '{$controller_name}' as controller_name
+        ");
+        $this->db->from($table);
+        $this->db->join('sample_reception_sample srs', "{$table}.id_one_water_sample = srs.id_one_water_sample", 'left');
+        $this->db->join('sample_reception sr', 'srs.id_project = sr.id_project AND sr.flag = 0', 'left');
+        $this->db->where("{$table}.flag", '0');
+        $this->db->where("({$table}.review IS NULL OR {$table}.review != '1')");
+        $this->db->order_by("{$table}.date_created", 'DESC');
+        $this->db->limit(50); // Limit to prevent too much data
+
+        $query = $this->db->get();
+        $results = $query->result_array();
+
+        // Format the data
+        foreach ($results as &$result) {
+            if (empty($result['project_id'])) {
+                $result['project_id'] = 'Unknown Project';
+            }
+            if (empty($result['client'])) {
+                $result['client'] = 'Unknown Client';
+            }
+            $result['date_created'] = date('M j, Y H:i', strtotime($result['date_created']));
+        }
+
+        return $results;
+    }
 }
