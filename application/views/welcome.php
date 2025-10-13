@@ -334,41 +334,69 @@
             <div class="modal-header" style="background-color: #f39c12; color: white;">
                 <button type="button" class="close" data-dismiss="modal" style="color: white;">&times;</button>
                 <h4 class="modal-title">
-                    <i class="fa fa-clock-o"></i> Pending Items - <span id="modalModuleName"></span>
+                    <i class="fa fa-clock-o"></i>Pending Items (<span id="pendingItemsCount">0</span>) - <span id="modalModuleName"></span>
                 </h4>
             </div>
-            <div class="modal-body">
-                <div id="pendingItemsLoader" class="text-center" style="padding: 20px;">
-                    <i class="fa fa-spinner fa-spin fa-2x"></i>
-                    <p>Loading pending items...</p>
+            <div class="modal-body" style="max-height: 70vh; padding: 0;">
+                <div id="pendingItemsLoader" class="modern-loader">
+                    <div class="loader-animation">
+                        <div class="pulse-loader"></div>
+                        <div class="pulse-loader pulse-delay-1"></div>
+                        <div class="pulse-loader pulse-delay-2"></div>
+                    </div>
+                    <p class="loader-text">Loading pending items...</p>
                 </div>
                 <div id="pendingItemsContent" style="display: none;">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped" id="pendingItemsTable">
-                            <thead>
+                    <!-- Modern Summary Info Bar -->
+                    <!-- <div class="modern-info-bar">
+                        <div class="info-content">
+                            <div class="info-badge">
+                                <span id="pendingItemsCount">0</span>
+                            </div>
+                            <span class="info-text">pending items found</span>
+                        </div>
+                    </div> -->
+                    <!-- Modern Scrollable Table Container -->
+                    <div class="modern-table-container" style="max-height: 400px; overflow-y: auto; overflow-x: auto;">
+                        <table class="modern-table" id="pendingItemsTable">
+                            <thead class="modern-thead">
                                 <tr>
-                                    <th>Project ID</th>
-                                    <th>Sample ID</th>
-                                    <th>Client</th>
-                                    <th>Date Created</th>
+                                    <th class="modern-th">Project ID</th>
+                                    <th class="modern-th">Sample ID</th>
+                                    <th class="modern-th">Client</th>
+                                    <th class="modern-th">Date Created</th>
                                     <!-- <th class="text-center">Action</th> -->
                                 </tr>
                             </thead>
-                            <tbody id="pendingItemsTableBody">
+                            <tbody id="pendingItemsTableBody" class="modern-tbody">
                                 <!-- Data will be loaded here -->
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <div id="pendingItemsError" style="display: none;" class="alert alert-danger">
+                <div id="pendingItemsError" style="display: none;" class="alert alert-danger" style="margin: 20px;">
                     <i class="fa fa-exclamation-triangle"></i> 
-                    Failed to load pending items. Please try again.
+                    <strong>Error:</strong> Failed to load pending items. Please try again.
+                    <button type="button" class="btn btn-sm btn-warning pull-right" onclick="$('.pending-badge').first().click();">
+                        <i class="fa fa-refresh"></i> Retry
+                    </button>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">
-                    <i class="fa fa-times"></i> Close
-                </button>
+                <div class="pull-left">
+                    <small class="text-muted">
+                        <i class="fa fa-info-circle"></i> 
+                        Last updated: <span id="lastUpdatedTime"></span>
+                    </small>
+                </div>
+                <div class="pull-right">
+                    <!-- <button type="button" class="btn btn-warning btn-sm" onclick="$('.pending-badge[data-module=\"' + $('#modalModuleName').text() + '\"]').click();" title="Refresh data">
+                        <i class="fa fa-refresh"></i> Refresh
+                    </button> -->
+                    <button type="button" class="btn btn-warning btn-sm" data-dismiss="modal">
+                        <i class="fa fa-times"></i> Close
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -524,13 +552,18 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.success) {
                     var tableBody = '';
+                    var itemCount = 0;
+                    
                     if (response.data && response.data.length > 0) {
+                        itemCount = response.data.length;
+                        
                         $.each(response.data, function(index, item) {
                             tableBody += '<tr>';
                             tableBody += '<td><strong>' + item.project_id + '</strong></td>';
                             tableBody += '<td>' + (item.sample_id || '-') + '</td>';
                             tableBody += '<td>' + (item.client || 'Unknown Client') + '</td>';
                             tableBody += '<td>' + item.date_created + '</td>';
+                            
                             /* 
                             // ACTION COLUMN - Hidden for now, may be needed in the future
                             tableBody += '<td class="text-center">';
@@ -575,9 +608,18 @@ $(document).ready(function() {
                         tableBody = '<tr><td colspan="4" class="text-center">No pending items found</td></tr>';
                     }
                     
+                    // Update item count
+                    $('#pendingItemsCount').html('<strong>' + itemCount + '</strong>');
+                    
                     $('#pendingItemsTableBody').html(tableBody);
                     $('#pendingItemsLoader').hide();
                     $('#pendingItemsContent').show();
+                    
+
+                    
+                    // Update timestamp
+                    var now = new Date();
+                    $('#lastUpdatedTime').text(now.toLocaleTimeString());
                 } else {
                     $('#pendingItemsLoader').hide();
                     $('#pendingItemsError').show();
@@ -770,6 +812,38 @@ $(document).ready(function() {
         text-align: center;
         margin-top: 10px;
     }
+    
+    /* Modern Table Mobile Responsive */
+    #pendingModal .modal-dialog {
+        margin: 10px;
+    }
+    
+    .modern-table-container {
+        max-height: 300px;
+    }
+    
+    #pendingModal .modal-body {
+        max-height: 60vh;
+    }
+    
+    .modern-th,
+    .modern-tbody td {
+        padding: 12px 15px;
+        font-size: 12px;
+    }
+    
+    .modern-info-bar {
+        padding: 15px 20px;
+    }
+    
+    .info-badge {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+    
+    .modern-loader {
+        padding: 40px 20px;
+    }
 }
 
 /* Pending Badge Styling */
@@ -803,6 +877,245 @@ $(document).ready(function() {
 
 .pending-badge:hover:before {
     opacity: 1;
+}
+
+/* Modern Table Design */
+.modern-table-container {
+    background: #ffffff;
+    border-radius: 0px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.modern-table-container::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.modern-table-container::-webkit-scrollbar-track {
+    background: #f8fafc;
+}
+
+.modern-table-container::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #64748b, #94a3b8);
+    border-radius: 6px;
+}
+
+.modern-table-container::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #475569, #64748b);
+}
+
+.modern-table {
+    width: 100%;
+    margin: 0;
+    border-collapse: collapse;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.modern-thead {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.modern-th {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: left;
+    padding: 16px 20px;
+    border: none;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 12px;
+    position: relative;
+}
+
+.modern-th::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.modern-tbody tr {
+    border-bottom: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+}
+
+.modern-tbody tr:hover {
+    background-color: #f8fafc;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.modern-tbody tr:last-child {
+    border-bottom: none;
+}
+
+.modern-tbody td {
+    padding: 16px 20px;
+    color: #334155;
+    font-size: 14px;
+    line-height: 1.5;
+    border: none;
+    vertical-align: middle;
+}
+
+.modern-tbody td:first-child {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.modern-tbody tr:nth-child(even) {
+    background-color: #fafbfc;
+}
+
+.modern-tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+/* Modern Info Bar */
+.modern-info-bar {
+    padding: 20px 25px;
+    background: linear-gradient(90deg, #f8fafc 0%, #f1f5f9 100%);
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.info-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.info-badge {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(243, 156, 18, 0.3);
+}
+
+.info-text {
+    color: #64748b;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#pendingModal .modal-header {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    border: none;
+    padding: 20px 25px;
+    border-radius: 8px 8px 0 0;
+}
+
+#pendingModal .modal-header .modal-title {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+#pendingModal .modal-header .close {
+    color: #ffffff;
+    opacity: 0.9;
+    text-shadow: none;
+    font-size: 24px;
+}
+
+#pendingModal .modal-header .close:hover {
+    opacity: 1;
+    color: #ffffff;
+}
+
+#pendingModal .modal-footer {
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    border-radius: 0 0 8px 8px;
+    padding: 15px 25px;
+}
+
+#pendingModal .modal-content {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Modern Loading Animation */
+.modern-loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+.loader-animation {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.pulse-loader {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    animation: pulseScale 1.5s ease-in-out infinite;
+}
+
+.pulse-delay-1 {
+    animation-delay: 0.2s;
+}
+
+.pulse-delay-2 {
+    animation-delay: 0.4s;
+}
+
+@keyframes pulseScale {
+    0%, 80%, 100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+
+.loader-text {
+    color: #64748b;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+/* Responsive Table Adjustments */
+@media (max-width: 768px) {
+    #pendingModal .modal-dialog {
+        margin: 10px;
+    }
+    
+    #pendingModal .table-container {
+        max-height: 300px;
+    }
+    
+    #pendingModal .modal-body {
+        max-height: 60vh;
+    }
+    
+    #pendingModal #pendingItemsTable th,
+    #pendingModal #pendingItemsTable td {
+        padding: 6px 8px;
+        font-size: 12px;
+    }
 }
 </style>
 <script src="<?php echo base_url('assets/js/export-data.js') ?>"></script>
