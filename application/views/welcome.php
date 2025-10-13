@@ -337,7 +337,7 @@
                     <i class="fa fa-clock-o"></i> Pending Items - <span id="modalModuleName"></span>
                 </h4>
             </div>
-            <div class="modal-body" style="max-height: 75vh; padding: 0;">
+            <div class="modal-body" style="height: 75vh; padding: 0;">
                 <div id="pendingItemsLoader" class="modern-loader">
                     <div class="loader-animation">
                         <div class="pulse-loader"></div>
