@@ -346,7 +346,7 @@
                     </div>
                     <p class="loader-text">Loading pending items...</p>
                 </div>
-                <div id="pendingItemsContent" style="display: none;">
+                <div id="pendingItemsContent" style="display: none; height: 100%; display: flex; flex-direction: column;">
                     <!-- Modern Summary Info Bar -->
                     <!-- <div class="modern-info-bar">
                         <div class="info-content">
@@ -357,7 +357,7 @@
                         </div>
                     </div> -->
                     <!-- Modern Scrollable Table Container -->
-                    <div class="modern-table-container" style="max-height: 400px; overflow-y: auto; overflow-x: auto;">
+                    <div class="modern-table-container" style="height: 100%; overflow-y: auto; overflow-x: auto;">
                         <table class="modern-table" id="pendingItemsTable">
                             <thead class="modern-thead">
                                 <tr>
