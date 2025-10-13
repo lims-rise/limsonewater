@@ -363,7 +363,7 @@
                                 <tr>
                                     <th class="modern-th">Project ID</th>
                                     <th class="modern-th">Sample ID</th>
-                                    <th class="modern-th">Client</th>
+                                    <!-- <th class="modern-th">Client</th> -->
                                     <th class="modern-th">Date Created</th>
                                     <!-- <th class="text-center">Action</th> -->
                                 </tr>
@@ -511,7 +511,7 @@ $(document).ready(function() {
         "drawCallback": function() {
             // Re-initialize tooltips after table redraw
             $('.progress').tooltip({
-                title: 'Click to view details',
+                // title: 'Click to view details',
                 placement: 'top'
             });
         }
@@ -525,7 +525,7 @@ $(document).ready(function() {
     // Add tooltips to progress bars
     $('.progress').each(function() {
         $(this).tooltip({
-            title: 'Click to view details',
+            // title: 'Click to view details',
             placement: 'top'
         });
     });
@@ -559,9 +559,9 @@ $(document).ready(function() {
                         
                         $.each(response.data, function(index, item) {
                             tableBody += '<tr>';
-                            tableBody += '<td><strong>' + item.project_id + '</strong></td>';
+                            tableBody += '<td>' + item.project_id + '</td>';
                             tableBody += '<td>' + (item.sample_id || '-') + '</td>';
-                            tableBody += '<td>' + (item.client || 'Unknown Client') + '</td>';
+                            // tableBody += '<td>' + (item.client || 'Unknown Client') + '</td>';
                             tableBody += '<td>' + item.date_created + '</td>';
                             
                             /* 
