@@ -16,7 +16,7 @@ class Biobankin_model extends CI_Model
     }
 
     // datatables
-    function json() {
+    function json($highlight_sample_id = null) {
         $this->datatables->select("
             biobank_in.id_one_water_sample, 
             biobank_in.date_conduct, 

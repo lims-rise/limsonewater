@@ -888,7 +888,8 @@ class Sample_reception_model extends CI_Model
             COALESCE(rt.testing_type, "Unknown Test") as testing_type,
             rt.prefix,
             cb.date_sample_processed, 
-            cb.time_sample_processed
+            cb.time_sample_processed,
+            crm.mpn_concentration_dw
         ');
         $this->db->from('sample_reception_sample srs');
         $this->db->join('campy_biosolids cb', 'srs.id_one_water_sample = cb.id_one_water_sample AND cb.flag = 0', 'left');
@@ -896,6 +897,7 @@ class Sample_reception_model extends CI_Model
         $this->db->join('ref_person rp', 'srs.id_person = rp.id_person AND rp.flag = 0', 'left');
         $this->db->join('sample_reception_testing srt', 'srs.id_sample = srt.id_sample AND srt.flag = 0', 'left');
         $this->db->join('ref_testing rt', 'srt.id_testing_type = rt.id_testing_type AND rt.flag = 0', 'left');
+        $this->db->join('campy_result_mpn crm' , 'cb.id_campy_biosolids = crm.id_campy_biosolids AND crm.flag = 0', 'left');
         $this->db->where('srs.id_project', $id_project);
         $this->db->where('srs.flag', '0');
         $samples = $this->db->get()->result_array();
@@ -914,7 +916,8 @@ class Sample_reception_model extends CI_Model
                 'time_arrival' => null,
                 'time_collected' => null,
                 'date_sample_processed' => null,
-                'time_sample_processed' => null
+                'time_sample_processed' => null,
+                'mpn_concentration_dw' => null,
             ]];
         }
 
@@ -972,7 +975,7 @@ class Sample_reception_model extends CI_Model
                 'PARAMETERNAME' => isset($sample['parameter_name']) ? $sample['parameter_name'] : $this->getParameterName($sample['testing_type'] ?? ''),
                 'TEST_KEY_CODE' => $testKeyCode,
                 // 'TEST_KEY_CODE' => isset($sample['test_key_code']) ? $sample['test_key_code'] : '-',
-                'RESULT' => isset($sample['result']) ? $sample['result'] : '-',
+                'RESULT' => isset($sample['mpn_concentration_dw']) ? $sample['mpn_concentration_dw'] : '',
                 'Units' => isset($sample['units']) ? $sample['units'] : $this->getUnits($sample['testing_type'] ?? ''),
                 // 'POSITIVECONTROL%' => isset($sample['positive_control']) ? $sample['positive_control'] : rand(95, 105) . '%',
                 'POSITIVECONTROL%' => '',
@@ -1036,7 +1039,8 @@ class Sample_reception_model extends CI_Model
             'Campylobacter-Liquids' => 'Campylobacter-Liquids',
             'Campylobacter-QPCR' => 'Campylobacter-QPCR',
             'Campylobacter-P/A' => 'Campylobacter-P/A',
-            'Campylobacter-MPN' => 'Campylobacter-MPN'
+            'Campylobacter-MPN' => 'Campylobacter-MPN',
+            'Salmonella-P/A' => 'Salmonella-P/A',
 
         ];
 
@@ -1046,29 +1050,30 @@ class Sample_reception_model extends CI_Model
                 return $category;
             }
         }
-        return 'MICROBIOLOGICAL_INDICATORS';
+        return '';
     }
     
     private function getAnalysisMethod($testing_type) {
         $methods = [
-            'Biobank-In' => 'BIOBANKING_STORAGE',
-            'Colilert-Idexx-Water' => 'COLILERT_MPN_WATER',
-            'Enterolert-Idexx-Water' => 'ENTEROLERT_MPN_WATER',
-            'Moisture_content' => 'GRAVIMETRIC_105C',
-            'Homeflow' => 'FLOW_MEASUREMENT',
-            'Colilert-Idexx-Biosolids' => 'COLILERT_MPN_BIOSOLIDS',
-            'Enterolert-Idexx-Biosolids' => 'ENTEROLERT_MPN_BIOSOLIDS',
-            'Extraction-Metagenome' => 'DNA_EXTRACTION_METAGENOME',
-            'Extraction-Culture-Plate' => 'DNA_EXTRACTION_CULTURE',
-            'Extraction-Liquids' => 'DNA_EXTRACTION_LIQUID',
-            'Campylobacter-Biosolids' => 'CULTURE_METHOD_BIOSOLIDS',
-            'Salmonella-Biosolids' => 'CULTURE_METHOD_BIOSOLIDS',
-            'Extraction-Biosolids' => 'DNA_EXTRACTION_BIOSOLIDS',
-            'Salmonella-Liquids' => 'CULTURE_METHOD_LIQUID',
-            'Campylobacter-Liquids' => 'CULTURE_METHOD_LIQUID',
-            'Campylobacter-QPCR' => 'qPCR_REAL_TIME',
-            'Campylobacter-P/A' => 'PRESENCE_ABSENCE_METHOD',
-            'Campylobacter-MPN' => 'MPN_METHOD'
+            'Biobank-In' => 'BIOBANK IN',
+            'Colilert-Idexx-Water' => 'COLILERT IDEXX WATER',
+            'Enterolert-Idexx-Water' => 'ENTEROLERT IDEXX WATER',
+            'Moisture_content' => 'MOISTURE CONTENT',
+            'Homeflow' => 'HOMEFLOW',
+            'Colilert-Idexx-Biosolids' => 'COLILERT IDEXX BIOSOLIDS',
+            'Enterolert-Idexx-Biosolids' => 'ENTEROLERT IDEXX BIOSOLIDS',
+            'Extraction-Metagenome' => 'EXTRACTION METAGENOME',
+            'Extraction-Culture-Plate' => 'EXTRACTION CULTURE',
+            'Extraction-Liquids' => 'EXTRACTION LIQUID',
+            'Campylobacter-Biosolids' => 'CAMPYLOBACTER BIOSOLIDS',
+            'Salmonella-Biosolids' => 'SALMONELLA BIOSOLIDS',
+            'Extraction-Biosolids' => 'EXTRACTION BIOSOLIDS',
+            'Salmonella-Liquids' => 'SALMONELLA LIQUIDS',
+            'Campylobacter-Liquids' => 'CAMPYLOBACTER LIQUIDS',
+            'Campylobacter-QPCR' => 'CAMPYLOBACTER QPCR',
+            'Campylobacter-P/A' => 'CAMPYLOBACTER P/A',
+            'Campylobacter-MPN' => 'CAMPYLOBACTER MPN',
+            'Salmonella-P/A' => 'SALMONELLA P/A',
         ];
         
         foreach ($methods as $test => $method) {
@@ -1076,7 +1081,7 @@ class Sample_reception_model extends CI_Model
                 return $method;
             }
         }
-        return 'STANDARD_METHOD';
+        return '';
     }
     
     private function getParameterCode($testing_type) {
@@ -1098,7 +1103,8 @@ class Sample_reception_model extends CI_Model
             'Campylobacter-Liquids' => 'CAMPY_L',
             'Campylobacter-QPCR' => 'CAMPY_QPCR',
             'Campylobacter-P/A' => 'CAMPY_PA',
-            'Campylobacter-MPN' => 'CAMPY_MPN'
+            'Campylobacter-MPN' => 'CAMPY_MPN',
+            'Salmonella-P/A' => 'SALM_PA'
         ];
         
         foreach ($codes as $test => $code) {
@@ -1106,29 +1112,30 @@ class Sample_reception_model extends CI_Model
                 return $code;
             }
         }
-        return 'PARAM';
+        return '';
     }
     
     private function getParameterName($testing_type) {
         $names = [
-            'Biobank-In' => 'Biobank Storage',
-            'Colilert-Idexx-Water' => 'Escherichia coli',
-            'Enterolert-Idexx-Water' => 'Enterococci',
+            'Biobank-In' => 'Biobank in',
+            'Colilert-Idexx-Water' => 'Colilert Idexx Water',
+            'Enterolert-Idexx-Water' => 'Enterolert Idexx Water',
             'Moisture_content' => 'Moisture Content',
-            'Homeflow' => 'Flow Rate',
-            'Colilert-Idexx-Biosolids' => 'Escherichia coli',
-            'Enterolert-Idexx-Biosolids' => 'Enterococci',
-            'Extraction-Metagenome' => 'Metagenome DNA Extraction',
-            'Extraction-Culture-Plate' => 'Culture Plate DNA Extraction',
-            'Extraction-Liquids' => 'Liquid Sample DNA Extraction',
-            'Campylobacter-Biosolids' => 'Campylobacter spp.',
-            'Salmonella-Biosolids' => 'Salmonella spp.',
-            'Extraction-Biosolids' => 'Biosolid DNA Extraction',
-            'Salmonella-Liquids' => 'Salmonella spp.',
-            'Campylobacter-Liquids' => 'Campylobacter spp.',
-            'Campylobacter-QPCR' => 'Campylobacter spp. (qPCR)',
-            'Campylobacter-P/A' => 'Campylobacter spp. (Presence/Absence)',
-            'Campylobacter-MPN' => 'Campylobacter spp. (MPN)'
+            'Homeflow' => 'Homeflow',
+            'Colilert-Idexx-Biosolids' => 'Colilert Idexx Biosolids',
+            'Enterolert-Idexx-Biosolids' => 'Enterolert Idexx Biosolids',
+            'Extraction-Metagenome' => 'Extraction Metagenome',
+            'Extraction-Culture-Plate' => 'Extraction Culture Plate',
+            'Extraction-Liquids' => 'Extraction Liquids',
+            'Campylobacter-Biosolids' => 'Campylobacter Biosolids',
+            'Salmonella-Biosolids' => 'Salmonella Biosolids',
+            'Extraction-Biosolids' => 'Extraction Biosolids',
+            'Salmonella-Liquids' => 'Salmonella Liquids',
+            'Campylobacter-Liquids' => 'Campylobacter Liquids',
+            'Campylobacter-QPCR' => 'Campylobacter QPCR',
+            'Campylobacter-P/A' => 'Campylobacter P/A',
+            'Campylobacter-MPN' => 'Campylobacter MPN',
+            'Salmonella-P/A' => 'Salmonella P/A',
         ];
         
         foreach ($names as $test => $name) {
@@ -1136,16 +1143,16 @@ class Sample_reception_model extends CI_Model
                 return $name;
             }
         }
-        return 'Parameter';
+        return '';
     }
     
     private function getUnits($testing_type) {
         $units = [
-            'Colilert' => 'MPN/100mL',
-            'Enterolert' => 'MPN/100mL',
-            'Campylobacter' => 'copies/g',
-            'Salmonella' => '-',
-            'Moisture' => '%'
+            // 'Colilert' => 'MPN/100mL',
+            // 'Enterolert' => 'MPN/100mL',
+            // 'Campylobacter' => 'copies/g',
+            // 'Salmonella' => '-',
+            // 'Moisture' => '%'
         ];
         
         foreach ($units as $test => $unit) {
@@ -1153,7 +1160,7 @@ class Sample_reception_model extends CI_Model
                 return $unit;
             }
         }
-        return 'MPN/100mL';
+        return 'MPN/g';
     }
     
     private function getSubmittedMatrix($sampletype) {
@@ -1178,7 +1185,7 @@ class Sample_reception_model extends CI_Model
                 return $matrix;
             }
         }
-        return 'UNKNOWN_MATRIX';
+        return '';
     }
     
     private function getAnalysisMatrix($sampletype) {
@@ -1203,7 +1210,7 @@ class Sample_reception_model extends CI_Model
                 return $matrix;
             }
         }
-        return 'UNKNOWN_MATRIX';
+        return '';
     }
     
     private function getAnalysisSubMatrix($sampletype) {
@@ -1228,7 +1235,7 @@ class Sample_reception_model extends CI_Model
                 return $subMatrix;
             }
         }
-        return 'UNKNOWN_SUBMATRIX';
+        return '';
     }
     
     private function generateSiteAreaCode($client_name) {

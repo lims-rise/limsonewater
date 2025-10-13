@@ -56,5 +56,30 @@ class Welcome extends CI_Controller {
         $pdf->Cell(190, 7, 'LIMS RISE', 0, 1, 'C');
         $pdf->Output();
     }
+    
+    public function get_pending_items() {
+        $module = $this->input->post('module');
+        
+        if (empty($module)) {
+            echo json_encode(['success' => false, 'message' => 'Module is required']);
+            return;
+        }
+        
+        try {
+            $pending_items = $this->Dashboard_model->get_pending_items_by_module($module);
+            
+            echo json_encode([
+                'success' => true,
+                'data' => $pending_items,
+                'message' => 'Pending items retrieved successfully'
+            ]);
+        } catch (Exception $e) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Failed to retrieve pending items',
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
 
 }

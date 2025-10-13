@@ -98,6 +98,34 @@
         margin-top: 0px;
     }
 
+    /* Styling for pending items highlight */
+    .pending-highlight {
+        background-color: #fff3cd !important;
+        border-left: 4px solid #ffc107 !important;
+        animation: pulse-highlight 2s ease-in-out infinite;
+    }
+
+    .pending-item {
+        background-color: #f8f9fa;
+        border-left: 2px solid #6c757d;
+    }
+
+    @keyframes pulse-highlight {
+        0% { box-shadow: 0 0 0 rgba(255, 193, 7, 0.4); }
+        50% { box-shadow: 0 0 20px rgba(255, 193, 7, 0.8); }
+        100% { box-shadow: 0 0 0 rgba(255, 193, 7, 0.4); }
+    }
+
+    .pending-notice {
+        background-color: #d1ecf1;
+        border: 1px solid #b6d4da;
+        color: #0c5460;
+        padding: 10px 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        display: none;
+    }
+
     .alert-success {
         background-color: #6A9C89;
         color: white;

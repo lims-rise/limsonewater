@@ -144,7 +144,12 @@
                                                     <span class="badge bg-green"><?php echo number_format($module['completed']); ?></span>
                                                 </td>
                                                 <td class="text-center">
-                                                    <span class="badge bg-yellow"><?php echo number_format($module['pending']); ?></span>
+                                                    <span class="badge bg-yellow pending-badge" 
+                                                          data-module="<?php echo htmlspecialchars($module['module']); ?>"
+                                                          style="cursor: pointer;"
+                                                          title="Click to view pending items">
+                                                        <?php echo number_format($module['pending']); ?>
+                                                    </span>
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="progress progress-xs">
@@ -322,6 +327,53 @@
     </section>
 </div>
 
+<!-- Modal for Pending Items Detail -->
+<div class="modal fade" id="pendingModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #f39c12; color: white;">
+                <button type="button" class="close" data-dismiss="modal" style="color: white;">&times;</button>
+                <h4 class="modal-title">
+                    <i class="fa fa-clock-o"></i> Pending Items - <span id="modalModuleName"></span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div id="pendingItemsLoader" class="text-center" style="padding: 20px;">
+                    <i class="fa fa-spinner fa-spin fa-2x"></i>
+                    <p>Loading pending items...</p>
+                </div>
+                <div id="pendingItemsContent" style="display: none;">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped" id="pendingItemsTable">
+                            <thead>
+                                <tr>
+                                    <th>Project ID</th>
+                                    <th>Sample ID</th>
+                                    <th>Client</th>
+                                    <th>Date Created</th>
+                                    <!-- <th class="text-center">Action</th> -->
+                                </tr>
+                            </thead>
+                            <tbody id="pendingItemsTableBody">
+                                <!-- Data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="pendingItemsError" style="display: none;" class="alert alert-danger">
+                    <i class="fa fa-exclamation-triangle"></i> 
+                    Failed to load pending items. Please try again.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <i class="fa fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="<?php echo base_url('assets/js/highcharts.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/exporting.js') ?>"></script>
 
@@ -447,6 +499,94 @@ $(document).ready(function() {
         $(this).tooltip({
             title: 'Click to view details',
             placement: 'top'
+        });
+    });
+
+    // Handle pending badge click
+    $('.pending-badge').on('click', function() {
+        var module = $(this).data('module');
+        if ($(this).text().trim() === '0') {
+            return; // Don't show modal if no pending items
+        }
+        
+        $('#modalModuleName').text(module);
+        $('#pendingItemsLoader').show();
+        $('#pendingItemsContent').hide();
+        $('#pendingItemsError').hide();
+        $('#pendingModal').modal('show');
+        
+        // Load pending items via AJAX
+        $.ajax({
+            url: '<?php echo site_url("welcome/get_pending_items"); ?>',
+            type: 'POST',
+            data: { module: module },
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    var tableBody = '';
+                    if (response.data && response.data.length > 0) {
+                        $.each(response.data, function(index, item) {
+                            tableBody += '<tr>';
+                            tableBody += '<td><strong>' + item.project_id + '</strong></td>';
+                            tableBody += '<td>' + (item.sample_id || '-') + '</td>';
+                            tableBody += '<td>' + (item.client || 'Unknown Client') + '</td>';
+                            tableBody += '<td>' + item.date_created + '</td>';
+                            /* 
+                            // ACTION COLUMN - Hidden for now, may be needed in the future
+                            tableBody += '<td class="text-center">';
+                            // Map module to valid controller URL
+                            var moduleUrls = {
+                                'Biobank Storage': 'biobankin',
+                                'Moisture Content': 'moisture_content', 
+                                'Campylobacter (Biosolids)': 'campy_biosolids',
+                                'Campylobacter (Liquids)': 'campy_liquids',
+                                'Campylobacter P/A': 'campy_pa',
+                                'Salmonella (Liquids)': 'salmonella_liquids',
+                                'Salmonella (Biosolids)': 'salmonella_biosolids',
+                                'Salmonella P/A': 'salmonella_pa',
+                                'DNA Extraction (Culture)': 'extraction_culture',
+                                'DNA Extraction (Liquid)': 'extraction_liquid',
+                                'DNA Extraction (Metagenome)': 'extraction_metagenome',
+                                'DNA Extraction (Biosolid)': 'extraction_biosolid',
+                                'Enterolert (Water)': 'enterolert_idexx_water',
+                                'Enterolert (Biosolids)': 'enterolert_idexx_biosolids',
+                                'Colilert (Biosolids)': 'colilert_idexx_biosolids',
+                                'Colilert (Water)': 'colilert_idexx_water',
+                                'Protozoa Analysis': 'protozoa',
+                                'HemoFlow Analysis': 'hemoflow'
+                            };
+                            
+                            var moduleController = moduleUrls[item.module_name] || 'sample_reception';
+                            var viewUrl = '<?php echo base_url(); ?>index.php/' + moduleController;
+                            
+                            if (item.sample_id && item.sample_id !== '-' && item.sample_id !== 'Unknown Project') {
+                                // Add sample_id as filter parameter for the specific module
+                                viewUrl += '?sample_id=' + encodeURIComponent(item.sample_id);
+                            }
+                            
+                            tableBody += '<a href="' + viewUrl + '" class="btn btn-xs btn-success" target="_blank" title="Go to ' + item.module_name + ' module for this sample">';
+                            tableBody += '<i class="fa fa-flask"></i> Open in Module';
+                            tableBody += '</a>';
+                            tableBody += '</td>';
+                            */
+                            tableBody += '</tr>';
+                        });
+                    } else {
+                        tableBody = '<tr><td colspan="4" class="text-center">No pending items found</td></tr>';
+                    }
+                    
+                    $('#pendingItemsTableBody').html(tableBody);
+                    $('#pendingItemsLoader').hide();
+                    $('#pendingItemsContent').show();
+                } else {
+                    $('#pendingItemsLoader').hide();
+                    $('#pendingItemsError').show();
+                }
+            },
+            error: function() {
+                $('#pendingItemsLoader').hide();
+                $('#pendingItemsError').show();
+            }
         });
     });
 
@@ -630,6 +770,39 @@ $(document).ready(function() {
         text-align: center;
         margin-top: 10px;
     }
+}
+
+/* Pending Badge Styling */
+.pending-badge {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.pending-badge:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(243, 156, 18, 0.4);
+}
+
+.pending-badge:before {
+    content: "Click to view details";
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+
+.pending-badge:hover:before {
+    opacity: 1;
 }
 </style>
 <script src="<?php echo base_url('assets/js/export-data.js') ?>"></script>
