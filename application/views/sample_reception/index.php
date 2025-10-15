@@ -255,9 +255,19 @@
                             <div class="form-group">
                                 <label for="files" class="col-sm-4 control-label">Filename</label>
                                 <div class="col-sm-8">
-                                    <input id="files" name="files" placeholder="Filename" type="text" class="form-control">
+                                    <input id="files" name="files" placeholder="Filename" type="text" class="form-control" readonly>
                                     <div class="val2tip"></div>
-                                    <button type="button" class="btn btn-success" style="margin-top: 5px;" onclick="openScanner()">Open File</button>
+                                    <small class="text-muted" id="file-status-text" style="display: none;">
+                                        <i class="fa fa-info-circle"></i>You can delete the file if needed.
+                                    </small>
+                                    <div class="file-buttons-container" style="margin-top: 5px;">
+                                        <button type="button" id="btn-open-scanner" class="btn btn-success" onclick="openScanner()">
+                                            <i class="fa fa-file-o"></i> Open File
+                                        </button>
+                                        <button type="button" id="btn-delete-file" class="btn btn-danger" onclick="deleteFile()" style="margin-left: 10px; display: none;">
+                                            <i class="fa fa-trash"></i> Delete File
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -356,14 +366,23 @@
                                                 <?php
                                                 foreach($sampletype as $row){
                                                     if ($id_sampletype == $row['id_sampletype']) {
-                                                        echo "<option value='".$row['id_sampletype']."' selected='selected'>".$row['sampletype']."</option>";
+                                                        echo "<option value='".$row['id_sampletype']."' selected='selected' data-type='".$row['sampletype']."'>".$row['sampletype']."</option>";
                                                     }
                                                     else {
-                                                        echo "<option value='".$row['id_sampletype']."'>".$row['sampletype']."</option>";
+                                                        echo "<option value='".$row['id_sampletype']."' data-type='".$row['sampletype']."'>".$row['sampletype']."</option>";
                                                     }
                                                 }
                                                     ?>
                                             </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- Additional Type Description Field (appears for Animal/Other) -->
+                                        <div class="form-group" id="typedesc-group" style="display: none;">
+                                            <label for="typedesc" class="col-sm-4 control-label">Other</label>
+                                            <div class="col-sm-8">
+                                                <input id="typedesc" name="typedesc" placeholder="Please specify the type..." type="text" class="form-control">
+                                                <small class="text-muted">Please provide additional details about the sample type.</small>
                                             </div>
                                         </div>
 
@@ -642,6 +661,75 @@
     .container {
         margin: 0;
         padding: 0;
+    }
+
+    /* File Management Buttons Styling */
+    .file-buttons-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .file-buttons-container .btn {
+        transition: all 0.3s ease;
+        border-radius: 6px;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .file-buttons-container .btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .file-buttons-container .btn i {
+        font-size: 12px;
+    }
+
+    /* Specific button styling */
+    #btn-open-scanner {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        border: none;
+        color: white;
+    }
+
+    #btn-open-scanner:hover {
+        background: linear-gradient(135deg, #218838 0%, #17a2b8 100%);
+    }
+
+    #btn-delete-file {
+        background: linear-gradient(135deg, #dc3545 0%, #e74c3c 100%);
+        border: none;
+        color: white;
+    }
+
+    #btn-delete-file:hover {
+        background: linear-gradient(135deg, #c82333 0%, #dc2626 100%);
+    }
+
+    /* File status text styling */
+    #file-status-text {
+        margin-top: 8px;
+        padding: 8px 12px;
+        background-color: #f8f9fa;
+        border-left: 4px solid #28a745;
+        border-radius: 4px;
+        font-size: 12px;
+    }
+
+    #file-status-text i {
+        margin-right: 5px;
+        color: #28a745;
+    }
+
+    /* Input file styling when readonly */
+    #files[readonly] {
+        background-color: #f8f9fa;
+        border-color: #e9ecef;
+        cursor: not-allowed;
     }
 
     /* Modern Icon-based Project Status Styles */
@@ -1477,6 +1565,12 @@
                     $('#time_collected_sample').val(data.time_collected).trigger('change');
                     $('#client_id').val(data.client_id);
                     $('#comments_sample').val(data.comments);
+                    
+                    // Fill typedesc field if available
+                    $('#typedesc').val(data.typedesc || '');
+                    
+                    // Trigger sample type change to show/hide typedesc field
+                    $('#id_sampletype').trigger('change');
                             
                     
                     // Define the states with associated values and labels
@@ -1641,6 +1735,20 @@
 
             // Sembunyikan detail client
             $('#clientDetails').hide();
+            
+            // Reset file buttons state
+            updateFileButtonsState();
+        });
+
+        // Add modal reset for sample modal
+        $('#compose-modal-sample').on('hide.bs.modal', function () {
+            // Reset form
+            $(this).find('form')[0].reset();
+            
+            // Reset and hide typedesc field
+            $('#typedesc').val('');
+            $('#typedesc-group').hide();
+            $('#typedesc').prop('required', false);
         });
 
 
@@ -1662,6 +1770,10 @@
             $('#files').val('');
             $('#comments').val('');
             $('.val2tip').html('');
+            
+            // Update file buttons state after reset
+            updateFileButtonsState();
+            
             $('#compose-modal').modal('show');
         });
 
@@ -1692,6 +1804,10 @@
             $('#comments').val(data.comments);
             $('#id_client_sample').val(data.id_client_sample);
             $('.val2tip').html('');
+            
+            // Update file buttons state after filling form
+            updateFileButtonsState();
+            
             $('#compose-modal').modal('show');
         });
 
@@ -1703,6 +1819,36 @@
                 $(this).addClass('active');
             }
         })   
+        
+        // Handle Sample Type change to show/hide type description field
+        $(document).on('change', '#id_sampletype', function() {
+            let selectedOption = $(this).find('option:selected');
+            let sampleType = selectedOption.data('type');
+            let typedescGroup = $('#typedesc-group');
+            let typedescInput = $('#typedesc');
+            
+            // Show field for Animal or Other sample types
+            if (sampleType === 'Animal' || sampleType === 'Other') {
+                typedescGroup.slideDown(300);
+                typedescInput.prop('required', true);
+                
+                // Update placeholder based on type
+                if (sampleType === 'Animal') {
+                    typedescInput.attr('placeholder', 'Specify animal type (e.g., Cow, Pig, Chicken...)');
+                } else if (sampleType === 'Other') {
+                    typedescInput.attr('placeholder', 'Please specify the sample type...');
+                }
+            } else {
+                typedescGroup.slideUp(300);
+                typedescInput.prop('required', false);
+                typedescInput.val(''); // Clear the field when hidden
+            }
+        });
+
+        // Initialize on page load
+        $(document).ready(function() {
+            $('#id_sampletype').trigger('change');
+        });
                             
     });
 </script>
@@ -1729,6 +1875,61 @@ function openScanner() {
 }
 
 
+// File management functions
+function updateFileButtonsState() {
+    const fileInput = document.getElementById("files");
+    const btnOpenScanner = document.getElementById("btn-open-scanner");
+    const btnDeleteFile = document.getElementById("btn-delete-file");
+    const fileStatusText = document.getElementById("file-status-text");
+    const valTip = document.querySelector(".val2tip");
+
+    const hasFile = fileInput && fileInput.value && fileInput.value.trim() !== '';
+
+    if (hasFile) {
+        // File exists - show delete button, hide open button
+        btnOpenScanner.style.display = 'none';
+        btnDeleteFile.style.display = 'inline-block';
+        fileStatusText.style.display = 'block';
+        
+        if (valTip) {
+            valTip.innerHTML = `<span class="text-success"><i class="fa fa-check-circle"></i> File <strong>${fileInput.value}</strong> is ready!</span>`;
+        }
+    } else {
+        // No file - show open button, hide delete button
+        btnOpenScanner.style.display = 'inline-block';
+        btnDeleteFile.style.display = 'none';
+        fileStatusText.style.display = 'none';
+        
+        if (valTip) {
+            valTip.innerHTML = '';
+        }
+    }
+}
+
+function deleteFile() {
+    if (confirm('Are you sure you want to delete this file?')) {
+        const fileInput = document.getElementById("files");
+        if (fileInput) {
+            // Clear the filename
+            fileInput.value = '';
+            
+            // Update button states
+            updateFileButtonsState();
+            
+            // Show success message
+            const valTip = document.querySelector(".val2tip");
+            if (valTip) {
+                valTip.innerHTML = `<span class="text-info"><i class="fa fa-info-circle"></i> File deleted successfully.</span>`;
+                
+                // Clear message after 3 seconds
+                setTimeout(function() {
+                    valTip.innerHTML = '';
+                }, 3000);
+            }
+        }
+    }
+}
+
 // 👇 Tangkap data dari scanner popup
 window.addEventListener("message", function(event) {
     if (event.data && event.data.type === 'scan-upload-complete') {
@@ -1741,12 +1942,19 @@ window.addEventListener("message", function(event) {
             fileInput.value = filename;
         }
 
-        // Optional: kasih tanda sukses
-        const valTip = document.querySelector(".val2tip");
-        if (valTip) {
-            valTip.innerHTML = `<span class="text-success">File <b>${filename}</b> has been uploading!</span>`;
-        }
+        // Update button states
+        updateFileButtonsState();
     }
+});
+
+// Initialize file buttons state on page load and modal show
+$(document).ready(function() {
+    updateFileButtonsState();
+    
+    // Update buttons when modal is shown
+    $('#compose-modal').on('shown.bs.modal', function() {
+        updateFileButtonsState();
+    });
 });
 </script>
 

@@ -829,7 +829,7 @@ class Sample_reception_model extends CI_Model
 
     public function get_sample_detail($id_one_water_sample) {
         $this->db->select('srs.id_one_water_sample, srs.date_arrival, srs.time_arrival,  srs.date_collected, srs.time_collected,
-            srs.quality_check, srs.client_id, srs.comments, srs.id_sampletype, 
+            srs.quality_check, srs.client_id, srs.comments, srs.id_sampletype, srs.typedesc,
             rst.sampletype, srs.id_person, rp.initial');
         $this->db->from('sample_reception_sample srs');
         $this->db->join('ref_sampletype rst', 'srs.id_sampletype = rst.id_sampletype', 'left');
