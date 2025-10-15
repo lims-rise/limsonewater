@@ -795,7 +795,8 @@
 
 </style>
 
-
+<!-- SweetAlert2 CSS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
@@ -1907,27 +1908,112 @@ function updateFileButtonsState() {
 }
 
 function deleteFile() {
-    if (confirm('Are you sure you want to delete this file?')) {
-        const fileInput = document.getElementById("files");
-        if (fileInput) {
-            // Clear the filename
-            fileInput.value = '';
-            
-            // Update button states
-            updateFileButtonsState();
-            
-            // Show success message
-            const valTip = document.querySelector(".val2tip");
-            if (valTip) {
-                valTip.innerHTML = `<span class="text-info"><i class="fa fa-info-circle"></i> File deleted successfully.</span>`;
-                
-                // Clear message after 3 seconds
-                setTimeout(function() {
-                    valTip.innerHTML = '';
-                }, 3000);
-            }
-        }
+    const fileInput = document.getElementById("files");
+    const filename = fileInput ? fileInput.value : '';
+    
+    if (!filename) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'No File Selected',
+            text: 'There is no file to delete.',
+            confirmButtonText: 'OK'
+        });
+        return;
     }
+    
+    // Show SweetAlert confirmation modal
+    Swal.fire({
+        icon: 'warning',
+        title: 'Delete File?',
+        text: 'Are you sure you want to delete this file? This action cannot be undone.',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Show loading state
+            const btnDeleteFile = document.getElementById("btn-delete-file");
+            const originalText = btnDeleteFile.innerHTML;
+            btnDeleteFile.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Deleting...';
+            btnDeleteFile.disabled = true;
+            
+            // Make AJAX call to delete file from server
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '<?= site_url("scan_page/delete_file") ?>', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            
+            xhr.onload = function() {
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    
+                    if (response.success) {
+                        // Clear the filename
+                        fileInput.value = '';
+                        
+                        // Update button states
+                        updateFileButtonsState();
+                        
+                        // Show success message with SweetAlert
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Deleted!',
+                            text: response.message,
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        // Show error message with SweetAlert
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Delete Failed',
+                            text: response.message,
+                            confirmButtonText: 'OK'
+                        });
+                        
+                        // Reset button state
+                        btnDeleteFile.innerHTML = originalText;
+                        btnDeleteFile.disabled = false;
+                    }
+                    
+                } catch (e) {
+                    console.error('Error parsing response:', e);
+                    
+                    // Show error message with SweetAlert
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to delete file due to server error.',
+                        confirmButtonText: 'OK'
+                    });
+                    
+                    // Reset button state
+                    btnDeleteFile.innerHTML = originalText;
+                    btnDeleteFile.disabled = false;
+                }
+            };
+            
+            xhr.onerror = function() {
+                console.error('Network error while deleting file');
+                
+                // Show network error with SweetAlert
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Network Error',
+                    text: 'Unable to connect to server. Please check your connection.',
+                    confirmButtonText: 'OK'
+                });
+                
+                // Reset button state
+                btnDeleteFile.innerHTML = originalText;
+                btnDeleteFile.disabled = false;
+            };
+            
+            // Send filename to delete
+            xhr.send('filename=' + encodeURIComponent(filename));
+        }
+    });
 }
 
 // 👇 Tangkap data dari scanner popup

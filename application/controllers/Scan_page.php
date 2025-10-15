@@ -407,6 +407,61 @@ class Scan_page extends CI_Controller {
                 ->set_output(json_encode(['filename' => $data['file_name']]));
         }
     }
+
+    public function delete_file()
+    {
+        // Set headers untuk JSON response
+        header('Content-Type: application/json');
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: POST, DELETE");
+        header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
+        
+        // $upload_path = '\\\\ad.monash.edu\\shared\\OneWater\\SecBackups\\Data\\Scan\\';
+        $upload_path = 'C:\\onewater\\scan\\';
+        
+        // Ambil filename dari POST request
+        $filename = $this->input->post('filename', TRUE);
+        
+        if (empty($filename)) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Filename is required'
+            ]);
+            return;
+        }
+        
+        // Bersihkan filename untuk security
+        $filename = preg_replace('/[^a-zA-Z0-9_\-\.]/', '', basename($filename));
+        $file_path = $upload_path . $filename;
+        
+        try {
+            // Check if file exists
+            if (file_exists($file_path)) {
+                // Attempt to delete file
+                if (unlink($file_path)) {
+                    echo json_encode([
+                        'success' => true,
+                        'message' => 'File deleted successfully'
+                    ]);
+                } else {
+                    echo json_encode([
+                        'success' => false,
+                        'message' => 'Failed to delete file'
+                    ]);
+                }
+            } else {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'File not found'
+                ]);
+            }
+        } catch (Exception $e) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Error deleting file: ' . $e->getMessage()
+            ]);
+        }
+    }
     
 
     
