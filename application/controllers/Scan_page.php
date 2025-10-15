@@ -231,7 +231,8 @@ class Scan_page extends CI_Controller {
     public function view_file($filename)
     {
         $filename = basename($filename);
-        $basePath = '\\\\ad.monash.edu\\shared\\OneWater\\SecBackups\\Data\\Scan\\';
+        // $basePath = '\\\\ad.monash.edu\\shared\\OneWater\\SecBackups\\Data\\Scan\\';
+        $basePath = 'C:\\onewater\\scan\\';
         $filePath = $basePath . $filename;
 
         if (!file_exists($filePath)) {
@@ -377,8 +378,9 @@ class Scan_page extends CI_Controller {
     
     public function do_upload()
     {
-        $upload_path = '\\\\ad.monash.edu\\shared\\OneWater\\SecBackups\\Data\\Scan\\';
-    
+        // $upload_path = '\\\\ad.monash.edu\\shared\\OneWater\\SecBackups\\Data\\Scan\\';
+        $upload_path = 'C:\\onewater\\scan\\';
+
         // Ambil project_id dari POST dan validasi
         $project_id_raw = $this->input->post('project_id', TRUE);
         $project_id = preg_replace('/[^a-zA-Z0-9_\-]/', '', $project_id_raw); // bersihkan input
