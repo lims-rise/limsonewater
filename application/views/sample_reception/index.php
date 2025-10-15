@@ -1892,6 +1892,10 @@ function updateFileButtonsState() {
         btnDeleteFile.style.display = 'inline-block';
         fileStatusText.style.display = 'block';
         
+        // Reset delete button state (in case it was in loading state)
+        btnDeleteFile.innerHTML = '<i class="fa fa-trash"></i> Delete File';
+        btnDeleteFile.disabled = false;
+        
         if (valTip) {
             valTip.innerHTML = `<span class="text-success"><i class="fa fa-check-circle"></i> File <strong>${fileInput.value}</strong> is ready!</span>`;
         }
@@ -1900,6 +1904,10 @@ function updateFileButtonsState() {
         btnOpenScanner.style.display = 'inline-block';
         btnDeleteFile.style.display = 'none';
         fileStatusText.style.display = 'none';
+        
+        // Reset delete button state completely
+        btnDeleteFile.innerHTML = '<i class="fa fa-trash"></i> Delete File';
+        btnDeleteFile.disabled = false;
         
         if (valTip) {
             valTip.innerHTML = '';
