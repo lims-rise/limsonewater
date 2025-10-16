@@ -352,9 +352,9 @@ class Campy_pa extends CI_Controller
         // Set appropriate flash message
         if ($hba_auto_generated) {
             if ($mode == "insert") {
-                $this->session->set_flashdata('message', 'Create Record Success - HBA Results auto-generated');
+                $this->session->set_flashdata('message', 'Create Record Success - HBA and Biochemical Results auto-generated (Not Campylobacter)');
             } else {
-                $this->session->set_flashdata('message', 'Update Record Success - HBA Results auto-generated');
+                $this->session->set_flashdata('message', 'Update Record Success - HBA and Biochemical Results auto-generated (Not Campylobacter)');
             }
         }
 
@@ -426,11 +426,99 @@ class Campy_pa extends CI_Controller
                 ));
             }
             
-            log_message('info', "Auto-generated HBA results for campy_pa ID {$id_campy_pa} with {$number_of_plates} plates (all 0)");
+            // Auto-generate biochemical results since all HBA plates are 0
+            $biochemical_auto_generated = $this->autoGenerateBiochemicalResults($hba_id, $id_campy_pa, $number_of_plates);
+            
+            if ($biochemical_auto_generated) {
+                log_message('info', "Auto-generated HBA and Biochemical results for campy_pa ID {$id_campy_pa} with {$number_of_plates} plates (all 0)");
+            } else {
+                log_message('info', "Auto-generated HBA results for campy_pa ID {$id_campy_pa} with {$number_of_plates} plates (all 0)");
+            }
+            
             return true; // Auto-generation successful
         }
         
         return false; // Auto-generation failed
+    }
+
+    /**
+     * Auto-generate Biochemical results when all HBA growth plates are 0
+     * This creates biochemical results with negative values indicating Not Campylobacter
+     * Returns true if Biochemical was auto-generated, false otherwise
+     */
+    private function autoGenerateBiochemicalResults($id_result_hba_pa, $id_campy_pa, $number_of_plates) {
+        // Check if biochemical results already exist for this HBA
+        $existing_biochemical = $this->Campy_pa_model->get_biochemical_by_hba_id($id_result_hba_pa);
+        if (!empty($existing_biochemical)) {
+            return false; // Biochemical results already exist, don't auto-generate
+        }
+        
+        $dt = new DateTime();
+        
+        // Auto-generate biochemical results for each tube
+        for ($i = 1; $i <= $number_of_plates; $i++) {
+            $biochemical_data = array(
+                'id_campy_pa' => $id_campy_pa,
+                'id_result_hba_pa' => $id_result_hba_pa,
+                'gramlysis' => 'Negative',     // Negative gramlysis
+                'oxidase' => 'Negative',         // Negative oxidase
+                'catalase' => 'Negative',        // Negative catalase  
+                'confirmation' => 'Not Campylobacter',  // Not Campylobacter
+                'sample_store' => 'No',          // No sample store
+                'biochemical_tube' => $i,        // Tube number
+                'flag' => '0',
+                'lab' => $this->session->userdata('lab'),
+                'uuid' => $this->uuid->v4(),
+                'user_created' => $this->session->userdata('id_users'),
+                'date_created' => $dt->format('Y-m-d H:i:s'),
+            );
+            
+            $biochemical_id = $this->Campy_pa_model->insertResultsBiochemical($biochemical_data);
+            
+            if (!$biochemical_id) {
+                log_message('error', "Failed to auto-generate biochemical result for tube {$i}, HBA ID {$id_result_hba_pa}");
+                return false; // If any insertion fails, return false
+            }
+        }
+        
+        log_message('info', "Auto-generated {$number_of_plates} biochemical results for HBA ID {$id_result_hba_pa} (all Not Campylobacter)");
+        return true; // Auto-generation successful
+    }
+
+    /**
+     * Check HBA plates and auto-generate biochemical results if all are 0
+     * This is used when HBA is manually entered (not auto-generated from charcoal)
+     * Returns true if Biochemical was auto-generated, false otherwise
+     */
+    private function checkAndAutoGenerateBiochemicalFromHBA($id_result_hba_pa, $id_campy_pa, $number_of_tubes) {
+        // Get all HBA growth plates for this HBA result
+        $hba_plates = $this->Campy_pa_model->get_growth_plates_hba_by_id($id_result_hba_pa);
+        
+        if (empty($hba_plates)) {
+            return false; // No plates found, nothing to do
+        }
+        
+        // Check if all HBA growth plates are 0
+        $all_plates_zero = true;
+        foreach ($hba_plates as $plate) {
+            if ($plate->growth_plate != '0') {
+                $all_plates_zero = false;
+                break;
+            }
+        }
+        
+        if (!$all_plates_zero) {
+            return false; // Not all plates are 0, no auto-generation needed
+        }
+        
+        // Check if biochemical results already exist for this HBA
+        $existing_biochemical = $this->Campy_pa_model->get_biochemical_by_hba_id($id_result_hba_pa);
+        if (!empty($existing_biochemical)) {
+            return false; // Biochemical results already exist, don't auto-generate
+        }
+        
+        // Auto-generate biochemical results using the existing function
+        return $this->autoGenerateBiochemicalResults($id_result_hba_pa, $id_campy_pa, $number_of_tubes);
     }
 
     public function saveResultsHBA() {
@@ -483,7 +571,14 @@ class Campy_pa extends CI_Controller
 
             }
     
-            $this->session->set_flashdata('message', 'Create Record Success');
+            // Check if auto-generation of Biochemical results is needed for manual HBA input
+            $biochemical_auto_generated = $this->checkAndAutoGenerateBiochemicalFromHBA($assay_id, $id_campy_pa, $number_of_tubes);
+            
+            if ($biochemical_auto_generated) {
+                $this->session->set_flashdata('message', 'Create Record Success - Biochemical Results auto-generated (Not Campylobacter)');
+            } else {
+                $this->session->set_flashdata('message', 'Create Record Success');
+            }
     
         } else if ($mode == "edit") {
             // Update data in assays table
@@ -522,7 +617,14 @@ class Campy_pa extends CI_Controller
                 }
             }
     
-            $this->session->set_flashdata('message', 'Update Record Success');
+            // Check if auto-generation of Biochemical results is needed for manual HBA input
+            $biochemical_auto_generated = $this->checkAndAutoGenerateBiochemicalFromHBA($id_result_hba_pa, $id_campy_pa, $number_of_tubes);
+            
+            if ($biochemical_auto_generated) {
+                $this->session->set_flashdata('message', 'Update Record Success - Biochemical Results auto-generated (Not Campylobacter)');
+            } else {
+                $this->session->set_flashdata('message', 'Update Record Success');
+            }
         }
     
         redirect(site_url("campy_pa/read/" . $id_one_water_sample));
@@ -534,6 +636,7 @@ class Campy_pa extends CI_Controller
         $id_result_biochemical_pa = $this->input->post('id_result_biochemical_pa', TRUE);
         $id_result_hba_pa = $this->input->post('id_result_hba_pa1', TRUE);
         $id_campy_pa = $this->input->post('id_campy_paBiochemical', TRUE);
+        $gramlysis = $this->input->post('gramlysis', TRUE);
         $oxidase = $this->input->post('oxidase', TRUE);
         $catalase = $this->input->post('catalase', TRUE);
         $confirmation = $this->input->post('confirmation', TRUE);
@@ -545,6 +648,7 @@ class Campy_pa extends CI_Controller
             $data = array(
                 'id_campy_pa' => $id_campy_pa,
                 'id_result_hba_pa' => $id_result_hba_pa,
+                'gramlysis' => $gramlysis,
                 'oxidase' => $oxidase,
                 'catalase' => $catalase,
                 'confirmation' => $confirmation,
@@ -559,14 +663,18 @@ class Campy_pa extends CI_Controller
             // var_dump($data);
             // die();
             $this->Campy_pa_model->insertResultsBiochemical($data);
+            $this->session->set_flashdata('message', 'Create Record Success');
         } else if ($mode == "edit") {
             $data = array(
+                'id_result_biochemical_pa' => $id_result_biochemical_pa,
                 'id_campy_pa' => $id_campy_pa,
                 'id_result_hba_pa' => $id_result_hba_pa,
+                'gramlysis' => $gramlysis,
                 'oxidase' => $oxidase,
                 'catalase' => $catalase,
                 'confirmation' => $confirmation,
                 'sample_store' => $sample_store,
+                'biochemical_tube' => $biochemical_tube,  // Missing field added
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
@@ -574,9 +682,8 @@ class Campy_pa extends CI_Controller
                 'date_updated' => date('Y-m-d H:i:s'),
             );
 
-            // var_dump($data);
-            // die();
             $this->Campy_pa_model->updateResultsBiochemical($id_result_biochemical_pa, $data);
+            $this->session->set_flashdata('message', 'Update Record Success');
         }
 
         redirect(site_url("campy_pa/read/" . $id_one_water_sample));
