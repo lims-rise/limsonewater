@@ -30,7 +30,7 @@
 
             <div id="previewContainer" class="mt-3" style="display: none;">
                 <p class="mb-2">Preview:</p>
-                <iframe id="filePreview" width="100%" height="400px" style="border:1px solid #ccc;"></iframe>
+                <iframe id="filePreview" width="100%" height="900px" style="border:1px solid #ccc;"></iframe>
             </div>
         </div>
 
