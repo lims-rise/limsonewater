@@ -18,7 +18,7 @@
     <div class="text-center mb-4">
         <!-- <input type="file" id="fileInput" class="form-control mb-3" accept="application/pdf,image/*" onchange="previewFile()"> -->
         <div class="text-center mb-4">
-            <div id="dropArea" class="border border-2 border-dashed rounded p-5 bg-light" 
+            <div id="dropArea" class="border-6 border-dashed rounded p-5 bg-light" 
                 ondragover="event.preventDefault()" 
                 ondrop="handleDrop(event)" 
                 onclick="document.getElementById('fileInput').click()" 
@@ -105,33 +105,34 @@
         transition: background-color 0.3s ease, border-color 0.3s ease;
         border-style: dashed;
         border-width: 2px;
-        border-color: #ccc;
-        background-color: #f8f9fa;
+        border-color: #BADFDB;
+        background-color: #BADFDB;
         cursor: pointer;
         text-align: center;
     }
 
     #dropArea:hover {
         background-color: #e9f5ff;
-        border-color: #0d6efd;
+        border-color: #BADFDB;
+        box-shadow: 0 0 20px rgba(186, 223, 219, 0.3);
     }
 
     #dropArea.active {
         background-color: #e0f7ff;
-        border-color: #0d6efd;
-        box-shadow: 0 0 10px rgba(13, 110, 253, 0.5);
+        border-color: #BADFDB;
+        box-shadow: 0 0 20px rgba(186, 223, 219, 0.3);
         animation: pulseBorder 1.2s infinite;
     }
 
     @keyframes pulseBorder {
         0% {
-            box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.4);
+            box-shadow: 0 0 20px rgba(186, 223, 219, 0.5);
         }
         70% {
-            box-shadow: 0 0 0 10px rgba(13, 110, 253, 0);
+              box-shadow: 0 0 20px rgba(186, 223, 219, 0);
         }
         100% {
-            box-shadow: 0 0 0 0 rgba(13, 110, 253, 0);
+            box-shadow: 0 0 20px rgba(186, 223, 219, 0);
         }
     }
 
@@ -140,7 +141,7 @@
     }
 
     #dropArea.active p {
-        color: #0d6efd;
+        color: #BADFDB;
     }
 </style>
 
