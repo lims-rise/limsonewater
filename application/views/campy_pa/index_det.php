@@ -467,7 +467,7 @@
                 <div class="modal-body">
                     <input id="mode_detResultsBiochemical" name="mode_detResultsBiochemical" type="hidden" class="form-control input-sm">
                     <input id="id_campy_paBiochemical" name="id_campy_paBiochemical" type="hidden" class="form-control input-sm">
-                    <input id="id_result_biochemical" name="id_result_biochemical" type="hidden" class="form-control input-sm">
+                    <input id="id_result_biochemical_pa" name="id_result_biochemical_pa" type="hidden" class="form-control input-sm">
                     <input id="biochemical_tube" name="biochemical_tube" type="hidden" class="form-control input-sm">
                     <input id="id_result_hba_pa1" name="id_result_hba_pa1" type="hidden" class="form-control input-sm">
                     <input id="idBiochemical_one_water_sample" name="idBiochemical_one_water_sample" type="hidden" class="form-control input-sm">
@@ -2102,6 +2102,7 @@
                         <table id="${tableId}" class="table display table-bordered table-striped" width="100%">
                             <thead>
                                 <tr>
+                                    <th>Gramlysis Result</th>
                                     <th>Oxidase Result</th>
                                     <th>Catalase Result</th>
                                     <th>Confirmation</th>
@@ -2136,6 +2137,7 @@
                     type: "POST"
                 },
                 columns: [
+                    {"data": "gramlysis"},
                     {"data": "oxidase"},
                     {"data": "catalase"},
                     {"data": "confirmation"},
@@ -2197,11 +2199,13 @@
             $('#id_result_biochemical_pa').val(data.id_result_biochemical_pa);
             $('#id_campy_paBiochemical').val(data.id_campy_pa);
             $('#id_result_hba_pa1').val(data.id_result_hba_pa);
+            // Set radio button untuk gramlysis
+            $('input[name="gramlysis"][value="' + data.gramlysis + '"]').prop('checked', true);
             // Set radio button untuk oxidase
             $('input[name="oxidase"][value="' + data.oxidase + '"]').prop('checked', true);
-            
             // Set radio button untuk catalase
             $('input[name="catalase"][value="' + data.catalase + '"]').prop('checked', true);
+            $('#biochemical_tube').val(data.biochemical_tube);
             $('#confirmation').val(data.confirmation);
             $('#sample_store').val(data.sample_store);
             // Tambahkan nilai lain yang diperlukan sesuai data

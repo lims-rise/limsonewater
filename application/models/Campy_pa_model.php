@@ -105,7 +105,7 @@ class Campy_pa_model extends CI_Model
 
     function subjsonBiochemical($id, $biochemical_tube) {
 
-        $this->datatables->select('rbp.id_result_biochemical_pa, rbp.id_campy_pa, rbp.id_result_hba_pa, cbp.campy_assay_barcode, rbp.oxidase, rbp.catalase, rbp.confirmation, rbp.sample_store, rbp.biochemical_tube, rbp.flag');
+        $this->datatables->select('rbp.id_result_biochemical_pa, rbp.id_campy_pa, rbp.id_result_hba_pa, cbp.campy_assay_barcode, rbp.gramlysis, rbp.oxidase, rbp.catalase, rbp.confirmation, rbp.sample_store, rbp.biochemical_tube, rbp.flag');
         $this->datatables->from('campy_result_biochemical_pa AS rbp');
         $this->datatables->join('campy_pa AS cbp', 'rbp.id_campy_pa = cbp.id_campy_pa', 'left');
         $this->datatables->where('rbp.flag', '0');
@@ -743,6 +743,13 @@ class Campy_pa_model extends CI_Model
         $this->db->where('id_result_hba_pa', $id_result_hba_pa);
         $this->db->where('flag', '0');
         return $this->db->get('campy_result_biochemical_pa')->result();
+    }
+
+    function get_growth_plates_hba_by_id($id_result_hba_pa) {
+        $this->db->where('id_result_hba_pa', $id_result_hba_pa);
+        $this->db->where('flag', '0');
+        $this->db->order_by('plate_number', 'ASC');
+        return $this->db->get('campy_sample_growth_plate_hba_pa')->result();
     }
 
     function delete_hba_by_campy_pa($id_campy_pa) {
