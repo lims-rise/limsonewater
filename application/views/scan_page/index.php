@@ -105,7 +105,7 @@
         transition: background-color 0.3s ease, border-color 0.3s ease;
         border-style: dashed;
         border-width: 2px;
-        border-color: #BADFDB;
+        border-color: #ccc;
         background-color: #BADFDB;
         cursor: pointer;
         text-align: center;

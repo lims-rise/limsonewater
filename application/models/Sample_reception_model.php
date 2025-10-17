@@ -861,6 +861,17 @@ class Sample_reception_model extends CI_Model
     
     
     // Get export data for CSV with real data from database
+    /**
+     * Get export data for a specific project
+     * 
+     * FILTER TESTING TYPES:
+     * Saat ini dibatasi hanya untuk testing:
+     * - Campylobacter-Biosolids 
+     * - Moisture_content
+     * 
+     * Untuk menampilkan SEMUA testing di masa depan:
+     * Hapus atau komentar baris: $this->db->where_in('rt.testing_type', ['Campylobacter-Biosolids', 'Moisture_content']);
+     */
     public function get_export_data($id_project) {
         // First get basic project info
         $this->db->select('sr.*, COALESCE(cc.client_name, sr.client, "Unknown Client") as client_name, cc.address, cc.phone1, cc.email');
@@ -889,7 +900,9 @@ class Sample_reception_model extends CI_Model
             rt.prefix,
             cb.date_sample_processed, 
             cb.time_sample_processed,
-            crm.mpn_concentration_dw
+            crm.mpn_concentration_dw,
+            mc.id_moisture,
+            m72.moisture_content_persen
         ');
         $this->db->from('sample_reception_sample srs');
         $this->db->join('campy_biosolids cb', 'srs.id_one_water_sample = cb.id_one_water_sample AND cb.flag = 0', 'left');
@@ -898,8 +911,14 @@ class Sample_reception_model extends CI_Model
         $this->db->join('sample_reception_testing srt', 'srs.id_sample = srt.id_sample AND srt.flag = 0', 'left');
         $this->db->join('ref_testing rt', 'srt.id_testing_type = rt.id_testing_type AND rt.flag = 0', 'left');
         $this->db->join('campy_result_mpn crm' , 'cb.id_campy_biosolids = crm.id_campy_biosolids AND crm.flag = 0', 'left');
+        $this->db->join('moisture_content mc', 'srs.id_one_water_sample = mc.id_one_water_sample AND mc.flag = 0', 'left');
+        $this->db->join('moisture72 m72', 'mc.id_moisture = m72.id_moisture AND m72.flag = 0', 'left');
         $this->db->where('srs.id_project', $id_project);
         $this->db->where('srs.flag', '0');
+        
+        // Filter untuk hanya menampilkan testing Campylobacter-Biosolids dan Moisture_content
+        // Untuk masa depan, komentar baris WHERE IN dibawah ini untuk menampilkan semua testing
+        $this->db->where_in('rt.testing_type', ['Campylobacter-Biosolids', 'Moisture_content']);
         $samples = $this->db->get()->result_array();
 
         $exportData = [];
@@ -918,6 +937,7 @@ class Sample_reception_model extends CI_Model
                 'date_sample_processed' => null,
                 'time_sample_processed' => null,
                 'mpn_concentration_dw' => null,
+                'moisture_content_persen' => null,
             ]];
         }
 
@@ -975,7 +995,7 @@ class Sample_reception_model extends CI_Model
                 'PARAMETERNAME' => isset($sample['parameter_name']) ? $sample['parameter_name'] : $this->getParameterName($sample['testing_type'] ?? ''),
                 'TEST_KEY_CODE' => $testKeyCode,
                 // 'TEST_KEY_CODE' => isset($sample['test_key_code']) ? $sample['test_key_code'] : '-',
-                'RESULT' => isset($sample['mpn_concentration_dw']) ? $sample['mpn_concentration_dw'] : '',
+                'RESULT' => $this->getResultValue($sample),
                 'Units' => isset($sample['units']) ? $sample['units'] : $this->getUnits($sample['testing_type'] ?? ''),
                 // 'POSITIVECONTROL%' => isset($sample['positive_control']) ? $sample['positive_control'] : rand(95, 105) . '%',
                 'POSITIVECONTROL%' => '',
@@ -1020,6 +1040,54 @@ class Sample_reception_model extends CI_Model
     }
     
     // Helper functions for data generation based on testing type
+    
+    /**
+     * Get result value based on testing type from different modules
+     * @param array $sample - Sample data containing various test results
+     * @return string - The appropriate result value
+     */
+    private function getResultValue($sample) {
+        $testing_type = $sample['testing_type'] ?? '';
+        
+        // Determine result based on testing type
+        if (stripos($testing_type, 'Campylobacter-Biosolids') !== false) {
+            // For Campylobacter tests, return MPN concentration
+            return isset($sample['mpn_concentration_dw']) ? $sample['mpn_concentration_dw'] : '';
+        }
+        else if (stripos($testing_type, 'Moisture_content') !== false) {
+            // For Moisture Content tests, return moisture percentage
+            return isset($sample['moisture_content_persen']) ? $sample['moisture_content_persen'] : '';
+        }
+        else if (stripos($testing_type, 'Colilert') !== false) {
+            // For Colilert tests - add appropriate result field when available
+            // return isset($sample['colilert_result']) ? $sample['colilert_result'] : '';
+            return '';
+        }
+        else if (stripos($testing_type, 'Enterolert') !== false) {
+            // For Enterolert tests - add appropriate result field when available
+            // return isset($sample['enterolert_result']) ? $sample['enterolert_result'] : '';
+            return '';
+        }
+        else if (stripos($testing_type, 'Salmonella') !== false) {
+            // For Salmonella tests - add appropriate result field when available
+            // return isset($sample['salmonella_result']) ? $sample['salmonella_result'] : '';
+            return '';
+        }
+        else if (stripos($testing_type, 'Biobank') !== false) {
+            // For Biobank tests - add appropriate result field when available
+            // return isset($sample['biobank_result']) ? $sample['biobank_result'] : '';
+            return '';
+        }
+        else if (stripos($testing_type, 'Extraction') !== false) {
+            // For Extraction tests - add appropriate result field when available
+            // return isset($sample['extraction_result']) ? $sample['extraction_result'] : '';
+            return '';
+        }
+        
+        // Default fallback - could be expanded as more modules are added
+        return '';
+    }
+    
     private function getAnalysisMethodCategory($testing_type) {
         $categories = [
             'Biobank-In' => 'Biobank',
@@ -1150,9 +1218,9 @@ class Sample_reception_model extends CI_Model
         $units = [
             // 'Colilert' => 'MPN/100mL',
             // 'Enterolert' => 'MPN/100mL',
-            // 'Campylobacter' => 'copies/g',
+            'Campylobacter-Biosolids' => 'MPN/g dw',
             // 'Salmonella' => '-',
-            // 'Moisture' => '%'
+            'Moisture_content' => ''
         ];
         
         foreach ($units as $test => $unit) {
@@ -1160,7 +1228,7 @@ class Sample_reception_model extends CI_Model
                 return $unit;
             }
         }
-        return 'MPN/g';
+        return '';
     }
     
     private function getSubmittedMatrix($sampletype) {
