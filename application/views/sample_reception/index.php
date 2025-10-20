@@ -47,6 +47,7 @@
                                         <th>Date Collected</th>
                                         <th>Time Collected</th>
                                         <th>File Status</th>
+                                        <th>Supplementary File</th>
                                         <th width="120px">Action</th>
                                     </tr>
                                 </thead>
@@ -265,6 +266,25 @@
                                             <i class="fa fa-file-o"></i> Open File
                                         </button>
                                         <button type="button" id="btn-delete-file" class="btn btn-danger" onclick="deleteFile()" style="margin-left: 10px; display: none;">
+                                            <i class="fa fa-trash"></i> Delete File
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="supplementary_files" class="col-sm-4 control-label">Supplementary File</label>
+                                <div class="col-sm-8">
+                                    <input id="supplementary_files" name="supplementary_files" placeholder="Supplementary File" type="text" class="form-control" readonly>
+                                    <div class="val3tip"></div>
+                                    <small class="text-muted" id="supplementary-file-status-text" style="display: none;">
+                                        <i class="fa fa-info-circle"></i>You can delete the supplementary file if needed.
+                                    </small>
+                                    <div class="file-buttons-container" style="margin-top: 5px;">
+                                        <button type="button" id="btn-open-scanner-supplementary" class="btn btn-success" onclick="openSupplementaryScanner()">
+                                            <i class="fa fa-file-o"></i> Open File
+                                        </button>
+                                        <button type="button" id="btn-delete-supplementary-file" class="btn btn-danger" onclick="deleteSupplementaryFile()" style="margin-left: 10px; display: none;">
                                             <i class="fa fa-trash"></i> Delete File
                                         </button>
                                     </div>
@@ -711,7 +731,7 @@
     }
 
     /* File status text styling */
-    #file-status-text {
+    #file-status-text, #supplementary-file-status-text {
         margin-top: 8px;
         padding: 8px 12px;
         background-color: #f8f9fa;
@@ -720,16 +740,37 @@
         font-size: 12px;
     }
 
-    #file-status-text i {
+    #file-status-text i, #supplementary-file-status-text i {
         margin-right: 5px;
         color: #28a745;
     }
 
     /* Input file styling when readonly */
-    #files[readonly] {
+    #files[readonly], #supplementary_files[readonly] {
         background-color: #f8f9fa;
         border-color: #e9ecef;
         cursor: not-allowed;
+    }
+
+    /* Supplementary file button styling */
+    #btn-open-scanner-supplementary {
+        background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+        border: none;
+        color: white;
+    }
+
+    #btn-open-scanner-supplementary:hover {
+        background: linear-gradient(135deg, #138496 0%, #117a8b 100%);
+    }
+
+    #btn-delete-supplementary-file {
+        background: linear-gradient(135deg, #dc3545 0%, #e74c3c 100%);
+        border: none;
+        color: white;
+    }
+
+    #btn-delete-supplementary-file:hover {
+        background: linear-gradient(135deg, #c82333 0%, #dc2626 100%);
     }
 
     /* Modern Icon-based Project Status Styles */
@@ -1182,6 +1223,19 @@
                         const fileURL = `<?= site_url('scan_page/view_file/') ?>${data}`;
                         return `<a href="${fileURL}" target="_blank" class="btn btn-sm btn-success">
                                     <i class="fa fa-file-pdf-o"></i> View Scan
+                                </a>`;
+                    }
+                },
+                {
+                    "data": "supplementary_files",
+                    "render": function(data, type, row) {
+                        if (!data || data === "null") return `<button type="button" class="btn btn-sm btn-light" disabled>
+                                    <i class="fa fa-times"></i> No file yet
+                                </button>`;
+
+                        const fileURL = `<?= site_url('scan_page/view_file/') ?>${data}`;
+                        return `<a href="${fileURL}" target="_blank" class="btn btn-sm btn-info">
+                                    <i class="fa fa-file-o"></i> View File
                                 </a>`;
                     }
                 },
@@ -1739,6 +1793,7 @@
             
             // Reset file buttons state
             updateFileButtonsState();
+            updateSupplementaryFileButtonsState();
         });
 
         // Add modal reset for sample modal
@@ -1769,11 +1824,14 @@
             $('#id_client_sample').val('').attr('readonly', false);
             $('#number_sample').val('').attr('readonly', false);
             $('#files').val('');
+            $('#supplementary_files').val('');
             $('#comments').val('');
             $('.val2tip').html('');
+            $('.val3tip').html('');
             
             // Update file buttons state after reset
             updateFileButtonsState();
+            updateSupplementaryFileButtonsState();
             
             $('#compose-modal').modal('show');
         });
@@ -1800,14 +1858,17 @@
             // Pre-fill other form fields
             $('#number_sample').val(data.number_sample).attr('readonly', true);
             $('#files').val(data.files).attr('readonly', true);
+            $('#supplementary_files').val(data.supplementary_files).attr('readonly', true);
             $('#date_collected').val(data.date_collected);
             $('#time_collected').val(data.time_collected);
             $('#comments').val(data.comments);
             $('#id_client_sample').val(data.id_client_sample);
             $('.val2tip').html('');
+            $('.val3tip').html('');
             
             // Update file buttons state after filling form
             updateFileButtonsState();
+            updateSupplementaryFileButtonsState();
             
             $('#compose-modal').modal('show');
         });
@@ -2024,7 +2085,7 @@ function deleteFile() {
     });
 }
 
-// 👇 Tangkap data dari scanner popup
+// 👇 Tangkap data dari scanner popup untuk main file
 window.addEventListener("message", function(event) {
     if (event.data && event.data.type === 'scan-upload-complete') {
         const filename = event.data.filename;
@@ -2039,15 +2100,196 @@ window.addEventListener("message", function(event) {
         // Update button states
         updateFileButtonsState();
     }
+    
+    // Handle supplementary file upload
+    if (event.data && event.data.type === 'scan-upload-complete-supplementary') {
+        const filename = event.data.filename;
+        console.log("Dapat nama supplementary file dari scanner:", filename);
+
+        // Masukkan ke input #supplementary_files
+        const supplementaryFileInput = document.getElementById("supplementary_files");
+        if (supplementaryFileInput) {
+            supplementaryFileInput.value = filename;
+        }
+
+        // Update button states
+        updateSupplementaryFileButtonsState();
+    }
 });
+
+// ========== SUPPLEMENTARY FILE FUNCTIONS ==========
+
+function openSupplementaryScanner() {
+  const idxProject = $('#idx_project').val(); // Ambil nilai project dari input form
+  const w = 800;
+  const h = 600;
+  const y = window.top.outerHeight / 2 + window.top.screenY - (h / 2);
+  const x = window.top.outerWidth / 2 + window.top.screenX - (w / 2);
+
+  const url = "<?= site_url('scan_page/supplementary') ?>?project_id=" + encodeURIComponent(idxProject);
+
+  window.open(url, "Scan Supplementary Document",
+    `width=${w},height=${h},top=${y},left=${x}`);
+}
+
+function updateSupplementaryFileButtonsState() {
+    const supplementaryFileInput = document.getElementById("supplementary_files");
+    const btnOpenSupplementaryScanner = document.getElementById("btn-open-scanner-supplementary");
+    const btnDeleteSupplementaryFile = document.getElementById("btn-delete-supplementary-file");
+    const supplementaryFileStatusText = document.getElementById("supplementary-file-status-text");
+    const valTip = document.querySelector(".val3tip");
+
+    const hasFile = supplementaryFileInput && supplementaryFileInput.value && supplementaryFileInput.value.trim() !== '';
+
+    if (hasFile) {
+        // File exists - show delete button, hide open button
+        btnOpenSupplementaryScanner.style.display = 'none';
+        btnDeleteSupplementaryFile.style.display = 'inline-block';
+        supplementaryFileStatusText.style.display = 'block';
+        
+        // Reset delete button state (in case it was in loading state)
+        btnDeleteSupplementaryFile.innerHTML = '<i class="fa fa-trash"></i> Delete File';
+        btnDeleteSupplementaryFile.disabled = false;
+        
+        if (valTip) {
+            valTip.innerHTML = `<span class="text-success"><i class="fa fa-check-circle"></i> Supplementary file <strong>${supplementaryFileInput.value}</strong> is ready!</span>`;
+        }
+    } else {
+        // No file - show open button, hide delete button
+        btnOpenSupplementaryScanner.style.display = 'inline-block';
+        btnDeleteSupplementaryFile.style.display = 'none';
+        supplementaryFileStatusText.style.display = 'none';
+        
+        // Reset delete button state completely
+        btnDeleteSupplementaryFile.innerHTML = '<i class="fa fa-trash"></i> Delete File';
+        btnDeleteSupplementaryFile.disabled = false;
+        
+        if (valTip) {
+            valTip.innerHTML = '';
+        }
+    }
+}
+
+function deleteSupplementaryFile() {
+    const supplementaryFileInput = document.getElementById("supplementary_files");
+    const filename = supplementaryFileInput ? supplementaryFileInput.value : '';
+    
+    if (!filename) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'No Supplementary File Selected',
+            text: 'There is no supplementary file to delete.',
+            confirmButtonText: 'OK'
+        });
+        return;
+    }
+    
+    // Show SweetAlert confirmation modal
+    Swal.fire({
+        icon: 'warning',
+        title: 'Delete Supplementary File?',
+        text: 'Are you sure you want to delete this supplementary file? This action cannot be undone.',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Show loading state
+            const btnDeleteSupplementaryFile = document.getElementById("btn-delete-supplementary-file");
+            const originalText = btnDeleteSupplementaryFile.innerHTML;
+            btnDeleteSupplementaryFile.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Deleting...';
+            btnDeleteSupplementaryFile.disabled = true;
+            
+            // Make AJAX call to delete file from server
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '<?= site_url("scan_page/delete_supplementary_file") ?>', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            
+            xhr.onload = function() {
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    
+                    if (response.success) {
+                        // Clear the filename
+                        supplementaryFileInput.value = '';
+                        
+                        // Update button states
+                        updateSupplementaryFileButtonsState();
+                        
+                        // Show success message with SweetAlert
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Deleted!',
+                            text: response.message,
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        // Show error message with SweetAlert
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Delete Failed',
+                            text: response.message,
+                            confirmButtonText: 'OK'
+                        });
+                        
+                        // Reset button state
+                        btnDeleteSupplementaryFile.innerHTML = originalText;
+                        btnDeleteSupplementaryFile.disabled = false;
+                    }
+                    
+                } catch (e) {
+                    console.error('Error parsing response:', e);
+                    
+                    // Show error message with SweetAlert
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to delete supplementary file due to server error.',
+                        confirmButtonText: 'OK'
+                    });
+                    
+                    // Reset button state
+                    btnDeleteSupplementaryFile.innerHTML = originalText;
+                    btnDeleteSupplementaryFile.disabled = false;
+                }
+            };
+            
+            xhr.onerror = function() {
+                console.error('Network error while deleting supplementary file');
+                
+                // Show network error with SweetAlert
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Network Error',
+                    text: 'Unable to connect to server. Please check your connection.',
+                    confirmButtonText: 'OK'
+                });
+                
+                // Reset button state
+                btnDeleteSupplementaryFile.innerHTML = originalText;
+                btnDeleteSupplementaryFile.disabled = false;
+            };
+            
+            // Send filename to delete
+            xhr.send('filename=' + encodeURIComponent(filename));
+        }
+    });
+}
+
+
 
 // Initialize file buttons state on page load and modal show
 $(document).ready(function() {
     updateFileButtonsState();
+    updateSupplementaryFileButtonsState();
     
     // Update buttons when modal is shown
     $('#compose-modal').on('shown.bs.modal', function() {
         updateFileButtonsState();
+        updateSupplementaryFileButtonsState();
     });
 });
 </script>

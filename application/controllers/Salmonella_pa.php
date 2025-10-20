@@ -218,7 +218,7 @@ class Salmonella_pa extends CI_Controller
             // var_dump($data);
             // die();
 
-            $this->Salmonella_pa_model->updateSalmonella($id_salmonella_pa, $data);
+            $this->Salmonella_pa_model->updateSalmonellaPA($id_salmonella_pa, $data);
 
             // Update sample volumes
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
