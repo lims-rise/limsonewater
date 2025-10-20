@@ -569,6 +569,11 @@ class Salmonella_pa_model extends CI_Model
         $this->db->update('salmonella_sample_black_colony_plate_xld_agar_pa', $data);
     }
 
+    function updateResultsPurplePlateChromagar($id, $data) {
+        $this->db->where('id_result_chromagar_pa', $id);
+        $this->db->update('salmonella_sample_purple_colony_plate_chromagar_pa', $data);
+    }
+
     function get_by_id_salmonella_pa($id)
     {
         $this->db->where('id_salmonella_pa', $id);
@@ -761,17 +766,17 @@ class Salmonella_pa_model extends CI_Model
         $confirmation = '';
 
         if (!$xld_has_positive && !$chromagar_has_positive) {
-            // XLD (0) + Chromagar (0) = Not Salmonella
-            $confirmation = 'Not Salmonella';
+            // XLD (0) + Chromagar (0) = Non-detect
+            $confirmation = 'Non-detect';
         } else if ($xld_has_positive && !$chromagar_has_positive) {
-            // XLD (1) + Chromagar (0) = Not Salmonella
-            $confirmation = 'Not Salmonella';
+            // XLD (1) + Chromagar (0) = Non-detect
+            $confirmation = 'Non-detect';
         } else if (!$xld_has_positive && $chromagar_has_positive) {
-            // XLD (0) + Chromagar (1) = Not Salmonella
-            $confirmation = 'Not Salmonella';
+            // XLD (0) + Chromagar (1) = Non-detect
+            $confirmation = 'Non-detect';
         } else if ($xld_has_positive && $chromagar_has_positive) {
-            // XLD (1) + Chromagar (1) = Salmonella
-            $confirmation = 'Salmonella';
+            // XLD (1) + Chromagar (1) = Detect
+            $confirmation = 'Detect';
         }
 
         // Check if biochemical result already exists for this salmonella_pa

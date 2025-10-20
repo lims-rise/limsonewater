@@ -1675,16 +1675,16 @@
                     
                     // Business rules based on user requirements:
                     if (xldBlackColony === 0 && chromPurpleColony === 0) {
-                        confirmationValue = 'Not Salmonella';
+                        confirmationValue = 'Non-detect';
                     } else if (xldBlackColony === 1 && chromPurpleColony === 0) {
-                        confirmationValue = 'Not Salmonella';
+                        confirmationValue = 'Non-detect';
                     } else if (xldBlackColony === 0 && chromPurpleColony === 1) {
-                        confirmationValue = 'Not Salmonella';
+                        confirmationValue = 'Non-detect';
                     } else if (xldBlackColony === 1 && chromPurpleColony === 1) {
-                        confirmationValue = 'Salmonella';
+                        confirmationValue = 'Detect';
                     } else {
                         // Default case - unexpected values
-                        confirmationValue = 'Not Salmonella';
+                        confirmationValue = 'Non-detect';
                     }
                     
                     // Set the calculated values
@@ -1720,32 +1720,32 @@
         console.log(`Updating confirmation options: XLD Agar=${xld}, Chromagar=${chromagar}`);
         
         if (xld === 0 && chromagar === 0) {
-            // XLD Agar = 0, Chromagar = 0 → checkbox with "Not Salmonella" option only
+            // XLD Agar = 0, Chromagar = 0 → checkbox with "Non-detect" option only
             confirmationContainer.html(`
                 <label class="checkbox-inline">
-                    <input type="checkbox" name="confirmation" value="Not Salmonella" required> Not Salmonella
+                    <input type="checkbox" name="confirmation" value="Non-detect" required> Non-detect
                 </label>
             `);
         } else if (xld === 1 && chromagar === 0) {
-            // XLD Agar = 1, Chromagar = 0 → checkbox with "Not Salmonella" option only
+            // XLD Agar = 1, Chromagar = 0 → checkbox with "Non-detect" option only
             confirmationContainer.html(`
                 <label class="checkbox-inline">
-                    <input type="checkbox" name="confirmation" value="Not Salmonella" required> Not Salmonella
+                    <input type="checkbox" name="confirmation" value="Non-detect" required> Non-detect
                 </label>
             `);
         } else if (xld === 1 && chromagar === 1) {
-            // XLD Agar = 1, Chromagar = 1 → checkbox with "Salmonella" option only
+            // XLD Agar = 1, Chromagar = 1 → checkbox with "Detect" option only
             confirmationContainer.html(`
                 <label class="checkbox-inline">
-                    <input type="checkbox" name="confirmation" value="Salmonella" required> Salmonella
+                    <input type="checkbox" name="confirmation" value="Detect" required> Detect
                 </label>
             `);
         } else {
-            // Unexpected case - log for debugging and default to "Not Salmonella"
-            console.warn(`Unexpected XLD Agar/Chromagar combination: XLD Agar=${xld}, Chromagar=${chromagar}. Defaulting to "Not Salmonella"`);
+            // Unexpected case - log for debugging and default to "Non-detect"
+            console.warn(`Unexpected XLD Agar/Chromagar combination: XLD Agar=${xld}, Chromagar=${chromagar}. Defaulting to "Non-detect"`);
             confirmationContainer.html(`
                 <label class="checkbox-inline">
-                    <input type="checkbox" name="confirmation" value="Not Salmonella" required> Not Salmonella
+                    <input type="checkbox" name="confirmation" value="Non-detect" required> Non-detect
                 </label>
             `);
         }

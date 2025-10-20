@@ -1695,13 +1695,13 @@
                 if (gramLysisValue === 'Positive') {
                     // If Gram-lysis is Positive (Yes)
                     if (oxidaseValue === 'Positive') {
-                        confirmationText = 'Campylobacter';  // Grim=Yes + Oxidase=Yes = Campy
+                        confirmationText = 'Detect';  // Grim=Yes + Oxidase=Yes = Campy
                     } else {
-                        confirmationText = 'Not Campylobacter';  // Grim=Yes + Oxidase=No = Not Campy
+                        confirmationText = 'Non-detect';  // Grim=Yes + Oxidase=No = Not Campy
                     }
                 } else {
                     // If Gram-lysis is Negative (No)
-                    confirmationText = 'Not Campylobacter';  // Grim=No = Always Not Campy
+                    confirmationText = 'Non-detect';  // Grim=No = Always Not Campy
                 }
             } else {
                 // If not all required values are selected, leave confirmation empty

@@ -12,6 +12,10 @@ class Scan_page extends CI_Controller {
         $this->load->view('scan_page/index'); // Ganti 'scan_page' dengan nama file view Anda jika berbeda
     }
 
+    public function supplementary() {
+        $this->load->view('scan_page/supplementary');
+    }
+
     // public function upload()
     // {
     //     // ---------------------------------------------------------------------
@@ -231,8 +235,16 @@ class Scan_page extends CI_Controller {
     public function view_file($filename)
     {
         $filename = basename($filename);
-        // $basePath = '\\\\ad.monash.edu\\shared\\OneWater\\SecBackups\\Data\\Scan\\';
-        $basePath = 'C:\\onewater\\scan\\';
+        
+        // Tentukan path berdasarkan prefix filename
+        if (strpos($filename, 'supplementary_') === 0) {
+            $basePath = 'C:\\onewater\\supplementary\\';
+            $fileType = 'supplementary file';
+        } else {
+            $basePath = 'C:\\onewater\\scan\\';
+            $fileType = 'scan file';
+        }
+        
         $filePath = $basePath . $filename;
 
         if (!file_exists($filePath)) {
@@ -241,8 +253,8 @@ class Scan_page extends CI_Controller {
             log_message('error', 'File not found or inaccessible: ' . $filePath);
 
             $error_message = $folderAccessible
-                ? "The file <b>$filename</b> could not be found."
-                : "Failed to access the file <b>$filename</b>.<br>Please make sure you are connected to the Monash internal network and VPN.";
+                ? "The $fileType <b>$filename</b> could not be found."
+                : "Failed to access the $fileType <b>$filename</b>.<br>Please make sure you are connected to the Monash internal network and VPN.";
 
             echo "<!DOCTYPE html>
                 <html><head><title>File Access Error</title>
@@ -405,6 +417,91 @@ class Scan_page extends CI_Controller {
             return $this->output
                 ->set_content_type('application/json')
                 ->set_output(json_encode(['filename' => $data['file_name']]));
+        }
+    }
+
+    public function do_upload_supplementary()
+    {
+        $upload_path = 'C:\\onewater\\supplementary\\';
+
+        // Ambil project_id dari POST dan validasi
+        $project_id_raw = $this->input->post('project_id', TRUE);
+        $project_id = preg_replace('/[^a-zA-Z0-9_\-]/', '', $project_id_raw); // bersihkan input
+    
+        $filename = 'supplementary_' . ($project_id ?: time()); // pakai project_id, fallback ke time() jika kosong
+    
+        $config['upload_path']   = $upload_path;
+        $config['allowed_types'] = '*';
+        $config['file_name']     = $filename;
+        $config['overwrite']     = FALSE;
+    
+        $this->load->library('upload', $config);
+    
+        if (!$this->upload->do_upload('file')) {
+            $error = $this->upload->display_errors();
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(400)
+                ->set_output(json_encode(['error' => strip_tags($error)]));
+        } else {
+            $data = $this->upload->data();
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode(['filename' => $data['file_name']]));
+        }
+    }
+
+    public function delete_supplementary_file()
+    {
+        // Set headers untuk JSON response
+        header('Content-Type: application/json');
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: POST, DELETE");
+        header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
+        
+        $upload_path = 'C:\\onewater\\supplementary\\';
+        
+        // Ambil filename dari POST request
+        $filename = $this->input->post('filename', TRUE);
+        
+        if (empty($filename)) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Filename is required'
+            ]);
+            return;
+        }
+        
+        // Bersihkan filename untuk security
+        $filename = preg_replace('/[^a-zA-Z0-9_\-\.]/', '', basename($filename));
+        $file_path = $upload_path . $filename;
+        
+        try {
+            // Check if file exists
+            if (file_exists($file_path)) {
+                // Attempt to delete file
+                if (unlink($file_path)) {
+                    echo json_encode([
+                        'success' => true,
+                        'message' => 'Supplementary file deleted successfully'
+                    ]);
+                } else {
+                    echo json_encode([
+                        'success' => false,
+                        'message' => 'Failed to delete supplementary file'
+                    ]);
+                }
+            } else {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Supplementary file not found'
+                ]);
+            }
+        } catch (Exception $e) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Error deleting supplementary file: ' . $e->getMessage()
+            ]);
         }
     }
 

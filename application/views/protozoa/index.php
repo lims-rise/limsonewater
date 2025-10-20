@@ -632,6 +632,7 @@
             // $('#id_one_water_sample_list').show();
             $('#id_one_water_sample').attr('readonly', true);
             $('#id_one_water_sample').val(idOneWaterSampleFromUrl || '');  // Set ID jika ada
+            $('#id_one_water_sample').show();
             $('#idx_one_water_sample').hide();
             $('#protozoa_barcode').val(barcodeFromUrl);
             $('#protozoa_barcode').attr('readonly', true);
@@ -1425,6 +1426,7 @@
             $('#id_one_water_sample').val('');
             $('#id_one_water_sample_list').val('');
             $('#id_one_water_sample').hide();
+            $('#idx_one_water_sample').hide();
             $('#id_one_water_sample_list').show();
             $('#id_person').val('');
             $('#sampletype').attr('readonly', true);
@@ -1458,6 +1460,7 @@
             $('#mode').val('edit');
             $('#modal-title').html('<i class="fa fa-pencil-square-o"></i> Protozoa | Update<span id="my-another-cool-loader"></span>');
             $('#id_one_water_sample').hide();
+            $('#idx_one_water_sample').show();
             $('#idx_one_water_sample').attr('readonly', true);
             $('#idx_one_water_sample').val(data.id_one_water_sample);
             $('#id_protozoa').val(data.id_protozoa);
@@ -1501,7 +1504,15 @@
             $('#date_processed').val(data.date_processed).trigger('change');
             $('#time_processed').val(data.time_processed).trigger('change');
             $('#volume_analysed').val(data.volume_analysed);
-            $('#weight').val(data.weight);
+            // $('#weight').val(data.weight);
+            // Auto fetch weight and dry weight data when modal opens with One Water Sample ID
+            setTimeout(function() {
+                const sampleId = $('#idx_one_water_sample').val();
+                console.log('Edit mode - Sample ID for autoFetch:', sampleId);
+                if (sampleId) {
+                    autoFetchWeightData('#idx_one_water_sample');
+                }
+            }, 200);
             $('#dry_weight_persen').val(data.dry_weight_persen);
             $('#mass_analysed').val(data.mass_analysed);
             // Set quality control checkboxes
