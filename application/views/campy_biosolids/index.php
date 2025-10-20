@@ -1384,27 +1384,79 @@
             oLanguage: {
                 sProcessing: "loading..."
             },
-            // select: true;
             processing: true,
             serverSide: true,
-            ajax: {"url": "Campy_biosolids/json", "type": "POST"},
+            ajax: {
+                "url": "Campy_biosolids/json", 
+                "type": "POST",
+                "error": function(xhr, error, code) {
+                    console.log('DataTables error:', error, code);
+                    console.log('Response:', xhr.responseText);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'DataTable Error',
+                        text: 'Error loading data. Please try refreshing the page.',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            },
             columns: [
-                {"data": "id_one_water_sample"},
-                {"data": "initial"},
-                {"data": "sampletype"},
-                {"data": "number_of_tubes"},
-                {"data": "mpn_pcr_conducted"},
-                {"data": "campy_assay_barcode"},
-                {"data": "date_sample_processed"},
-                {"data": "time_sample_processed"},
-                {"data": "sample_wetweight"},
-                {"data": "dry_weight_persen"},
-                {"data": "sample_dryweight"},
-                {"data": "elution_volume"},
-                {"data": "vol_sampletube"},
+                {
+                    "data": "id_one_water_sample",
+                    "searchable": true
+                },
+                {
+                    "data": "initial",
+                    "searchable": true
+                },
+                {
+                    "data": "sampletype",
+                    "searchable": true
+                },
+                {
+                    "data": "number_of_tubes",
+                    "searchable": true
+                },
+                {
+                    "data": "mpn_pcr_conducted",
+                    "searchable": true
+                },
+                {
+                    "data": "campy_assay_barcode",
+                    "searchable": true
+                },
+                {
+                    "data": "date_sample_processed",
+                    "searchable": true
+                },
+                {
+                    "data": "time_sample_processed",
+                    "searchable": true
+                },
+                {
+                    "data": "sample_wetweight",
+                    "searchable": true
+                },
+                {
+                    "data": "dry_weight_persen",
+                    "searchable": true
+                },
+                {
+                    "data": "sample_dryweight",
+                    "searchable": true
+                },
+                {
+                    "data": "elution_volume",
+                    "searchable": true
+                },
+                {
+                    "data": "vol_sampletube",
+                    "searchable": false // Disable search for GROUP_CONCAT column
+                },
                 {
                     "data" : "action",
                     "orderable": false,
+                    "searchable": false,
                     "className" : "text-center"
                 }
             ],
@@ -1421,15 +1473,17 @@
                 // Highlight baris yang baru saja ditambahkan atau diperbarui
                 api.rows().every(function() {
                     let data = this.data();
-                    let createdDate = new Date(data.date_created);
-                    let updatedDate = new Date(data.date_updated);
-                    let now = new Date();
+                    if (data.date_created && data.date_updated) {
+                        let createdDate = new Date(data.date_created);
+                        let updatedDate = new Date(data.date_updated);
+                        let now = new Date();
 
-                    // Highlight jika baru ditambahkan atau diperbarui dalam 10 detik terakhir
-                    if (now - createdDate < 10 * 1000) {
-                        $(this.node()).addClass('highlight');
-                    } else if (now - updatedDate < 10 * 1000) {
-                        $(this.node()).addClass('highlight-edit');
+                        // Highlight jika baru ditambahkan atau diperbarui dalam 10 detik terakhir
+                        if (now - createdDate < 10 * 1000) {
+                            $(this.node()).addClass('highlight');
+                        } else if (now - updatedDate < 10 * 1000) {
+                            $(this.node()).addClass('highlight-edit');
+                        }
                     }
                 });
                 
