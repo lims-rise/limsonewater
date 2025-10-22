@@ -766,17 +766,17 @@ class Salmonella_pa_model extends CI_Model
         $confirmation = '';
 
         if (!$xld_has_positive && !$chromagar_has_positive) {
-            // XLD (0) + Chromagar (0) = Non-detect
-            $confirmation = 'Non-detect';
+            // XLD (0) + Chromagar (0) = Not detected
+            $confirmation = 'Not detected';
         } else if ($xld_has_positive && !$chromagar_has_positive) {
-            // XLD (1) + Chromagar (0) = Non-detect
-            $confirmation = 'Non-detect';
+            // XLD (1) + Chromagar (0) = Not detected
+            $confirmation = 'Not detected';
         } else if (!$xld_has_positive && $chromagar_has_positive) {
-            // XLD (0) + Chromagar (1) = Non-detect
-            $confirmation = 'Non-detect';
+            // XLD (0) + Chromagar (1) = Not detected
+            $confirmation = 'Not detected';
         } else if ($xld_has_positive && $chromagar_has_positive) {
-            // XLD (1) + Chromagar (1) = Detect
-            $confirmation = 'Detect';
+            // XLD (1) + Chromagar (1) = Detected
+            $confirmation = 'Detected';
         }
 
         // Check if biochemical result already exists for this salmonella_pa

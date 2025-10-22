@@ -1247,7 +1247,7 @@
             const dryWeightPersen = parseFloat($('#dry_weight_persen').val()) || 0;
             
             // Calculate mass_analysed = weight * dry_weight_persen
-            const massAnalysed = weight * dryWeightPersen;
+            const massAnalysed = weight * (dryWeightPersen/100);
             
             // Update the mass_analysed field with calculated value
             // Always show the calculated result, even if it's 0

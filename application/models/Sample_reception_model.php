@@ -1220,7 +1220,7 @@ class Sample_reception_model extends CI_Model
             // 'Enterolert' => 'MPN/100mL',
             'Campylobacter-Biosolids' => 'MPN/g dw',
             // 'Salmonella' => '-',
-            'Moisture_content' => ''
+            'Moisture_content' => '%'
         ];
         
         foreach ($units as $test => $unit) {
