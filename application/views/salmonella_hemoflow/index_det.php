@@ -2,68 +2,74 @@
 	<section class="content">
 		<div class="box box-black box-solid">
 			<div class="box-header with-border">
-				<h3 class="box-title">Processing | Salmonella PA | Details</h3>
+				<h3 class="box-title">Processing | Salmonella Biosolids | Details</h3>
 			</div>
 				<form role="form"  id="formKeg" method="post" class="form-horizontal">
 					<div class="box-body">
-						<input id="id_salmonella_pa" name="id_salmonella_pa" type="hidden" class="form-control input-sm" value="<?php echo $id_salmonella_pa ?>">
+						<!-- <input type="hidden" class="form-control " id="id_req" name="id_req" value="<?php// echo $id_req ?>"> -->
+						<input id="id_salmonella_biosolids" name="id_salmonella_biosolids" type="hidden" class="form-control input-sm" value="<?php echo $id_salmonella_biosolids ?>">
 						<div class="form-group">
 							<label for="id_one_water_sample" class="col-sm-2 control-label">One Water Sample ID</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="id_one_water_sample" name="id_one_water_sample" value="<?php echo $id_one_water_sample ?>"  disabled>
+								<input class="form-control " id="id_one_water_sample" name="id_one_water_sample" value="<?php echo $id_one_water_sample ?? '-' ?>"  disabled>
 							</div>
 
 							<label for="initial" class="col-sm-2 control-label">Lab Tech</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="initial" name="initial" value="<?php echo $initial ?>"  disabled>
+								<input class="form-control " id="initial" name="initial" value="<?php echo $initial ?? '-' ?>"  disabled>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="number_of_tubes" class="col-sm-2 control-label">Number of Assay Tubes</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="number_of_tubes" name="number_of_tubes" value="<?php echo $number_of_tubes ?>"  disabled>
+								<input class="form-control " id="number_of_tubes" name="number_of_tubes" value="<?php echo $number_of_tubes ?? '-' ?>"  disabled>
 							</div>
 
 							<label for="sampletype" class="col-sm-2 control-label">Sample Type</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="sampletype" name="sampletype" value="<?php echo $sampletype ?>"  disabled>
+								<input class="form-control " id="sampletype" name="sampletype" value="<?php echo $sampletype ?? '-' ?>"  disabled>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="mpn_pcr_conducted" class="col-sm-2 control-label">MPN PCR Conducted</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="mpn_pcr_conducted" name="mpn_pcr_conducted" value="<?php echo $mpn_pcr_conducted ?>"  disabled>
+								<input class="form-control " id="mpn_pcr_conducted" name="mpn_pcr_conducted" value="<?php echo $mpn_pcr_conducted ?? '-' ?>"  disabled>
 							</div>
 
 							<label for="salmonella_assay_barcode" class="col-sm-2 control-label">Salmonella Assay Barcode</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="salmonella_assay_barcode" name="salmonella_assay_barcode" value="<?php echo $salmonella_assay_barcode ?>"  disabled>
+								<input class="form-control " id="salmonella_assay_barcode" name="salmonella_assay_barcode" value="<?php echo $salmonella_assay_barcode ?? '-' ?>"  disabled>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="date_sample_processed" class="col-sm-2 control-label">Date Sample</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="date_sample_processed" name="date_sample_processed" value="<?php echo $date_sample_processed ?>" disabled>
+								<input class="form-control " id="date_sample_processed" name="date_sample_processed" value="<?php echo $date_sample_processed ?? '-' ?>" disabled>
 							</div>
 
 							<label for="time_sample_processed" class="col-sm-2 control-label">Time Sample</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="time_sample_processed" name="time_sample_processed" value="<?php echo $time_sample_processed ?>"  disabled>
+								<input class="form-control " id="time_sample_processed" name="time_sample_processed" value="<?php echo $time_sample_processed ?? '-' ?>"  disabled>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label for="sample_wetweight" class="col-sm-2 control-label">Sample Wet Weight</label>
+							<!-- <label for="sample_wetweight" class="col-sm-2 control-label">Sample Wet Weight</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="sample_wetweight" name="sample_wetweight" value="<?php echo $sample_wetweight ?>"  disabled>
+							</div> -->
+
+                            <label for="elution_volume" class="col-sm-2 control-label">Elution Volume</label>
+							<div class="col-sm-4">
+								<input class="form-control " id="elution_volume" name="elution_volume" value="<?php echo $elution_volume ?? '-' ?>"  disabled>
 							</div>
 
-                            <label for="enrichment_media" class="col-sm-2 control-label">Enrichment Media</label>
+                            <label for="enrichment_media" class="col-sm-2 control-label">Enrichment media</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="enrichment_media" name="enrichment_media" value="<?php echo $enrichment_media ?>"  disabled>
+								<input class="form-control " id="enrichment_media" name="enrichment_media" value="<?php echo $enrichment_media ?? '-' ?>"  disabled>
 							</div>
 						</div>
 
@@ -109,16 +115,16 @@
 					</div>
 				</form>
 			<div class="box-footer">
-                    <div class="col-xs-12"> 
+                <div class="col-xs-12"> 
                         <div class="box box-primary box-solid">
                             <div class="box-header">
-                                <h3 class="box-title">Results XLD Agar</h3>
+                                <h3 class="box-title">Results XLD</h3>
                             </div>
 							<div class="box-body pad table-responsive">
 								<?php
 									$lvl = $this->session->userdata('id_user_level');
 									if ($lvl != 4){
-										echo "<button class='btn btn-primary' id='addtombol_detResultsXldAgar'><i class='fa fa-wpforms' aria-hidden='true'></i> New Data</button>";
+										echo "<button class='btn btn-primary' id='addtombol_detResultsXld'><i class='fa fa-wpforms' aria-hidden='true'></i> New Data</button>";
 									}
 								?>
 								<table id="example2" class="table display table-bordered table-striped" width="100%">
@@ -140,9 +146,16 @@
                     <div class="col-xs-12"> 
                         <div class="box box-primary box-solid">
                             <div class="box-header">
-                                <h3 class="box-title">Results Chromagar</h3>
+                                <h3 class="box-title">Results ChroMagar</h3>
                             </div>
 							<div class="box-body pad table-responsive">
+                                <?php if ($this->session->flashdata('auto_chromagar')): ?>
+                                    <div class="alert alert-success alert-dismissible" id="auto-processing-alert" style="margin-bottom: 15px;">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                        <h4><i class="icon fa fa-check"></i> Auto-Processing Complete!</h4>
+                                        <?php echo $this->session->flashdata('auto_chromagar'); ?>
+                                    </div>
+                                <?php endif; ?>
 								<?php
 									$lvl = $this->session->userdata('id_user_level');
 									if ($lvl != 4){
@@ -165,28 +178,6 @@
                         </div>
                     </div>
 
-                    <!-- <div class="col-xs-12"> 
-                        <div class="box box-primary box-solid" role="dialog" aria-hidden="true" data-bs-scrollable="true">
-                            <div class="box-header">
-                                <h3 class="box-title">Results Biochemical</h3>
-                                <div class="box-tools pull-right">
-                                    <?php 
-                                        $lvl = $this->session->userdata('id_user_level');
-                                        if ($lvl != 4): 
-                                    ?>
-                                        <button class="btn btn-success btn-sm" id="autoGenerateBiochemical" title="Auto-generate biochemical results based on XLD and Chromagar">
-                                            <i class="fa fa-magic" aria-hidden="true"></i> Auto-Generate
-                                        </button>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                            <div id="content-result-biochemical">
-
-                            </div>
-                        </div>
-                    </div> -->
-                    
-
                     <div class="col-xs-12">
                         <div class="box box-primary box-solid">
                             <div class="box-header">
@@ -197,8 +188,17 @@
                                     <button class="btn btn-success" id="exportBtn">
                                         <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS
                                     </button>
+                                    <?php
+                                        $lvl = $this->session->userdata('id_user_level');
+                                        if ($lvl != 4){
+                                            echo '<button class="btn btn-primary" id="calculateMpnBtn" style="margin-left: 10px; position: relative;">
+                                                    <i class="fa fa-calculator" aria-hidden="true"></i> Calculate MPN
+                                                    <span id="mpnUpdateBadge" class="badge badge-warning" style="position: absolute; top: -5px; right: -5px; background-color: #ff6b6b; color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 10px; line-height: 20px; display: none;">!</span>
+                                                  </button>';
+                                        }
+                                    ?>
                                 </div>
-                                <input id="id_salmonella_pa" name="id_salmonella_pa" type="hidden" class="form-control input-sm" value="<?php echo $id_salmonella_pa ?>">
+                                <input id="id_salmonella_biosolids" name="id_salmonella_biosolids" type="hidden" class="form-control input-sm" value="<?php echo $id_salmonella_biosolids ?>">
 
                                 <div id="content-final-concentration" class="table-responsive">
                                     <table id="exampleFinalConcentration" class="table display table-bordered table-striped" width="100%">
@@ -213,6 +213,7 @@
                                                 <th>Date Sample Processed</th>
                                                 <th>Time Sample Processed</th>
                                                 <th>Sample Wet Weight</th>
+                                                <th>Elution Volume</th>
                                                 <th>Enrichment Media</th>
                                                 <?php if (!empty($finalConcentration)): ?>
                                                     <?php 
@@ -233,6 +234,9 @@
                                                 <?php else: ?>
                                                     <th colspan="100%" style="text-align: center">No data available</th>
                                                 <?php endif; ?>
+                                                <th>Concentration MPN</th>
+                                                <th>Upper CI</th>
+                                                <th>Lower CI</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -242,14 +246,14 @@
                                                         <td><?= htmlspecialchars($concentration->id_one_water_sample) ?></td>
                                                         <td><?= htmlspecialchars($concentration->salmonella_assay_barcode) ?></td>
                                                         <td><?= htmlspecialchars($concentration->initial) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->sampletype) ?></td>
+                                                        <td><?= htmlspecialchars($concentration->sampletype ?? '-') ?></td>
                                                         <td><?= htmlspecialchars($concentration->number_of_tubes) ?></td>
                                                         <td><?= htmlspecialchars($concentration->mpn_pcr_conducted) ?></td>
                                                         <td><?= htmlspecialchars($concentration->date_sample_processed) ?></td>
                                                         <td><?= htmlspecialchars($concentration->time_sample_processed) ?></td>
                                                         <td><?= htmlspecialchars($concentration->sample_wetweight) ?></td>
+                                                        <td><?= htmlspecialchars($concentration->elution_volume) ?></td>
                                                         <td><?= htmlspecialchars($concentration->enrichment_media) ?></td>
-
                                                         <?php 
                                                         // Tube volumes
                                                         foreach ($concentration as $key => $value): 
@@ -277,7 +281,9 @@
                                                         ?>
                                                             <td><?= htmlspecialchars($confirmation_value) ?></td>
                                                         <?php endforeach; ?>
-
+                                                        <td><?= htmlspecialchars($concentration->mpn_concentration) ?></td>
+                                                        <td><?= htmlspecialchars($concentration->upper_ci) ?></td>
+                                                        <td><?= htmlspecialchars($concentration->lower_ci) ?></td>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             <?php else: ?>
@@ -295,7 +301,7 @@
 
 				<div class="form-group">
 					<div class="modal-footer clearfix">
-						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('Salmonella_pa'); ?>';">
+						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('salmonella_biosolids'); ?>';">
 							<i class="fa fa-times"></i> Close
 						</button>
 					</div>
@@ -305,24 +311,24 @@
 	</section>
 </div>
 
-<!-- MODAL FORM Results XldAgar -->
+<!-- MODAL FORM Results XLD -->
         <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true" data-bs-scrollable="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color: #3c8dbc; color: white;">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
-                        <h4 class="modal-title" id="modal-title-detail">
+                        <h4 class="modal-title" id="modal-title-Xld">
 							<span id="my-another-cool-loader"></span></h4>
                     </div>
-                        <form id="formDetail24" action=<?php echo site_url('Salmonella_pa/saveResultsXldAgar') ?> method="post" class="form-horizontal">
+                        <form id="formDetail24" action=<?php echo site_url('Salmonella_biosolids/saveResultsXld') ?> method="post" class="form-horizontal">
                             <div class="modal-body">
                                 <div class="form-group">
                                         <div class="col-sm-9">
-                                            <input id="mode_detResultsXldAgar" name="mode_detResultsXldAgar" type="hidden" class="form-control input-sm">
-                                            <input id="id_salmonella_pa1" name="id_salmonella_pa1" type="hidden" class="form-control input-sm">
+                                            <input id="mode_detResultsXld" name="mode_detResultsXld" type="hidden" class="form-control input-sm">
+                                            <input id="id_salmonella_biosolids1" name="id_salmonella_biosolids1" type="hidden" class="form-control input-sm">
                                             <input id="number_of_tubes1" name="number_of_tubes1" type="hidden" class="form-control input-sm">
-                                            <input id="id_result_xld_agar_pa" name="id_result_xld_agar_pa" type="hidden" class="form-control input-sm">
-                                            <input id="idXldAgar_one_water_sample" name="idXldAgar_one_water_sample" type="hidden" class="form-control input-sm">
+                                            <input id="id_result_xld" name="id_result_xld" type="hidden" class="form-control input-sm">
+                                            <input id="idXld_one_water_sample" name="idXld_one_water_sample" type="hidden" class="form-control input-sm">
                                         </div>
                                     </div>
 
@@ -353,13 +359,13 @@
                                         </div>
                                     </div>
 
-                                    <!-- <div class="form-group" id="growth_plate">
-                                        <label class="col-sm-4 control-label">Growth Plate</label>
-                                        <div class="col-sm-8" id="growthPlateInputs">
+                                    <!-- <div class="form-group" id="purple_colony_plate">
+                                        <label class="col-sm-4 control-label"> Purple Colony Plate</label>
+                                        <div class="col-sm-8" id="purpleColonyPlateInputs">
                                         </div>
                                     </div> -->
 
-                                    <div class="form-group" id="black_colony_plate_xld_agar">
+                                    <div class="form-group" id="black_colony_plate_chromagar">
                                         <label class="col-sm-4 control-label">Black Colony Plate</label>
                                         <div class="col-sm-8" id="blackColonyPlateInputs">
                                             <!-- Radio buttons akan dihasilkan di sini -->
@@ -371,13 +377,12 @@
                                         <div class="col-sm-8">
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" id="quality_control" name="quality_control" value="1">
+                                                    <input type="checkbox" id="quality_control_xld" name="quality_control_xld" value="1">
                                                     <strong>Pass</strong> <span class="text-muted">(Check if quality control passed)</span>
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
-
 
                             </div>
                             <div class="modal-footer clearfix">
@@ -389,8 +394,8 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-<!-- MODAL FORM Results Chromagar -->
-<div class="modal fade" id="compose-modalChromagar" tabindex="-1" role="dialog" aria-hidden="true" data-bs-scrollable="true">
+<!-- MODAL FORM Results CHROMagar -->
+<div class="modal fade" id="compose-modalChroMagar" tabindex="-1" role="dialog" aria-hidden="true" data-bs-scrollable="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color: #3c8dbc; color: white;">
@@ -398,14 +403,14 @@
                         <h4 class="modal-title" id="modal-title-Chromagar">
 							<span id="my-another-cool-loader"></span></h4>
                     </div>
-                        <form id="formDetail24" action=<?php echo site_url('Salmonella_pa/saveResultsChromagar') ?> method="post" class="form-horizontal">
+                        <form id="formDetail24" action=<?php echo site_url('Salmonella_biosolids/saveResultsChromagar') ?> method="post" class="form-horizontal">
                             <div class="modal-body">
                                 <div class="form-group">
                                         <div class="col-sm-9">
                                             <input id="mode_detResultsChromagar" name="mode_detResultsChromagar" type="hidden" class="form-control input-sm">
-                                            <input id="id_salmonella_paChromagar" name="id_salmonella_paChromagar" type="hidden" class="form-control input-sm">
+                                            <input id="id_salmonella_biosolidsChromagar" name="id_salmonella_biosolidsChromagar" type="hidden" class="form-control input-sm">
                                             <input id="number_of_tubesChromagar" name="number_of_tubesChromagar" type="hidden" class="form-control input-sm">
-                                            <input id="id_result_chromagar_pa" name="id_result_chromagar_pa" type="hidden" class="form-control input-sm">
+                                            <input id="id_result_chromagar" name="id_result_chromagar" type="hidden" class="form-control input-sm">
                                             <input id="idChromagar_one_water_sample" name="idChromagar_one_water_sample" type="hidden" class="form-control input-sm">
                                         </div>
                                     </div>
@@ -437,13 +442,13 @@
                                         </div>
                                     </div>
 
-                                    <!-- <div class="form-group" id="growth_plateChromagar">
-                                        <label class="col-sm-4 control-label">Growth Plate</label>
-                                        <div class="col-sm-8" id="growthPlateInputsChromagar">
+                                    <!-- <div class="form-group" id="black_colony_plate_chromagar">
+                                        <label class="col-sm-4 control-label">Black Colony Plate</label>
+                                        <div class="col-sm-8" id="blackColonyPlateInputsChromagar">
                                         </div>
                                     </div> -->
 
-                                    <div class="form-group" id="purple_colony_plate_chromagar">
+                                    <div class="form-group" id="purple_colony_plate">
                                         <label class="col-sm-4 control-label"> Purple Colony Plate</label>
                                         <div class="col-sm-8" id="purpleColonyPlateInputs">
                                             <!-- Radio buttons akan dihasilkan di sini -->
@@ -465,7 +470,6 @@
                                         </div>
                                     </div>
 
-
                             </div>
                             <div class="modal-footer clearfix">
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
@@ -483,32 +487,158 @@
         <div class="modal-content">
             <div class="modal-header" style="background-color: #3c8dbc; color: white;">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
-                <h4 class="modal-title" id="modal-title-biochemical">Biochemical Tube | New</h4>
+                <h4 class="modal-title" id="modal-title-biochemical">Tube | New</h4>
             </div>
-            <form id="formBiochemical" action="<?php echo site_url('Salmonella_pa/saveBiochemical') ?>" method="post" class="form-horizontal">
+            <form id="formBiochemical" action="<?php echo site_url('Salmonella_biosolids/saveBiochemical') ?>" method="post" class="form-horizontal">
                 <div class="modal-body">
                     <input id="mode_detResultsBiochemical" name="mode_detResultsBiochemical" type="hidden" class="form-control input-sm">
-                    <input id="id_salmonella_paBiochemical" name="id_salmonella_paBiochemical" type="hidden" class="form-control input-sm">
+                    <input id="id_salmonella_biosolidsBiochemical" name="id_salmonella_biosolidsBiochemical" type="hidden" class="form-control input-sm">
                     <input id="id_result_biochemical" name="id_result_biochemical" type="hidden" class="form-control input-sm">
                     <input id="biochemical_tube" name="biochemical_tube" type="hidden" class="form-control input-sm">
-                    <input id="id_result_chromagar_pa1" name="id_result_chromagar_pa1" type="hidden" class="form-control input-sm">
+                    <input id="id_result_chromagar1" name="id_result_chromagar1" type="hidden" class="form-control input-sm">
                     <input id="idBiochemical_one_water_sample" name="idBiochemical_one_water_sample" type="hidden" class="form-control input-sm">
+                    
 
-                    <!-- Hidden inputs for auto-calculated values -->
-
-                    <!-- Confirmation (Auto-calculated) -->
-                    <div class="form-group">
-                        <label for="confirmation" class="col-sm-4 control-label">Confirmation <small class="text-muted">(Auto-calculated)</small></label>
+                    <!-- Oxidase Result -->
+                    <!-- <div class="form-group">
+                        <label class="col-sm-4 control-label">Oxidase Result</label>
                         <div class="col-sm-8">
-                            <input id="confirmation" name="confirmation" type="text" class="form-control" placeholder="Will be calculated automatically" readonly>
-                            <small class="text-info">
-                                <i class="fa fa-info-circle"></i> Value automatically determined from XLD and Chromagar results
-                            </small>
+                            <label class="radio-inline">
+                                <input type="radio" name="oxidase"  value="Positive" required> Positive
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="oxidase"  value="Negative"> Negative
+                            </label>
+                        </div>
+                    </div> -->
+
+                    <!-- Catalase Result -->
+                    <!-- <div class="form-group">
+                        <label class="col-sm-4 control-label">Catalase Result</label>
+                        <div class="col-sm-8">
+                            <label class="radio-inline">
+                                <input type="radio" name="catalase"  value="Positive" required> Positive
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="catalase" value="Negative"> Negative
+                            </label>
+                        </div>
+                    </div> -->
+
+                    <!-- Confirmation -->
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Confirmation</label>
+                        <div class="col-sm-8" id="confirmation-options">
+                            <!-- Dynamic content will be inserted here based on XLD and Chromagar values -->
                         </div>
                     </div>
 
+                    <!-- Sample Store in Biobank -->
+                    <!-- <div class="form-group">
+                        <label for="sample_store" class="col-sm-4 control-label">Sample Store in Biobank</label>
+                        <div class="col-sm-8">
+                            <select id="sample_store" name="sample_store" class="form-control" required>
+                                <option value="" disabled selected>-- Select --</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div> -->
+
                 </div>
                 <div class="modal-footer clearfix">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- MODAL FORM Calculate MPN -->
+<div class="modal fade" id="compose-modalCalculateMPN" tabindex="-1" role="dialog" aria-hidden="true" data-bs-scrollable="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #3c8dbc; color: white;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
+                <h4 class="modal-title" id="modal-title-calculate-mpn">Calculate MPN | New</h4>
+            </div>
+            <form id="formCalculateMPN" action="<?php echo site_url('Salmonella_biosolids/saveCalculateMPN') ?>" method="post" class="form-horizontal">
+                <div class="modal-body">
+                    <input id="mode_calculateMPN" name="mode_calculateMPN" type="hidden" class="form-control input-sm">
+                    <input id="id_salmonella_biosolids_mpn" name="id_salmonella_biosolids_mpn" type="hidden" class="form-control input-sm">
+                    <input id="id_salmonella_result_mpn_biosolids" name="id_salmonella_result_mpn_biosolids" type="hidden" class="form-control input-sm">
+                    <!-- <input id="current_sample_dryweight" name="current_sample_dryweight" type="hidden" class="form-control input-sm"> -->
+
+                    <!-- MPN Concentration -->
+                    <div class="form-group">
+                        <label for="mpn_concentration" class="col-sm-4 control-label">MPN Concentration</label>
+                        <div class="col-sm-8">
+                            <input id="mpn_concentration" name="mpn_concentration" type="text" class="form-control" placeholder="Enter MPN concentration" required>
+                        </div>
+                    </div>
+
+                    <!-- Upper CI -->
+                    <div class="form-group">
+                        <label for="upper_ci" class="col-sm-4 control-label">Upper CI</label>
+                        <div class="col-sm-8">
+                            <input id="upper_ci" name="upper_ci" type="text" class="form-control" placeholder="Enter upper confidence interval" required>
+                        </div>
+                    </div>
+
+                    <!-- Lower CI -->
+                    <div class="form-group">
+                        <label for="lower_ci" class="col-sm-4 control-label">Lower CI</label>
+                        <div class="col-sm-8">
+                            <input id="lower_ci" name="lower_ci" type="text" class="form-control" placeholder="Enter lower confidence interval" required>
+                        </div>
+                    </div>
+
+                    <!-- Concentration MPN/g dry weight -->
+                    <!-- <div class="form-group">
+                        <label class="col-sm-4 control-label">Auto-calculated Results</label>
+                        <div class="col-sm-8">
+                            <input id="mpn_concentration_dw" name="mpn_concentration_dw" type="hidden">
+                            <input id="upper_ci_dw" name="upper_ci_dw" type="hidden">
+                            <input id="lower_ci_dw" name="lower_ci_dw" type="hidden">
+                            
+                            <div class="auto-calc-cards">
+                                <div class="calc-card calc-card-full">
+                                    <div class="calc-card-header">
+                                        <i class="fa fa-calculator text-primary"></i>
+                                        <span class="calc-title">Concentration MPN/g dry weight</span>
+                                    </div>
+                                    <div class="calc-card-body">
+                                        <span id="display_mpn_concentration_dw" class="calc-value">-</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="calc-card-row">
+                                    <div class="calc-card calc-card-half">
+                                        <div class="calc-card-header">
+                                            <i class="fa fa-arrow-up text-success"></i>
+                                            <span class="calc-title">Upper CI MPN/g dw</span>
+                                        </div>
+                                        <div class="calc-card-body">
+                                            <span id="display_upper_ci_dw" class="calc-value">-</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="calc-card calc-card-half">
+                                        <div class="calc-card-header">
+                                            <i class="fa fa-arrow-down text-warning"></i>
+                                            <span class="calc-title">Lower CI MPN/g dw</span>
+                                        </div>
+                                        <div class="calc-card-body">
+                                            <span id="display_lower_ci_dw" class="calc-value">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="modal-footer clearfix" style="display: flex; align-items: center; justify-content: flex-end; gap: 10px; padding: 15px 20px; border-top: 1px solid #dee2e6; background-color: #f8f9fa;">
                     <button type="submit" class="btn btn-primary" style="min-width: 100px; padding: 8px 16px; font-weight: 500; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,123,255,0.2); transition: all 0.3s ease;">
                         <i class="fa fa-save" style="margin-right: 6px;"></i> Save
                     </button>
@@ -523,15 +653,13 @@
 
 
 
-
-
 <!-- MODAL INFORMATION -->
 <div class="modal fade" id="confirm-modal" role="dialog" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header" style="background-color: #f39c12; color: white;">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
-					<h4 class="modal-title">Salmonella PA | Information</h4>
+					<h4 class="modal-title">Salmonella Biosolids | Information</h4>
 				</div>
                 <div id="confirmation-content">
                     <div class="modal-body">
@@ -570,6 +698,44 @@
 </div><!-- /.modal -->
 
 <style>
+
+        /* Accept All Tubes Button Styling */
+    #acceptAllTubesBtn {
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    #acceptAllTubesBtn:disabled {
+        background-color: #6c757d !important;
+        border-color: #6c757d !important;
+        color: #fff !important;
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    #acceptAllTubesBtn.btn-success {
+        background-color: #28a745 !important;
+        border-color: #28a745 !important;
+        color: #fff !important;
+    }
+
+    #acceptAllTubesBtn.btn-success:hover:not(:disabled) {
+        background-color: #218838 !important;
+        border-color: #1e7e34 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(40,167,69,0.3) !important;
+    }
+
+    .badge-warning {
+        animation: pulse-badge 1.5s infinite;
+    }
+
+    @keyframes pulse-badge {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
 
     #review_label {
         cursor: pointer;
@@ -623,6 +789,31 @@
     .modal-body {
     max-height: 80vh;
     overflow-y: auto;
+    }
+
+    /* Styling for confirmation options */
+    .checkbox-inline {
+        display: inline-block;
+        margin-bottom: 0;
+        margin-right: 15px;
+        font-weight: normal;
+        cursor: pointer;
+    }
+
+    .checkbox-inline input[type="checkbox"] {
+        margin-right: 5px;
+    }
+
+    .radio-inline {
+        display: inline-block;
+        margin-bottom: 0;
+        margin-right: 15px;
+        font-weight: normal;
+        cursor: pointer;
+    }
+
+    .radio-inline input[type="radio"] {
+        margin-right: 5px;
     }
 
     .badge {
@@ -1045,40 +1236,6 @@
     .swal2-html-container strong {
         font-weight: 600;
     }
-
-    /* Styling for MPN concentration field with symbol values */
-    .has-symbol-value {
-        border-left: 3px solid #28a745 !important;
-        background-color: rgba(40, 167, 69, 0.05) !important;
-    }
-
-    .symbol-feedback {
-        background-color: rgba(40, 167, 69, 0.1);
-        border: 1px solid rgba(40, 167, 69, 0.3);
-        border-radius: 4px;
-        padding: 5px 8px;
-        margin-top: 3px;
-    }
-
-    .symbol-feedback i {
-        margin-right: 4px;
-    }
-
-    /* Auto-generated Chromagar Results Visual Indicator */
-    .auto-generated-chromagar {
-        background-color: rgba(40, 167, 69, 0.1) !important;
-        border-left: 4px solid #28a745 !important;
-        position: relative;
-    }
-
-    .auto-generated-chromagar td:first-child {
-        padding-left: 25px !important;
-    }
-
-    .auto-generated-chromagar:hover {
-        background-color: rgba(40, 167, 69, 0.2) !important;
-        cursor: help;
-    }
 </style>
 <style>
 	#textInform2 .alert {
@@ -1086,15 +1243,6 @@
         margin-top: 20px;
         font-size: 16px;
         z-index: 1000; /* Pastikan info card di atas elemen lain */
-    }
-
-    /* SweetAlert custom styling for wider modal */
-    .swal-wide {
-        width: 600px !important;
-    }
-    
-    .swal-wide .swal2-html-container {
-        text-align: left !important;
     }
 
     .badge1 {
@@ -1118,18 +1266,440 @@
         color: #b91c1c;
     }
 </style>
-
 <!-- SweetAlert2 CSS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+<script>
+    // Auto-hide alert after 5 seconds
+    setTimeout(function() {
+        $('#auto-processing-alert').fadeOut('slow');
+    }, 3500);
+</script>
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
 <script>
     document.getElementById('exportBtn').addEventListener('click', function() {
-        let id_salmonella_pa = document.getElementById('id_salmonella_pa').value;
-        window.location.href = '<?php echo site_url('Salmonella_pa/excel') ?>/' + id_salmonella_pa;
+        let id_salmonella_biosolids = document.getElementById('id_salmonella_biosolids').value;
+        window.location.href = '<?php echo site_url('Salmonella_biosolids/excel') ?>/' + id_salmonella_biosolids;
     });
+</script>
+<script>
+    // Calculate MPN button click handler
+    document.getElementById('calculateMpnBtn').addEventListener('click', function() {
+        let id_salmonella_biosolids = document.getElementById('id_salmonella_biosolids').value;
+
+        // Validate sample_dryweight before proceeding
+        // let sampleDryweight = document.getElementById('sample_dryweight').value;
+        
+        // Check if sample_dryweight is empty or equals 0
+        // if (!sampleDryweight || sampleDryweight.trim() === '' || parseFloat(sampleDryweight) === 0) {
+        //     Swal.fire({
+        //         title: 'Sample Dry Weight Data is Empty!',
+        //         html: `
+        //             <div style="text-align: left; margin-top: 15px;">
+        //                 <p><i class="fa fa-exclamation-triangle" style="color: #f39c12; margin-right: 8px;"></i><strong>Sample Dry Weight is still empty or equals 0.</strong></p>
+        //                 <p style="margin-top: 10px;">Please fill in the <strong>Sample Dry Weight</strong> data first to perform MPN calculation.</p>
+        //                 <hr style="margin: 15px 0;">
+        //                 <p style="font-size: 13px; color: #666;"><i class="fa fa-info-circle" style="color: #3498db; margin-right: 5px;"></i>Sample Dry Weight data is required to calculate <strong>MPN/g Dry Weight</strong>.</p>
+        //             </div>
+        //         `,
+        //         icon: 'warning',
+        //         confirmButtonText: '<i class="fa fa-check"></i> Understood',
+        //         confirmButtonColor: '#f39c12',
+        //         customClass: {
+        //             popup: 'swal-wide'
+        //         }
+        //     });
+        //     return; // Stop execution if sample_dryweight is empty
+        // }
+
+        // Set the id_salmonella_biosolids value in the modal
+        document.getElementById('id_salmonella_biosolids_mpn').value = id_salmonella_biosolids;
+
+        // Check if MPN calculation already exists
+        $.ajax({
+            url: '<?php echo site_url('Salmonella_biosolids/getCalculateMPN'); ?>',
+            type: 'GET',
+            data: { id_salmonella_biosolids: id_salmonella_biosolids },
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'success') {
+                    // Data exists, set to edit mode
+                    document.getElementById('mode_calculateMPN').value = 'edit';
+                    document.getElementById('id_salmonella_result_mpn_biosolids').value = response.data.id_salmonella_result_mpn_biosolids;
+                    document.getElementById('mpn_concentration').value = response.data.mpn_concentration;
+                    document.getElementById('upper_ci').value = response.data.upper_ci;
+                    document.getElementById('lower_ci').value = response.data.lower_ci;
+                    // document.getElementById('mpn_concentration_dw').value = response.data.mpn_concentration_dw || '';
+                    // document.getElementById('upper_ci_dw').value = response.data.upper_ci_dw || '';
+                    // document.getElementById('lower_ci_dw').value = response.data.lower_ci_dw || '';
+                    
+                    // Update modal title
+                    document.getElementById('modal-title-calculate-mpn').innerHTML = 'Calculate MPN | Edit';
+                } else {
+                    // No data exists, set to insert mode
+                    document.getElementById('mode_calculateMPN').value = 'insert';
+                    document.getElementById('id_salmonella_result_mpn_biosolids').value = '';
+                    document.getElementById('mpn_concentration').value = '';
+                    document.getElementById('upper_ci').value = '';
+                    document.getElementById('lower_ci').value = '';
+                    // document.getElementById('mpn_concentration_dw').value = '';
+                    // document.getElementById('upper_ci_dw').value = '';
+                    // document.getElementById('lower_ci_dw').value = '';
+                    
+                    // Update modal title
+                    document.getElementById('modal-title-calculate-mpn').innerHTML = 'Calculate MPN | New';
+                }
+                
+                // Show the modal
+                $('#compose-modalCalculateMPN').modal('show');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error checking MPN calculation:', error);
+                
+                // On error, default to insert mode
+                document.getElementById('mode_calculateMPN').value = 'insert';
+                document.getElementById('id_salmonella_result_mpn_biosolids').value = '';
+                document.getElementById('mpn_concentration').value = '';
+                document.getElementById('upper_ci').value = '';
+                document.getElementById('lower_ci').value = '';
+                // document.getElementById('mpn_concentration_dw').value = '';
+                // document.getElementById('upper_ci_dw').value = '';
+                // document.getElementById('lower_ci_dw').value = '';
+                document.getElementById('modal-title-calculate-mpn').innerHTML = 'Calculate MPN | New';
+                
+                // Show the modal
+                $('#compose-modalCalculateMPN').modal('show');
+            }
+        });
+    });
+</script>
+<script>
+    // Accept All Tubes functionality removed - auto-processing implemented
+    // document.getElementById('acceptAllTubesBtn').addEventListener('click', function() {
+    // Auto-processing: Biochemical results are generated automatically after ChroMagar save
+    // console.log('Accept All Tubes button functionality replaced with auto-processing');
+    //             html: `
+    //                 <div style="text-align: left; margin-top: 15px;">
+    //                     <p><i class="fa fa-exclamation-triangle" style="color: #f39c12; margin-right: 8px;"></i><strong>XLD or Chromagar data is missing.</strong></p>
+    //                     <p style="margin-top: 10px;">Please complete both <strong>Results XLD</strong> and <strong>Results Chromagar</strong> data first.</p>
+    //                 </div>
+    //             `,
+    //             icon: 'warning',
+    //             confirmButtonText: '<i class="fa fa-check"></i> Understood',
+    //             confirmButtonColor: '#f39c12'
+    //         });
+    //         return;
+    //     }
+
+        // Get arrays from the data
+    //     const purpleColonyPlateArray = dataChromagar.purple_colony_plate.split(', ');
+    //     const plateNumberArray = dataChromagar.plate_number.split(', ');
+    //     const blackColonyPlateArray = dataXld.black_colony_plate.split(', ');
+
+    //     // Prepare confirmation dialog
+    //     let tubeDetails = '';
+    //     let totalTubes = plateNumberArray.length;
+    //     let salmonellaTubes = 0;
+    //     let notSalmonellaTubes = 0;
+
+    //     for (let i = 0; i < totalTubes; i++) {
+    //         const tubeNumber = plateNumberArray[i];
+    //         const xldValue = blackColonyPlateArray[i] || '0';
+    //         const chromagarValue = purpleColonyPlateArray[i] || '0';
+            
+    //         let confirmation = '';
+    //         if ((parseInt(xldValue) === 0 && parseInt(chromagarValue) === 0) || 
+    //             (parseInt(xldValue) === 1 && parseInt(chromagarValue) === 0) || (parseInt(xldValue) === 0 && parseInt(chromagarValue) === 1)) {
+    //             confirmation = 'Not Salmonella';
+    //             notSalmonellaTubes++;
+    //         } else if (parseInt(xldValue) === 1 && parseInt(chromagarValue) === 1) {
+    //             confirmation = 'Salmonella';
+    //             salmonellaTubes++;
+    //         }
+            
+    //         tubeDetails += `<tr>
+    //             <td style="text-align: center;">Tube ${tubeNumber}</td>
+    //             <td style="text-align: center;">XLD: ${xldValue}, Chromagar: ${chromagarValue}</td>
+    //             <td style="text-align: center;"><span class="badge ${confirmation === 'Not Salmonella' ? 'badge-danger' : 'badge-success'}">${confirmation}</span></td>
+    //         </tr>`;
+    //     }
+
+    //     Swal.fire({
+    //         title: 'Accept All Tubes?',
+    //         html: `
+    //             <div style="text-align: left; margin-top: 15px;">
+    //                 <p><i class="fa fa-info-circle" style="color: #3498db; margin-right: 8px;"></i><strong>You are about to process ${totalTubes} tubes automatically:</strong></p>
+    //                 <div style="margin: 15px 0;">
+    //                     <span class="badge badge-success" style="margin-right: 10px;">${salmonellaTubes} Salmonella</span>
+    //                     <span class="badge badge-danger">${notSalmonellaTubes} Not Salmonella</span>
+    //                 </div>
+                    
+    //                 <div style="max-height: 300px; overflow-y: auto; margin-top: 15px;">
+    //                     <table class="table table-bordered table-sm">
+    //                         <thead>
+    //                             <tr style="background-color: #f5f5f5;">
+    //                                 <th style="text-align: center;">Tube</th>
+    //                                 <th style="text-align: center;">Values</th>
+    //                                 <th style="text-align: center;">Result</th>
+    //                             </tr>
+    //                         </thead>
+    //                         <tbody>
+    //                             ${tubeDetails}
+    //                         </tbody>
+    //                     </table>
+    //                 </div>
+                    
+    //                 <hr style="margin: 15px 0;">
+    //                 <p style="font-size: 13px; color: #666;"><i class="fa fa-warning" style="color: #f39c12; margin-right: 5px;"></i>This action will create biochemical results for all tubes that don't already have data.</p>
+    //             </div>
+    //         `,
+    //         icon: 'question',
+    //         showCancelButton: true,
+    //         confirmButtonText: '<i class="fa fa-check"></i> Accept All Tubes',
+    //         cancelButtonText: '<i class="fa fa-times"></i> Cancel',
+    //         confirmButtonColor: '#28a745',
+    //         cancelButtonColor: '#6c757d',
+    //         customClass: {
+    //             popup: 'swal-wide'
+    //         }
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             // Auto-processing: No manual batch processing needed
+    //             // Biochemical results are automatically generated after ChroMagar save
+    //             console.log('Auto-processing workflow - no manual tube processing required');
+    //             // processBatchTubes(dataChromagar, dataXld); // Commented out - auto-processing handles this
+    //         }
+    //     });
+    // });
+
+    // Function to process all tubes in batch
+    function processBatchTubes(dataChromagar, dataXld) {
+        const purpleColonyPlateArray = dataChromagar.purple_colony_plate.split(', ');
+        const plateNumberArray = dataChromagar.plate_number.split(', ');
+        const blackColonyPlateArray = dataXld.black_colony_plate.split(', ');
+        
+        let processedCount = 0;
+        let totalTubes = plateNumberArray.length;
+        let successCount = 0;
+        let errorCount = 0;
+        let skippedCount = 0;
+        let updatedCount = 0;
+        let errorDetails = [];
+
+        // Show progress
+        Swal.fire({
+            title: 'Processing Tubes...',
+            html: `<div id="progressText">Processing tube 1 of ${totalTubes}...</div>`,
+            icon: 'info',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        // Process each tube
+        plateNumberArray.forEach((tubeNumber, index) => {
+            const xldValue = blackColonyPlateArray[index] || '0';
+            const chromagarValue = purpleColonyPlateArray[index] || '0';
+            
+            let confirmation = '';
+            if ((parseInt(xldValue) === 0 && parseInt(chromagarValue) === 0) || 
+                (parseInt(xldValue) === 1 && parseInt(chromagarValue) === 0) || (parseInt(xldValue) === 0 && parseInt(chromagarValue) === 1)) {
+                confirmation = 'Not Salmonella';
+            } else if (parseInt(xldValue) === 1 && parseInt(chromagarValue) === 1) {
+                confirmation = 'Salmonella';
+            }
+
+            // Update progress
+            document.getElementById('progressText').innerHTML = `Processing tube ${index + 1} of ${totalTubes}... (Tube ${tubeNumber})`;
+
+            // Check if tube needs update instead of just checking existence
+            $.ajax({
+                url: '<?php echo site_url('Salmonella_biosolids/checkTubeNeedsUpdate'); ?>',
+                type: 'POST',
+                data: {
+                    id_salmonella_biosolids: id_salmonella_biosolids,
+                    biochemical_tube: tubeNumber,
+                    expected_confirmation: confirmation
+                },
+                dataType: 'json',
+                async: false, // Process synchronously for better progress tracking
+                success: function(checkResponse) {
+                    if (checkResponse.exists && !checkResponse.needs_update) {
+                        // Tube exists and confirmation is already correct, skip
+                        skippedCount++;
+                        processedCount++;
+                        console.log(`Tube ${tubeNumber} already has correct data (${checkResponse.current_confirmation}), skipped`);
+                    } else if (checkResponse.exists && checkResponse.needs_update) {
+                        // Tube exists but needs update
+                        console.log(`Tube ${tubeNumber} needs update: ${checkResponse.current_confirmation} → ${confirmation}`);
+                        
+                        $.ajax({
+                            url: '<?php echo site_url('Salmonella_biosolids/saveBiochemical'); ?>',
+                            type: 'POST',
+                            data: {
+                                mode_detResultsBiochemical: 'edit',
+                                id_result_biochemical: checkResponse.id_result_biochemical,
+                                idBiochemical_one_water_sample: idx_one_water_sample,
+                                id_salmonella_biosolidsBiochemical: id_salmonella_biosolids,
+                                id_result_chromagar1: dataChromagar.id_result_chromagar,
+                                biochemical_tube: tubeNumber,
+                                confirmation: confirmation
+                            },
+                            dataType: 'json',
+                            async: false,
+                            success: function(saveResponse) {
+                                console.log(`Update response for tube ${tubeNumber}:`, saveResponse);
+                                
+                                if (typeof saveResponse === 'object' && saveResponse !== null) {
+                                    if (saveResponse.status === 'success') {
+                                        updatedCount++;
+                                        console.log(`Tube ${tubeNumber} updated successfully`);
+                                    } else {
+                                        errorCount++;
+                                        errorDetails.push(`Tube ${tubeNumber} (update): ${saveResponse.message || 'Unknown error'}`);
+                                        console.error(`Error updating tube ${tubeNumber}:`, saveResponse.message);
+                                    }
+                                } else {
+                                    errorCount++;
+                                    errorDetails.push(`Tube ${tubeNumber} (update): Invalid server response (not JSON)`);
+                                    console.error(`Invalid update response for tube ${tubeNumber}:`, saveResponse);
+                                }
+                                processedCount++;
+                            },
+                            error: function(xhr, status, error) {
+                                errorCount++;
+                                errorDetails.push(`Tube ${tubeNumber} (update): AJAX error - ${error}`);
+                                console.error(`AJAX error updating tube ${tubeNumber}:`, xhr.responseText);
+                                processedCount++;
+                            }
+                        });
+                    } else {
+                        // Tube doesn't exist, create new
+                        console.log(`Tube ${tubeNumber} doesn't exist, creating new with: ${confirmation}`);
+                        
+                        $.ajax({
+                            url: '<?php echo site_url('Salmonella_biosolids/saveBiochemical'); ?>',
+                            type: 'POST',
+                            data: {
+                                mode_detResultsBiochemical: 'insert',
+                                idBiochemical_one_water_sample: idx_one_water_sample,
+                                id_salmonella_biosolidsBiochemical: id_salmonella_biosolids,
+                                id_result_chromagar1: dataChromagar.id_result_chromagar,
+                                biochemical_tube: tubeNumber,
+                                confirmation: confirmation
+                            },
+                            dataType: 'json',
+                            async: false,
+                            success: function(saveResponse) {
+                                console.log(`Insert response for tube ${tubeNumber}:`, saveResponse);
+                                
+                                if (typeof saveResponse === 'object' && saveResponse !== null) {
+                                    if (saveResponse.status === 'success') {
+                                        successCount++;
+                                        console.log(`Tube ${tubeNumber} created successfully`);
+                                    } else {
+                                        errorCount++;
+                                        errorDetails.push(`Tube ${tubeNumber} (insert): ${saveResponse.message || 'Unknown error'}`);
+                                        console.error(`Error creating tube ${tubeNumber}:`, saveResponse.message);
+                                    }
+                                } else {
+                                    errorCount++;
+                                    errorDetails.push(`Tube ${tubeNumber} (insert): Invalid server response (not JSON)`);
+                                    console.error(`Invalid insert response for tube ${tubeNumber}:`, saveResponse);
+                                }
+                                processedCount++;
+                            },
+                            error: function(xhr, status, error) {
+                                errorCount++;
+                                errorDetails.push(`Tube ${tubeNumber} (insert): AJAX error - ${error}`);
+                                console.error(`AJAX error creating tube ${tubeNumber}:`, xhr.responseText);
+                                processedCount++;
+                            }
+                        });
+                    }
+
+                    // Check if all tubes are processed
+                    if (processedCount === totalTubes) {
+                        // All tubes processed, show final result
+                        let resultHtml = `
+                            <div style="text-align: left; margin-top: 15px;">
+                                <p><i class="fa fa-check-circle" style="color: #28a745; margin-right: 8px;"></i><strong>Processing Summary:</strong></p>
+                                <ul style="list-style: none; padding-left: 0;">
+                                    <li><i class="fa fa-plus" style="color: #28a745; margin-right: 8px;"></i>New tubes created: <strong>${successCount}</strong></li>
+                                    <li><i class="fa fa-edit" style="color: #ffc107; margin-right: 8px;"></i>Existing tubes updated: <strong>${updatedCount}</strong></li>
+                                    <li><i class="fa fa-info" style="color: #17a2b8; margin-right: 8px;"></i>Skipped (already correct): <strong>${skippedCount}</strong> tubes</li>
+                                    ${errorCount > 0 ? `<li><i class="fa fa-times" style="color: #dc3545; margin-right: 8px;"></i>Errors: <strong>${errorCount}</strong> tubes</li>` : ''}
+                                </ul>`;
+                        
+                        if (errorDetails.length > 0) {
+                            resultHtml += `
+                                <hr style="margin: 15px 0;">
+                                <p><strong>Error Details:</strong></p>
+                                <ul style="font-size: 12px; color: #dc3545; max-height: 150px; overflow-y: auto;">
+                                    ${errorDetails.map(detail => `<li>${detail}</li>`).join('')}
+                                </ul>`;
+                        }
+                        
+                        resultHtml += `
+                                <hr style="margin: 15px 0;">
+                                <p style="font-size: 13px; color: #666;"><i class="fa fa-info-circle" style="color: #3498db; margin-right: 5px;"></i>The page will reload to show updated data.</p>
+                            </div>
+                        `;
+
+                        Swal.fire({
+                            title: 'Batch Processing Complete!',
+                            html: resultHtml,
+                            icon: (successCount > 0 || updatedCount > 0) ? (errorCount > 0 ? 'warning' : 'success') : 'info',
+                            confirmButtonText: '<i class="fa fa-check"></i> OK',
+                            confirmButtonColor: '#28a745',
+                            width: '600px',
+                            timer: 3000, // Auto close after 3 seconds
+                            timerProgressBar: true,
+                            showConfirmButton: true,
+                            allowOutsideClick: true
+                        }).then(() => {
+                            // Reload page to show updated data
+                            location.reload();
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    errorCount++;
+                    errorDetails.push(`Tube ${tubeNumber}: Check update status failed - ${error}`);
+                    processedCount++;
+                    console.error(`Error checking tube ${tubeNumber} update status:`, xhr.responseText);
+                    
+                    if (processedCount === totalTubes) {
+                        Swal.fire({
+                            title: 'Processing Complete with Errors',
+                            html: `
+                                <p>New: ${successCount}, Updated: ${updatedCount}, Errors: ${errorCount}, Skipped: ${skippedCount}</p>
+                                ${errorDetails.length > 0 ? `<hr><p><strong>Error Details:</strong></p><ul style="text-align: left; font-size: 12px;">${errorDetails.map(detail => `<li>${detail}</li>`).join('')}</ul>` : ''}
+                            `,
+                            icon: 'warning',
+                            width: '600px',
+                            timer: 5000, // Auto close after 5 seconds for errors
+                            timerProgressBar: true,
+                            showConfirmButton: true,
+                            allowOutsideClick: true
+                        }).then(() => {
+                            location.reload();
+                        });
+                    }
+                }
+            });
+        });
+    }
+
+    // Function kept for compatibility - Auto-processing handles biochemical results
+    function checkAcceptAllTubesStatus() {
+        // Auto-processing: No manual tube acceptance needed
+        // Biochemical results are automatically generated after ChroMagar save
+        console.log('Auto-processing enabled - no manual tube acceptance required');
+    }
 </script>
 <script type="text/javascript">
 
@@ -1138,14 +1708,14 @@
     let table2;
     let id_moisture = $('#id_moisture').val();
     let salmonella_assay_barcode = $('#salmonella_assay_barcode').val();
-    let id_salmonella_pa = $('#id_salmonella_pa').val();
+    let id_salmonella_biosolids = $('#id_salmonella_biosolids').val();
     let number_of_tubes = $('#number_of_tubes').val();
     const BASE_URL = '/limsonewater/index.php';
     let idx_one_water_sample = $('#id_one_water_sample').val();
 
-    // Simple function to ensure Chromagar Quality Control is always enabled
-    window.updateChromagarQualityControlLogic = function() {
-        // Check if Chromagar modal is open
+    // Simple function to ensure HBA Quality Control is always enabled
+    window.updateHBAQualityControlLogic = function() {
+        // Check if HBA modal is open
         if ($('#compose-modalChromagar').hasClass('in') || $('#compose-modalChromagar').is(':visible')) {
             const qualityControlCheckbox = $('#quality_control_chromagar');
             const qcNotice = $('#qc_chromagar_auto_notice');
@@ -1157,50 +1727,136 @@
     };
 
     $(document).ready(function() {
-        // Check for flash messages from controller
-        <?php if ($this->session->flashdata('message')): ?>
-            let flashMessage = '<?php echo $this->session->flashdata('message'); ?>';
+       	let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
+		let userCreated = $('#user_created').val();
+		let userReview = $('#user_review').val();
+		let fullName = $('#reviewed_by_label').val();
 
-            if (flashMessage.includes('Chromagar Results auto-generated')) {
-                // Show special notification for auto-generated Chromagar
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success!',
-                    // html: `
-                    //     <div style="text-align: left; margin: 15px 0;">
-                    //         <p><i class="fa fa-magic" style="color: #28a745; margin-right: 8px;"></i><strong>All growth plates in Results XldAgar were 0</strong></p>
-                    //         <p style="margin-top: 10px;">✅ <strong>Results Chromagar has been automatically generated</strong> with all plates = 0</p>
-                    //         <p style="margin-top: 10px;">🚀 This saves you time by eliminating manual Chromagar data entry when the outcome is predictable.</p>
-                    //         <hr style="margin: 15px 0;">
-                    //         <p style="font-size: 13px; color: #666;"><i class="fa fa-info-circle" style="color: #3498db; margin-right: 5px;"></i>You can now proceed directly to Results Biochemical if needed.</p>
-                    //     </div>
-                    // `,
-                    confirmButtonText: '<i class="fa fa-check"></i> Got it!',
-                    confirmButtonColor: '#28a745',
-                    timer: 1500,
-                    timerProgressBar: true,
-                    customClass: {
-                        popup: 'swal-wide'
+        // Function to calculate MPN per gram dry weight values
+        // function calculateMpnDryWeight() {
+        //     let mpnConcentration = parseFloat($('#mpn_concentration').val()) || 0;
+        //     let upperCi = parseFloat($('#upper_ci').val()) || 0;
+        //     let lowerCi = parseFloat($('#lower_ci').val()) || 0;
+        //     let sampleDryweight = parseFloat($('#sample_dryweight').val()) || 0;
+
+        //     if (sampleDryweight > 0) {
+        //         // Calculate Concentration MPN/g dry weight = mpn_concentration / sample_dryweight
+        //         let mpnConcentrationDw = (mpnConcentration / sampleDryweight).toFixed(4);
+        //         $('#mpn_concentration_dw').val(mpnConcentrationDw);
+        //         $('#display_mpn_concentration_dw').text(mpnConcentrationDw);
+
+        //         // Calculate Upper CI MPN/g dw = upper_ci / sample_dryweight
+        //         let upperCiDw = (upperCi / sampleDryweight).toFixed(4);
+        //         $('#upper_ci_dw').val(upperCiDw);
+        //         $('#display_upper_ci_dw').text(upperCiDw);
+
+        //         // Calculate Lower CI MPN/g dw = lower_ci / sample_dryweight
+        //         let lowerCiDw = (lowerCi / sampleDryweight).toFixed(4);
+        //         $('#lower_ci_dw').val(lowerCiDw);
+        //         $('#display_lower_ci_dw').text(lowerCiDw);
+        //     } else {
+        //         $('#mpn_concentration_dw').val('');
+        //         $('#upper_ci_dw').val('');
+        //         $('#lower_ci_dw').val('');
+        //         $('#display_mpn_concentration_dw').text('-');
+        //         $('#display_upper_ci_dw').text('-');
+        //         $('#display_lower_ci_dw').text('-');
+        //     }
+        // }
+
+        // Attach the calculation function to input events
+        // $('#mpn_concentration, #upper_ci, #lower_ci').on('input', calculateMpnDryWeight);
+
+        // Also trigger calculation when the modal is shown (in case data is pre-filled)
+        // $('#compose-modalCalculateMPN').on('shown.bs.modal', function() {
+        //     calculateMpnDryWeight();
+        // });
+
+        // Calculate MPN form submission
+        $('#formCalculateMPN').submit(function(e) {
+            e.preventDefault();
+            
+            // Always use the same URL since we handle mode validation in the controller
+            let url = '<?php echo site_url('Salmonella_biosolids/saveCalculateMPN'); ?>';
+            let formData = $(this).serialize();
+            
+            // Debug logging
+            console.log('Form URL:', url);
+            console.log('Form Data:', formData);
+            console.log('Mode:', $('#mode_calculateMPN').val());
+            console.log('ID Salmonella Biosolids:', $('#id_salmonella_biosolids_mpn').val());
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                dataType: 'json',
+                success: function(response) {
+                    console.log('Success Response:', response);
+                    if (response.status === 'success') {
+                        $('#compose-modalCalculateMPN').modal('hide');
+                        
+                        // Update initialSampleDryweight to current value to prevent further notifications
+                        initialSampleDryweight = parseFloat($('#sample_dryweight').val()) || 0;
+                        
+                        // Hide the badge since we just updated the MPN calculation
+                        $('#mpnUpdateBadge').hide();
+                        
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: response.message,
+                            timer: 2000,
+                            showConfirmButton: false
+                        }).then(function() {
+                            location.reload(); // Reload page to show updated data
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: response.message || 'Unknown error occurred.'
+                        });
                     }
-                });
-            } else {
-                // Show regular success message
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success!',
-                    text: flashMessage,
-                    timer: 3000,
-                    showConfirmButton: false
-                });
-            }
-        <?php endif; ?>
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error Details:');
+                    console.error('Status:', status);
+                    console.error('Error:', error);
+                    console.error('Response Text:', xhr.responseText);
+                    console.error('Status Code:', xhr.status);
+                    
+                    let errorMessage = 'Something went wrong. Please try again.';
+                    if (xhr.responseText) {
+                        try {
+                            let errorResponse = JSON.parse(xhr.responseText);
+                            errorMessage = errorResponse.message || errorMessage;
+                        } catch (e) {
+                            errorMessage = 'Server error: ' + xhr.responseText.substring(0, 100);
+                        }
+                    }
+                    
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: errorMessage
+                    });
+                }
+            });
+        });
 
-        let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
-        let userCreated = $('#user_created').val();
-        let userReview = $('#user_review').val();
-        let fullName = $('#reviewed_by_label').val();
+        // Reset form when modal is hidden
+        $('#compose-modalCalculateMPN').on('hidden.bs.modal', function() {
+            $('#formCalculateMPN')[0].reset();
+            $('#mode_calculateMPN').val('');
+            $('#id_salmonella_result_mpn_biosolids').val('');
+            // $('#current_sample_dryweight').val('');
+            // $('#mpn_concentration_dw').val('');
+            // $('#upper_ci_dw').val('');
+            // $('#lower_ci_dw').val('');
+        });
 
-        $('#reviewed_by_label').val(fullName ? fullName : '-');
+		$('#reviewed_by_label').val(fullName ? fullName : '-');
 
 		// Definisikan state review
 		const states = [
@@ -1253,7 +1909,7 @@
 		// 					.addClass('form-check-label ' + states[currentState].class);
 
 		// 				$.ajax({
-		// 					url: '<?php echo site_url("Salmonella_pa/saveReview"); ?>',
+		// 					url: '<?php echo site_url('Salmonella_biosolids/saveReview'); ?>',
 		// 					method: 'POST',
 		// 					data: $('#formSampleReview').serialize(),
 		// 					dataType: 'json',
@@ -1338,7 +1994,7 @@
 
 		// 	$('#saveButtonDetail').prop('disabled', true);
 		// }
-
+		
 		// Configuration based on user role
 		const isCreator = userCreated === loggedInUser;
 		const canReview = !isCreator;
@@ -1483,7 +2139,7 @@
 		 */
 		function saveReviewData() {
 			$.ajax({
-				url: '<?php echo site_url('Salmonella_pa/saveReview'); ?>',
+				url: '<?php echo site_url('Salmonella_biosolids/saveReview'); ?>',
 				method: 'POST',
 				data: $('#formSampleReview').serialize(),
 				dataType: 'json',
@@ -1534,7 +2190,7 @@
 				timer: 2000
 			});
 		}
-		
+
 		// Fungsi untuk cancel review (khusus admin user 1 & 2)
   // Cek status review ketika halaman dimuat
   if ($('#review').val() === '1') {
@@ -1574,7 +2230,7 @@
                 console.log('Form data to be sent: ', formData); // Debugging log
 
                 $.ajax({
-                    url: '<?php echo site_url("Salmonella_pa/cancelReview"); ?>',
+                    url: '<?php echo site_url('Salmonella_biosolids/cancelReview'); ?>',
                     method: 'POST',
                     data: formData,
                     dataType: 'json',
@@ -1647,68 +2303,34 @@
             $('#textInform2').fadeOut();
         });
 
-
-    // Function to automatically calculate confirmation based on XLD and Chromagar results
-    function calculateBiochemicalConfirmation() {
-        const id_salmonella_pa = $('#id_salmonella_pa').val();
+    // Event listener untuk radio button Oxidase
+    // $('input[name="oxidase"]').on('change', updateConfirmation);
+    
+    // Event listener untuk radio button Catalase
+    // $('input[name="catalase"]').on('change', updateConfirmation);
+    
+    // function updateConfirmation() {
+    //     const oxidaseValue = $('input[name="oxidase"]:checked').val();
+    //     const catalaseValue = $('input[name="catalase"]:checked').val();
         
-        if (!id_salmonella_pa) {
-            console.warn('No Salmonella PA ID found');
-            return;
-        }
+    //     let confirmationText = '';
 
-        // Fetch XLD and Chromagar results via AJAX
-        $.ajax({
-            url: '<?php echo site_url("Salmonella_pa/getBiochemicalData"); ?>',
-            method: 'POST',
-            data: { id_salmonella_pa: id_salmonella_pa },
-            dataType: 'json',
-            success: function(response) {
-                if (response.success) {
-                    // Apply business rules for confirmation
-                    let confirmationValue = '';
-                    
-                    const xldBlackColony = parseInt(response.xld_black_colony) || 0;
-                    const chromPurpleColony = parseInt(response.chrom_purple_colony) || 0;
-                    
-                    console.log(`XLD Black Colony: ${xldBlackColony}, Chromagar Purple Colony: ${chromPurpleColony}`);
-                    
-                    // Business rules based on user requirements:
-                    if (xldBlackColony === 0 && chromPurpleColony === 0) {
-                        confirmationValue = 'Not detected';
-                    } else if (xldBlackColony === 1 && chromPurpleColony === 0) {
-                        confirmationValue = 'Not detected';
-                    } else if (xldBlackColony === 0 && chromPurpleColony === 1) {
-                        confirmationValue = 'Not detected';
-                    } else if (xldBlackColony === 1 && chromPurpleColony === 1) {
-                        confirmationValue = 'Detected';
-                    } else {
-                        // Default case - unexpected values
-                        confirmationValue = 'Not detected';
-                    }
-                    
-                    // Set the calculated values
-                    $('#confirmation').val(confirmationValue);
-                    
-                    // Show info to user
-                    const infoText = `Auto-calculated based on XLD (${xldBlackColony}) and Chromagar (${chromPurpleColony}) results`;
-                    $('#confirmation').next('small').html(`<i class="fa fa-info-circle"></i> ${infoText}`);
-                    
-                } else {
-                    console.error('Failed to fetch biochemical data:', response.message);
-                    $('#confirmation').val('');
-                    $('#confirmation').next('small').html('<i class="fa fa-exclamation-triangle"></i> Unable to auto-calculate. Please check XLD and Chromagar results.');
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('AJAX error:', error);
-                $('#confirmation').val('');
-                $('#confirmation').next('small').html('<i class="fa fa-exclamation-triangle"></i> Error fetching data for auto-calculation.');
-            }
-        });
-    }
+    //     if (oxidaseValue === 'Positive' && catalaseValue === 'Positive') {
+    //         confirmationText = 'Salmonella';
+    //     } else if (oxidaseValue === 'Negative' && catalaseValue === 'Negative') {
+    //         confirmationText = 'Not Salmonella';
+    //     } else if (oxidaseValue === 'Positive' && catalaseValue === 'Negative') {
+    //         confirmationText = 'Not Salmonella';
+    //     } else if (oxidaseValue === 'Negative' && catalaseValue === 'Positive') {
+    //         confirmationText = 'Not Salmonella';
+    //     } else {
+    //         confirmationText = '';
+    //     }
 
-    // Function to update confirmation options based on XLD Agar and Chromagar values
+    //     $('#confirmation').val(confirmationText);
+    // }
+
+    // Function to update confirmation options based on XLD and Chromagar values
     function updateConfirmationOptions(xldValue, chromagarValue) {
         const confirmationContainer = $('#confirmation-options');
         confirmationContainer.empty(); // Clear existing options
@@ -1717,68 +2339,41 @@
         const xld = parseInt(xldValue) || 0;
         const chromagar = parseInt(chromagarValue) || 0;
         
-        console.log(`Updating confirmation options: XLD Agar=${xld}, Chromagar=${chromagar}`);
+        console.log(`Updating confirmation options: XLD=${xld}, Chromagar=${chromagar}`);
         
         if (xld === 0 && chromagar === 0) {
-            // XLD Agar = 0, Chromagar = 0 → checkbox with "Not detected" option only
+            // XLD = 0, Chromagar = 0 → checkbox with "Not Salmonella" option only
             confirmationContainer.html(`
                 <label class="checkbox-inline">
-                    <input type="checkbox" name="confirmation" value="Not detected" required> Not detected
+                    <input type="checkbox" name="confirmation" value="Not Salmonella" required> Not Salmonella
                 </label>
             `);
         } else if (xld === 1 && chromagar === 0) {
-            // XLD Agar = 1, Chromagar = 0 → checkbox with "Not detected" option only
+            // XLD = 1, Chromagar = 0 → checkbox with "Not Salmonella" option only
             confirmationContainer.html(`
                 <label class="checkbox-inline">
-                    <input type="checkbox" name="confirmation" value="Not detected" required> Not detected
+                    <input type="checkbox" name="confirmation" value="Not Salmonella" required> Not Salmonella
                 </label>
             `);
         } else if (xld === 1 && chromagar === 1) {
-            // XLD Agar = 1, Chromagar = 1 → checkbox with "Detected" option only
+            // XLD = 1, Chromagar = 1 → checkbox with "Salmonella" option only
             confirmationContainer.html(`
                 <label class="checkbox-inline">
-                    <input type="checkbox" name="confirmation" value="Detected" required> Detected
+                    <input type="checkbox" name="confirmation" value="Salmonella" required> Salmonella
                 </label>
             `);
         } else {
-            // Unexpected case - log for debugging and default to "Not detected"
-            console.warn(`Unexpected XLD Agar/Chromagar combination: XLD Agar=${xld}, Chromagar=${chromagar}. Defaulting to "Not detected"`);
+            // Unexpected case - log for debugging and default to "Not Salmonella"
+            console.warn(`Unexpected XLD/Chromagar combination: XLD=${xld}, Chromagar=${chromagar}. Defaulting to "Not Salmonella"`);
             confirmationContainer.html(`
                 <label class="checkbox-inline">
-                    <input type="checkbox" name="confirmation" value="Not detected" required> Not detected
+                    <input type="checkbox" name="confirmation" value="Not Salmonella" required> Not Salmonella
                 </label>
             `);
         }
     }
 
-        // function generateGrowthPlateInputs(container, numberOfTubes) {
-        //     container.empty(); // Clear existing inputs
-
-        //     // Create the required number of inputs and labels
-        //     for (let i = 1; i <= numberOfTubes; i++) {
-        //         container.append(
-        //             `<div class="d-flex align-items-center mb-2" style="gap: 12px;">
-        //                 <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Growth Plate ${i}:</label>
-        //                 <div class="d-flex align-items-center">
-        //                     <label class="radio-inline me-2" style="margin-bottom: 0;">
-        //                         <input type="radio" name="growth_plate${i}" value="1"> Yes 
-        //                     </label>
-        //                     <label class="radio-inline" style="margin-bottom: 0;">
-        //                         <input type="radio" name="growth_plate${i}" value="0"> No 
-        //                     </label>
-        //                 </div>
-        //             </div>`
-        //         );
-        //     }
-        // }
-
-        // $('#number_of_tubes').change(function() {
-        //     let numberOfTubes = parseInt($(this).val()); // Get the selected value as an integer
-        //     generateGrowthPlateInputs($('#growthPlateInputs'), numberOfTubes);
-        //     generateGrowthPlateInputs($('#growthPlateInputsChromagar'), numberOfTubes);
-        // }).trigger('change');
-
-        function generateColonyPlateInputs(container, numberOfTubes) {
+    function generateColonyPlateInputs(container, numberOfTubes) {
             container.empty(); // Clear existing inputs
 
             // Create the required number of inputs and labels
@@ -1812,43 +2407,21 @@
         }
 
         // Handle the delete button click
-        $(document).on('click', '.btn_deleteXldAgar, .btn_deleteChromagar, .btn_deleteBiochemical', function() {
+        $(document).on('click', '.btn_deleteXld, .btn_deleteChromagar, .btn_deleteBiochemical', function() {
             let id = $(this).data('id');
             let url;
-            if ($(this).hasClass('btn_deleteXldAgar')) {
-                url = '<?php echo site_url('Salmonella_pa/delete_detailXldAgar'); ?>/' + id;
-                $('.modal-title').html('<i class="fa fa-trash"></i> Result XldAgar | Delete <span id="my-another-cool-loader"></span>');
+            if ($(this).hasClass('btn_deleteXld')) {
+                url = '<?php echo site_url('Salmonella_biosolids/delete_detailXld'); ?>/' + id;
+                $('.modal-title').html('<i class="fa fa-trash"></i> Result XLD | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
-
-                // Add warning about cascade delete for XldAgar
-                $('#confirm-modal-delete .modal-body').html(
-                    '<p><strong>⚠️ Critical Warning:</strong> Deleting this XldAgar result will also delete ALL related data including:</p>' +
-                    '<ul style="margin: 10px 0; padding-left: 20px;">' +
-                    '<li><strong>All Chromagar results</strong> associated with this sample</li>' +
-                    '<li><strong>All Biochemical test results</strong> related to those Chromagar results</li>' +
-                    '</ul>' +
-                    '<p style="color: #dc3545;"><strong>This action cannot be undone and will remove the entire data chain!</strong></p>' +
-                    '<p>Are you sure you want to delete Result XldAgar <strong>' + id + '</strong> and all its related data?</p>'
-                );
             } else if ($(this).hasClass('btn_deleteChromagar')) {
-                url = '<?php echo site_url('Salmonella_pa/delete_detailChromagar'); ?>/' + id;
+                url = '<?php echo site_url('Salmonella_biosolids/delete_detailChromagar'); ?>/' + id;
                 $('.modal-title').html('<i class="fa fa-trash"></i> Result Chromagar | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
-                
-                // Add warning about cascade delete
-                $('#confirm-modal-delete .modal-body').html(
-                    '<p><strong>⚠️ Warning:</strong> Deleting this Chromagar result will also delete all related Biochemical test results to maintain data integrity.</p>' +
-                    '<p>This action cannot be undone. Are you sure you want to delete Result Chromagar <strong>' + id + '</strong> and all its related data?</p>'
-                );
             } else if ($(this).hasClass('btn_deleteBiochemical')) {
-                url = '<?php echo site_url('Salmonella_pa/delete_detailBiochemical'); ?>/' + id;
-                $('.modal-title').html('<i class="fa fa-trash"></i> Result Biochemical | Delete <span id="my-another-cool-loader"></span>');
+                url = '<?php echo site_url('Salmonella_biosolids/delete_detailBiochemical'); ?>/' + id;
+                $('.modal-title').html('<i class="fa fa-trash"></i> Result | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
-                
-                // Reset modal body to default
-                $('#confirm-modal-delete .modal-body').html(
-                    '<p>Are you sure you want to delete Result Biochemical <strong>' + id + '</strong>?</p>'
-                );
             }
 
             showConfirmationDelete(url);
@@ -1908,13 +2481,8 @@
             $('.val1tip').tooltipster('hide'); 
         });
 
-        $('#compose-modalChromagar').on('shown.bs.modal', function () {
-            $('.val2tip').tooltipster('hide');
-
-            // Update Quality Control logic when Chromagar modal is shown (only for edit mode)
-            if (typeof window.updateChromagarQualityControlLogic === 'function') {
-                window.updateChromagarQualityControlLogic();
-            }
+        $('#compose-modalCharomagar').on('shown.bs.modal', function () {
+            $('.val2tip').tooltipster('hide'); 
         });
 
         $("input").keypress(function(){
@@ -1927,6 +2495,10 @@
 
         $('#compose-modal').on('shown.bs.modal', function () {
             $('#barcode_tray24').focus();
+        });
+
+        $('#compose-modalCharomagar').on('shown.bs.modal', function () {
+            $('#dry_weight72').focus();
         });
 
         $('#barcode_tray24').on("change", function() {
@@ -1950,35 +2522,6 @@
                                 $('#barcode_tray24').css({'background-color' : '#FFE6E7'});
                                 setTimeout(function(){
                                     $('#barcode_tray24').css({'background-color' : '#FFFFFF'});
-                                }, 300);                            
-                            }, 300);
-                        }, 300);
-                    }
-                }
-            });
-        });
-
-        $('#barcode_tray72').on("change", function() {
-            let barcode72 = $('#barcode_tray72').val();
-            $.ajax({
-                type: "GET",
-                url: `${BASE_URL}/Moisture_content/validate72`,
-                data: { id72: barcode72 },
-                dataType: "json",
-                success: function(data) {
-                    if (data.length == 0) {
-                        let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + barcode72 +'</strong> is not on moisture content or is not already in the system !</span>');
-                        $('.val2tip').tooltipster('content', tip);
-                        $('.val2tip').tooltipster('show');
-                        $('#barcode_tray72').focus();
-                        $('#barcode_tray72').val('');       
-                        $('#barcode_tray72').css({'background-color' : '#FFE6E7'});
-                        setTimeout(function(){
-                            $('#barcode_tray72').css({'background-color' : '#FFFFFF'});
-                            setTimeout(function(){
-                                $('#barcode_tray72').css({'background-color' : '#FFE6E7'});
-                                setTimeout(function(){
-                                    $('#barcode_tray72').css({'background-color' : '#FFFFFF'});
                                 }, 300);                            
                             }, 300);
                         }, 300);
@@ -2025,7 +2568,7 @@
             paging: false,
             info: false,
             bFilter: false,
-            ajax: {"url": "../../Salmonella_pa/subjsonXldAgar?idXldAgar="+id_salmonella_pa, "type": "POST"},
+            ajax: {"url": "../../Salmonella_biosolids/subjsonXld?idXld="+id_salmonella_biosolids, "type": "POST"},
             columns: [
                 {"data": "salmonella_assay_barcode"},
                 {"data": "date_sample_processed"},
@@ -2048,32 +2591,14 @@
             rowCallback: function(row, data, iDisplayIndex) {
                 let info = this.fnPagingInfo();
                 if (info.iTotal > 0) {
-                    $('#addtombol_detResultsXldAgar').prop("disabled", true);
+                    $('#addtombol_detResultsXld').prop("disabled", true);
                 } else {
-                    $('#addtombol_detResultsXldAgar').show();
+                    $('#addtombol_detResultsXld').show();
                 }
             },
             drawCallback: function(settings) {
-                // This function is called every time the table is redrawn
-                window.xldAgarDataChanged = true;
-                
-                // Auto-processing: Check if all XLD Agar results are 0 for auto-ChroMagar processing
-                let hasData = settings.json && settings.json.data && settings.json.data.length > 0;
-                if (hasData) {
-                    let data = settings.json.data[0]; // Get first (and likely only) row
-                    if (data && data.black_colony_plate) {
-                        const blackColonyArray = data.black_colony_plate.split(', ');
-                        const allZero = blackColonyArray.every(value => value === '0');
-                        
-                        if (allZero) {
-                            console.log('Auto-processing: All XLD Agar results are 0 - ChroMagar will be auto-saved');
-                            // Note: The actual auto-save logic should be implemented in the backend
-                            // when ChroMagar button is clicked or when saving XLD Agar data
-                        }
-                    }
-                }
-                
-                console.log('XLD Agar table updated - auto-processing handles biochemical results');
+                // Auto-processing: No button status checks needed
+                console.log('XLD table updated - auto-processing handles biochemical results');
             }
         });
 
@@ -2095,7 +2620,7 @@
             paging: false,
             info: false,
             bFilter: false,
-            ajax: {"url": "../../Salmonella_pa/subjsonChromagar?idChromagar="+id_salmonella_pa, "type": "POST"},
+            ajax: {"url": "../../Salmonella_biosolids/subjsonChromagar?idChromagar="+id_salmonella_biosolids, "type": "POST"},
             columns: [
                 {"data": "salmonella_assay_barcode"},
                 {"data": "date_sample_processed"},
@@ -2123,8 +2648,8 @@
                 let info = this.fnPagingInfo();
                 if (info.iTotal > 0) {
                     $('#addtombol_detResultsChromagar').prop("disabled", true);
-                } else {
-                    // Check if all XLD Agar results are 0 to decide if button should be available
+                }  else {
+                    // Check if all XLD results are 0 to decide if button should be available
                     let tdXld = $('#example2 td:first');
                     let dataXld = table.row(tdXld).data();
                     
@@ -2133,9 +2658,9 @@
                         const allZero = xldArray.every(value => value === '0');
                         
                         if (allZero) {
-                            // If all XLD Agar are 0, disable button as auto-save will handle it
+                            // If all XLD are 0, disable button as auto-save will handle it
                             $('#addtombol_detResultsChromagar').prop("disabled", true);
-                            $('#addtombol_detResultsChromagar').attr('title', 'Auto-processing: ChroMagar automatically saved (all XLD Agar results are 0)');
+                            $('#addtombol_detResultsChromagar').attr('title', 'Auto-processing: ChroMagar automatically saved (all XLD results are 0)');
                         } else {
                             $('#addtombol_detResultsChromagar').prop("disabled", false);
                             $('#addtombol_detResultsChromagar').attr('title', 'Add new ChroMagar data');
@@ -2160,16 +2685,17 @@
             }
         });
 
+
         table1.ajax.reload(function() {
             let td = $('#exampleChromagar td:first');
-            let data = table1.row(td).data();
-            console.log(data);
+            let dataChromagar = table1.row(td).data();
+            console.log(dataChromagar);
 
-            if (data) {
-                const purpleColonyPlateInputs = data.purple_colony_plate.split(', ');
-                const plateNumberArray = data.plate_number.split(', ');
+            if (dataChromagar) {
+                const purpleColonyPlateArray = dataChromagar.purple_colony_plate.split(', ');
+                const plateNumberArray = dataChromagar.plate_number.split(', ');
 
-                // Get XLD Agar data as well
+                // Get XLD data as well
                 let tdXld = $('#example2 td:first');
                 let dataXld = table.row(tdXld).data();
                 
@@ -2188,11 +2714,8 @@
         });
 
         // Improved generateResultBiochemical function
-        function generateResultBiochemical(container, numberOfPlates, id_salmonella_pa, plateNumberArray, purpleColonyPlateInputs, blackColonyPlateArray = []) {
+        function generateResultBiochemical(container, numberOfPlates, id_salmonella_biosolids, plateNumberArray, purpleColonyPlateArray, blackColonyPlateArray = []) {
             container.empty(); // Clear existing content
-
-            // Get user level from PHP session
-            const userLevel = <?php echo $this->session->userdata('id_user_level'); ?>;
 
             // Iterate through the plateNumberArray
             for (let i = 0; i < numberOfPlates; i++) {
@@ -2200,33 +2723,25 @@
                 const tableId = `exampleBiochemical_${i}`; // Unique table ID
                 const buttonId = `addtombol_detResultsBiochemical_${plateNumber}`; // Unique button ID
                 
-                // Get XLD Agar and Chromagar values for this plate
+                // Get XLD and Chromagar values for this plate
                 const xldValue = blackColonyPlateArray[i] || '0';
-                const chromagarValue = purpleColonyPlateInputs[i] || '0';
+                const chromagarValue = purpleColonyPlateArray[i] || '0';
                 
-                // Determine button HTML based on user level and growth plate status
-                let buttonHtml = '';
-                if (userLevel != 4) { // Level 1-3 can see buttons
-                    // Tombol tetap aktif berdasarkan instruksi baru
-                    const isDisabled = ''; // Semua tombol tetap aktif
-                    buttonHtml = `<button class="btn btn-primary" id="${buttonId}" data-index="${plateNumber}" data-xld="${xldValue}" data-chromagar="${chromagarValue}" ${isDisabled}>
-                                    <i class="fa fa-wpforms" aria-hidden="true"></i> Biochemical Tube ${plateNumber}
-                                  </button>`;
-                } // Level 4 (read-only) gets no button (buttonHtml remains empty)
+                // Tombol tetap aktif berdasarkan instruksi baru
+                const isDisabled = ''; // Semua tombol tetap aktif
                 
-                console.log(`Plate ${plateNumber}: XLD Agar=${xldValue}, Chromagar=${chromagarValue}`);
+                // console.log(`Plate ${plateNumber}: XLD=${xldValue}, Chromagar=${chromagarValue}`);
 
                 // Append the table and button for each plate
                 container.append(`
                     <div class="box-body pad table-responsive">
-                        ${buttonHtml}
+                        <button class="btn btn-primary" id="${buttonId}" data-index="${plateNumber}" data-xld="${xldValue}" data-chromagar="${chromagarValue}" ${isDisabled}>
+                            <i class="fa fa-wpforms" aria-hidden="true"></i> Tube ${plateNumber}
+                        </button>
                         <table id="${tableId}" class="table display table-bordered table-striped" width="100%">
                             <thead>
                                 <tr>
-                                    <th>Oxidase Result</th>
-                                    <th>Catalase Result</th>
                                     <th>Confirmation</th>
-                                    <th>Sample Store in Biobank</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -2235,13 +2750,13 @@
                 `);
 
                 // Initialize DataTable for the newly created table, passing the plate number
-                initializeDataTable(tableId, id_salmonella_pa, plateNumber); // Pass the actual plate number
+                initializeDataTable(tableId, id_salmonella_biosolids, plateNumber); // Pass the actual plate number
             }
         }
 
 
         // Fungsi untuk menginisialisasi DataTable
-        function initializeDataTable(tableId, id_salmonella_pa, tubeIndex) {
+        function initializeDataTable(tableId, id_salmonella_biosolids, tubeIndex) {
             console.log(`Tube index: ${tubeIndex}`);
             $(`#${tableId}`).DataTable({
                 oLanguage: {
@@ -2253,12 +2768,11 @@
                 info: false,
                 bFilter: false,
                 ajax: {
-                    url: `../../Salmonella_pa/subjsonBiochemical?idBiochemical=${id_salmonella_pa}&biochemical_tube=${tubeIndex}`,
+                    url: `../../Salmonella_biosolids/subjsonBiochemical?idBiochemical=${id_salmonella_biosolids}&biochemical_tube=${tubeIndex}`,
                     type: "POST"
                 },
                 columns: [
                     {"data": "confirmation"},
-                    // {"data": "biochemical_tube"},
                     {
                         "data": "action",
                         "orderable": false,
@@ -2282,7 +2796,7 @@
         // Event listener untuk tombol "New Data"
         $(document).on('click', '[id^=addtombol_detResultsBiochemical_]', function() {
             const plateNumber = $(this).data('index'); // Get the plate number directly
-            // const xldValue = $(this).data('xld'); // Get XLD Agar value
+            // const xldValue = $(this).data('xld'); // Get XLD value
             // const chromagarValue = $(this).data('chromagar'); // Get Chromagar value
             
             // Always get fresh data from tables instead of using potentially stale button data
@@ -2293,7 +2807,7 @@
             let tdChromagar = $('#exampleChromagar td:first');
             let dataChromagar = table1.row(tdChromagar).data();
             
-            // Get fresh XLD Agar data
+            // Get fresh XLD data
             let tdXld = $('#example2 td:first');
             let dataXld = table.row(tdXld).data();
             
@@ -2317,17 +2831,20 @@
             
             let td = $('#exampleChromagar td:first');
             let data = table1.row(td).data();
-            console.log('datanya', data.id_result_chromagar_pa);
-            console.log(`Tube ${plateNumber}: XLD Agar=${xldValue}, Chromagar=${chromagarValue}`);
+            console.log('datanya', data.id_result_chromagar);
+            console.log(`Tube ${plateNumber}: XLD=${xldValue}, Chromagar=${chromagarValue}`);
 
             $('#mode_detResultsBiochemical').val('insert');
-            $('#modal-title-biochemical').html(`<i class="fa fa-wpforms"></i> Insert | Biochemical Tube ${plateNumber} <span id="my-another-cool-loader"></span>`);
+            $('#modal-title-biochemical').html(`<i class="fa fa-wpforms"></i> Insert | Tube ${plateNumber} <span id="my-another-cool-loader"></span>`);
             $('#idBiochemical_one_water_sample').val(idx_one_water_sample);
-            $('#id_salmonella_paBiochemical').val(id_salmonella_pa);
-            $('#id_result_chromagar_pa1').val(data.id_result_chromagar_pa);
+            $('#id_salmonella_biosolidsBiochemical').val(id_salmonella_biosolids);
+            $('#id_result_chromagar1').val(data.id_result_chromagar);
+            $('#oxidase').val('');
+            $('#catalase').val('');
+            $('#sample_store').val('');
             $('#biochemical_tube').val(plateNumber);
             
-            // Update confirmation options based on XLD Agar and Chromagar values
+            // Update confirmation options based on XLD and Chromagar values
             updateConfirmationOptions(xldValue, chromagarValue);
             
             $('#compose-modalBiochemical').modal('show');
@@ -2342,7 +2859,7 @@
             let data = $(`#${tableId}`).DataTable().row(tr).data(); // Dapatkan data dari DataTable yang sesuai
             console.log(data);
 
-            // Get XLD Agar and Chromagar values for this tube
+            // Get XLD and Chromagar values for this tube
             let tubeNumber = data.biochemical_tube;
             let xldValue = '0';
             let chromagarValue = '0';
@@ -2373,13 +2890,19 @@
 
             // Set nilai-nilai di dalam modal sesuai data yang didapat
             $('#mode_detResultsBiochemical').val('edit');
-            $('#modal-title-biochemical').html('<i class="fa fa-pencil-square"></i> Update | Biochemical Tube ' + data.biochemical_tube + ' <span id="my-another-cool-loader"></span>');
+            $('#modal-title-biochemical').html('<i class="fa fa-pencil-square"></i> Update | Tube ' + data.biochemical_tube + ' <span id="my-another-cool-loader"></span>');
             $('#idBiochemical_one_water_sample').val(idx_one_water_sample);
-            $('#id_result_biochemical_pa').val(data.id_result_biochemical_pa);
-            $('#id_salmonella_paBiochemical').val(data.id_salmonella_pa);
-            $('#id_result_chromagar_pa1').val(data.id_result_chromagar_pa);
+            $('#id_result_biochemical').val(data.id_result_biochemical);
+            $('#id_salmonella_biosolidsBiochemical').val(data.id_salmonella_biosolids);
+            $('#id_result_chromagar1').val(data.id_result_chromagar);
+            // Set radio button untuk oxidase
+            $('input[name="oxidase"][value="' + data.oxidase + '"]').prop('checked', true);
             
-            // Update confirmation options based on XLD Agar and Chromagar values
+            // Set radio button untuk catalase
+            $('input[name="catalase"][value="' + data.catalase + '"]').prop('checked', true);
+            $('#sample_store').val(data.sample_store);
+            
+            // Update confirmation options based on XLD and Chromagar values
             updateConfirmationOptions(xldValue, chromagarValue);
             
             // Set the confirmation value after updating the options
@@ -2397,38 +2920,36 @@
 
 
 
-        $('#addtombol_detResultsXldAgar').click(function() {
-            $('#mode_detResultsXldAgar').val('insert');
-            $('#modal-title-detail').html('<i class="fa fa-wpforms"></i> Insert | Results XldAgar <span id="my-another-cool-loader"></span>');
-            $('#idXldAgar_one_water_sample').val(idx_one_water_sample);
+        $('#addtombol_detResultsXld').click(function() {
+            $('#mode_detResultsXld').val('insert');
+            $('#modal-title-Xld').html('<i class="fa fa-wpforms"></i> Insert | Results XLD <span id="my-another-cool-loader"></span>');
+            $('#idXld_one_water_sample').val(idx_one_water_sample);
             $('#salmonella_assay_barcode1').val(salmonella_assay_barcode);
             $('#salmonella_assay_barcode1').attr('readonly', true);
-            $('#id_salmonella_pa1').val(id_salmonella_pa);
+            $('#id_salmonella_biosolids1').val(id_salmonella_biosolids);
             $('#number_of_tubes1').val(number_of_tubes);
-
             // Reset quality control checkbox for new record
-            $('#quality_control').prop('checked', false);
-
+            $('#quality_control_xld').prop('checked', false);
             $('#compose-modal').modal('show');
         });
 
-        $('#example2').on('click', '.btn_edit_detResultsXldAgar', function() {
+        $('#example2').on('click', '.btn_edit_detResultsXld', function() {
             let tr = $(this).closest('tr');
             let data = table.row(tr).data();
             console.log(data);
-            $('#mode_detResultsXldAgar').val('edit');
-            $('#modal-title-detail').html('<i class="fa fa-pencil-square"></i> Update | Results XldAgar <span id="my-another-cool-loader"></span>');
-            $('#idXldAgar_one_water_sample').val(idx_one_water_sample);
-            $('#id_result_xld_agar_pa').val(data.id_result_xld_agar_pa);
+            $('#mode_detResultsXld').val('edit');
+            $('#modal-title-Xld').html('<i class="fa fa-pencil-square"></i> Update | Results XLD <span id="my-another-cool-loader"></span>');
+            $('#idXld_one_water_sample').val(idx_one_water_sample);
+            $('#id_result_xld').val(data.id_result_xld);
             $('#salmonella_assay_barcode1').val(data.salmonella_assay_barcode);
             $('#salmonella_assay_barcode1').attr('readonly', true);
-            $('#id_salmonella_pa1').val(data.id_salmonella_pa);
+            $('#id_salmonella_biosolids1').val(data.id_salmonella_biosolids);
             $('#date_sample_processed1').val(data.date_sample_processed);
             $('#time_sample_processed1').val(data.time_sample_processed);
             $('#number_of_tubes1').val(number_of_tubes);
 
             // Set quality control checkbox
-            $('#quality_control').prop('checked', data.quality_control == '1');
+            $('#quality_control_xld').prop('checked', data.quality_control == '1');
 
             // Clear existing blackColonyPlateInputs
             let blackColonyPlateInputs = $('#blackColonyPlateInputs');
@@ -2448,13 +2969,13 @@
 
                 blackColonyPlateInputs.append(
                     `<div class="d-flex align-items-center mb-2">
-                        <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Black Colony ${plateNumber}:</label>
+                        <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Black ${plateNumber}:</label>
                         <div class="d-flex align-items-center">
                             <label class="radio-inline me-2" style="margin-bottom: 0;">
                                 <input type="radio" id="black_colony_plate${plateNumber}" name="black_colony_plate${plateNumber}" value="1" ${checkedYes}> Yes
                             </label>
                             <label class="radio-inline" style="margin-bottom: 0;">
-                                <input type="radio" id="black_colony_plate${plateNumber}" name="black_colony_plate${plateNumber}" value="0" ${checkedNo}> No
+                                <input type="radio" id="black_colony_plate${plateNumber}"  name="black_colony_plate${plateNumber}" value="0" ${checkedNo}> No
                             </label>
                         </div>
                     </div>`
@@ -2471,12 +2992,13 @@
             let td = $('#example2 td:first');
             let data = table.row(td).data();
             console.log(data);
-
+            
             if (data && data.salmonella_assay_barcode) {
                 let salmonella_assay_barcode = data.salmonella_assay_barcode;
-                const purpleColonyPlateArray = data.black_colony_plate.split(', ');
+                console.log(salmonella_assay_barcode);
                 
-                // Check if XLD Agar results are all zero
+                // Check if XLD results are all zero
+                const purpleColonyPlateArray = data.black_colony_plate.split(', ');
                 const allZero = purpleColonyPlateArray.every(value => value === '0');
 
                 if (allZero) {
@@ -2485,7 +3007,7 @@
                         title: 'Auto-Processing Enabled',
                         html: `
                             <div style="text-align: left; margin-top: 15px;">
-                                <p><i class="fa fa-info-circle" style="color: #3498db; margin-right: 8px;"></i><strong>All XLD Agar results are 0 (zero).</strong></p>
+                                <p><i class="fa fa-info-circle" style="color: #3498db; margin-right: 8px;"></i><strong>All XLD results are 0 (zero).</strong></p>
                                 <p style="margin-top: 10px;">ChroMagar results will be automatically saved with value 0 for all tubes.</p>
                                 <hr style="margin: 15px 0;">
                                 <p style="font-size: 13px; color: #666;"><i class="fa fa-magic" style="color: #9b59b6; margin-right: 5px;"></i>Auto-processing: <strong>No manual input required</strong></p>
@@ -2504,7 +3026,7 @@
                 // Parsing data ke komponen
                 $('#idChromagar_one_water_sample').val(idx_one_water_sample);
                 $('#salmonella_assay_barcodeChromagar').val(salmonella_assay_barcode);
-                $('#id_salmonella_paChromagar').val(id_salmonella_pa);
+                $('#id_salmonella_biosolidsChromagar').val(id_salmonella_biosolids);
                 $('#salmonella_assay_barcodeChromagar').attr('readonly', true);
                 $('#number_of_tubesChromagar').val(number_of_tubes);
 
@@ -2518,6 +3040,7 @@
                 purpleColonyPlateInputs.empty();
 
                 // split the string into an array
+                // const purpleColonyPlateArray = data.black_colony_plate.split(', ');
                 const plateNumberArray = data.plate_number.split(', ');
 
                 // console.log('purpleColonyPlateArray:', purpleColonyPlateArray);
@@ -2533,8 +3056,8 @@
                     const disabled = plate === '0' ? 'disabled' : '';
 
                     purpleColonyPlateInputs.append(
-                      `<div class="d-flex align-items-center mb-2">
-                            <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Purple Colony Plate ${plateNumber}:</label>
+                        `<div class="d-flex align-items-center mb-2">
+                            <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Purple ${plateNumber}:</label>
                             <div class="d-flex align-items-center">
                                 <input type="hidden" name="purple_colony_plate${plateNumber}" value="${plate}">
                                 <label class="radio-inline me-2" style="margin-bottom: 0;">
@@ -2552,16 +3075,16 @@
                 const qualityControlCheckbox = $('#quality_control_chromagar');
                 const qcNotice = $('#qc_chromagar_auto_notice');
 
-                // Always enable Quality Control - not affected by XldAgar growth plates
+                // Always enable Quality Control - not affected by charcoal growth plates
                 qualityControlCheckbox.prop('disabled', false);
                 qcNotice.hide();
 
-                $('#compose-modalChromagar').modal('show');
+                $('#compose-modalChroMagar').modal('show');
             } else {
                 // Tampilkan modal konfirmasi
                 $('#confirm-modal').modal('show');
                 // Tambahkan pesan ke modal
-                $('#confirm-modal .modal-body').html('<p class="text-center" style="font-size: 15px;">You have not filled in the Result XldAgar. Please fill in that data first.</p>');
+                $('#confirm-modal .modal-body').html('<p class="text-center" style="font-size: 15px;">You have not filled in the Result XLD. Please fill in that data first.</p>');
             }
         });
         
@@ -2569,14 +3092,15 @@
         $('#exampleChromagar').on('click', '.btn_edit_detResultsChromagar', function() {
             let tr = $(this).closest('tr');
             let data = table1.row(tr).data();
+            let data1 = table.row(tr).data();
             console.log(data);
             $('#mode_detResultsChromagar').val('edit');
             $('#modal-title-Chromagar').html('<i class="fa fa-pencil-square"></i> Update | Results Chromagar <span id="my-another-cool-loader"></span>');
             $('#idChromagar_one_water_sample').val(idx_one_water_sample);
-            $('#id_result_chromagar_pa').val(data.id_result_chromagar_pa);
+            $('#id_result_chromagar').val(data.id_result_chromagar);
             $('#salmonella_assay_barcodeChromagar').val(data.salmonella_assay_barcode);
             $('#salmonella_assay_barcodeChromagar').attr('readonly', true);
-            $('#id_salmonella_paChromagar').val(data.id_salmonella_pa);
+            $('#id_salmonella_biosolidsChromagar').val(data.id_salmonella_biosolids);
             $('#date_sample_processedChromagar').val(data.date_sample_processed);
             $('#time_sample_processedChromagar').val(data.time_sample_processed);
             $('#number_of_tubesChromagar').val(number_of_tubes);
@@ -2591,26 +3115,28 @@
             // split the string into an array
             const purpleColonyPlateArray = data.purple_colony_plate.split(', ');
             const plateNumberArray = data.plate_number.split(', ');
+            const purpleColonyPlateArray1 = data1.black_colony_plate.split(', ');
 
             // making the input base on the plate number
             plateNumberArray.forEach((plateNumber, index) => {
                 const plate = purpleColonyPlateArray[index] || '';
+                const plate1 = purpleColonyPlateArray1[index] || '';
 
                 // decide the value radio selected
                 const checkedYes = plate === '1' ? 'checked' : '';
                 const checkedNo = plate === '0' ? 'checked' : '';
-                const disabled = plate === '0' ? 'disabled' : '';
+                const disabled = plate1 === '0' ? 'disabled' : '';
 
                 purpleColonyPlateInputs.append(
                     `<div class="d-flex align-items-center mb-2">
-                        <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Purple Colony Plate ${plateNumber}:</label>
+                        <label class="control-label me-3" style="margin-bottom: 0; line-height: 1.5;">Purple ${plateNumber}:</label>
                         <div class="d-flex align-items-center">
                             <input type="hidden" name="purple_colony_plate${plateNumber}" value="${plate}">
                             <label class="radio-inline me-2" style="margin-bottom: 0;">
-                                <input type="radio" id="purple_colony_plate${plateNumber}" name="purple_colony_plate${plateNumber}" value="1" ${checkedYes}> Yes
+                                <input type="radio" id="purple_colony_plate${plateNumber}" name="purple_colony_plate${plateNumber}" value="1" ${checkedYes}  ${disabled}> Yes
                             </label>
                             <label class="radio-inline" style="margin-bottom: 0;">
-                                <input type="radio" id="purple_colony_plate${plateNumber}"  name="purple_colony_plate${plateNumber}" value="0" ${checkedNo}> No
+                                <input type="radio" id="purple_colony_plate${plateNumber}"  name="purple_colony_plate${plateNumber}" value="0" ${checkedNo}  ${disabled}> No
                             </label>
                         </div>
                     </div>`
@@ -2623,8 +3149,7 @@
 
             qualityControlCheckbox.prop('disabled', false);
             qcNotice.hide();
-
-            $('#compose-modalChromagar').modal('show');
+            $('#compose-modalChroMagar').modal('show');
         });
 
         // Auto-processing: biochemical results are automatically handled by the system
@@ -2639,101 +3164,6 @@
             }
         }, 1000); // Small delay to ensure tables are loaded
 
-        // Event listener for biochemical modal shown event
-        $('#compose-modalBiochemical').on('shown.bs.modal', function () {
-            console.log('Biochemical modal opened - calculating confirmation automatically');
-            calculateBiochemicalConfirmation();
-        });
-
-        // Event listener for manual biochemical auto-generation trigger
-        // $('#autoGenerateBiochemical').on('click', function() {
-        //     const id_salmonella_pa = $('#id_salmonella_pa').val();
-            
-        //     if (!id_salmonella_pa) {
-        //         Swal.fire({
-        //             icon: 'error',
-        //             title: 'Error',
-        //             text: 'No Salmonella PA ID found'
-        //         });
-        //         return;
-        //     }
-
-        //     Swal.fire({
-        //         icon: 'question',
-        //         title: 'Auto-Generate Biochemical Results?',
-        //         html: `
-        //             <div style="text-align: left; margin: 15px 0;">
-        //                 <p>This will automatically generate biochemical results based on:</p>
-        //                 <ul style="margin: 10px 0; padding-left: 20px;">
-        //                     <li><strong>XLD Black Colony results</strong></li>
-        //                     <li><strong>Chromagar Purple Colony results</strong></li>
-        //                 </ul>
-        //                 <p>The confirmation value will be calculated according to the business rules.</p>
-        //                 <hr style="margin: 15px 0;">
-        //                 <p style="font-size: 13px; color: #666;"><i class="fa fa-info-circle"></i> This will create or update the biochemical record automatically.</p>
-        //             </div>
-        //         `,
-        //         showCancelButton: true,
-        //         confirmButtonText: '<i class="fa fa-magic"></i> Generate',
-        //         cancelButtonText: 'Cancel',
-        //         confirmButtonColor: '#28a745',
-        //         customClass: {
-        //             popup: 'swal-wide'
-        //         }
-        //     }).then((result) => {
-        //         if (result.isConfirmed) {
-        //             // Show loading
-        //             Swal.fire({
-        //                 title: 'Generating...',
-        //                 text: 'Please wait while biochemical results are being generated',
-        //                 allowOutsideClick: false,
-        //                 showConfirmButton: false,
-        //                 willOpen: () => {
-        //                     Swal.showLoading();
-        //                 }
-        //             });
-
-        //             $.ajax({
-        //                 url: '<?php echo site_url("Salmonella_pa/triggerBiochemicalAutoGeneration"); ?>',
-        //                 method: 'POST',
-        //                 data: { id_salmonella_pa: id_salmonella_pa },
-        //                 dataType: 'json',
-        //                 success: function(response) {
-        //                     Swal.close();
-                            
-        //                     if (response.success) {
-        //                         Swal.fire({
-        //                             icon: 'success',
-        //                             title: 'Success!',
-        //                             text: response.message,
-        //                             timer: 3000,
-        //                             showConfirmButton: true
-        //                         }).then(() => {
-        //                             // Reload the page to show updated results
-        //                             window.location.reload();
-        //                         });
-        //                     } else {
-        //                         Swal.fire({
-        //                             icon: 'warning',
-        //                             title: 'Cannot Generate',
-        //                             text: response.message,
-        //                             confirmButtonText: 'OK'
-        //                         });
-        //                     }
-        //                 },
-        //                 error: function(xhr, status, error) {
-        //                     Swal.close();
-        //                     Swal.fire({
-        //                         icon: 'error',
-        //                         title: 'Error',
-        //                         text: 'An error occurred while generating biochemical results',
-        //                         confirmButtonText: 'OK'
-        //                     });
-        //                 }
-        //             });
-        //         }
-        //     });
-        // });
 
     });
 </script>
