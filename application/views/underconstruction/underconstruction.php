@@ -244,7 +244,7 @@
             
             <!-- Back Button -->
             <a href="javascript:history.back()" class="back-button">
-                <i class="fas fa-arrow-left"></i> Back to Dashboard
+                <i class="fas fa-arrow-left"></i> Back
             </a>
             
             <!-- Additional Info -->
