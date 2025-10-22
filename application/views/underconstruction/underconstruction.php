@@ -243,8 +243,8 @@
             </div> -->
             
             <!-- Back Button -->
-            <a href="javascript:history.back()" class="back-button">
-                <i class="fas fa-arrow-left"></i> Back
+            <a href="<?= site_url('welcome') ?>" class="back-button">
+                <i class="fas fa-arrow-left"></i> Back to dashboard
             </a>
             
             <!-- Additional Info -->
