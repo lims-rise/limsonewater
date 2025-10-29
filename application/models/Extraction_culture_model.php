@@ -448,8 +448,10 @@ class Extraction_culture_model extends CI_Model
             user.full_name,
             ecp.sequence_id,
             rs.sequence_type,
+            ecp.custom_sequence_type,
             ecp.sequence,
-            ecp.species_id
+            ecp.species_id,
+            ecp.other_kit
         ');
         $this->db->from('extraction_culture_plate ecp');
         $this->db->join('ref_sampletype rst', 'ecp.id_sampletype = rst.id_sampletype', 'left');
@@ -499,14 +501,19 @@ class Extraction_culture_model extends CI_Model
     }
 
     function getSequenceType() {
-        $this->db->select('sequence_id, sequence_type'); // pilih kolom yang dibutuhkan saja
-        $this->db->from('ref_sequence');
-        $this->db->where('flag', 0); // jika kolom flag berupa integer, jangan pakai string
-        $this->db->where_in('is_custom', [0, 1]);
-        $this->db->order_by('sequence_id', 'ASC');
-    
-        $query = $this->db->get();
-        return $query->result_array();
+        try {
+            $this->db->select('sequence_id, sequence_type');
+            $this->db->from('ref_sequence');
+            $this->db->where('flag', 0);
+            $this->db->where_in('is_custom', [0, 1]);
+            $this->db->order_by('sequence_id', 'ASC');
+        
+            $query = $this->db->get();
+            return $query->result_array();
+        } catch (Exception $e) {
+            log_message('error', 'Error in getSequenceType: ' . $e->getMessage());
+            return array(); // Return empty array on error
+        }
     }
     
     function updateCancel($id, $data)

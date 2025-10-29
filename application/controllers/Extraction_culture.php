@@ -42,7 +42,7 @@ class Extraction_culture extends CI_Controller
         $data['col1'] = $this->Extraction_culture_model->getPos2();
         $data['sequencetype'] = $this->Extraction_culture_model->getSequenceType();
         $data['selected_sequence_id'] = '';
-$data['selected_sequence_type'] = '';
+        $data['selected_sequence_type'] = '';
         $this->template->load('template','Extraction_culture/index', $data);
     } 
     
@@ -253,30 +253,10 @@ $data['selected_sequence_type'] = '';
         $sequence = $this->input->post('sequence', TRUE);
         $sequence_id = $this->input->post('sequence_id', TRUE);
         $species_id = $this->input->post('species_id', TRUE);
+        $other_kit = $this->input->post('other_kit', TRUE);
     
-        // Cek jika user memilih 'Other' untuk sequence type
-        $other_sequence = $this->input->post('other_sequence_name', TRUE);  // Nama sequence "Other" jika diisi
-        // var_dump($other_sequence);
-        // die();
-    
-        // Jika user memilih 'Other', proses tambahan untuk sequence
-        if ($sequence_id === 'other' && !empty($other_sequence)) {
-            // Cek apakah sequence ini sudah ada di database
-            $existing = $this->db->get_where('ref_sequence', ['sequence_type' => $other_sequence])->row();
-    
-            if ($existing) {
-                $sequence_id = $existing->sequence_id; // Gunakan ID yang sudah ada
-            } else {
-                // Insert sequence baru jika tidak ada
-                $this->db->insert('ref_sequence', [
-                    'sequence_type' => $other_sequence,
-                    'flag' => 0,
-                    'is_custom' => 1
-                ]);
-                
-                $sequence_id = $this->db->insert_id(); // Ambil ID yang baru disimpan
-            }
-        }
+        // Handle custom sequence type input
+        $other_sequence = $this->input->post('other_sequence_name', TRUE);
     
         // Mengambil lokasi dan posisi
         $loc_obj = $this->Extraction_culture_model->get_freezx($id_freez, $id_shelf, $id_rack, $id_tray);
@@ -302,12 +282,29 @@ $data['selected_sequence_type'] = '';
                 'review' => $review,
                 'user_review' => $user_review,
                 'sequence' => $sequence,
-                'sequence_id' => $sequence_id,  // Gunakan ID yang didapat (baik yang baru atau yang sudah ada)
                 'species_id' => $species_id,
+                'other_kit' => $other_kit,
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
+
+            // Handle sequence type - use custom_sequence_type approach like sample reception
+            if ($sequence_id === 'other' && !empty($other_sequence)) {
+                // Store custom sequence type directly in custom_sequence_type field
+                $data['sequence_id'] = null;
+                $data['custom_sequence_type'] = $other_sequence;
+            } else if (!empty($sequence_id) && $sequence_id !== 'other') {
+                // Use predefined sequence type from dropdown
+                $data['sequence_id'] = $sequence_id;
+                $data['custom_sequence_type'] = null; // Clear custom type if using predefined
+            } else {
+                // No sequence type selected
+                $data['sequence_id'] = null;
+                $data['custom_sequence_type'] = null;
+            }
     
+            // var_dump($data);
+            // die();
             // Update child di model
             $this->Extraction_culture_model->update_child($barcode_sample, $data);
     

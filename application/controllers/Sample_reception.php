@@ -78,6 +78,7 @@ class Sample_reception extends CI_Controller
                 'client_id' => $row->client_id,
                 'comments' => $row->comments,
                 'testing_type' => $this->Sample_reception_model->getTest(),
+                'sequencetype' => $this->Sample_reception_model->getSequenceType(),
                 // 'barcode' => $this->Water_sample_reception_model->getBarcode(),
             );
                 
@@ -1012,6 +1013,153 @@ class Sample_reception extends CI_Controller
                 'success' => false,
                 'message' => 'Search failed',
                 'debug' => $e->getMessage()
+            ));
+        }
+    }
+
+    // Method to save sequence data - using same approach as extraction_culture
+    public function save_sequence_data()
+    {
+        header('Content-Type: application/json');
+        
+        try {
+            // Get form data
+            $id_one_water_sample = $this->input->post('id_one_water_sample');
+            $sequence = $this->input->post('sequence'); 
+            $sequence_id = $this->input->post('sequence_id');
+            $other_sequence_name = $this->input->post('other_sequence_name');
+            $species_id = $this->input->post('species_id');
+            
+            // Validate required fields
+            if (empty($id_one_water_sample)) {
+                echo json_encode(array(
+                    'status' => 'error',
+                    'message' => 'Sample ID is required'
+                ));
+                return;
+            }
+
+            // Check if sequence data already exists for this sample
+            $existingData = $this->Sample_reception_model->checkSequenceDataExists($id_one_water_sample);
+            $isUpdate = $existingData !== false;
+
+            // Prepare data
+            $dt = new DateTime();
+            
+            if ($isUpdate) {
+                // Prepare update data array
+                $update_data = array(
+                    'sequence' => $sequence,
+                    'species_id' => $species_id,
+                    'user_updated' => $this->session->userdata('id_users'),
+                    'date_updated' => $dt->format('Y-m-d H:i:s')
+                );
+
+                // Handle sequence type
+                if ($sequence_id === 'other' && !empty($other_sequence_name)) {
+                    $update_data['sequence_id'] = null;
+                    $update_data['custom_sequence_type'] = $other_sequence_name;
+                } else if (!empty($sequence_id) && $sequence_id !== 'other') {
+                    $update_data['sequence_id'] = $sequence_id;
+                    $update_data['custom_sequence_type'] = null;
+                } else {
+                    $update_data['sequence_id'] = null;
+                    $update_data['custom_sequence_type'] = null;
+                }
+
+                // Update existing record
+                $this->db->where('id_one_water_sample', $id_one_water_sample);
+                $this->db->where('flag', 0);
+                $result = $this->db->update('extraction_culture_plate', $update_data);
+                
+                $action = 'updated';
+            } else {
+                // Insert new data
+                $data = array(
+                    'id_one_water_sample' => $id_one_water_sample,
+                    'sequence' => $sequence,
+                    'species_id' => $species_id,
+                    'date_created' => $dt->format('Y-m-d H:i:s'),
+                    'user_created' => $this->session->userdata('id_users'),
+                    'uuid' => $this->uuid->v4(),
+                    'flag' => 0
+                );
+
+                // Handle sequence type
+                if ($sequence_id === 'other' && !empty($other_sequence_name)) {
+                    $data['sequence_id'] = null;
+                    $data['custom_sequence_type'] = $other_sequence_name;
+                } else if (!empty($sequence_id) && $sequence_id !== 'other') {
+                    $data['sequence_id'] = $sequence_id;
+                    $data['custom_sequence_type'] = null;
+                } else {
+                    $data['sequence_id'] = null;
+                    $data['custom_sequence_type'] = null;
+                }
+                
+                // Insert new record
+                $result = $this->db->insert('extraction_culture_plate', $data);
+                
+                $action = 'saved';
+            }
+
+            if ($result) {
+                echo json_encode(array(
+                    'status' => 'success',
+                    'message' => "Sequence data {$action} successfully",
+                    'action' => $action
+                ));
+            } else {
+                echo json_encode(array(
+                    'status' => 'error',
+                    'message' => "Failed to {$action} sequence data"
+                ));
+            }
+
+        } catch (Exception $e) {
+            echo json_encode(array(
+                'status' => 'error',
+                'message' => 'An error occurred while saving data'
+            ));
+        }
+    }
+
+    // Method to get existing sequence data for a sample
+    public function get_sequence_data()
+    {
+        header('Content-Type: application/json');
+        
+        try {
+            $id_one_water_sample = $this->input->post('id_one_water_sample');
+            
+            if (empty($id_one_water_sample)) {
+                echo json_encode(array(
+                    'status' => 'error',
+                    'message' => 'Sample ID is required'
+                ));
+                return;
+            }
+
+            $data = $this->Sample_reception_model->checkSequenceDataExists($id_one_water_sample);
+            
+            if ($data) {
+                echo json_encode(array(
+                    'status' => 'success',
+                    'data' => $data,
+                    'message' => 'Sequence data found'
+                ));
+            } else {
+                echo json_encode(array(
+                    'status' => 'success',
+                    'data' => null,
+                    'message' => 'No sequence data found'
+                ));
+            }
+
+        } catch (Exception $e) {
+            echo json_encode(array(
+                'status' => 'error',
+                'message' => 'An error occurred while fetching data'
             ));
         }
     }

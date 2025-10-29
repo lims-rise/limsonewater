@@ -2,12 +2,12 @@
 	<section class="content">
 		<div class="box box-black box-solid">
 			<div class="box-header with-border">
-				<h3 class="box-title">Processing | Enterolert Idexx Water | Out</h3>
+				<h3 class="box-title">Processing | Enterolert Hemoflow</h3>
 			</div>
 				<form role="form"  id="formKeg" method="post" class="form-horizontal">
 					<div class="box-body">
 						<!-- <input type="hidden" class="form-control " id="id_req" name="id_req" value="<?php// echo $id_req ?>"> -->
-						<input id="id_enterolert_in" name="id_enterolert_in" type="hidden" class="form-control input-sm" value="<?php echo $id_enterolert_in ?>">
+						<input id="id_enterolert_hemoflow" name="id_enterolert_hemoflow" type="hidden" class="form-control input-sm" value="<?php echo $id_enterolert_hemoflow ?>">
 						<div class="form-group">
 							<label for="id_one_water_sample" class="col-sm-2 control-label">One Water Sample ID</label>
 							<div class="col-sm-4">
@@ -26,9 +26,9 @@
 								<input class="form-control " id="sampletype" name="sampletype" value="<?php echo $sampletype ?>"  disabled>
 							</div>
 
-                            <label for="enterolert_barcode" class="col-sm-2 control-label">Enterolert Barcode</label>
+                            <label for="enterolert_hemoflow_barcode" class="col-sm-2 control-label">Enterolert Barcode</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="enterolert_barcode" name="enterolert_barcode" value="<?php echo $enterolert_barcode ?>"  disabled>
+								<input class="form-control " id="enterolert_hemoflow_barcode" name="enterolert_hemoflow_barcode" value="<?php echo $enterolert_hemoflow_barcode ?>"  disabled>
 							</div>
 
 						</div>
@@ -104,7 +104,7 @@
                     <div class="col-xs-12"> 
                         <div class="box box-primary box-solid">
                             <div class="box-header">
-                                <h3 class="box-title">Enterolert Out</h3>
+                                <h3 class="box-title">Enterolert Hemoflow Detail</h3>
                             </div>
 							<div class="box-body pad table-responsive">
 								<?php
@@ -132,11 +132,75 @@
 							</div> <!--/.box-body  -->
                         </div><!-- box box-warning -->
                     </div>  <!--col-xs-12 --> 
+
+                    <div class="col-xs-12">
+                        <div class="box box-primary box-solid">
+                            <div class="box-header">
+                                <h3 class="box-title">Final Calculation</h3>
+                            </div>
+                            <div class="box-body pad">
+                                <!-- <div style="padding-bottom: 10px;">
+                                    <button class="btn btn-success" id="exportBtn">
+                                        <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS
+                                    </button>
+                                    <?php
+                                        $lvl = $this->session->userdata('id_user_level');
+                                        if ($lvl != 4){
+                                            echo '<button class="btn btn-primary" id="calculateMpnBtn" style="margin-left: 10px; position: relative;">
+                                                    <i class="fa fa-calculator" aria-hidden="true"></i> Calculate MPN
+                                                    <span id="mpnUpdateBadge" class="badge badge-warning" style="position: absolute; top: -5px; right: -5px; background-color: #ff6b6b; color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 10px; line-height: 20px; display: none;">!</span>
+                                                  </button>';
+                                        }
+                                    ?>
+                                </div> -->
+                                <input id="id_enterolert_hemoflow" name="id_enterolert_hemoflow" type="hidden" class="form-control input-sm" value="<?php echo $id_enterolert_hemoflow ?>">
+
+                                <div id="content-final-calculation" class="table-responsive">
+                                    <table id="exampleFinalCalculation" class="table display table-bordered table-striped" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>ID One Water Sample</th>
+                                                <th>Enterolert Hemoflow Barcode</th>
+                                                <th>Initial</th>
+                                                <th>Sample Type</th>
+                                                <th>Volume Filtered (L)</th>
+                                                <th>Volume Eluted (mL)</th>
+                                                <th>Total Enterococcus</th>
+                                                <th>Enterococcus (MPN/100ML)</th>
+                                                <th>Lower Confidence Limit MPN/100mL</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php if (!empty($finalCalculation)): ?>
+                                                <?php foreach ($finalCalculation as $calculation): ?>
+                                                    <tr>
+                                                        <td><?= htmlspecialchars($calculation['id_one_water_sample']) ?></td>
+                                                        <td><?= htmlspecialchars($calculation['enterolert_hemoflow_barcode']) ?></td>
+                                                        <td><?= htmlspecialchars($calculation['initial']) ?></td>
+                                                        <td><?= htmlspecialchars($calculation['sampletype'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['volume_filter'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['volume_eluted'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['total_enterococcus'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['enterococcus'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['lowerdetection'] ?? '-') ?></td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            <?php else: ?>
+                                                <tr>
+                                                    <td colspan="100%" style="text-align: center">No data available</td>
+                                                </tr>
+                                            <?php endif; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 <!--</div> row -->    
 
 				<div class="form-group">
 					<div class="modal-footer clearfix">
-						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('enterolert_idexx_water'); ?>';">
+						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('enterolert_hemoflow'); ?>';">
 							<i class="fa fa-times"></i> Close
 						</button>
 					</div>
@@ -155,22 +219,22 @@
                         <h4 class="modal-title" id="modal-title-detail">
 							<span id="my-another-cool-loader"></span></h4>
                     </div>
-                        <form id="formDetail" action=<?php echo site_url('Enterolert_idexx_water/savedetail') ?> method="post" class="form-horizontal">
+                        <form id="formDetail" action=<?php echo site_url('Enterolert_hemoflow/savedetail') ?> method="post" class="form-horizontal">
                             <div class="modal-body">
                                 <div class="form-group">
                                         <div class="col-sm-9">
                                             <input id="mode_det" name="mode_det" type="hidden" class="form-control input-sm">
-                                            <input id="idx_enterolert_in" name="idx_enterolert_in" type="hidden" class="form-control input-sm">
-                                            <input id="id_enterolert_in" name="id_enterolert_in" type="hidden" class="form-control input-sm">
-                                            <input id="id_enterolert_out" name="id_enterolert_out" type="hidden" class="form-control input-sm">
+                                            <input id="idx_enterolert_hemoflow" name="idx_enterolert_hemoflow" type="hidden" class="form-control input-sm">
+                                            <input id="id_enterolert_hemoflow" name="id_enterolert_hemoflow" type="hidden" class="form-control input-sm">
+                                            <input id="id_enterolert_hemoflow_detail" name="id_enterolert_hemoflow_detail" type="hidden" class="form-control input-sm">
                                             <input id="idx_one_water_sample" name="idx_one_water_sample" type="hidden" class="form-control input-sm">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="enterolert_barcodex" class="col-sm-4 control-label">Enterolert Barcode</label>
+                                        <label for="enterolert_hemoflow_barcodex" class="col-sm-4 control-label">Enterolert Barcode</label>
                                         <div class="col-sm-8">
-                                            <input id="enterolert_barcodex" name="enterolert_barcodex" placeholder="Enterolert Barcode" type="text" class="form-control">
+                                            <input id="enterolert_hemoflow_barcodex" name="enterolert_hemoflow_barcodex" placeholder="Enterolert Barcode" type="text" class="form-control">
                                             <div class="val1tip"></div>
                                         </div>
                                     </div>
@@ -601,8 +665,8 @@
     let table;
     // let table1;
     let id_one_water_sample = $('#id_one_water_sample').val();
-    let enterolertBarcode = $('#enterolert_barcode').val();
-    let idEnterolertIn = $('#id_enterolert_in').val();
+    let enterolertHemoflowBarcode = $('#enterolert_hemoflow_barcode').val();
+    let idEnterolertHemoflow = $('#id_enterolert_hemoflow').val();
     let dilution = $('#dilution').val();
     const BASE_URL = '/limsonewater/index.php';
     let result;
@@ -665,7 +729,7 @@
 		// 					.addClass('form-check-label ' + states[currentState].class);
 
 		// 				$.ajax({
-		// 					url: '<?php echo site_url('Enterolert_idexx_water/saveReview'); ?>',
+		// 					url: '<?php echo site_url('Enterolert_hemoflow/saveReview'); ?>',
 		// 					method: 'POST',
 		// 					data: $('#formSampleReview').serialize(),
 		// 					dataType: 'json',
@@ -895,7 +959,7 @@
 		 */
 		function saveReviewData() {
 			$.ajax({
-				url: '<?php echo site_url('Enterolert_idexx_water/saveReview'); ?>',
+				url: '<?php echo site_url('Enterolert_hemoflow/saveReview'); ?>',
 				method: 'POST',
 				data: $('#formSampleReview').serialize(),
 				dataType: 'json',
@@ -986,7 +1050,7 @@
                     console.log('Form data to be sent: ', formData); // Debugging log
 
                     $.ajax({
-                        url: '<?php echo site_url('Enterolert_idexx_water/cancelReview'); ?>',
+                        url: '<?php echo site_url('Enterolert_hemoflow/cancelReview'); ?>',
                         method: 'POST',
                         data: formData,
                         dataType: 'json',
@@ -1062,7 +1126,7 @@
         function datachart(valueLargeWells, valueSmallWells) {
             $.ajax({
                 type: "GET",
-                url: `${BASE_URL}/Enterolert_idexx_water/data_chart?valueLargeWells=`+valueLargeWells+"&valueSmallWells="+valueSmallWells,
+                url: `${BASE_URL}/Enterolert_hemoflow/data_chart?valueLargeWells=`+valueLargeWells+"&valueSmallWells="+valueSmallWells,
                 dataType: "json",
                 success: function(data) {
                     console.log('data mpm '+ data);
@@ -1121,8 +1185,8 @@
             let id = $(this).data('id');
             let url;
             if ($(this).hasClass('btn_delete')) {
-                url = '<?php echo site_url('Enterolert_idexx_water/delete_detail'); ?>/' + id;
-                $('.modal-title').html('<i class="fa fa-trash"></i> Enterolert Out | Delete <span id="my-another-cool-loader"></span>');
+                url = '<?php echo site_url('Enterolert_hemoflow/delete_detail'); ?>/' + id;
+                $('.modal-title').html('<i class="fa fa-trash"></i> Enterolert Hemoflow | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
             } else if ($(this).hasClass('btn_delete72')) {
                 url = '<?php echo site_url('Moisture_content/delete_detail72'); ?>/' + id;
@@ -1244,9 +1308,9 @@
             paging: false,
             info: false,
             bFilter: false,
-            ajax: {"url": "../../Enterolert_idexx_water/subjson?id="+idEnterolertIn, "type": "POST"},
+            ajax: {"url": "../../Enterolert_hemoflow/subjson?id="+idEnterolertHemoflow, "type": "POST"},
             columns: [
-                {"data": "enterolert_barcode"},
+                {"data": "enterolert_hemoflow_barcode"},
                 {"data": "date_sample"}, 
                 {"data": "time_sample"}, 
                 {"data": "enterococcus_largewells"}, 
@@ -1290,11 +1354,11 @@
         $('#addtombol_det').click(function() {
             let id_one_water_sample = $('#id_one_water_sample').val();
             $('#mode_det').val('insert');
-            $('#modal-title-detail').html('<i class="fa fa-wpforms"></i> Enterolert Idexx Out | New <span id="my-another-cool-loader"></span>');
+            $('#modal-title-detail').html('<i class="fa fa-wpforms"></i> Enterolert Hemoflow Detail | New <span id="my-another-cool-loader"></span>');
             $('#idx_one_water_sample').val(id_one_water_sample);
-            $('#enterolert_barcodex').val(enterolertBarcode);
-            $('#enterolert_barcodex').attr('readonly', true);
-            $('#idx_enterolert_in').val(idEnterolertIn);
+            $('#enterolert_hemoflow_barcodex').val(enterolertHemoflowBarcode);
+            $('#enterolert_hemoflow_barcodex').attr('readonly', true);
+            $('#idx_enterolert_hemoflow').val(idEnterolertHemoflow);
             $('#enterococcus_largewells').val('0');
             $('#enterococcus_smallwells').val('0');
             $('#enterococcus').val('');
@@ -1313,10 +1377,10 @@
             $('#mode_det').val('edit');
             $('#modal-title-detail').html('<i class="fa fa-pencil-square"></i> Enterolert Idexx Out | Update <span id="my-another-cool-loader"></span>');
             $('#idx_one_water_sample').val(id_one_water_sample);
-            $('#idx_enterolert_in').val(idEnterolertIn);
-            $('#id_enterolert_out').val(data.id_enterolert_out);
-            $('#enterolert_barcodex').val(data.enterolert_barcode);
-            $('#enterolert_barcodex').attr('readonly', true);
+            $('#idx_enterolert_hemoflow').val(idEnterolertHemoflow);
+            $('#id_enterolert_hemoflow_detail').val(data.id_enterolert_hemoflow_detail);
+            $('#enterolert_hemoflow_barcodex').val(data.enterolert_hemoflow_barcode);
+            $('#enterolert_hemoflow_barcodex').attr('readonly', true);
             $('#date_sample_out').val(data.date_sample);
             $('#time_sample_out').val(data.time_sample);
             $('#enterococcus_largewells').val(data.enterococcus_largewells);

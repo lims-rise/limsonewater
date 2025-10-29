@@ -26,14 +26,14 @@ class Enterolert_hemoflow extends CI_Controller
 	    $this->load->library('uuid');
     }
 
-    public function index()
-    {
-        // Redirect ke halaman under construction untuk sementara
-        $this->load->view('underconstruction/underconstruction');
-    }
+    // public function index()
+    // {
+    //     // Redirect ke halaman under construction untuk sementara
+    //     $this->load->view('underconstruction/underconstruction');
+    // }
 
     // Method untuk development - akan diaktifkan nanti
-    public function development_index()
+    public function index()
     {
         // Nanti ketika modul sudah siap, ganti nama method ini ke 'index'
         // dan comment atau hapus method index yang di atas
@@ -73,11 +73,11 @@ class Enterolert_hemoflow extends CI_Controller
         $row = $this->Enterolert_hemoflow_model->get_detail($id);
         if ($row) {
             $data = array(
-                'id_enterolert_in' => $row->id_enterolert_in,
+                'id_enterolert_hemoflow' => $row->id_enterolert_hemoflow,
                 'id_one_water_sample' => $row->id_one_water_sample,
                 'initial' => $row->initial,
                 'sampletype' => $row->sampletype,
-                'enterolert_barcode' => $row->enterolert_barcode,
+                'enterolert_hemoflow_barcode' => $row->enterolert_hemoflow_barcode,
                 'date_sample' => $row->date_sample,
                 'time_sample' => $row->time_sample,
                 'volume_bottle' => $row->volume_bottle,
@@ -88,7 +88,16 @@ class Enterolert_hemoflow extends CI_Controller
                 'user_created'  => $row->user_created,
             );
 
-
+            // Mendapatkan final calculation
+            $finalCalculation = $this->Enterolert_hemoflow_model->subjsonFinalCalculation($row->id_enterolert_hemoflow);
+            if ($finalCalculation) {
+                $data['finalCalculation'] = $finalCalculation;
+            } else {
+                $data['finalCalculation'] = []; // Pastikan ini tidak null
+            }
+            
+            // var_dump($data);
+            // die();
             $this->template->load('template','enterolert_hemoflow/index_det', $data);
 
         }
@@ -107,7 +116,7 @@ class Enterolert_hemoflow extends CI_Controller
         $idx_one_water_sample = $this->input->post('idx_one_water_sample', TRUE);
         $id_person = $this->input->post('id_person', TRUE);
         $id_sampletype = $this->input->post('id_sampletype', TRUE);
-        $enterolert_barcode = $this->input->post('enterolert_barcode', TRUE);
+        $enterolert_hemoflow_barcode = $this->input->post('enterolert_hemoflow_barcode', TRUE);
         $date_sample = $this->input->post('date_sample', TRUE);
         $time_sample = $this->input->post('time_sample', TRUE);
         $volume_bottle = $this->input->post('volume_bottle', TRUE);
@@ -121,7 +130,7 @@ class Enterolert_hemoflow extends CI_Controller
                 'id_one_water_sample' => $id_one_water_sample,
                 'id_person' => $id_person,
                 'id_sampletype' => $id_sampletype,
-                'enterolert_barcode' => $enterolert_barcode,
+                'enterolert_hemoflow_barcode' => $enterolert_hemoflow_barcode,
                 'date_sample' => $date_sample,
                 'time_sample' => $time_sample,
                 'volume_bottle' => $volume_bottle,
@@ -144,7 +153,7 @@ class Enterolert_hemoflow extends CI_Controller
                 'id_one_water_sample' => $idx_one_water_sample,
                 'id_person' => $id_person,
                 'id_sampletype' => $id_sampletype,
-                'enterolert_barcode' => $enterolert_barcode,
+                'enterolert_hemoflow_barcode' => $enterolert_hemoflow_barcode,
                 'date_sample' => $date_sample,
                 'time_sample' => $time_sample,
                 'volume_bottle' => $volume_bottle,
@@ -172,10 +181,10 @@ class Enterolert_hemoflow extends CI_Controller
             $dt = new DateTime();
             // var_dump($id_moisture);
             // die();
-        
-            $id_enterolert_in = $this->input->post('idx_enterolert_in', TRUE);
-            $id_enterolert_out = $this->input->post('id_enterolert_out', TRUE);
-            $enterolert_barcode = $this->input->post('enterolert_barcodex', TRUE);
+
+            $id_enterolert_hemoflow = $this->input->post('idx_enterolert_hemoflow', TRUE);
+            $id_enterolert_hemoflow_detail = $this->input->post('id_enterolert_hemoflow_detail', TRUE);
+            $enterolert_hemoflow_barcode = $this->input->post('enterolert_hemoflow_barcodex', TRUE);
             $date_sample = $this->input->post('date_sample_out', TRUE);
             $time_sample = $this->input->post('time_sample_out', TRUE);
             $enterococcus_largewells = $this->input->post('enterococcus_largewells', TRUE);
@@ -188,8 +197,8 @@ class Enterolert_hemoflow extends CI_Controller
         
             if($mode_det == "insert") {
                 $data = array(
-                    'id_enterolert_in' => $id_enterolert_in,
-                    'enterolert_barcode' => $enterolert_barcode,
+                    'id_enterolert_hemoflow' => $id_enterolert_hemoflow,
+                    'enterolert_hemoflow_barcode' => $enterolert_hemoflow_barcode,
                     'date_sample' => $date_sample,
                     'time_sample' => $time_sample,
                     'enterococcus_largewells' => $enterococcus_largewells,
@@ -215,7 +224,7 @@ class Enterolert_hemoflow extends CI_Controller
                 }
             } else if($mode_det == "edit") {
                 $data = array(
-                    'enterolert_barcode' => $enterolert_barcode,
+                    'enterolert_hemoflow_barcode' => $enterolert_hemoflow_barcode,
                     'date_sample' => $date_sample,
                     'time_sample' => $time_sample,
                     'enterococcus_largewells' => $enterococcus_largewells,
@@ -232,7 +241,7 @@ class Enterolert_hemoflow extends CI_Controller
                 );
                 // var_dump($data);
                 // die();
-                $result = $this->Enterolert_hemoflow_model->update_det($id_enterolert_out, $data);
+                $result = $this->Enterolert_hemoflow_model->update_det($id_enterolert_hemoflow_detail, $data);
                 if ($result) {
                     $this->session->set_flashdata('message', 'Update Record Success');
                 } else {
@@ -265,7 +274,7 @@ class Enterolert_hemoflow extends CI_Controller
     {
         $row = $this->Enterolert_hemoflow_model->get_by_id_detail($id);
         if ($row) {
-            $id_parent = $row->id_enterolert_in; // Retrieve project_id before updating the record
+            $id_parent = $row->id_enterolert_hemoflow; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
@@ -321,8 +330,8 @@ class Enterolert_hemoflow extends CI_Controller
         $numrow = 2;
         foreach($moisture as $data){ 
 
-            if (property_exists($data, 'id_enterolert_in')) {
-                $sheet->setCellValue('A'.$numrow, $data->id_enterolert_in);
+            if (property_exists($data, 'id_enterolert_hemoflow')) {
+                $sheet->setCellValue('A'.$numrow, $data->id_enterolert_hemoflow);
             } else {
                 $sheet->setCellValue('A'.$numrow, '');
             }
@@ -345,8 +354,8 @@ class Enterolert_hemoflow extends CI_Controller
                 $sheet->setCellValue('D'.$numrow, '');
             }
     
-            if (property_exists($data, 'enterolert_barcode')) {
-                $sheet->setCellValue('E'.$numrow, $data->enterolert_barcode);
+            if (property_exists($data, 'enterolert_hemoflow_barcode')) {
+                $sheet->setCellValue('E'.$numrow, $data->enterolert_hemoflow_barcode);
             } else {
                 $sheet->setCellValue('E'.$numrow, '');
             }
@@ -375,14 +384,14 @@ class Enterolert_hemoflow extends CI_Controller
                 $sheet->setCellValue('I'.$numrow, '');
             }
 
-            if (property_exists($data, 'id_enterolert_out')) {
-                $sheet->setCellValue('J'.$numrow, $data->id_enterolert_out);
+            if (property_exists($data, 'id_enterolert_hemoflow_detail')) {
+                $sheet->setCellValue('J'.$numrow, $data->id_enterolert_hemoflow_detail);
             } else {
                 $sheet->setCellValue('J'.$numrow, '');
             }
-    
-            if (property_exists($data, 'enterolert_barcode')) {
-                $sheet->setCellValue('K'.$numrow, $data->enterolert_barcode);
+
+            if (property_exists($data, 'enterolert_hemoflow_barcode')) {
+                $sheet->setCellValue('K'.$numrow, $data->enterolert_hemoflow_barcode);
             } else {
                 $sheet->setCellValue('K'.$numrow, '');
             }

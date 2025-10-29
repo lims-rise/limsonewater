@@ -4,7 +4,7 @@
             <div class="col-xs-12">
                 <div class="box box-black box-solid">
                     <div class="box-header">
-                        <h3 class="box-title">Processing | Colilert Idexx Water | In </h3>
+                        <h3 class="box-title">Processing | Colilert Hemoflow</h3>
                     </div>
                     <div class="box-body">
                         <div style="padding-bottom: 10px;">
@@ -14,7 +14,7 @@
                                         echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Colilert Idexx - Water</button>";
                                     }
                             ?>         -->
-                            <?php echo anchor(site_url('Colilert_idexx_water/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
+                            <?php echo anchor(site_url('Colilert_hemoflow/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
                         </div>
                             <div class="table-responsive">
                                 <table class="table ho table-bordered table-striped tbody" id="mytable" style="width:100%">
@@ -66,10 +66,10 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
                         <h4 class="modal-title" id="modal-title">Moisture Content | New</h4>
                     </div>
-                    <form id="formSample"  action= <?php echo site_url('Colilert_idexx_water/save') ?> method="post" class="form-horizontal">
+                    <form id="formSample"  action= <?php echo site_url('Colilert_hemoflow/save') ?> method="post" class="form-horizontal">
                         <div class="modal-body">
                             <input id="mode" name="mode" type="hidden" class="form-control input-sm">
-                            <input id="idx_colilert_water_in" name="idx_colilert_water_in" type="hidden" class="form-control input-sm">
+                            <input id="idx_colilert_hemoflow" name="idx_colilert_hemoflow" type="hidden" class="form-control input-sm">
                             
                             <!-- <div class="form-group">
                                 <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
@@ -125,9 +125,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="colilert_barcode" class="col-sm-4 control-label">Coliloert Barcode</label>
+                                <label for="colilert_hemoflow_barcode" class="col-sm-4 control-label">Coliloert Barcode</label>
                                 <div class="col-sm-8">
-                                    <input id="colilert_barcode" name="colilert_barcode" placeholder="Coliloert Barcode" type="text" class="form-control" required>
+                                    <input id="colilert_hemoflow_barcode" name="colilert_hemoflow_barcode" placeholder="Coliloert Barcode" type="text" class="form-control" required>
                                     <!-- <div class="val1tip"></div> -->
                                 </div>
                             </div>
@@ -250,7 +250,7 @@
         if (barcodeFromUrl) {
             handleSampleTypeInput('#sampletype');
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> Colilert Idexx Water | New<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Colilert Hemoflow | New<span id="my-another-cool-loader"></span>');
             $('#id_one_water_sample').attr('readonly', true);
             $('#id_one_water_sample').val(idOneWaterSampleFromUrl || '');  // Set ID jika ada
             // $('#id_one_water_sample').val('');
@@ -261,8 +261,8 @@
             $('#sampletype').attr('readonly', true);
             // $('#wet_weight').val('');
             // $('#elution_volume').val('');
-            $('#colilert_barcode').val(barcodeFromUrl);
-            $('#colilert_barcode').attr('readonly', true);
+            $('#colilert_hemoflow_barcode').val(barcodeFromUrl);
+            $('#colilert_hemoflow_barcode').attr('readonly', true);
             $('#volume_bottle').val('');
             $('#dilution').val('');
             $('#dilution').attr('readonly', true);
@@ -316,7 +316,7 @@
         // Handle the delete button click
         $(document).on('click', '.btn_delete', function() {
             let id = $(this).data('id');
-            let url = '<?php echo site_url('Colilert_idexx_water/delete'); ?>/' + id;
+            let url = '<?php echo site_url('Colilert_hemoflow/delete'); ?>/' + id;
             $('#confirm-modal #id').text(id);
             console.log(id);
             showConfirmation(url);
@@ -415,7 +415,7 @@
             id_one_water_sample = $('#id_one_water_sample').val();
             $.ajax({
                 type: "GET",
-                url: "Colilert_idexx_water/barcode_restrict?id1="+id_one_water_sample,
+                url: "Colilert_hemoflow/barcode_restrict?id1="+id_one_water_sample,
                 dataType: "json",
                 success: function(data) {
                     if (data.length > 0) {
@@ -491,11 +491,11 @@
         //     }, 3000);                            
         // });
         
-        // $('#colilert_barcode').on("change", function() {
-        //     let colilertBarcode = $('#colilert_barcode').val();
+        // $('#colilert_hemoflow_barcode').on("change", function() {
+        //     let colilertBarcode = $('#colilert_hemoflow_barcode').val();
         //     $.ajax({
         //         type: "GET",
-        //         url: "Colilert_idexx_water/validateColilertBarcode",
+        //         url: "Colilert_hemoflow/validateColilertBarcode",
         //         data: { id: colilertBarcode },
         //         dataType: "json",
         //         success: function(data) {
@@ -503,15 +503,15 @@
         //                 let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Enterolert Barcode <strong> ' + colilertBarcode +'</strong> is already in the system !</span>');
         //                 $('.val1tip').tooltipster('content', tip);
         //                 $('.val1tip').tooltipster('show');
-        //                 $('#colilert_barcode').focus();
-        //                 $('#colilert_barcode').val('');       
-        //                 $('#colilert_barcode').css({'background-color' : '#FFE6E7'});
+        //                 $('#colilert_hemoflow_barcode').focus();
+        //                 $('#colilert_hemoflow_barcode').val('');       
+        //                 $('#colilert_hemoflow_barcode').css({'background-color' : '#FFE6E7'});
         //                 setTimeout(function(){
-        //                     $('#colilert_barcode').css({'background-color' : '#FFFFFF'});
+        //                     $('#colilert_hemoflow_barcode').css({'background-color' : '#FFFFFF'});
         //                     setTimeout(function(){
-        //                         $('#colilert_barcode').css({'background-color' : '#FFE6E7'});
+        //                         $('#colilert_hemoflow_barcode').css({'background-color' : '#FFE6E7'});
         //                         setTimeout(function(){
-        //                             $('#colilert_barcode').css({'background-color' : '#FFFFFF'});
+        //                             $('#colilert_hemoflow_barcode').css({'background-color' : '#FFFFFF'});
         //                         }, 300);                            
         //                     }, 300);
         //                 }, 300);
@@ -519,15 +519,15 @@
         //                 let tip = $('<span><i class="fa fa-exclamation-triangle"></i>  Wrong type <strong>' + colilertBarcode +'</strong> Input must not contain symbols !</span>');
         //                 $('.val1tip').tooltipster('content', tip);
         //                 $('.val1tip').tooltipster('show');
-        //                 $('#colilert_barcode').focus();
-        //                 $('#colilert_barcode').val('');
-        //                 $('#colilert_barcode').css({'background-color' : '#FFE6E7'});
+        //                 $('#colilert_hemoflow_barcode').focus();
+        //                 $('#colilert_hemoflow_barcode').val('');
+        //                 $('#colilert_hemoflow_barcode').css({'background-color' : '#FFE6E7'});
         //                 setTimeout(function(){
-        //                     $('#colilert_barcode').css({'background-color' : '#FFFFFF'});
+        //                     $('#colilert_hemoflow_barcode').css({'background-color' : '#FFFFFF'});
         //                     setTimeout(function(){
-        //                         $('#colilert_barcode').css({'background-color' : '#FFE6E7'});
+        //                         $('#colilert_hemoflow_barcode').css({'background-color' : '#FFE6E7'});
         //                         setTimeout(function(){
-        //                             $('#colilert_barcode').css({'background-color' : '#FFFFFF'});
+        //                             $('#colilert_hemoflow_barcode').css({'background-color' : '#FFFFFF'});
         //                         }, 300);                            
         //                     }, 300);
         //                 }, 300);
@@ -567,12 +567,12 @@
             // select: true;
             processing: true,
             serverSide: true,
-            ajax: {"url": "Colilert_idexx_water/json", "type": "POST"},
+            ajax: {"url": "Colilert_hemoflow/json", "type": "POST"},
             columns: [
                 {"data": "id_one_water_sample"},
                 {"data": "initial"},
                 {"data": "sampletype"},
-                {"data": "colilert_barcode"},
+                {"data": "colilert_hemoflow_barcode"},
                 {"data": "date_sample"},
                 {"data": "time_sample"},
                 // {"data": "wet_weight"},
@@ -629,14 +629,14 @@
         // Event handler untuk klik pada baris
         $('#mytable tbody').on('click', 'tr', function() {
             let rowData = table.row(this).data();
-            let rowId = rowData.id_colilert_in;
+            let rowId = rowData.id_colilert_hemoflow;
             $(this).removeClass('highlight');
             $(this).removeClass('highlight-edit');
         });
         $('#addtombol').click(function() {
             handleSampleTypeInput('#sampletype');
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> Colilert Idexx Water | New<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Colilert Hemoflow | New<span id="my-another-cool-loader"></span>');
             $('#id_one_water_sample').val('');
             $('#id_one_water_sample').show();
             $('#idx_one_water_sample').hide();
@@ -645,7 +645,7 @@
             $('#sampletype').attr('readonly', true);
             // $('#wet_weight').val('');
             // $('#elution_volume').val('');
-            $('#colilert_barcode').val('');
+            $('#colilert_hemoflow_barcode').val('');
             $('#volume_bottle').val('');
             $('#dilution').val('');
             $('#dilution').attr('readonly', true);
@@ -657,8 +657,8 @@
             let data = table.row(tr).data();
             console.log(data);
             $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Colilert Idexx Water | Update<span id="my-another-cool-loader"></span>');
-            $('#idx_colilert_water_in').val(data.id_colilert_in);
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Colilert Hemoflow | Update<span id="my-another-cool-loader"></span>');
+            $('#idx_colilert_hemoflow').val(data.id_colilert_hemoflow);
             $('#id_one_water_sample').hide();
             // $('#idx_one_water_sample').show();
             $('#idx_one_water_sample').attr('readonly', true);
@@ -667,8 +667,8 @@
             $('#id_sampletype').val(data.id_sampletype);
             $('#sampletype').val(data.sampletype);
             $('#sampletype').attr('readonly', true);
-            $('#colilert_barcode').val(data.colilert_barcode);
-            $('#colilert_barcode').attr('readonly', true);
+            $('#colilert_hemoflow_barcode').val(data.colilert_hemoflow_barcode);
+            $('#colilert_hemoflow_barcode').attr('readonly', true);
             $('#date_sample').val(data.date_sample);
             $('#time_sample').val(data.time_sample);
             // $('#wet_weight').val(data.wet_weight);

@@ -475,7 +475,8 @@ class Extraction_liquid_model extends CI_Model
             pos.columns1,
             pos.rows1,  
             eld.comments,
-            eld.user_created
+            eld.user_created,
+            eld.other_kit
         ');
         $this->db->from('extraction_liquid_detail eld');
         $this->db->join('sample_reception_sample srs', 'eld.id_one_water_sample = srs.id_one_water_sample', 'left');

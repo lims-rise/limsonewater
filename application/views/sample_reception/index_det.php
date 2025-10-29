@@ -252,6 +252,63 @@
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 
+<!-- MODAL SEQUENCE DATA - Only for Extraction Culture -->
+<div class="modal fade" id="sequence-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #3c8dbc; color: white;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
+                <h4 class="modal-title"><i class="fa fa-dna"></i> Extraction Culture | Sequence Data Entry</h4>
+            </div>
+            <form id="sequenceForm" method="post" class="form-horizontal">
+                <div class="modal-body">
+                    <input type="hidden" id="seq_id_one_water_sample" name="id_one_water_sample">
+                    
+                    <div class="form-group">
+                        <label for="sequenceCheckbox" class="col-sm-4 control-label">Sequence</label>
+                        <div class="col-sm-8" style="padding-top: 7px;">
+                            <input type="hidden" id="sequenceHidden" name="sequence" value="0">
+                            <input type="checkbox" id="sequenceCheckbox" name="sequence" value="1">
+                            <span style="margin-left: 10px; font-size: 12px; color: #666;">Check to show sequence fields</span>
+                        </div>
+                    </div>
+
+                    <div id="sequenceFields" style="display: none;">
+                        <div class="form-group">
+                            <label for="sequence_id" class="col-sm-4 control-label">Sequence Type</label>
+                            <div class="col-sm-8">
+                                <select id="sequence_id" name="sequence_id" class="form-control">
+                                    <option value="" disabled selected>-- Select Sequence Type --</option>
+                                    <?php
+                                        if (isset($sequencetype) && is_array($sequencetype)) {
+                                            foreach($sequencetype as $row){
+                                                echo "<option value='".$row['sequence_id']."'>".$row['sequence_type']."</option>";
+                                            }
+                                        }
+                                    ?>
+                                    <option value="other">Other</option>
+                                </select>
+                                <input type="text" id="other_sequence_name" name="other_sequence_name" class="form-control" placeholder="Enter new sequence type" style="display:none; margin-top:5px;">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="species_id" class="col-sm-4 control-label">Species ID</label>
+                            <div class="col-sm-8">
+                                <input id="species_id" name="species_id" placeholder="Enter Species ID" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer clearfix">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save Sequence</button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <style>
 	/* Flexbox untuk memastikan elemen berada di dalam satu baris */
 .modal-footer-content {
@@ -406,6 +463,34 @@
 .futuristic-button-warning:active {
 	transform: translateY(0px) !important;
 	box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4) !important;
+}
+
+.futuristic-button-sequence {
+	border-radius: 25px !important;
+	padding: 10px 25px !important;
+	font-weight: 600 !important;
+	font-size: 14px !important;
+	border: none !important;
+background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
+
+
+	color: white !important;
+	box-shadow: 0 8px 25px rgba(156, 39, 176, 0.4) !important;
+	transition: all 0.3s ease !important;
+	text-transform: none !important;
+	min-width: 150px !important;
+	max-width: 170px !important;
+}
+
+.futuristic-button-sequence:hover {
+	transform: translateY(-2px) !important;
+	box-shadow: 0 12px 35px rgba(156, 39, 176, 0.6) !important;
+	background: linear-gradient(135deg, #8e24aa 0%, #5e35b1 100%) !important;
+}
+
+.futuristic-button-sequence:active {
+	transform: translateY(0px) !important;
+	box-shadow: 0 6px 20px rgba(156, 39, 176, 0.4) !important;
 }
 
 /* Animation classes */
@@ -818,8 +903,11 @@
 						Swal.close(); // Close loading indicator
 						
 						if (response.status === 'success' && response.exists) {
+							// Check if this is extraction_culture testing type
+							let isExtractionCulture = testingType.toLowerCase().includes('extraction') && testingType.toLowerCase().includes('culture');
+							
 							// Data already exists, show info modal with futuristic design
-							Swal.fire({
+							let sweetAlertConfig = {
 								icon: 'success',
 								title: '<span style="color: #2E86AB; font-weight: 600;">✨ Data Already Available</span>',
 								html: `
@@ -904,6 +992,33 @@
 												<p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px;">Data already exists in the system</p>
 											</div>
 										</div>
+										${isExtractionCulture ? `
+										<div style="
+											display: flex;
+											align-items: center;
+											background: rgba(156, 39, 176, 0.2);
+											border-radius: 10px;
+											padding: 15px;
+											margin-top: 15px;
+											border: 2px solid rgba(156, 39, 176, 0.3);
+										">
+											<div style="
+												width: 50px;
+												height: 50px;
+												background: rgba(156, 39, 176, 0.3);
+												border-radius: 50%;
+												display: flex;
+												align-items: center;
+												justify-content: center;
+												margin-right: 15px;
+												font-size: 24px;
+											">🧬</div>
+											<div style="text-align: left;">
+												<h4 style="margin: 0; font-size: 18px; font-weight: 600;">Sequence Data</h4>
+												<p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px;">Add sequence information for this sample</p>
+											</div>
+										</div>
+										` : ''}
 									</div>
 								`,
 								confirmButtonText: '✨ Got it!',
@@ -918,6 +1033,72 @@
 								},
 								hideClass: {
 									popup: 'animate__animated animate__fadeOutDown animate__faster'
+								}
+							};
+
+							// Add sequence button only for extraction_culture
+							if (isExtractionCulture) {
+								sweetAlertConfig.showCancelButton = true;
+								sweetAlertConfig.cancelButtonText = '🧬 Add Sequence';
+								sweetAlertConfig.cancelButtonColor = '#9c27b0';
+								sweetAlertConfig.customClass.cancelButton = 'futuristic-button-sequence';
+								sweetAlertConfig.buttonsStyling = false;
+							}
+
+							Swal.fire(sweetAlertConfig).then((result) => {
+								if (result.dismiss === Swal.DismissReason.cancel && isExtractionCulture) {
+									// Load existing sequence data if any
+									$.ajax({
+										url: '<?php echo site_url('Sample_reception/get_sequence_data'); ?>',
+										type: 'POST',
+										data: { id_one_water_sample: idOneWaterSample },
+										dataType: 'json',
+										success: function(seqResponse) {
+											// Set sample ID
+											$('#seq_id_one_water_sample').val(idOneWaterSample);
+											
+											if (seqResponse.status === 'success' && seqResponse.data) {
+												// Pre-populate form with existing data
+												let data = seqResponse.data;
+												
+												// Check sequence checkbox ONLY based on sequence field value from database
+												let isSequenceEnabled = (data.sequence == '1');
+												$('#sequenceCheckbox').prop('checked', isSequenceEnabled);
+												
+												// Set hidden field state based on checkbox
+												if (isSequenceEnabled) {
+													$('#sequenceHidden').prop('disabled', true);
+													$('#sequenceFields').show();
+												} else {
+													$('#sequenceHidden').prop('disabled', false);
+													$('#sequenceFields').hide();
+												}
+												
+												if (data.sequence_id) {
+													$('#sequence_id').val(data.sequence_id);
+												}
+												if (data.species_id) {
+													$('#species_id').val(data.species_id);
+												}
+												if (data.custom_sequence_type) {
+													$('#sequence_id').val('other').trigger('change');
+													$('#other_sequence_name').val(data.custom_sequence_type);
+												}
+											}
+											
+											// Open sequence modal
+											$('#sequence-modal').modal('show');
+										},
+										error: function() {
+											// Even if error, still open modal
+											$('#seq_id_one_water_sample').val(idOneWaterSample);
+											// Reset for new sample (no data)
+											$('#sequenceCheckbox').prop('checked', false);
+											$('#sequenceHidden').prop('disabled', false);
+											$('#sequenceFields').hide();
+											$('#sequence-modal').modal('show');
+										}
+									});
 								}
 							});
 						} else {
@@ -1344,6 +1525,215 @@
 
 				$('#compose-modal').modal('show');
 			}
+		});
+
+		// ============ SEQUENCE MODAL HANDLERS ============
+		
+		// Initialize sequence hidden field state on page load
+		$(document).ready(function() {
+			if ($('#sequenceCheckbox').is(':checked')) {
+				$('#sequenceHidden').prop('disabled', true);
+			} else {
+				$('#sequenceHidden').prop('disabled', false);
+			}
+		});
+		
+		// Handle sequence checkbox toggle (using hidden field pattern like extraction culture)
+		$('#sequenceCheckbox').change(function() {
+			if ($(this).is(':checked')) {
+				$('#sequenceFields').show();
+				$('#sequenceHidden').prop('disabled', true); // Disable hidden when checkbox checked
+				$('#sequenceHidden').val('1'); // Set hidden to 1 as backup
+				$('#sequence_id').prop('required', false); // Don't make required to allow flexibility
+			} else {
+				$('#sequenceFields').hide();
+				$('#sequenceHidden').prop('disabled', false); // Enable hidden when checkbox unchecked  
+				$('#sequenceHidden').val('0'); // Explicitly set to 0
+				$('#sequence_id').prop('required', false);
+				$('#other_sequence_name').prop('required', false);
+				// Clear all sequence-related fields when unchecked
+				$('#species_id').val('');
+				$('#sequence_id').val('').trigger('change'); // Trigger change to hide other field
+				$('#other_sequence_name').hide().val('');
+			}
+		});
+
+		// Handle sequence type dropdown change
+		$('#sequence_id').change(function() {
+			if ($(this).val() === 'other') {
+				$('#other_sequence_name').show().prop('required', true);
+			} else {
+				$('#other_sequence_name').hide().prop('required', false).val('');
+			}
+		});
+
+		// Handle sequence form submission
+		$('#sequenceForm').on('submit', function(e) {
+			e.preventDefault();
+			
+			// Get current checkbox state
+			let isSequenceChecked = $('#sequenceCheckbox').is(':checked');
+			
+			// Basic validation - only check required fields if sequence is checked
+			if (isSequenceChecked) {
+				let sequenceId = $('#sequence_id').val();
+				let otherSequenceName = $('#other_sequence_name').val();
+				
+				// If sequence is checked, user must select a sequence type OR provide custom name
+				if (!sequenceId && !otherSequenceName) {
+					Swal.fire({
+						icon: 'warning',
+						title: 'Validation Error',
+						text: 'Please select a sequence type or enter a custom sequence name.',
+						confirmButtonColor: '#f39c12'
+					});
+					return false;
+				}
+			}
+			
+			let formData = {
+				id_one_water_sample: $('#seq_id_one_water_sample').val(),
+				sequence_id: $('#sequence_id').val(),
+				other_sequence_name: $('#other_sequence_name').val(),
+				species_id: $('#species_id').val()
+			};
+
+			// Get sequence value from form (hidden field pattern)
+			// This will automatically be 1 if checkbox checked, 0 if unchecked
+			let formElement = document.getElementById('sequenceForm');
+			let formDataObj = new FormData(formElement);
+			formData.sequence = formDataObj.get('sequence');
+
+			// Show loading
+			Swal.fire({
+				title: '<span style="color: #9c27b0; font-weight: 600;">🧬 Saving Sequence Data...</span>',
+				html: `
+					<div style="
+						background: linear-gradient(135deg, #9c27b0 0%, #673ab7 100%);
+						border-radius: 15px;
+						padding: 30px;
+						margin: 15px 0;
+						color: white;
+						box-shadow: 0 8px 32px rgba(156, 39, 176, 0.3);
+						backdrop-filter: blur(10px);
+						border: 1px solid rgba(255, 255, 255, 0.2);
+						text-align: center;
+					">
+						<div style="
+							width: 60px;
+							height: 60px;
+							background: rgba(255, 255, 255, 0.2);
+							border-radius: 50%;
+							display: inline-flex;
+							align-items: center;
+							justify-content: center;
+							margin-bottom: 20px;
+							animation: pulse 2s infinite;
+							font-size: 28px;
+						">🧬</div>
+						<h4 style="margin: 0 0 10px 0; font-size: 20px; font-weight: 600;">Processing Sequence Data</h4>
+						<p style="margin: 0; opacity: 0.9; font-size: 14px;">
+							Saving sequence information to extraction culture plate...
+						</p>
+					</div>
+				`,
+				allowOutsideClick: false,
+				showConfirmButton: false,
+				customClass: {
+					popup: 'futuristic-popup',
+					title: 'futuristic-title'
+				}
+			});
+
+			$.ajax({
+				url: '<?php echo site_url('Sample_reception/save_sequence_data'); ?>',
+				type: 'POST',
+				data: formData,
+				dataType: 'json',
+				success: function(response) {
+					Swal.close();
+					
+					if (response.status === 'success') {
+						let actionIcon = response.action === 'updated' ? '🔄' : '✅';
+						let actionText = response.action === 'updated' ? 'Updated' : 'Saved';
+						let actionColor = response.action === 'updated' ? '#3498db' : '#27ae60';
+						
+						Swal.fire({
+							icon: 'success',
+							title: `<span style="color: ${actionColor}; font-weight: 600;">${actionIcon} Sequence Data ${actionText}!</span>`,
+							html: `
+								<div style="
+									background: linear-gradient(135deg, ${actionColor} 0%, ${response.action === 'updated' ? '#2980b9' : '#2ecc71'} 100%);
+									border-radius: 15px;
+									padding: 25px;
+									margin: 15px 0;
+									color: white;
+									box-shadow: 0 8px 32px rgba(${response.action === 'updated' ? '52, 152, 219' : '39, 174, 96'}, 0.3);
+									backdrop-filter: blur(10px);
+									border: 1px solid rgba(255, 255, 255, 0.2);
+								">
+									<div style="text-align: center;">
+										<div style="
+											width: 80px;
+											height: 80px;
+											background: rgba(255, 255, 255, 0.2);
+											border-radius: 50%;
+											display: inline-flex;
+											align-items: center;
+											justify-content: center;
+											margin-bottom: 20px;
+											font-size: 40px;
+										">${actionIcon}</div>
+										<h4 style="margin: 0 0 15px 0; font-size: 20px; font-weight: 600;">Sequence Data Successfully ${actionText}</h4>
+										<p style="margin: 0; opacity: 0.9; font-size: 14px;">
+											Sample: ${formData.id_one_water_sample}
+										</p>
+										<p style="margin: 5px 0 0 0; opacity: 0.8; font-size: 12px;">
+											Action: ${response.action === 'updated' ? 'Data was updated with new information' : 'New sequence data was created'}
+										</p>
+									</div>
+								</div>
+							`,
+							confirmButtonText: '🎉 Great!',
+							confirmButtonColor: actionColor,
+							customClass: {
+								popup: 'futuristic-popup',
+								title: 'futuristic-title',
+								confirmButton: 'futuristic-button'
+							}
+						});
+						
+						$('#sequence-modal').modal('hide');
+						// Reset form
+						$('#sequenceForm')[0].reset();
+						$('#sequenceCheckbox').prop('checked', false).trigger('change');
+						
+					} else {
+						
+						Swal.fire({
+							icon: 'error',
+							title: '<span style="color: #e74c3c; font-weight: 600;">❌ Save Failed</span>',
+							text: response.message || 'Could not save sequence data',
+							confirmButtonColor: '#e74c3c'
+						});
+					}
+				},
+				error: function() {
+					Swal.close();
+					Swal.fire({
+						icon: 'error',
+						title: '<span style="color: #e74c3c; font-weight: 600;">❌ Connection Error</span>',
+						text: 'Could not connect to server. Please try again.',
+						confirmButtonColor: '#e74c3c'
+					});
+				}
+			});
+		});
+
+		// Reset sequence modal when closed
+		$('#sequence-modal').on('hidden.bs.modal', function () {
+			$('#sequenceForm')[0].reset();
+			$('#sequenceCheckbox').prop('checked', false).trigger('change');
 		});
 
 	});

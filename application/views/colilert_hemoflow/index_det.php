@@ -2,11 +2,11 @@
 	<section class="content">
 		<div class="box box-black box-solid">
 			<div class="box-header with-border">
-				<h3 class="box-title">Processing |  Colilert Idexx Water | Out</h3>
+				<h3 class="box-title">Processing |  Colilert Hemoflow</h3>
 			</div>
 				<form role="form"  id="formKeg" method="post" class="form-horizontal">
 					<div class="box-body">
-						<input id="id_colilert_in" name="id_colilert_in" type="hidden" class="form-control input-sm" value="<?php echo $id_colilert_in ?>">
+						<input id="id_colilert_hemoflow" name="id_colilert_hemoflow" type="hidden" class="form-control input-sm" value="<?php echo $id_colilert_hemoflow ?>">
 
 						<div class="form-group">
 							<label for="id_one_water_sample" class="col-sm-2 control-label">One Water Sample ID</label>
@@ -26,9 +26,9 @@
 								<input class="form-control " id="sampletype" name="sampletype" value="<?php echo $sampletype ?>"  disabled>
 							</div>
 
-                            <label for="colilert_barcode" class="col-sm-2 control-label">Colilert Barcode</label>
+                            <label for="colilert_hemoflow_barcode" class="col-sm-2 control-label">Colilert Barcode</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="colilert_barcode" name="colilert_barcode" value="<?php echo $colilert_barcode ?>"  disabled>
+								<input class="form-control " id="colilert_hemoflow_barcode" name="colilert_hemoflow_barcode" value="<?php echo $colilert_hemoflow_barcode ?>"  disabled>
 							</div>
 
 						</div>
@@ -105,7 +105,7 @@
                     <div class="col-xs-12"> 
                         <div class="box box-primary box-solid">
                             <div class="box-header">
-                                <h3 class="box-title">Colilert Out</h3>
+                                <h3 class="box-title">Colilert Hemoflow Detail</h3>
                             </div>
 							<div class="box-body pad table-responsive">
 								<?php
@@ -123,10 +123,10 @@
                                             <th>E. Coli large wells</th>
                                             <th>E. Coli small wells</th>
                                             <th>E. Coli (MPN/100mL)</th>
-                                            <th>Lower detection limit MPN/100 mL</th>
+                                            <th>Lower confidence limit MPN/100 mL</th>
                                             <th>Coliforms large wells</th>
                                             <th>Coliforms small wells</th>
-                                            <th>Total Coliforms (MPN/100mL)</th>
+                                            <th>Coliforms (MPN/100mL)</th>
                                             <th>Remarks</th>
                                             <th>Quality Control</th>
                                             <th>Action</th>
@@ -136,11 +136,79 @@
 							</div> <!--/.box-body  -->
                         </div><!-- box box-warning -->
                     </div>  <!--col-xs-12 --> 
+
+                    <div class="col-xs-12">
+                        <div class="box box-primary box-solid">
+                            <div class="box-header">
+                                <h3 class="box-title">Final Calculation</h3>
+                            </div>
+                            <div class="box-body pad">
+                                <!-- <div style="padding-bottom: 10px;">
+                                    <button class="btn btn-success" id="exportBtn">
+                                        <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS
+                                    </button>
+                                    <?php
+                                        $lvl = $this->session->userdata('id_user_level');
+                                        if ($lvl != 4){
+                                            echo '<button class="btn btn-primary" id="calculateMpnBtn" style="margin-left: 10px; position: relative;">
+                                                    <i class="fa fa-calculator" aria-hidden="true"></i> Calculate MPN
+                                                    <span id="mpnUpdateBadge" class="badge badge-warning" style="position: absolute; top: -5px; right: -5px; background-color: #ff6b6b; color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 10px; line-height: 20px; display: none;">!</span>
+                                                  </button>';
+                                        }
+                                    ?>
+                                </div> -->
+                                <input id="id_colilert_hemoflow" name="id_colilert_hemoflow" type="hidden" class="form-control input-sm" value="<?php echo $id_colilert_hemoflow ?>">
+
+                                <div id="content-final-calculation" class="table-responsive">
+                                    <table id="exampleFinalCalculation" class="table display table-bordered table-striped" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>ID One Water Sample</th>
+                                                <th>Enterolert Hemoflow Barcode</th>
+                                                <th>Initial</th>
+                                                <th>Sample Type</th>
+                                                <th>Volume Filtered (L)</th>
+                                                <th>Volume Eluted (mL)</th>
+                                                <th>Total E. coli</th>
+                                                <th>E. coli (MPN/100ML)</th>
+                                                <th>Lower Confidence Limit MPN/100mL</th>
+                                                <th>Total Coliforms</th>
+                                                <th>Coliforms (MPN/100mL)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php if (!empty($finalCalculation)): ?>
+                                                <?php foreach ($finalCalculation as $calculation): ?>
+                                                    <tr>
+                                                        <td><?= htmlspecialchars($calculation['id_one_water_sample']) ?></td>
+                                                        <td><?= htmlspecialchars($calculation['colilert_hemoflow_barcode']) ?></td>
+                                                        <td><?= htmlspecialchars($calculation['initial']) ?></td>
+                                                        <td><?= htmlspecialchars($calculation['sampletype'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['volume_filter'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['volume_eluted'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['total_ecoli'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['ecolimpn'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['lowermpn'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['totalcoliforms'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['coliformmpn'] ?? '-') ?></td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            <?php else: ?>
+                                                <tr>
+                                                    <td colspan="100%" style="text-align: center">No data available</td>
+                                                </tr>
+                                            <?php endif; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 <!--</div> row -->    
 
 				<div class="form-group">
 					<div class="modal-footer clearfix">
-						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('colilert_idexx_water'); ?>';">
+						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('colilert_hemoflow'); ?>';">
 							<i class="fa fa-times"></i> Close
 						</button>
 					</div>
@@ -159,38 +227,38 @@
                         <h4 class="modal-title" id="modal-title-detail">
 							<span id="my-another-cool-loader"></span></h4>
                     </div>
-                        <form id="formDetail" action=<?php echo site_url('Colilert_idexx_water/savedetail') ?> method="post" class="form-horizontal">
+                        <form id="formDetail" action=<?php echo site_url('Colilert_hemoflow/savedetail') ?> method="post" class="form-horizontal">
                             <div class="modal-body">
                                 <div class="form-group">
                                         <div class="col-sm-9">
                                             <input id="mode_det" name="mode_det" type="hidden" class="form-control input-sm">
-                                            <input id="idx_colilert_in" name="idx_colilert_in" type="hidden" class="form-control input-sm">
-                                            <input id="id_colilert_in" name="id_colilert_in" type="hidden" class="form-control input-sm">
-                                            <input id="id_colilert_out" name="id_colilert_out" type="hidden" class="form-control input-sm">
+                                            <input id="idx_colilert_hemoflow" name="idx_colilert_hemoflow" type="hidden" class="form-control input-sm">
+                                            <input id="id_colilert_hemoflow" name="id_colilert_hemoflow" type="hidden" class="form-control input-sm">
+                                            <input id="id_colilert_hemoflow_detail" name="id_colilert_hemoflow_detail" type="hidden" class="form-control input-sm">
                                             <input id="idx_one_water_sample" name="idx_one_water_sample" type="hidden" class="form-control input-sm">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="colilert_barcodex" class="col-sm-4 control-label">Colilert Barcode</label>
+                                        <label for="colilert_hemoflow_barcodex" class="col-sm-4 control-label">Colilert Barcode</label>
                                         <div class="col-sm-8">
-                                            <input id="colilert_barcodex" name="colilert_barcodex" placeholder="Colilert Barcode" type="text" class="form-control">
+                                            <input id="colilert_hemoflow_barcodex" name="colilert_hemoflow_barcodex" placeholder="Colilert Barcode" type="text" class="form-control">
                                             <div class="val1tip"></div>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="date_sample_out" class="col-sm-4 control-label">Date Sample</label>
+                                        <label for="date_sample_detail" class="col-sm-4 control-label">Date Sample</label>
                                         <div class="col-sm-8">
-                                            <input id="date_sample_out" name="date_sample_out" type="date" class="form-control" placeholder="Date Sample" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
+                                            <input id="date_sample_detail" name="date_sample_detail" type="date" class="form-control" placeholder="Date Sample" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="time_sample_out" class="col-sm-4 control-label">Time Sample</label>
+                                        <label for="time_sample_detail" class="col-sm-4 control-label">Time Sample</label>
                                         <div class="col-sm-8">
                                             <div class="input-group clockpicker">
-                                            <input id="time_sample_out" name="time_sample_out" class="form-control" placeholder="Time Sample" value="<?php 
+                                            <input id="time_sample_detail" name="time_sample_detail" class="form-control" placeholder="Time Sample" value="<?php 
                                             $datetime = new DateTime();
                                             echo $datetime->format( 'H:i' );
                                             ?>">
@@ -224,9 +292,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="lowerdetection" class="col-sm-4 control-label">Lower detection limit MPN/100 mL</label>
+                                        <label for="lowerconfidence" class="col-sm-4 control-label">Lower confidence limit MPN/100 mL</label>
                                         <div class="col-sm-8">
-                                            <input id="lowerdetection" name="lowerdetection" type="text"  placeholder="Lower detection limit MPN/100 mL" class="form-control">
+                                            <input id="lowerconfidence" name="lowerconfidence" type="text"  placeholder="Lower confidence limit MPN/100 mL" class="form-control">
                                             <!-- <div class="val1tip"></div> -->
                                         </div>
                                     </div>
@@ -246,9 +314,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="total_coliforms" class="col-sm-4 control-label">Total Coliforms (MPN/100mL)</label>
+                                        <label for="coliforms" class="col-sm-4 control-label">Coliforms (MPN/100mL)</label>
                                         <div class="col-sm-8">
-                                            <input id="total_coliforms" name="total_coliforms" type="text"  placeholder="Total Coliforms (MPN/100mL)" class="form-control">
+                                            <input id="coliforms" name="coliforms" type="text"  placeholder="Coliforms (MPN/100mL)" class="form-control">
                                             <!-- <div class="val1tip"></div> -->
                                         </div>
                                     </div>
@@ -627,9 +695,9 @@
     let table;
     // let table1;
     let id_one_water_sample = $('#id_one_water_sample').val();
-    let colilertBarcode = $('#colilert_barcode').val();
-    let idColilertIn = $('#id_colilert_in').val();
-    console.log(idColilertIn);
+    let colilertBarcode = $('#colilert_hemoflow_barcode').val();
+    let idColilertHemoflow = $('#id_colilert_hemoflow').val();
+    console.log(idColilertHemoflow);
     let dilution = $('#dilution').val();
     const BASE_URL = '/limsonewater/index.php';
     let result;
@@ -692,7 +760,7 @@
 		// 					.addClass('form-check-label ' + states[currentState].class);
 
 		// 				$.ajax({
-		// 					url: '<?php echo site_url('Colilert_idexx_water/saveReview'); ?>',
+		// 					url: '<?php echo site_url('Colilert_hemoflow/saveReview'); ?>',
 		// 					method: 'POST',
 		// 					data: $('#formSampleReview').serialize(),
 		// 					dataType: 'json',
@@ -922,7 +990,7 @@
 		 */
 		function saveReviewData() {
 			$.ajax({
-				url: '<?php echo site_url('Colilert_idexx_water/saveReview'); ?>',
+				url: '<?php echo site_url('Colilert_hemoflow/saveReview'); ?>',
 				method: 'POST',
 				data: $('#formSampleReview').serialize(),
 				dataType: 'json',
@@ -1013,7 +1081,7 @@
                     console.log('Form data to be sent: ', formData); // Debugging log
 
                     $.ajax({
-                        url: '<?php echo site_url('Colilert_idexx_water/cancelReview'); ?>',
+                        url: '<?php echo site_url('Colilert_hemoflow/cancelReview'); ?>',
                         method: 'POST',
                         data: formData,
                         dataType: 'json',
@@ -1090,7 +1158,7 @@
         function datachart(valueLargeWells, valueSmallWells) {
             $.ajax({
                 type: "GET",
-                url: `${BASE_URL}/Colilert_idexx_water/data_chart?valueLargeWells=`+valueLargeWells+"&valueSmallWells="+valueSmallWells,
+                url: `${BASE_URL}/Colilert_hemoflow/data_chart?valueLargeWells=`+valueLargeWells+"&valueSmallWells="+valueSmallWells,
                 dataType: "json",
                 success: function(data) {
                     console.log('data mpm '+ data);
@@ -1145,27 +1213,27 @@
         // $('#coliforms_largewells').on('change keypress keyup keydown', function(event) {        
         //     let empn = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
         //     if (empn == 'Invalid'){
-        //         $('#total_coliforms').css({'background-color' : '#FFE6E7'});
+        //         $('#coliforms').css({'background-color' : '#FFE6E7'});
         //         $('#coliforms_largewells').val('0');
         //         $('#coliforms_smallwells').val('0');
         //     }
         //     else {
-        //         $('#total_coliforms').css({'background-color' : '#EEEEEE'});
+        //         $('#coliforms').css({'background-color' : '#EEEEEE'});
         //     }
-        //     $("#total_coliforms").val(empn);
+        //     $("#coliforms").val(empn);
         // });
 
         // $('#coliforms_smallwells').on('change keypress keyup keydown', function(event) {        
         //     let empn = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
         //     if (empn == 'Invalid'){
-        //         $('#total_coliforms').css({'background-color' : '#FFE6E7'});
+        //         $('#coliforms').css({'background-color' : '#FFE6E7'});
         //         $('#coliforms_largewells').val('0');
         //         $('#coliforms_smallwells').val('0');
         //     }
         //     else {
-        //         $('#total_coliforms').css({'background-color' : '#EEEEEE'});
+        //         $('#coliforms').css({'background-color' : '#EEEEEE'});
         //     }
-        //     $("#total_coliforms").val(empn);
+        //     $("#coliforms").val(empn);
         // });
 
         function showConfirmationDelete(url) {
@@ -1178,7 +1246,7 @@
             let id = $(this).data('id');
             let url;
             if ($(this).hasClass('btn_delete')) {
-                url = '<?php echo site_url('Colilert_idexx_water/delete_detail'); ?>/' + id;
+                url = '<?php echo site_url('Colilert_hemoflow/delete_detail'); ?>/' + id;
                 $('.modal-title').html('<i class="fa fa-trash"></i> Enterolert Out | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
             } else if ($(this).hasClass('btn_delete72')) {
@@ -1301,18 +1369,18 @@
             paging: false,
             info: false,
             bFilter: false,
-            ajax: {"url": "../../Colilert_idexx_water/subjson?id="+idColilertIn, "type": "POST"},
+            ajax: {"url": "../../Colilert_hemoflow/subjson?id="+idColilertHemoflow, "type": "POST"},
             columns: [
-                {"data": "colilert_barcode"},
+                {"data": "colilert_hemoflow_barcode"},
                 {"data": "date_sample"}, 
                 {"data": "time_sample"}, 
                 {"data": "ecoli_largewells"}, 
                 {"data": "ecoli_smallwells"},
                 {"data": "ecoli"},
-                {"data": "lowerdetection"},
+                {"data": "lowerconfidence"},
                 {"data": "coliforms_largewells"}, 
                 {"data": "coliforms_smallwells"},
-                {"data": "total_coliforms"},
+                {"data": "coliforms"},
                 {"data": "remarks"},
                 {
                     "data": "quality_control",
@@ -1352,16 +1420,16 @@
             $('#mode_det').val('insert');
             $('#modal-title-detail').html('<i class="fa fa-wpforms"></i> Colilert Idexx Out | New <span id="my-another-cool-loader"></span>');
             $('#idx_one_water_sample').val(id_one_water_sample);
-            $('#colilert_barcodex').val(colilertBarcode);
-            $('#colilert_barcodex').attr('readonly', true);
-            $('#idx_colilert_in').val(idColilertIn);
+            $('#colilert_hemoflow_barcodex').val(colilertBarcode);
+            $('#colilert_hemoflow_barcodex').attr('readonly', true);
+            $('#idx_colilert_hemoflow').val(idColilertHemoflow);
             $('#ecoli_largewells').val('0');
             $('#ecoli_smallwells').val('0');
             $('#ecoli').val('');
-            $('#lowerdetection').val('0');
+            $('#lowerconfidence').val('0');
             $('#coliforms_largewells').val('0');
             $('#coliforms_smallwells').val('0');
-            $('#total_coliforms').val('');
+            $('#coliforms').val('');
             $('#remarks').val('');
             // Reset quality control checkbox for new record
             $('#quality_control_ciw').prop('checked', false);
@@ -1376,21 +1444,21 @@
             $('#mode_det').val('edit');
             $('#modal-title-detail').html('<i class="fa fa-pencil-square"></i> Colilert Idexx Out | Update <span id="my-another-cool-loader"></span>');
             $('#idx_one_water_sample').val(id_one_water_sample);
-            $('#idx_colilert_in').val(idColilertIn);
-            $('#id_colilert_out').val(data.id_colilert_out);
-            $('#colilert_barcodex').val(data.colilert_barcode);
-            $('#colilert_barcodex').attr('readonly', true);
-            $('#date_sample_out').val(data.date_sample);
-            $('#time_sample_out').val(data.time_sample);
+            $('#idx_colilert_hemoflow').val(idColilertHemoflow);
+            $('#id_colilert_hemoflow_detail').val(data.id_colilert_hemoflow_detail);
+            $('#colilert_hemoflow_barcodex').val(data.colilert_hemoflow_barcode);
+            $('#colilert_hemoflow_barcodex').attr('readonly', true);
+            $('#date_sample_detail').val(data.date_sample);
+            $('#time_sample_detail').val(data.time_sample);
             $('#ecoli_largewells').val(data.ecoli_largewells);
             $('#ecoli_smallwells').val(data.ecoli_smallwells);
             $('#ecoli').val(data.ecoli);
             // $('#ecoli').attr('readonly', true);
-            $('#lowerdetection').val(data.lowerdetection);
+            $('#lowerconfidence').val(data.lowerconfidence);
             $('#coliforms_largewells').val(data.coliforms_largewells);
             $('#coliforms_smallwells').val(data.coliforms_smallwells);
-            $('#total_coliforms').val(data.total_coliforms);
-            // $('#total_coliforms').attr('readonly', true);
+            $('#coliforms').val(data.coliforms);
+            // $('#coliforms').attr('readonly', true);
             $('#remarks').val(data.remarks);
             // Set quality control checkbox
             $('#quality_control_ciw').prop('checked', data.quality_control == '1');
