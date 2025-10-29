@@ -1025,22 +1025,23 @@ class Sample_reception extends CI_Controller
         try {
             // Get form data
             $id_one_water_sample = $this->input->post('id_one_water_sample');
+            $barcode_sample = $this->input->post('barcode_sample'); // New required field
             $sequence = $this->input->post('sequence'); 
             $sequence_id = $this->input->post('sequence_id');
             $other_sequence_name = $this->input->post('other_sequence_name');
             $species_id = $this->input->post('species_id');
             
             // Validate required fields
-            if (empty($id_one_water_sample)) {
+            if (empty($barcode_sample)) {
                 echo json_encode(array(
                     'status' => 'error',
-                    'message' => 'Sample ID is required'
+                    'message' => 'Barcode Sample is required'
                 ));
                 return;
             }
 
-            // Check if sequence data already exists for this sample
-            $existingData = $this->Sample_reception_model->checkSequenceDataExists($id_one_water_sample);
+            // Check if sequence data already exists for this specific barcode
+            $existingData = $this->Sample_reception_model->getSequenceDataByBarcode($barcode_sample);
             $isUpdate = $existingData !== false;
 
             // Prepare data
@@ -1067,25 +1068,23 @@ class Sample_reception extends CI_Controller
                     $update_data['custom_sequence_type'] = null;
                 }
 
-                // Update existing record
-                $this->db->where('id_one_water_sample', $id_one_water_sample);
+                // Update existing record using barcode_sample as key
+                $this->db->where('barcode_sample', $barcode_sample);
                 $this->db->where('flag', 0);
                 $result = $this->db->update('extraction_culture_plate', $update_data);
                 
                 $action = 'updated';
             } else {
-                // Insert new data
+                // For new data, we need to get the id_one_water_sample from the barcode record
+                // Since barcode already exists in extraction_culture_plate, we update instead of insert
                 $data = array(
-                    'id_one_water_sample' => $id_one_water_sample,
                     'sequence' => $sequence,
                     'species_id' => $species_id,
-                    'date_created' => $dt->format('Y-m-d H:i:s'),
-                    'user_created' => $this->session->userdata('id_users'),
-                    'uuid' => $this->uuid->v4(),
-                    'flag' => 0
+                    'date_updated' => $dt->format('Y-m-d H:i:s'),
+                    'user_updated' => $this->session->userdata('id_users'),
                 );
 
-                // Handle sequence type
+                // Handle sequence type for new data
                 if ($sequence_id === 'other' && !empty($other_sequence_name)) {
                     $data['sequence_id'] = null;
                     $data['custom_sequence_type'] = $other_sequence_name;
@@ -1097,8 +1096,10 @@ class Sample_reception extends CI_Controller
                     $data['custom_sequence_type'] = null;
                 }
                 
-                // Insert new record
-                $result = $this->db->insert('extraction_culture_plate', $data);
+                // Update the existing barcode record with sequence data
+                $this->db->where('barcode_sample', $barcode_sample);
+                $this->db->where('flag', 0);
+                $result = $this->db->update('extraction_culture_plate', $data);
                 
                 $action = 'saved';
             }
@@ -1124,23 +1125,29 @@ class Sample_reception extends CI_Controller
         }
     }
 
-    // Method to get existing sequence data for a sample
+    // Method to get existing sequence data for a sample or specific barcode
     public function get_sequence_data()
     {
         header('Content-Type: application/json');
         
         try {
             $id_one_water_sample = $this->input->post('id_one_water_sample');
+            $barcode_sample = $this->input->post('barcode_sample');
             
-            if (empty($id_one_water_sample)) {
+            if (empty($id_one_water_sample) && empty($barcode_sample)) {
                 echo json_encode(array(
                     'status' => 'error',
-                    'message' => 'Sample ID is required'
+                    'message' => 'Sample ID or Barcode Sample is required'
                 ));
                 return;
             }
 
-            $data = $this->Sample_reception_model->checkSequenceDataExists($id_one_water_sample);
+            // Get data based on barcode_sample if provided, otherwise use id_one_water_sample
+            if (!empty($barcode_sample)) {
+                $data = $this->Sample_reception_model->getSequenceDataByBarcode($barcode_sample);
+            } else {
+                $data = $this->Sample_reception_model->checkSequenceDataExists($id_one_water_sample);
+            }
             
             if ($data) {
                 echo json_encode(array(
@@ -1160,6 +1167,38 @@ class Sample_reception extends CI_Controller
             echo json_encode(array(
                 'status' => 'error',
                 'message' => 'An error occurred while fetching data'
+            ));
+        }
+    }
+
+    // Method to get available barcode samples for selection
+    public function get_barcode_samples()
+    {
+        header('Content-Type: application/json');
+        
+        try {
+            $id_one_water_sample = $this->input->post('id_one_water_sample');
+            
+            if (empty($id_one_water_sample)) {
+                echo json_encode(array(
+                    'status' => 'error',
+                    'message' => 'Sample ID is required'
+                ));
+                return;
+            }
+
+            $barcode_samples = $this->Sample_reception_model->getAvailableBarcodeSamples($id_one_water_sample);
+            
+            echo json_encode(array(
+                'status' => 'success',
+                'data' => $barcode_samples,
+                'message' => 'Barcode samples retrieved successfully'
+            ));
+
+        } catch (Exception $e) {
+            echo json_encode(array(
+                'status' => 'error',
+                'message' => 'An error occurred while fetching barcode samples'
             ));
         }
     }
