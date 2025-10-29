@@ -278,8 +278,8 @@
                         <label for="sequenceCheckbox" class="col-sm-4 control-label">Sequence</label>
                         <div class="col-sm-8" style="padding-top: 7px;">
                             <input type="hidden" id="sequenceHidden" name="sequence" value="0">
-                            <input type="checkbox" id="sequenceCheckbox" name="sequence" value="1">
-                            <span style="margin-left: 10px; font-size: 12px; color: #666;">Check to show sequence fields</span>
+                            <input type="checkbox" id="sequenceCheckbox" name="sequence" value="1" disabled>
+                            <span id="sequenceHelpText" style="margin-left: 10px; font-size: 12px; color: #999;">Please select a barcode sample first</span>
                         </div>
                     </div>
 
@@ -1088,8 +1088,11 @@ background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
 											$('#sequence-modal').modal('show');
 										}
 									});
-								} else if (result.isConfirmed || !isExtractionCulture) {
-									// User clicked "Got it!" or it's not extraction culture - proceed to module
+								} else if (result.isConfirmed) {
+									// User clicked "Got it!" - just close the dialog and stay on current page
+									// Do nothing, dialog will close automatically
+								} else if (!isExtractionCulture) {
+									// It's not extraction culture - proceed to module directly
 									let fullUrl = `${window.location.origin}/limsonewater/index.php/${url}?barcode=${barcode}&idOneWaterSample=${idOneWaterSample}&idTestingType=${idTestingType}`;
 									window.location.href = fullUrl;
 								}
@@ -1560,11 +1563,15 @@ background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
 			}
 		});
 
-		// Handle barcode sample selection - load existing sequence data for selected barcode
+		// Handle barcode sample selection - enable sequence checkbox and load existing data
 		$('#barcode_sample').change(function() {
 			let selectedBarcode = $(this).val();
 			
 			if (selectedBarcode) {
+				// Enable sequence checkbox now that barcode is selected
+				$('#sequenceCheckbox').prop('disabled', false);
+				$('#sequenceHelpText').text('Check to show sequence fields').css('color', '#666');
+				
 				// Load existing sequence data for this specific barcode
 				$.ajax({
 					url: '<?php echo site_url('Sample_reception/get_sequence_data'); ?>',
@@ -1608,10 +1615,16 @@ background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
 						}
 					},
 					error: function() {
-						// Error loading - reset form
+						// Error loading - reset form but keep checkbox enabled since barcode is selected
 						$('#sequenceCheckbox').prop('checked', false).trigger('change');
 					}
 				});
+			} else {
+				// No barcode selected - disable sequence checkbox again
+				$('#sequenceCheckbox').prop('disabled', true).prop('checked', false);
+				$('#sequenceFields').hide();
+				$('#sequenceHidden').prop('disabled', false);
+				$('#sequenceHelpText').text('Please select a barcode sample first').css('color', '#999');
 			}
 		});
 
@@ -1794,8 +1807,9 @@ background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
 		// Reset sequence modal when closed
 		$('#sequence-modal').on('hidden.bs.modal', function () {
 			$('#sequenceForm')[0].reset();
-			$('#sequenceCheckbox').prop('checked', false).trigger('change');
+			$('#sequenceCheckbox').prop('checked', false).prop('disabled', true).trigger('change');
 			$('#barcode_sample').html('<option value="" disabled selected>-- Select Barcode Sample --</option>'); // Reset barcode dropdown
+			$('#sequenceHelpText').text('Please select a barcode sample first').css('color', '#999'); // Reset help text
 		});
 
 	});
