@@ -265,6 +265,16 @@
                     <input type="hidden" id="seq_id_one_water_sample" name="id_one_water_sample">
                     
                     <div class="form-group">
+                        <label for="barcode_sample" class="col-sm-4 control-label">Barcode Sample <span style="color: red;">*</span></label>
+                        <div class="col-sm-8">
+                            <select id="barcode_sample" name="barcode_sample" class="form-control" required>
+                                <option value="" disabled selected>-- Select Barcode Sample --</option>
+                            </select>
+                            <small class="help-block">Select which barcode sample to add sequence data to</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label for="sequenceCheckbox" class="col-sm-4 control-label">Sequence</label>
                         <div class="col-sm-8" style="padding-top: 7px;">
                             <input type="hidden" id="sequenceHidden" name="sequence" value="0">
@@ -1047,58 +1057,41 @@ background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
 
 							Swal.fire(sweetAlertConfig).then((result) => {
 								if (result.dismiss === Swal.DismissReason.cancel && isExtractionCulture) {
-									// Load existing sequence data if any
+									// First load available barcode samples
 									$.ajax({
-										url: '<?php echo site_url('Sample_reception/get_sequence_data'); ?>',
+										url: '<?php echo site_url('Sample_reception/get_barcode_samples'); ?>',
 										type: 'POST',
 										data: { id_one_water_sample: idOneWaterSample },
 										dataType: 'json',
-										success: function(seqResponse) {
+										success: function(barcodeResponse) {
 											// Set sample ID
 											$('#seq_id_one_water_sample').val(idOneWaterSample);
 											
-											if (seqResponse.status === 'success' && seqResponse.data) {
-												// Pre-populate form with existing data
-												let data = seqResponse.data;
-												
-												// Check sequence checkbox ONLY based on sequence field value from database
-												let isSequenceEnabled = (data.sequence == '1');
-												$('#sequenceCheckbox').prop('checked', isSequenceEnabled);
-												
-												// Set hidden field state based on checkbox
-												if (isSequenceEnabled) {
-													$('#sequenceHidden').prop('disabled', true);
-													$('#sequenceFields').show();
-												} else {
-													$('#sequenceHidden').prop('disabled', false);
-													$('#sequenceFields').hide();
-												}
-												
-												if (data.sequence_id) {
-													$('#sequence_id').val(data.sequence_id);
-												}
-												if (data.species_id) {
-													$('#species_id').val(data.species_id);
-												}
-												if (data.custom_sequence_type) {
-													$('#sequence_id').val('other').trigger('change');
-													$('#other_sequence_name').val(data.custom_sequence_type);
-												}
+											// Populate barcode dropdown
+											$('#barcode_sample').html('<option value="" disabled selected>-- Select Barcode Sample --</option>');
+											if (barcodeResponse.status === 'success' && barcodeResponse.data && barcodeResponse.data.length > 0) {
+												$.each(barcodeResponse.data, function(index, item) {
+													let optionText = item.barcode_sample + ' (' + item.sequence_status + ')';
+													$('#barcode_sample').append(`<option value="${item.barcode_sample}">${optionText}</option>`);
+												});
+											} else {
+												$('#barcode_sample').append('<option value="" disabled>No barcode samples found</option>');
 											}
 											
 											// Open sequence modal
 											$('#sequence-modal').modal('show');
 										},
 										error: function() {
-											// Even if error, still open modal
+											// Even if error, still open modal but show warning
 											$('#seq_id_one_water_sample').val(idOneWaterSample);
-											// Reset for new sample (no data)
-											$('#sequenceCheckbox').prop('checked', false);
-											$('#sequenceHidden').prop('disabled', false);
-											$('#sequenceFields').hide();
+											$('#barcode_sample').html('<option value="" disabled>Error loading barcode samples</option>');
 											$('#sequence-modal').modal('show');
 										}
 									});
+								} else if (result.isConfirmed || !isExtractionCulture) {
+									// User clicked "Got it!" or it's not extraction culture - proceed to module
+									let fullUrl = `${window.location.origin}/limsonewater/index.php/${url}?barcode=${barcode}&idOneWaterSample=${idOneWaterSample}&idTestingType=${idTestingType}`;
+									window.location.href = fullUrl;
 								}
 							});
 						} else {
@@ -1567,6 +1560,61 @@ background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
 			}
 		});
 
+		// Handle barcode sample selection - load existing sequence data for selected barcode
+		$('#barcode_sample').change(function() {
+			let selectedBarcode = $(this).val();
+			
+			if (selectedBarcode) {
+				// Load existing sequence data for this specific barcode
+				$.ajax({
+					url: '<?php echo site_url('Sample_reception/get_sequence_data'); ?>',
+					type: 'POST',
+					data: { barcode_sample: selectedBarcode }, // Use barcode_sample instead of id_one_water_sample
+					dataType: 'json',
+					success: function(seqResponse) {
+						if (seqResponse.status === 'success' && seqResponse.data) {
+							// Pre-populate form with existing data for this barcode
+							let data = seqResponse.data;
+							
+							// Check sequence checkbox based on sequence field value from database
+							let isSequenceEnabled = (data.sequence == '1');
+							$('#sequenceCheckbox').prop('checked', isSequenceEnabled);
+							
+							// Set hidden field state based on checkbox
+							if (isSequenceEnabled) {
+								$('#sequenceHidden').prop('disabled', true);
+								$('#sequenceFields').show();
+							} else {
+								$('#sequenceHidden').prop('disabled', false);
+								$('#sequenceFields').hide();
+							}
+							
+							// Populate fields if sequence is enabled
+							if (data.sequence_id) {
+								$('#sequence_id').val(data.sequence_id);
+							}
+							if (data.species_id) {
+								$('#species_id').val(data.species_id);
+							}
+							if (data.custom_sequence_type) {
+								$('#sequence_id').val('other').trigger('change');
+								$('#other_sequence_name').val(data.custom_sequence_type);
+							}
+						} else {
+							// No existing data for this barcode - reset form
+							$('#sequenceCheckbox').prop('checked', false).trigger('change');
+							$('#species_id').val('');
+							$('#sequence_id').val('').trigger('change');
+						}
+					},
+					error: function() {
+						// Error loading - reset form
+						$('#sequenceCheckbox').prop('checked', false).trigger('change');
+					}
+				});
+			}
+		});
+
 		// Handle sequence form submission
 		$('#sequenceForm').on('submit', function(e) {
 			e.preventDefault();
@@ -1591,8 +1639,21 @@ background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
 				}
 			}
 			
+			// Validate barcode selection
+			let selectedBarcode = $('#barcode_sample').val();
+			if (!selectedBarcode) {
+				Swal.fire({
+					icon: 'warning',
+					title: 'Validation Error',
+					text: 'Please select a barcode sample.',
+					confirmButtonColor: '#f39c12'
+				});
+				return false;
+			}
+			
 			let formData = {
 				id_one_water_sample: $('#seq_id_one_water_sample').val(),
+				barcode_sample: selectedBarcode, // Add barcode_sample to form data
 				sequence_id: $('#sequence_id').val(),
 				other_sequence_name: $('#other_sequence_name').val(),
 				species_id: $('#species_id').val()
@@ -1734,6 +1795,7 @@ background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
 		$('#sequence-modal').on('hidden.bs.modal', function () {
 			$('#sequenceForm')[0].reset();
 			$('#sequenceCheckbox').prop('checked', false).trigger('change');
+			$('#barcode_sample').html('<option value="" disabled selected>-- Select Barcode Sample --</option>'); // Reset barcode dropdown
 		});
 
 	});

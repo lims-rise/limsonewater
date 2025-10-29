@@ -1533,6 +1533,38 @@ class Sample_reception_model extends CI_Model
         return $affected_rows > 0;
     }
 
+    // Method to get available barcode samples for a sample ID (similar to extraction culture)
+    function getAvailableBarcodeSamples($id_one_water_sample) {
+        $this->db->select('barcode_sample, sequence');
+        $this->db->from('extraction_culture_plate');
+        $this->db->where('id_one_water_sample', $id_one_water_sample);
+        $this->db->where('flag', '0');
+        $this->db->order_by('barcode_sample', 'ASC');
+        
+        $query = $this->db->get();
+        $result = $query->result_array();
+        
+        // Add sequence_status in PHP instead of SQL
+        foreach ($result as &$row) {
+            $row['sequence_status'] = ($row['sequence'] == 1) ? 'Has Sequence' : 'No Sequence';
+        }
+        
+        return $result;
+    }
+
+    // Method to get sequence data by specific barcode sample
+    function getSequenceDataByBarcode($barcode_sample) {
+        $this->db->where('barcode_sample', $barcode_sample);
+        $this->db->where('flag', '0');
+        $query = $this->db->get('extraction_culture_plate');
+        
+        if ($query->num_rows() > 0) {
+            $result = $query->row();
+            return $result; // Return existing data for this specific barcode
+        }
+        return false; // No data exists for this barcode
+    }
+
 }
 
 /* End of file Tbl_delivery_model.php */
