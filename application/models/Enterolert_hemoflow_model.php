@@ -6,10 +6,10 @@ if (!defined('BASEPATH'))
 class Enterolert_hemoflow_model extends CI_Model
 {
 
-    public $table = 'enterolert_water_in';
-    public $tableOut = 'enterolert_water_out';
-    public $id = 'id_enterolert_in';
-    public $idOut = 'id_enterolert_out';
+    public $table = 'enterolert_hemoflow';
+    public $tableOut = 'enterolert_hemoflow_detail';
+    public $id = 'id_enterolert_hemoflow';
+    public $idOut = 'id_enterolert_hemoflow_detail';
     public $order = 'DESC';
 
     function __construct()
@@ -19,14 +19,14 @@ class Enterolert_hemoflow_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('enterolert_water_in.id_enterolert_in, enterolert_water_in.id_one_water_sample, enterolert_water_in.id_person, ref_person.initial,
-        enterolert_water_in.id_sampletype, ref_sampletype.sampletype, enterolert_water_in.enterolert_barcode, enterolert_water_in.date_sample, enterolert_water_in.time_sample,
-        enterolert_water_in.volume_bottle, enterolert_water_in.dilution, enterolert_water_in.date_created, enterolert_water_in.date_updated, GREATEST(enterolert_water_in.date_created, enterolert_water_in.date_updated) AS latest_date');
+        $this->datatables->select('enterolert_hemoflow.id_enterolert_hemoflow, enterolert_hemoflow.id_one_water_sample, enterolert_hemoflow.id_person, ref_person.initial,
+        enterolert_hemoflow.id_sampletype, ref_sampletype.sampletype, enterolert_hemoflow.enterolert_hemoflow_barcode, enterolert_hemoflow.date_sample, enterolert_hemoflow.time_sample,
+        enterolert_hemoflow.volume_bottle, enterolert_hemoflow.dilution, enterolert_hemoflow.date_created, enterolert_hemoflow.date_updated, GREATEST(enterolert_hemoflow.date_created, enterolert_hemoflow.date_updated) AS latest_date');
         $this->datatables->from($this->table);
-        $this->datatables->join('ref_person', 'enterolert_water_in.id_person = ref_person.id_person', 'left');
-        $this->datatables->join('ref_sampletype', 'enterolert_water_in.id_sampletype = ref_sampletype.id_sampletype', 'left');
+        $this->datatables->join('ref_person', 'enterolert_hemoflow.id_person = ref_person.id_person', 'left');
+        $this->datatables->join('ref_sampletype', 'enterolert_hemoflow.id_sampletype = ref_sampletype.id_sampletype', 'left');
         $this->datatables->where('lab', $this->session->userdata('lab'));
-        $this->datatables->where('enterolert_water_in.flag', '0');
+        $this->datatables->where('enterolert_hemoflow.flag', '0');
 
         $lvl = $this->session->userdata('id_user_level');
 
@@ -49,25 +49,25 @@ class Enterolert_hemoflow_model extends CI_Model
     }
 
     function subjson($id) {
-        $this->datatables->select('ewo.id_enterolert_out, ewo.enterolert_barcode, ewo.date_sample, ewo.time_sample, ewo.enterococcus_largewells,  ewo.enterococcus_smallwells,
-        ewo.enterococcus, ewo.lowerdetection, ewo.remarks, ewo.quality_control, ewo.flag');
-        $this->datatables->from('enterolert_water_out AS ewo');
+        $this->datatables->select('ehd.id_enterolert_hemoflow_detail, ehd.enterolert_hemoflow_barcode, ehd.date_sample, ehd.time_sample, ehd.enterococcus_largewells,  ehd.enterococcus_smallwells,
+        ehd.enterococcus, ehd.lowerdetection, ehd.remarks, ehd.quality_control, ehd.flag');
+        $this->datatables->from('enterolert_hemoflow_detail AS ehd');
         // $this->datatables->join('ref_testing b', 'FIND_IN_SET(b.id_testing_type, a.id_testing_type)', 'left');
         // $this->datatables->join('ref_barcode c', 'a.sample_id = c.testing_type_id', 'left');
-        $this->datatables->where('ewo.flag', '0');
-        $this->datatables->where('ewo.id_enterolert_in', $id);
-        $this->datatables->group_by('ewo.id_enterolert_out');
+        $this->datatables->where('ehd.flag', '0');
+        $this->datatables->where('ehd.id_enterolert_hemoflow', $id);
+        $this->datatables->group_by('ehd.id_enterolert_hemoflow_detail');
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 4){
-            // $this->datatables->add_column('action', anchor(site_url('Enterolert_hemoflow/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_enterolert_out');
+            // $this->datatables->add_column('action', anchor(site_url('Enterolert_hemoflow/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_enterolert_hemoflow_detail');
              $this->datatables->add_column('action', '-');
         }
         else if ($lvl == 3){
-            $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_enterolert_out');
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_enterolert_hemoflow_detail');
         }
         else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_enterolert_out');
+                ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_enterolert_hemoflow_detail');
         }
         return $this->datatables->generate();
     }
@@ -82,28 +82,28 @@ class Enterolert_hemoflow_model extends CI_Model
 
     function get_by_id_detail($id)
     {
-        $this->db->where('id_enterolert_out', $id);
+        $this->db->where('id_enterolert_hemoflow_detail', $id);
         $this->db->where('flag', '0');
         // $this->db->where('lab', $this->session->userdata('lab'));
-        return $this->db->get('enterolert_water_out')->row();
+        return $this->db->get('enterolert_hemoflow_detail')->row();
     }
 
     function get_detail($id)
     {
       $response = array();
-      $this->db->select('ewi.id_enterolert_in, ewi.id_one_water_sample, ewi.id_person, rp.initial,
-        ewi.user_created, 
-        ewi.user_review, 
-        ewi.review, 
+      $this->db->select('ehf.id_enterolert_hemoflow, ehf.id_one_water_sample, ehf.id_person, rp.initial,
+        ehf.user_created, 
+        ehf.user_review, 
+        ehf.review, 
         user.full_name,
-        ewi.id_sampletype, rs.sampletype, ewi.enterolert_barcode, ewi.date_sample, ewi.time_sample,
-        ewi.volume_bottle, ewi.dilution');
-      $this->db->from('enterolert_water_in AS ewi');
-      $this->db->join('ref_sampletype AS rs', 'ewi.id_sampletype = rs.id_sampletype', 'left');
-      $this->db->join('ref_person AS rp',  'ewi.id_person = rp.id_person', 'left');
-      $this->db->join('tbl_user user', 'ewi.user_review = user.id_users', 'left');
-      $this->db->where('ewi.id_one_water_sample', $id);
-      $this->db->where('ewi.flag', '0');
+        ehf.id_sampletype, rs.sampletype, ehf.enterolert_hemoflow_barcode, ehf.date_sample, ehf.time_sample,
+        ehf.volume_bottle, ehf.dilution');
+      $this->db->from('enterolert_hemoflow AS ehf');
+      $this->db->join('ref_sampletype AS rs', 'ehf.id_sampletype = rs.id_sampletype', 'left');
+      $this->db->join('ref_person AS rp',  'ehf.id_person = rp.id_person', 'left');
+      $this->db->join('tbl_user user', 'ehf.user_review = user.id_users', 'left');
+      $this->db->where('ehf.id_one_water_sample', $id);
+      $this->db->where('ehf.flag', '0');
       $q = $this->db->get();
 
       if ($q->num_rows() > 0) {
@@ -121,7 +121,7 @@ class Enterolert_hemoflow_model extends CI_Model
     // Function update data
     function update($id, $data)
     {
-        $this->db->where('id_enterolert_in', $id);
+        $this->db->where('id_enterolert_hemoflow', $id);
         $this->db->update($this->table, $data);
     }
 
@@ -131,8 +131,8 @@ class Enterolert_hemoflow_model extends CI_Model
     }
 
     function update_det($id, $data) {
-        $this->db->where('id_enterolert_out', $id);
-        $this->db->update('enterolert_water_out', $data);
+        $this->db->where('id_enterolert_hemoflow_detail', $id);
+        $this->db->update('enterolert_hemoflow_detail', $data);
     }
 
     // delete data
@@ -144,8 +144,8 @@ class Enterolert_hemoflow_model extends CI_Model
 
     function delete_detail($id)
     {
-        $this->db->where('id_enterolert_out', $id);
-        $this->db->delete('enterolert_water_out');
+        $this->db->where('id_enterolert_hemoflow_detail', $id);
+        $this->db->delete('enterolert_hemoflow_detail');
     }
     
 
@@ -172,7 +172,7 @@ class Enterolert_hemoflow_model extends CI_Model
     function getID_one(){
         $q = $this->db->query('
         SELECT id_one_water_sample FROM sample_reception_sample
-        WHERE id_one_water_sample NOT IN (SELECT id_one_water_sample FROM enterolert_water_in)
+        WHERE id_one_water_sample NOT IN (SELECT id_one_water_sample FROM enterolert_hemoflow)
         AND flag = 0');       
         $response = $q->result_array();
         return $response;
@@ -200,23 +200,23 @@ class Enterolert_hemoflow_model extends CI_Model
 
     function get_all()
     {
-        $this->db->select('ewi.id_enterolert_in, ewi.id_one_water_sample, rp.initial, rs.sampletype, ewi.enterolert_barcode, ewi.date_sample,
-        ewi.time_sample, ewi.volume_bottle,ewi.dilution, ewo.id_enterolert_out, ewo.enterolert_barcode, ewo.date_sample, ewo.time_sample, ewo.enterococcus_largewells,
+        $this->db->select('ehf.id_enterolert_hemoflow, ehf.id_one_water_sample, rp.initial, rs.sampletype, ehf.enterolert_hemoflow_barcode, ehf.date_sample,
+        ehf.time_sample, ehf.volume_bottle, ehf.dilution, ehd.id_enterolert_hemoflow_detail, ehd.enterolert_hemoflow_barcode, ehd.date_sample, ehd.time_sample, ehd.enterococcus_largewells,
         ewo.enterococcus_smallwells, ewo.enterococcus, ewo.lowerdetection, ewo.remarks');
-        $this->db->from('enterolert_water_in AS ewi');
-        $this->db->join('ref_person AS rp', 'ewi.id_person = rp.id_person');
-        $this->db->join('ref_sampletype AS rs', 'ewi.id_sampletype = rs.id_sampletype');
-        $this->db->join('enterolert_water_out AS ewo', 'ewi.id_enterolert_in = ewo.id_enterolert_in');
-        $this->db->where('ewi.flag', '0');
-        $this->db->order_by('ewi.id_enterolert_in', 'ASC');
+        $this->db->from('enterolert_hemoflow AS ehf');
+        $this->db->join('ref_person AS rp', 'ehf.id_person = rp.id_person');
+        $this->db->join('ref_sampletype AS rs', 'ehf.id_sampletype = rs.id_sampletype');
+        $this->db->join('enterolert_hemoflow_detail AS ehd', 'ehf.id_enterolert_hemoflow = ehd.id_enterolert_hemoflow');
+        $this->db->where('ehf.flag', '0');
+        $this->db->order_by('ehf.id_enterolert_hemoflow', 'ASC');
 
         return $this->db->get()->result();
     }
 
     function validateEnterolertBarcode($id){
         $q = $this->db->query('
-        SELECT enterolert_barcode FROM enterolert_water_in
-        WHERE enterolert_barcode = "'.$id.'"
+        SELECT enterolert_hemoflow_barcode FROM enterolert_hemoflow
+        WHERE enterolert_hemoflow_barcode = "'.$id.'"
         AND flag = 0 
         ');        
         $response = $q->result_array();
@@ -235,7 +235,7 @@ class Enterolert_hemoflow_model extends CI_Model
 
         $q = $this->db->query('
         select id_one_water_sample
-        from enterolert_water_in
+        from enterolert_hemoflow
         WHERE id_one_water_sample = "'.$id.'"
         ');        
         $response = $q->result_array();
@@ -245,7 +245,7 @@ class Enterolert_hemoflow_model extends CI_Model
     function updateCancel($id, $data)
     {
         $this->db->where('id_one_water_sample', $id);
-        $this->db->update('enterolert_water_in', $data);
+        $this->db->update('enterolert_hemoflow', $data);
 
         if ($this->db->affected_rows() > 0) {
             return true;
@@ -257,7 +257,53 @@ class Enterolert_hemoflow_model extends CI_Model
     function updateSave($id, $data)
     {
         $this->db->where('id_one_water_sample', $id);
-        $this->db->update('enterolert_water_in', $data);
+        $this->db->update('enterolert_hemoflow', $data);
+    }
+
+    function subjsonFinalCalculation($id)
+    {
+        $response = array();
+
+        // Get data with proper column specification and calculate all required fields
+        $this->db->select('
+        ehf.id_enterolert_hemoflow, 
+        ehf.id_one_water_sample, 
+        ehf.enterolert_hemoflow_barcode, 
+        rp.initial, 
+        rs.sampletype, 
+        hm.volume_filter, 
+        hm.volume_eluted,
+        ehd.enterococcus as enterococcus_raw, 
+        ehd.lowerdetection as lowerdetection_raw,
+        ehd.id_enterolert_hemoflow_detail,
+        CASE 
+            WHEN ehd.enterococcus IS NOT NULL AND hm.volume_eluted IS NOT NULL 
+            THEN ROUND((ehd.enterococcus / 100) * hm.volume_eluted, 2)
+            ELSE NULL 
+        END as total_enterococcus,
+        CASE 
+            WHEN ehd.enterococcus IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0
+            THEN ROUND(((ehd.enterococcus / 100) * hm.volume_eluted) / hm.volume_filter / 10, 2)
+            ELSE NULL 
+        END as enterococcus,
+        CASE 
+            WHEN ehd.lowerdetection IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0
+            THEN ROUND((ehd.lowerdetection / 100) * hm.volume_eluted / hm.volume_filter / 10, 2)
+            ELSE NULL 
+        END as lowerdetection');
+        $this->db->from('enterolert_hemoflow ehf');
+        $this->db->join('hemoflow hm', 'ehf.id_one_water_sample = hm.id_one_water_sample AND hm.flag = "0"', 'left');
+        $this->db->join('enterolert_hemoflow_detail AS ehd', 'ehf.id_enterolert_hemoflow = ehd.id_enterolert_hemoflow');
+        $this->db->join('ref_sampletype AS rs', 'ehf.id_sampletype = rs.id_sampletype', 'left');
+        $this->db->join('ref_person AS rp',  'ehf.id_person = rp.id_person', 'left');
+        $this->db->where('ehf.id_enterolert_hemoflow', $id);
+        $this->db->where('ehd.flag', '0');
+        $this->db->order_by('ehd.id_enterolert_hemoflow_detail', 'ASC');
+        
+        $query = $this->db->get();
+        $response = $query->result_array();
+
+        return $response;
     }
 
       

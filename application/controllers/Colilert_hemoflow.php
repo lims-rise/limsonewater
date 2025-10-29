@@ -26,13 +26,13 @@ class Colilert_hemoflow extends CI_Controller
 	    $this->load->library('uuid');
     }
 
-      public function index()
-    {
-        // Redirect ke halaman under construction untuk sementara
-        $this->load->view('underconstruction/underconstruction');
-    }
+    //   public function index()
+    // {
+    //     // Redirect ke halaman under construction untuk sementara
+    //     $this->load->view('underconstruction/underconstruction');
+    // }
 
-    public function development_index()
+    public function index()
     {
         $data['id_one'] = $this->Colilert_hemoflow_model->getID_one();
         $data['sampletype'] = $this->Colilert_hemoflow_model->getSampleType();
@@ -69,11 +69,11 @@ class Colilert_hemoflow extends CI_Controller
         $row = $this->Colilert_hemoflow_model->get_detail($id);
         if ($row) {
             $data = array(
-                'id_colilert_in' => $row->id_colilert_in,
+                'id_colilert_hemoflow' => $row->id_colilert_hemoflow,
                 'id_one_water_sample' => $row->id_one_water_sample,
                 'initial' => $row->initial,
                 'sampletype' => $row->sampletype,
-                'colilert_barcode' => $row->colilert_barcode,
+                'colilert_hemoflow_barcode' => $row->colilert_hemoflow_barcode,
                 'date_sample' => $row->date_sample,
                 'time_sample' => $row->time_sample,
                 // 'wet_weight' => $row->wet_weight,
@@ -86,7 +86,13 @@ class Colilert_hemoflow extends CI_Controller
                 'user_created'  => $row->user_created,
             );
 
-
+            // Mendapatkan final calculation
+            $finalCalculation = $this->Colilert_hemoflow_model->subjsonFinalCalculation($row->id_colilert_hemoflow);
+            if ($finalCalculation) {
+                $data['finalCalculation'] = $finalCalculation;
+            } else {
+                $data['finalCalculation'] = []; // Pastikan ini tidak null
+            }
 
             $this->template->load('template','colilert_hemoflow/index_det', $data);
 
@@ -106,7 +112,7 @@ class Colilert_hemoflow extends CI_Controller
         $idx_one_water_sample = $this->input->post('idx_one_water_sample', TRUE);
         $id_person = $this->input->post('id_person', TRUE);
         $id_sampletype = $this->input->post('id_sampletype', TRUE);
-        $colilert_barcode = $this->input->post('colilert_barcode', TRUE);
+        $colilert_hemoflow_barcode = $this->input->post('colilert_hemoflow_barcode', TRUE);
         $date_sample = $this->input->post('date_sample', TRUE);
         $time_sample = $this->input->post('time_sample', TRUE);
         $volume_bottle = $this->input->post('volume_bottle', TRUE);
@@ -118,7 +124,7 @@ class Colilert_hemoflow extends CI_Controller
                 'id_one_water_sample' => $id_one_water_sample,
                 'id_person' => $id_person,
                 'id_sampletype' => $id_sampletype,
-                'colilert_barcode' => $colilert_barcode,
+                'colilert_hemoflow_barcode' => $colilert_hemoflow_barcode,
                 'date_sample' => $date_sample,
                 'time_sample' => $time_sample,
                 'volume_bottle' => $volume_bottle,
@@ -141,7 +147,7 @@ class Colilert_hemoflow extends CI_Controller
                 'id_one_water_sample' => $idx_one_water_sample,
                 'id_person' => $id_person,
                 'id_sampletype' => $id_sampletype,
-                'colilert_barcode' => $colilert_barcode,
+                'colilert_hemoflow_barcode' => $colilert_hemoflow_barcode,
                 'date_sample' => $date_sample,
                 'time_sample' => $time_sample,
                 'volume_bottle' => $volume_bottle,
@@ -168,36 +174,36 @@ class Colilert_hemoflow extends CI_Controller
             $dt = new DateTime();
             // var_dump($id_moisture);
             // die();
-        
-            $idx_colilert_in = $this->input->post('idx_colilert_in', TRUE);
-            $id_colilert_out = $this->input->post('id_colilert_out', TRUE);
-            $colilert_barcode = $this->input->post('colilert_barcodex', TRUE);
-            $date_sample = $this->input->post('date_sample_out', TRUE);
-            $time_sample = $this->input->post('time_sample_out', TRUE);
+
+            $idx_colilert_hemoflow = $this->input->post('idx_colilert_hemoflow', TRUE);
+            $id_colilert_hemoflow_detail = $this->input->post('id_colilert_hemoflow_detail', TRUE);
+            $colilert_hemoflow_barcode = $this->input->post('colilert_hemoflow_barcodex', TRUE);
+            $date_sample = $this->input->post('date_sample_detail', TRUE);
+            $time_sample = $this->input->post('time_sample_detail', TRUE);
             $ecoli_largewells = $this->input->post('ecoli_largewells', TRUE);
             $ecoli_smallwells = $this->input->post('ecoli_smallwells', TRUE);
             $ecoli = $this->input->post('ecoli', TRUE);
-            $lowerdetection = $this->input->post('lowerdetection', TRUE);
+            $lowerconfidence = $this->input->post('lowerconfidence', TRUE);
             $coliforms_largewells = $this->input->post('coliforms_largewells', TRUE);
             $coliforms_smallwells = $this->input->post('coliforms_smallwells', TRUE);
-            $total_coliforms = $this->input->post('total_coliforms', TRUE);
+            $coliforms = $this->input->post('coliforms', TRUE);
             $remarks = $this->input->post('remarks', TRUE);
             $id_one_water_sample = $this->input->post('idx_one_water_sample', TRUE);
             $quality_control = $this->input->post('quality_control_ciw', TRUE) ? 1 : 0; // Convert checkbox to integer
 
             if($mode_det == "insert") {
                 $data = array(
-                    'id_colilert_in' => $idx_colilert_in,
-                    'colilert_barcode' => $colilert_barcode,
+                    'id_colilert_hemoflow' => $idx_colilert_hemoflow,
+                    'colilert_hemoflow_barcode' => $colilert_hemoflow_barcode,
                     'date_sample' => $date_sample,
                     'time_sample' => $time_sample,
                     'ecoli_largewells' => $ecoli_largewells,
                     'ecoli_smallwells' => $ecoli_smallwells,
                     'ecoli' => $ecoli,
-                    'lowerdetection' => $lowerdetection,
+                    'lowerconfidence' => $lowerconfidence,
                     'coliforms_largewells' => $coliforms_largewells,
                     'coliforms_smallwells' => $coliforms_smallwells,
-                    'total_coliforms' => $total_coliforms,
+                    'coliforms' => $coliforms,
                     'remarks' => $remarks,
                     'quality_control' => $quality_control,
                     'flag' => '0',
@@ -218,16 +224,16 @@ class Colilert_hemoflow extends CI_Controller
                 }
             } else if($mode_det == "edit") {
                 $data = array(
-                    'colilert_barcode' => $colilert_barcode,
+                    'colilert_hemoflow_barcode' => $colilert_hemoflow_barcode,
                     'date_sample' => $date_sample,
                     'time_sample' => $time_sample,
                     'ecoli_largewells' => $ecoli_largewells,
                     'ecoli_smallwells' => $ecoli_smallwells,
                     'ecoli' => $ecoli,
-                    'lowerdetection' => $lowerdetection,
+                    'lowerconfidence' => $lowerconfidence,
                     'coliforms_largewells' => $coliforms_largewells,
                     'coliforms_smallwells' => $coliforms_smallwells,
-                    'total_coliforms' => $total_coliforms,
+                    'coliforms' => $coliforms,
                     'remarks' => $remarks,
                     'quality_control' => $quality_control,
                     'flag' => '0',
@@ -238,7 +244,7 @@ class Colilert_hemoflow extends CI_Controller
                 );
                 // var_dump($data);
                 // die();
-                $result = $this->Colilert_hemoflow_model->update_det($id_colilert_out, $data);
+                $result = $this->Colilert_hemoflow_model->update_det($id_colilert_hemoflow_detail, $data);
                 if ($result) {
                     $this->session->set_flashdata('message', 'Update Record Success');
                 } else {
@@ -271,7 +277,7 @@ class Colilert_hemoflow extends CI_Controller
     {
         $row = $this->Colilert_hemoflow_model->get_by_id_detail($id);
         if ($row) {
-            $id_parent = $row->id_colilert_out; // Retrieve project_id before updating the record
+            $id_parent = $row->id_colilert_hemoflow_detail; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
@@ -332,8 +338,8 @@ class Colilert_hemoflow extends CI_Controller
         $numrow = 2;
         foreach($moisture as $data){ 
 
-            if (property_exists($data, 'id_colilert_in')) {
-                $sheet->setCellValue('A'.$numrow, $data->id_colilert_in);
+            if (property_exists($data, 'id_colilert_hemoflow')) {
+                $sheet->setCellValue('A'.$numrow, $data->id_colilert_hemoflow);
             } else {
                 $sheet->setCellValue('A'.$numrow, '');
             }
@@ -356,8 +362,8 @@ class Colilert_hemoflow extends CI_Controller
                 $sheet->setCellValue('D'.$numrow, '');
             }
 
-            if (property_exists($data, 'colilert_barcode')) {
-                $sheet->setCellValue('E'.$numrow, $data->colilert_barcode);
+            if (property_exists($data, 'colilert_hemoflow_barcode')) {
+                $sheet->setCellValue('E'.$numrow, $data->colilert_hemoflow_barcode);
             } else {
                 $sheet->setCellValue('E'.$numrow, '');
             }
@@ -386,14 +392,14 @@ class Colilert_hemoflow extends CI_Controller
                 $sheet->setCellValue('I'.$numrow, '');
             }
 
-            if (property_exists($data, 'id_colilert_out')) {
-                $sheet->setCellValue('J'.$numrow, $data->id_colilert_out);
+            if (property_exists($data, 'id_colilert_hemoflow_detail')) {
+                $sheet->setCellValue('J'.$numrow, $data->id_colilert_hemoflow_detail);
             } else {
                 $sheet->setCellValue('J'.$numrow, '');
             }
 
-            if (property_exists($data, 'colilert_barcode')) {
-                $sheet->setCellValue('K'.$numrow, $data->colilert_barcode);
+            if (property_exists($data, 'colilert_hemoflow_barcode')) {
+                $sheet->setCellValue('K'.$numrow, $data->colilert_hemoflow_barcode);
             } else {
                 $sheet->setCellValue('K'.$numrow, '');
             }
@@ -440,8 +446,8 @@ class Colilert_hemoflow extends CI_Controller
                 $sheet->setCellValue('R'.$numrow, '');
             }
 
-            if (property_exists($data, 'total_coliforms')) {
-                $sheet->setCellValue('S'.$numrow, $data->total_coliforms);
+            if (property_exists($data, 'coliforms')) {
+                $sheet->setCellValue('S'.$numrow, $data->coliforms);
             } else {
                 $sheet->setCellValue('S'.$numrow, '');
             }

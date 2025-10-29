@@ -171,7 +171,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="id_kit" class="col-sm-4 control-label">Kit Used</label>
                             <div class="col-sm-8">
                                 <select id="id_kit" name="id_kit" class="form-control">
@@ -186,6 +186,34 @@
                                         }
                                     ?>
                                 </select>
+                            </div>
+                        </div> -->
+
+                        <div class="form-group">
+                            <label for="id_kit" class="col-sm-4 control-label">Kit Used</label>
+                            <div class="col-sm-8" >
+                                <select id='id_kit' name="id_kit" class="form-control" required>
+                                    <option value="" disabled>-- Select Kit --</option>
+                                        <?php
+                                            foreach($kit as $row){
+                                                if ($id_kit == $row['id_kit']) {
+                                                    echo "<option value='".$row['id_kit']."' selected='selected' data-type='".$row['kit']."'>".$row['kit']."</option>";
+                                                }
+                                                else {
+                                                    echo "<option value='".$row['id_kit']."' data-type='".$row['kit']."'>".$row['kit']."</option>";
+                                                }
+                                            }
+                                        ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Additional Type Description Field (appears for Animal/Other) -->
+                        <div class="form-group" id="other-kit-group" style="display: none;">
+                            <label for="other_kit" class="col-sm-4 control-label">Other</label>
+                            <div class="col-sm-8">
+                                <input id="other_kit" name="other_kit" placeholder="Please specify the kit..." type="text" class="form-control">
+                                <small class="text-muted">Please provide additional details about the sample kit.</small>
                             </div>
                         </div>
 
@@ -791,6 +819,17 @@
             }
         });
 
+        // Add modal reset for sample modal
+        $('#compose-modal').on('hide.bs.modal', function () {
+            // Reset form
+            $(this).find('form')[0].reset();
+            
+            // Reset and hide other_kit field
+            $('#other_kit').val('');
+            $('#other-kit-group').hide();
+            $('#other_kit').prop('required', false);
+        });
+
         $('#addtombol').click(function() {
             $('#mode').val('insert');
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Extraction biosolid | New<span id="my-another-cool-loader"></span>');
@@ -854,6 +893,12 @@
             // $('#culture_plate').val(data.culture_plate).trigger('change');
             // $('#culture_media').val(data.culture_media).trigger('change');
             $('#id_kit').val(data.id_kit).trigger('change');
+
+            // Fill typedesc field if available
+            $('#other_kit').val(data.other_kit || '');    
+            // Trigger sample type change to show/hide typedesc field
+            $('#id_kit').trigger('change');
+
             $('#kit_lot').val(data.kit_lot);
             $('#barcode_tube').val(data.barcode_tube);
             $('#dna_concentration').val(data.dna_concentration);
@@ -868,6 +913,29 @@
             $('#comments').val(data.comments);
             $('#compose-modal').modal('show');
         });  
+
+        // Handle Sample Type change to show/hide type description field
+        $(document).on('change', '#id_kit', function() {
+            let selectedOption = $(this).find('option:selected');
+            let kitName = selectedOption.data('type');
+            let other_kitGroup = $('#other-kit-group');
+            let other_kitInput = $('#other_kit');
+
+            // Show field for Other sample types
+            if (kitName === 'Other') {
+                other_kitGroup.slideDown(300);
+                other_kitInput.prop('required', true);
+            } else {
+                other_kitGroup.slideUp(300);
+                other_kitInput.prop('required', false);
+                other_kitInput.val(''); // Clear the field when hidden
+            }
+        });
+
+        // Initialize on page load
+        $(document).ready(function() {
+            $('#id_kit').trigger('change');
+        });
 
         $('#mytable tbody').on('click', 'tr', function () {
             if ($(this).hasClass('active')) {

@@ -510,6 +510,7 @@ class Extraction_metagenome_model extends CI_Model
             pos.rows1,  
             emd.comments,
             emd.user_created,
+            emd.other_kit
             
         ');
         $this->db->from('extraction_metagenome_detail emd');

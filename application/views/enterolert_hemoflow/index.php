@@ -4,7 +4,7 @@
             <div class="col-xs-12">
                 <div class="box box-black box-solid">
                     <div class="box-header">
-                        <h3 class="box-title">Processing | Enterolert Idexx Water | In </h3>
+                        <h3 class="box-title">Processing | Enterolert Hemoflow </h3>
                     </div>
                     <div class="box-body">
                         <div style="padding-bottom: 10px;">
@@ -14,7 +14,7 @@
                                         echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Enterolert Idexx - Water</button>";
                                     }
                             ?>         -->
-                            <?php echo anchor(site_url('Enterolert_idexx_water/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
+                            <?php echo anchor(site_url('Enterolert_hemoflow/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
                         </div>
                             <div class="table-responsive">
                                 <table class="table ho table-bordered table-striped tbody" id="mytable" style="width:100%">
@@ -64,7 +64,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
                         <h4 class="modal-title" id="modal-title">Moisture Content | New</h4>
                     </div>
-                    <form id="formSample"  action= <?php echo site_url('Enterolert_idexx_water/save') ?> method="post" class="form-horizontal">
+                    <form id="formSample"  action= <?php echo site_url('Enterolert_hemoflow/save') ?> method="post" class="form-horizontal">
                         <div class="modal-body">
                             <input id="mode" name="mode" type="hidden" class="form-control input-sm">
                             <input id="idx_enterolert" name="idx_enterolert" type="hidden" class="form-control input-sm">
@@ -123,9 +123,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="enterolert_barcode" class="col-sm-4 control-label">Enterolert Barcode</label>
+                                <label for="enterolert_hemoflow_barcode" class="col-sm-4 control-label">Enterolert Barcode</label>
                                 <div class="col-sm-8">
-                                    <input id="enterolert_barcode" name="enterolert_barcode" placeholder="Enterolert Barcode" type="text" class="form-control" required>
+                                    <input id="enterolert_hemoflow_barcode" name="enterolert_hemoflow_barcode" placeholder="Enterolert Barcode" type="text" class="form-control" required>
                                     <!-- <div class="val1tip"></div> -->
                                 </div>
                             </div>
@@ -232,11 +232,11 @@
         const idTestingTypeFromUrl = params.get('idTestingType');
 
         if (barcodeFromUrl) {
-            $('#enterolert_barcode').val(barcodeFromUrl);
-            $('#enterolert_barcode').attr('readonly', true);
+            $('#enterolert_hemoflow_barcode').val(barcodeFromUrl);
+            $('#enterolert_hemoflow_barcode').attr('readonly', true);
             handleSampleTypeInput('#sampletype');
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> Enterolert Idexx Water | New<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Enterolert Hemoflow | New<span id="my-another-cool-loader"></span>');
             $('#id_one_water_sample').attr('readonly', true);
             $('#id_one_water_sample').val(idOneWaterSampleFromUrl || '');  // Set ID jika ada
             $('#idx_one_water_sample').hide();
@@ -245,7 +245,7 @@
             $('#id_person').val('');
             $('#sampletype').val('');
             $('#sampletype').attr('readonly', true);
-            // $('#enterolert_barcode').val('');
+            // $('#enterolert_hemoflow_barcode').val('');
             $('#volume_bottle').val('');
             $('#dilution').val('');
             $('#dilution').attr('readonly', true);
@@ -302,7 +302,7 @@
         // Handle the delete button click
         $(document).on('click', '.btn_delete', function() {
             let id = $(this).data('id');
-            let url = '<?php echo site_url('Enterolert_idexx_water/delete'); ?>/' + id;
+            let url = '<?php echo site_url('Enterolert_hemoflow/delete'); ?>/' + id;
             $('#confirm-modal #id').text(id);
             console.log(id);
             showConfirmation(url);
@@ -371,7 +371,7 @@
             console.log('test'+ id_one_water_sample)
             if (id_one_water_sample) {
                 $.ajax({
-                    url: '<?php echo site_url('Enterolert_idexx_water/getIdOneWaterDetails'); ?>', // URL untuk request AJAX
+                    url: '<?php echo site_url('Enterolert_hemoflow/getIdOneWaterDetails'); ?>', // URL untuk request AJAX
                     type: 'POST',
                     data: { id_one_water_sample: id_one_water_sample }, // Data yang dikirim ke server
                     dataType: 'json', // Format data yang diharapkan dari server
@@ -401,7 +401,7 @@
             id_one_water_sample = $('#id_one_water_sample').val();
             $.ajax({
                 type: "GET",
-                url: "Enterolert_idexx_water/barcode_restrict?id1="+id_one_water_sample,
+                url: "Enterolert_hemoflow/barcode_restrict?id1="+id_one_water_sample,
                 dataType: "json",
                 success: function(data) {
                     if (data.length > 0) {
@@ -477,11 +477,11 @@
         //     }, 3000);                            
         // });
         
-        // $('#enterolert_barcode').on("change", function() {
-        //     let enterolertBarcode = $('#enterolert_barcode').val();
+        // $('#enterolert_hemoflow_barcode').on("change", function() {
+        //     let enterolertBarcode = $('#enterolert_hemoflow_barcode').val();
         //     $.ajax({
         //         type: "GET",
-        //         url: "Enterolert_idexx_water/validateEnterolertBarcode",
+        //         url: "Enterolert_hemoflow/validateEnterolertBarcode",
         //         data: { id: enterolertBarcode },
         //         dataType: "json",
         //         success: function(data) {
@@ -489,32 +489,32 @@
         //                 let tip = $('<span><i class="fa fa-exclamation-triangle"></i> Enterolert Barcode <strong> ' + enterolertBarcode +'</strong> is already in the system !</span>');
         //                 $('.val1tip').tooltipster('content', tip);
         //                 $('.val1tip').tooltipster('show');
-        //                 $('#enterolert_barcode').focus();
-        //                 $('#enterolert_barcode').val('');       
-        //                 $('#enterolert_barcode').css({'background-color' : '#FFE6E7'});
+        //                 $('#enterolert_hemoflow_barcode').focus();
+        //                 $('#enterolert_hemoflow_barcode').val('');       
+        //                 $('#enterolert_hemoflow_barcode').css({'background-color' : '#FFE6E7'});
         //                 setTimeout(function(){
-        //                     $('#enterolert_barcode').css({'background-color' : '#FFFFFF'});
+        //                     $('#enterolert_hemoflow_barcode').css({'background-color' : '#FFFFFF'});
         //                     setTimeout(function(){
-        //                         $('#enterolert_barcode').css({'background-color' : '#FFE6E7'});
+        //                         $('#enterolert_hemoflow_barcode').css({'background-color' : '#FFE6E7'});
         //                         setTimeout(function(){
-        //                             $('#enterolert_barcode').css({'background-color' : '#FFFFFF'});
-        //                         }, 300);                            
+        //                             $('#enterolert_hemoflow_barcode').css({'background-color' : '#FFFFFF'});
+        //                         }, 300);
         //                     }, 300);
         //                 }, 300);
         //             } else if (/[^a-zA-Z0-9]/.test(enterolertBarcode)) {
         //                 let tip = $('<span><i class="fa fa-exclamation-triangle"></i>  Wrong type <strong>' + enterolertBarcode +'</strong> Input must not contain symbols !</span>');
         //                 $('.val1tip').tooltipster('content', tip);
         //                 $('.val1tip').tooltipster('show');
-        //                 $('#enterolert_barcode').focus();
-        //                 $('#enterolert_barcode').val('');
-        //                 $('#enterolert_barcode').css({'background-color' : '#FFE6E7'});
+        //                 $('#enterolert_hemoflow_barcode').focus();
+        //                 $('#enterolert_hemoflow_barcode').val('');
+        //                 $('#enterolert_hemoflow_barcode').css({'background-color' : '#FFE6E7'});
         //                 setTimeout(function(){
-        //                     $('#enterolert_barcode').css({'background-color' : '#FFFFFF'});
+        //                     $('#enterolert_hemoflow_barcode').css({'background-color' : '#FFFFFF'});
         //                     setTimeout(function(){
-        //                         $('#enterolert_barcode').css({'background-color' : '#FFE6E7'});
+        //                         $('#enterolert_hemoflow_barcode').css({'background-color' : '#FFE6E7'});
         //                         setTimeout(function(){
-        //                             $('#enterolert_barcode').css({'background-color' : '#FFFFFF'});
-        //                         }, 300);                            
+        //                             $('#enterolert_hemoflow_barcode').css({'background-color' : '#FFFFFF'});
+        //                         }, 300);
         //                     }, 300);
         //                 }, 300);
         //             }
@@ -553,12 +553,12 @@
             // select: true;
             processing: true,
             serverSide: true,
-            ajax: {"url": "Enterolert_idexx_water/json", "type": "POST"},
+            ajax: {"url": "Enterolert_hemoflow/json", "type": "POST"},
             columns: [
                 {"data": "id_one_water_sample"},
                 {"data": "initial"},
                 {"data": "sampletype"},
-                {"data": "enterolert_barcode"},
+                {"data": "enterolert_hemoflow_barcode"},
                 {"data": "date_sample"},
                 {"data": "time_sample"},
                 {"data": "volume_bottle"},
@@ -613,7 +613,7 @@
         // Event handler untuk klik pada baris
         $('#mytable tbody').on('click', 'tr', function() {
             let rowData = table.row(this).data();
-            let rowId = rowData.id_enterolert_in;
+            let rowId = rowData.id_enterolert_hemoflow;
             $(this).removeClass('highlight');
             $(this).removeClass('highlight-edit');
         });
@@ -623,20 +623,20 @@
             const barcodeFromUrl = params.get('barcode');
 
             if (barcodeFromUrl) {
-                $('#enterolert_barcode').val(barcodeFromUrl).trigger('change');;
+                $('#enterolert_hemoflow_barcode').val(barcodeFromUrl).trigger('change');;
             } else {
                 console.log('Barcode tidak ditemukan di URL');
             }
             handleSampleTypeInput('#sampletype');
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> Enterolert Idexx Water | New<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Enterolert Hemoflow | New<span id="my-another-cool-loader"></span>');
             $('#id_one_water_sample').val('');
             $('#id_one_water_sample').show();
             $('#idx_one_water_sample').hide();
             $('#id_person').val('');
             $('#sampletype').val('');
             $('#sampletype').attr('readonly', true);
-            // $('#enterolert_barcode').val('');
+            // $('#enterolert_hemoflow_barcode').val('');
             $('#volume_bottle').val('');
             $('#dilution').val('');
             $('#dilution').attr('readonly', true);
@@ -648,8 +648,8 @@
             let data = table.row(tr).data();
             console.log(data);
             $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Enterolert Idexx Water | Update<span id="my-another-cool-loader"></span>');
-            $('#idx_enterolert').val(data.id_enterolert_in);
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Enterolert Hemoflow | Update<span id="my-another-cool-loader"></span>');
+            $('#idx_enterolert').val(data.id_enterolert_hemoflow);
             $('#id_one_water_sample').hide();
             // $('#idx_one_water_sample').show();
             $('#idx_one_water_sample').attr('readonly', true);
@@ -658,8 +658,8 @@
             $('#id_sampletype').val(data.id_sampletype);
             $('#sampletype').val(data.sampletype);
             $('#sampletype').attr('readonly', true);
-            $('#enterolert_barcode').val(data.enterolert_barcode);
-            $('#enterolert_barcode').attr('readonly', true);
+            $('#enterolert_hemoflow_barcode').val(data.enterolert_hemoflow_barcode);
+            $('#enterolert_hemoflow_barcode').attr('readonly', true);
             $('#date_sample').val(data.date_sample);
             $('#time_sample').val(data.time_sample);
             $('#volume_bottle').val(data.volume_bottle);

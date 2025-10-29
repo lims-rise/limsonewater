@@ -6,10 +6,10 @@ if (!defined('BASEPATH'))
 class Colilert_hemoflow_model extends CI_Model
 {
 
-    public $table = 'colilert_water_in';
-    public $id = 'id_colilert_in';
-    public $tableOut = 'colilert_water_out';
-    public $idOut = 'id_colilert_out';
+    public $table = 'colilert_hemoflow';
+    public $id = 'id_colilert_hemoflow';
+    public $tableOut = 'colilert_hemoflow_detail';
+    public $idOut = 'id_colilert_hemoflow_detail';
     public $order = 'DESC';
 
     function __construct()
@@ -19,14 +19,14 @@ class Colilert_hemoflow_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('cwi.id_colilert_in, cwi.id_one_water_sample, cwi.id_person, rp.initial,
-        cwi.id_sampletype, rs.sampletype, cwi.colilert_barcode, cwi.date_sample, cwi.time_sample,
-        cwi.volume_bottle, cwi.dilution, cwi.date_created, cwi.date_updated, GREATEST(cwi.date_created, cwi.date_updated) AS latest_date');
-        $this->datatables->from('colilert_water_in AS cwi');
-        $this->datatables->join('ref_person AS rp', 'cwi.id_person = rp.id_person', 'left');
-        $this->datatables->join('ref_sampletype AS rs', 'cwi.id_sampletype = rs.id_sampletype', 'left');
+        $this->datatables->select('chf.id_colilert_hemoflow, chf.id_one_water_sample, chf.id_person, rp.initial,
+        chf.id_sampletype, rs.sampletype, chf.colilert_hemoflow_barcode, chf.date_sample, chf.time_sample,
+        chf.volume_bottle, chf.dilution, chf.date_created, chf.date_updated, GREATEST(chf.date_created, chf.date_updated) AS latest_date');
+        $this->datatables->from('colilert_hemoflow AS chf');
+        $this->datatables->join('ref_person AS rp', 'chf.id_person = rp.id_person', 'left');
+        $this->datatables->join('ref_sampletype AS rs', 'chf.id_sampletype = rs.id_sampletype', 'left');
         $this->datatables->where('lab', $this->session->userdata('lab'));
-        $this->datatables->where('cwi.flag', '0');
+        $this->datatables->where('chf.flag', '0');
 
         $lvl = $this->session->userdata('id_user_level');
 
@@ -49,27 +49,27 @@ class Colilert_hemoflow_model extends CI_Model
     }
 
     function subjson($id) {
-        $this->datatables->select('cwo.id_colilert_out, cwo.colilert_barcode, cwo.date_sample, cwo.time_sample, cwo.ecoli_largewells, cwo.ecoli_smallwells, 
-        cwo.ecoli, cwo.lowerdetection, cwo.coliforms_largewells, cwo.coliforms_smallwells, cwo.total_coliforms, cwo.remarks, cwo.quality_control, cwo.flag');
-        $this->datatables->from('colilert_water_out AS cwo');
+        $this->datatables->select('chd.id_colilert_hemoflow_detail, chd.colilert_hemoflow_barcode, chd.date_sample, chd.time_sample, chd.ecoli_largewells, chd.ecoli_smallwells, 
+        chd.ecoli, chd.lowerconfidence, chd.coliforms_largewells, chd.coliforms_smallwells, chd.coliforms, chd.remarks, chd.quality_control, chd.flag');
+        $this->datatables->from('colilert_hemoflow_detail AS chd');
         // $this->datatables->join('ref_testing b', 'FIND_IN_SET(b.id_testing_type, a.id_testing_type)', 'left');
         // $this->datatables->join('ref_barcode c', 'a.sample_id = c.testing_type_id', 'left');
-        $this->datatables->where('cwo.flag', '0');
-        $this->datatables->where('cwo.id_colilert_in', $id);
-        $this->datatables->group_by('cwo.id_colilert_out');
+        $this->datatables->where('chd.flag', '0');
+        $this->datatables->where('chd.id_colilert_hemoflow', $id);
+        $this->datatables->group_by('chd.id_colilert_hemoflow_detail');
 
         $lvl = $this->session->userdata('id_user_level');
 
         if ($lvl == 4){
-            // $this->datatables->add_column('action', anchor(site_url('colilert_hemoflow/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_colilert_out');
+            // $this->datatables->add_column('action', anchor(site_url('colilert_hemoflow/read2/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm')), 'id_colilert_hemoflow_detail');
             $this->datatables->add_column('action', '-');
         }
         else if ($lvl == 3){
-            $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_colilert_out');
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_colilert_hemoflow_detail');
         }
         else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit_det btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_colilert_out');
+                ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_colilert_hemoflow_detail');
         }
         return $this->datatables->generate();
     }
@@ -84,28 +84,28 @@ class Colilert_hemoflow_model extends CI_Model
 
     function get_by_id_detail($id)
     {
-        $this->db->where('id_colilert_out', $id);
+        $this->db->where('id_colilert_hemoflow_detail', $id);
         $this->db->where('flag', '0');
         // $this->db->where('lab', $this->session->userdata('lab'));
-        return $this->db->get('colilert_water_out')->row();
+        return $this->db->get('colilert_hemoflow_detail')->row();
     }
 
     function get_detail($id)
     {
       $response = array();
-      $this->db->select('cwi.id_colilert_in, cwi.id_one_water_sample, cwi.id_person, rp.initial,
-        cwi.user_created, 
-        cwi.user_review, 
-        cwi.review, 
+      $this->db->select('chf.id_colilert_hemoflow, chf.id_one_water_sample, chf.id_person, rp.initial,
+        chf.user_created, 
+        chf.user_review, 
+        chf.review, 
         user.full_name,
-        cwi.id_sampletype, rs.sampletype, cwi.colilert_barcode, cwi.date_sample, cwi.time_sample,
-        cwi.volume_bottle, cwi.dilution');
-      $this->db->from('colilert_water_in AS cwi');
-      $this->db->join('ref_sampletype AS rs', 'cwi.id_sampletype = rs.id_sampletype', 'left');
-      $this->db->join('ref_person AS rp',  'cwi.id_person = rp.id_person', 'left');
-      $this->db->join('tbl_user user', 'cwi.user_review = user.id_users', 'left');
-      $this->db->where('cwi.id_one_water_sample', $id);
-      $this->db->where('cwi.flag', '0');
+        chf.id_sampletype, rs.sampletype, chf.colilert_hemoflow_barcode, chf.date_sample, chf.time_sample,
+        chf.volume_bottle, chf.dilution');
+      $this->db->from('colilert_hemoflow AS chf');
+      $this->db->join('ref_sampletype AS rs', 'chf.id_sampletype = rs.id_sampletype', 'left');
+      $this->db->join('ref_person AS rp',  'chf.id_person = rp.id_person', 'left');
+      $this->db->join('tbl_user user', 'chf.user_review = user.id_users', 'left');
+      $this->db->where('chf.id_one_water_sample', $id);
+      $this->db->where('chf.flag', '0');
       $q = $this->db->get();
 
       if ($q->num_rows() > 0) {
@@ -123,7 +123,7 @@ class Colilert_hemoflow_model extends CI_Model
     // Function update data
     function update($id, $data)
     {
-        $this->db->where('id_colilert_in', $id);
+        $this->db->where('id_colilert_hemoflow', $id);
         $this->db->update($this->table, $data);
     }
 
@@ -133,8 +133,8 @@ class Colilert_hemoflow_model extends CI_Model
     }
 
     function update_det($id, $data) {
-        $this->db->where('id_colilert_out', $id);
-        $this->db->update('colilert_water_out', $data);
+        $this->db->where('id_colilert_hemoflow_detail', $id);
+        $this->db->update('colilert_hemoflow_detail', $data);
     }
 
     // delete data
@@ -174,7 +174,7 @@ class Colilert_hemoflow_model extends CI_Model
     function getID_one(){
         $q = $this->db->query('
         SELECT id_one_water_sample FROM sample_reception_sample
-        WHERE id_one_water_sample NOT IN (SELECT id_one_water_sample FROM colilert_water_in)
+        WHERE id_one_water_sample NOT IN (SELECT id_one_water_sample FROM colilert_hemoflow)
         AND flag = 0');       
         $response = $q->result_array();
         return $response;
@@ -202,24 +202,24 @@ class Colilert_hemoflow_model extends CI_Model
 
     function get_all()
     {
-        $this->db->select('cwi.id_colilert_in, cwi.id_one_water_sample, rp.initial, rs.sampletype, cwi.colilert_barcode, cwi.date_sample,
-            cwi.time_sample, cwi.volume_bottle,cwi.dilution, cwo.id_colilert_out, cwo.colilert_barcode, cwo.date_sample, cwo.time_sample, 
-            cwo.ecoli_largewells, cwo.ecoli_smallwells,
-            cwo.ecoli, cwo.lowerdetection, cwo.coliforms_largewells, cwo.coliforms_smallwells, cwo.total_coliforms, cwo.remarks');
-        $this->db->from('colilert_water_in AS cwi');
-        $this->db->join('ref_person AS rp', 'cwi.id_person = rp.id_person');
-        $this->db->join('ref_sampletype AS rs', 'cwi.id_sampletype = rs.id_sampletype');
-        $this->db->join('colilert_water_out AS cwo', 'cwi.id_colilert_in = cwo.id_colilert_in');
-        $this->db->where('cwi.flag', '0');
-        $this->db->order_by('cwi.id_colilert_in', 'ASC');
+        $this->db->select('chf.id_colilert_hemoflow, chf.id_one_water_sample, rp.initial, rs.sampletype, chf.colilert_hemoflow_barcode, chf.date_sample,
+            chf.time_sample, chf.volume_bottle, chf.dilution, chd.id_colilert_hemoflow_detail, chd.colilert_hemoflow_barcode, chd.date_sample, chd.time_sample, 
+            chd.ecoli_largewells, chd.ecoli_smallwells,
+            chd.ecoli, chd.lowerconfidence, chd.coliforms_largewells, chd.coliforms_smallwells, chd.coliforms, chd.remarks');
+        $this->db->from('colilert_hemoflow AS chf');
+        $this->db->join('ref_person AS rp', 'chf.id_person = rp.id_person');
+        $this->db->join('ref_sampletype AS rs', 'chf.id_sampletype = rs.id_sampletype');
+        $this->db->join('colilert_hemoflow_detail AS chd', 'chf.id_colilert_hemoflow = chd.id_colilert_hemoflow');
+        $this->db->where('chf.flag', '0');
+        $this->db->order_by('chf.id_colilert_hemoflow', 'ASC');
 
         return $this->db->get()->result();
     }
 
     function validateColilertBarcode($id){
         $q = $this->db->query('
-        SELECT colilert_barcode FROM colilert_water_in
-        WHERE colilert_barcode = "'.$id.'"
+        SELECT colilert_hemoflow_barcode FROM colilert_hemoflow
+        WHERE colilert_hemoflow_barcode = "'.$id.'"
         AND flag = 0 
         ');        
         $response = $q->result_array();
@@ -238,7 +238,7 @@ class Colilert_hemoflow_model extends CI_Model
 
         $q = $this->db->query('
         select id_one_water_sample
-        from colilert_water_in
+        from colilert_hemoflow
         WHERE id_one_water_sample = "'.$id.'"
         ');        
         $response = $q->result_array();
@@ -248,7 +248,7 @@ class Colilert_hemoflow_model extends CI_Model
     function updateCancel($id, $data)
     {
         $this->db->where('id_one_water_sample', $id);
-        $this->db->update('colilert_water_in', $data);
+        $this->db->update('colilert_hemoflow', $data);
 
         if ($this->db->affected_rows() > 0) {
             return true;
@@ -260,7 +260,65 @@ class Colilert_hemoflow_model extends CI_Model
     function updateSave($id, $data)
     {
         $this->db->where('id_one_water_sample', $id);
-        $this->db->update('colilert_water_in', $data);
+        $this->db->update('colilert_hemoflow', $data);
+    }
+
+    function subjsonFinalCalculation($id)
+    {
+        $response = array();
+
+        // Get data with proper column specification and calculate all required fields
+        $this->db->select('
+        chf.id_colilert_hemoflow, 
+        chf.id_one_water_sample, 
+        chf.colilert_hemoflow_barcode, 
+        rp.initial, 
+        rs.sampletype, 
+        hm.volume_filter, 
+        hm.volume_eluted,
+        chd.ecoli as ecoli_raw,
+        chd.lowerconfidence as lowerconfidence_raw,
+        chd.coliforms as coliforms_raw,
+        chd.id_colilert_hemoflow_detail,
+        CASE 
+            WHEN chd.ecoli IS NOT NULL AND hm.volume_eluted IS NOT NULL 
+            THEN ROUND((chd.ecoli / 100) * hm.volume_eluted, 2)
+            ELSE NULL 
+        END as total_ecoli,
+        CASE 
+            WHEN chd.ecoli IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0
+            THEN ROUND(((chd.ecoli / 100) * hm.volume_eluted / hm.volume_filter / 10), 2)
+            ELSE NULL 
+        END as ecolimpn,
+        CASE 
+            WHEN chd.lowerconfidence IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0
+            THEN ROUND((chd.lowerconfidence / 100) * hm.volume_eluted / hm.volume_filter / 10, 2)
+            ELSE NULL 
+        END as lowermpn,
+        CASE
+            WHEN chd.coliforms IS NOT NULL AND hm.volume_eluted IS NOT NULL
+            THEN ROUND((chd.coliforms / 100) * hm.volume_eluted, 2)
+            ELSE NULL 
+        END as totalcoliforms,
+        CASE
+            WHEN chd.coliforms IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0
+            THEN ROUND(((chd.coliforms / 100) * hm.volume_eluted / hm.volume_filter / 10), 2)
+            ELSE NULL 
+        END as coliformmpn
+        ');
+        $this->db->from('colilert_hemoflow chf');
+        $this->db->join('hemoflow hm', 'chf.id_one_water_sample = hm.id_one_water_sample AND hm.flag = "0"', 'left');
+        $this->db->join('colilert_hemoflow_detail AS chd', 'chf.id_colilert_hemoflow = chd.id_colilert_hemoflow');
+        $this->db->join('ref_sampletype AS rs', 'chf.id_sampletype = rs.id_sampletype', 'left');
+        $this->db->join('ref_person AS rp',  'chf.id_person = rp.id_person', 'left');
+        $this->db->where('chf.id_colilert_hemoflow', $id);
+        $this->db->where('chd.flag', '0');
+        $this->db->order_by('chd.id_colilert_hemoflow_detail', 'ASC');
+
+        $query = $this->db->get();
+        $response = $query->result_array();
+
+        return $response;
     }
       
 }

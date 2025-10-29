@@ -475,6 +475,7 @@ class Extraction_metagenome extends CI_Controller
         $id_col = $this->input->post('id_col', TRUE);
         $review = $this->input->post('review', TRUE);
         $user_review = $this->input->post('user_review', TRUE);
+        $other_kit = $this->input->post('other_kit', TRUE);
 
         $loc_obj = $this->Extraction_metagenome_model->get_freezx($id_freez, $id_shelf, $id_rack, $id_tray);
         $pos_obj = $this->Extraction_metagenome_model->get_posx($id_row, $id_col);
@@ -498,6 +499,7 @@ class Extraction_metagenome extends CI_Controller
                 'cryobox' => $cryobox,
                 'id_location' => $id_loc,
                 'id_pos' => $id_pos,
+                'other_kit' => $other_kit,
                 // 'review' => $review,
                 // 'user_review' => $user_review,
                 'user_updated' => $this->session->userdata('id_users'),

@@ -453,7 +453,7 @@
                                             <label for="date_collected_sample" class="col-sm-4 control-label">Date collected</label>
                                             <div class="col-sm-8">
                                                 <!-- Dropdown untuk memilih antara tanggal atau NA -->
-                                                <select id="date_selector_sample" name="date_collected_sample" class="form-control" onchange="toggleDateInput()">
+                                                <select id="date_selector_sample" name="date_collected_sample" class="form-control">
                                                     <option value="date">Select Date</option>
                                                     <option value="NA">NA</option>
                                                 </select>
@@ -476,7 +476,7 @@
                                                         <span class="glyphicon glyphicon-time"></span>
                                                     </span>
                                                 </div>
-                                                <span id="time_collected_error_sample" class="text-danger" style="display:none;">Time collected cannot be greater than or equal to time arrive.</span>
+                                                <span id="time_collected_error_sample" class="text-danger" style="display:none;">Collection time cannot be after or equal to arrival time.</span>
                                             </div>
                                         </div>
 
@@ -842,16 +842,156 @@
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
 <script>
+    // Global function for datetime validation
+    function validateTimeCollected() {
+        let dateSelector = $('#date_selector_sample').val();
+        let timeArrival = $('#time_arrival_sample').val();
+        let timeCollected = $('#time_collected_sample').val();
+        let dateArrival = $('#date_arrival_sample').val();
+        let dateCollected = $('#date_collected_sample').val();
+        let isValid = true;
+
+        // Hide error message first
+        $('#time_collected_error_sample').hide();
+
+        // If date selector is "NA", skip validation entirely
+        if (dateSelector === 'NA') {
+            return true; // No validation needed for NA case
+        }
+
+        // Check if time collected is empty (only validate if not NA)
+        if (!timeCollected || timeCollected.trim() === '') {
+            $('#time_collected_error_sample').text('Time collected cannot be empty.').show();
+            return false;
+        }
+
+        // If we have both dates and times, compare full datetime
+        if (dateArrival && dateCollected && timeArrival && timeCollected) {
+            try {
+                // Normalize time format (handle both HH:mm and HH:mm:ss)
+                let normalizedTimeArrival = timeArrival.length === 5 ? timeArrival + ':00' : timeArrival;
+                let normalizedTimeCollected = timeCollected.length === 5 ? timeCollected + ':00' : timeCollected;
+                
+                // Create full datetime objects for comparison
+                let arrivalDateTime = new Date(dateArrival + 'T' + normalizedTimeArrival);
+                let collectedDateTime = new Date(dateCollected + 'T' + normalizedTimeCollected);
+                
+                // Check if dates are valid
+                if (isNaN(arrivalDateTime.getTime()) || isNaN(collectedDateTime.getTime())) {
+                    $('#time_collected_error_sample').text('Invalid date or time format.').show();
+                    return false;
+                }
+
+                // Check if collected datetime is after or equal to arrival datetime (collection should be BEFORE arrival)
+                if (collectedDateTime >= arrivalDateTime) {
+                    let errorMsg = 'Collection datetime cannot be after or equal to arrival datetime.';
+                    
+                    // Add more specific message based on the difference
+                    if (dateCollected > dateArrival) {
+                        errorMsg = 'Collection date cannot be after arrival date.';
+                    } else if (dateCollected === dateArrival && timeCollected >= timeArrival) {
+                        errorMsg = 'Collection time cannot be after or equal to arrival time on the same date.';
+                    }
+                    
+                    $('#time_collected_error_sample').text(errorMsg).show();
+                    isValid = false;
+                }
+            } catch (error) {
+                $('#time_collected_error_sample').text('Invalid date or time format.').show();
+                isValid = false;
+            }
+        }
+
+        return isValid;
+    }
+
     function toggleDateInput() {
         let dateSelector = $('#date_selector_sample').val();
         let dateInput = $('#date_collected_sample');
+        let timeInput = $('#time_collected_sample');
 
-            if (dateSelector === 'NA') {
-                dateInput.val(''); // Clear date input if 'NA' is selected
-                dateInput.prop('disabled', true); // Disable the date input
-            } else {
-                dateInput.prop('disabled', false); // Enable the date input if 'Select Date' is selected
+        if (dateSelector === 'NA') {
+            dateInput.val(''); // Clear date input if 'NA' is selected
+            dateInput.prop('disabled', true); // Disable the date input
+            timeInput.val(''); // Clear time input as well
+            timeInput.prop('disabled', true); // Disable the time input
+            $('#time_collected_error_sample').hide(); // Hide any error messages
+        } else {
+            dateInput.prop('disabled', false); // Enable the date input if 'Select Date' is selected
+            timeInput.prop('disabled', false); // Enable the time input
+            
+            // Set default values if empty
+            if (!dateInput.val()) {
+                dateInput.val('<?php echo date('Y-m-d'); ?>');
             }
+            if (!timeInput.val()) {
+                timeInput.val('<?php $datetime = new DateTime(); echo $datetime->format('H:i'); ?>');
+            }
+        }
+        
+        // Trigger validation after changes
+        validateTimeCollected();
+    }
+
+
+
+    // Function to attach comprehensive event listeners for validation
+    function attachValidationEventListeners() {
+        // Use delegated events for dynamically loaded content
+        $(document).on('change', '#date_arrival_sample', function() {
+            validateTimeCollected();
+        });
+
+        $(document).on('change', '#time_arrival_sample', function() {
+            validateTimeCollected();
+        });
+
+        $(document).on('change', '#date_collected_sample', function() {
+            validateTimeCollected();
+        });
+
+        $(document).on('change', '#time_collected_sample', function() {
+            validateTimeCollected();
+        });
+
+        $(document).on('change', '#date_selector_sample', function() {
+            toggleDateInput();
+        });
+
+        // Additional events for more responsive validation
+        $(document).on('blur', '#time_arrival_sample, #time_collected_sample', function() {
+            validateTimeCollected();
+        });
+
+        $(document).on('input', '#time_arrival_sample, #time_collected_sample', function() {
+            // Debounce input event to avoid too many validations
+            clearTimeout(window.validationTimeout);
+            window.validationTimeout = setTimeout(function() {
+                validateTimeCollected();
+            }, 300);
+        });
+
+        // Modal events to ensure validation is set up when modal opens
+        $(document).on('shown.bs.modal', '#compose-modal-sample', function() {
+            // Give modal time to fully render before validating
+            setTimeout(function() {
+                validateTimeCollected();
+            }, 200);
+        });
+
+        // Also handle when modal is about to be shown
+        $(document).on('show.bs.modal', '#compose-modal-sample', function() {
+            // Reset validation state
+            $('#time_collected_error_sample').hide();
+        });
+
+        // Form submission validation
+        $(document).on('submit', '#form-sample', function(e) {
+            if (!validateTimeCollected()) {
+                e.preventDefault();
+                return false;
+            }
+        });
     }
 </script>
 
@@ -928,6 +1068,9 @@
 
     $(document).ready(function() {
 
+        // Initialize comprehensive validation event listeners
+        attachValidationEventListeners();
+
         // Check if new_modal parameter is present in URL
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('new_modal') === '1') {
@@ -985,7 +1128,23 @@
         align: 'left',       // popover arrow align
         donetext: 'Done',     // done button text
         autoclose: true,    // auto close when minute is selected
-        vibrate: true        // vibrate the device when dragging clock hand
+        vibrate: true,       // vibrate the device when dragging clock hand
+        afterDone: function() {
+            // Trigger validation after time is selected
+            setTimeout(function() {
+                if (typeof validateTimeCollected === 'function') {
+                    validateTimeCollected();
+                }
+            }, 100); // Small delay to ensure input value is updated
+        },
+        afterHide: function() {
+            // Also trigger validation when clock is hidden (in case user clicked outside)
+            setTimeout(function() {
+                if (typeof validateTimeCollected === 'function') {
+                    validateTimeCollected();
+                }
+            }, 100);
+        }
         });                
 
         $('.val1tip, .val2tip, .val3tip').tooltipster({
@@ -1655,53 +1814,9 @@
                         checkbox.value = states[currentState].value; // Set the value to the current state
                     });
 
-                    $('#time_collected_sample').on('change', function() {
-                        validateTimeCollected();
-                    });
 
-                    $('#form-sample').on('submit', function(e) {
-                        if (!validateTimeCollected()) {
-                            e.preventDefault(); // Prevent form submission if validation fails
-                        }
-                    });
 
-                    function validateTimeCollected() {
-                        let timeArrival = $('#time_arrival_sample').val();
-                        let timeCollected = $('#time_collected_sample').val();
-                        let isValid = true;
 
-                        $('#time_collected_error_sample').hide();
-                            // Check if time collected is empty
-                            if (!timeCollected) {
-                                $('#time_collected_error_sample').text('Time collected cannot be empty.').show();
-                                isValid = false;
-                            } else {
-                                // Convert to Date object for comparison
-                                let arrivalParts = timeArrival.split(':');
-                                let collectedParts = timeCollected.split(':');
-
-                                let arrivalDate = new Date();
-                                arrivalDate.setHours(arrivalParts[0], arrivalParts[1]);
-
-                                let collectedDate = new Date();
-                                collectedDate.setHours(collectedParts[0], collectedParts[1]);
-
-                                // Check if time collected is greater than or equal to time arrival
-                                if (collectedDate >= arrivalDate) {
-                                    $('#time_collected_error_sample').text('Time collected cannot be greater than or equal to time arrive.').show();
-                                    isValid = false;
-                                }
-                            }
-
-                            // If valid, update the input value to prevent the default time from being sent
-                            if (isValid) {
-                                $('#time_collected_sample').val(timeCollected);
-                            } else {
-                                $('#time_collected_sample').val('');
-                            }
-
-                            return isValid;
-                        }
 
                         toggleDateInput();
 
@@ -1805,6 +1920,40 @@
             $('#typedesc').val('');
             $('#typedesc-group').hide();
             $('#typedesc').prop('required', false);
+            
+            // Hide error messages
+            $('#time_collected_error_sample').hide();
+        });
+
+        // Add modal shown event for sample modal to setup validation
+        $('#compose-modal-sample').on('shown.bs.modal', function () {
+            console.log('Sample modal shown, setting up validation'); // Debug log
+            
+            // Initialize clock pickers for the modal specifically
+            $('#compose-modal-sample .clockpicker').clockpicker({
+                placement: 'bottom',
+                align: 'left',
+                donetext: 'Done',
+                autoclose: true,
+                vibrate: true,
+                afterDone: function() {
+                    console.log('Clock picker done, triggering validation'); // Debug log
+                    // Trigger validation after time is selected
+                    setTimeout(validateTimeCollected, 100);
+                }
+            });
+            
+            // Setup initial date selector value and trigger toggle
+            if (!$('#date_selector_sample').val()) {
+                $('#date_selector_sample').val('date');
+            }
+            setTimeout(toggleDateInput, 100);
+            
+            // Trigger initial validation
+            setTimeout(function() {
+                console.log('Initial validation trigger from modal shown'); // Debug log
+                validateTimeCollected();
+            }, 300);
         });
 
 
@@ -1911,6 +2060,56 @@
         $(document).ready(function() {
             $('#id_sampletype').trigger('change');
         });
+
+        // Global event listeners for datetime validation (delegated events)
+        $(document).on('change', '#time_collected_sample', function() {
+            console.log('Time collected changed:', $(this).val()); // Debug log
+            validateTimeCollected();
+        });
+
+        $(document).on('change', '#time_arrival_sample', function() {
+            console.log('Time arrival changed:', $(this).val()); // Debug log
+            validateTimeCollected();
+        });
+
+        $(document).on('change', '#date_arrival_sample', function() {
+            console.log('Date arrival changed:', $(this).val()); // Debug log
+            validateTimeCollected();
+        });
+
+        $(document).on('change', '#date_collected_sample', function() {
+            console.log('Date collected changed:', $(this).val()); // Debug log
+            validateTimeCollected();
+        });
+
+        $(document).on('change', '#date_selector_sample', function() {
+            console.log('Date selector changed:', $(this).val()); // Debug log
+            toggleDateInput(); // This will call validateTimeCollected internally
+        });
+
+        // Form submission validation
+        $(document).on('submit', '#form-sample', function(e) {
+            console.log('Form submitting, validating...'); // Debug log
+            if (!validateTimeCollected()) {
+                e.preventDefault(); // Prevent form submission if validation fails
+                console.log('Validation failed, form submission prevented'); // Debug log
+            }
+        });
+
+        // Test function for validation (you can call this from browser console)
+        window.testValidation = function() {
+            console.log('Testing validation...');
+            console.log('Current values:');
+            console.log('Date selector:', $('#date_selector_sample').val());
+            console.log('Date arrival:', $('#date_arrival_sample').val());
+            console.log('Time arrival:', $('#time_arrival_sample').val());
+            console.log('Date collected:', $('#date_collected_sample').val());
+            console.log('Time collected:', $('#time_collected_sample').val());
+            
+            var result = validateTimeCollected();
+            console.log('Validation result:', result);
+            return result;
+        };
                             
     });
 </script>

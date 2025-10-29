@@ -198,7 +198,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="id_kit" class="col-sm-4 control-label">Kit Used</label>
                             <div class="col-sm-8">
                                 <select id="id_kit" name="id_kit" class="form-control">
@@ -213,6 +213,34 @@
                                         }
                                     ?>
                                 </select>
+                            </div>
+                        </div> -->
+
+                        <div class="form-group">
+                            <label for="id_kit" class="col-sm-4 control-label">Kit Used</label>
+                            <div class="col-sm-8" >
+                                <select id='id_kit' name="id_kit" class="form-control" required>
+                                    <option value="" disabled>-- Select Kit --</option>
+                                        <?php
+                                            foreach($kit as $row){
+                                                if ($id_kit == $row['id_kit']) {
+                                                    echo "<option value='".$row['id_kit']."' selected='selected' data-type='".$row['kit']."'>".$row['kit']."</option>";
+                                                }
+                                                else {
+                                                    echo "<option value='".$row['id_kit']."' data-type='".$row['kit']."'>".$row['kit']."</option>";
+                                                }
+                                            }
+                                        ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Additional Type Description Field (appears for Animal/Other) -->
+                        <div class="form-group" id="other-kit-group" style="display: none;">
+                            <label for="other_kit" class="col-sm-4 control-label">Other</label>
+                            <div class="col-sm-8">
+                                <input id="other_kit" name="other_kit" placeholder="Please specify the kit..." type="text" class="form-control">
+                                <small class="text-muted">Please provide additional details about the sample kit.</small>
                             </div>
                         </div>
 
@@ -340,6 +368,7 @@
                         <div class="form-group">
                             <label for="sequenceCheckbox" class="col-sm-4 control-label">Sequence</label>
                             <div class="col-sm-8" style="padding-top: 7px;">
+                                <input type="hidden" id="sequenceHidden" name="sequence" value="0">
                                 <input type="checkbox" id="sequenceCheckbox" name="sequence" value="1">
                             </div>
                         </div>
@@ -350,14 +379,16 @@
                                 <label for="sequence_id" class="col-sm-4 control-label">Sequence Type</label>
                                 <div class="col-sm-8" >
                                     <select id='sequence_id' name="sequence_id" class="form-control">
-                                        <option value="" disabled>-- Select Sequence Type --</option>
+                                        <option value="" disabled selected>-- Select Sequence Type --</option>
                                             <?php
-                                                foreach($sequencetype as $row){
-                                                    if ($sequence_id == $row['sequence_id']) {
-                                                        echo "<option value='".$row['sequence_id']."' selected='selected'>".$row['sequence_type']."</option>";
-                                                    }
-                                                    else {
-                                                        echo "<option value='".$row['sequence_id']."'>".$row['sequence_type']."</option>";
+                                                if (isset($sequencetype) && is_array($sequencetype)) {
+                                                    foreach($sequencetype as $row){
+                                                        if (isset($sequence_id) && $sequence_id == $row['sequence_id']) {
+                                                            echo "<option value='".$row['sequence_id']."' selected='selected'>".$row['sequence_type']."</option>";
+                                                        }
+                                                        else {
+                                                            echo "<option value='".$row['sequence_id']."'>".$row['sequence_type']."</option>";
+                                                        }
                                                     }
                                                 }
                                             ?>
@@ -979,7 +1010,6 @@
     // Fungsi untuk mendapatkan parameter dari URL
     function getQueryParam(param) {
         const urlParams = new URLSearchParams(window.location.search);
-        console.log('Current URL:', window.location.search);  // Cek URL yang sedang diakses
         return urlParams.get(param);
     }
 
@@ -994,11 +1024,12 @@
         $('#sequenceCheckbox').on('change', function () {
             if ($(this).is(':checked')) {
                 $('#sequenceFields').slideDown();
+                $('#sequenceHidden').prop('disabled', true); // Disable hidden input when checkbox is checked
             } else {
                 $('#sequenceFields').slideUp();
-
+                $('#sequenceHidden').prop('disabled', false); // Enable hidden input when checkbox is unchecked
                 // Clear values if unchecked (opsional)
-                $('#sequence_id').val('');
+                $('#sequence_id').val('').trigger('change'); // Trigger change to hide other field
                 $('#species_id').val('');
             }
         });
@@ -1067,7 +1098,6 @@
             let id_one_water_sample = $(this).data('id');
             let url = '<?php echo site_url('Extraction_culture/delete_extraction'); ?>/' + id_one_water_sample;
             $('#confirm-modal #id').text(id_one_water_sample);
-            console.log(id_one_water_sample);
             showConfirmation(url);
         });
 
@@ -1151,7 +1181,6 @@
                             }, 300);
                         }, 300);
                         id_one_water_sample = data[0].id_one_water_sample;
-                        console.log(data);
                     }
                     else {
                     }
@@ -1876,6 +1905,25 @@
                 .fadeIn();
         }
 
+        // Add modal reset for sample modal
+        $('#compose-modal-child').on('hide.bs.modal', function () {
+            // Reset form
+            $(this).find('form')[0].reset();
+            
+            // Reset and hide other_kit field
+            $('#other_kit').val('');
+            $('#other-kit-group').hide();
+            $('#other_kit').prop('required', false);
+            
+            // Reset sequence fields
+            $('#sequenceCheckbox').prop('checked', false);
+            $('#sequenceFields').hide();
+            $('#sequence_id').val('').trigger('change');
+            $('#species_id').val('');
+            $('#other_sequence_name').hide().val('');
+            $('#sequenceHidden').prop('disabled', false);
+        });
+
 
         $('#mytable').on('click', '.btn_edit_child', function() {
             let barcode_sample = $(this).data('id');
@@ -1904,6 +1952,10 @@
                     $('#culture_media').val(data.culture_media).trigger('change');
                     $('#id_kit').val(data.id_kit).trigger('change');
                     $('#kit_lot').val(data.kit_lot);
+                    // Fill typedesc field if available
+                    $('#other_kit').val(data.other_kit || '');    
+                    // Trigger sample type change to show/hide typedesc field
+                    $('#id_kit').trigger('change');
                     $('#barcode_tube').val(data.barcode_tube);
                     $('#fin_volume').val(data.fin_volume);
                     $('#dna_concentration').val(data.dna_concentration);
@@ -1913,15 +1965,23 @@
                     $('#id_rack').val(data.rack);
                     $('#id_tray').val(data.tray);
                     $('#id_row').val(data.rows1);
-                    $('#sequence_id').val(data.sequence_id);
-                    // $('#sequence').val(data.sequence);
+                    // Handle sequence type - check for custom_sequence_type first
+                    if (data.custom_sequence_type) {
+                        $('#sequence_id').val('other').trigger('change');
+                        $('#other_sequence_name').val(data.custom_sequence_type);
+                    } else if (data.sequence_id) {
+                        $('#sequence_id').val(data.sequence_id);
+                    }
+                    
                     // Set the checkbox and handle dependent fields
                     if (data.sequence == 1 || data.sequence === '1') {
                         $('#sequenceCheckbox').prop('checked', true);
                         $('#sequenceFields').show();  // Show the dependent fields (sequence_id, species_id)
+                        $('#sequenceHidden').prop('disabled', true); // Disable hidden input when checkbox is checked
                     } else {
                         $('#sequenceCheckbox').prop('checked', false);
                         $('#sequenceFields').hide();  // Hide the dependent fields (sequence_id, species_id)
+                        $('#sequenceHidden').prop('disabled', false); // Enable hidden input when checkbox is unchecked
                     }
                     $('#species_id').val(data.species_id);
                     $('#id_col').val(data.columns1);
@@ -1938,21 +1998,62 @@
             });
         });
 
-        $('#sequenceCheckbox').on('change', function () {
-            if ($(this).is(':checked')) {
-                $('#sequenceFields').slideDown();
+        // Handle Sample Type change to show/hide type description field
+        $(document).on('change', '#id_kit', function() {
+            let selectedOption = $(this).find('option:selected');
+            let kitName = selectedOption.data('type');
+            let other_kitGroup = $('#other-kit-group');
+            let other_kitInput = $('#other_kit');
+
+            // Show field for Other sample types
+            if (kitName === 'Other') {
+                other_kitGroup.slideDown(300);
+                other_kitInput.prop('required', true);
             } else {
-                $('#sequenceFields').slideUp();
-                $('#sequence_id').val('');
-                $('#species_id').val('');
+                other_kitGroup.slideUp(300);
+                other_kitInput.prop('required', false);
+                other_kitInput.val(''); // Clear the field when hidden
             }
         });
+
+        // Initialize on page load
+        $(document).ready(function() {
+            $('#id_kit').trigger('change');
+            $('#sequence_id').trigger('change');
+            
+            // Initialize sequence hidden field state
+            if ($('#sequenceCheckbox').is(':checked')) {
+                $('#sequenceHidden').prop('disabled', true);
+            } else {
+                $('#sequenceHidden').prop('disabled', false);
+            }
+        });
+
+        // Handle Sequence Type change to show/hide custom sequence name field
+        $(document).on('change', '#sequence_id', function() {
+            let selectedValue = $(this).val();
+            let other_sequenceInput = $('#other_sequence_name');
+
+            // Show field for "Other" sequence type
+            if (selectedValue === 'other') {
+                other_sequenceInput.show().prop('required', true);
+            } else {
+                other_sequenceInput.hide().prop('required', false).val(''); // Clear the field when hidden
+            }
+        });
+
+        // Debug form submission to see sequence values
+        $('form[action*="update_child"]').on('submit', function(e) {
+            let formData = new FormData(this);
+            let sequenceValues = formData.getAll('sequence');
+        });
+
+        // Sequence checkbox handler (consolidated - removed duplicate)
 
         $(document).on('click', '.btn_delete_child', function() {
             let barcode_sample = $(this).data('id');
             let url = '<?php echo site_url('Extraction_culture/delete_child'); ?>/' + barcode_sample;
             $('#confirm-modal #id').text(barcode_sample);
-            console.log(id);
             showConfirmation(url);
         });
 
@@ -1960,8 +2061,6 @@
             let tr = $(this).parent().parent();
             let data = table.row(tr).data();
             let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';  // Get the logged-in user from the session or a similar method.
-            console.log('user aktif', loggedInUser);
-            console.log(data);
             $('#mode').val('edit');
             $('#modal-title').html('<i class="fa fa-pencil-square-o"></i> Extraction culture plate | Update<span id="my-another-cool-loader"></span>');
             // Set nilai form sesuai dengan parameter yang diterima

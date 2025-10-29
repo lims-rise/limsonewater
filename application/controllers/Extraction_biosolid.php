@@ -102,6 +102,7 @@ class Extraction_biosolid extends CI_Controller
         $barcode_tube = $this->input->post('barcode_tube', TRUE);
         $dna_concentration = $this->input->post('dna_concentration', TRUE);
         $cryobox = $this->input->post('cryobox', TRUE);
+        $other_kit = $this->input->post('other_kit', TRUE);
 
         $id_freez = $this->input->post('id_freez', TRUE);
         $id_shelf = $this->input->post('id_shelf', TRUE);
@@ -135,6 +136,7 @@ class Extraction_biosolid extends CI_Controller
                 'cryobox' => $cryobox,
                 'id_location' => $id_loc,
                 'id_pos' => $id_pos,
+                'other_kit' => $other_kit,
                 'uuid' => $this->uuid->v4(),
                 'user_created' => $this->session->userdata('id_users'),
                 'date_created' => $dt->format('Y-m-d H:i:s'),
@@ -181,6 +183,7 @@ class Extraction_biosolid extends CI_Controller
                 'cryobox' => $cryobox,
                 'id_location' => $id_loc,
                 'id_pos' => $id_pos,
+                'other_kit' => $other_kit,
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );

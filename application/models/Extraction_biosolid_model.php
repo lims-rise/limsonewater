@@ -22,7 +22,7 @@ class Extraction_biosolid_model extends CI_Model
         ref_kit.kit, extraction_biosolid.kit_lot, extraction_biosolid.barcode_tube, extraction_biosolid.dna_concentration, 
         extraction_biosolid.cryobox, extraction_biosolid.id_location, extraction_biosolid.comments, extraction_biosolid.flag, 
         extraction_biosolid.id_person, extraction_biosolid.id_kit, extraction_biosolid.id_location,
-        ref_location.freezer,ref_location.shelf,ref_location.rack,ref_location.tray, 
+        ref_location.freezer,ref_location.shelf,ref_location.rack,ref_location.tray, extraction_biosolid.other_kit,
         ref_position.rows1, ref_position.columns1
         ');
         $this->datatables->from('extraction_biosolid');
