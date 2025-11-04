@@ -360,8 +360,8 @@ class Sample_reception extends CI_Controller
         $number_sample = (int) $this->input->post('number_sample', TRUE);
         $id_client_sample = $this->input->post('id_client_sample', TRUE);
         $comments = $this->input->post('comments', TRUE);
-        $date_collected = $this->input->post('date_collected', TRUE);
-        $time_collected = $this->input->post('time_collected', TRUE);
+        $date_arrive = $this->input->post('date_arrive', TRUE);
+        $time_arrive = $this->input->post('time_arrive', TRUE);
         $files =  $this->input->post('files', TRUE);
         $supplementary_files =  $this->input->post('supplementary_files', TRUE);
     
@@ -373,8 +373,8 @@ class Sample_reception extends CI_Controller
                 'id_client_sample' => $id_client_sample,
                 'id_client_contact' => $id_client_contact,
                 'number_sample' => $number_sample,
-                'date_collected' => $date_collected,
-                'time_collected' => $time_collected,
+                'date_arrive' => $date_arrive,
+                'time_arrive' => $time_arrive,
                 'files' => $files,
                 'supplementary_files' => $supplementary_files,
                 'comments' => $comments,
@@ -395,6 +395,8 @@ class Sample_reception extends CI_Controller
                 $sample_data = array(
                     'id_project' => $id_project,
                     'id_one_water_sample' => $id_one_water_sample,
+                    'date_arrival' => $date_arrive,  // Auto-inherit from parent
+                    'time_arrival' => $time_arrive,  // Auto-inherit from parent
                     'flag' => '0',
                     'uuid' => $this->uuid->v4(),
                     'user_created' => $this->session->userdata('id_users'),
@@ -412,8 +414,8 @@ class Sample_reception extends CI_Controller
                             'id_client_contact' => $id_client_contact,
                             'id_client_sample' => $id_client_sample,
                             'number_sample' => $number_sample,
-                            'date_collected' => $date_collected,
-                            'time_collected' => $time_collected,
+                            'date_arrive' => $date_arrive,
+                            'time_arrive' => $time_arrive,
                             'files' => $files,
                             'supplementary_files' => $supplementary_files,
                             'comments' => $comments,
@@ -425,6 +427,17 @@ class Sample_reception extends CI_Controller
                 // var_dump($data);
                 // die();
                 $this->Sample_reception_model->update($id_project, $data);
+                
+                // Update all child samples with new parent date/time arrival
+                $child_update_data = array(
+                    'date_arrival' => $date_arrive,
+                    'time_arrival' => $time_arrive,
+                    'user_updated' => $this->session->userdata('id_users'),
+                    'date_updated' => $dt->format('Y-m-d H:i:s'),
+                );
+                $this->Sample_reception_model->update_all_samples_by_project($id_project, $child_update_data);
+                
+                $this->session->set_flashdata('message', 'Update Record Success');
         }
         
         redirect(site_url("sample_reception"));

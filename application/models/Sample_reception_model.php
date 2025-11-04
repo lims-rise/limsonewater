@@ -15,7 +15,7 @@ class Sample_reception_model extends CI_Model
     }
 
     public function json() {
-        $this->datatables->select('NULL AS toggle, sr.id_project, sr.client_quote_number, sr.client, sr.id_client_sample, COALESCE(cc.client_name, sr.client, "Unknown Client") as client_name, sr.id_client_contact, sr.number_sample, sr.comments, sr.files, sr.supplementary_files, sr.date_collected, sr.time_collected, 
+        $this->datatables->select('NULL AS toggle, sr.id_project, sr.client_quote_number, sr.client, sr.id_client_sample, COALESCE(cc.client_name, sr.client, "Unknown Client") as client_name, sr.id_client_contact, sr.number_sample, sr.comments, sr.files, sr.supplementary_files, sr.date_arrive, sr.time_arrive, 
             sr.date_created, sr.date_updated, sr.flag', FALSE);
             
         $this->datatables->from('sample_reception sr');
@@ -552,6 +552,15 @@ class Sample_reception_model extends CI_Model
         $this->db->update('sample_reception_sample', $data);
         
         return $this->db->affected_rows() > 0; // Return true jika update berhasil
+    }
+
+    // Update all child samples for a specific project with parent date/time arrival
+    public function update_all_samples_by_project($id_project, $data) {
+        $this->db->where('id_project', $id_project);
+        $this->db->where('flag', '0'); // Only update active samples
+        $this->db->update('sample_reception_sample', $data);
+        
+        return $this->db->affected_rows();
     }
     
 
