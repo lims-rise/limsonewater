@@ -186,7 +186,7 @@ class Colilert_hemoflow extends CI_Controller
             $lowerconfidence = $this->input->post('lowerconfidence', TRUE);
             $coliforms_largewells = $this->input->post('coliforms_largewells', TRUE);
             $coliforms_smallwells = $this->input->post('coliforms_smallwells', TRUE);
-            $coliforms = $this->input->post('coliforms', TRUE);
+            $coliforms = $this->input->post('coliforms', FALSE);
             $remarks = $this->input->post('remarks', TRUE);
             $id_one_water_sample = $this->input->post('idx_one_water_sample', TRUE);
             $quality_control = $this->input->post('quality_control_ciw', TRUE) ? 1 : 0; // Convert checkbox to integer
