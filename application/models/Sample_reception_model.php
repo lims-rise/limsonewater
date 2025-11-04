@@ -648,6 +648,7 @@ class Sample_reception_model extends CI_Model
         $response = array();
         $this->db->select('*');
         $this->db->where('flag', '0');
+        $this->db->order_by('testing_type', 'ASC'); // Sort testing types alphabetically
         $q = $this->db->get('ref_testing');
         $response = $q->result_array();
         return $response; 
