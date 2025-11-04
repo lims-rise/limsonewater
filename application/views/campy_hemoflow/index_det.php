@@ -2,12 +2,12 @@
 	<section class="content">
 		<div class="box box-black box-solid">
 			<div class="box-header with-border">
-				<h3 class="box-title">Processing | Campy Biosolids | Details</h3>
+				<h3 class="box-title">Processing | Campy Hemoflow | Details</h3>
 			</div>
 				<form role="form"  id="formKeg" method="post" class="form-horizontal">
 					<div class="box-body">
 						<!-- <input type="hidden" class="form-control " id="id_req" name="id_req" value="<?php// echo $id_req ?>"> -->
-						<input id="id_campy_biosolids" name="id_campy_biosolids" type="hidden" class="form-control input-sm" value="<?php echo $id_campy_biosolids ?>">
+						<input id="id_campy_hemoflow" name="id_campy_hemoflow" type="hidden" class="form-control input-sm" value="<?php echo $id_campy_hemoflow ?>">
 						<div class="form-group">
 							<label for="id_one_water_sample" class="col-sm-2 control-label">One Water Sample ID</label>
 							<div class="col-sm-4">
@@ -56,15 +56,23 @@
 							</div>
 						</div>
 
+                        <div class="form-group">
+                            <label for="filtration_volume" class="col-sm-2 control-label">Filtration Volume</label>
+							<div class="col-sm-4">
+								<input class="form-control " id="filtration_volume" name="filtration_volume" value="<?php echo $filtration_volume ?>"  disabled>
+							</div>
+						</div>
+
+						<!-- COMMENTED OUT: Fields no longer needed for hemoflow
 						<div class="form-group">
 							<label for="sample_wetweight" class="col-sm-2 control-label">Sample Wet Weight</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="sample_wetweight" name="sample_wetweight" value="<?php echo $sample_wetweight ?>"  disabled>
 							</div>
 
-                            <label for="elution_volume" class="col-sm-2 control-label">Elution Volume</label>
+                            <label for="filtration_volume" class="col-sm-2 control-label">Filtration Volume</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="elution_volume" name="elution_volume" value="<?php echo $elution_volume ?>"  disabled>
+								<input class="form-control " id="filtration_volume" name="filtration_volume" value="<?php echo $filtration_volume ?>"  disabled>
 							</div>
 						</div>
 
@@ -80,6 +88,7 @@
                                 <input class="form-control " id="sample_dryweight_old" name="sample_dryweight_old" type="hidden" value="<?php echo $sample_dryweight_old ?>"  disabled>
 							</div>
 						</div>
+						-->
 					</div>
 				</form>
                 <form id="formSampleReview" method="post">
@@ -193,7 +202,7 @@
                     <div class="col-xs-12">
                         <div class="box box-primary box-solid">
                             <div class="box-header">
-                                <h3 class="box-title">Final Concentration</h3>
+                                <h3 class="box-title">Final Calculation</h3>
                             </div>
                             <div class="box-body pad">
                                 <div style="padding-bottom: 10px;">
@@ -210,10 +219,10 @@
                                         }
                                     ?>
                                 </div>
-                                <input id="id_campy_biosolids" name="id_campy_biosolids" type="hidden" class="form-control input-sm" value="<?php echo $id_campy_biosolids ?>">
+                                <input id="id_campy_hemoflow" name="id_campy_hemoflow" type="hidden" class="form-control input-sm" value="<?php echo $id_campy_hemoflow ?>">
 
-                                <div id="content-final-concentration" class="table-responsive">
-                                    <table id="exampleFinalConcentration" class="table display table-bordered table-striped" width="100%">
+                                <div id="content-final-calculation" class="table-responsive">
+                                    <table id="exampleFinalCalculation" class="table display table-bordered table-striped" width="100%">
                                         <thead>
                                             <tr>
                                                 <th>ID One Water Sample</th>
@@ -224,20 +233,20 @@
                                                 <th>MPN PCR Conducted</th>
                                                 <th>Date Sample Processed</th>
                                                 <th>Time Sample Processed</th>
-                                                <th>Sample Wet Weight</th>
+                                                <!-- <th>Sample Wet Weight</th> -->
                                                 <th>Elution Volume</th>
-                                                <?php if (!empty($finalConcentration)): ?>
+                                                <?php if (!empty($finalCalculation)): ?>
                                                     <?php 
                                                         // Tube volume headers
-                                                        foreach ($finalConcentration[0] as $key => $value): 
+                                                        foreach ($finalCalculation[0] as $key => $value): 
                                                             if (strpos($key, 'Tube ') === 0): ?>
                                                                 <th><?= htmlspecialchars($key) ?> Volume</th>
                                                             <?php endif;
                                                         endforeach;
                                                         // Plate number headers
                                                         $plate_numbers = [];
-                                                        if (!empty($finalConcentration[0]->plate_numbers)) {
-                                                            $plate_numbers = array_map('trim', explode(',', $finalConcentration[0]->plate_numbers));
+                                                        if (!empty($finalCalculation[0]['plate_numbers'])) {
+                                                            $plate_numbers = array_map('trim', explode(',', $finalCalculation[0]['plate_numbers']));
                                                         }
                                                         foreach ($plate_numbers as $plate_number): ?>
                                                             <th>Tube <?= htmlspecialchars($plate_number) ?> Result</th>
@@ -251,25 +260,31 @@
                                                 <th>Concentration MPN/g Dw</th>
                                                 <th>Upper CI MPN/g Dw</th>
                                                 <th>Lower CI MPN/g Dw</th>
+                                                <th>Volume Filtered (L)</th>
+                                                <th>Volume Eluted (mL)</th>
+                                                <th>Total Campylobacter</th>
+                                                <th>Concentration (MPN/L)</th>
+                                                <th>Upper CI</th>
+                                                <th>Lower CI</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php if (!empty($finalConcentration)): ?>
-                                                <?php foreach ($finalConcentration as $concentration): ?>
+                                            <?php if (!empty($finalCalculation)): ?>
+                                                <?php foreach ($finalCalculation as $calculation): ?>
                                                     <tr>
-                                                        <td><?= htmlspecialchars($concentration->id_one_water_sample) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->campy_assay_barcode) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->initial) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->sampletype) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->number_of_tubes) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->mpn_pcr_conducted) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->date_sample_processed) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->time_sample_processed) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->sample_wetweight) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->elution_volume) ?></td>
+                                                        <td><?= htmlspecialchars($calculation['id_one_water_sample']) ?></td>
+                                                        <td><?= htmlspecialchars($calculation['campy_assay_barcode']) ?></td>
+                                                        <td><?= htmlspecialchars($calculation['initial']) ?></td>
+                                                        <td><?= htmlspecialchars($calculation['sampletype'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['number_of_tubes'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['mpn_pcr_conducted'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['date_sample_processed'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['time_sample_processed'] ?? '-') ?></td>
+                                                        <!-- <td><?= htmlspecialchars($calculation['sample_wetweight']) ?></td> -->
+                                                        <td><?= htmlspecialchars($calculation['filtration_volume'] ?? '-') ?></td>
                                                         <?php 
                                                         // Tube volumes
-                                                        foreach ($concentration as $key => $value): 
+                                                        foreach ($calculation as $key => $value): 
                                                             if (strpos($key, 'Tube ') === 0): ?>
                                                                 <td><?= htmlspecialchars($value) ?></td>
                                                             <?php endif;
@@ -277,11 +292,11 @@
 
                                                         // Plate numbers
                                                         $plate_numbers = [];
-                                                        if (!empty($concentration->plate_numbers)) {
-                                                            $plate_numbers = array_map('trim', explode(',', $concentration->plate_numbers));
+                                                        if (!empty($calculation['plate_numbers'])) {
+                                                            $plate_numbers = array_map('trim', explode(',', $calculation['plate_numbers']));
                                                         }
                                                         // Confirmation values
-                                                        $confirmation = isset($concentration->confirmation) && is_array($concentration->confirmation) ? $concentration->confirmation : [];
+                                                        $confirmation = isset($calculation['confirmation']) && is_array($calculation['confirmation']) ? $calculation['confirmation'] : [];
                                                         foreach ($plate_numbers as $plate_number): 
                                                             // Normalize key for confirmation lookup (remove spaces)
                                                             $lookup_key = trim($plate_number);
@@ -294,12 +309,18 @@
                                                         ?>
                                                             <td><?= htmlspecialchars($confirmation_value) ?></td>
                                                         <?php endforeach; ?>
-                                                        <td><?= htmlspecialchars($concentration->mpn_concentration) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->upper_ci) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->lower_ci) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->mpn_concentration_dw) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->upper_ci_dw) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->lower_ci_dw) ?></td>
+                                                        <td><?= htmlspecialchars($calculation['mpn_concentration'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['upper_ci'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['lower_ci'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['mpn_concentration_dw'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['upper_ci_dw'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['lower_ci_dw'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['volume_filter'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['volume_eluted'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['total_campylobacter'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['concentration_mpn_l'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['upper_ci_new'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation['lower_ci_new'] ?? '-') ?></td>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             <?php else: ?>
@@ -317,7 +338,7 @@
 
 				<div class="form-group">
 					<div class="modal-footer clearfix">
-						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('campy_biosolids'); ?>';">
+						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('campy_hemoflow'); ?>';">
 							<i class="fa fa-times"></i> Close
 						</button>
 					</div>
@@ -336,16 +357,16 @@
                         <h4 class="modal-title" id="modal-title-detail">
 							<span id="my-another-cool-loader"></span></h4>
                     </div>
-                        <form id="formDetail24" action=<?php echo site_url('Campy_biosolids/saveResultsCharcoal') ?> method="post" class="form-horizontal">
+                        <form id="formDetail24" action=<?php echo site_url('Campy_hemoflow/saveResultsCharcoal') ?> method="post" class="form-horizontal">
                             <div class="modal-body">
                                 <div class="form-group">
                                         <div class="col-sm-9">
                                             <input id="mode_detResultsCharcoal" name="mode_detResultsCharcoal" type="hidden" class="form-control input-sm">
                                             <!-- <input id="idx_moisture24" name="idx_moisture24" type="hidden" class="form-control input-sm">
                                             <input id="id_moisture24" name="id_moisture24" type="hidden" class="form-control input-sm"> -->
-                                            <input id="id_campy_biosolids1" name="id_campy_biosolids1" type="hidden" class="form-control input-sm">
+                                            <input id="id_campy_hemoflow1" name="id_campy_hemoflow1" type="hidden" class="form-control input-sm">
                                             <input id="number_of_tubes1" name="number_of_tubes1" type="hidden" class="form-control input-sm">
-                                            <input id="id_result_charcoal" name="id_result_charcoal" type="hidden" class="form-control input-sm">
+                                            <input id="id_chrc" name="id_chrc" type="hidden" class="form-control input-sm">
                                             <input id="idCharcoal_one_water_sample" name="idCharcoal_one_water_sample" type="hidden" class="form-control input-sm">
                                         </div>
                                     </div>
@@ -420,16 +441,16 @@
                         <h4 class="modal-title" id="modal-title-HBA">
 							<span id="my-another-cool-loader"></span></h4>
                     </div>
-                        <form id="formDetail24" action=<?php echo site_url('Campy_biosolids/saveResultsHBA') ?> method="post" class="form-horizontal">
+                        <form id="formDetail24" action=<?php echo site_url('Campy_hemoflow/saveResultsHBA') ?> method="post" class="form-horizontal">
                             <div class="modal-body">
                                 <div class="form-group">
                                         <div class="col-sm-9">
                                             <input id="mode_detResultsHBA" name="mode_detResultsHBA" type="hidden" class="form-control input-sm">
                                             <!-- <input id="idx_moisture24" name="idx_moisture24" type="hidden" class="form-control input-sm">
                                             <input id="id_moisture24" name="id_moisture24" type="hidden" class="form-control input-sm"> -->
-                                            <input id="id_campy_biosolidsHBA" name="id_campy_biosolidsHBA" type="hidden" class="form-control input-sm">
+                                            <input id="id_campy_hemoflowHBA" name="id_campy_hemoflowHBA" type="hidden" class="form-control input-sm">
                                             <input id="number_of_tubesHba" name="number_of_tubesHba" type="hidden" class="form-control input-sm">
-                                            <input id="id_result_hba" name="id_result_hba" type="hidden" class="form-control input-sm">
+                                            <input id="id_campy_hemoflow_result_hba" name="id_campy_hemoflow_result_hba" type="hidden" class="form-control input-sm">
                                             <input id="idHba_one_water_sample" name="idHba_one_water_sample" type="hidden" class="form-control input-sm">
                                         </div>
                                     </div>
@@ -507,13 +528,13 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
                 <h4 class="modal-title" id="modal-title-biochemical">Biochemical Tube | New</h4>
             </div>
-            <form id="formBiochemical" action="<?php echo site_url('Campy_biosolids/saveBiochemical') ?>" method="post" class="form-horizontal">
+            <form id="formBiochemical" action="<?php echo site_url('Campy_hemoflow/saveBiochemical') ?>" method="post" class="form-horizontal">
                 <div class="modal-body">
                     <input id="mode_detResultsBiochemical" name="mode_detResultsBiochemical" type="hidden" class="form-control input-sm">
-                    <input id="id_campy_biosolidsBiochemical" name="id_campy_biosolidsBiochemical" type="hidden" class="form-control input-sm">
-                    <input id="id_result_biochemical" name="id_result_biochemical" type="hidden" class="form-control input-sm">
+                    <input id="id_campy_hemoflowBiochemical" name="id_campy_hemoflowBiochemical" type="hidden" class="form-control input-sm">
+                    <input id="id_campy_hemoflow_result_biochemical" name="id_campy_hemoflow_result_biochemical" type="hidden" class="form-control input-sm">
                     <input id="biochemical_tube" name="biochemical_tube" type="hidden" class="form-control input-sm">
-                    <input id="id_result_hba1" name="id_result_hba1" type="hidden" class="form-control input-sm">
+                    <input id="id_campy_hemoflow_result_hba1" name="id_campy_hemoflow_result_hba1" type="hidden" class="form-control input-sm">
                     <input id="idBiochemical_one_water_sample" name="idBiochemical_one_water_sample" type="hidden" class="form-control input-sm">
 
                     <!-- Gramlysis Result -->
@@ -601,12 +622,12 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
                 <h4 class="modal-title" id="modal-title-calculate-mpn">Calculate MPN | New</h4>
             </div>
-            <form id="formCalculateMPN" action="<?php echo site_url('Campy_biosolids/saveCalculateMPN') ?>" method="post" class="form-horizontal">
+            <form id="formCalculateMPN" action="<?php echo site_url('Campy_hemoflow/saveCalculateMPN') ?>" method="post" class="form-horizontal">
                 <div class="modal-body">
                     <input id="mode_calculateMPN" name="mode_calculateMPN" type="hidden" class="form-control input-sm">
-                    <input id="id_campy_biosolids_mpn" name="id_campy_biosolids_mpn" type="hidden" class="form-control input-sm">
+                    <input id="id_campy_hemoflow_mpn" name="id_campy_hemoflow_mpn" type="hidden" class="form-control input-sm">
                     <input id="id_campy_result_mpn" name="id_campy_result_mpn" type="hidden" class="form-control input-sm">
-                    <input id="current_sample_dryweight" name="current_sample_dryweight" type="hidden" class="form-control input-sm">
+                    <!-- <input id="current_sample_dryweight" name="current_sample_dryweight" type="hidden" class="form-control input-sm"> -->
 
                     <!-- MPN Concentration -->
                     <div class="form-group">
@@ -636,7 +657,8 @@
                         </div>
                     </div>
 
-                    <!-- Concentration MPN/g dry weight -->
+                    <!-- COMMENTED OUT: MPN/g dry weight calculations no longer needed for hemoflow
+                    Concentration MPN/g dry weight -->
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Auto-calculated Results</label>
                         <div class="col-sm-8">
@@ -702,7 +724,7 @@
 			<div class="modal-content">
 				<div class="modal-header" style="background-color: #f39c12; color: white;">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
-					<h4 class="modal-title">Campy Biosolids | Information</h4>
+					<h4 class="modal-title">Campy Hemoflow | Information</h4>
 				</div>
                 <div id="confirmation-content">
                     <div class="modal-body">
@@ -1288,14 +1310,15 @@
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
 <script>
     document.getElementById('exportBtn').addEventListener('click', function() {
-        let id_campy_biosolids = document.getElementById('id_campy_biosolids').value;
-        window.location.href = '<?php echo site_url("Campy_biosolids/excel"); ?>/' + id_campy_biosolids;
+        let id_campy_hemoflow = document.getElementById('id_campy_hemoflow').value;
+        window.location.href = '<?php echo site_url("Campy_hemoflow/excel"); ?>/' + id_campy_hemoflow;
     });
 
     // Calculate MPN button click handler
     document.getElementById('calculateMpnBtn').addEventListener('click', function() {
-        let id_campy_biosolids = document.getElementById('id_campy_biosolids').value;
+        let id_campy_hemoflow = document.getElementById('id_campy_hemoflow').value;
         
+        /* COMMENTED OUT: Sample Dry Weight validation no longer needed for hemoflow
         // Validate sample_dryweight before proceeding
         let sampleDryweight = document.getElementById('sample_dryweight').value;
         
@@ -1320,15 +1343,16 @@
             });
             return; // Stop execution if sample_dryweight is empty
         }
-        
-        // Set the id_campy_biosolids value in the modal
-        document.getElementById('id_campy_biosolids_mpn').value = id_campy_biosolids;
-        
+        */
+
+        // Set the id_campy_hemoflow value in the modal
+        document.getElementById('id_campy_hemoflow_mpn').value = id_campy_hemoflow;
+
         // Check if MPN calculation already exists
         $.ajax({
-            url: '<?php echo site_url("Campy_biosolids/getCalculateMPN"); ?>',
+            url: '<?php echo site_url("Campy_hemoflow/getCalculateMPN"); ?>',
             type: 'GET',
-            data: { id_campy_biosolids: id_campy_biosolids },
+            data: { id_campy_hemoflow: id_campy_hemoflow },
             dataType: 'json',
             success: function(response) {
                 if (response.status === 'success') {
@@ -1389,7 +1413,7 @@
     let table2;
     let id_moisture = $('#id_moisture').val();
     let campy_assay_barcode = $('#campy_assay_barcode').val();
-    let id_campy_biosolids = $('#id_campy_biosolids').val();
+    let id_campy_hemoflow = $('#id_campy_hemoflow').val();
     let number_of_tubes = $('#number_of_tubes').val();
     let idx_one_water_sample = $('#id_one_water_sample').val();
 
@@ -1462,9 +1486,9 @@
             // If sample_dryweight has changed and MPN calculation exists
             if (currentSampleDryweight !== initialSampleDryweight && currentSampleDryweight > 0) {
                 $.ajax({
-                    url: '<?php echo site_url("Campy_biosolids/getCalculateMPN"); ?>',
+                    url: '<?php echo site_url("Campy_hemoflow/getCalculateMPN"); ?>',
                     type: 'GET',
-                    data: { id_campy_biosolids: id_campy_biosolids },
+                    data: { id_campy_hemoflow: id_campy_hemoflow },
                     dataType: 'json',
                     success: function(response) {
                         if (response.status === 'success') {
@@ -1579,7 +1603,7 @@
 		// 					.addClass('form-check-label ' + states[currentState].class);
 
 		// 				$.ajax({
-		// 					url: '<?php echo site_url("Campy_biosolids/saveReview"); ?>',
+		// 					url: '<?php echo site_url("Campy_hemoflow/saveReview"); ?>',
 		// 					method: 'POST',
 		// 					data: $('#formSampleReview').serialize(),
 		// 					dataType: 'json',
@@ -1809,7 +1833,7 @@
 		 */
 		function saveReviewData() {
 			$.ajax({
-				url: '<?php echo site_url('Campy_biosolids/saveReview'); ?>',
+				url: '<?php echo site_url('Campy_hemoflow/saveReview'); ?>',
 				method: 'POST',
 				data: $('#formSampleReview').serialize(),
 				dataType: 'json',
@@ -1900,7 +1924,7 @@
                 console.log('Form data to be sent: ', formData); // Debugging log
 
                 $.ajax({
-                    url: '<?php echo site_url("Campy_biosolids/cancelReview"); ?>',
+                    url: '<?php echo site_url("Campy_hemoflow/cancelReview"); ?>',
                     method: 'POST',
                     data: formData,
                     dataType: 'json',
@@ -2015,6 +2039,7 @@
 
         // Function to calculate MPN per gram dry weight values
         function calculateMpnDryWeight() {
+            /* COMMENTED OUT: Dry weight calculation no longer needed for hemoflow
             // Get original mpn_concentration value with potential symbols
             let mpnConcentrationOriginal = $('#mpn_concentration').val().trim();
             let upperCi = parseFloat($('#upper_ci').val()) || 0;
@@ -2054,6 +2079,7 @@
                 $('#display_upper_ci_dw').text('-');
                 $('#display_lower_ci_dw').text('-');
             }
+            */
         }
 
         // Attach the calculation function to input events
@@ -2089,7 +2115,7 @@
         // Also trigger calculation when the modal is shown (in case data is pre-filled)
         $('#compose-modalCalculateMPN').on('shown.bs.modal', function() {
             calculateMpnDryWeight();
-            $('#current_sample_dryweight').val($('#sample_dryweight').val());
+            // $('#current_sample_dryweight').val($('#sample_dryweight').val()); // COMMENTED: No longer needed
             
             // Trigger symbol detection for pre-filled values
             $('#mpn_concentration').trigger('input');
@@ -2275,7 +2301,7 @@
             let id = $(this).data('id');
             let url;
             if ($(this).hasClass('btn_deleteCharcoal')) {
-                url = '<?php echo site_url("Campy_biosolids/delete_detailCharcoal"); ?>/' + id;
+                url = '<?php echo site_url("Campy_hemoflow/delete_detailCharcoal"); ?>/' + id;
                 $('.modal-title').html('<i class="fa fa-trash"></i> Result Charcoal | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
                 
@@ -2290,7 +2316,7 @@
                     '<p>Are you sure you want to delete Result Charcoal <strong>' + id + '</strong> and all its related data?</p>'
                 );
             } else if ($(this).hasClass('btn_deleteHba')) {
-                url = '<?php echo site_url("Campy_biosolids/delete_detailHba"); ?>/' + id;
+                url = '<?php echo site_url("Campy_hemoflow/delete_detailHba"); ?>/' + id;
                 $('.modal-title').html('<i class="fa fa-trash"></i> Result HBA | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
                 
@@ -2300,7 +2326,7 @@
                     '<p>This action cannot be undone. Are you sure you want to delete Result HBA <strong>' + id + '</strong> and all its related data?</p>'
                 );
             } else if ($(this).hasClass('btn_deleteBiochemical')) {
-                url = '<?php echo site_url("Campy_biosolids/delete_detailBiochemical"); ?>/' + id;
+                url = '<?php echo site_url("Campy_hemoflow/delete_detailBiochemical"); ?>/' + id;
                 $('.modal-title').html('<i class="fa fa-trash"></i> Result Biochemical | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
                 
@@ -2482,7 +2508,7 @@
             paging: false,
             info: false,
             bFilter: false,
-            ajax: {"url": "../../Campy_biosolids/subjsonCharcoal?idCharcoal="+id_campy_biosolids, "type": "POST"},
+            ajax: {"url": "../../Campy_hemoflow/subjsonCharcoal?idCharcoal="+id_campy_hemoflow, "type": "POST"},
             columns: [
                 {"data": "campy_assay_barcode"},
                 {"data": "date_sample_processed"},
@@ -2530,7 +2556,7 @@
             paging: false,
             info: false,
             bFilter: false,
-            ajax: {"url": "../../Campy_biosolids/subjsonHba?idHba="+id_campy_biosolids, "type": "POST"},
+            ajax: {"url": "../../Campy_hemoflow/subjsonHba?idHba="+id_campy_hemoflow, "type": "POST"},
             columns: [
                 {"data": "campy_assay_barcode"},
                 {"data": "date_sample_processed"},
@@ -2594,7 +2620,7 @@
                 const plateNumberArray = data.plate_number.split(', ');
 
                 // Generate the biochemical results for all plate numbers
-                generateResultBiochemical($('#content-result-biochemical'), plateNumberArray.length, data.id_campy_biosolids, plateNumberArray, growthPlateArray);
+                generateResultBiochemical($('#content-result-biochemical'), plateNumberArray.length, data.id_campy_hemoflow, plateNumberArray, growthPlateArray);
             } else {
                 console.log('Data belum tersedia');
                 $('#content-result-biochemical').empty().append('<p class="text-center">No data available</p>');
@@ -2602,7 +2628,7 @@
         });
 
         // Improved generateResultBiochemical function
-        function generateResultBiochemical(container, numberOfPlates, id_campy_biosolids, plateNumberArray, growthPlateArray) {
+        function generateResultBiochemical(container, numberOfPlates, id_campy_hemoflow, plateNumberArray, growthPlateArray) {
             container.empty(); // Clear existing content
             
             // Get user level from PHP session
@@ -2653,13 +2679,13 @@
                 `);
 
                 // Initialize DataTable for the newly created table, passing the plate number
-                initializeDataTable(tableId, id_campy_biosolids, plateNumber); // Pass the actual plate number
+                initializeDataTable(tableId, id_campy_hemoflow, plateNumber); // Pass the actual plate number
             }
         }
 
 
         // Fungsi untuk menginisialisasi DataTable
-        function initializeDataTable(tableId, id_campy_biosolids, tubeIndex) {
+        function initializeDataTable(tableId, id_campy_hemoflow, tubeIndex) {
             console.log(`Tube index: ${tubeIndex}`);
             $(`#${tableId}`).DataTable({
                 oLanguage: {
@@ -2671,7 +2697,7 @@
                 info: false,
                 bFilter: false,
                 ajax: {
-                    url: `../../Campy_biosolids/subjsonBiochemical?idBiochemical=${id_campy_biosolids}&biochemical_tube=${tubeIndex}`,
+                    url: `../../Campy_hemoflow/subjsonBiochemical?idBiochemical=${id_campy_hemoflow}&biochemical_tube=${tubeIndex}`,
                     type: "POST"
                 },
                 columns: [
@@ -2703,13 +2729,13 @@
             const plateNumber = $(this).data('index'); // Get the plate number directly
             let td = $('#exampleHba td:first');
             let data = table1.row(td).data();
-            console.log('datanya', data.id_result_hba);
+            console.log('datanya', data.id_campy_hemoflow_result_hba);
 
             $('#mode_detResultsBiochemical').val('insert');
             $('#modal-title-biochemical').html(`<i class="fa fa-wpforms"></i> Insert | Biochemical Tube ${plateNumber} <span id="my-another-cool-loader"></span>`);
             $('#idBiochemical_one_water_sample').val(idx_one_water_sample);
-            $('#id_campy_biosolidsBiochemical').val(id_campy_biosolids);
-            $('#id_result_hba1').val(data.id_result_hba);
+            $('#id_campy_hemoflowBiochemical').val(id_campy_hemoflow);
+            $('#id_campy_hemoflow_result_hba1').val(data.id_campy_hemoflow_result_hba);
             $('#gramlysis').val('');
             $('#oxidase').val('');
             $('#catalase').val('');
@@ -2732,9 +2758,9 @@
             $('#mode_detResultsBiochemical').val('edit');
             $('#modal-title-biochemical').html('<i class="fa fa-pencil-square"></i> Update | Biochemical Tube ' + data.biochemical_tube + ' <span id="my-another-cool-loader"></span>');
             $('#idBiochemical_one_water_sample').val(idx_one_water_sample);
-            $('#id_result_biochemical').val(data.id_result_biochemical);
-            $('#id_campy_biosolidsBiochemical').val(data.id_campy_biosolids);
-            $('#id_result_hba1').val(data.id_result_hba);
+            $('#id_campy_hemoflow_result_biochemical').val(data.id_campy_hemoflow_result_biochemical);
+            $('#id_campy_hemoflowBiochemical').val(data.id_campy_hemoflow);
+            $('#id_campy_hemoflow_result_hba1').val(data.id_campy_hemoflow_result_hba);
             // Set radio button untuk gramlysis
             $('input[name="gramlysis"][value="' + data.gramlysis + '"]').prop('checked', true); 
 
@@ -2761,7 +2787,7 @@
             $('#idCharcoal_one_water_sample').val(idx_one_water_sample);
             $('#campy_assay_barcode1').val(campy_assay_barcode);
             $('#campy_assay_barcode1').attr('readonly', true);
-            $('#id_campy_biosolids1').val(id_campy_biosolids);
+            $('#id_campy_hemoflow1').val(id_campy_hemoflow);
             $('#number_of_tubes1').val(number_of_tubes);
             // Reset quality control checkbox for new record
             $('#quality_control').prop('checked', false);
@@ -2775,10 +2801,10 @@
             $('#mode_detResultsCharcoal').val('edit');
             $('#modal-title-detail').html('<i class="fa fa-pencil-square"></i> Update | Results Charcoal <span id="my-another-cool-loader"></span>');
             $('#idCharcoal_one_water_sample').val(idx_one_water_sample);
-            $('#id_result_charcoal').val(data.id_result_charcoal);
+            $('#id_chrc').val(data.id_chrc);
             $('#campy_assay_barcode1').val(data.campy_assay_barcode);
             $('#campy_assay_barcode1').attr('readonly', true);
-            $('#id_campy_biosolids1').val(data.id_campy_biosolids);
+            $('#id_campy_hemoflow1').val(data.id_campy_hemoflow);
             $('#date_sample_processed1').val(data.date_sample_processed);
             $('#time_sample_processed1').val(data.time_sample_processed);
             $('#number_of_tubes1').val(number_of_tubes);
@@ -2833,7 +2859,7 @@
                 // Parsing data ke komponen
                 $('#idHba_one_water_sample').val(idx_one_water_sample);
                 $('#campy_assay_barcodeHBA').val(campy_assay_barcode);
-                $('#id_campy_biosolidsHBA').val(id_campy_biosolids);
+                $('#id_campy_hemoflowHBA').val(id_campy_hemoflow);
                 $('#campy_assay_barcodeHBA').attr('readonly', true);
                 $('#number_of_tubesHba').val(number_of_tubes);
 
@@ -2904,10 +2930,10 @@
             $('#mode_detResultsHBA').val('edit');
             $('#modal-title-HBA').html('<i class="fa fa-pencil-square"></i> Update | Results HBA <span id="my-another-cool-loader"></span>');
             $('#idHba_one_water_sample').val(idx_one_water_sample);
-            $('#id_result_hba').val(data.id_result_hba);
+            $('#id_campy_hemoflow_result_hba').val(data.id_campy_hemoflow_result_hba);
             $('#campy_assay_barcodeHBA').val(data.campy_assay_barcode);
             $('#campy_assay_barcodeHBA').attr('readonly', true);
-            $('#id_campy_biosolidsHBA').val(data.id_campy_biosolids);
+            $('#id_campy_hemoflowHBA').val(data.id_campy_hemoflow);
             $('#date_sample_processedHBA').val(data.date_sample_processed);
             $('#time_sample_processedHBA').val(data.time_sample_processed);
             $('#number_of_tubesHba').val(number_of_tubes);
@@ -2966,7 +2992,7 @@
             e.preventDefault();
             
             // Always use the same URL since we handle mode validation in the controller
-            let url = '<?php echo site_url("Campy_biosolids/saveCalculateMPN"); ?>';
+            let url = '<?php echo site_url("Campy_hemoflow/saveCalculateMPN"); ?>';
             let formData = $(this).serialize();
 
             $.ajax({
@@ -3017,10 +3043,10 @@
             $('#formCalculateMPN')[0].reset();
             $('#mode_calculateMPN').val('');
             $('#id_campy_result_mpn').val('');
-            $('#current_sample_dryweight').val('');
-            $('#mpn_concentration_dw').val('');
-            $('#upper_ci_dw').val('');
-            $('#lower_ci_dw').val('');
+            // $('#current_sample_dryweight').val(''); // COMMENTED: No longer needed
+            // $('#mpn_concentration_dw').val(''); // COMMENTED: No longer needed
+            // $('#upper_ci_dw').val(''); // COMMENTED: No longer needed  
+            // $('#lower_ci_dw').val(''); // COMMENTED: No longer needed
         });
 
     });

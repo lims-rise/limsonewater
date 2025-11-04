@@ -95,7 +95,7 @@ class Sample_reception_model extends CI_Model
                         bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
                         ec.review, el.review, em.review, cb.review, mc.review, 
                         ewi.review, ebi.review, cbi.review, cwi.review, 
-                        pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review
+                        pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review
                     ) = 1 THEN 1 END) as completed_tests
                 FROM sample_reception sr
                 LEFT JOIN sample_reception_sample srs ON sr.id_project = srs.id_project AND srs.flag = 0
@@ -119,6 +119,7 @@ class Sample_reception_model extends CI_Model
                 LEFT JOIN hemoflow hem ON hem.hemoflow_barcode = srt.barcode AND hem.flag = 0
                 LEFT JOIN enterolert_hemoflow ehf ON ehf.enterolert_hemoflow_barcode = srt.barcode AND ehf.flag = 0
                 LEFT JOIN colilert_hemoflow chf ON chf.colilert_hemoflow_barcode = srt.barcode AND chf.flag = 0
+                LEFT JOIN campy_hemoflow ch ON ch.campy_assay_barcode = srt.barcode AND ch.flag = 0
                 WHERE sr.id_project = ? AND sr.flag = 0
                 GROUP BY sr.id_project";
 
@@ -191,8 +192,8 @@ class Sample_reception_model extends CI_Model
             testing.barcode, 
             retest.testing_type AS testing_type, 
             retest.url, 
-            COALESCE(bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review, ec.user_review, el.user_review, em.user_review, cb.user_review, mc.user_review, ewi.user_review, ebi.user_review, cbi.user_review, cwi.user_review, pr.user_review, cp.user_review, sp.user_review, hem.user_review, ehf.user_review, chf.user_review) AS user_review, 
-            COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review) AS review,
+            COALESCE(bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review, ec.user_review, el.user_review, em.user_review, cb.user_review, mc.user_review, ewi.user_review, ebi.user_review, cbi.user_review, cwi.user_review, pr.user_review, cp.user_review, sp.user_review, hem.user_review, ehf.user_review, chf.user_review, ch.user_review) AS user_review, 
+            COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review) AS review,
             tbl_user.full_name, 
             testing.flag
         ");
@@ -218,7 +219,8 @@ class Sample_reception_model extends CI_Model
         $this->datatables->join('hemoflow hem', 'hem.hemoflow_barcode = testing.barcode and hem.flag = 0', 'left');
         $this->datatables->join('enterolert_hemoflow ehf', 'ehf.enterolert_hemoflow_barcode = testing.barcode and ehf.flag = 0', 'left');
         $this->datatables->join('colilert_hemoflow chf', 'chf.colilert_hemoflow_barcode = testing.barcode and chf.flag = 0', 'left');
-        $this->datatables->join('tbl_user', 'tbl_user.id_users = COALESCE(bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review, ec.user_review, el.user_review, em.user_review, cb.user_review, mc.user_review, ewi.user_review, ebi.user_review, cbi.user_review, cwi.user_review, pr.user_review, cp.user_review, sp.user_review, hem.user_review, ehf.user_review)', 'left');
+        $this->datatables->join('campy_hemoflow ch', 'ch.campy_assay_barcode = testing.barcode and ch.flag = 0', 'left');
+        $this->datatables->join('tbl_user', 'tbl_user.id_users = COALESCE(bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review, ec.user_review, el.user_review, em.user_review, cb.user_review, mc.user_review, ewi.user_review, ebi.user_review, cbi.user_review, cwi.user_review, pr.user_review, cp.user_review, sp.user_review, hem.user_review, ehf.user_review, chf.user_review, ch.user_review)', 'left');
         $this->datatables->where('testing.flag', '0');
         $this->datatables->where('testing.id_sample', $id);
         $this->datatables->group_by('testing.id_testing');
@@ -751,11 +753,11 @@ class Sample_reception_model extends CI_Model
         $this->db->select('sample_reception_sample.id_one_water_sample, sample_reception_sample.id_project, sample_reception_sample.date_collected, sample_reception_sample.time_collected, sample_reception_sample.date_created,
         ref_person.initial, ref_sampletype.sampletype, sample_reception_sample.quality_check, sample_reception_sample.client_id, sample_reception_sample.comments, sample_reception_sample.date_arrival, 
         sample_reception_sample.time_arrival,
-        COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, 0) AS review,
+        COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, ch.review, 0) AS review,
         CASE 
             WHEN COUNT(testing.id_testing) = 0 THEN "No Tests"
-            WHEN COUNT(CASE WHEN COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review) = 1 THEN 1 END) = COUNT(testing.id_testing) THEN "Complete"
-            WHEN COUNT(CASE WHEN COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review) = 1 THEN 1 END) > 0 THEN "Partial"
+            WHEN COUNT(CASE WHEN COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review) = 1 THEN 1 END) = COUNT(testing.id_testing) THEN "Complete"
+            WHEN COUNT(CASE WHEN COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review) = 1 THEN 1 END) > 0 THEN "Partial"
             ELSE "Incomplete"
         END AS review_status
         ');
@@ -780,6 +782,7 @@ class Sample_reception_model extends CI_Model
         $this->db->join('hemoflow hem', 'hem.hemoflow_barcode = testing.barcode and hem.flag = 0', 'left');
         $this->db->join('enterolert_hemoflow ehf', 'ehf.enterolert_hemoflow_barcode = testing.barcode and ehf.flag = 0', 'left');
         $this->db->join('colilert_hemoflow chf', 'chf.colilert_hemoflow_barcode = testing.barcode and chf.flag = 0', 'left');
+        $this->db->join('campy_hemoflow ch', 'ch.campy_assay_barcode = testing.barcode and ch.flag = 0', 'left');
         $this->db->join('ref_sampletype', 'sample_reception_sample.id_sampletype = ref_sampletype.id_sampletype', 'left');
         $this->db->join('ref_person', 'sample_reception_sample.id_person=ref_person.id_person', 'left');
         $this->db->where('sample_reception_sample.id_project', $id_project);
@@ -1116,7 +1119,8 @@ class Sample_reception_model extends CI_Model
             'Campylobacter-MPN' => 'Campylobacter-MPN',
             'Salmonella-P/A' => 'Salmonella-P/A',
             'Enterolert-Hemoflow' => 'Enterolert-Hemoflow',
-            'Colilert-Hemoflow' => 'Colilert-Hemoflow'
+            'Colilert-Hemoflow' => 'Colilert-Hemoflow',
+            'Campy-Hemoflow' => 'Campy-Hemoflow'
 
         ];
 
@@ -1151,7 +1155,8 @@ class Sample_reception_model extends CI_Model
             'Campylobacter-MPN' => 'CAMPYLOBACTER MPN',
             'Salmonella-P/A' => 'SALMONELLA P/A',
             'Enterolert-Hemoflow' => 'ENTEROLERT HEMOFLOW',
-            'Colilert-Hemoflow' => 'COLILERT HEMOFLOW'
+            'Colilert-Hemoflow' => 'COLILERT HEMOFLOW',
+            'Campy-Hemoflow' => 'CAMPY HEMOFLOW'
         ];
         
         foreach ($methods as $test => $method) {
@@ -1184,7 +1189,8 @@ class Sample_reception_model extends CI_Model
             'Campylobacter-MPN' => 'CAMPY_MPN',
             'Salmonella-P/A' => 'SALM_PA',
             'Enterolert-Hemoflow' => 'ENTEROLERT_HF',
-            'Colilert-Hemoflow' => 'COLILERT_HF'
+            'Colilert-Hemoflow' => 'COLILERT_HF',
+            'Campy-Hemoflow' => 'CAMPY_HF'
         ];
         
         foreach ($codes as $test => $code) {
@@ -1217,7 +1223,8 @@ class Sample_reception_model extends CI_Model
             'Campylobacter-MPN' => 'Campylobacter MPN',
             'Salmonella-P/A' => 'Salmonella P/A',
             'Enterolert-Hemoflow' => 'Enterolert Hemoflow',
-            'Colilert-Hemoflow' => 'Colilert Hemoflow'
+            'Colilert-Hemoflow' => 'Colilert Hemoflow',
+            'Campy-Hemoflow' => 'Campy Hemoflow'
         ];
         
         foreach ($names as $test => $name) {
@@ -1350,6 +1357,71 @@ class Sample_reception_model extends CI_Model
      * @param string $url
      * @return boolean
      */
+    // function check_data_exists($id_one_water_sample, $id_testing_type, $url) {
+    //     // Map URL to corresponding table names
+    //     $table_mapping = array(
+    //         'biobankin' => 'biobank_in',
+    //         'colilert_idexx_water' => 'colilert_water_in',
+    //         'colilert_idexx_biosolids' => 'colilert_biosolids_in',
+    //         'enterolert_idexx_water' => 'enterolert_water_in',
+    //         'enterolert_idexx_biosolids' => 'enterolert_biosolids_in',
+    //         'campy_biosolids' => 'campy_biosolids',
+    //         'campy_liquids' => 'campy_liquids',
+    //         'moisture_content' => 'moisture_content',
+    //         'salmonella_biosolids' => 'salmonella_biosolids',
+    //         'salmonella_liquids' => 'salmonella_liquids',
+    //         'extraction_metagenome' => 'extraction_metagenome',
+    //         'extraction_culture' => 'extraction_culture',
+    //         'extraction_liquid' => 'extraction_liquid',
+    //         'extraction_biosolid' => 'extraction_biosolid',
+    //         'hemoflow' => 'hemoflow',
+    //         'campy_qpcr' => 'campy_pa',
+    //         'campy_pa' => 'campy_pa',
+    //         'freezer_in' => 'freezer_in',
+    //         'freezer_out' => 'freezer_out',
+    //         'protozoa' => 'protozoa',
+    //         'salmonella_pa' => 'salmonella_pa',
+    //         'enterolert_hemoflow' => 'enterolert_hemoflow',
+    //         'colilert_hemoflow' => 'colilert_hemoflow',
+    //         'campy hemoflow' => 'campy hemoflow'
+    //     );
+
+    //     // Extract table name from URL
+    //     $table_name = null;
+    //     foreach ($table_mapping as $url_key => $table) {
+    //         if (strpos($url, $url_key) !== false) {
+    //             $table_name = $table;
+    //             break;
+    //         }
+    //     }
+
+    //     // If no matching table found, return false
+    //     if (!$table_name || !$this->db->table_exists($table_name)) {
+    //         return false;
+    //     }
+
+    //     // Check if data exists in the corresponding table
+    //     try {
+    //         $this->db->reset_query();
+    //         $this->db->select('COUNT(*) as count');
+    //         $this->db->from($table_name);
+    //         $this->db->where('id_one_water_sample', $id_one_water_sample);
+    //         $this->db->where('flag', '0');
+            
+    //         $query = $this->db->get();
+            
+    //         if (!$query) {
+    //             return false;
+    //         }
+            
+    //         $result = $query->row();
+    //         return ($result && $result->count > 0);
+            
+    //     } catch (Exception $e) {
+    //         return false;
+    //     }
+    // }
+
     function check_data_exists($id_one_water_sample, $id_testing_type, $url) {
         // Map URL to corresponding table names
         $table_mapping = array(
@@ -1367,7 +1439,6 @@ class Sample_reception_model extends CI_Model
             'extraction_culture' => 'extraction_culture',
             'extraction_liquid' => 'extraction_liquid',
             'extraction_biosolid' => 'extraction_biosolid',
-            'hemoflow' => 'hemoflow',
             'campy_qpcr' => 'campy_pa',
             'campy_pa' => 'campy_pa',
             'freezer_in' => 'freezer_in',
@@ -1375,7 +1446,9 @@ class Sample_reception_model extends CI_Model
             'protozoa' => 'protozoa',
             'salmonella_pa' => 'salmonella_pa',
             'enterolert_hemoflow' => 'enterolert_hemoflow',
-            'colilert_hemoflow' => 'colilert_hemoflow'
+            'colilert_hemoflow' => 'colilert_hemoflow',
+            'campy_hemoflow' => 'campy_hemoflow',
+            'hemoflow' => 'hemoflow'
         );
 
         // Extract table name from URL
@@ -1395,10 +1468,25 @@ class Sample_reception_model extends CI_Model
         // Check if data exists in the corresponding table
         try {
             $this->db->reset_query();
-            $this->db->select('COUNT(*) as count');
-            $this->db->from($table_name);
-            $this->db->where('id_one_water_sample', $id_one_water_sample);
-            $this->db->where('flag', '0');
+            
+            // Special handling for hemoflow tables which use different field structure
+            if (strpos($table_name, 'hemoflow') !== false) {
+                // For hemoflow tables, we need to join with sample_reception_testing to get the correct barcode
+                $this->db->select('COUNT(*) as count');
+                $this->db->from($table_name . ' h');
+                $this->db->join('sample_reception_testing srt', 'srt.barcode = h.' . $this->get_hemoflow_barcode_field($table_name), 'inner');
+                $this->db->join('sample_reception_sample srs', 'srs.id_sample = srt.id_sample', 'inner');
+                $this->db->where('srs.id_one_water_sample', $id_one_water_sample);
+                $this->db->where('srt.flag', '0');
+                $this->db->where('srs.flag', '0');
+                $this->db->where('h.flag', '0');
+            } else {
+                // Standard tables use id_one_water_sample directly
+                $this->db->select('COUNT(*) as count');
+                $this->db->from($table_name);
+                $this->db->where('id_one_water_sample', $id_one_water_sample);
+                $this->db->where('flag', '0');
+            }
             
             $query = $this->db->get();
             
@@ -1563,6 +1651,23 @@ class Sample_reception_model extends CI_Model
             return $result; // Return existing data for this specific barcode
         }
         return false; // No data exists for this barcode
+    }
+
+
+    // Helper function to get the correct barcode field name for hemoflow tables
+    private function get_hemoflow_barcode_field($table_name) {
+        switch ($table_name) {
+            case 'campy_hemoflow':
+                return 'campy_assay_barcode';
+            case 'enterolert_hemoflow':
+                return 'enterolert_hemoflow_barcode';
+            case 'colilert_hemoflow':
+                return 'colilert_hemoflow_barcode';
+            case 'hemoflow':
+                return 'hemoflow_barcode';
+            default:
+                return 'barcode'; // fallback
+        }
     }
 
 }
