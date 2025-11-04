@@ -296,13 +296,16 @@ class Colilert_hemoflow_model extends CI_Model
             ELSE NULL 
         END as lowermpn,
         CASE
-            WHEN chd.coliforms IS NOT NULL AND hm.volume_eluted IS NOT NULL
-            THEN ROUND((chd.coliforms / 100) * hm.volume_eluted, 2)
+            WHEN chd.coliforms IS NOT NULL AND hm.volume_eluted IS NOT NULL AND chd.coliforms != "" 
+            AND CAST(REPLACE(REPLACE(chd.coliforms, ">", ""), "<", "") AS DECIMAL(10,2)) > 0
+            THEN ROUND((CAST(REPLACE(REPLACE(chd.coliforms, ">", ""), "<", "") AS DECIMAL(10,2)) / 100) * hm.volume_eluted, 2)
             ELSE NULL 
         END as totalcoliforms,
         CASE
-            WHEN chd.coliforms IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0
-            THEN ROUND(((chd.coliforms / 100) * hm.volume_eluted / hm.volume_filter / 10), 2)
+            WHEN chd.coliforms IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL 
+            AND hm.volume_filter > 0 AND chd.coliforms != ""
+            AND CAST(REPLACE(REPLACE(chd.coliforms, ">", ""), "<", "") AS DECIMAL(10,2)) > 0
+            THEN ROUND(((CAST(REPLACE(REPLACE(chd.coliforms, ">", ""), "<", "") AS DECIMAL(10,2)) / 100) * hm.volume_eluted / hm.volume_filter / 10), 2)
             ELSE NULL 
         END as coliformmpn
         ');
