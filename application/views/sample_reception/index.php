@@ -292,17 +292,17 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="date_collected" class="col-sm-4 control-label">Date Arrived</label>
+                                <label for="date_arrive" class="col-sm-4 control-label">Date Arrived</label>
                                 <div class="col-sm-8">
-                                    <input id="date_collected" name="date_collected" type="date" class="form-control" placeholder="Date Arrived" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
+                                    <input id="date_arrive" name="date_arrive" type="date" class="form-control" placeholder="Date Arrived" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="time_collected" class="col-sm-4 control-label">Time Arrived</label>
+                                <label for="time_arrive" class="col-sm-4 control-label">Time Arrived</label>
                                 <div class="col-sm-8">
                                     <div class="input-group clockpicker">
-                                    <input id="time_collected" name="time_collected" class="form-control" placeholder="Time Arrived" value="<?php 
+                                    <input id="time_arrive" name="time_arrive" class="form-control" placeholder="Time Arrived" value="<?php 
                                     $datetime = new DateTime();
                                     echo $datetime->format( 'H:i' );
                                     ?>">
@@ -1370,8 +1370,8 @@
                         return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
                     }
                 },
-                {"data": "date_collected"},
-                {"data": "time_collected"},
+                {"data": "date_arrive"},
+                {"data": "time_arrive"},
                 {
                     "data": "files",
                     "render": function(data, type, row) {
@@ -1615,7 +1615,7 @@
                                 else if (sample.quality_check == 1) qualityCheckIcon = '<i class="fa fa-check-square-o" style="color: green;"></i>';
                                 else if (sample.quality_check == 2) qualityCheckIcon = '<i class="fa fa-times-circle-o" style="color: red;"></i>';
 
-                                tableContent += `<tr><td>${sample.id_one_water_sample ?? '-'}</td><td>${sample.sampletype ?? '-'}</td><td>${sample.initial ?? '-'}</td><td>${sample.date_arrival ?? '-'}</td><td>${sample.time_arrival ?? '-'}</td><td>${sample.date_collected ?? '-'}</td><td>${sample.time_collected ?? '-'}</td><td>${qualityCheckIcon ?? '-'}</td><td>${sample.client_id ?? '-'}</td><td>${sample.comments ?? '-'}</td><td>${sample.review_status_styled ?? '-'}</td><td>${sample.action ?? '-'}</td></tr>`;
+                                tableContent += `<tr><td>${sample.id_one_water_sample ?? '-'}</td><td>${sample.sampletype ?? '-'}</td><td>${sample.initial ?? '-'}</td><td>${sample.date_arrival ?? '-'}</td><td>${sample.time_arrival ?? '-'}</td><td>${sample.date_arrive ?? '-'}</td><td>${sample.time_arrive ?? '-'}</td><td>${qualityCheckIcon ?? '-'}</td><td>${sample.client_id ?? '-'}</td><td>${sample.comments ?? '-'}</td><td>${sample.review_status_styled ?? '-'}</td><td>${sample.action ?? '-'}</td></tr>`;
                             });
                         } else {
                             tableContent += `<tr><td colspan="11" class="text-center">No samples available</td></tr>`;
@@ -2008,8 +2008,8 @@
             $('#number_sample').val(data.number_sample).attr('readonly', true);
             $('#files').val(data.files).attr('readonly', true);
             $('#supplementary_files').val(data.supplementary_files).attr('readonly', true);
-            $('#date_collected').val(data.date_collected);
-            $('#time_collected').val(data.time_collected);
+            $('#date_arrive').val(data.date_arrive);
+            $('#time_arrive').val(data.time_arrive);
             $('#comments').val(data.comments);
             $('#id_client_sample').val(data.id_client_sample);
             $('.val2tip').html('');
