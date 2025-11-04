@@ -44,8 +44,8 @@
                                         <th>Number of Samples</th>
                                         <th>Client Contact</th>
                                         <th>Comments</th>
-                                        <th>Date Collected</th>
-                                        <th>Time Collected</th>
+                                        <th>Date Arrived</th>
+                                        <th>Time Arrived</th>
                                         <th>File Status</th>
                                         <th>Supplementary File</th>
                                         <th width="120px">Action</th>
