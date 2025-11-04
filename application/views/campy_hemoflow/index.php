@@ -4,17 +4,17 @@
             <div class="col-xs-12">
                 <div class="box box-black box-solid">
                     <div class="box-header">
-                        <h3 class="box-title">Processing | Campy Biosolids </h3>
+                        <h3 class="box-title">Processing | Campy Hemoflow </h3>
                     </div>
                     <div class="box-body">
                         <div style="padding-bottom: 10px;">
                             <!-- <?php
                                     $lvl = $this->session->userdata('id_user_level');
                                     if ($lvl != 4){
-                                        echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Campy Biosolids</button>";
+                                        echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Campy Hemoflow</button>";
                                     }
                             ?>         -->
-                            <?php echo anchor(site_url('Campy_biosolids/excel_all'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
+                            <?php echo anchor(site_url('Campy_hemoflow/excel_all'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
                         </div>
                             <div class="table-responsive">
                                 <table class="table ho table-bordered table-striped tbody" id="mytable" style="width:100%">
@@ -28,9 +28,9 @@
                                             <th>Campy Assay Barcode</th>
                                             <th>Date of Sample</th>
                                             <th>Time of Sample</th>
-                                            <th>Sample Wet Weight</th>
-                                            <th>Dry Weight (%)</th>
-                                            <th>Sample Dry Weight</th>
+                                            <!-- <th>Sample Wet Weight</th> -->
+                                            <!-- <th>Dry Weight (%)</th> -->
+                                            <!-- <th>Sample Dry Weight</th> -->
                                             <th>Elution Volume</th>
                                             <th>Volume of Sample</th>
                                             <th width="120px">Action</th>
@@ -70,10 +70,10 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
                     <h4 class="modal-title" id="modal-title">Moisture Content | New</h4>
                 </div>
-                <form id="formSample" action="<?php echo site_url('Campy_biosolids/save') ?>" method="post" class="form-horizontal">
+                <form id="formSample" action="<?php echo site_url('Campy_hemoflow/save') ?>" method="post" class="form-horizontal">
                     <div class="modal-body">
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
-                        <input id="id_campy_biosolids" name="id_campy_biosolids" type="hidden" class="form-control input-sm">
+                        <input id="id_campy_hemoflow" name="id_campy_hemoflow" type="hidden" class="form-control input-sm">
                         <!-- <div class="form-group">
                             <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
                             <div class="col-sm-8">
@@ -183,7 +183,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="sample_wetweight" class="col-sm-4 control-label">Sample Wet Weight(g)</label>
                             <div class="col-sm-8">
                                 <input id="sample_wetweight" name="sample_wetweight" type="number" step="any" class="form-control" placeholder="Sample Wet Weight(g)" required>
@@ -209,14 +209,7 @@
                             <div class="col-sm-8">
                                 <input id="sample_dryweight" name="sample_dryweight" type="number" step="any" class="form-control" placeholder="Sample Dry Weight(g)" readonly>
                             </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="elution_volume" class="col-sm-4 control-label">Elution Volume(mL)</label>
-                            <div class="col-sm-8">
-                                <input id="elution_volume" name="elution_volume" type="number" step="any" class="form-control" placeholder="Elution Volume(mL)" required>
-                            </div>
-                        </div>
+                        </div> -->
 
                         <!-- <div class="form-group" id="sampleTubeContainer">
                             <label class="col-sm-4 control-label">Volume of The Sample(uL)</label>
@@ -228,6 +221,13 @@
                             <label class="col-sm-4 control-label">Volume of The Sample(mL)</label>
                             <div class="col-sm-8" id="sampleVolumeInputs">
                                 <input id="vol_sampletube1" name="vol_sampletube1" type="number" step="any" class="form-control" placeholder="Volume of The Sample(mL) Tube1" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="filtration_volume" class="col-sm-4 control-label">Filtration  Volume(mL)</label>
+                            <div class="col-sm-8">
+                                <input id="filtration_volume" name="filtration_volume" type="number" step="0.01" class="form-control" placeholder="Filtration  Volume(mL)" required>
                             </div>
                         </div>
 
@@ -287,7 +287,7 @@
         <div class="modal-content">
             <div class="modal-header" style="background-color: #dd4b39; color: white;">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
-                <h4 class="modal-title"><i class="fa fa-trash"></i> Campy Biosolids | Delete <span id="my-another-cool-loader"></span></h4>
+                <h4 class="modal-title"><i class="fa fa-trash"></i> Campy Hemoflow | Delete <span id="my-another-cool-loader"></span></h4>
             </div>
             <div class="modal-body">
                 <div id="confirmation-content">
@@ -873,7 +873,7 @@
 
         if (barcodeFromUrl && idOneWaterSampleFromUrl) {
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> Campy Biosolids | New<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Campy Hemoflow | New<span id="my-another-cool-loader"></span>');
             // $('#id_one_water_sample').val('');
             // $('#id_one_water_sample').show();
             // $('#idx_one_water_sample').hide();
@@ -887,11 +887,11 @@
             $('#campy_assay_barcode').attr('readonly', true);
             $('#sampletype').val('');
             $('#sampletype').attr('readonly', true);
-            $('#tray_weight').val('');
-            $('#traysample_wetweight').val('');
-            $('#dry_weight_persen').val('');
-            $('#dry_weight_persen').attr('readonly', true);
-            $('#sample_dryweight').val('');
+            // $('#tray_weight').val('');
+            // $('#traysample_wetweight').val('');
+            // $('#dry_weight_persen').val('');
+            // $('#dry_weight_persen').attr('readonly', true);
+            // $('#sample_dryweight').val('');
             $('#comments').val('');
             $('#mpn_pcr_conducted').val('');
             // let sampleVolumeInputs = $('#sampleVolumeInputs');
@@ -973,7 +973,25 @@
                     </div>`
                 );
             }
+            // Menambahkan event listener untuk setiap input volume tabung
+            addElutionVolumeCalculation();
         }).trigger('change');
+
+        // Fungsi untuk menghitung dan memperbarui filtration_volume
+        function addElutionVolumeCalculation() {
+            $('#sampleVolumeInputs').on('input', 'input.sample-input', function() {
+                let totalVolume = 0;
+
+                // Menjumlahkan nilai dari semua input volume tabung
+                $('input.sample-input').each(function() {
+                    let value = parseFloat($(this).val()) || 0; // Ambil nilai input, default 0 jika kosong atau NaN
+                    totalVolume += value; // Jumlahkan nilai
+                });
+
+                // Perbarui input filtration_volume dengan total
+                $('#filtration_volume').val(totalVolume.toFixed(2)); // Set nilai pada filtration_volume, dengan 2 angka desimal
+            });
+        }
 
         // Function to calculate sample dry weight
         function calculateSampleDryWeight() {
@@ -1001,9 +1019,9 @@
         }
 
         // Handle the delete button click
-        $(document).on('click', '.btn_deleteCampyBiosolids', function() {
+        $(document).on('click', '.btn_deleteCampyHemoflow', function() {
             let id = $(this).data('id');
-            let url = '<?php echo site_url('Campy_biosolids/delete_campyBiosolids'); ?>/' + id;
+            let url = '<?php echo site_url('Campy_hemoflow/delete_campyHemoflow'); ?>/' + id;
             $('#confirm-modal #id').text(id);
             console.log(id);
             showConfirmation(url);
@@ -1100,7 +1118,7 @@
             console.log('test'+ id_one_water_sample)
             if (id_one_water_sample) {
                 $.ajax({
-                    url: '<?php echo site_url('Campy_biosolids/getIdOneWaterDetails'); ?>', // URL untuk request AJAX
+                    url: '<?php echo site_url('Campy_hemoflow/getIdOneWaterDetails'); ?>', // URL untuk request AJAX
                     type: 'POST',
                     data: { id_one_water_sample: id_one_water_sample }, // Data yang dikirim ke server
                     dataType: 'json', // Format data yang diharapkan dari server
@@ -1162,7 +1180,7 @@
                 console.log('Sending dry weight request for ID:', id_one_water_sample.trim());
 
                 $.ajax({
-                    url: '<?php echo site_url('Campy_biosolids/getDryWeight'); ?>',
+                    url: '<?php echo site_url('Campy_hemoflow/getDryWeight'); ?>',
                     type: 'POST',
                     data: { id_one_water_sample: id_one_water_sample.trim() },
                     dataType: 'json',
@@ -1234,7 +1252,7 @@
             id_one_water_sample = $('#id_one_water_sample').val();
             $.ajax({
                 type: "GET",
-                url: "Campy_biosolids/barcode_restrict?id1="+id_one_water_sample,
+                url: "Campy_hemoflow/barcode_restrict?id1="+id_one_water_sample,
                 dataType: "json",
                 success: function(data) {
                     if (data.length > 0) {
@@ -1325,7 +1343,7 @@
             console.log(campyAssayBarcode);
             $.ajax({
                 type: "GET",
-                url: "Campy_biosolids/validateCampyAssayBarcode",
+                url: "Campy_hemoflow/validateCampyAssayBarcode",
                 data: { id: campyAssayBarcode },
                 dataType: "json",
                 success: function(data) {
@@ -1387,7 +1405,7 @@
             processing: true,
             serverSide: true,
             ajax: {
-                "url": "Campy_biosolids/json", 
+                "url": "Campy_hemoflow/json", 
                 "type": "POST",
                 "error": function(xhr, error, code) {
                     console.log('DataTables error:', error, code);
@@ -1433,20 +1451,20 @@
                     "data": "time_sample_processed",
                     "searchable": true
                 },
+                // {
+                //     "data": "sample_wetweight",
+                //     "searchable": true
+                // },
+                // {
+                //     "data": "dry_weight_persen",
+                //     "searchable": true
+                // },
+                // {
+                //     "data": "sample_dryweight",
+                //     "searchable": true
+                // },
                 {
-                    "data": "sample_wetweight",
-                    "searchable": true
-                },
-                {
-                    "data": "dry_weight_persen",
-                    "searchable": true
-                },
-                {
-                    "data": "sample_dryweight",
-                    "searchable": true
-                },
-                {
-                    "data": "elution_volume",
+                    "data": "filtration_volume",
                     "searchable": true
                 },
                 {
@@ -1498,14 +1516,14 @@
         // Event handler untuk klik pada baris
         $('#mytable tbody').on('click', 'tr', function() {
             let rowData = table.row(this).data();
-            let rowId = rowData.id_campy_biosolids;
+            let rowId = rowData.id_campy_hemoflow;
             $(this).removeClass('highlight');
             $(this).removeClass('highlight-edit');
         });
 
         $('#addtombol').click(function() {
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> Campy Biosolids | New<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Campy Hemoflow | New<span id="my-another-cool-loader"></span>');
             $('#id_one_water_sample').val('');
             $('#id_one_water_sample').show();
             $('#idx_one_water_sample').hide();
@@ -1516,10 +1534,10 @@
             $('#campy_assay_barcode').attr('readonly', false);
             $('#sampletype').val('');
             $('#sampletype').attr('readonly', true);
-            $('#tray_weight').val('');
-            $('#traysample_wetweight').val('');
-            $('#dry_weight_persen').val('');
-            $('#sample_dryweight').val('');
+            // $('#tray_weight').val('');
+            // $('#traysample_wetweight').val('');
+            // $('#dry_weight_persen').val('');
+            // $('#sample_dryweight').val('');
             $('#comments').val('');
             $('#mpn_pcr_conducted').val('');
             let sampleVolumeInputs = $('#sampleVolumeInputs');
@@ -1536,8 +1554,8 @@
         //     let data = table.row(tr).data();
         //     console.log(data);
         //     $('#mode').val('edit');
-        //     $('#modal-title').html('<i class="fa fa-pencil-square"></i> Campy Biosolids | Update<span id="my-another-cool-loader"></span>');
-        //     $('#id_campy_biosolids').val(data.id_campy_biosolids);
+        //     $('#modal-title').html('<i class="fa fa-pencil-square"></i> Campy Hemoflow | Update<span id="my-another-cool-loader"></span>');
+        //     $('#id_campy_hemoflow').val(data.id_campy_hemoflow);
         //     // $('#id_one_water_sample').hide();
         //     // $('#idx_one_water_sample').show();
         //     // $('#idx_one_water_sample').attr('readonly', true);
@@ -1603,13 +1621,12 @@
             let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
             console.log(data);
             $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Campy Biosolids | Update<span id="my-another-cool-loader"></span>');
-            $('#id_campy_biosolids').val(data.id_campy_biosolids);
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Campy Hemoflow | Update<span id="my-another-cool-loader"></span>');
+            $('#id_campy_hemoflow').val(data.id_campy_hemoflow);
             // $('#id_one_water_sample').hide();
             // $('#idx_one_water_sample').show();
             // $('#idx_one_water_sample').attr('readonly', true);
             // $('#idx_one_water_sample').val(data.id_one_water_sample);
-            $('#id_campy_liquids').val(data.id_campy_liquids);
             $('#id_one_water_sample').hide();
             $('#idx_one_water_sample').attr('readonly', true);
             $('#idx_one_water_sample').val(data.id_one_water_sample);
@@ -1624,7 +1641,7 @@
                     $('#tray_weight_container').hide();
                 }
             }).val(data.sampletype).trigger('input');
-            $('#tray_weight').val(data.tray_weight);
+            // $('#tray_weight').val(data.tray_weight);
             // Set radio button value
             if (data.mpn_pcr_conducted === 'Yes') {
                 $('#mpn_pcr_conducted input[type="radio"][value="Yes"]').prop('checked', true);
@@ -1635,11 +1652,11 @@
             $('#campy_assay_barcode').attr('readonly', true);
             $('#date_sample_processed').val(data.date_sample_processed);
             $('#time_sample_processed').val(data.time_sample_processed);
-            $('#sample_wetweight').val(data.sample_wetweight);
-            $('#dry_weight_persen').val(data.dry_weight_persen);
-            $('#dry_weight_persen').attr('readonly', true);
-            $('#sample_dryweight').val(data.sample_dryweight);
-            $('#elution_volume').val(data.elution_volume);
+            // $('#sample_wetweight').val(data.sample_wetweight);
+            // $('#dry_weight_persen').val(data.dry_weight_persen);
+            // $('#dry_weight_persen').attr('readonly', true);
+            // $('#sample_dryweight').val(data.sample_dryweight);
+            $('#filtration_volume').val(data.filtration_volume);
             $('#number_of_tubes').val(data.number_of_tubes);
             $('#number_of_tubes').prop('disabled', true);
             $('#number_of_tubes1').val(data.number_of_tubes);
@@ -1719,7 +1736,7 @@
                     }).then(result => {
                         if (result.isConfirmed) {
                             $.ajax({
-                                url: '<?php echo site_url('Campy_biosolids/saveReview'); ?>',
+                                url: '<?php echo site_url('Campy_hemoflow/saveReview'); ?>',
                                 method: 'POST',
                                 data: {
                                     id_one_water_sample: data.id_one_water_sample,
@@ -1786,7 +1803,7 @@
                         const loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
 
                         $.ajax({
-                            url: '<?php echo site_url('Campy_biosolids/cancelReview'); ?>',
+                            url: '<?php echo site_url('Campy_hemoflow/cancelReview'); ?>',
                             method: 'POST',
                             data: {
                                 id_one_water_sample: idSample,

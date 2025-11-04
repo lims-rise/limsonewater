@@ -26,12 +26,12 @@ class Campy_hemoflow extends CI_Controller
 	    $this->load->library('uuid');
     }
 
+    // public function index()
+    // {
+    //     // Redirect ke halaman under construction untuk sementara
+    //     $this->load->view('underconstruction/underconstruction');
+    // }
     public function index()
-    {
-        // Redirect ke halaman under construction untuk sementara
-        $this->load->view('underconstruction/underconstruction');
-    }
-    public function development_index()
     {
         $data['id_one'] = $this->Campy_hemoflow_model->getID_one();
         $data['sampletype'] = $this->Campy_hemoflow_model->getSampleType();
@@ -84,11 +84,11 @@ class Campy_hemoflow extends CI_Controller
                 'campy_assay_barcode' => $row->campy_assay_barcode,
                 'date_sample_processed' => $row->date_sample_processed,
                 'time_sample_processed' => $row->time_sample_processed,
-                'sample_wetweight' => $row->sample_wetweight,
-                'dry_weight_persen' => $row->dry_weight_persen,
-                'sample_dryweight' => $row->sample_dryweight,
-                'sample_dryweight_old' => $row->sample_dryweight_old,
-                'elution_volume' => $row->elution_volume,
+                // 'sample_wetweight' => $row->sample_wetweight,
+                // 'dry_weight_persen' => $row->dry_weight_persen,
+                // 'sample_dryweight' => $row->sample_dryweight,
+                // 'sample_dryweight_old' => $row->sample_dryweight_old,
+                'filtration_volume' => $row->filtration_volume,
                 'vol_sampletube' => $row->vol_sampletube,
                 'tube_number' => $row->tube_number,
                 'full_name' => $row->full_name,
@@ -98,11 +98,11 @@ class Campy_hemoflow extends CI_Controller
             );
 
             // Mendapatkan final concentration dengan id_campy_hemoflow
-            $finalConcentration = $this->Campy_hemoflow_model->subjsonFinalConcentration($row->id_campy_hemoflow);
-            if ($finalConcentration) {
-                $data['finalConcentration'] = $finalConcentration;
+            $finalCalculation = $this->Campy_hemoflow_model->subjsonFinalCalculation($row->id_campy_hemoflow);
+            if ($finalCalculation) {
+                $data['finalCalculation'] = $finalCalculation;
             } else {
-                $data['finalConcentration'] = [];
+                $data['finalCalculation'] = [];
             }
             // var_dump($data);
             // die();
@@ -148,10 +148,10 @@ class Campy_hemoflow extends CI_Controller
         $campy_assay_barcode = $this->input->post('campy_assay_barcode', TRUE);
         $date_sample_processed = $this->input->post('date_sample_processed', TRUE);
         $time_sample_processed = $this->input->post('time_sample_processed', TRUE);
-        $sample_wetweight = $this->input->post('sample_wetweight', TRUE);
-        $elution_volume = $this->input->post('elution_volume', TRUE);
-        $dry_weight_persen = $this->input->post('dry_weight_persen', TRUE);
-        $sample_dryweight = $this->input->post('sample_dryweight', TRUE);
+        // $sample_wetweight = $this->input->post('sample_wetweight', TRUE);
+        $filtration_volume = $this->input->post('filtration_volume', TRUE);
+        // $dry_weight_persen = $this->input->post('dry_weight_persen', TRUE);
+        // $sample_dryweight = $this->input->post('sample_dryweight', TRUE);
 
         if ($mode == "insert") {
             // Insert data into assays table
@@ -164,11 +164,11 @@ class Campy_hemoflow extends CI_Controller
                 'campy_assay_barcode' => $campy_assay_barcode,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
-                'sample_wetweight' => $sample_wetweight,
-                'dry_weight_persen' => $dry_weight_persen,
-                'sample_dryweight' => $sample_dryweight,
-                'sample_dryweight_old' => $sample_dryweight,
-                'elution_volume' => $elution_volume,
+                // 'sample_wetweight' => $sample_wetweight,
+                // 'dry_weight_persen' => $dry_weight_persen,
+                // 'sample_dryweight' => $sample_dryweight,
+                // 'sample_dryweight_old' => $sample_dryweight,
+                'filtration_volume' => $filtration_volume,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
@@ -209,10 +209,10 @@ class Campy_hemoflow extends CI_Controller
                 'campy_assay_barcode' => $campy_assay_barcode,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
-                'sample_wetweight' => $sample_wetweight,
-                'dry_weight_persen' => $dry_weight_persen,
-                'sample_dryweight' => $sample_dryweight,
-                'elution_volume' => $elution_volume,
+                // 'sample_wetweight' => $sample_wetweight,
+                // 'dry_weight_persen' => $dry_weight_persen,
+                // 'sample_dryweight' => $sample_dryweight,
+                'filtration_volume' => $filtration_volume,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
@@ -282,7 +282,7 @@ class Campy_hemoflow extends CI_Controller
         $mode = $this->input->post('mode_detResultsCharcoal', TRUE);
         $id_one_water_sample = $this->input->post('idCharcoal_one_water_sample', TRUE);
         $id_campy_hemoflow = $this->input->post('id_campy_hemoflow1', TRUE);
-        $id_result_charcoal = $this->input->post('id_result_charcoal', TRUE);
+        $id_chrc = $this->input->post('id_chrc', TRUE);
         $dt = new DateTime();
         $date_sample_processed = $this->input->post('date_sample_processed1', TRUE);
         $time_sample_processed = $this->input->post('time_sample_processed1', TRUE);
@@ -323,7 +323,7 @@ class Campy_hemoflow extends CI_Controller
                     }
                     
                     $this->Campy_hemoflow_model->insert_growth_plate(array(
-                        'id_result_charcoal' => $assay_id,
+                        'id_chrc' => $assay_id,
                         'plate_number' => $i,
                         'growth_plate' => $plate,
                         'flag' => '0',
@@ -368,12 +368,12 @@ class Campy_hemoflow extends CI_Controller
 
             // var_dump($data);
             // die();
-    
-            $this->Campy_hemoflow_model->updateResultsCharcoal($id_result_charcoal, $data);
+
+            $this->Campy_hemoflow_model->updateResultsCharcoal($id_chrc, $data);
 
             // Update sample volumes and check if all growth plates are 0
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
-            $this->Campy_hemoflow_model->delete_growth_plates($id_result_charcoal); // Hapus volume yang ada
+            $this->Campy_hemoflow_model->delete_growth_plates($id_chrc); // Hapus volume yang ada
 
             $all_plates_zero = true;
             $growth_plate_data = array();
@@ -389,7 +389,7 @@ class Campy_hemoflow extends CI_Controller
                     }
                     
                     $data_plate = array(
-                        'id_result_charcoal' => $id_result_charcoal,
+                        'id_chrc' => $id_chrc,
                         'plate_number' => $i,
                         'growth_plate' => $plate,
                         'flag' => '0',
@@ -410,7 +410,7 @@ class Campy_hemoflow extends CI_Controller
                 if (!$existing_hba) {
                     try {
                         // Auto-generate new HBA results
-                        $hba_result = $this->autoGenerateHBAResults($id_campy_hemoflow, $id_result_charcoal, $date_sample_processed, $time_sample_processed, $growth_plate_data, $dt);
+                        $hba_result = $this->autoGenerateHBAResults($id_campy_hemoflow, $id_chrc, $date_sample_processed, $time_sample_processed, $growth_plate_data, $dt);
                         if ($hba_result) {
                             $this->session->set_flashdata('message', 'Update Record Success - HBA Results auto-generated');
                         } else {
@@ -436,7 +436,7 @@ class Campy_hemoflow extends CI_Controller
      * This improves efficiency by eliminating the need for manual HBA data entry
      * when the outcome is predictable (all zeros)
      */
-    private function autoGenerateHBAResults($id_campy_hemoflow, $id_result_charcoal, $date_sample_processed, $time_sample_processed, $growth_plate_data, $dt) {
+    private function autoGenerateHBAResults($id_campy_hemoflow, $id_chrc, $date_sample_processed, $time_sample_processed, $growth_plate_data, $dt) {
         try {
             // Insert HBA result with same basic data as Charcoal (without campy_assay_barcode)
             $hba_data = array(
@@ -455,7 +455,7 @@ class Campy_hemoflow extends CI_Controller
             // Insert HBA growth plates (all will be 0 since Charcoal was all 0)
             foreach ($growth_plate_data as $plate_number => $plate_value) {
                 $hba_plate_data = array(
-                    'id_result_hba' => $hba_assay_id,
+                    'id_campy_hemoflow_result_hba' => $hba_assay_id,
                     'plate_number' => $plate_number,
                     'growth_plate' => '0', // Always 0 when auto-generated
                     'flag' => '0',
@@ -483,7 +483,7 @@ class Campy_hemoflow extends CI_Controller
         $mode = $this->input->post('mode_detResultsHBA', TRUE);
         $id_one_water_sample = $this->input->post('idHba_one_water_sample', TRUE);
         $id_campy_hemoflow = $this->input->post('id_campy_hemoflowHBA', TRUE);
-        $id_result_hba = $this->input->post('id_result_hba', TRUE);
+        $id_campy_hemoflow_result_hba = $this->input->post('id_campy_hemoflow_result_hba', TRUE);
 
         $dt = new DateTime();
         $date_sample_processed = $this->input->post('date_sample_processedHBA', TRUE);
@@ -516,7 +516,7 @@ class Campy_hemoflow extends CI_Controller
 
                 if ($plate !== null) {
                     $this->Campy_hemoflow_model->insert_growth_plate_hba(array(
-                        'id_result_hba' => $assay_id,
+                        'id_campy_hemoflow_result_hba' => $assay_id,
                         'plate_number' => $i,
                         'growth_plate' => $plate,
                         'flag' => '0',
@@ -544,18 +544,18 @@ class Campy_hemoflow extends CI_Controller
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
-    
-            $this->Campy_hemoflow_model->updateResultsHba($id_result_hba, $data);
-    
+
+            $this->Campy_hemoflow_model->updateResultsHba($id_campy_hemoflow_result_hba, $data);
+
             // Update sample volumes
             $number_of_tubes = $this->input->post('number_of_tubesHba', TRUE);
-            $this->Campy_hemoflow_model->delete_growth_plates_hba($id_result_hba); // Hapus volume yang ada
-    
+            $this->Campy_hemoflow_model->delete_growth_plates_hba($id_campy_hemoflow_result_hba); // Hapus volume yang ada
+
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $plate = $this->input->post("growth_plate{$i}", TRUE);
                 if ($plate !== null) {
                     $data_plate = array(
-                        'id_result_hba' => $id_result_hba,
+                        'id_campy_hemoflow_result_hba' => $id_campy_hemoflow_result_hba,
                         'plate_number' => $i,
                         'growth_plate' => $plate,
                         'flag' => '0',
@@ -577,8 +577,8 @@ class Campy_hemoflow extends CI_Controller
 
     public function saveBiochemical() {
         $mode = $this->input->post('mode_detResultsBiochemical', TRUE);
-        $id_result_biochemical = $this->input->post('id_result_biochemical', TRUE);
-        $id_result_hba = $this->input->post('id_result_hba1', TRUE);
+        $id_campy_hemoflow_result_biochemical = $this->input->post('id_campy_hemoflow_result_biochemical', TRUE);
+        $id_campy_hemoflow_result_hba = $this->input->post('id_campy_hemoflow_result_hba1', TRUE);
         $id_campy_hemoflow = $this->input->post('id_campy_hemoflowBiochemical', TRUE);
         $gramlysis = $this->input->post('gramlysis', TRUE);
         $oxidase = $this->input->post('oxidase', TRUE);
@@ -596,7 +596,7 @@ class Campy_hemoflow extends CI_Controller
         if ($mode == "insert") {
             $data = array(
                 'id_campy_hemoflow' => $id_campy_hemoflow,
-                'id_result_hba' => $id_result_hba,
+                'id_campy_hemoflow_result_hba' => $id_campy_hemoflow_result_hba,
                 'gramlysis' => $gramlysis,
                 'oxidase' => $oxidase,
                 'catalase' => $catalase,
@@ -613,7 +613,7 @@ class Campy_hemoflow extends CI_Controller
         } else if ($mode == "edit") {
             $data = array(
                 'id_campy_hemoflow' => $id_campy_hemoflow,
-                'id_result_hba' => $id_result_hba,
+                'id_campy_hemoflow_result_hba' => $id_campy_hemoflow_result_hba,
                 'gramlysis' => $gramlysis,
                 'oxidase' => $oxidase,
                 'catalase' => $catalase,
@@ -625,7 +625,7 @@ class Campy_hemoflow extends CI_Controller
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => date('Y-m-d H:i:s'),
             );
-            $this->Campy_hemoflow_model->updateResultsBiochemical($id_result_biochemical, $data);
+            $this->Campy_hemoflow_model->updateResultsBiochemical($id_campy_hemoflow_result_biochemical, $data);
         }
 
         redirect(site_url("campy_hemoflow/read/" . $id_one_water_sample));
@@ -781,15 +781,15 @@ class Campy_hemoflow extends CI_Controller
     // }
 
 
-    public function delete_campyBiosolids($id) {
-        $row = $this->Campy_hemoflow_model->get_by_id_campybiosolids($id);
+    public function delete_campyHemoflow($id) {
+        $row = $this->Campy_hemoflow_model->get_by_id_campyhemoflow($id);
         if ($row) {
-            $id_parent = $row->id_result_charcoal; // Retrieve project_id before updating the record
+            $id_parent = $row->id_chrc; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
-    
-            $this->Campy_hemoflow_model->updateCampyBiosolids($id, $data);
+
+            $this->Campy_hemoflow_model->updateCampyHemoflow($id, $data);
             $this->Campy_hemoflow_model->updateSampleVolume($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
@@ -814,15 +814,15 @@ class Campy_hemoflow extends CI_Controller
 
             // Step 2: For each HBA, delete related biochemical results
             foreach ($hba_results as $hba) {
-                $biochemical_results = $this->Campy_hemoflow_model->get_biochemical_by_hba_id($hba->id_result_hba);
+                $biochemical_results = $this->Campy_hemoflow_model->get_biochemical_by_hba_id($hba->id_campy_hemoflow_result_hba);
                 $biochemical_count = count($biochemical_results);
                 
                 if ($biochemical_count > 0) {
-                    $this->Campy_hemoflow_model->delete_biochemical_by_hba_id($hba->id_result_hba);
+                    $this->Campy_hemoflow_model->delete_biochemical_by_hba_id($hba->id_campy_hemoflow_result_hba);
                     $total_biochemical_deleted += $biochemical_count;
                     
                     // Log the cascade delete
-                    log_message('info', "Cascade delete: Deleted {$biochemical_count} biochemical results for HBA ID {$hba->id_result_hba}");
+                    log_message('info', "Cascade delete: Deleted {$biochemical_count} biochemical results for HBA ID {$hba->id_campy_hemoflow_result_hba}");
                 }
                 
                 $total_hba_deleted++;
@@ -860,7 +860,7 @@ class Campy_hemoflow extends CI_Controller
     public function delete_detailHba($id) {
         $row = $this->Campy_hemoflow_model->get_by_id_hba($id);
         if ($row) {
-            $id_parent = $row->id_result_charcoal; // Retrieve project_id before updating the record
+            $id_parent = $row->id_chrc; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
@@ -900,7 +900,7 @@ class Campy_hemoflow extends CI_Controller
     public function delete_detailBiochemical($id) {
         $row = $this->Campy_hemoflow_model->get_by_id_biochemical($id);
         if ($row) {
-            $id_parent = $row->id_result_charcoal; // Retrieve project_id before updating the record
+            $id_parent = $row->id_chrc; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
@@ -1022,7 +1022,7 @@ class Campy_hemoflow extends CI_Controller
     //         $sheet->setCellValue('G' . $numrow, $concentration->date_sample_processed ?? '');
     //         $sheet->setCellValue('H' . $numrow, $concentration->time_sample_processed ?? '');
     //         $sheet->setCellValue('I' . $numrow, $concentration->sample_wetweight ?? '');
-    //         $sheet->setCellValue('J' . $numrow, $concentration->elution_volume ?? '');
+    //         $sheet->setCellValue('J' . $numrow, $concentration->filtration_volume ?? '');
 
     //         // Fill tube volumes
     //         $tubeIndex = 0;
@@ -1182,8 +1182,8 @@ class Campy_hemoflow extends CI_Controller
             $sheet->setCellValue('F' . $numrow, $concentration->mpn_pcr_conducted ?? '');
             $sheet->setCellValue('G' . $numrow, $concentration->date_sample_processed ?? '');
             $sheet->setCellValue('H' . $numrow, $concentration->time_sample_processed ?? '');
-            $sheet->setCellValue('I' . $numrow, $concentration->sample_wetweight ?? '');
-            $sheet->setCellValue('J' . $numrow, $concentration->elution_volume ?? '');
+            // $sheet->setCellValue('I' . $numrow, $concentration->sample_wetweight ?? '');
+            $sheet->setCellValue('I' . $numrow, $concentration->filtration_volume ?? '');
     
             // Fill tube volumes
             $tubeIndex = 0;
@@ -1248,7 +1248,7 @@ class Campy_hemoflow extends CI_Controller
     
         // Set header for the Excel file
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="Report_Biosolids_Final_Concentrations.xlsx"');
+        header('Content-Disposition: attachment;filename="Report_Hemoflow_Final_Concentrations.xlsx"');
         header('Cache-Control: max-age=0');
     
         // Output the Excel file
@@ -1283,7 +1283,7 @@ class Campy_hemoflow extends CI_Controller
     
         // Set header untuk file Excel
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="Report_All_Biosolids_Final_Concentrations.xlsx"');
+        header('Content-Disposition: attachment;filename="Report_All_Hemoflow_Final_Concentrations.xlsx"');
         header('Cache-Control: max-age=0');
     
         ob_clean();
@@ -1359,8 +1359,8 @@ class Campy_hemoflow extends CI_Controller
             $sheet->setCellValue('F' . $numrow, $concentration->mpn_pcr_conducted ?? '');
             $sheet->setCellValue('G' . $numrow, $concentration->date_sample_processed ?? '');
             $sheet->setCellValue('H' . $numrow, $concentration->time_sample_processed ?? '');
-            $sheet->setCellValue('I' . $numrow, $concentration->sample_wetweight ?? '');
-            $sheet->setCellValue('J' . $numrow, $concentration->elution_volume ?? '');
+            // $sheet->setCellValue('I' . $numrow, $concentration->sample_wetweight ?? '');
+            $sheet->setCellValue('I' . $numrow, $concentration->filtration_volume ?? '');
     
             // Mengisi volume tabung
             $tubeIndex = 0;
@@ -1701,7 +1701,7 @@ class Campy_hemoflow extends CI_Controller
             $mpn_concentration_dw = $this->input->post('mpn_concentration_dw', TRUE);
             $upper_ci_dw = $this->input->post('upper_ci_dw', TRUE);
             $lower_ci_dw = $this->input->post('lower_ci_dw', TRUE);
-            $current_sample_dryweight = $this->input->post('current_sample_dryweight', TRUE);
+            // $current_sample_dryweight = $this->input->post('current_sample_dryweight', TRUE); // COMMENTED: No longer needed
             
             // Validation
             if (!$mode || !in_array($mode, ['insert', 'edit'])) {
@@ -1712,10 +1712,11 @@ class Campy_hemoflow extends CI_Controller
                 return;
             }
             
-            if (!$id_campy_hemoflow || !$mpn_concentration || !$upper_ci || !$lower_ci || !$mpn_concentration_dw || !$upper_ci_dw || !$lower_ci_dw) {
+            // Modified validation - only check essential fields (removed dry weight requirements)
+            if (!$id_campy_hemoflow || !$mpn_concentration || !$upper_ci || !$lower_ci) {
                 echo json_encode([
                     'status' => 'error',
-                    'message' => 'All fields are required.'
+                    'message' => 'Required fields: MPN Concentration, Upper CI, and Lower CI.'
                 ]);
                 return;
             }
@@ -1731,9 +1732,9 @@ class Campy_hemoflow extends CI_Controller
                     'mpn_concentration' => $mpn_concentration,
                     'upper_ci' => $upper_ci,
                     'lower_ci' => $lower_ci,
-                    'mpn_concentration_dw' => $mpn_concentration_dw,
-                    'upper_ci_dw' => $upper_ci_dw,
-                    'lower_ci_dw' => $lower_ci_dw,
+                    'mpn_concentration_dw' => $mpn_concentration_dw ? $mpn_concentration_dw : NULL, // Optional field
+                    'upper_ci_dw' => $upper_ci_dw ? $upper_ci_dw : NULL, // Optional field
+                    'lower_ci_dw' => $lower_ci_dw ? $lower_ci_dw : NULL, // Optional field
                     'flag' => '0',
                     'lab' => $lab ? $lab : '1',
                     'uuid' => $this->uuid->v4(),
@@ -1744,6 +1745,8 @@ class Campy_hemoflow extends CI_Controller
                 $insert_id = $this->Campy_hemoflow_model->insertCalculateMPN($data);
                 
                 if ($insert_id) {
+                    // COMMENTED OUT: sample_dryweight_old update no longer needed for hemoflow
+                    /*
                     // Update sample_dryweight_old in campy_hemoflow table to sync with current value
                     if ($current_sample_dryweight) {
                         $update_hemoflow_data = array(
@@ -1751,6 +1754,7 @@ class Campy_hemoflow extends CI_Controller
                         );
                         $this->Campy_hemoflow_model->updateCampyHemoflow($id_campy_hemoflow, $update_hemoflow_data);
                     }
+                    */
                     
                     echo json_encode([
                         'status' => 'success',
@@ -1782,9 +1786,9 @@ class Campy_hemoflow extends CI_Controller
                     'mpn_concentration' => $mpn_concentration,
                     'upper_ci' => $upper_ci,
                     'lower_ci' => $lower_ci,
-                    'mpn_concentration_dw' => $mpn_concentration_dw,
-                    'upper_ci_dw' => $upper_ci_dw,
-                    'lower_ci_dw' => $lower_ci_dw,
+                    'mpn_concentration_dw' => $mpn_concentration_dw ? $mpn_concentration_dw : NULL, // Optional field
+                    'upper_ci_dw' => $upper_ci_dw ? $upper_ci_dw : NULL, // Optional field
+                    'lower_ci_dw' => $lower_ci_dw ? $lower_ci_dw : NULL, // Optional field
                     'flag' => '0',
                     'lab' => $lab ? $lab : '1',
                     'uuid' => $this->uuid->v4(),
@@ -1798,6 +1802,8 @@ class Campy_hemoflow extends CI_Controller
                 $update_result = $this->Campy_hemoflow_model->updateCalculateMPN($id_campy_result_mpn, $data);
                 
                 if ($update_result) {
+                    // COMMENTED OUT: sample_dryweight_old update no longer needed for hemoflow
+                    /*
                     // Update sample_dryweight_old in campy_hemoflow table to sync with current value
                     if ($current_sample_dryweight) {
                         $update_hemoflow_data = array(
@@ -1805,6 +1811,7 @@ class Campy_hemoflow extends CI_Controller
                         );
                         $this->Campy_hemoflow_model->updateCampyHemoflow($id_campy_hemoflow, $update_hemoflow_data);
                     }
+                    */
                     
                     echo json_encode([
                         'status' => 'success',
