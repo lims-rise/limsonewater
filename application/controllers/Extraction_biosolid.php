@@ -418,6 +418,88 @@ class Extraction_biosolid extends CI_Controller
         echo json_encode($oneWaterSample);
     }
 
+    public function saveReview() {
+        header('Content-Type: application/json');
+        
+        $id = $this->input->post('id_one_water_sample', true);
+        $review = $this->input->post('review', true);
+        $user_review = $this->input->post('user_review', true);
+
+        if (!$id || $review === null || !$user_review) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Invalid request data.'
+            ]);
+            return;
+        }
+
+        try {
+            $data = array(
+                'review' => $review,
+                'user_review' => $user_review,
+                'user_updated' => $this->session->userdata('id_users'),
+                'date_updated' => date('Y-m-d H:i:s')
+            );
+
+            $this->Extraction_biosolid_model->updateExtractionBiosolid($id, $data);
+
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Review saved successfully.'
+            ]);
+        } catch (Exception $e) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Error saving review: ' . $e->getMessage()
+            ]);
+        }
+    }
+    
+    public function cancelReview() {
+        header('Content-Type: application/json');
+        
+        $id = $this->input->post('id_one_water_sample', true);
+        $review = $this->input->post('review', true);
+        $user_review = $this->input->post('user_review', true);
+        
+        if (!$id) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Invalid request data.'
+            ]);
+            return;
+        }
+        
+        try {
+            $data = array(
+                'review' => 0,
+                'user_review' => null,
+                'user_updated' => $this->session->userdata('id_users'),
+                'date_updated' => date('Y-m-d H:i:s')
+            );
+
+            $this->Extraction_biosolid_model->updateExtractionBiosolid($id, $data);
+
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Review cancelled successfully.'
+            ]);
+        } catch (Exception $e) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Error cancelling review: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+    public function getReviewer()
+    {
+        $userReview = $this->input->post('user_review');
+        $reviewer = $this->Extraction_biosolid_model->getReviewer($userReview);
+        
+        echo json_encode(['realname' => $reviewer, 'full_name' => $reviewer]);
+    }
+
 
     // public function excel_print($id)
 	// {
@@ -580,7 +662,6 @@ class Extraction_biosolid extends CI_Controller
     //     $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
     //     $writer->save('php://output');
     // }
-
 }
 
 /* End of file Extraction_biosolid.php */
