@@ -1358,10 +1358,10 @@
                 if (response.status === 'success') {
                     // Data exists, set to edit mode
                     document.getElementById('mode_calculateMPN').value = 'edit';
-                    document.getElementById('id_campy_result_mpn').value = response.data.id_campy_result_mpn;
-                    document.getElementById('mpn_concentration').value = response.data.mpn_concentration;
-                    document.getElementById('upper_ci').value = response.data.upper_ci;
-                    document.getElementById('lower_ci').value = response.data.lower_ci;
+                    document.getElementById('id_campy_result_mpn').value = response.data.id_campy_hemoflow_result_mpn || response.data.id_campy_result_mpn;
+                    document.getElementById('mpn_concentration').value = response.data.mpn_concentration || '';
+                    document.getElementById('upper_ci').value = response.data.upper_ci || '';
+                    document.getElementById('lower_ci').value = response.data.lower_ci || '';
                     // document.getElementById('mpn_concentration_dw').value = response.data.mpn_concentration_dw || '';
                     // document.getElementById('upper_ci_dw').value = response.data.upper_ci_dw || '';
                     // document.getElementById('lower_ci_dw').value = response.data.lower_ci_dw || '';

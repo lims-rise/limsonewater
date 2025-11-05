@@ -179,23 +179,39 @@ class Campy_hemoflow_model extends CI_Model
             chrm.upper_ci_dw,
             chrm.lower_ci_dw,
             CASE 
-                WHEN chrm.mpn_concentration IS NOT NULL AND hm.volume_eluted IS NOT NULL 
-                THEN ROUND((chrm.mpn_concentration / 1000) * hm.volume_eluted, 2)
+                WHEN chrm.mpn_concentration IS NOT NULL AND hm.volume_eluted IS NOT NULL THEN
+                    CASE 
+                        WHEN chrm.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND((CAST(SUBSTRING(chrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted, 2))
+                        WHEN chrm.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND((CAST(SUBSTRING(chrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted, 2))
+                        ELSE ROUND((CAST(chrm.mpn_concentration AS DECIMAL(10,2)) / 1000) * hm.volume_eluted, 2)
+                    END
                 ELSE NULL 
             END as total_campylobacter,
             CASE 
-                WHEN chrm.mpn_concentration IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0
-                THEN ROUND(((chrm.mpn_concentration / 1000) * hm.volume_eluted / hm.volume_filter), 2)
+                WHEN chrm.mpn_concentration IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0 THEN
+                    CASE 
+                        WHEN chrm.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND(((CAST(SUBSTRING(chrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter), 2))
+                        WHEN chrm.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND(((CAST(SUBSTRING(chrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter), 2))
+                        ELSE ROUND(((CAST(chrm.mpn_concentration AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter), 2)
+                    END
                 ELSE NULL 
             END as concentration_mpn_l,
             CASE 
-                WHEN chrm.upper_ci IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0
-                THEN ROUND((chrm.upper_ci / 1000) * hm.volume_eluted / hm.volume_filter, 2)
+                WHEN chrm.upper_ci IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0 THEN
+                    CASE 
+                        WHEN chrm.upper_ci LIKE '>%' THEN CONCAT('>', ROUND((CAST(SUBSTRING(chrm.upper_ci, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 2))
+                        WHEN chrm.upper_ci LIKE '<%' THEN CONCAT('<', ROUND((CAST(SUBSTRING(chrm.upper_ci, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 2))
+                        ELSE ROUND((CAST(chrm.upper_ci AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 2)
+                    END
                 ELSE NULL 
             END as upper_ci_new,
             CASE 
-                WHEN chrm.lower_ci IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0
-                THEN ROUND((chrm.lower_ci / 1000) * hm.volume_eluted / hm.volume_filter, 2)
+                WHEN chrm.lower_ci IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0 THEN
+                    CASE 
+                        WHEN chrm.lower_ci LIKE '>%' THEN CONCAT('>', ROUND((CAST(SUBSTRING(chrm.lower_ci, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 2))
+                        WHEN chrm.lower_ci LIKE '<%' THEN CONCAT('<', ROUND((CAST(SUBSTRING(chrm.lower_ci, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 2))
+                        ELSE ROUND((CAST(chrm.lower_ci AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 2)
+                    END
                 ELSE NULL 
             END as lower_ci_new,
             $case_query, 
@@ -696,7 +712,7 @@ class Campy_hemoflow_model extends CI_Model
     }
 
     function get_calculate_mpn_by_campy_hemoflow($id_campy_hemoflow) {
-        $this->db->where('id_campy_hemoflow_hemoflow', $id_campy_hemoflow);
+        $this->db->where('id_campy_hemoflow', $id_campy_hemoflow);
         $this->db->where('flag', '0');
         return $this->db->get('campy_hemoflow_result_mpn')->row();
     }

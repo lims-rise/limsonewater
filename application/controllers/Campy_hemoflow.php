@@ -1794,10 +1794,7 @@ class Campy_hemoflow extends CI_Controller
                     'uuid' => $this->uuid->v4(),
                     // Remove date_updated and user_updated as they don't exist in the table
                 );
-                
-                // Debug logging - you can remove this later
-                log_message('debug', 'Update MPN Data: ' . json_encode($data));
-                log_message('debug', 'Update MPN ID: ' . $id_campy_result_mpn);
+
                 
                 $update_result = $this->Campy_hemoflow_model->updateCalculateMPN($id_campy_result_mpn, $data);
                 
