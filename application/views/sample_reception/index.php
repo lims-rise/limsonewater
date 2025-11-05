@@ -1615,7 +1615,7 @@
                                 else if (sample.quality_check == 1) qualityCheckIcon = '<i class="fa fa-check-square-o" style="color: green;"></i>';
                                 else if (sample.quality_check == 2) qualityCheckIcon = '<i class="fa fa-times-circle-o" style="color: red;"></i>';
 
-                                tableContent += `<tr><td>${sample.id_one_water_sample ?? '-'}</td><td>${sample.sampletype ?? '-'}</td><td>${sample.initial ?? '-'}</td><td>${sample.date_arrival ?? '-'}</td><td>${sample.time_arrival ?? '-'}</td><td>${sample.date_arrive ?? '-'}</td><td>${sample.time_arrive ?? '-'}</td><td>${qualityCheckIcon ?? '-'}</td><td>${sample.client_id ?? '-'}</td><td>${sample.comments ?? '-'}</td><td>${sample.review_status_styled ?? '-'}</td><td>${sample.action ?? '-'}</td></tr>`;
+                                tableContent += `<tr><td>${sample.id_one_water_sample ?? '-'}</td><td>${sample.sampletype ?? '-'}</td><td>${sample.initial ?? '-'}</td><td>${sample.date_arrival ?? '-'}</td><td>${sample.time_arrival ?? '-'}</td><td>${sample.date_collected ?? '-'}</td><td>${sample.time_collected ?? '-'}</td><td>${qualityCheckIcon ?? '-'}</td><td>${sample.client_id ?? '-'}</td><td>${sample.comments ?? '-'}</td><td>${sample.review_status_styled ?? '-'}</td><td>${sample.action ?? '-'}</td></tr>`;
                             });
                         } else {
                             tableContent += `<tr><td colspan="11" class="text-center">No samples available</td></tr>`;
