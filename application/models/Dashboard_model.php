@@ -53,9 +53,10 @@ class Dashboard_model extends CI_Model
             'salmonella_liquids' => 'Salmonella (Liquids)',
             'salmonella_biosolids' => 'Salmonella (Biosolids)',
             'salmonella_pa' => 'Salmonella P/A',
-            'extraction_culture' => 'DNA Extraction (Culture)',
-            'extraction_liquid' => 'DNA Extraction (Liquid)',
-            'extraction_metagenome' => 'DNA Extraction (Metagenome)',
+            'extraction_culture' => 'Extraction (Culture)',
+            'extraction_liquid' => 'Extraction (Liquid)',
+            'extraction_metagenome' => 'Extraction (Metagenome)',
+            'extraction_biosolid' => 'Extraction (Biosolid)',
             'enterolert_water_in' => 'Enterolert (Water)',
             'enterolert_biosolids_in' => 'Enterolert (Biosolids)',
             'colilert_biosolids_in' => 'Colilert (Biosolids)',
@@ -176,7 +177,7 @@ class Dashboard_model extends CI_Model
                         bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
                         ec.review, el.review, em.review, cb.review, mc.review, 
                         ewi.review, ebi.review, cbi.review, cwi.review, 
-                        pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review
+                        pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review
                     ) = 1 THEN 1 END) as completed_tests,
                     sr.date_created
                 FROM sample_reception sr
@@ -202,6 +203,7 @@ class Dashboard_model extends CI_Model
                 LEFT JOIN enterolert_hemoflow ehf ON ehf.enterolert_hemoflow_barcode = srt.barcode AND ehf.flag = 0
                 LEFT JOIN colilert_hemoflow chf ON chf.colilert_hemoflow_barcode = srt.barcode AND chf.flag = 0
                 LEFT JOIN campy_hemoflow ch ON ch.campy_assay_barcode = srt.barcode AND ch.flag = 0
+                LEFT JOIN extraction_biosolid ex ON ex.barcode_sample = srt.barcode AND ex.flag = 0
                 WHERE sr.flag = 0
                 GROUP BY sr.id_project
                 ORDER BY sr.date_created DESC";
@@ -296,10 +298,10 @@ class Dashboard_model extends CI_Model
             'Salmonella (Liquids)' => 'salmonella_liquids',
             'Salmonella (Biosolids)' => 'salmonella_biosolids',
             'Salmonella P/A' => 'salmonella_pa',
-            'DNA Extraction (Culture)' => 'extraction_culture',
-            'DNA Extraction (Liquid)' => 'extraction_liquid',
-            'DNA Extraction (Metagenome)' => 'extraction_metagenome',
-            'DNA Extraction (Biosolid)' => 'extraction_biosolid',
+            'Extraction (Culture)' => 'extraction_culture',
+            'Extraction (Liquid)' => 'extraction_liquid',
+            'Extraction (Metagenome)' => 'extraction_metagenome',
+            'Extraction (Biosolid)' => 'extraction_biosolid',
             'Enterolert (Water)' => 'enterolert_water_in',
             'Enterolert (Biosolids)' => 'enterolert_biosolids_in',
             'Colilert (Biosolids)' => 'colilert_biosolids_in',
@@ -321,10 +323,10 @@ class Dashboard_model extends CI_Model
             'Salmonella (Liquids)' => 'salmonella_liquids',
             'Salmonella (Biosolids)' => 'salmonella_biosolids',
             'Salmonella P/A' => 'salmonella_pa',
-            'DNA Extraction (Culture)' => 'extraction_culture',
-            'DNA Extraction (Liquid)' => 'extraction_liquid',
-            'DNA Extraction (Metagenome)' => 'extraction_metagenome',
-            'DNA Extraction (Biosolid)' => 'extraction_biosolid',
+            'Extraction (Culture)' => 'extraction_culture',
+            'Extraction (Liquid)' => 'extraction_liquid',
+            'Extraction (Metagenome)' => 'extraction_metagenome',
+            'Extraction (Biosolid)' => 'extraction_biosolid',
             'Enterolert (Water)' => 'enterolert_idexx_water',
             'Enterolert (Biosolids)' => 'enterolert_idexx_biosolids',
             'Colilert (Biosolids)' => 'colilert_idexx_biosolids',

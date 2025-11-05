@@ -23,7 +23,7 @@ class Extraction_biosolid_model extends CI_Model
         extraction_biosolid.cryobox, extraction_biosolid.id_location, extraction_biosolid.comments, extraction_biosolid.flag, 
         extraction_biosolid.id_person, extraction_biosolid.id_kit, extraction_biosolid.id_location,
         ref_location.freezer,ref_location.shelf,ref_location.rack,ref_location.tray, extraction_biosolid.other_kit,
-        ref_position.rows1, ref_position.columns1
+        ref_position.rows1, ref_position.columns1, extraction_biosolid.review, extraction_biosolid.user_review, extraction_biosolid.user_created
         ');
         $this->datatables->from('extraction_biosolid');
         $this->datatables->join('ref_person', 'extraction_biosolid.id_person = ref_person.id_person', 'left');
@@ -375,6 +375,24 @@ class Extraction_biosolid_model extends CI_Model
         $this->db->where('sr.id_one_water_sample', $idOneWaterSample);
         $query = $this->db->get();
         return $query->row_array();
+    }
+
+    function updateExtractionBiosolid($id_one_water_sample, $data) {
+        $this->db->where('id_one_water_sample', $id_one_water_sample);
+        $this->db->update('extraction_biosolid', $data);
+    }
+
+    function getReviewer($user_review) {
+        $this->db->select('full_name');
+        $this->db->from('tbl_user');
+        $this->db->where('id_users', $user_review);
+        $query = $this->db->get();
+        
+        if ($query->num_rows() > 0) {
+            return $query->row()->full_name;
+        } else {
+            return null;
+        }
     }
 
       
