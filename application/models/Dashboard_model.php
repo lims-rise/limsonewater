@@ -56,17 +56,17 @@ class Dashboard_model extends CI_Model
             'extraction_culture' => 'Extraction (Culture)',
             'extraction_liquid' => 'Extraction (Liquid)',
             'extraction_metagenome' => 'Extraction (Metagenome)',
-            'extraction_biosolid' => 'Extraction (Biosolid)',
+            'extraction_biosolid' => 'Extraction (Biosolids)',
             'enterolert_water_in' => 'Enterolert (Water)',
             'enterolert_biosolids_in' => 'Enterolert (Biosolids)',
             'colilert_biosolids_in' => 'Colilert (Biosolids)',
             'colilert_water_in' => 'Colilert (Water)',
-            'protozoa' => 'Protozoa Analysis',
-            'hemoflow' => 'HemoFlow Analysis',
+            'protozoa' => 'Protozoa',
+            'hemoflow' => 'Hemoflow',
             'enterolert_hemoflow' => 'Enterolert HemoFlow',
-            'colilert_hemoflow' => 'Colilert HemoFlow',
-            'campy_hemoflow' => 'Campy HemoFlow',
-            'salmonella_hemoflow' => 'Salmonella HemoFlow'
+            'colilert_hemoflow' => 'Colilert (HemoFlow)',
+            'campy_hemoflow' => 'Campy (HemoFlow)',
+            'salmonella_hemoflow' => 'Salmonella (HemoFlow)'
         );
 
         $statistics = array();
