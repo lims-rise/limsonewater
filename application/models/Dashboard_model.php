@@ -65,7 +65,8 @@ class Dashboard_model extends CI_Model
             'hemoflow' => 'HemoFlow Analysis',
             'enterolert_hemoflow' => 'Enterolert HemoFlow',
             'colilert_hemoflow' => 'Colilert HemoFlow',
-            'campy_hemoflow' => 'Campy HemoFlow'
+            'campy_hemoflow' => 'Campy HemoFlow',
+            'salmonella_hemoflow' => 'Salmonella HemoFlow'
         );
 
         $statistics = array();
@@ -103,6 +104,11 @@ class Dashboard_model extends CI_Model
                 );
             }
         }
+
+        // Sort alphabetically by module name
+        usort($statistics, function($a, $b) {
+            return strcmp($a['module'], $b['module']);
+        });
 
         return $statistics;
     }
@@ -177,7 +183,7 @@ class Dashboard_model extends CI_Model
                         bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
                         ec.review, el.review, em.review, cb.review, mc.review, 
                         ewi.review, ebi.review, cbi.review, cwi.review, 
-                        pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review
+                        pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review
                     ) = 1 THEN 1 END) as completed_tests,
                     sr.date_created
                 FROM sample_reception sr
@@ -204,6 +210,7 @@ class Dashboard_model extends CI_Model
                 LEFT JOIN colilert_hemoflow chf ON chf.colilert_hemoflow_barcode = srt.barcode AND chf.flag = 0
                 LEFT JOIN campy_hemoflow ch ON ch.campy_assay_barcode = srt.barcode AND ch.flag = 0
                 LEFT JOIN extraction_biosolid ex ON ex.barcode_sample = srt.barcode AND ex.flag = 0
+                LEFT JOIN salmonella_hemoflow sh ON sh.salmonella_assay_barcode = srt.barcode AND sh.flag = 0
                 WHERE sr.flag = 0
                 GROUP BY sr.id_project
                 ORDER BY sr.date_created DESC";
@@ -262,7 +269,7 @@ class Dashboard_model extends CI_Model
                 'colilert_biosolids_in', 'colilert_water_in', 'enterolert_biosolids_in', 
                 'enterolert_water_in', 'salmonella_biosolids', 'salmonella_liquids', 
                 'salmonella_pa', 'moisture_content', 'hemoflow', 'protozoa', 'colilert_hemoflow', 'enterolert_hemoflow', 'campy_hemoflow',
-                'extraction_culture', 'extraction_liquid', 'extraction_metagenome', 'extraction_biosolid'
+                'extraction_culture', 'extraction_liquid', 'extraction_metagenome', 'extraction_biosolid', 'salmonella_hemoflow'
             );
             
             foreach ($testing_tables as $table) {
@@ -310,7 +317,8 @@ class Dashboard_model extends CI_Model
             'HemoFlow Analysis' => 'hemoflow',
             'Enterolert HemoFlow' => 'enterolert_hemoflow',
             'Colilert HemoFlow' => 'colilert_hemoflow',
-            'Campy HemoFlow' => 'campy_hemoflow'
+            'Campy HemoFlow' => 'campy_hemoflow',
+            'Salmonella HemoFlow' => 'salmonella_hemoflow'
         );
         
         // Module to controller mapping 
@@ -335,7 +343,8 @@ class Dashboard_model extends CI_Model
             'HemoFlow Analysis' => 'hemoflow',
             'Enterolert HemoFlow' => 'enterolert_hemoflow',
             'Colilert HemoFlow' => 'colilert_hemoflow',
-            'Campy HemoFlow' => 'campy_hemoflow'
+            'Campy HemoFlow' => 'campy_hemoflow',
+            'Salmonella HemoFlow' => 'salmonella_hemoflow'
         );
 
         if (!isset($modules[$module_name])) {

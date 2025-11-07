@@ -1,13 +1,18 @@
+<!-- SweetAlert2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
 <div class="content-wrapper">
 	<section class="content">
 		<div class="box box-black box-solid">
 			<div class="box-header with-border">
-				<h3 class="box-title">Processing | Salmonella Biosolids | Details</h3>
+				<h3 class="box-title">Processing | Salmonella Hemoflow | Details</h3>
 			</div>
 				<form role="form"  id="formKeg" method="post" class="form-horizontal">
 					<div class="box-body">
 						<!-- <input type="hidden" class="form-control " id="id_req" name="id_req" value="<?php// echo $id_req ?>"> -->
-						<input id="id_salmonella_biosolids" name="id_salmonella_biosolids" type="hidden" class="form-control input-sm" value="<?php echo $id_salmonella_biosolids ?>">
+						<input id="id_salmonella_hemoflow" name="id_salmonella_hemoflow" type="hidden" class="form-control input-sm" value="<?php echo $id_salmonella_hemoflow ?>">
 						<div class="form-group">
 							<label for="id_one_water_sample" class="col-sm-2 control-label">One Water Sample ID</label>
 							<div class="col-sm-4">
@@ -198,10 +203,10 @@
                                         }
                                     ?>
                                 </div>
-                                <input id="id_salmonella_biosolids" name="id_salmonella_biosolids" type="hidden" class="form-control input-sm" value="<?php echo $id_salmonella_biosolids ?>">
+                                <input id="id_salmonella_hemoflow" name="id_salmonella_hemoflow" type="hidden" class="form-control input-sm" value="<?php echo $id_salmonella_hemoflow ?>">
 
-                                <div id="content-final-concentration" class="table-responsive">
-                                    <table id="exampleFinalConcentration" class="table display table-bordered table-striped" width="100%">
+                                <div id="content-final-calculation" class="table-responsive">
+                                    <table id="exampleFinalCalculation" class="table display table-bordered table-striped" width="100%">
                                         <thead>
                                             <tr>
                                                 <th>ID One Water Sample</th>
@@ -215,18 +220,18 @@
                                                 <th>Sample Wet Weight</th>
                                                 <th>Elution Volume</th>
                                                 <th>Enrichment Media</th>
-                                                <?php if (!empty($finalConcentration)): ?>
+                                                <?php if (!empty($finalCalculation)): ?>
                                                     <?php 
                                                         // Tube volume headers
-                                                        foreach ($finalConcentration[0] as $key => $value): 
+                                                        foreach ($finalCalculation[0] as $key => $value): 
                                                             if (strpos($key, 'Tube ') === 0): ?>
                                                                 <th><?= htmlspecialchars($key) ?> Volume</th>
                                                             <?php endif;
                                                         endforeach;
                                                         // Plate number headers
                                                         $plate_numbers = [];
-                                                        if (!empty($finalConcentration[0]->plate_numbers)) {
-                                                            $plate_numbers = array_map('trim', explode(',', $finalConcentration[0]->plate_numbers));
+                                                        if (!empty($finalCalculation[0]->plate_numbers)) {
+                                                            $plate_numbers = array_map('trim', explode(',', $finalCalculation[0]->plate_numbers));
                                                         }
                                                         foreach ($plate_numbers as $plate_number): ?>
                                                             <th>Tube <?= htmlspecialchars($plate_number) ?> Result</th>
@@ -237,26 +242,32 @@
                                                 <th>Concentration MPN</th>
                                                 <th>Upper CI</th>
                                                 <th>Lower CI</th>
+                                                <th>Volume filtered (L)</th>
+                                                <th>Volume eluted (mL)</th>
+                                                <th>Total Salmonella</th>
+                                                <th>Concentration (MPN/L)</th>
+                                                <th>Upper CI</th>
+                                                <th>Lower CI</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php if (!empty($finalConcentration)): ?>
-                                                <?php foreach ($finalConcentration as $concentration): ?>
+                                            <?php if (!empty($finalCalculation)): ?>
+                                                <?php foreach ($finalCalculation as $calculation): ?>
                                                     <tr>
-                                                        <td><?= htmlspecialchars($concentration->id_one_water_sample) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->salmonella_assay_barcode) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->initial) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->sampletype ?? '-') ?></td>
-                                                        <td><?= htmlspecialchars($concentration->number_of_tubes) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->mpn_pcr_conducted) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->date_sample_processed) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->time_sample_processed) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->sample_wetweight) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->elution_volume) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->enrichment_media) ?></td>
+                                                        <td><?= htmlspecialchars($calculation->id_one_water_sample) ?></td>
+                                                        <td><?= htmlspecialchars($calculation->salmonella_assay_barcode) ?></td>
+                                                        <td><?= htmlspecialchars($calculation->initial) ?></td>
+                                                        <td><?= htmlspecialchars($calculation->sampletype ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars($calculation->number_of_tubes) ?></td>
+                                                        <td><?= htmlspecialchars($calculation->mpn_pcr_conducted) ?></td>
+                                                        <td><?= htmlspecialchars($calculation->date_sample_processed) ?></td>
+                                                        <td><?= htmlspecialchars($calculation->time_sample_processed) ?></td>
+                                                        <td><?= htmlspecialchars($calculation->sample_wetweight) ?></td>
+                                                        <td><?= htmlspecialchars($calculation->elution_volume) ?></td>
+                                                        <td><?= htmlspecialchars($calculation->enrichment_media) ?></td>
                                                         <?php 
                                                         // Tube volumes
-                                                        foreach ($concentration as $key => $value): 
+                                                        foreach ($calculation as $key => $value): 
                                                             if (strpos($key, 'Tube ') === 0): ?>
                                                                 <td><?= htmlspecialchars($value) ?></td>
                                                             <?php endif;
@@ -264,11 +275,11 @@
 
                                                         // Plate numbers
                                                         $plate_numbers = [];
-                                                        if (!empty($concentration->plate_numbers)) {
-                                                            $plate_numbers = array_map('trim', explode(',', $concentration->plate_numbers));
+                                                        if (!empty($calculation->plate_numbers)) {
+                                                            $plate_numbers = array_map('trim', explode(',', $calculation->plate_numbers));
                                                         }
                                                         // Confirmation values
-                                                        $confirmation = isset($concentration->confirmation) && is_array($concentration->confirmation) ? $concentration->confirmation : [];
+                                                        $confirmation = isset($calculation->confirmation) && is_array($calculation->confirmation) ? $calculation->confirmation : [];
                                                         foreach ($plate_numbers as $plate_number): 
                                                             // Normalize key for confirmation lookup (remove spaces)
                                                             $lookup_key = trim($plate_number);
@@ -281,9 +292,15 @@
                                                         ?>
                                                             <td><?= htmlspecialchars($confirmation_value) ?></td>
                                                         <?php endforeach; ?>
-                                                        <td><?= htmlspecialchars($concentration->mpn_concentration) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->upper_ci) ?></td>
-                                                        <td><?= htmlspecialchars($concentration->lower_ci) ?></td>
+                                                        <td><?= htmlspecialchars($calculation->mpn_concentration) ?></td>
+                                                        <td><?= htmlspecialchars($calculation->upper_ci) ?></td>
+                                                        <td><?= htmlspecialchars($calculation->lower_ci) ?></td>
+                                                        <td><?= htmlspecialchars($calculation->volume_filter) ?></td>
+                                                        <td><?= htmlspecialchars($calculation->volume_eluted) ?></td>
+                                                        <td><?= htmlspecialchars($calculation->total_salmonella) ?></td>
+                                                        <td><?= htmlspecialchars($calculation->concentration_mpn_l) ?></td>
+                                                        <td><?= htmlspecialchars($calculation->concentration_upper_ci) ?></td>
+                                                        <td><?= htmlspecialchars($calculation->concentration_lower_ci) ?></td>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             <?php else: ?>
@@ -301,7 +318,7 @@
 
 				<div class="form-group">
 					<div class="modal-footer clearfix">
-						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('salmonella_biosolids'); ?>';">
+						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('salmonella_hemoflow'); ?>';">
 							<i class="fa fa-times"></i> Close
 						</button>
 					</div>
@@ -320,14 +337,14 @@
                         <h4 class="modal-title" id="modal-title-Xld">
 							<span id="my-another-cool-loader"></span></h4>
                     </div>
-                        <form id="formDetail24" action=<?php echo site_url('Salmonella_biosolids/saveResultsXld') ?> method="post" class="form-horizontal">
+                        <form id="formDetail24" action=<?php echo site_url('Salmonella_hemoflow/saveResultsXld') ?> method="post" class="form-horizontal">
                             <div class="modal-body">
                                 <div class="form-group">
                                         <div class="col-sm-9">
                                             <input id="mode_detResultsXld" name="mode_detResultsXld" type="hidden" class="form-control input-sm">
-                                            <input id="id_salmonella_biosolids1" name="id_salmonella_biosolids1" type="hidden" class="form-control input-sm">
+                                            <input id="id_salmonella_hemoflow1" name="id_salmonella_hemoflow1" type="hidden" class="form-control input-sm">
                                             <input id="number_of_tubes1" name="number_of_tubes1" type="hidden" class="form-control input-sm">
-                                            <input id="id_result_xld" name="id_result_xld" type="hidden" class="form-control input-sm">
+                                            <input id="id_salmonella_hemoflow_result_xld" name="id_salmonella_hemoflow_result_xld" type="hidden" class="form-control input-sm">
                                             <input id="idXld_one_water_sample" name="idXld_one_water_sample" type="hidden" class="form-control input-sm">
                                         </div>
                                     </div>
@@ -403,14 +420,14 @@
                         <h4 class="modal-title" id="modal-title-Chromagar">
 							<span id="my-another-cool-loader"></span></h4>
                     </div>
-                        <form id="formDetail24" action=<?php echo site_url('Salmonella_biosolids/saveResultsChromagar') ?> method="post" class="form-horizontal">
+                        <form id="formDetail24" action=<?php echo site_url('Salmonella_hemoflow/saveResultsChromagar') ?> method="post" class="form-horizontal">
                             <div class="modal-body">
                                 <div class="form-group">
                                         <div class="col-sm-9">
                                             <input id="mode_detResultsChromagar" name="mode_detResultsChromagar" type="hidden" class="form-control input-sm">
-                                            <input id="id_salmonella_biosolidsChromagar" name="id_salmonella_biosolidsChromagar" type="hidden" class="form-control input-sm">
+                                            <input id="id_salmonella_hemoflowChromagar" name="id_salmonella_hemoflowChromagar" type="hidden" class="form-control input-sm">
                                             <input id="number_of_tubesChromagar" name="number_of_tubesChromagar" type="hidden" class="form-control input-sm">
-                                            <input id="id_result_chromagar" name="id_result_chromagar" type="hidden" class="form-control input-sm">
+                                            <input id="id_salmonella_hemoflow_result_chromagar" name="id_salmonella_hemoflow_result_chromagar" type="hidden" class="form-control input-sm">
                                             <input id="idChromagar_one_water_sample" name="idChromagar_one_water_sample" type="hidden" class="form-control input-sm">
                                         </div>
                                     </div>
@@ -489,13 +506,13 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
                 <h4 class="modal-title" id="modal-title-biochemical">Tube | New</h4>
             </div>
-            <form id="formBiochemical" action="<?php echo site_url('Salmonella_biosolids/saveBiochemical') ?>" method="post" class="form-horizontal">
+            <form id="formBiochemical" action="<?php echo site_url('Salmonella_hemoflow/saveBiochemical') ?>" method="post" class="form-horizontal">
                 <div class="modal-body">
                     <input id="mode_detResultsBiochemical" name="mode_detResultsBiochemical" type="hidden" class="form-control input-sm">
-                    <input id="id_salmonella_biosolidsBiochemical" name="id_salmonella_biosolidsBiochemical" type="hidden" class="form-control input-sm">
-                    <input id="id_result_biochemical" name="id_result_biochemical" type="hidden" class="form-control input-sm">
+                    <input id="id_salmonella_hemoflowBiochemical" name="id_salmonella_hemoflowBiochemical" type="hidden" class="form-control input-sm">
+                    <input id="id_salmonella_hemoflow_result_biochemical" name="id_salmonella_hemoflow_result_biochemical" type="hidden" class="form-control input-sm">
                     <input id="biochemical_tube" name="biochemical_tube" type="hidden" class="form-control input-sm">
-                    <input id="id_result_chromagar1" name="id_result_chromagar1" type="hidden" class="form-control input-sm">
+                    <input id="id_salmonella_hemoflow_result_chromagar1" name="id_salmonella_hemoflow_result_chromagar1" type="hidden" class="form-control input-sm">
                     <input id="idBiochemical_one_water_sample" name="idBiochemical_one_water_sample" type="hidden" class="form-control input-sm">
                     
 
@@ -563,11 +580,11 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
                 <h4 class="modal-title" id="modal-title-calculate-mpn">Calculate MPN | New</h4>
             </div>
-            <form id="formCalculateMPN" action="<?php echo site_url('Salmonella_biosolids/saveCalculateMPN') ?>" method="post" class="form-horizontal">
+            <form id="formCalculateMPN" action="<?php echo site_url('Salmonella_hemoflow/saveCalculateMPN') ?>" method="post" class="form-horizontal">
                 <div class="modal-body">
                     <input id="mode_calculateMPN" name="mode_calculateMPN" type="hidden" class="form-control input-sm">
-                    <input id="id_salmonella_biosolids_mpn" name="id_salmonella_biosolids_mpn" type="hidden" class="form-control input-sm">
-                    <input id="id_salmonella_result_mpn_biosolids" name="id_salmonella_result_mpn_biosolids" type="hidden" class="form-control input-sm">
+                    <input id="id_salmonella_hemoflow_mpn" name="id_salmonella_hemoflow_mpn" type="hidden" class="form-control input-sm">
+                    <input id="id_salmonella_hemoflow_result_mpn" name="id_salmonella_hemoflow_result_mpn" type="hidden" class="form-control input-sm">
                     <!-- <input id="current_sample_dryweight" name="current_sample_dryweight" type="hidden" class="form-control input-sm"> -->
 
                     <!-- MPN Concentration -->
@@ -659,7 +676,7 @@
 			<div class="modal-content">
 				<div class="modal-header" style="background-color: #f39c12; color: white;">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
-					<h4 class="modal-title">Salmonella Biosolids | Information</h4>
+					<h4 class="modal-title">Salmonella Hemoflow | Information</h4>
 				</div>
                 <div id="confirmation-content">
                     <div class="modal-body">
@@ -683,11 +700,7 @@
                 <h4 class="modal-title"></h4>
             </div>
             <div class="modal-body">
-                <div id="confirmation-content">
-                    <div class="modal-body">
-                        <p class="text-center" style="font-size: 15px;">Are you sure you want to delete ID <span id="id" style="font-weight: bold;"></span> ?</p>
-                    </div>
-                </div>
+                <p class="text-center" style="font-size: 15px;">Are you sure you want to delete ID <span id="id" style="font-weight: bold;"></span> ?</p>
             </div>
             <div class="modal-footer clearfix">
                 <button type="button" id="confirm-delete" class="btn btn-danger"><i class="fa fa-trash"></i> Yes</button>
@@ -1279,14 +1292,14 @@
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
 <script>
     document.getElementById('exportBtn').addEventListener('click', function() {
-        let id_salmonella_biosolids = document.getElementById('id_salmonella_biosolids').value;
-        window.location.href = '<?php echo site_url('Salmonella_biosolids/excel') ?>/' + id_salmonella_biosolids;
+        let id_salmonella_hemoflow = document.getElementById('id_salmonella_hemoflow').value;
+        window.location.href = '<?php echo site_url('Salmonella_hemoflow/excel') ?>/' + id_salmonella_hemoflow;
     });
 </script>
 <script>
     // Calculate MPN button click handler
     document.getElementById('calculateMpnBtn').addEventListener('click', function() {
-        let id_salmonella_biosolids = document.getElementById('id_salmonella_biosolids').value;
+        let id_salmonella_hemoflow = document.getElementById('id_salmonella_hemoflow').value;
 
         // Validate sample_dryweight before proceeding
         // let sampleDryweight = document.getElementById('sample_dryweight').value;
@@ -1313,20 +1326,20 @@
         //     return; // Stop execution if sample_dryweight is empty
         // }
 
-        // Set the id_salmonella_biosolids value in the modal
-        document.getElementById('id_salmonella_biosolids_mpn').value = id_salmonella_biosolids;
+        // Set the id_salmonella_hemoflow value in the modal
+        document.getElementById('id_salmonella_hemoflow_mpn').value = id_salmonella_hemoflow;
 
         // Check if MPN calculation already exists
         $.ajax({
-            url: '<?php echo site_url('Salmonella_biosolids/getCalculateMPN'); ?>',
+            url: '<?php echo site_url('Salmonella_hemoflow/getCalculateMPN'); ?>',
             type: 'GET',
-            data: { id_salmonella_biosolids: id_salmonella_biosolids },
+            data: { id_salmonella_hemoflow: id_salmonella_hemoflow },
             dataType: 'json',
             success: function(response) {
                 if (response.status === 'success') {
                     // Data exists, set to edit mode
                     document.getElementById('mode_calculateMPN').value = 'edit';
-                    document.getElementById('id_salmonella_result_mpn_biosolids').value = response.data.id_salmonella_result_mpn_biosolids;
+                    document.getElementById('id_salmonella_hemoflow_result_mpn').value = response.data.id_salmonella_hemoflow_result_mpn;
                     document.getElementById('mpn_concentration').value = response.data.mpn_concentration;
                     document.getElementById('upper_ci').value = response.data.upper_ci;
                     document.getElementById('lower_ci').value = response.data.lower_ci;
@@ -1339,7 +1352,7 @@
                 } else {
                     // No data exists, set to insert mode
                     document.getElementById('mode_calculateMPN').value = 'insert';
-                    document.getElementById('id_salmonella_result_mpn_biosolids').value = '';
+                    document.getElementById('id_salmonella_hemoflow_result_mpn').value = '';
                     document.getElementById('mpn_concentration').value = '';
                     document.getElementById('upper_ci').value = '';
                     document.getElementById('lower_ci').value = '';
@@ -1359,7 +1372,7 @@
                 
                 // On error, default to insert mode
                 document.getElementById('mode_calculateMPN').value = 'insert';
-                document.getElementById('id_salmonella_result_mpn_biosolids').value = '';
+                document.getElementById('id_salmonella_hemoflow_result_mpn').value = '';
                 document.getElementById('mpn_concentration').value = '';
                 document.getElementById('upper_ci').value = '';
                 document.getElementById('lower_ci').value = '';
@@ -1517,10 +1530,10 @@
 
             // Check if tube needs update instead of just checking existence
             $.ajax({
-                url: '<?php echo site_url('Salmonella_biosolids/checkTubeNeedsUpdate'); ?>',
+                url: '<?php echo site_url('Salmonella_hemoflow/checkTubeNeedsUpdate'); ?>',
                 type: 'POST',
                 data: {
-                    id_salmonella_biosolids: id_salmonella_biosolids,
+                    id_salmonella_hemoflow: id_salmonella_hemoflow,
                     biochemical_tube: tubeNumber,
                     expected_confirmation: confirmation
                 },
@@ -1537,14 +1550,14 @@
                         console.log(`Tube ${tubeNumber} needs update: ${checkResponse.current_confirmation} → ${confirmation}`);
                         
                         $.ajax({
-                            url: '<?php echo site_url('Salmonella_biosolids/saveBiochemical'); ?>',
+                            url: '<?php echo site_url('Salmonella_hemoflow/saveBiochemical'); ?>',
                             type: 'POST',
                             data: {
                                 mode_detResultsBiochemical: 'edit',
-                                id_result_biochemical: checkResponse.id_result_biochemical,
+                                id_salmonella_hemoflow_result_biochemical: checkResponse.id_salmonella_hemoflow_result_biochemical,
                                 idBiochemical_one_water_sample: idx_one_water_sample,
-                                id_salmonella_biosolidsBiochemical: id_salmonella_biosolids,
-                                id_result_chromagar1: dataChromagar.id_result_chromagar,
+                                id_salmonella_hemoflowBiochemical: id_salmonella_hemoflow,
+                                id_salmonella_hemoflow_result_chromagar1: dataChromagar.id_salmonella_hemoflow_result_chromagar,
                                 biochemical_tube: tubeNumber,
                                 confirmation: confirmation
                             },
@@ -1581,13 +1594,13 @@
                         console.log(`Tube ${tubeNumber} doesn't exist, creating new with: ${confirmation}`);
                         
                         $.ajax({
-                            url: '<?php echo site_url('Salmonella_biosolids/saveBiochemical'); ?>',
+                            url: '<?php echo site_url('Salmonella_hemoflow/saveBiochemical'); ?>',
                             type: 'POST',
                             data: {
                                 mode_detResultsBiochemical: 'insert',
                                 idBiochemical_one_water_sample: idx_one_water_sample,
-                                id_salmonella_biosolidsBiochemical: id_salmonella_biosolids,
-                                id_result_chromagar1: dataChromagar.id_result_chromagar,
+                                id_salmonella_hemoflowBiochemical: id_salmonella_hemoflow,
+                                id_salmonella_hemoflow_result_chromagar1: dataChromagar.id_salmonella_hemoflow_result_chromagar,
                                 biochemical_tube: tubeNumber,
                                 confirmation: confirmation
                             },
@@ -1708,7 +1721,7 @@
     let table2;
     let id_moisture = $('#id_moisture').val();
     let salmonella_assay_barcode = $('#salmonella_assay_barcode').val();
-    let id_salmonella_biosolids = $('#id_salmonella_biosolids').val();
+    let id_salmonella_hemoflow = $('#id_salmonella_hemoflow').val();
     let number_of_tubes = $('#number_of_tubes').val();
     const BASE_URL = '/limsonewater/index.php';
     let idx_one_water_sample = $('#id_one_water_sample').val();
@@ -1777,14 +1790,14 @@
             e.preventDefault();
             
             // Always use the same URL since we handle mode validation in the controller
-            let url = '<?php echo site_url('Salmonella_biosolids/saveCalculateMPN'); ?>';
+            let url = '<?php echo site_url('Salmonella_hemoflow/saveCalculateMPN'); ?>';
             let formData = $(this).serialize();
             
             // Debug logging
             console.log('Form URL:', url);
             console.log('Form Data:', formData);
             console.log('Mode:', $('#mode_calculateMPN').val());
-            console.log('ID Salmonella Biosolids:', $('#id_salmonella_biosolids_mpn').val());
+            console.log('ID Salmonella Hemoflow:', $('#id_salmonella_hemoflow_mpn').val());
 
             $.ajax({
                 url: url,
@@ -1849,7 +1862,7 @@
         $('#compose-modalCalculateMPN').on('hidden.bs.modal', function() {
             $('#formCalculateMPN')[0].reset();
             $('#mode_calculateMPN').val('');
-            $('#id_salmonella_result_mpn_biosolids').val('');
+            $('#id_salmonella_hemoflow_result_mpn').val('');
             // $('#current_sample_dryweight').val('');
             // $('#mpn_concentration_dw').val('');
             // $('#upper_ci_dw').val('');
@@ -1909,7 +1922,7 @@
 		// 					.addClass('form-check-label ' + states[currentState].class);
 
 		// 				$.ajax({
-		// 					url: '<?php echo site_url('Salmonella_biosolids/saveReview'); ?>',
+		// 					url: '<?php echo site_url('Salmonella_hemoflow/saveReview'); ?>',
 		// 					method: 'POST',
 		// 					data: $('#formSampleReview').serialize(),
 		// 					dataType: 'json',
@@ -2139,7 +2152,7 @@
 		 */
 		function saveReviewData() {
 			$.ajax({
-				url: '<?php echo site_url('Salmonella_biosolids/saveReview'); ?>',
+				url: '<?php echo site_url('Salmonella_hemoflow/saveReview'); ?>',
 				method: 'POST',
 				data: $('#formSampleReview').serialize(),
 				dataType: 'json',
@@ -2230,7 +2243,7 @@
                 console.log('Form data to be sent: ', formData); // Debugging log
 
                 $.ajax({
-                    url: '<?php echo site_url('Salmonella_biosolids/cancelReview'); ?>',
+                    url: '<?php echo site_url('Salmonella_hemoflow/cancelReview'); ?>',
                     method: 'POST',
                     data: formData,
                     dataType: 'json',
@@ -2410,20 +2423,43 @@
         $(document).on('click', '.btn_deleteXld, .btn_deleteChromagar, .btn_deleteBiochemical', function() {
             let id = $(this).data('id');
             let url;
+            let confirmationMessage;
+            
             if ($(this).hasClass('btn_deleteXld')) {
-                url = '<?php echo site_url('Salmonella_biosolids/delete_detailXld'); ?>/' + id;
+                url = '<?php echo site_url('Salmonella_hemoflow/delete_detailXld'); ?>/' + id;
                 $('.modal-title').html('<i class="fa fa-trash"></i> Result XLD | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
+                
+                // Add warning about cascade delete for XLD (similar to Charcoal in Campy)
+                $('#confirm-modal-delete .modal-body').html(
+                    '<p><strong>⚠️ Critical Warning:</strong> Deleting this XLD result will also delete ALL related data including:</p>' +
+                    '<ul style="margin: 10px 0; padding-left: 20px;">' +
+                    '<li><strong>All ChroMagar results</strong> associated with this sample</li>' +
+                    '<li><strong>All Tube test results</strong> related to those ChroMagar results</li>' +
+                    '</ul>' +
+                    '<p style="color: #dc3545;"><strong>This action cannot be undone and will remove the entire data chain!</strong></p>' +
+                    '<p>Are you sure you want to delete Result XLD <strong>' + id + '</strong> and all its related data?</p>'
+                );
             } else if ($(this).hasClass('btn_deleteChromagar')) {
-                url = '<?php echo site_url('Salmonella_biosolids/delete_detailChromagar'); ?>/' + id;
-                $('.modal-title').html('<i class="fa fa-trash"></i> Result Chromagar | Delete <span id="my-another-cool-loader"></span>');
+                url = '<?php echo site_url('Salmonella_hemoflow/delete_detailChromagar'); ?>/' + id;
+                $('.modal-title').html('<i class="fa fa-trash"></i> Result ChroMagar | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
+                
+                // Add warning about cascade delete for ChroMagar (similar to HBA in Campy)
+                $('#confirm-modal-delete .modal-body').html(
+                    '<p><strong>⚠️ Warning:</strong> Deleting this ChroMagar result will also delete all related Tube test results to maintain data integrity.</p>' +
+                    '<p>This action cannot be undone. Are you sure you want to delete Result ChroMagar <strong>' + id + '</strong> and all its related data?</p>'
+                );
             } else if ($(this).hasClass('btn_deleteBiochemical')) {
-                url = '<?php echo site_url('Salmonella_biosolids/delete_detailBiochemical'); ?>/' + id;
-                $('.modal-title').html('<i class="fa fa-trash"></i> Result | Delete <span id="my-another-cool-loader"></span>');
+                url = '<?php echo site_url('Salmonella_hemoflow/delete_detailBiochemical'); ?>/' + id;
+                $('.modal-title').html('<i class="fa fa-trash"></i> Result Biochemical | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
+                
+                // Reset modal body to default for Biochemical (similar to Campy)
+                $('#confirm-modal-delete .modal-body').html(
+                    '<p>Are you sure you want to delete Result Biochemical <strong>' + id + '</strong>?</p>'
+                );
             }
-
             showConfirmationDelete(url);
 
         });
@@ -2434,16 +2470,73 @@
                 url: deleteUrl,
                 type: 'POST',
                 dataType: 'json',
+                beforeSend: function() {
+                    $('#confirm-delete').prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Deleting...');
+                    // Disable close button during delete to prevent interruption
+                    $('.modal-header .close').prop('disabled', true);
+                },
                 success: function(response) {
                     if (response.status === 'success') {
-                        alert(response.message);
+                        // Show success message
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Deleted!',
+                            text: response.message,
+                            timer: 1500,
+                            showConfirmButton: false,
+                            willClose: function() {
+                                // Force page reload when success message closes
+                                location.reload();
+                            }
+                        });
+                        
+                        // Reload all relevant tables
+                        var tablesReloaded = false;
+                        
+                        if (typeof table !== 'undefined' && table.ajax) {
+                            table.ajax.reload(null, false);
+                            tablesReloaded = true;
+                        }
+                        if (typeof table1 !== 'undefined' && table1.ajax) {
+                            table1.ajax.reload(null, false);
+                            tablesReloaded = true;
+                        }
+                        if (typeof table2 !== 'undefined' && table2.ajax) {
+                            table2.ajax.reload(null, false);
+                            tablesReloaded = true;
+                        }
+                        
                     } else {
-                        alert(response.message);
+                        // Show error message
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: response.message,
+                            confirmButtonText: 'OK'
+                        }).then(function() {
+                            // Reload page to ensure data consistency
+                            location.reload();
+                        });
                     }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Delete error:', xhr.responseText);
+                    // Show error message
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Something went wrong. Please try again.',
+                        confirmButtonText: 'OK'
+                    }).then(function() {
+                        // Reload page even on error to ensure data consistency
+                        location.reload();
+                    });
                 },
                 complete: function() {
                     $('#confirm-modal-delete').modal('hide');
-                    location.reload();
+                    $('#confirm-delete').prop('disabled', false).html('<i class="fa fa-trash"></i> Yes');
+                    // Re-enable close button
+                    $('.modal-header .close').prop('disabled', false);
                 }
             });
         });
@@ -2568,7 +2661,7 @@
             paging: false,
             info: false,
             bFilter: false,
-            ajax: {"url": "../../Salmonella_biosolids/subjsonXld?idXld="+id_salmonella_biosolids, "type": "POST"},
+            ajax: {"url": "../../Salmonella_hemoflow/subjsonXld?idXld="+id_salmonella_hemoflow, "type": "POST"},
             columns: [
                 {"data": "salmonella_assay_barcode"},
                 {"data": "date_sample_processed"},
@@ -2598,7 +2691,7 @@
             },
             drawCallback: function(settings) {
                 // Auto-processing: No button status checks needed
-                console.log('XLD table updated - auto-processing handles biochemical results');
+                console.log('XLD table updated - auto-processing handles tube results');
             }
         });
 
@@ -2620,7 +2713,7 @@
             paging: false,
             info: false,
             bFilter: false,
-            ajax: {"url": "../../Salmonella_biosolids/subjsonChromagar?idChromagar="+id_salmonella_biosolids, "type": "POST"},
+            ajax: {"url": "../../Salmonella_hemoflow/subjsonChromagar?idChromagar="+id_salmonella_hemoflow, "type": "POST"},
             columns: [
                 {"data": "salmonella_assay_barcode"},
                 {"data": "date_sample_processed"},
@@ -2704,17 +2797,17 @@
                     blackColonyPlateArray = dataXld.black_colony_plate.split(', ');
                 }
 
-                // Auto-processing: Biochemical results are now generated automatically after ChroMagar save
+                // Auto-processing: Tube results are now generated automatically after ChroMagar save
                 // No manual entry needed - results will be available in Final Concentration
-                console.log('Biochemical results will be auto-generated after ChroMagar save');
+                console.log('Tube results will be auto-generated after ChroMagar save');
             } else {
                 console.log('Data belum tersedia');
-                // No manual biochemical entry needed with auto-processing
+                // No manual tube entry needed with auto-processing
             }
         });
 
         // Improved generateResultBiochemical function
-        function generateResultBiochemical(container, numberOfPlates, id_salmonella_biosolids, plateNumberArray, purpleColonyPlateArray, blackColonyPlateArray = []) {
+        function generateResultBiochemical(container, numberOfPlates, id_salmonella_hemoflow, plateNumberArray, purpleColonyPlateArray, blackColonyPlateArray = []) {
             container.empty(); // Clear existing content
 
             // Iterate through the plateNumberArray
@@ -2750,13 +2843,13 @@
                 `);
 
                 // Initialize DataTable for the newly created table, passing the plate number
-                initializeDataTable(tableId, id_salmonella_biosolids, plateNumber); // Pass the actual plate number
+                initializeDataTable(tableId, id_salmonella_hemoflow, plateNumber); // Pass the actual plate number
             }
         }
 
 
         // Fungsi untuk menginisialisasi DataTable
-        function initializeDataTable(tableId, id_salmonella_biosolids, tubeIndex) {
+        function initializeDataTable(tableId, id_salmonella_hemoflow, tubeIndex) {
             console.log(`Tube index: ${tubeIndex}`);
             $(`#${tableId}`).DataTable({
                 oLanguage: {
@@ -2768,7 +2861,7 @@
                 info: false,
                 bFilter: false,
                 ajax: {
-                    url: `../../Salmonella_biosolids/subjsonBiochemical?idBiochemical=${id_salmonella_biosolids}&biochemical_tube=${tubeIndex}`,
+                    url: `../../Salmonella_hemoflow/subjsonBiochemical?idBiochemical=${id_salmonella_hemoflow}&biochemical_tube=${tubeIndex}`,
                     type: "POST"
                 },
                 columns: [
@@ -2831,14 +2924,14 @@
             
             let td = $('#exampleChromagar td:first');
             let data = table1.row(td).data();
-            console.log('datanya', data.id_result_chromagar);
+            console.log('datanya', data.id_salmonella_hemoflow_result_chromagar);
             console.log(`Tube ${plateNumber}: XLD=${xldValue}, Chromagar=${chromagarValue}`);
 
             $('#mode_detResultsBiochemical').val('insert');
             $('#modal-title-biochemical').html(`<i class="fa fa-wpforms"></i> Insert | Tube ${plateNumber} <span id="my-another-cool-loader"></span>`);
             $('#idBiochemical_one_water_sample').val(idx_one_water_sample);
-            $('#id_salmonella_biosolidsBiochemical').val(id_salmonella_biosolids);
-            $('#id_result_chromagar1').val(data.id_result_chromagar);
+            $('#id_salmonella_hemoflowBiochemical').val(id_salmonella_hemoflow);
+            $('#id_salmonella_hemoflow_result_chromagar1').val(data.id_salmonella_hemoflow_result_chromagar);
             $('#oxidase').val('');
             $('#catalase').val('');
             $('#sample_store').val('');
@@ -2892,9 +2985,9 @@
             $('#mode_detResultsBiochemical').val('edit');
             $('#modal-title-biochemical').html('<i class="fa fa-pencil-square"></i> Update | Tube ' + data.biochemical_tube + ' <span id="my-another-cool-loader"></span>');
             $('#idBiochemical_one_water_sample').val(idx_one_water_sample);
-            $('#id_result_biochemical').val(data.id_result_biochemical);
-            $('#id_salmonella_biosolidsBiochemical').val(data.id_salmonella_biosolids);
-            $('#id_result_chromagar1').val(data.id_result_chromagar);
+            $('#id_salmonella_hemoflow_result_biochemical').val(data.id_salmonella_hemoflow_result_biochemical);
+            $('#id_salmonella_hemoflowBiochemical').val(data.id_salmonella_hemoflow);
+            $('#id_salmonella_hemoflow_result_chromagar1').val(data.id_salmonella_hemoflow_result_chromagar);
             // Set radio button untuk oxidase
             $('input[name="oxidase"][value="' + data.oxidase + '"]').prop('checked', true);
             
@@ -2926,7 +3019,7 @@
             $('#idXld_one_water_sample').val(idx_one_water_sample);
             $('#salmonella_assay_barcode1').val(salmonella_assay_barcode);
             $('#salmonella_assay_barcode1').attr('readonly', true);
-            $('#id_salmonella_biosolids1').val(id_salmonella_biosolids);
+            $('#id_salmonella_hemoflow1').val(id_salmonella_hemoflow);
             $('#number_of_tubes1').val(number_of_tubes);
             // Reset quality control checkbox for new record
             $('#quality_control_xld').prop('checked', false);
@@ -2940,10 +3033,10 @@
             $('#mode_detResultsXld').val('edit');
             $('#modal-title-Xld').html('<i class="fa fa-pencil-square"></i> Update | Results XLD <span id="my-another-cool-loader"></span>');
             $('#idXld_one_water_sample').val(idx_one_water_sample);
-            $('#id_result_xld').val(data.id_result_xld);
+            $('#id_salmonella_hemoflow_result_xld').val(data.id_salmonella_hemoflow_result_xld);
             $('#salmonella_assay_barcode1').val(data.salmonella_assay_barcode);
             $('#salmonella_assay_barcode1').attr('readonly', true);
-            $('#id_salmonella_biosolids1').val(data.id_salmonella_biosolids);
+            $('#id_salmonella_hemoflow1').val(data.id_salmonella_hemoflow);
             $('#date_sample_processed1').val(data.date_sample_processed);
             $('#time_sample_processed1').val(data.time_sample_processed);
             $('#number_of_tubes1').val(number_of_tubes);
@@ -3026,7 +3119,7 @@
                 // Parsing data ke komponen
                 $('#idChromagar_one_water_sample').val(idx_one_water_sample);
                 $('#salmonella_assay_barcodeChromagar').val(salmonella_assay_barcode);
-                $('#id_salmonella_biosolidsChromagar').val(id_salmonella_biosolids);
+                $('#id_salmonella_hemoflowChromagar').val(id_salmonella_hemoflow);
                 $('#salmonella_assay_barcodeChromagar').attr('readonly', true);
                 $('#number_of_tubesChromagar').val(number_of_tubes);
 
@@ -3097,10 +3190,10 @@
             $('#mode_detResultsChromagar').val('edit');
             $('#modal-title-Chromagar').html('<i class="fa fa-pencil-square"></i> Update | Results Chromagar <span id="my-another-cool-loader"></span>');
             $('#idChromagar_one_water_sample').val(idx_one_water_sample);
-            $('#id_result_chromagar').val(data.id_result_chromagar);
+            $('#id_salmonella_hemoflow_result_chromagar').val(data.id_salmonella_hemoflow_result_chromagar);
             $('#salmonella_assay_barcodeChromagar').val(data.salmonella_assay_barcode);
             $('#salmonella_assay_barcodeChromagar').attr('readonly', true);
-            $('#id_salmonella_biosolidsChromagar').val(data.id_salmonella_biosolids);
+            $('#id_salmonella_hemoflowChromagar').val(data.id_salmonella_hemoflow);
             $('#date_sample_processedChromagar').val(data.date_sample_processed);
             $('#time_sample_processedChromagar').val(data.time_sample_processed);
             $('#number_of_tubesChromagar').val(number_of_tubes);
@@ -3154,7 +3247,7 @@
 
         // Auto-processing: biochemical results are automatically handled by the system
         setTimeout(function() {
-            console.log('Page loaded - auto-processing system is active for biochemical results');
+            console.log('Page loaded - auto-processing system is active for tube results');
             
             // Check if auto-save notification exists and reload tables if needed
             if ($('.alert-success:contains("Auto-Processing Complete")').length > 0) {

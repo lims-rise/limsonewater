@@ -22,13 +22,12 @@ class Salmonella_hemoflow extends CI_Controller
 	    $this->load->library('uuid');
     }
 
-    public function index()
-    {
-        // Redirect ke halaman under construction untuk sementara
-        $this->load->view('underconstruction/underconstruction');
-    }
+    // public function index(){
+    //     // Redirect ke halaman under construction untuk sementara
+    //     $this->load->view('underconstruction/underconstruction');
+    // }
 
-    public function development_index()
+    public function index()
     {
         $data['id_one'] = $this->Salmonella_hemoflow_model->getID_one();
         $data['sampletype'] = $this->Salmonella_hemoflow_model->getSampleType();
@@ -89,12 +88,12 @@ class Salmonella_hemoflow extends CI_Controller
                 
             );
             
-            // Mendapatkan final concentration
-            $finalConcentration = $this->Salmonella_hemoflow_model->subjsonFinalConcentration($row->id_salmonella_hemoflow);
-            if ($finalConcentration) {
-                $data['finalConcentration'] = $finalConcentration;
+            // Mendapatkan final calculation
+            $finalCalculation = $this->Salmonella_hemoflow_model->subjsonFinalCalculation($row->id_salmonella_hemoflow);
+            if ($finalCalculation) {
+                $data['finalCalculation'] = $finalCalculation;
             } else {
-                $data['finalConcentration'] = []; // Pastikan ini tidak null
+                $data['finalCalculation'] = []; // Pastikan ini tidak null
             }
             // var_dump($data);
             // die();
@@ -258,7 +257,7 @@ class Salmonella_hemoflow extends CI_Controller
         $mode = $this->input->post('mode_detResultsXld', TRUE);
         $id_one_water_sample = $this->input->post('idXld_one_water_sample', TRUE);
         $id_salmonella_hemoflow = $this->input->post('id_salmonella_hemoflow1', TRUE);
-        $id_result_xld = $this->input->post('id_result_xld', TRUE);
+        $id_salmonella_hemoflow_result_xld = $this->input->post('id_salmonella_hemoflow_result_xld', TRUE);
         $dt = new DateTime();
         $date_sample_processed = $this->input->post('date_sample_processed1', TRUE);
         $time_sample_processed = $this->input->post('time_sample_processed1', TRUE);
@@ -289,7 +288,7 @@ class Salmonella_hemoflow extends CI_Controller
                 $plate = $this->input->post("colony_plate{$i}", TRUE);
                 if ($plate !== null) {
                     $this->Salmonella_hemoflow_model->insert_black_colony_plate_chromagar(array(
-                        'id_result_xld' => $assay_id,
+                        'id_salmonella_hemoflow_result_xld' => $assay_id,
                         'plate_number' => $i,
                         'black_colony_plate' => $plate,
                         'flag' => '0',
@@ -326,17 +325,17 @@ class Salmonella_hemoflow extends CI_Controller
             // var_dump($data);
             // die();
 
-            $this->Salmonella_hemoflow_model->updateResultsXld($id_result_xld, $data);
+            $this->Salmonella_hemoflow_model->updateResultsXld($id_salmonella_hemoflow_result_xld, $data);
 
             // Update sample volumes
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
-            $this->Salmonella_hemoflow_model->delete_black_colony_plates_chromagar($id_result_xld); // Hapus volume yang ada
+            $this->Salmonella_hemoflow_model->delete_black_colony_plates_chromagar($id_salmonella_hemoflow_result_xld); // Hapus volume yang ada
 
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $plate = $this->input->post("black_colony_plate{$i}", TRUE);
                 if ($plate !== null) {
                     $data_plate = array(
-                        'id_result_xld' => $id_result_xld,
+                        'id_salmonella_hemoflow_result_xld' => $id_salmonella_hemoflow_result_xld,
                         'plate_number' => $i,
                         'black_colony_plate' => $plate,
                         'flag' => '0',
@@ -365,7 +364,7 @@ class Salmonella_hemoflow extends CI_Controller
         $mode = $this->input->post('mode_detResultsChromagar', TRUE);
         $id_one_water_sample = $this->input->post('idChromagar_one_water_sample', TRUE);
         $id_salmonella_hemoflow = $this->input->post('id_salmonella_hemoflowChromagar', TRUE);
-        $id_result_chromagar = $this->input->post('id_result_chromagar', TRUE);
+        $id_salmonella_hemoflow_result_chromagar = $this->input->post('id_salmonella_hemoflow_result_chromagar', TRUE);
 
         $dt = new DateTime();
         $date_sample_processed = $this->input->post('date_sample_processedChromagar', TRUE);
@@ -398,7 +397,7 @@ class Salmonella_hemoflow extends CI_Controller
 
                 if ($plate !== null) {
                     $this->Salmonella_hemoflow_model->insert_purple_colony_plate(array(
-                        'id_result_chromagar' => $assay_id,
+                        'id_salmonella_hemoflow_result_chromagar' => $assay_id,
                         'plate_number' => $i,
                         'purple_colony_plate' => $plate,
                         'flag' => '0',
@@ -427,17 +426,17 @@ class Salmonella_hemoflow extends CI_Controller
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
 
-            $this->Salmonella_hemoflow_model->updateResultsChromagar($id_result_chromagar, $data);
+            $this->Salmonella_hemoflow_model->updateResultsChromagar($id_salmonella_hemoflow_result_chromagar, $data);
 
             // Update sample volumes
             $number_of_tubes = $this->input->post('number_of_tubesChromagar', TRUE);
-            $this->Salmonella_hemoflow_model->delete_purple_colony_plates($id_result_chromagar); // Hapus volume yang ada
+            $this->Salmonella_hemoflow_model->delete_purple_colony_plates($id_salmonella_hemoflow_result_chromagar); // Hapus volume yang ada
 
             for ($i = 1; $i <= $number_of_tubes; $i++) {
                 $plate = $this->input->post("purple_colony_plate{$i}", TRUE);
                 if ($plate !== null) {
                     $data_plate = array(
-                        'id_result_chromagar' => $id_result_chromagar,
+                        'id_salmonella_hemoflow_result_chromagar' => $id_salmonella_hemoflow_result_chromagar,
                         'plate_number' => $i,
                         'purple_colony_plate' => $plate,
                         'flag' => '0',
@@ -457,7 +456,7 @@ class Salmonella_hemoflow extends CI_Controller
         if ($mode == "insert") {
             $this->autoGenerateBiochemicalResults($id_salmonella_hemoflow, $assay_id, $number_of_tubes);
         } else if ($mode == "edit") {
-            $this->autoGenerateBiochemicalResults($id_salmonella_hemoflow, $id_result_chromagar, $number_of_tubes);
+            $this->autoGenerateBiochemicalResults($id_salmonella_hemoflow, $id_salmonella_hemoflow_result_chromagar, $number_of_tubes);
         }
 
         redirect(site_url("salmonella_hemoflow/read/" . $id_one_water_sample));
@@ -466,14 +465,14 @@ class Salmonella_hemoflow extends CI_Controller
     /**
      * Auto-generate biochemical results based on XLD and ChroMagar data
      */
-    private function autoGenerateBiochemicalResults($id_salmonella_hemoflow, $id_result_chromagar, $number_of_tubes) {
+    private function autoGenerateBiochemicalResults($id_salmonella_hemoflow, $id_salmonella_hemoflow_result_chromagar, $number_of_tubes) {
         $dt = new DateTime();
         
         // Get XLD results for this sample
         $xld_results = $this->Salmonella_hemoflow_model->getXldResults($id_salmonella_hemoflow);
         
         // Get ChroMagar results for this result set
-        $chromagar_results = $this->Salmonella_hemoflow_model->getPurpleColonyPlates($id_result_chromagar);
+        $chromagar_results = $this->Salmonella_hemoflow_model->getPurpleColonyPlates($id_salmonella_hemoflow_result_chromagar);
 
         for ($tube = 1; $tube <= $number_of_tubes; $tube++) {
             // Get XLD value for this tube
@@ -498,13 +497,13 @@ class Salmonella_hemoflow extends CI_Controller
             $confirmation = $this->calculateConfirmation($xld_value, $chromagar_value);
             
             // Check if biochemical result already exists for this tube
-            $existing = $this->Salmonella_hemoflow_model->checkBiochemicalExists($id_salmonella_hemoflow, $id_result_chromagar, $tube);
+            $existing = $this->Salmonella_hemoflow_model->checkBiochemicalExists($id_salmonella_hemoflow, $id_salmonella_hemoflow_result_chromagar, $tube);
             
             if (!$existing) {
                 // Insert new biochemical result with default oxidase/catalase values for auto-processing
                 $data = array(
                     'id_salmonella_hemoflow' => $id_salmonella_hemoflow,
-                    'id_result_chromagar' => $id_result_chromagar,
+                    'id_salmonella_hemoflow_result_chromagar' => $id_salmonella_hemoflow_result_chromagar,
                     'confirmation' => $confirmation,
                     'biochemical_tube' => $tube,
                     'oxidase' => '',  // Salmonella is typically oxidase negative
@@ -526,7 +525,7 @@ class Salmonella_hemoflow extends CI_Controller
                     'date_updated' => $dt->format('Y-m-d H:i:s'),
                 );
 
-                $this->Salmonella_hemoflow_model->updateBiochemicalResult($existing->id_result_biochemical, $data);
+                $this->Salmonella_hemoflow_model->updateBiochemicalResult($existing->id_salmonella_hemoflow_result_biochemical, $data);
             }
         }
     }
@@ -550,11 +549,11 @@ class Salmonella_hemoflow extends CI_Controller
         
         // Process each ChroMagar result set
         foreach ($chromagar_results_list as $chromagar_result) {
-            $id_result_chromagar = $chromagar_result->id_result_chromagar;
+            $id_salmonella_hemoflow_result_chromagar = $chromagar_result->id_salmonella_hemoflow_result_chromagar;
             
             // Get ChroMagar plates for this specific result
-            $chromagar_plates = $this->Salmonella_hemoflow_model->getPurpleColonyPlates($id_result_chromagar);
-            
+            $chromagar_plates = $this->Salmonella_hemoflow_model->getPurpleColonyPlates($id_salmonella_hemoflow_result_chromagar);
+
             // Update biochemical results for all tubes
             for ($tube = 1; $tube <= $number_of_tubes; $tube++) {
                 // Get XLD value for this tube
@@ -579,7 +578,7 @@ class Salmonella_hemoflow extends CI_Controller
                 $confirmation = $this->calculateConfirmation($xld_value, $chromagar_value);
                 
                 // Check if biochemical result exists for this tube and ChroMagar result
-                $existing = $this->Salmonella_hemoflow_model->checkBiochemicalExists($id_salmonella_hemoflow, $id_result_chromagar, $tube);
+                $existing = $this->Salmonella_hemoflow_model->checkBiochemicalExists($id_salmonella_hemoflow, $id_salmonella_hemoflow_result_chromagar, $tube);
                 
                 if ($existing) {
                     // Update existing biochemical result with new confirmation
@@ -588,8 +587,8 @@ class Salmonella_hemoflow extends CI_Controller
                         'user_updated' => $this->session->userdata('id_users'),
                         'date_updated' => $dt->format('Y-m-d H:i:s'),
                     );
-                    
-                    $this->Salmonella_hemoflow_model->updateBiochemicalResult($existing->id_result_biochemical, $data);
+
+                    $this->Salmonella_hemoflow_model->updateBiochemicalResult($existing->id_salmonella_hemoflow_result_biochemical, $data);
                 }
                 // Note: We don't create new biochemical results here since they should only be created when ChroMagar is saved
             }
@@ -641,7 +640,7 @@ class Salmonella_hemoflow extends CI_Controller
                 // Insert purple colony plates with value 0 for all tubes
                 for ($i = 1; $i <= $number_of_tubes; $i++) {
                     $plate_data = array(
-                        'id_result_chromagar' => $chromagar_id,
+                        'id_salmonella_hemoflow_result_chromagar' => $chromagar_id,
                         'plate_number' => $i,
                         'purple_colony_plate' => '0', // Auto-set to 0 since all XLD are 0
                         'flag' => '0',
@@ -687,8 +686,8 @@ class Salmonella_hemoflow extends CI_Controller
     // public function saveBiochemical() {
     //     $mode = $this->input->post('mode_detResultsBiochemical', TRUE);
     //     $id_one_water_sample = $this->input->post('idBiochemical_one_water_sample', TRUE);
-    //     $id_result_biochemical = $this->input->post('id_result_biochemical', TRUE);
-    //     $id_result_chromagar = $this->input->post('id_result_chromagar1', TRUE);
+    //     $id_salmonella_hemoflow_result_biochemical = $this->input->post('id_salmonella_hemoflow_result_biochemical', TRUE);
+    //     $id_salmonella_hemoflow_result_chromagar = $this->input->post('id_salmonella_hemoflow_result_chromagar1', TRUE);
     //     $id_salmonella_hemoflow = $this->input->post('id_salmonella_hemoflowBiochemical', TRUE);
     //     $confirmation = $this->input->post('confirmation', TRUE);
     //     $biochemical_tube = $this->input->post('biochemical_tube', TRUE);
@@ -696,7 +695,7 @@ class Salmonella_hemoflow extends CI_Controller
     //     if ($mode == "insert") {
     //         $data = array(
     //             'id_salmonella_hemoflow' => $id_salmonella_hemoflow,
-    //             'id_result_chromagar' => $id_result_chromagar,
+    //             'id_salmonella_hemoflow_result_chromagar' => $id_salmonella_hemoflow_result_chromagar,
     //             'confirmation' => $confirmation,
     //             'biochemical_tube' => $biochemical_tube,
     //             'flag' => '0',
@@ -711,7 +710,7 @@ class Salmonella_hemoflow extends CI_Controller
     //     } else if ($mode == "edit") {
     //         $data = array(
     //             'id_salmonella_hemoflow' => $id_salmonella_hemoflow,
-    //             'id_result_chromagar' => $id_result_chromagar,
+    //             'id_salmonella_hemoflow_result_chromagar' => $id_salmonella_hemoflow_result_chromagar,
     //             'confirmation' => $confirmation,
     //             'flag' => '0',
     //             'lab' => $this->session->userdata('lab'),
@@ -722,7 +721,7 @@ class Salmonella_hemoflow extends CI_Controller
 
     //         // var_dump($data);
     //         // die();
-    //         $this->Salmonella_hemoflow_model->updateResultsBiochemical($id_result_biochemical, $data);
+    //         $this->Salmonella_hemoflow_model->updateResultsBiochemical($id_salmonella_hemoflow_result_biochemical, $data);
     //     }
 
     //     redirect(site_url("salmonella_hemoflow/read/" . $id_one_water_sample));
@@ -736,8 +735,8 @@ class Salmonella_hemoflow extends CI_Controller
         
         $mode = $this->input->post('mode_detResultsBiochemical', TRUE);
         $id_one_water_sample = $this->input->post('idBiochemical_one_water_sample', TRUE);
-        $id_result_biochemical = $this->input->post('id_result_biochemical', TRUE);
-        $id_result_chromagar = $this->input->post('id_result_chromagar1', TRUE);
+        $id_salmonella_hemoflow_result_biochemical = $this->input->post('id_salmonella_hemoflow_result_biochemical', TRUE);
+        $id_salmonella_hemoflow_result_chromagar = $this->input->post('id_salmonella_hemoflow_result_chromagar1', TRUE);
         $id_salmonella_hemoflow = $this->input->post('id_salmonella_hemoflowBiochemical', TRUE);
         $confirmation = $this->input->post('confirmation', TRUE);
         $sample_store = $this->input->post('sample_store', TRUE);
@@ -772,7 +771,7 @@ class Salmonella_hemoflow extends CI_Controller
             if ($mode == "insert") {
                 $data = array(
                     'id_salmonella_hemoflow' => $id_salmonella_hemoflow,
-                    'id_result_chromagar' => $id_result_chromagar,
+                    'id_salmonella_hemoflow_result_chromagar' => $id_salmonella_hemoflow_result_chromagar,
                     'confirmation' => $confirmation,
                     // 'sample_store' => $sample_store,
                     'biochemical_tube' => $biochemical_tube,
@@ -806,7 +805,7 @@ class Salmonella_hemoflow extends CI_Controller
             } else if ($mode == "edit") {
                 $data = array(
                     'id_salmonella_hemoflow' => $id_salmonella_hemoflow,
-                    'id_result_chromagar' => $id_result_chromagar,
+                    'id_salmonella_hemoflow_result_chromagar' => $id_salmonella_hemoflow_result_chromagar,
                     'confirmation' => $confirmation,
                     // 'sample_store' => $sample_store,
                     'flag' => '0',
@@ -816,7 +815,7 @@ class Salmonella_hemoflow extends CI_Controller
                     'date_updated' => date('Y-m-d H:i:s'),
                 );
 
-                $this->Salmonella_hemoflow_model->updateResultsBiochemical($id_result_biochemical, $data);
+                $this->Salmonella_hemoflow_model->updateResultsBiochemical($id_salmonella_hemoflow_result_biochemical, $data);
 
                 if ($is_ajax) {
                     echo json_encode([
@@ -847,15 +846,15 @@ class Salmonella_hemoflow extends CI_Controller
     }
 
 
-    public function delete_salmonellaBiosolids($id) {
+    public function delete_salmonellaHemoflow($id) {
         $row = $this->Salmonella_hemoflow_model->get_by_id_salmonella_hemoflow($id);
         if ($row) {
-            $id_parent = $row->id_result_xld; // Retrieve project_id before updating the record
+            $id_parent = $row->id_salmonella_hemoflow_result_xld; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
-    
-            $this->Salmonella_hemoflow_model->updateSalmonellaBiosolids($id, $data);
+
+            $this->Salmonella_hemoflow_model->updateSalmonellaHemoflow($id, $data);
             $this->Salmonella_hemoflow_model->updateSampleVolume($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
@@ -868,54 +867,112 @@ class Salmonella_hemoflow extends CI_Controller
     public function delete_detailXld($id) {
         $row = $this->Salmonella_hemoflow_model->get_by_id_xld($id);
         if ($row) {
-            $id_parent = $row->id_result_xld; // Retrieve project_id before updating the record
+            $id_parent = $row->id_salmonella_hemoflow; // Get the main salmonella_hemoflow ID
             $data = array(
                 'flag' => 1,
             );
     
+            // Delete XLD result and its black colony plates
             $this->Salmonella_hemoflow_model->updateResultsXld($id, $data);
-            $this->Salmonella_hemoflow_model->updateResultsGrowthPlate($id, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
+            $this->Salmonella_hemoflow_model->updateResultsBlackColonyPlateXLD($id, $data);
+            
+            // CASCADE DELETE: Get all related ChroMagar results for this XLD
+            $related_chromagar = $this->Salmonella_hemoflow_model->get_chromagar_by_salmonella_hemoflow($id_parent);
+            
+            if ($related_chromagar) {
+                foreach ($related_chromagar as $chromagar) {
+                    // Delete each ChroMagar result and its related data
+                    $this->Salmonella_hemoflow_model->updateResultsChroMagar($chromagar->id_salmonella_hemoflow_result_chromagar, $data);
+                    $this->Salmonella_hemoflow_model->updateResultsPurplePlate($chromagar->id_salmonella_hemoflow_result_chromagar, $data);
+                    
+                    // Also delete related Biochemical results
+                    $this->Salmonella_hemoflow_model->updateResultsBiochemicalByChromagar($chromagar->id_salmonella_hemoflow_result_chromagar, $data);
+                }
+                $this->session->set_flashdata('message', 'XLD result and all related ChroMagar/Biochemical data deleted successfully');
+            } else {
+                $this->session->set_flashdata('message', 'XLD result deleted successfully');
+            }
+
+            // Return JSON response for AJAX
+            header('Content-Type: application/json');
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'XLD result and all related data deleted successfully'
+            ]);
+            return;
+            
         } else {
-            $this->session->set_flashdata('message', 'Record Not Found');
+            // Return JSON error response
+            header('Content-Type: application/json');
+            echo json_encode([
+                'status' => 'error',  
+                'message' => 'Record Not Found'
+            ]);
+            return;
         }
-    
-        redirect(site_url('salmonella_hemoflow/read/'.$id_parent));
     }
 
     public function delete_detailChromagar($id) {
         $row = $this->Salmonella_hemoflow_model->get_by_id_chromagar($id);
         if ($row) {
-            $id_parent = $row->id_result_xld; // Retrieve project_id before updating the record
+            $id_parent = $row->id_salmonella_hemoflow; // Get the main salmonella_hemoflow ID
             $data = array(
                 'flag' => 1,
             );
 
-            $this->Salmonella_hemoflow_model->updateResultsChromagar($id, $data);
-            $this->Salmonella_hemoflow_model->updateResultsBlackColonyPlateChromagar($id, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
+            // Delete ChroMagar result and its purple colony plates
+            $this->Salmonella_hemoflow_model->updateResultsChroMagar($id, $data);
+            $this->Salmonella_hemoflow_model->updateResultsPurplePlate($id, $data);
+            
+            // Also delete related Biochemical results for this ChroMagar
+            $this->Salmonella_hemoflow_model->updateResultsBiochemicalByChromagar($id, $data);
+            
+            // Return JSON response for AJAX
+            header('Content-Type: application/json');
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'ChroMagar result and related Biochemical data deleted successfully'
+            ]);
+            return;
+            
         } else {
-            $this->session->set_flashdata('message', 'Record Not Found');
+            // Return JSON error response
+            header('Content-Type: application/json');
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Record Not Found'
+            ]);
+            return;
         }
-    
-        redirect(site_url('salmonella_hemoflow/read/'.$id_parent));
     }
 
     public function delete_detailBiochemical($id) {
         $row = $this->Salmonella_hemoflow_model->get_by_id_biochemical($id);
         if ($row) {
-            $id_parent = $row->id_result_xld; // Retrieve project_id before updating the record
+            $id_parent = $row->id_salmonella_hemoflow; // Get the main salmonella_hemoflow ID
             $data = array(
                 'flag' => 1,
             );
     
             $this->Salmonella_hemoflow_model->updateResultsBiochemical($id, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
+            
+            // Return JSON response for AJAX
+            header('Content-Type: application/json');
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Biochemical result deleted successfully'
+            ]);
+            return;
+            
         } else {
-            $this->session->set_flashdata('message', 'Record Not Found');
+            // Return JSON error response
+            header('Content-Type: application/json');
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Record Not Found'
+            ]);
+            return;
         }
-    
-        redirect(site_url('salmonella_hemoflow/read/'.$id_parent));
     }
 
     public function getIdOneWaterDetails()
@@ -1341,9 +1398,9 @@ class Salmonella_hemoflow extends CI_Controller
                 
             } else if ($mode === 'edit') {
                 // Edit mode
-                $id_salmonella_result_mpn_biosolids = $this->input->post('id_salmonella_result_mpn_biosolids', TRUE);
+                $id_salmonella_hemoflow_result_mpn = $this->input->post('id_salmonella_hemoflow_result_mpn', TRUE);
                 
-                if (!$id_salmonella_result_mpn_biosolids) {
+                if (!$id_salmonella_hemoflow_result_mpn) {
                     echo json_encode([
                         'status' => 'error',
                         'message' => 'MPN calculation ID is required for update.'
@@ -1364,7 +1421,7 @@ class Salmonella_hemoflow extends CI_Controller
                     'uuid' => $this->uuid->v4(),
                 );
 
-                $result = $this->Salmonella_hemoflow_model->updateCalculateMPN($id_salmonella_result_mpn_biosolids, $data);
+                $result = $this->Salmonella_hemoflow_model->updateCalculateMPN($id_salmonella_hemoflow_result_mpn, $data);
 
                 if ($result) {
                     echo json_encode([
@@ -1448,7 +1505,7 @@ class Salmonella_hemoflow extends CI_Controller
                 'exists' => $result['exists'],
                 'needs_update' => $result['needs_update'],
                 'current_confirmation' => $result['current_confirmation'],
-                'id_result_biochemical' => $result['id_result_biochemical']
+                'id_salmonella_hemoflow_result_biochemical' => $result['id_salmonella_hemoflow_result_biochemical']
             ]);
             
         } catch (Exception $e) {
