@@ -1693,7 +1693,7 @@ class Campy_biosolids extends CI_Controller
             $mpn_concentration = $this->input->post('mpn_concentration', FALSE);
             $upper_ci = $this->input->post('upper_ci', TRUE);
             $lower_ci = $this->input->post('lower_ci', TRUE);
-            $mpn_concentration_dw = $this->input->post('mpn_concentration_dw', TRUE);
+            $mpn_concentration_dw = $this->input->post('mpn_concentration_dw', FALSE);
             $upper_ci_dw = $this->input->post('upper_ci_dw', TRUE);
             $lower_ci_dw = $this->input->post('lower_ci_dw', TRUE);
             $current_sample_dryweight = $this->input->post('current_sample_dryweight', TRUE);
