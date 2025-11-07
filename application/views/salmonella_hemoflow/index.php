@@ -4,17 +4,17 @@
             <div class="col-xs-12">
                 <div class="box box-black box-solid">
                     <div class="box-header">
-                        <h3 class="box-title">Processing | Salmonella Biosolids </h3>
+                        <h3 class="box-title">Processing | Salmonella Hemoflow </h3>
                     </div>
                     <div class="box-body">
                         <div style="padding-bottom: 10px;">
                             <!-- <?php
                                     $lvl = $this->session->userdata('id_user_level');
                                     if ($lvl != 4){
-                                        echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Salmonella Biosolids</button>";
+                                        echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Salmonella Hemoflow</button>";
                                     }
                             ?>         -->
-                            <?php echo anchor(site_url('Salmonella_biosolids/excel_all'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
+                            <?php echo anchor(site_url('Salmonella_hemoflow/excel_all'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
                         </div>
                             <div class="table-responsive">
                                 <table class="table ho table-bordered table-striped tbody" id="mytable" style="width:100%">
@@ -69,10 +69,10 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
                     <h4 class="modal-title" id="modal-title">Moisture Content | New</h4>
                 </div>
-                <form id="formSample" action="<?php echo site_url('Salmonella_biosolids/save') ?>" method="post" class="form-horizontal">
+                <form id="formSample" action="<?php echo site_url('Salmonella_hemoflow/save') ?>" method="post" class="form-horizontal">
                     <div class="modal-body">
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
-                        <input id="id_salmonella_biosolids" name="id_salmonella_biosolids" type="hidden" class="form-control input-sm">
+                        <input id="id_salmonella_hemoflow" name="id_salmonella_hemoflow" type="hidden" class="form-control input-sm">
                         <input id="user_review" name="user_review" type="hidden" class="form-control input-sm">
                         
                         <!-- <div class="form-group">
@@ -276,7 +276,7 @@
         <div class="modal-content">
             <div class="modal-header" style="background-color: #dd4b39; color: white;">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
-                <h4 class="modal-title"><i class="fa fa-trash"></i> Salmonella Biosolids | Delete <span id="my-another-cool-loader"></span></h4>
+                <h4 class="modal-title"><i class="fa fa-trash"></i> Salmonella Hemoflow | Delete <span id="my-another-cool-loader"></span></h4>
             </div>
             <div class="modal-body">
                 <div id="confirmation-content">
@@ -834,7 +834,7 @@
 
         if (barcodeFromUrl) {
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> Salmonella Biosolids | New<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Salmonella Hemoflow | New<span id="my-another-cool-loader"></span>');
             $('#id_one_water_sample').attr('readonly', true);
             $('#id_one_water_sample').val(idOneWaterSampleFromUrl || '');  // Set ID jika ada
             $('#idx_one_water_sample').hide();
@@ -932,9 +932,9 @@
         }
 
         // Handle the delete button click
-        $(document).on('click', '.btn_deleteSalmonellaBiosolids', function() {
+        $(document).on('click', '.btn_deleteSalmonellaHemoflow', function() {
             let id = $(this).data('id');
-            let url = '<?php echo site_url('Salmonella_biosolids/delete_salmonellaBiosolids'); ?>/' + id;
+            let url = '<?php echo site_url('Salmonella_hemoflow/delete_salmonellaHemoflow'); ?>/' + id;
             $('#confirm-modal #id').text(id);
             console.log(id);
             showConfirmation(url);
@@ -1013,7 +1013,7 @@
             let id_one_water_sample = $(this).val(); // Mendapatkan ID produk yang dipilih
             if (id_one_water_sample) {
                 $.ajax({
-                    url: '<?php echo site_url('Salmonella_biosolids/getIdOneWaterDetails'); ?>', // URL untuk request AJAX
+                    url: '<?php echo site_url('Salmonella_hemoflow/getIdOneWaterDetails'); ?>', // URL untuk request AJAX
                     type: 'POST',
                     data: { id_one_water_sample: id_one_water_sample }, // Data yang dikirim ke server
                     dataType: 'json', // Format data yang diharapkan dari server
@@ -1042,7 +1042,7 @@
             id_one_water_sample = $('#id_one_water_sample').val();
             $.ajax({
                 type: "GET",
-                url: "Salmonella_biosolids/barcode_restrict?id1="+id_one_water_sample,
+                url: "Salmonella_hemoflow/barcode_restrict?id1="+id_one_water_sample,
                 dataType: "json",
                 success: function(data) {
                     if (data.length > 0) {
@@ -1075,7 +1075,7 @@
             console.log(salmonellaAssayBarcode);
             $.ajax({
                 type: "GET",
-                url: "Salmonella_biosolids/validateSalmonellaAssayBarcode",
+                url: "Salmonella_hemoflow/validateSalmonellaAssayBarcode",
                 data: { id: salmonellaAssayBarcode },
                 dataType: "json",
                 success: function(data) {
@@ -1137,7 +1137,7 @@
             // select: true;
             processing: true,
             serverSide: true,
-            ajax: {"url": "Salmonella_biosolids/json", "type": "POST", "error": function(xhr, error, code) {
+            ajax: {"url": "Salmonella_hemoflow/json", "type": "POST", "error": function(xhr, error, code) {
                     console.log('DataTables error:', error, code);
                     console.log('Response:', xhr.responseText);
                     Swal.fire({
@@ -1211,14 +1211,14 @@
         // Event handler untuk klik pada baris
         $('#mytable tbody').on('click', 'tr', function() {
             let rowData = table.row(this).data();
-            let rowId = rowData.id_salmonella_biosolids;
+            let rowId = rowData.id_salmonella_hemoflow;
             $(this).removeClass('highlight');
             $(this).removeClass('highlight-edit');
         });
 
         $('#addtombol').click(function() {
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> Salmonella Biosolids | New<span id="my-another-cool-loader"></span>');
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Salmonella Hemoflow | New<span id="my-another-cool-loader"></span>');
             $('#id_one_water_sample').val('');
             $('#id_one_water_sample').show();
             $('#idx_one_water_sample').hide();
@@ -1251,8 +1251,8 @@
         //     let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
         //     console.log(data);
         //     $('#mode').val('edit');
-        //     $('#modal-title').html('<i class="fa fa-pencil-square"></i> Salmonella Biosolids | Update<span id="my-another-cool-loader"></span>');
-        //     $('#id_salmonella_biosolids').val(data.id_salmonella_biosolids);
+        //     $('#modal-title').html('<i class="fa fa-pencil-square"></i> Salmonella Hemoflow | Update<span id="my-another-cool-loader"></span>');
+        //     $('#id_salmonella_hemoflow').val(data.id_salmonella_hemoflow);
         //     $('#id_one_water_sample').hide();
         //     // $('#idx_one_water_sample').show();
         //     $('#idx_one_water_sample').attr('readonly', true);
@@ -1380,8 +1380,8 @@
             let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
             console.log(data);
             $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Salmonella Biosolids | Update<span id="my-another-cool-loader"></span>');
-            $('#id_salmonella_biosolids').val(data.id_salmonella_biosolids);
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Salmonella Hemoflow | Update<span id="my-another-cool-loader"></span>');
+            $('#id_salmonella_hemoflow').val(data.id_salmonella_hemoflow);
             $('#id_one_water_sample').hide();
             // $('#idx_one_water_sample').show();
             $('#idx_one_water_sample').attr('readonly', true);
@@ -1490,7 +1490,7 @@
                     }).then(result => {
                         if (result.isConfirmed) {
                             $.ajax({
-                                url: '<?php echo site_url('Salmonella_biosolids/saveReview'); ?>',
+                                url: '<?php echo site_url('Salmonella_hemoflow/saveReview'); ?>',
                                 method: 'POST',
                                 data: {
                                     id_one_water_sample: data.id_one_water_sample,
@@ -1557,7 +1557,7 @@
                         const loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
 
                         $.ajax({
-                            url: '<?php echo site_url('Salmonella_biosolids/cancelReview'); ?>',
+                            url: '<?php echo site_url('Salmonella_hemoflow/cancelReview'); ?>',
                             method: 'POST',
                             data: {
                                 id_one_water_sample: idSample,

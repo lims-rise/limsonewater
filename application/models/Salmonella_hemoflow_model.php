@@ -13,22 +13,22 @@ class Salmonella_hemoflow_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('sb.id_salmonella_biosolids, sb.id_one_water_sample, sb.id_person, sb.number_of_tubes, sb.mpn_pcr_conducted, sb.salmonella_assay_barcode, 
-        rp.initial, sb.date_sample_processed, sb.time_sample_processed, sb.sample_wetweight, sb.elution_volume,sb.enrichment_media, sb.user_created, 
-        sb.user_review,
-        sb.review,
+        $this->datatables->select('sh.id_salmonella_hemoflow, sh.id_one_water_sample, sh.id_person, sh.number_of_tubes, sh.mpn_pcr_conducted, sh.salmonella_assay_barcode, 
+        rp.initial, sh.date_sample_processed, sh.time_sample_processed, sh.sample_wetweight, sh.elution_volume,sh.enrichment_media, sh.user_created, 
+        sh.user_review,
+        sh.review,
         user.full_name,
-        sb.id_sampletype, rs.sampletype, GROUP_CONCAT(ssv.vol_sampletube ORDER BY ssv.tube_number SEPARATOR ", ") AS vol_sampletube, GROUP_CONCAT(ssv.tube_number ORDER BY ssv.tube_number SEPARATOR ", ") AS tube_number, sb.flag,
-        sb.date_created, sb.date_updated, GREATEST(sb.date_created, sb.date_updated) AS latest_date');
-        $this->datatables->from('salmonella_biosolids AS sb');
-        $this->datatables->join('ref_person AS rp', 'sb.id_person = rp.id_person', 'left');
-        $this->datatables->join('ref_sampletype AS rs', 'sb.id_sampletype = rs.id_sampletype', 'left');
-        $this->datatables->join('salmonella_sample_volumes AS ssv', 'sb.id_salmonella_biosolids = ssv.id_salmonella_biosolids', 'left');
-        $this->datatables->join('tbl_user user', 'sb.user_review = user.id_users', 'left');
+        sh.id_sampletype, rs.sampletype, GROUP_CONCAT(shsv.vol_sampletube ORDER BY shsv.tube_number SEPARATOR ", ") AS vol_sampletube, GROUP_CONCAT(shsv.tube_number ORDER BY shsv.tube_number SEPARATOR ", ") AS tube_number, sh.flag,
+        sh.date_created, sh.date_updated, GREATEST(sh.date_created, sh.date_updated) AS latest_date');
+        $this->datatables->from('salmonella_hemoflow AS sh');
+        $this->datatables->join('ref_person AS rp', 'sh.id_person = rp.id_person', 'left');
+        $this->datatables->join('ref_sampletype AS rs', 'sh.id_sampletype = rs.id_sampletype', 'left');
+        $this->datatables->join('salmonella_hemoflow_sample_volumes AS shsv', 'sh.id_salmonella_hemoflow = shsv.id_salmonella_hemoflow', 'left');
+        $this->datatables->join('tbl_user user', 'sh.user_review = user.id_users', 'left');
         // $this->datatables->where('lab', $this->session->userdata('lab'));
-        $this->datatables->where('sb.flag', '0');
+        $this->datatables->where('sh.flag', '0');
         // GROUP BY
-        $this->datatables->group_by('sb.id_salmonella_biosolids');
+        $this->datatables->group_by('sh.id_salmonella_hemoflow');
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 4){
             $this->datatables->add_column('action', anchor(site_url('salmonella_hemoflow/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')), 'id_one_water_sample');
@@ -47,99 +47,99 @@ class Salmonella_hemoflow_model extends CI_Model
     }
 
     function subjsonXld($id) {
-        $this->datatables->select('srx.id_result_xld, sb.salmonella_assay_barcode, srx.id_salmonella_biosolids, srx.date_sample_processed, srx.time_sample_processed, srx.quality_control,
-        GROUP_CONCAT(sspcl.black_colony_plate ORDER BY sspcl.plate_number SEPARATOR ", ") AS black_colony_plate, GROUP_CONCAT(sspcl.plate_number ORDER BY sspcl.plate_number SEPARATOR ", ") AS plate_number, srx.flag');
-        $this->datatables->from('salmonella_result_xld AS srx');
-        $this->datatables->join('salmonella_biosolids AS sb', 'srx.id_salmonella_biosolids = sb.id_salmonella_biosolids', 'left');
-        $this->datatables->join('salmonella_sample_black_colony_plate AS sspcl', 'srx.id_result_xld = sspcl.id_result_xld', 'left');
-        $this->datatables->where('srx.flag', '0');
-        $this->datatables->where('srx.id_salmonella_biosolids', $id);
+        $this->datatables->select('shrx.id_salmonella_hemoflow_result_xld, sh.salmonella_assay_barcode, shrx.id_salmonella_hemoflow, shrx.date_sample_processed, shrx.time_sample_processed, shrx.quality_control,
+        GROUP_CONCAT(shsbcp.black_colony_plate ORDER BY shsbcp.plate_number SEPARATOR ", ") AS black_colony_plate, GROUP_CONCAT(shsbcp.plate_number ORDER BY shsbcp.plate_number SEPARATOR ", ") AS plate_number, shrx.flag');
+        $this->datatables->from('salmonella_hemoflow_result_xld AS shrx');
+        $this->datatables->join('salmonella_hemoflow AS sh', 'shrx.id_salmonella_hemoflow = sh.id_salmonella_hemoflow', 'left');
+        $this->datatables->join('salmonella_hemoflow_sample_black_colony_plate AS shsbcp', 'shrx.id_salmonella_hemoflow_result_xld = shsbcp.id_salmonella_hemoflow_result_xld', 'left');
+        $this->datatables->where('shrx.flag', '0');
+        $this->datatables->where('shrx.id_salmonella_hemoflow', $id);
         $this->datatables->group_by('
-        srx.id_result_xld, 
-        sb.salmonella_assay_barcode, 
-        srx.id_salmonella_biosolids, 
-        srx.date_sample_processed, 
-        srx.time_sample_processed,
-        srx.flag
+        shrx.id_salmonella_hemoflow_result_xld, 
+        sh.salmonella_assay_barcode, 
+        shrx.id_salmonella_hemoflow, 
+        shrx.date_sample_processed, 
+        shrx.time_sample_processed,
+        shrx.flag
         ');
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 4){
-            $this->datatables->add_column('action', '', 'id_result_xld');
+            $this->datatables->add_column('action', '', 'id_salmonella_hemoflow_result_xld');
         }
         else if ($lvl == 3){
-            $this->datatables->add_column('action', '<button type="button" class="btn_edit_detResultsXld btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_result_xld');
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit_detResultsXld btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_salmonella_hemoflow_result_xld');
         }
         else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit_detResultsXld btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                ".'<button type="button" class="btn_deleteXld btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_result_xld');
+                ".'<button type="button" class="btn_deleteXld btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_salmonella_hemoflow_result_xld');
         }
         return $this->datatables->generate();
     }
 
     function subjsonChroMagar($id) {
-        $this->datatables->select('src.id_result_chromagar, sb.salmonella_assay_barcode, src.id_salmonella_biosolids, src.date_sample_processed, src.time_sample_processed, src.quality_control,
-        GROUP_CONCAT(ssbcpc.purple_colony_plate ORDER BY ssbcpc.plate_number SEPARATOR ", ") AS purple_colony_plate, GROUP_CONCAT(ssbcpc.plate_number ORDER BY ssbcpc.plate_number SEPARATOR ", ") AS plate_number, src.flag, ssbcpc.id_sample_purple_plate');
-        $this->datatables->from('salmonella_result_chromagar AS src');
-        $this->datatables->join('salmonella_biosolids AS sb', 'src.id_salmonella_biosolids = sb.id_salmonella_biosolids', 'left');
-        $this->datatables->join('salmonella_sample_purple_colony_plate AS ssbcpc', 'src.id_result_chromagar = ssbcpc.id_result_chromagar', 'left');
-        $this->datatables->where('src.flag', '0');
-        $this->datatables->where('src.id_salmonella_biosolids', $id);
+        $this->datatables->select('shrc.id_salmonella_hemoflow_result_chromagar, sh.salmonella_assay_barcode, shrc.id_salmonella_hemoflow, shrc.date_sample_processed, shrc.time_sample_processed, shrc.quality_control,
+        GROUP_CONCAT(shspcp.purple_colony_plate ORDER BY shspcp.plate_number SEPARATOR ", ") AS purple_colony_plate, GROUP_CONCAT(shspcp.plate_number ORDER BY shspcp.plate_number SEPARATOR ", ") AS plate_number, shrc.flag, shspcp.id_salmonella_hemoflow_sample_purple_plate');
+        $this->datatables->from('salmonella_hemoflow_result_chromagar AS shrc');
+        $this->datatables->join('salmonella_hemoflow AS sh', 'shrc.id_salmonella_hemoflow = sh.id_salmonella_hemoflow', 'left');
+        $this->datatables->join('salmonella_hemoflow_sample_purple_colony_plate AS shspcp', 'shrc.id_salmonella_hemoflow_result_chromagar = shspcp.id_salmonella_hemoflow_result_chromagar', 'left');
+        $this->datatables->where('shrc.flag', '0');
+        $this->datatables->where('shrc.id_salmonella_hemoflow', $id);
         $this->datatables->group_by('
-        src.id_result_chromagar, 
-        sb.salmonella_assay_barcode, 
-        src.id_salmonella_biosolids, 
-        src.date_sample_processed, 
-        src.time_sample_processed,
-        src.flag
+        shrc.id_salmonella_hemoflow_result_chromagar, 
+        sh.salmonella_assay_barcode, 
+        shrc.id_salmonella_hemoflow, 
+        shrc.date_sample_processed, 
+        shrc.time_sample_processed,
+        shrc.flag
         ');
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 4){
-            $this->datatables->add_column('action', '', 'id_result_chromagar');
+            $this->datatables->add_column('action', '', 'id_salmonella_hemoflow_result_chromagar');
         }
         else if ($lvl == 3){
-            $this->datatables->add_column('action', '<button type="button" class="btn_edit_detResultsChromagar btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_result_chromagar');
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit_detResultsChromagar btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_salmonella_hemoflow_result_chromagar');
         }
         else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit_detResultsChromagar btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                ".'<button type="button" class="btn_deleteChromagar btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_result_chromagar');
+                ".'<button type="button" class="btn_deleteChromagar btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_salmonella_hemoflow_result_chromagar');
         }
         return $this->datatables->generate();
     }
 
     function subjsonBiochemical($id, $biochemical_tube) {
 
-        $this->datatables->select('srb.id_result_biochemical, srb.id_salmonella_biosolids, srb.id_result_chromagar, sb.salmonella_assay_barcode, srb.oxidase, srb.catalase, srb.confirmation, srb.sample_store, srb.biochemical_tube, srb.flag');
-        $this->datatables->from('salmonella_result_biochemical AS srb');
-        $this->datatables->join('salmonella_biosolids AS sb', 'srb.id_salmonella_biosolids = sb.id_salmonella_biosolids', 'left');
-        $this->datatables->where('srb.flag', '0');
-        $this->datatables->where('srb.id_salmonella_biosolids', $id);
-        
+        $this->datatables->select('shrb.id_salmonella_hemoflow_result_biochemical, shrb.id_salmonella_hemoflow, shrb.id_salmonella_hemoflow_result_chromagar, sh.salmonella_assay_barcode, shrb.oxidase, shrb.catalase, shrb.confirmation, shrb.sample_store, shrb.biochemical_tube, shrb.flag');
+        $this->datatables->from('salmonella_hemoflow_result_biochemical AS shrb');
+        $this->datatables->join('salmonella_hemoflow AS sh', 'shrb.id_salmonella_hemoflow = sh.id_salmonella_hemoflow', 'left');
+        $this->datatables->where('shrb.flag', '0');
+        $this->datatables->where('shrb.id_salmonella_hemoflow', $id);
+
        // Add condition for biochemical_tube if it exists
         if (!empty($biochemical_tube)) {
-            $this->datatables->where('srb.biochemical_tube', $biochemical_tube);
+            $this->datatables->where('shrb.biochemical_tube', $biochemical_tube);
         }
     
         $lvl = $this->session->userdata('id_user_level');
         if ($lvl == 4){
-            $this->datatables->add_column('action', '', 'id_result_biochemical');
+            $this->datatables->add_column('action', '', 'id_salmonella_hemoflow_result_biochemical');
         } else if ($lvl == 3){
-            $this->datatables->add_column('action', '<button type="button" class="btn_edit_detResultsBiochemical btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_result_biochemical');
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit_detResultsBiochemical btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_salmonella_hemoflow_result_biochemical');
         } else {
             $this->datatables->add_column('action', '<button type="button" class="btn_edit_detResultsBiochemical btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-                ".'<button type="button" class="btn_deleteBiochemical btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_result_biochemical');
+                ".'<button type="button" class="btn_deleteBiochemical btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_salmonella_hemoflow_result_biochemical');
         }
         return $this->datatables->generate();
     }
 
-    function subjsonFinalConcentration($id)
+    function subjsonFinalCalculation($id)
     {
         $response = array();
 
         // Step 1: Get unique tube_number
         $this->db->select('tube_number');
         $this->db->distinct();
-        $this->db->from('salmonella_sample_volumes');
-        $this->db->where('id_salmonella_biosolids', $id);
+        $this->db->from('salmonella_hemoflow_sample_volumes');
+        $this->db->where('id_salmonella_hemoflow', $id);
         $this->db->order_by('tube_number', 'ASC'); // Tambahkan pengurutan
         $tube_numbers = $this->db->get()->result_array();
 
@@ -152,40 +152,79 @@ class Salmonella_hemoflow_model extends CI_Model
         $case_statements = [];
         foreach ($tube_numbers as $row) {
             $tube_number = $row['tube_number'];
-            $case_statements[] = "MAX(CASE WHEN ssv1.tube_number = {$tube_number} THEN ssv1.vol_sampletube END) AS `Tube {$tube_number}`";
+            $case_statements[] = "MAX(CASE WHEN shsv1.tube_number = {$tube_number} THEN shsv1.vol_sampletube END) AS `Tube {$tube_number}`";
         }
         $case_query = implode(', ', $case_statements);
 
         // Final query
-        $this->db->select("sb.id_one_water_sample, sb.id_person, rp.initial, sb.mpn_pcr_conducted, 
-                        sb.number_of_tubes, 
-                        sb.salmonella_assay_barcode, 
-                        sb.date_sample_processed, 
-                        sb.time_sample_processed, 
-                        sb.sample_wetweight, 
-                        sb.elution_volume, 
+        $this->db->select("sh.id_one_water_sample, sh.id_person, rp.initial, sh.mpn_pcr_conducted, 
+                        sh.number_of_tubes, 
+                        sh.salmonella_assay_barcode, 
+                        sh.date_sample_processed, 
+                        sh.time_sample_processed, 
+                        sh.sample_wetweight, 
+                        sh.elution_volume, 
                         rs.sampletype, 
-                        sb.enrichment_media,
-                        srmp.mpn_concentration,
-                        srmp.upper_ci,
-                        srmp.lower_ci,
+                        sh.enrichment_media,
+                        hm.volume_filter,
+                        hm.volume_eluted,
+                        shrm.mpn_concentration,
+                        shrm.upper_ci,
+                        shrm.lower_ci,
+                        CASE 
+                            WHEN shrm.mpn_concentration IS NOT NULL AND hm.volume_eluted IS NOT NULL THEN
+                                CASE 
+                                    WHEN shrm.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted, 4))
+                                    WHEN shrm.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted, 4))
+                                    ELSE ROUND((CAST(shrm.mpn_concentration AS DECIMAL(10,2)) / 1000) * hm.volume_eluted, 4)
+                                END
+                            ELSE NULL 
+                        END as total_salmonella,
+                        CASE 
+                            WHEN shrm.mpn_concentration IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0 THEN
+                                CASE 
+                                    WHEN shrm.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND(((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter), 4))
+                                    WHEN shrm.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND(((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter), 4))
+                                    ELSE ROUND(((CAST(shrm.mpn_concentration AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter), 4)
+                                END
+                            ELSE NULL 
+                        END as concentration_mpn_l,
+                        CASE 
+                            WHEN shrm.upper_ci IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0 THEN
+                                CASE 
+                                    WHEN shrm.upper_ci LIKE '>%' THEN CONCAT('>', ROUND((CAST(SUBSTRING(shrm.upper_ci, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 4))
+                                    WHEN shrm.upper_ci LIKE '<%' THEN CONCAT('<', ROUND((CAST(SUBSTRING(shrm.upper_ci, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 4))
+                                    ELSE ROUND((CAST(shrm.upper_ci AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 4)
+                                END
+                            ELSE NULL 
+                        END as concentration_upper_ci,
+                        CASE 
+                            WHEN shrm.lower_ci IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0 THEN
+                                CASE 
+                                    WHEN shrm.lower_ci LIKE '>%' THEN CONCAT('>', ROUND((CAST(SUBSTRING(shrm.lower_ci, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 4))
+                                    WHEN shrm.lower_ci LIKE '<%' THEN CONCAT('<', ROUND((CAST(SUBSTRING(shrm.lower_ci, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 4))
+                                    ELSE ROUND((CAST(shrm.lower_ci AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 4)
+                                END
+                            ELSE NULL 
+                        END as concentration_lower_ci,
                         $case_query,
-                        GROUP_CONCAT(DISTINCT srb.biochemical_tube ORDER BY srb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
-                        GROUP_CONCAT(DISTINCT CONCAT(srb.biochemical_tube, ':', srb.confirmation) ORDER BY srb.biochemical_tube SEPARATOR ', ') AS confirmation,
-                        GROUP_CONCAT(DISTINCT ssbcpc.plate_number ORDER BY ssbcpc.plate_number SEPARATOR ', ') AS plate_numbers");
-        $this->db->from('salmonella_biosolids AS sb');
-        $this->db->join('salmonella_result_chromagar AS src', 'sb.id_salmonella_biosolids = src.id_salmonella_biosolids', 'left');
-        $this->db->join('salmonella_sample_purple_colony_plate AS ssbcpc', 'src.id_result_chromagar = ssbcpc.id_result_chromagar', 'left');
-        $this->db->join('salmonella_sample_volumes AS ssv1', 'src.id_salmonella_biosolids = ssv1.id_salmonella_biosolids', 'left');
-        $this->db->join('salmonella_result_biochemical AS srb', 'ssbcpc.id_result_chromagar = srb.id_result_chromagar AND srb.flag = 0', 'left');
-        $this->db->join('salmonella_result_mpn_biosolids AS srmp', 'sb.id_salmonella_biosolids = srmp.id_salmonella_biosolids', 'left');
-        $this->db->join('ref_sampletype AS rs', 'sb.id_sampletype = rs.id_sampletype', 'left');
-        $this->db->join('ref_person AS rp',  'sb.id_person = rp.id_person', 'left');
+                        GROUP_CONCAT(DISTINCT shrb.biochemical_tube ORDER BY shrb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
+                        GROUP_CONCAT(DISTINCT CONCAT(shrb.biochemical_tube, ':', shrb.confirmation) ORDER BY shrb.biochemical_tube SEPARATOR ', ') AS confirmation,
+                        GROUP_CONCAT(DISTINCT shspcp.plate_number ORDER BY shspcp.plate_number SEPARATOR ', ') AS plate_numbers");
+        $this->db->from('salmonella_hemoflow AS sh');
+        $this->db->join('hemoflow AS hm', 'sh.id_one_water_sample = hm.id_one_water_sample AND hm.flag = "0"', 'left');
+        $this->db->join('salmonella_hemoflow_result_chromagar AS shrc', 'sh.id_salmonella_hemoflow = shrc.id_salmonella_hemoflow', 'left');
+        $this->db->join('salmonella_hemoflow_sample_purple_colony_plate AS shspcp', 'shrc.id_salmonella_hemoflow_result_chromagar = shspcp.id_salmonella_hemoflow_result_chromagar', 'left');
+        $this->db->join('salmonella_hemoflow_sample_volumes AS shsv1', 'shrc.id_salmonella_hemoflow = shsv1.id_salmonella_hemoflow', 'left');
+        $this->db->join('salmonella_hemoflow_result_biochemical AS shrb', 'shspcp.id_salmonella_hemoflow_result_chromagar = shrb.id_salmonella_hemoflow_result_chromagar AND shrb.flag = 0', 'left');
+        $this->db->join('salmonella_hemoflow_result_mpn AS shrm', 'sh.id_salmonella_hemoflow = shrm.id_salmonella_hemoflow', 'left');
+        $this->db->join('ref_sampletype AS rs', 'sh.id_sampletype = rs.id_sampletype', 'left');
+        $this->db->join('ref_person AS rp',  'sh.id_person = rp.id_person', 'left');
 
         // Conditions
-        $this->db->where('src.flag', '0');
-        $this->db->where('src.id_salmonella_biosolids', $id);
-        $this->db->group_by('src.id_result_chromagar');
+        $this->db->where('shrc.flag', '0');
+        $this->db->where('shrc.id_salmonella_hemoflow', $id);
+        $this->db->group_by('shrc.id_salmonella_hemoflow_result_chromagar');
 
         $q = $this->db->get();
 
@@ -214,8 +253,8 @@ class Salmonella_hemoflow_model extends CI_Model
         // Step 1: Get unique tube_number
         $this->db->select('tube_number');
         $this->db->distinct();
-        $this->db->from('salmonella_sample_volumes');
-        $this->db->where('id_salmonella_biosolids', $id);
+        $this->db->from('salmonella_hemoflow_sample_volumes');
+        $this->db->where('id_salmonella_hemoflow', $id);
         $this->db->order_by('tube_number', 'ASC'); // Tambahkan pengurutan
         $tube_numbers = $this->db->get()->result_array();
     
@@ -231,29 +270,29 @@ class Salmonella_hemoflow_model extends CI_Model
         $case_statements = [];
         foreach ($tube_numbers as $row) {
             $tube_number = $row['tube_number'];
-            $case_statements[] = "MAX(CASE WHEN ssv1.tube_number = {$tube_number} THEN ssv1.vol_sampletube END) AS `Tube {$tube_number}`";
+            $case_statements[] = "MAX(CASE WHEN shsv1.tube_number = {$tube_number} THEN shsv1.vol_sampletube END) AS `Tube {$tube_number}`";
         }
         $case_query = implode(', ', $case_statements);
     
         // Final query
-        $this->db->select("sb.id_one_water_sample, sb.id_person, rp.initial, sb.mpn_pcr_conducted, sb.number_of_tubes, sb.salmonella_assay_barcode, sb.date_sample_processed, sb.time_sample_processed, sb.sample_wetweight, sb.elution_volume, rs.sampletype, sb.enrichment_media,
+        $this->db->select("sh.id_one_water_sample, sh.id_person, rp.initial, sh.mpn_pcr_conducted, sh.number_of_tubes, sh.salmonella_assay_barcode, sh.date_sample_processed, sh.time_sample_processed, sh.sample_wetweight, sh.elution_volume, rs.sampletype, sh.enrichment_media,
                            $case_query, 
-                           GROUP_CONCAT(DISTINCT srb.biochemical_tube ORDER BY srb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
-                           GROUP_CONCAT(DISTINCT CONCAT(srb.biochemical_tube, ':', srb.confirmation) ORDER BY srb.biochemical_tube SEPARATOR ', ') AS confirmation,
-                           GROUP_CONCAT(DISTINCT ssbcpc.plate_number ORDER BY ssbcpc.plate_number SEPARATOR ', ') AS plate_numbers");
-        $this->db->from('salmonella_biosolids AS sb');
-        $this->db->join('salmonella_result_chromagar AS src', 'sb.id_salmonella_biosolids = src.id_salmonella_biosolids', 'left');
-        $this->db->join('salmonella_sample_purple_colony_plate AS ssbcpc', 'src.id_result_chromagar = ssbcpc.id_result_chromagar', 'left');
-        $this->db->join('salmonella_sample_volumes AS ssv1', 'src.id_salmonella_biosolids = ssv1.id_salmonella_biosolids', 'left');
-        $this->db->join('salmonella_result_biochemical AS srb', 'ssbcpc.id_result_chromagar = srb.id_result_chromagar', 'left');
-        $this->db->join('ref_sampletype AS rs', 'sb.id_sampletype = rs.id_sampletype', 'left');
-        $this->db->join('ref_person AS rp',  'sb.id_person = rp.id_person', 'left');
+                           GROUP_CONCAT(DISTINCT shrb.biochemical_tube ORDER BY shrb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
+                           GROUP_CONCAT(DISTINCT CONCAT(shrb.biochemical_tube, ':', shrb.confirmation) ORDER BY shrb.biochemical_tube SEPARATOR ', ') AS confirmation,
+                           GROUP_CONCAT(DISTINCT shspcp.plate_number ORDER BY shspcp.plate_number SEPARATOR ', ') AS plate_numbers");
+        $this->db->from('salmonella_hemoflow AS sh');
+        $this->db->join('salmonella_hemoflow_result_chromagar AS shrc', 'sh.id_salmonella_hemoflow = shrc.id_salmonella_hemoflow', 'left');
+        $this->db->join('salmonella_hemoflow_sample_purple_colony_plate AS shspcp', 'shrc.id_salmonella_hemoflow_result_chromagar = shspcp.id_salmonella_hemoflow_result_chromagar', 'left');
+        $this->db->join('salmonella_hemoflow_sample_volumes AS shsv1', 'shrc.id_salmonella_hemoflow = shsv1.id_salmonella_hemoflow', 'left');
+        $this->db->join('salmonella_hemoflow_result_biochemical AS shrb', 'shspcp.id_salmonella_hemoflow_result_chromagar = shrb.id_salmonella_hemoflow_result_chromagar', 'left');
+        $this->db->join('ref_sampletype AS rs', 'sh.id_sampletype = rs.id_sampletype', 'left');
+        $this->db->join('ref_person AS rp', 'sh.id_person = rp.id_person', 'left');
     
         // Conditions
-        $this->db->where('srb.flag', '0');
-        $this->db->where('src.id_salmonella_biosolids', $id);
-        $this->db->group_by('src.id_result_chromagar');
-    
+        $this->db->where('shrb.flag', '0');
+        $this->db->where('shrc.id_salmonella_hemoflow', $id);
+        $this->db->group_by('shrc.id_salmonella_hemoflow_result_chromagar');
+
         $q = $this->db->get();
     
         if ($q->num_rows() > 0) {
@@ -289,8 +328,8 @@ class Salmonella_hemoflow_model extends CI_Model
         // Step 1: Get unique tube_number
         $this->db->select('tube_number');
         $this->db->distinct();
-        $this->db->from('salmonella_sample_volumes');
-        $this->db->where('id_salmonella_biosolids IS NOT NULL');
+        $this->db->from('salmonella_hemoflow_sample_volumes');
+        $this->db->where('id_salmonella_hemoflow IS NOT NULL');
         $this->db->order_by('tube_number', 'ASC'); // Tambahkan pengurutan
         $tube_numbers = $this->db->get()->result_array();
     
@@ -306,28 +345,28 @@ class Salmonella_hemoflow_model extends CI_Model
         // Step 2: Create case query for pivot
         $case_statements = [];
         foreach ($tube_numbers_list as $tube_number) {
-            $case_statements[] = "MAX(CASE WHEN ssv1.tube_number = {$tube_number} THEN ssv1.vol_sampletube END) AS `Tube {$tube_number}`";
+            $case_statements[] = "MAX(CASE WHEN shsv1.tube_number = {$tube_number} THEN shsv1.vol_sampletube END) AS `Tube {$tube_number}`";
         }
         $case_query = implode(', ', $case_statements);
     
         // Final query
-        $this->db->select("sb.id_one_water_sample, sb.id_person, rp.initial, sb.mpn_pcr_conducted, sb.number_of_tubes, sb.salmonella_assay_barcode, sb.date_sample_processed, sb.time_sample_processed, sb.sample_wetweight, sb.elution_volume, rs.sampletype, sb.enrichment_media,
+        $this->db->select("sh.id_one_water_sample, sh.id_person, rp.initial, sh.mpn_pcr_conducted, sh.number_of_tubes, sh.salmonella_assay_barcode, sh.date_sample_processed, sh.time_sample_processed, sh.sample_wetweight, sh.elution_volume, rs.sampletype, sh.enrichment_media,
                            $case_query, 
-                           GROUP_CONCAT(DISTINCT srb.biochemical_tube ORDER BY srb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
-                           GROUP_CONCAT(DISTINCT CONCAT(srb.biochemical_tube, ':', srb.confirmation) ORDER BY srb.biochemical_tube SEPARATOR ', ') AS confirmation,
-                           GROUP_CONCAT(DISTINCT ssbcpc.plate_number ORDER BY ssbcpc.plate_number SEPARATOR ', ') AS plate_numbers");
-        $this->db->from('salmonella_biosolids AS sb');
-        $this->db->join('salmonella_result_chromagar AS src', 'sb.id_salmonella_biosolids = src.id_salmonella_biosolids', 'left');
-        $this->db->join('salmonella_sample_purple_colony_plate AS ssbcpc', 'src.id_result_chromagar = ssbcpc.id_result_chromagar', 'left');
-        $this->db->join('salmonella_sample_volumes AS ssv1', 'src.id_salmonella_biosolids = ssv1.id_salmonella_biosolids', 'left');
-        $this->db->join('salmonella_result_biochemical AS srb', 'ssbcpc.id_result_chromagar = srb.id_result_chromagar', 'left');
-        $this->db->join('ref_sampletype AS rs', 'sb.id_sampletype = rs.id_sampletype', 'left');
-        $this->db->join('ref_person AS rp', 'sb.id_person = rp.id_person', 'left');
+                           GROUP_CONCAT(DISTINCT shrb.biochemical_tube ORDER BY shrb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
+                           GROUP_CONCAT(DISTINCT CONCAT(shrb.biochemical_tube, ':', shrb.confirmation) ORDER BY shrb.biochemical_tube SEPARATOR ', ') AS confirmation,
+                           GROUP_CONCAT(DISTINCT shspcp.plate_number ORDER BY shspcp.plate_number SEPARATOR ', ') AS plate_numbers");
+        $this->db->from('salmonella_hemoflow AS sh');
+        $this->db->join('salmonella_hemoflow_result_chromagar AS shrc', 'sh.id_salmonella_hemoflow = shrc.id_salmonella_hemoflow', 'left');
+        $this->db->join('salmonella_hemoflow_sample_purple_colony_plate AS shspcp', 'shrc.id_salmonella_hemoflow_result_chromagar = shspcp.id_salmonella_hemoflow_result_chromagar', 'left');
+        $this->db->join('salmonella_hemoflow_sample_volumes AS shsv1', 'shrc.id_salmonella_hemoflow = shsv1.id_salmonella_hemoflow', 'left');
+        $this->db->join('salmonella_hemoflow_result_biochemical AS shrb', 'shspcp.id_salmonella_hemoflow_result_chromagar = shrb.id_salmonella_hemoflow_result_chromagar', 'left');
+        $this->db->join('ref_sampletype AS rs', 'sh.id_sampletype = rs.id_sampletype', 'left');
+        $this->db->join('ref_person AS rp', 'sh.id_person = rp.id_person', 'left');
     
         // Conditions
-        $this->db->where('srb.flag', '0');
-        $this->db->where('ssv1.flag', '0');
-        $this->db->group_by('src.id_result_chromagar');
+        $this->db->where('shrb.flag', '0');
+        $this->db->where('shsv1.flag', '0');
+        $this->db->group_by('shrc.id_salmonella_hemoflow_result_chromagar');
     
         $q = $this->db->get();
     
@@ -370,21 +409,21 @@ class Salmonella_hemoflow_model extends CI_Model
     {
 
       $response = array();
-      $this->db->select('sb.id_salmonella_biosolids, sb.id_one_water_sample, sb.id_person, rp.initial, sb.number_of_tubes,
-        sb.id_sampletype, rs.sampletype, sb.mpn_pcr_conducted, sb.salmonella_assay_barcode, sb.date_sample_processed,
-        sb.user_review, 
-        sb.review, 
+      $this->db->select('sh.id_salmonella_hemoflow, sh.id_one_water_sample, sh.id_person, rp.initial, sh.number_of_tubes,
+        sh.id_sampletype, rs.sampletype, sh.mpn_pcr_conducted, sh.salmonella_assay_barcode, sh.date_sample_processed,
+        sh.user_review, 
+        sh.review, 
         user.full_name,
-        sb.user_created, 
-        sb.time_sample_processed, sb.time_sample_processed, sb.sample_wetweight, sb.elution_volume, sb.enrichment_media,
-        GROUP_CONCAT(ssv.vol_sampletube ORDER BY ssv.tube_number SEPARATOR ", ") AS vol_sampletube, GROUP_CONCAT(ssv.tube_number ORDER BY ssv.tube_number SEPARATOR ", ") AS tube_number');
-      $this->db->from('salmonella_biosolids AS sb');
-      $this->db->join('ref_sampletype AS rs', 'sb.id_sampletype = rs.id_sampletype', 'left');
-      $this->datatables->join('salmonella_sample_volumes AS ssv', 'sb.id_salmonella_biosolids = ssv.id_salmonella_biosolids', 'left');
-      $this->db->join('ref_person AS rp',  'sb.id_person = rp.id_person', 'left');
-      $this->db->join('tbl_user user', 'sb.user_review = user.id_users', 'left');
-      $this->db->where('sb.id_one_water_sample', $id);
-      $this->db->where('sb.flag', '0');
+        sh.user_created, 
+        sh.time_sample_processed, sh.sample_wetweight, sh.elution_volume, sh.enrichment_media,
+        GROUP_CONCAT(shsv.vol_sampletube ORDER BY shsv.tube_number SEPARATOR ", ") AS vol_sampletube, GROUP_CONCAT(shsv.tube_number ORDER BY shsv.tube_number SEPARATOR ", ") AS tube_number');
+      $this->db->from('salmonella_hemoflow AS sh');
+      $this->db->join('ref_sampletype AS rs', 'sh.id_sampletype = rs.id_sampletype', 'left');
+      $this->datatables->join('salmonella_hemoflow_sample_volumes AS shsv', 'sh.id_salmonella_hemoflow = shsv.id_salmonella_hemoflow', 'left');
+      $this->db->join('ref_person AS rp',  'sh.id_person = rp.id_person', 'left');
+      $this->db->join('tbl_user user', 'sh.user_review = user.id_users', 'left');
+      $this->db->where('sh.id_one_water_sample', $id);
+      $this->db->where('sh.flag', '0');
       $q = $this->db->get();
 
       if ($q->num_rows() > 0) {
@@ -430,7 +469,7 @@ class Salmonella_hemoflow_model extends CI_Model
       function getID_one(){
         $q = $this->db->query('
         SELECT id_one_water_sample FROM sample_reception_sample
-        WHERE id_one_water_sample NOT IN (SELECT id_one_water_sample FROM salmonella_biosolids)
+        WHERE id_one_water_sample NOT IN (SELECT id_one_water_sample FROM salmonella_hemoflow)
         AND flag = 0');       
         $response = $q->result_array();
         return $response;
@@ -449,7 +488,7 @@ class Salmonella_hemoflow_model extends CI_Model
 
     function validateSalmonellaAssayBarcode($id){
         $q = $this->db->query('
-        SELECT salmonella_assay_barcode FROM salmonella_biosolids
+        SELECT salmonella_assay_barcode FROM salmonella_hemoflow
         WHERE salmonella_assay_barcode = "'.$id.'"
         AND flag = 0 
         ');        
@@ -471,136 +510,136 @@ class Salmonella_hemoflow_model extends CI_Model
 
 
     public function insert($data) {
-        $this->db->insert('salmonella_biosolids', $data);
+        $this->db->insert('salmonella_hemoflow', $data);
         return $this->db->insert_id(); // Return the last inserted ID
     }
     
     public function insert_sample_volume($data) {
-        $this->db->insert('salmonella_sample_volumes', $data);
+        $this->db->insert('salmonella_hemoflow_sample_volumes', $data);
     }
     
-    function updateSalmonellaBiosolids($id, $data) {
-        $this->db->where('id_salmonella_biosolids', $id);
-        $this->db->update('salmonella_biosolids', $data);
+    function updateSalmonellaHemoflow($id, $data) {
+        $this->db->where('id_salmonella_hemoflow', $id);
+        $this->db->update('salmonella_hemoflow', $data);
     }
 
-    public function delete_sample_volumes($id_salmonella_biosolids) {
-        $this->db->where('id_salmonella_biosolids', $id_salmonella_biosolids);
-        $this->db->delete('salmonella_sample_volumes');
+    public function delete_sample_volumes($id_salmonella_hemoflow) {
+        $this->db->where('id_salmonella_hemoflow', $id_salmonella_hemoflow);
+        $this->db->delete('salmonella_hemoflow_sample_volumes');
     }
 
     public function insertResultsXld($data) {
-        $this->db->insert('salmonella_result_xld', $data);
+        $this->db->insert('salmonella_hemoflow_result_xld', $data);
         return $this->db->insert_id(); // Return the last inserted ID
     }
 
     public function insert_purple_colony_plate($data) {
-        $this->db->insert('salmonella_sample_purple_colony_plate', $data);
+        $this->db->insert('salmonella_hemoflow_sample_purple_colony_plate', $data);
     }
 
     function updateResultsXld($id, $data) {
-        $this->db->where('id_result_xld', $id);
-        $this->db->update('salmonella_result_xld', $data);
+        $this->db->where('id_salmonella_hemoflow_result_xld', $id);
+        $this->db->update('salmonella_hemoflow_result_xld', $data);
     }
 
-    public function delete_purple_colony_plates($id_result_chromagar) {
-        $this->db->where('id_result_chromagar', $id_result_chromagar);
-        $this->db->delete('salmonella_sample_purple_colony_plate');
+    public function delete_purple_colony_plates($id_salmonella_hemoflow_result_chromagar) {
+        $this->db->where('id_salmonella_hemoflow_result_chromagar', $id_salmonella_hemoflow_result_chromagar);
+        $this->db->delete('salmonella_hemoflow_sample_purple_colony_plate');
     }
 
     function get_by_id_xld($id)
     {
-        $this->db->where('id_result_xld', $id);
+        $this->db->where('id_salmonella_hemoflow_result_xld', $id);
         $this->db->where('flag', '0');
-        return $this->db->get('salmonella_result_xld')->row();
+        return $this->db->get('salmonella_hemoflow_result_xld')->row();
     }
 
     function updateResultsPurpleColonyPlate($id, $data) {
-        $this->db->where('id_result_xld', $id);
-        $this->db->update('salmonella_sample_purple_colony_plate', $data);
+        $this->db->where('id_salmonella_hemoflow_result_xld', $id);
+        $this->db->update('salmonella_hemoflow_sample_purple_colony_plate', $data);
     }
 
-    function get_by_id_salmonella_biosolids($id)
+    function get_by_id_salmonella_hemoflow($id)
     {
-        $this->db->where('id_salmonella_biosolids', $id);
+        $this->db->where('id_salmonella_hemoflow', $id);
         $this->db->where('flag', '0');
-        return $this->db->get('salmonella_biosolids')->row();
+        return $this->db->get('salmonella_hemoflow')->row();
     }
 
     function updateSampleVolume($id, $data) {
-        $this->db->where('id_salmonella_biosolids', $id);
-        $this->db->update('salmonella_sample_volumes', $data);
+        $this->db->where('id_salmonella_hemoflow', $id);
+        $this->db->update('salmonella_hemoflow_sample_volumes', $data);
     }
 
     function insertResultsChroMagar($data) {
-        $this->db->insert('salmonella_result_chromagar', $data);
+        $this->db->insert('salmonella_hemoflow_result_chromagar', $data);
         return $this->db->insert_id();
     }
 
     public function insert_black_colony_plate_chromagar($data) {
-        $this->db->insert('salmonella_sample_black_colony_plate', $data);
+        $this->db->insert('salmonella_hemoflow_sample_black_colony_plate', $data);
     }
 
-    function updateResultsChroMagar($id_result_chromagar, $data) {
-        $this->db->where('id_result_chromagar', $id_result_chromagar);
-        $this->db->update('salmonella_result_chromagar', $data);
+    function updateResultsChroMagar($id_salmonella_hemoflow_result_chromagar, $data) {
+        $this->db->where('id_salmonella_hemoflow_result_chromagar', $id_salmonella_hemoflow_result_chromagar);
+        $this->db->update('salmonella_hemoflow_result_chromagar', $data);
     }
 
-    public function delete_black_colony_plates_chromagar($id_result_xld) {
-        $this->db->where('id_result_xld', $id_result_xld);
-        $this->db->delete('salmonella_sample_black_colony_plate');
+    public function delete_black_colony_plates_chromagar($id_salmonella_hemoflow_result_xld) {
+        $this->db->where('id_salmonella_hemoflow_result_xld', $id_salmonella_hemoflow_result_xld);
+        $this->db->delete('salmonella_hemoflow_sample_black_colony_plate');
     }
 
     function get_by_id_chromagar($id)
     {
-        $this->db->where('id_result_chromagar', $id);
+        $this->db->where('id_salmonella_hemoflow_result_chromagar', $id);
         $this->db->where('flag', '0');
-        return $this->db->get('salmonella_result_chromagar')->row();
+        return $this->db->get('salmonella_hemoflow_result_chromagar')->row();
     }
 
     function updateResultsBlackColonyPlateChroMagar($id, $data) {
-        $this->db->where('id_result_chromagar', $id);
-        $this->db->update('salmonella_sample_black_colony_plate', $data);
+        $this->db->where('id_salmonella_hemoflow_result_chromagar', $id);
+        $this->db->update('salmonella_hemoflow_sample_black_colony_plate', $data);
     }
 
     function insertResultsBiochemical($data) {
-        $this->db->insert('salmonella_result_biochemical', $data);
+        $this->db->insert('salmonella_hemoflow_result_biochemical', $data);
         return $this->db->insert_id();
     }
     
     function get_by_id_biochemical($id)
     {
-        $this->db->where('id_result_biochemical', $id);
+        $this->db->where('id_salmonella_hemoflow_result_biochemical', $id);
         $this->db->where('flag', '0');
-        return $this->db->get('salmonella_result_biochemical')->row();
+        return $this->db->get('salmonella_hemoflow_result_biochemical')->row();
     }
 
-    function updateResultsBiochemical($id_result_biochemical, $data) {
-        $this->db->where('id_result_biochemical', $id_result_biochemical);
-        $this->db->update('salmonella_result_biochemical', $data);
+    function updateResultsBiochemical($id_salmonella_hemoflow_result_biochemical, $data) {
+        $this->db->where('id_salmonella_hemoflow_result_biochemical', $id_salmonella_hemoflow_result_biochemical);
+        $this->db->update('salmonella_hemoflow_result_biochemical', $data);
     }
     
     function barcode_restrict($id){
 
         $q = $this->db->query('
         select id_one_water_sample
-        from salmonella_biosolids
+        from salmonella_hemoflow
         WHERE id_one_water_sample = "'.$id.'"
         ');        
         $response = $q->result_array();
         return $response;
       }
 
-    function update_salmonella_biosolids($id_one_water_sample, $data)
+    function update_salmonella_hemoflow($id_one_water_sample, $data)
     {
         $this->db->where('id_one_water_sample', $id_one_water_sample);
-        $this->db->update('salmonella_biosolids', $data);
+        $this->db->update('salmonella_hemoflow', $data);
     }
 
     function updateCancel($id, $data)
     {
         $this->db->where('id_one_water_sample', $id);
-        $this->db->update('salmonella_biosolids', $data);
+        $this->db->update('salmonella_hemoflow', $data);
 
         if ($this->db->affected_rows() > 0) {
             return true;
@@ -609,14 +648,14 @@ class Salmonella_hemoflow_model extends CI_Model
         }
     }
 
-        function get_calculate_mpn_by_salmonella_biosolids($id_salmonella_biosolids) {
-        $this->db->where('id_salmonella_biosolids', $id_salmonella_biosolids);
+        function get_calculate_mpn_by_salmonella_hemoflow($id_salmonella_hemoflow) {
+        $this->db->where('id_salmonella_hemoflow', $id_salmonella_hemoflow);
         $this->db->where('flag', '0');
-        return $this->db->get('salmonella_result_mpn_biosolids')->row();
+        return $this->db->get('salmonella_hemoflow_result_mpn')->row();
     }
 
     function insertCalculateMPN($data) {
-        $this->db->insert('salmonella_result_mpn_biosolids', $data);
+        $this->db->insert('salmonella_hemoflow_result_mpn', $data);
 
         if ($this->db->affected_rows() > 0) {
             return $this->db->insert_id();
@@ -628,9 +667,9 @@ class Salmonella_hemoflow_model extends CI_Model
         }
     }
 
-    function updateCalculateMPN($id_salmonella_result_mpn_biosolids, $data) {
-        $this->db->where('id_salmonella_result_mpn_biosolids', $id_salmonella_result_mpn_biosolids);
-        $this->db->update('salmonella_result_mpn_biosolids', $data);
+    function updateCalculateMPN($id_salmonella_hemoflow_result_mpn, $data) {
+        $this->db->where('id_salmonella_hemoflow_result_mpn', $id_salmonella_hemoflow_result_mpn);
+        $this->db->update('salmonella_hemoflow_result_mpn', $data);
 
         // Check if update was successful
         if ($this->db->affected_rows() >= 0) { // Changed from > 0 to >= 0 to handle cases where data is the same
@@ -643,14 +682,41 @@ class Salmonella_hemoflow_model extends CI_Model
         }
     }
 
+    // CASCADE DELETE METHODS
+    
+    function get_chromagar_by_salmonella_hemoflow($id_salmonella_hemoflow) {
+        $this->db->where('id_salmonella_hemoflow', $id_salmonella_hemoflow);
+        $this->db->where('flag', '0');
+        return $this->db->get('salmonella_hemoflow_result_chromagar')->result();
+    }
+
+    function updateResultsPurplePlate($id_salmonella_hemoflow_result_chromagar, $data) {
+        $this->db->where('id_salmonella_hemoflow_result_chromagar', $id_salmonella_hemoflow_result_chromagar);
+        $this->db->update('salmonella_hemoflow_sample_purple_colony_plate', $data);
+        return $this->db->affected_rows();
+    }
+
+    function updateResultsBiochemicalByChromagar($id_salmonella_hemoflow_result_chromagar, $data) {
+        $this->db->where('id_salmonella_hemoflow_result_chromagar', $id_salmonella_hemoflow_result_chromagar);
+        $this->db->update('salmonella_hemoflow_result_biochemical', $data);
+        return $this->db->affected_rows();
+    }
+
+    // Method untuk update black colony plates XLD berdasarkan XLD result ID
+    function updateResultsBlackColonyPlateXLD($id_salmonella_hemoflow_result_xld, $data) {
+        $this->db->where('id_salmonella_hemoflow_result_xld', $id_salmonella_hemoflow_result_xld);
+        $this->db->update('salmonella_hemoflow_sample_black_colony_plate', $data);
+        return $this->db->affected_rows();
+    }
+
         /**
      * Check if a specific tube already has biochemical data
      */
-    function checkTubeExists($id_salmonella_biosolids, $biochemical_tube) {
-        $this->db->where('id_salmonella_biosolids', $id_salmonella_biosolids);
+    function checkTubeExists($id_salmonella_hemoflow, $biochemical_tube) {
+        $this->db->where('id_salmonella_hemoflow', $id_salmonella_hemoflow);
         $this->db->where('biochemical_tube', $biochemical_tube);
         $this->db->where('flag', '0');
-        $query = $this->db->get('salmonella_result_biochemical');
+        $query = $this->db->get('salmonella_hemoflow_result_biochemical');
 
         return $query->num_rows() > 0;
     }
@@ -658,12 +724,12 @@ class Salmonella_hemoflow_model extends CI_Model
     /**
      * Check if a specific tube needs update (exists but with different confirmation value)
      */
-    function checkTubeNeedsUpdate($id_salmonella_biosolids, $biochemical_tube, $expected_confirmation) {
-        $this->db->select('confirmation, id_result_biochemical');
-        $this->db->where('id_salmonella_biosolids', $id_salmonella_biosolids);
+    function checkTubeNeedsUpdate($id_salmonella_hemoflow, $biochemical_tube, $expected_confirmation) {
+        $this->db->select('confirmation, id_salmonella_hemoflow_result_biochemical');
+        $this->db->where('id_salmonella_hemoflow', $id_salmonella_hemoflow);
         $this->db->where('biochemical_tube', $biochemical_tube);
         $this->db->where('flag', '0');
-        $query = $this->db->get('salmonella_result_biochemical');
+        $query = $this->db->get('salmonella_hemoflow_result_biochemical');
         
         if ($query->num_rows() > 0) {
             $result = $query->row();
@@ -672,7 +738,7 @@ class Salmonella_hemoflow_model extends CI_Model
                 'exists' => true,
                 'needs_update' => $result->confirmation !== $expected_confirmation,
                 'current_confirmation' => $result->confirmation,
-                'id_result_biochemical' => $result->id_result_biochemical
+                'id_salmonella_hemoflow_result_biochemical' => $result->id_salmonella_hemoflow_result_biochemical
             ];
         }
         
@@ -680,17 +746,17 @@ class Salmonella_hemoflow_model extends CI_Model
             'exists' => false,
             'needs_update' => false,
             'current_confirmation' => null,
-            'id_result_biochemical' => null
+            'id_salmonella_hemoflow_result_biochemical' => null
         ];
     }
 
     /**
      * Check if any tube has biochemical data for monitoring sync status
      */
-    function checkAnyTubeExists($id_salmonella_biosolids) {
-        $this->db->where('id_salmonella_biosolids', $id_salmonella_biosolids);
+    function checkAnyTubeExists($id_salmonella_hemoflow) {
+        $this->db->where('id_salmonella_hemoflow', $id_salmonella_hemoflow);
         $this->db->where('flag', '0');
-        $query = $this->db->get('salmonella_result_biochemical');
+        $query = $this->db->get('salmonella_hemoflow_result_biochemical');
 
         return $query->num_rows() > 0;
     }
@@ -698,13 +764,13 @@ class Salmonella_hemoflow_model extends CI_Model
     /**
      * Get XLD results for a specific sample
      */
-    function getXldResults($id_salmonella_biosolids) {
-        $this->db->select('sspcl.plate_number, sspcl.black_colony_plate as colony_plate');
-        $this->db->from('salmonella_result_xld AS srx');
-        $this->db->join('salmonella_sample_black_colony_plate AS sspcl', 'srx.id_result_xld = sspcl.id_result_xld', 'left');
-        $this->db->where('srx.id_salmonella_biosolids', $id_salmonella_biosolids);
-        $this->db->where('srx.flag', '0');
-        $this->db->where('sspcl.flag', '0');
+    function getXldResults($id_salmonella_hemoflow) {
+        $this->db->select('shsbcp.plate_number, shsbcp.black_colony_plate as colony_plate');
+        $this->db->from('salmonella_hemoflow_result_xld AS shrx');
+        $this->db->join('salmonella_hemoflow_sample_black_colony_plate AS shsbcp', 'shrx.id_salmonella_hemoflow_result_xld = shsbcp.id_salmonella_hemoflow_result_xld', 'left');
+        $this->db->where('shrx.id_salmonella_hemoflow', $id_salmonella_hemoflow);
+        $this->db->where('shrx.flag', '0');
+        $this->db->where('shsbcp.flag', '0');
         $query = $this->db->get();
         return $query->result();
     }
@@ -712,43 +778,43 @@ class Salmonella_hemoflow_model extends CI_Model
     /**
      * Get purple colony plates for a specific ChroMagar result
      */
-    function getPurpleColonyPlates($id_result_chromagar) {
+    function getPurpleColonyPlates($id_salmonella_hemoflow_result_chromagar) {
         $this->db->select('plate_number, purple_colony_plate');
-        $this->db->where('id_result_chromagar', $id_result_chromagar);
+        $this->db->where('id_salmonella_hemoflow_result_chromagar', $id_salmonella_hemoflow_result_chromagar);
         $this->db->where('flag', '0');
-        $query = $this->db->get('salmonella_sample_purple_colony_plate');
+        $query = $this->db->get('salmonella_hemoflow_sample_purple_colony_plate');
         return $query->result();
     }
 
     /**
      * Get all ChroMagar results for a specific sample
      */
-    function getAllChroMagarResults($id_salmonella_biosolids) {
-        $this->db->select('id_result_chromagar');
-        $this->db->where('id_salmonella_biosolids', $id_salmonella_biosolids);
+    function getAllChroMagarResults($id_salmonella_hemoflow) {
+        $this->db->select('id_salmonella_hemoflow_result_chromagar');
+        $this->db->where('id_salmonella_hemoflow', $id_salmonella_hemoflow);
         $this->db->where('flag', '0');
-        $query = $this->db->get('salmonella_result_chromagar');
+        $query = $this->db->get('salmonella_hemoflow_result_chromagar');
         return $query->result();
     }
 
     /**
      * Check if biochemical result exists for a specific tube
      */
-    function checkBiochemicalExists($id_salmonella_biosolids, $id_result_chromagar, $biochemical_tube) {
-        $this->db->where('id_salmonella_biosolids', $id_salmonella_biosolids);
-        $this->db->where('id_result_chromagar', $id_result_chromagar);
+    function checkBiochemicalExists($id_salmonella_hemoflow, $id_salmonella_hemoflow_result_chromagar, $biochemical_tube) {
+        $this->db->where('id_salmonella_hemoflow', $id_salmonella_hemoflow);
+        $this->db->where('id_salmonella_hemoflow_result_chromagar', $id_salmonella_hemoflow_result_chromagar);
         $this->db->where('biochemical_tube', $biochemical_tube);
         $this->db->where('flag', '0');
-        $query = $this->db->get('salmonella_result_biochemical');
+        $query = $this->db->get('salmonella_hemoflow_result_biochemical');
         return $query->row();
     }
 
     /**
      * Update biochemical result
      */
-    function updateBiochemicalResult($id_result_biochemical, $data) {
-        $this->db->where('id_result_biochemical', $id_result_biochemical);
-        $this->db->update('salmonella_result_biochemical', $data);
+    function updateBiochemicalResult($id_salmonella_hemoflow_result_biochemical, $data) {
+        $this->db->where('id_salmonella_hemoflow_result_biochemical', $id_salmonella_hemoflow_result_biochemical);
+        $this->db->update('salmonella_hemoflow_result_biochemical', $data);
         return $this->db->affected_rows();
     }
       
