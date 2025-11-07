@@ -174,36 +174,36 @@ class Salmonella_hemoflow_model extends CI_Model
                         CASE 
                             WHEN shrm.mpn_concentration IS NOT NULL AND hm.volume_eluted IS NOT NULL THEN
                                 CASE 
-                                    WHEN shrm.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted, 4))
-                                    WHEN shrm.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted, 4))
-                                    ELSE ROUND((CAST(shrm.mpn_concentration AS DECIMAL(10,2)) / 1000) * hm.volume_eluted, 4)
+                                    WHEN shrm.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted, 2))
+                                    WHEN shrm.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted, 2))
+                                    ELSE ROUND((CAST(shrm.mpn_concentration AS DECIMAL(10,2)) / 1000) * hm.volume_eluted, 2)
                                 END
                             ELSE NULL 
                         END as total_salmonella,
                         CASE 
                             WHEN shrm.mpn_concentration IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0 THEN
                                 CASE 
-                                    WHEN shrm.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND(((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter), 4))
-                                    WHEN shrm.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND(((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter), 4))
-                                    ELSE ROUND(((CAST(shrm.mpn_concentration AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter), 4)
+                                    WHEN shrm.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND(((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter), 2))
+                                    WHEN shrm.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND(((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter), 2))
+                                    ELSE ROUND(((CAST(shrm.mpn_concentration AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter), 2)
                                 END
                             ELSE NULL 
                         END as concentration_mpn_l,
                         CASE 
                             WHEN shrm.upper_ci IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0 THEN
                                 CASE 
-                                    WHEN shrm.upper_ci LIKE '>%' THEN CONCAT('>', ROUND((CAST(SUBSTRING(shrm.upper_ci, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 4))
-                                    WHEN shrm.upper_ci LIKE '<%' THEN CONCAT('<', ROUND((CAST(SUBSTRING(shrm.upper_ci, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 4))
-                                    ELSE ROUND((CAST(shrm.upper_ci AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 4)
+                                    WHEN shrm.upper_ci LIKE '>%' THEN CONCAT('>', ROUND((CAST(SUBSTRING(shrm.upper_ci, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 2))
+                                    WHEN shrm.upper_ci LIKE '<%' THEN CONCAT('<', ROUND((CAST(SUBSTRING(shrm.upper_ci, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 2))
+                                    ELSE ROUND((CAST(shrm.upper_ci AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 2)
                                 END
                             ELSE NULL 
                         END as concentration_upper_ci,
                         CASE 
                             WHEN shrm.lower_ci IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0 THEN
                                 CASE 
-                                    WHEN shrm.lower_ci LIKE '>%' THEN CONCAT('>', ROUND((CAST(SUBSTRING(shrm.lower_ci, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 4))
-                                    WHEN shrm.lower_ci LIKE '<%' THEN CONCAT('<', ROUND((CAST(SUBSTRING(shrm.lower_ci, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 4))
-                                    ELSE ROUND((CAST(shrm.lower_ci AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 4)
+                                    WHEN shrm.lower_ci LIKE '>%' THEN CONCAT('>', ROUND((CAST(SUBSTRING(shrm.lower_ci, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 2))
+                                    WHEN shrm.lower_ci LIKE '<%' THEN CONCAT('<', ROUND((CAST(SUBSTRING(shrm.lower_ci, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 2))
+                                    ELSE ROUND((CAST(shrm.lower_ci AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 2)
                                 END
                             ELSE NULL 
                         END as concentration_lower_ci,
