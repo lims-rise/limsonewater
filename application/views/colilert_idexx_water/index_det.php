@@ -123,7 +123,7 @@
                                             <th>E. Coli large wells</th>
                                             <th>E. Coli small wells</th>
                                             <th>E. Coli (MPN/100mL)</th>
-                                            <th>Lower detection limit MPN/100 mL</th>
+                                            <th>Lower confidence limit MPN/100 mL</th>
                                             <th>Coliforms large wells</th>
                                             <th>Coliforms small wells</th>
                                             <th>Total Coliforms (MPN/100mL)</th>
@@ -224,9 +224,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="lowerdetection" class="col-sm-4 control-label">Lower detection limit MPN/100 mL</label>
+                                        <label for="lowerdetection" class="col-sm-4 control-label">Lower confidence limit MPN/100 mL</label>
                                         <div class="col-sm-8">
-                                            <input id="lowerdetection" name="lowerdetection" type="text"  placeholder="Lower detection limit MPN/100 mL" class="form-control">
+                                            <input id="lowerdetection" name="lowerdetection" type="text"  placeholder="Lower confidence limit MPN/100 mL" class="form-control">
                                             <!-- <div class="val1tip"></div> -->
                                         </div>
                                     </div>

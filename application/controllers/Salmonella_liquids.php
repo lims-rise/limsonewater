@@ -999,54 +999,112 @@ class Salmonella_liquids extends CI_Controller
     public function delete_detailXld($id) {
         $row = $this->Salmonella_liquids_model->get_by_id_xld($id);
         if ($row) {
-            $id_parent = $row->id_result_xld; // Retrieve project_id before updating the record
+            $id_parent = $row->id_salmonella_liquids; // Get the main salmonella_liquids ID
             $data = array(
                 'flag' => 1,
             );
     
+            // Delete XLD result and its black colony plates
             $this->Salmonella_liquids_model->updateResultsXld($id, $data);
-            $this->Salmonella_liquids_model->updateResultsGrowthPlate($id, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
+            $this->Salmonella_liquids_model->updateResultsBlackColonyPlateXLD($id, $data);
+            
+            // CASCADE DELETE: Get all related ChroMagar results for this Salmonella Liquids
+            $related_chromagar = $this->Salmonella_liquids_model->get_chromagar_by_salmonella_liquids($id_parent);
+            
+            if ($related_chromagar) {
+                foreach ($related_chromagar as $chromagar) {
+                    // Delete each ChroMagar result and its related data
+                    $this->Salmonella_liquids_model->updateResultsChroMagar($chromagar->id_result_chromagar, $data);
+                    $this->Salmonella_liquids_model->updateResultsPurpleColonyPlateByChromagar($chromagar->id_result_chromagar, $data);
+                    
+                    // Also delete related Biochemical results
+                    $this->Salmonella_liquids_model->updateResultsBiochemicalByChromagar($chromagar->id_result_chromagar, $data);
+                }
+                $this->session->set_flashdata('message', 'XLD result and all related ChroMagar/Biochemical data deleted successfully');
+            } else {
+                $this->session->set_flashdata('message', 'XLD result deleted successfully');
+            }
+
+            // Return JSON response for AJAX
+            header('Content-Type: application/json');
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'XLD result and all related data deleted successfully'
+            ]);
+            return;
+            
         } else {
-            $this->session->set_flashdata('message', 'Record Not Found');
+            // Return JSON error response
+            header('Content-Type: application/json');
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Record Not Found'
+            ]);
+            return;
         }
-    
-        redirect(site_url('salmonella_liquids/read/'.$id_parent));
     }
 
     public function delete_detailChromagar($id) {
         $row = $this->Salmonella_liquids_model->get_by_id_chromagar($id);
         if ($row) {
-            $id_parent = $row->id_result_xld; // Retrieve project_id before updating the record
+            $id_parent = $row->id_salmonella_liquids; // Get the main salmonella_liquids ID
             $data = array(
                 'flag' => 1,
             );
-    
-            $this->Salmonella_liquids_model->updateResultsChromagar($id, $data);
-            $this->Salmonella_liquids_model->updateResultsBlackColonyPlateChromagar($id, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
+
+            // Delete ChroMagar result and its purple colony plates
+            $this->Salmonella_liquids_model->updateResultsChroMagar($id, $data);
+            $this->Salmonella_liquids_model->updateResultsPurpleColonyPlateByChromagar($id, $data);
+            
+            // Also delete related Biochemical results for this ChroMagar
+            $this->Salmonella_liquids_model->updateResultsBiochemicalByChromagar($id, $data);
+            
+            // Return JSON response for AJAX
+            header('Content-Type: application/json');
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'ChroMagar result and related Biochemical data deleted successfully'
+            ]);
+            return;
+            
         } else {
-            $this->session->set_flashdata('message', 'Record Not Found');
+            // Return JSON error response
+            header('Content-Type: application/json');
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Record Not Found'
+            ]);
+            return;
         }
-    
-        redirect(site_url('salmonella_liquids/read/'.$id_parent));
     }
 
     public function delete_detailBiochemical($id) {
         $row = $this->Salmonella_liquids_model->get_by_id_biochemical($id);
         if ($row) {
-            $id_parent = $row->id_result_xld; // Retrieve project_id before updating the record
+            $id_parent = $row->id_salmonella_liquids; // Get the main salmonella_liquids ID
             $data = array(
                 'flag' => 1,
             );
     
             $this->Salmonella_liquids_model->updateResultsBiochemical($id, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
+            
+            // Return JSON response for AJAX
+            header('Content-Type: application/json');
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Biochemical result deleted successfully'
+            ]);
+            return;
+            
         } else {
-            $this->session->set_flashdata('message', 'Record Not Found');
+            // Return JSON error response
+            header('Content-Type: application/json');
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Record Not Found'
+            ]);
+            return;
         }
-    
-        redirect(site_url('salmonella_liquids/read/'.$id_parent));
     }
 
     public function getIdOneWaterDetails()

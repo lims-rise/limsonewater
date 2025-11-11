@@ -30,7 +30,20 @@
                                     }
                             ?>        
                             <?php echo anchor(site_url('Sample_reception/excel'), '<i class="fa fa-file-excel-o"></i> Export to XLS', 'class="btn btn-success"'); ?>
+                            <button class='btn btn-info' id='advanceSearchBtn'><i class='fa fa-search-plus'></i> Advanced Search</button>
+                            <button class='btn btn-warning' id='clearSearchBtn' style='display:none;'><i class='fa fa-refresh'></i> Clear Filters</button>
                         </div>
+                        
+                        <!-- Active Filters Display -->
+                        <div id="activeFiltersDisplay" style="display:none; margin-bottom: 15px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #17a2b8; border-radius: 4px;">
+                            <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px;">
+                                <span style="font-weight: 600; color: #17a2b8; margin-right: 10px;">
+                                    <i class="fa fa-filter"></i> Active Filters:
+                                </span>
+                                <div id="filterTags" style="display: flex; flex-wrap: wrap; gap: 6px;"></div>
+                            </div>
+                        </div>
+                        
                             <div class="table-responsive">
                             <table class="table table-bordered table-striped" id="mytable" style="width:100%">
                                 <thead>
@@ -519,6 +532,253 @@
                 </div>
             </div>
 
+<!-- ADVANCED SEARCH MODAL -->
+<div class="modal fade" id="advancedSearchModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #17a2b8; color: white;">
+                <button type="button" class="close" data-dismiss="modal" style="color: white;">&times;</button>
+                <h4 class="modal-title">
+                    <i class="fa fa-search-plus"></i> Advanced Search - Sample Reception
+                </h4>
+            </div>
+            <form id="advancedSearchForm">
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Project Level Filters -->
+                        <div class="col-md-12">
+                            <h5 style="color: #17a2b8; border-bottom: 2px solid #17a2b8; padding-bottom: 5px; margin-bottom: 15px;">
+                                <i class="fa fa-folder-o"></i> Project Level Filters
+                            </h5>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="search_project_id" class="control-label">Project ID</label>
+                                <input type="text" class="form-control" id="search_project_id" name="search_project_id" placeholder="e.g., MU25xxxxx">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="search_client_quote" class="control-label">Client Quote Number</label>
+                                <input type="text" class="form-control" id="search_client_quote" name="search_client_quote" placeholder="Client quote number">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="search_client_sample_id" class="control-label">Project Description</label>
+                                <input type="text" class="form-control" id="search_client_sample_id" name="search_client_sample_id" placeholder="e.g., ALS Campy, MW Hemoflow, etc.">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="search_client_name" class="control-label">Client Name</label>
+                                <input type="text" class="form-control" id="search_client_name" name="search_client_name" placeholder="e.g., Mellisa Steele, Darren Cottam, etc.">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="search_date_arrive_from" class="control-label">Date Arrived (From)</label>
+                                <input type="date" class="form-control" id="search_date_arrive_from" name="search_date_arrive_from">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="search_date_arrive_to" class="control-label">Date Arrived (To)</label>
+                                <input type="date" class="form-control" id="search_date_arrive_to" name="search_date_arrive_to">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row" style="margin-top: 20px;">
+                        <!-- Sample Level Filters -->
+                        <div class="col-md-12">
+                            <h5 style="color: #28a745; border-bottom: 2px solid #28a745; padding-bottom: 5px; margin-bottom: 15px;">
+                                <i class="fa fa-flask"></i> Sample Level Filters
+                            </h5>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="search_sample_id" class="control-label">Water Sample ID</label>
+                                <input type="text" class="form-control" id="search_sample_id" name="search_sample_id" placeholder="e.g., P25xxxxx">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="search_sampletype" class="control-label">Sample Type</label>
+                                <select class="form-control" id="search_sampletype" name="search_sampletype">
+                                    <option value="">-- All Sample Types --</option>
+                                    <?php foreach($sampletype as $st): ?>
+                                        <option value="<?= $st['id_sampletype'] ?>"><?= $st['sampletype'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="search_lab_tech" class="control-label">Receiving Lab Tech</label>
+                                <select class="form-control" id="search_lab_tech" name="search_lab_tech">
+                                    <option value="">-- All Lab Technicians --</option>
+                                    <?php foreach($labtech as $lt): ?>
+                                        <option value="<?= $lt['id_person'] ?>"><?= $lt['realname'] ?> (<?= $lt['initial'] ?>)</option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="search_quality_check" class="control-label">Quality Check Status</label>
+                                <select class="form-control" id="search_quality_check" name="search_quality_check">
+                                    <option value="">-- All Status --</option>
+                                    <option value="0">Unchecked</option>
+                                    <option value="1">Checked</option>
+                                    <option value="2">Crossed</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="search_date_collected_from" class="control-label">Date Collected (From)</label>
+                                <input type="date" class="form-control" id="search_date_collected_from" name="search_date_collected_from">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="search_date_collected_to" class="control-label">Date Collected (To)</label>
+                                <input type="date" class="form-control" id="search_date_collected_to" name="search_date_collected_to">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="search_client_id" class="control-label">Client ID</label>
+                                <input type="text" class="form-control" id="search_client_id" name="search_client_id" placeholder="e.g., 00023222, 9008, NA, etc.">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="comments_sample" class="control-label">Sample Description</label>
+                                <input type="text" class="form-control" id="comments_sample" name="comments_sample" placeholder="e.g., deer">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row" style="margin-top: 20px;">
+                        <!-- Testing Level Filters -->
+                        <div class="col-md-12">
+                            <h5 style="color: #ffc107; border-bottom: 2px solid #ffc107; padding-bottom: 5px; margin-bottom: 15px;">
+                                <i class="fa fa-cogs"></i> Testing Level Filters
+                            </h5>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="search_barcode" class="control-label">Barcode</label>
+                                <input type="text" class="form-control" id="search_barcode" name="search_barcode" placeholder="e.g., PR25xxxxx, HM25xxxxx, CL25xxxxx, etc.">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="search_testing_type" class="control-label">Testing Type</label>
+                                <select class="form-control" id="search_testing_type" name="search_testing_type">
+                                    <option value="">-- All Testing Types --</option>
+                                    <option value="Biobank-In">Biobank In</option>
+                                    <option value="Colilert-Idexx-Water">Colilert Idexx Water</option>
+                                    <option value="Enterolert-Idexx-Water">Enterolert Idexx Water</option>
+                                    <option value="Moisture_content">Moisture Content</option>
+                                    <option value="Salmonella-P/A">Salmonella P/A</option>
+                                    <option value="Protozoa">Protozoa</option>
+                                    <option value="Enterolert-Hemoflow">Enterolert Hemoflow</option>
+                                    <option value="Colilert-Hemoflow">Colilert Hemoflow</option>
+                                    <option value="Campy-Hemoflow">Campy Hemoflow</option>
+                                    <option value="Salmonella-Hemoflow">Salmonella Hemoflow</option>
+                                    <option value="Homeflow">Homeflow</option>
+                                    <option value="Colilert-Idexx-Biosolids">Colilert Idexx Biosolids</option>
+                                    <option value="Enterolert-Idexx-Biosolids">Enterolert Idexx Biosolids</option>
+                                    <option value="Extraction-Metagenome">Extraction Metagenome</option>
+                                    <option value="Extraction-Culture-Plate">Extraction Culture Plate</option>
+                                    <option value="Extraction-Liquids">Extraction Liquids</option>
+                                    <option value="Campylobacter-Biosolids">Campylobacter Biosolids</option>
+                                    <option value="Salmonella-Biosolids">Salmonella Biosolids</option>
+                                    <option value="Extraction-Biosolids">Extraction Biosolids</option>
+                                    <option value="Salmonella-Liquids">Salmonella Liquids</option>
+                                    <option value="Campylobacter-Liquids">Campylobacter Liquids</option>
+                                    <option value="Campylobacter-QPCR">Campylobacter QPCR</option>
+                                    <option value="Campylobacter-P/A">Campylobacter P/A</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="search_review_status" class="control-label">Review Status</label>
+                                <select class="form-control" id="search_review_status" name="search_review_status">
+                                    <option value="">-- All Review Status --</option>
+                                    <option value="Complete">Complete</option>
+                                    <option value="Partial">Partial</option>
+                                    <option value="Incomplete">Incomplete</option>
+                                    <option value="No Tests">No Tests</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="search_completion_rate" class="control-label">Completion Rate (%)</label>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <input type="number" class="form-control" id="search_completion_rate_min" name="search_completion_rate_min" 
+                                               placeholder="Min %" min="0" max="100" step="10">
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <input type="number" class="form-control" id="search_completion_rate_max" name="search_completion_rate_max" 
+                                               placeholder="Max %" min="0" max="100" step="10">
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                    
+                    <!-- Search Actions -->
+                    <div class="row" style="margin-top: 30px;">
+                        <div class="col-md-12">
+                            <div class="alert alert-info">
+                                <i class="fa fa-info-circle"></i> 
+                                Use more filters for more specific results. All fields are optional.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-search"></i> Apply Search
+                    </button>
+                    <button type="button" class="btn btn-default" id="resetAdvancedSearch">
+                        <i class="fa fa-refresh"></i> Reset
+                    </button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">
+                        <i class="fa fa-times"></i> Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 <style>
     .highlight {
@@ -831,6 +1091,154 @@
     .status-icon-no-samples {
         /* border-color: rgba(107, 114, 128, 0.2); */
         background: rgba(107, 114, 128, 0.1);
+    }
+
+    /* Advanced Search Modal Styling */
+    #advancedSearchModal .modal-content {
+        border-radius: 8px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    #advancedSearchModal .modal-header {
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+    }
+
+    #advancedSearchModal .form-group {
+        margin-bottom: 15px;
+    }
+
+    #advancedSearchModal .form-group label {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 5px;
+    }
+
+    #advancedSearchModal .form-control {
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        padding: 8px 12px;
+        transition: all 0.3s ease;
+    }
+
+    #advancedSearchModal .form-control:focus {
+        border-color: #17a2b8;
+        box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25);
+    }
+
+    #advancedSearchModal h5 {
+        font-weight: 700;
+        margin-bottom: 15px;
+        padding: 10px 0;
+    }
+
+    #advancedSearchModal .alert-info {
+        background-color: #f8f9fa;
+        border: 1px solid #17a2b8;
+        border-radius: 5px;
+        padding: 12px;
+    }
+
+    /* Advanced Search Button Styling */
+    #advanceSearchBtn {
+        background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+        border: 1px solid #117a8b;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    #advanceSearchBtn:hover {
+        background: linear-gradient(135deg, #138496 0%, #117a8b 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(23, 162, 184, 0.3);
+    }
+
+    #clearSearchBtn {
+        background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+        border: 1px solid #d39e00;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    #clearSearchBtn:hover {
+        background: linear-gradient(135deg, #e0a800 0%, #d39e00 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(255, 193, 7, 0.3);
+    }
+
+    /* Filter indicator */
+    .filter-active {
+        position: relative;
+    }
+
+    .filter-active::after {
+        content: '';
+        position: absolute;
+        top: -2px;
+        right: -2px;
+        width: 8px;
+        height: 8px;
+        background-color: #dc3545;
+        border-radius: 50%;
+        border: 2px solid white;
+    }
+
+    /* Advanced Search Form Enhancements */
+    #advancedSearchModal .row {
+        margin-left: -5px;
+        margin-right: -5px;
+    }
+
+    #advancedSearchModal .col-md-6 {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    /* Search result indicator */
+    .search-highlight {
+        background-color: rgba(255, 235, 59, 0.3);
+        padding: 2px 4px;
+        border-radius: 3px;
+    }
+
+    /* Active Filters Display */
+    #activeFiltersDisplay {
+        animation: slideDown 0.3s ease-out;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .filter-tag {
+        background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 600;
+        border: 1px solid #117a8b;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        display: inline-block;
+    }
+
+    .filter-tag .filter-label {
+        margin-right: 4px;
+    }
+
+    .filter-tag .filter-value {
+        background-color: rgba(255, 255, 255, 0.2);
+        padding: 1px 4px;
+        border-radius: 6px;
+        margin-left: 4px;
     }
 
 
@@ -2490,6 +2898,200 @@ $(document).ready(function() {
         updateFileButtonsState();
         updateSupplementaryFileButtonsState();
     });
+
+    // ========== ADVANCED SEARCH FUNCTIONALITY ==========
+    let activeAdvancedFilters = {};
+    let originalServerParams = {};
+    
+    // Open Advanced Search Modal
+    $('#advanceSearchBtn').click(function() {
+        $('#advancedSearchModal').modal('show');
+    });
+
+    // Reset Advanced Search Form
+    $('#resetAdvancedSearch').click(function() {
+        $('#advancedSearchForm')[0].reset();
+        activeAdvancedFilters = {};
+        updateFilterIndicator();
+    });
+
+    // Clear All Filters
+    $('#clearSearchBtn').click(function() {
+        // Reset form
+        $('#advancedSearchForm')[0].reset();
+        activeAdvancedFilters = {};
+        
+        // Reset DataTable search
+        if (table) {
+            // Store original server params
+            originalServerParams = table.ajax.params();
+            
+            // Reset to normal search mode
+            table.ajax.url('Sample_reception/json').load();
+        }
+        
+        // Update UI
+        $('#clearSearchBtn').hide();
+        $('#advanceSearchBtn').removeClass('filter-active');
+        updateFilterIndicator();
+        
+        Swal.fire({
+            icon: 'success',
+            title: 'Filters Cleared',
+            text: 'All advanced search filters have been cleared.',
+            timer: 2000,
+            showConfirmButton: false
+        });
+    });
+
+    // Advanced Search Form Submit
+    $('#advancedSearchForm').submit(function(e) {
+        e.preventDefault();
+        
+        // Collect all form data
+        let formData = $(this).serializeArray();
+        activeAdvancedFilters = {};
+        
+        // Build filter object from form data
+        $.each(formData, function(i, field) {
+            if (field.value && field.value.trim() !== '') {
+                activeAdvancedFilters[field.name] = field.value.trim();
+            }
+        });
+
+        // Apply search if we have filters
+        if (Object.keys(activeAdvancedFilters).length > 0) {
+            applyAdvancedSearch();
+        } else {
+            Swal.fire({
+                icon: 'warning',
+                title: 'No Filters',
+                text: 'Please select at least one filter criteria.',
+                confirmButtonText: 'OK'
+            });
+        }
+    });
+
+    // Apply Advanced Search
+    function applyAdvancedSearch() {
+        if (!table) return;
+        
+        // Update DataTable Ajax URL with search parameters
+        let searchParams = $.param(activeAdvancedFilters);
+        let newUrl = 'Sample_reception/advanced_search?' + searchParams;
+        
+        table.ajax.url(newUrl).load(function() {
+            // Close modal
+            $('#advancedSearchModal').modal('hide');
+            
+            // Update UI
+            $('#clearSearchBtn').show();
+            $('#advanceSearchBtn').addClass('filter-active');
+            updateFilterIndicator();
+            
+            // Show success message with filter count
+            let filterCount = Object.keys(activeAdvancedFilters).length;
+            Swal.fire({
+                icon: 'success',
+                title: 'Search Applied',
+                text: `Applied ${filterCount} filter(s) to the search.`,
+                timer: 2000,
+                showConfirmButton: false
+            });
+        });
+    }
+
+    // Update filter indicator
+    function updateFilterIndicator() {
+        let filterCount = Object.keys(activeAdvancedFilters).length;
+        if (filterCount > 0) {
+            $('#advanceSearchBtn').addClass('filter-active');
+            $('#clearSearchBtn').show();
+            displayActiveFilters();
+        } else {
+            $('#advanceSearchBtn').removeClass('filter-active');
+            $('#clearSearchBtn').hide();
+            $('#activeFiltersDisplay').hide();
+        }
+    }
+
+    // Display active filters as tags
+    function displayActiveFilters() {
+        if (Object.keys(activeAdvancedFilters).length === 0) {
+            $('#activeFiltersDisplay').hide();
+            return;
+        }
+
+        let filterLabels = {
+            'search_project_id': 'Project ID',
+            'search_client_quote': 'Quote Number',
+            'search_client_sample_id': 'Client Sample ID',
+            'search_client_name': 'Client Name',
+            'search_date_arrive_from': 'Date Arrived From',
+            'search_date_arrive_to': 'Date Arrived To',
+            'search_sample_id': 'Sample ID',
+            'search_sampletype': 'Sample Type',
+            'search_lab_tech': 'Lab Tech',
+            'search_quality_check': 'Quality Check',
+            'search_date_collected_from': 'Date Collected From',
+            'search_date_collected_to': 'Date Collected To',
+            'search_client_id': 'Client ID',
+            'comments_sample': 'Description/Comments',
+            'search_barcode': 'Barcode',
+            'search_testing_type': 'Testing Type',
+            'search_review_status': 'Review Status',
+            'search_completion_rate_min': 'Min Completion %',
+            'search_completion_rate_max': 'Max Completion %'
+        };
+
+        let tagsHtml = '';
+        for (let key in activeAdvancedFilters) {
+            let label = filterLabels[key] || key;
+            let value = activeAdvancedFilters[key];
+            
+            // Special handling for select dropdowns
+            if (key === 'search_sampletype') {
+                let selectedOption = $('#search_sampletype option:selected').text();
+                if (selectedOption !== '-- All Sample Types --') {
+                    value = selectedOption;
+                }
+            } else if (key === 'search_lab_tech') {
+                let selectedOption = $('#search_lab_tech option:selected').text();
+                if (selectedOption !== '-- All Lab Technicians --') {
+                    value = selectedOption;
+                }
+            } else if (key === 'search_quality_check') {
+                let qualityLabels = {'0': 'Unchecked', '1': 'Checked', '2': 'Crossed'};
+                value = qualityLabels[value] || value;
+            }
+
+            tagsHtml += `<span class="filter-tag">
+                <span class="filter-label">${label}:</span>
+                <span class="filter-value">${value}</span>
+            </span>`;
+        }
+
+        $('#filterTags').html(tagsHtml);
+        $('#activeFiltersDisplay').show();
+    }
+
+    // Enhanced search highlighting
+    function highlightSearchTerms(text, searchTerms) {
+        if (!text || !searchTerms || searchTerms.length === 0) return text;
+        
+        let highlightedText = text;
+        searchTerms.forEach(term => {
+            if (term && term.length > 0) {
+                let regex = new RegExp(`(${term})`, 'gi');
+                highlightedText = highlightedText.replace(regex, '<span class="search-highlight">$1</span>');
+            }
+        });
+        
+        return highlightedText;
+    }
+
+    // Initialize filter indicator
+    updateFilterIndicator();
 });
 </script>
 
