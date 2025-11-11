@@ -83,6 +83,174 @@ class Sample_reception_model extends CI_Model
         return $this->datatables->generate();
     }
 
+    public function advanced_search_json() {
+        // Base query dengan joins yang diperlukan untuk advanced search
+        $this->datatables->select('
+            NULL AS toggle, 
+            sr.id_project, 
+            sr.client_quote_number, 
+            sr.client, 
+            sr.id_client_sample, 
+            COALESCE(cc.client_name, sr.client, "Unknown Client") as client_name, 
+            sr.id_client_contact, 
+            sr.number_sample, 
+            sr.comments,
+            sr.files, 
+            sr.supplementary_files, 
+            sr.date_arrive, 
+            sr.time_arrive, 
+            sr.date_created, 
+            sr.date_updated, 
+            sr.flag
+        ', FALSE);
+        
+        $this->datatables->from('sample_reception sr');
+        $this->datatables->join('ref_client cc', 'sr.id_client_contact = cc.id_client_contact AND cc.flag = 0', 'left');
+        $this->datatables->join('sample_reception_sample srs', 'sr.id_project = srs.id_project AND srs.flag = 0', 'left');
+        $this->datatables->join('ref_sampletype rst', 'srs.id_sampletype = rst.id_sampletype AND rst.flag = 0', 'left');
+        $this->datatables->join('ref_person rp', 'srs.id_person = rp.id_person AND rp.flag = 0', 'left');
+        $this->datatables->join('sample_reception_testing srt', 'srs.id_sample = srt.id_sample AND srt.flag = 0', 'left');
+        $this->datatables->join('ref_testing rt', 'srt.id_testing_type = rt.id_testing_type AND rt.flag = 0', 'left');
+        
+        // Apply advanced search filters
+        $this->apply_advanced_search_filters();
+        
+        // Base condition
+        $this->datatables->where('sr.flag', '0');
+        
+        // Group by untuk menghindari duplicate rows
+        $this->datatables->group_by('sr.id_project');
+        
+        $lvl = $this->session->userdata('id_user_level');
+        
+        // Kolom Toggle (Sisi Kiri)
+        $this->datatables->add_column('toggle', 
+            '<button type="button" class="btn btn-sm btn-primary toggle-child">
+                <i class="fa fa-plus-square"></i>
+            </button>', 
+        'id_project');
+        
+        // Kolom Action dengan permission levels
+        if ($lvl == 4) {
+            // Level 4 (ViewOnly) - Tidak ada button yang bisa diakses
+            $this->datatables->add_column('action', '-', 'id_project');
+        } else if ($lvl == 3) {
+            // Level 3 (User) - Bisa akses print dan edit, tapi tidak delete
+            $this->datatables->add_column('action', 
+            anchor(site_url('sample_reception/rep_print/$1'), 
+                '<i class="fa fa-print" aria-hidden="true"></i>', 
+                array('class' => 'btn btn-warning btn-sm')) . 
+            "
+                " . anchor(site_url('sample_reception/rep_print2/$1'), 
+                '<i class="fa fa-print" aria-hidden="true"></i>', 
+                array('class' => 'btn btn-success btn-sm')) . 
+            "
+                " . '<button type="button" class="btn_edit btn btn-info btn-sm">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </button>', 'id_project');
+        } else {
+            // Level 1 (Super Admin) dan Level 2 (Admin) - Bisa akses semua button
+            $this->datatables->add_column('action', 
+            anchor(site_url('sample_reception/rep_print/$1'), 
+                '<i class="fa fa-print" aria-hidden="true"></i>', 
+                array('class' => 'btn btn-warning btn-sm')) . 
+            "
+                " . anchor(site_url('sample_reception/rep_print2/$1'), 
+                '<i class="fa fa-print" aria-hidden="true"></i>', 
+                array('class' => 'btn btn-success btn-sm')) . 
+            "
+                " . '<button type="button" class="btn_edit btn btn-info btn-sm">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </button>' . " 
+                " . '<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </button>', 'id_project');
+        }
+        
+        $this->db->order_by('sr.date_created', 'DESC');
+        
+        return $this->datatables->generate();
+    }
+    
+    private function apply_advanced_search_filters() {
+        // Project Level Filters
+        if ($this->input->get_post('search_project_id')) {
+            $this->datatables->like('sr.id_project', $this->input->get_post('search_project_id'));
+        }
+        
+        if ($this->input->get_post('search_client_quote')) {
+            $this->datatables->like('sr.client_quote_number', $this->input->get_post('search_client_quote'));
+        }
+        
+        if ($this->input->get_post('search_client_sample_id')) {
+            $this->datatables->like('sr.id_client_sample', $this->input->get_post('search_client_sample_id'));
+        }
+        
+        if ($this->input->get_post('search_client_name')) {
+            $client_name = $this->input->get_post('search_client_name');
+            // $this->datatables->group_start();
+            $this->datatables->like('sr.client', $client_name);
+            $this->datatables->or_like('cc.client_name', $client_name);
+            // $this->datatables->group_end();
+        }
+        
+        if ($this->input->get_post('search_date_arrive_from')) {
+            $this->datatables->where('sr.date_arrive >=', $this->input->get_post('search_date_arrive_from'));
+        }
+        
+        if ($this->input->get_post('search_date_arrive_to')) {
+            $this->datatables->where('sr.date_arrive <=', $this->input->get_post('search_date_arrive_to'));
+        }
+        
+        // Sample Level Filters
+        if ($this->input->get_post('search_sample_id')) {
+            $this->datatables->like('srs.id_one_water_sample', $this->input->get_post('search_sample_id'));
+        }
+        
+        if ($this->input->get_post('search_sampletype')) {
+            $this->datatables->where('srs.id_sampletype', $this->input->get_post('search_sampletype'));
+        }
+        
+        if ($this->input->get_post('search_lab_tech')) {
+            $this->datatables->where('srs.id_person', $this->input->get_post('search_lab_tech'));
+        }
+        
+        if ($this->input->get_post('search_quality_check') !== null && $this->input->get_post('search_quality_check') !== '') {
+            $this->datatables->where('srs.quality_check', $this->input->get_post('search_quality_check'));
+        }
+        
+        if ($this->input->get_post('search_date_collected_from')) {
+            $this->datatables->where('srs.date_collected >=', $this->input->get_post('search_date_collected_from'));
+        }
+        
+        if ($this->input->get_post('search_date_collected_to')) {
+            $this->datatables->where('srs.date_collected <=', $this->input->get_post('search_date_collected_to'));
+        }
+        
+        if ($this->input->get_post('search_client_id')) {
+            $this->datatables->like('srs.client_id', $this->input->get_post('search_client_id'));
+        }
+        
+        // Sample Description/Comments - sesuai request dengan id komponen comments_sample
+        // Fokus pada sample level comments (srs.comments) untuk menghindari kompleksitas JOIN
+        if ($this->input->get_post('comments_sample')) {
+            $comments = $this->input->get_post('comments_sample');
+            $this->datatables->like('srs.comments', $comments);
+        }
+        
+        // Testing Level Filters
+        if ($this->input->get_post('search_barcode')) {
+            $this->datatables->like('srt.barcode', $this->input->get_post('search_barcode'));
+        }
+        
+        if ($this->input->get_post('search_testing_type')) {
+            $this->datatables->like('rt.testing_type', $this->input->get_post('search_testing_type'));
+        }
+        
+        // Review Status dan Completion Rate akan memerlukan subquery yang lebih kompleks
+        // Untuk sekarang, mari fokus pada filter dasar yang sudah ada
+    }
+
     // Method to get project status for a specific project
     public function get_project_status($id_project) {
         // Get project statistics using similar logic as Dashboard_model

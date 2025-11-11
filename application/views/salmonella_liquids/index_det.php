@@ -2060,44 +2060,123 @@
             $('#confirm-modal-delete').modal('show');
         }
 
-        // Handle the delete button click
+        // Handle the delete button click with SweetAlert and cascade warnings
         $(document).on('click', '.btn_deleteXld, .btn_deleteChromagar, .btn_deleteBiochemical', function() {
             let id = $(this).data('id');
             let url;
+            let title;
+            let warningMessage;
+            let icon = 'warning';
+
             if ($(this).hasClass('btn_deleteXld')) {
                 url = '<?php echo site_url('Salmonella_liquids/delete_detailXld'); ?>/' + id;
-                $('.modal-title').html('<i class="fa fa-trash"></i> Result XLD | Delete <span id="my-another-cool-loader"></span>');
-                $('#confirm-modal-delete #id').text(id);
+                title = '⚠️ Critical Warning - Delete XLD Result?';
+                warningMessage = `
+                    <div style="text-align: left; margin-top: 15px;">
+                        <p><i class="fa fa-exclamation-triangle" style="color: #dc3545; margin-right: 8px;"></i><strong>This will permanently delete XLD result ID: ${id}</strong></p>
+                        <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; margin: 15px 0;">
+                            <p style="margin: 5px 0;"><strong>⚠️ CASCADE DELETE WARNING:</strong></p>
+                            <p style="margin: 5px 0;">• All related <strong>ChroMagar results</strong> will also be deleted</p>
+                            <p style="margin: 5px 0;">• All related <strong>Tube results</strong> will also be deleted</p>
+                        </div>
+                        <p style="color: #dc3545; font-weight: bold;">This action cannot be undone!</p>
+                    </div>
+                `;
+                icon = 'error';
             } else if ($(this).hasClass('btn_deleteChromagar')) {
                 url = '<?php echo site_url('Salmonella_liquids/delete_detailChromagar'); ?>/' + id;
-                $('.modal-title').html('<i class="fa fa-trash"></i> Result Chromagar | Delete <span id="my-another-cool-loader"></span>');
-                $('#confirm-modal-delete #id').text(id);
+                title = '⚠️ Warning - Delete ChroMagar Result?';
+                warningMessage = `
+                    <div style="text-align: left; margin-top: 15px;">
+                        <p><i class="fa fa-exclamation-triangle" style="color: #f39c12; margin-right: 8px;"></i><strong>This will permanently delete ChroMagar result ID: ${id}</strong></p>
+                        <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; margin: 15px 0;">
+                            <p style="margin: 5px 0;"><strong>⚠️ CASCADE DELETE WARNING:</strong></p>
+                            <p style="margin: 5px 0;">• All related <strong>Tube results</strong> will also be deleted</p>
+                        </div>
+                        <p style="color: #f39c12; font-weight: bold;">This action cannot be undone!</p>
+                    </div>
+                `;
             } else if ($(this).hasClass('btn_deleteBiochemical')) {
                 url = '<?php echo site_url('Salmonella_liquids/delete_detailBiochemical'); ?>/' + id;
-                $('.modal-title').html('<i class="fa fa-trash"></i> Result | Delete <span id="my-another-cool-loader"></span>');
-                $('#confirm-modal-delete #id').text(id);
+                title = 'Delete Biochemical Result?';
+                warningMessage = `
+                    <div style="text-align: left; margin-top: 15px;">
+                        <p><i class="fa fa-trash" style="color: #6c757d; margin-right: 8px;"></i><strong>This will permanently delete Biochemical result ID: ${id}</strong></p>
+                        <div style="background-color: #e2e3e5; border-left: 4px solid #6c757d; padding: 10px; margin: 15px 0;">
+                            <p style="margin: 5px 0;"><strong>ℹ️ INDEPENDENT DELETE:</strong></p>
+                            <p style="margin: 5px 0;">• Only this Biochemical result will be deleted</p>
+                            <p style="margin: 5px 0;">• XLD and ChroMagar results will remain intact</p>
+                        </div>
+                        <p style="color: #6c757d;">This action cannot be undone!</p>
+                    </div>
+                `;
+                icon = 'question';
             }
 
-            showConfirmationDelete(url);
-
-        });
-
-        // When the confirm-delete button is clicked
-        $('#confirm-delete').click(function() {
-            $.ajax({
-                url: deleteUrl,
-                type: 'POST',
-                dataType: 'json',
-                success: function(response) {
-                    if (response.status === 'success') {
-                        alert(response.message);
-                    } else {
-                        alert(response.message);
-                    }
+            Swal.fire({
+                title: title,
+                html: warningMessage,
+                icon: icon,
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: '<i class="fa fa-trash"></i> Yes, Delete It!',
+                cancelButtonText: '<i class="fa fa-times"></i> Cancel',
+                customClass: {
+                    popup: 'swal-wide'
                 },
-                complete: function() {
-                    $('#confirm-modal-delete').modal('hide');
-                    location.reload();
+                beforeOpen: function() {
+                    $('.swal2-confirm').addClass('btn-loading');
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Show loading state
+                    Swal.fire({
+                        title: 'Deleting...',
+                        text: 'Please wait while we process your request.',
+                        icon: 'info',
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                        willOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+
+                    // Perform AJAX delete
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: response.message,
+                                    icon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 2000,
+                                    timerProgressBar: true
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: response.message,
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'An error occurred while processing your request: ' + error,
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    });
                 }
             });
         });
@@ -2326,7 +2405,7 @@
             },
             drawCallback: function(settings) {
                 // Auto-processing: biochemical results are automatically generated when ChroMagar data is saved
-                console.log('ChroMagar table updated - auto-processing will handle biochemical results');
+                console.log('ChroMagar table updated - auto-processing will handle tube results');
             }
         });
 
@@ -2378,14 +2457,14 @@
                 generateResultBiochemical($('#content-result-biochemical'), plateNumberArray.length, dataChromagar.id_salmonella_liquids, plateNumberArray, purpleColonyPlateArray, blackColonyPlateArray);
                 
                 // Auto-processing: biochemical results are automatically generated/updated
-                console.log('Data loaded - auto-processing active for biochemical results');
+                console.log('Data loaded - auto-processing active for tube results');
             } else {
                 console.log('Data belum tersedia');
                 $('#content-result-biochemical').empty().append(`
                     <div class="box-body pad">
                         <div class="alert alert-warning">
                             <h4><i class="icon fa fa-info"></i> No Data Available</h4>
-                            Please save XLD and ChroMagar data first. Biochemical results will be automatically generated.
+                            Please save XLD and ChroMagar data first. Tube results will be automatically generated.
                         </div>
                     </div>
                 `);
@@ -2402,7 +2481,7 @@
                 <div class="box-body pad">
                     <div class="alert alert-info">
                         <h4><i class="icon fa fa-check"></i> Auto-Processing Enabled!</h4>
-                        Biochemical results are automatically generated based on XLD and ChroMagar data. 
+                        Tube results are automatically generated based on XLD and ChroMagar data. 
                         No manual entry required - results are available in the Final Concentration section.
                         <br><br>
                         <strong>Auto-Processing Logic:</strong><br>
@@ -2412,7 +2491,7 @@
                 </div>
             `);
 
-            console.log('Auto-processing enabled - biochemical results generated automatically');
+            console.log('Auto-processing enabled - tube results generated automatically');
         }
 
 
@@ -2677,7 +2756,7 @@
 
         // Auto-processing: biochemical results are automatically handled by the system
         setTimeout(function() {
-            console.log('Page loaded - auto-processing system is active for biochemical results');
+            console.log('Page loaded - auto-processing system is active for tube results');
             
             // Check if auto-save notification exists and reload tables if needed
             if ($('.alert-success:contains("Auto-Processing Complete")').length > 0) {

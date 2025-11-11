@@ -759,6 +759,43 @@ class Salmonella_liquids_model extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+
+    // CASCADE DELETE METHODS - Added to match Salmonella Hemoflow functionality
+
+    /**
+     * Get all ChroMagar results for cascade deletion from XLD
+     */
+    function get_chromagar_by_salmonella_liquids($id_salmonella_liquids) {
+        $this->db->select('id_result_chromagar, id_salmonella_liquids');
+        $this->db->from('salmonella_result_chromagar_liquids');
+        $this->db->where('id_salmonella_liquids', $id_salmonella_liquids);
+        $this->db->where('flag', '0');
+        return $this->db->get()->result();
+    }
+
+    /**
+     * Update purple colony plates for ChroMagar cascade delete
+     */
+    function updateResultsPurpleColonyPlateByChromagar($id_result_chromagar, $data) {
+        $this->db->where('id_result_chromagar', $id_result_chromagar);
+        $this->db->update('salmonella_sample_purple_colony_plate_liquids', $data);
+    }
+
+    /**
+     * Update all biochemical results linked to a specific ChroMagar result
+     */
+    function updateResultsBiochemicalByChromagar($id_result_chromagar, $data) {
+        $this->db->where('id_result_chromagar', $id_result_chromagar);
+        $this->db->update('salmonella_result_biochemical_liquids', $data);
+    }
+
+    /**
+     * Update black colony plates for XLD results
+     */
+    function updateResultsBlackColonyPlateXLD($id_result_xld, $data) {
+        $this->db->where('id_result_xld', $id_result_xld);
+        $this->db->update('salmonella_sample_black_colony_plate_liquids', $data);
+    }
     
 
       
