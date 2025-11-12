@@ -23,6 +23,12 @@ class Protozoa_model extends CI_Model
         $this->datatables->from('protozoa a');
         $this->datatables->join('ref_person b', 'a.id_person = b.id_person', 'left');
         $this->datatables->join('ref_sampletype c', 'a.id_sampletype = c.id_sampletype', 'left');
+
+        // Filter by specific sample ID if provided (from Sample Reception redirect)
+        if ($this->input->get_post('search_sample_id')) {
+            $this->datatables->like('a.id_one_water_sample', $this->input->get_post('search_sample_id'));
+        }
+
         $this->datatables->where('a.flag', '0');
         
         $lvl = $this->session->userdata('id_user_level');

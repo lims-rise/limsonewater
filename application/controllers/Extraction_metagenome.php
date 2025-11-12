@@ -40,6 +40,9 @@ class Extraction_metagenome extends CI_Controller
         $data['row1'] = $this->Extraction_metagenome_model->getPos1();
         $data['col1'] = $this->Extraction_metagenome_model->getPos2();
 
+        // Check if redirected from Sample Reception with specific ID
+        $data['search_sample_id'] = $this->input->get('idOneWaterSample');
+
         $this->template->load('template','Extraction_metagenome/index', $data);
     } 
     

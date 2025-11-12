@@ -27,6 +27,12 @@ class Hemoflow_model extends CI_Model
         $this->datatables->join('sample_reception_sample c', 'a.id_one_water_sample = c.id_one_water_sample', 'left');
         $this->datatables->join('ref_sampletype d', 'c.id_sampletype = d.id_sampletype', 'left');
         $this->datatables->join('ref_person e', 'a.id_person_proc = e.id_person', 'left');
+        
+        // Filter by specific sample ID if provided (from Sample Reception redirect)
+        if ($this->input->get_post('search_sample_id')) {
+            $this->datatables->like('a.id_one_water_sample', $this->input->get_post('search_sample_id'));
+        }
+        
         // $this->datatables->where('Hemoflow.id_country', $this->session->userdata('lab'));
         $this->datatables->where('a.flag', '0');
         $lvl = $this->session->userdata('id_user_level');

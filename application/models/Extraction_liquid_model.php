@@ -26,6 +26,11 @@ class Extraction_liquid_model extends CI_Model
         $this->datatables->join('tbl_user user', 'extraction_liquid.user_review = user.id_users', 'left');
         // $this->datatables->join('ref_sampletype', 'extraction_liquid.id_sampletype = ref_sampletype.id_sampletype', 'left');
 
+        // Filter by specific sample ID if provided (from Sample Reception redirect)
+        if ($this->input->get_post('search_sample_id')) {
+            $this->datatables->like('extraction_liquid.id_one_water_sample', $this->input->get_post('search_sample_id'));
+        }
+
         $this->datatables->where('extraction_liquid.flag', '0');
         $lvl = $this->session->userdata('id_user_level');
 

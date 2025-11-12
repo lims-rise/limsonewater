@@ -30,6 +30,9 @@ class Protozoa extends CI_Controller
     {
         $data['id_one'] = $this->Protozoa_model->getID_one();
         $data['labtech'] = $this->Protozoa_model->getLabTech();
+        
+        // Check if redirected from Sample Reception with specific ID
+        $data['search_sample_id'] = $this->input->get('idOneWaterSample');
 
         $this->template->load('template','Protozoa/index', $data);
     } 
