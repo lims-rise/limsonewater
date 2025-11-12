@@ -33,6 +33,12 @@ class Extraction_biosolid_model extends CI_Model
         $this->datatables->join('ref_kit', 'extraction_biosolid.id_kit = ref_kit.id_kit', 'left');
         $this->datatables->join('ref_location', 'extraction_biosolid.id_location = ref_location.id_location', 'left');
         $this->datatables->join('ref_position', 'extraction_biosolid.id_pos = ref_position.id_pos', 'left');
+
+        // Filter by specific sample ID if provided (from Sample Reception redirect)
+        if ($this->input->get_post('search_sample_id')) {
+            $this->datatables->like('extraction_biosolid.id_one_water_sample', $this->input->get_post('search_sample_id'));
+        }
+
         $this->datatables->where('extraction_biosolid.flag', '0');
         // $this->datatables->where('extraction_biosolid.id_country', $this->session->userdata('lab'));
         $this->datatables->where('extraction_biosolid.flag', '0');

@@ -30,6 +30,9 @@ class Hemoflow extends CI_Controller
     {
         $data['id_one'] = $this->Hemoflow_model->getID_one();
         $data['labtech'] = $this->Hemoflow_model->getLabTech();
+        
+        // Check if redirected from Sample Reception with specific ID
+        $data['search_sample_id'] = $this->input->get('idOneWaterSample');
 
         $this->template->load('template','Hemoflow/index', $data);
     } 

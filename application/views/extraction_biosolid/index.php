@@ -1094,7 +1094,19 @@
             // select: true;
             processing: true,
             serverSide: true,
-            ajax: {"url": "Extraction_biosolid/json", "type": "POST"},
+            // ajax: {"url": "Extraction_biosolid/json", "type": "POST"},
+            ajax: {
+                "url": "Extraction_biosolid/json", 
+                "type": "POST",
+                "data": function(d) {
+                    // Add search parameters if provided from Sample Reception redirect
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const searchSampleId = urlParams.get('idOneWaterSample');
+                    if (searchSampleId) {
+                        d.search_sample_id = searchSampleId;
+                    }
+                }
+            },
             columns: [
                 // {
                 //     "data": "barcode_sample",
@@ -1154,6 +1166,20 @@
             $('#other-kit-group').hide();
             $('#other_kit').prop('required', false);
         });
+        
+        // Check if filtered by Sample ID from Sample Reception redirect
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchSampleId = urlParams.get('idOneWaterSample');
+        if (searchSampleId) {
+            // Show notification that filter is active
+            $('<div class="alert alert-info alert-dismissible" style="margin-top: 10px;">' +
+              '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' +
+              '<h4><i class="icon fa fa-info-circle"></i> Filter Active!</h4>' +
+              'Showing results filtered by Sample ID: <strong>' + searchSampleId + '</strong>' +
+              '<br><small>This filter was applied when redirected from Sample Reception. ' +
+              '<a href="' + window.location.pathname + '" style="color: #337ab7;">Click here to clear filter</a></small>' +
+              '</div>').insertAfter('.box-header');
+        }
 
         $('#addtombol').click(function() {
             $('#mode').val('insert');

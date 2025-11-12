@@ -1146,7 +1146,19 @@
             },
             processing: true,
             serverSide: true,
-            ajax: {"url": "Extraction_metagenome/json", "type": "POST"},
+            // ajax: {"url": "Extraction_metagenome/json", "type": "POST"},
+            ajax: {
+                "url": "Extraction_metagenome/json", 
+                "type": "POST",
+                "data": function(d) {
+                    // Add search parameters if provided from Sample Reception redirect
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const searchSampleId = urlParams.get('idOneWaterSample');
+                    if (searchSampleId) {
+                        d.search_sample_id = searchSampleId;
+                    }
+                }
+            },
             displayStart: lastPage ? (parseInt(lastPage) * 10) : 0, // <-- ini di sini ya!
             columns: [
                 {"data": "toggle", "orderable": false, "searchable": false }, // Ikon toggle di awal
@@ -1242,6 +1254,20 @@
                 }
             }
         });
+
+        // Check if filtered by Sample ID from Sample Reception redirect
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchSampleId = urlParams.get('idOneWaterSample');
+        if (searchSampleId) {
+            // Show notification that filter is active
+            $('<div class="alert alert-info alert-dismissible" style="margin-top: 10px;">' +
+              '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' +
+              '<h4><i class="icon fa fa-info-circle"></i> Filter Active!</h4>' +
+              'Showing results filtered by Sample ID: <strong>' + searchSampleId + '</strong>' +
+              '<br><small>This filter was applied when redirected from Sample Reception. ' +
+              '<a href="' + window.location.pathname + '" style="color: #337ab7;">Click here to clear filter</a></small>' +
+              '</div>').insertAfter('.box-header');
+        }
 
         $('#mytable tbody').on('click', 'tr', function () {
             const table = $('#mytable').DataTable();

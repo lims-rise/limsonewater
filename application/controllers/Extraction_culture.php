@@ -43,6 +43,10 @@ class Extraction_culture extends CI_Controller
         $data['sequencetype'] = $this->Extraction_culture_model->getSequenceType();
         $data['selected_sequence_id'] = '';
         $data['selected_sequence_type'] = '';
+
+        // Check if redirected from Sample Reception with specific ID
+        $data['search_sample_id'] = $this->input->get('idOneWaterSample');
+        
         $this->template->load('template','Extraction_culture/index', $data);
     } 
     
