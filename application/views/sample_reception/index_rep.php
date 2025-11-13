@@ -154,51 +154,51 @@
                                 <thead>
                                     <tr>
                                         <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Project ID</td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $id_project ?></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($id_project) && $id_project !== 'null') ? $id_project : '-'; ?></td>
                                     </tr>
                                     <tr>
                                         <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Client</td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $client ?></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($client) && $client !== 'null') ? $client : '-'; ?></td>
                                     </tr>
                                     <tr>
                                         <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Client contact details</td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $client_name ?></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($client_name) && $client_name !== 'null') ? $client_name : '-'; ?></td>
                                     </tr>
                                     <tr>
                                         <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"></td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $address ?></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($address) && $address !== 'null') ? $address : '-'; ?></td>
                                     </tr>
                                     <tr>
                                         <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"></td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $phone1 ?></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($phone1) && $phone1 !== 'null') ? $phone1 : '-'; ?></td>
                                     </tr>
                                     <tr>
                                         <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"></td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $phone2 ?></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($phone2) && $phone2 !== 'null') ? $phone2 : '-'; ?></td>
                                     </tr>
                                     <tr>
                                         <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"></td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $email ?></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($email) && $email !== 'null') ? $email : '-'; ?></td>
                                     </tr>
                                     <tr>
                                         <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Quote Number</td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $client_quote_number ?></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($client_quote_number) && $client_quote_number !== 'null') ? $client_quote_number : '-'; ?></td>
                                     </tr>
                                     <tr>
                                         <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">PO Number</td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $po_number ?></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($po_number) && $po_number !== 'null') ? $po_number : '-'; ?></td>
                                     </tr>
                                     <tr>
                                         <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Date of Sample Received</td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $from_date . "&nbsp &nbsp~&nbsp &nbsp" . $to_date ?></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($from_date) && $from_date !== 'null' && !empty($to_date) && $to_date !== 'null') ? $from_date . "&nbsp &nbsp~&nbsp &nbsp" . $to_date : '-'; ?></td>
                                     </tr>
                                     <tr>
                                         <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Analysis</td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo "??" ?></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">-</td>
                                     </tr>
                                     <tr>
                                         <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Test Analyst(s)</td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $realname ?></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($realname) && $realname !== 'null') ? $realname : '-'; ?></td>
                                     </tr>
                                 </thead>
                             </table>
@@ -238,7 +238,7 @@
                     </div>
                     <?php
 
-                    $q = $this->db->query('SELECT a.id_project, a.id_one_water_sample, a.comments, a.id_sampletype, b.sampletype, a.date_collected, a.time_collected
+                    $q = $this->db->query('SELECT a.id_project, a.id_one_water_sample, a.comments, a.id_sampletype, b.sampletype, a.date_collected, a.time_collected, a.client_id
                     FROM sample_reception_sample a
                     LEFT JOIN ref_sampletype b ON a.id_sampletype = b.id_sampletype
                     WHERE a.id_project="'.$id_project.'"
@@ -253,19 +253,30 @@
                         <table id="additional-info" width="100%" style="border:1px solid #3c8dbc; border-collapse: separate; border-spacing: 6px;">
                             <thead>
                                 <tr>
-                                    <td width="8%" style="border:0px solid black; padding: 2px 0; vertical-align: top; font-weight: bold;" align="left">Sample Number</td>
-                                    <td width="35%" style="border:0px solid black; padding: 2px 0; vertical-align: top; font-weight: bold;" align="left">Description</td>
-                                    <td width="10%" style="border:0px solid black; padding: 2px 0; vertical-align: top; font-weight: bold;" align="left">Sample type</td>
-                                    <td width="14%" style="border:0px solid black; padding: 2px 0; vertical-align: top; font-weight: bold;" align="left">Sampled Date</td>
-                                    <td width="14%" style="border:0px solid black; padding: 2px 0; vertical-align: top; font-weight: bold;" align="left">Sampled Time</td>
+                                    <td width="8%" style="border-bottom: 0.5px solid #3c8dbc; padding: 2px 0; vertical-align: top; font-weight: bold;" align="left">Sample</td>
+                                    <td width="8%" style="border-bottom: 0.5px solid #3c8dbc; padding: 2px 0; vertical-align: top; font-weight: bold;" align="left">ID</td>
+                                    <td width="35%" style="border-bottom: 0.5px solid #3c8dbc; padding: 2px 0; vertical-align: top; font-weight: bold;" align="left">Description</td>
+                                    <td width="28%" style="border-bottom: 0.5px solid #3c8dbc; padding: 2px 0; vertical-align: top; font-weight: bold;" align="center">
+                                        <div>Sample</div>
+                                        <div style="display: flex; justify-content: space-between; margin-top: 2px; border-top: 1px solid #3c8dbc; padding-top: 2px;">
+                                            <span style="flex: 1; text-align: left;">Date</span>
+                                            <span style="flex: 1; text-align: right; border-left: 1px solid #3c8dbc; padding-left: 4px;">Time</span>
+                                        </div>
+                                    </td>
+                                    <td width="10%" style="border-bottom: 0.5px solid #3c8dbc; padding: 2px 0; vertical-align: top; font-weight: bold;" align="left">Sample type</td>
                                 </tr>
                                 <?php foreach ($response as $row): ?>
                                 <tr>
-                                    <td style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $row->id_one_water_sample; ?></td>
-                                    <td style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $row->comments; ?></td>
-                                    <td style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $row->sampletype; ?></td>
-                                    <td style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $row->date_collected; ?></td>
-                                    <td style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $row->time_collected; ?></td>
+                                    <td style="padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($row->id_one_water_sample) && $row->id_one_water_sample !== 'null') ? $row->id_one_water_sample : '-'; ?></td>
+                                    <td style="padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($row->client_id) && $row->client_id !== 'null') ? $row->client_id : '-'; ?></td>
+                                    <td style="padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($row->comments) && $row->comments !== 'null') ? $row->comments : '-'; ?></td>
+                                    <td style="padding: 2px 0; vertical-align: top;" align="center">
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <span style="flex: 1; text-align: left;"><?php echo (!empty($row->date_collected) && $row->date_collected !== 'null') ? $row->date_collected : '-'; ?></span>
+                                            <span style="flex: 1; text-align: right;"><?php echo (!empty($row->time_collected) && $row->time_collected !== 'null') ? $row->time_collected : '-'; ?></span>
+                                        </div>
+                                    </td>
+                                    <td style="padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($row->sampletype) && $row->sampletype !== 'null') ? $row->sampletype : '-'; ?></td>
                                 </tr>
                                 <?php endforeach; ?>                                  
                             </thead>
