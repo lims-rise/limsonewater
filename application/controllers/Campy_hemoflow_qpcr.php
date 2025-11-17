@@ -13,7 +13,7 @@ if (!defined('BASEPATH'))
 
 // use PhpOffice\PhpSpreadsheet\Spreadsheet;
 // use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-
+    
 class Campy_hemoflow_qpcr extends CI_Controller
 {
     function __construct()
@@ -26,18 +26,22 @@ class Campy_hemoflow_qpcr extends CI_Controller
 	    $this->load->library('uuid');
     }
 
+    // public function index()
+    // {
+    //     // Redirect ke halaman under construction untuk sementara
+    //     $this->load->view('underconstruction/underconstruction');
+    // }
     public function index()
-    {
-        // Redirect ke halaman under construction untuk sementara
-        $this->load->view('underconstruction/underconstruction');
-    }
-
-    public function development_index()
     {
         $data['id_one'] = $this->Campy_hemoflow_qpcr_model->getID_one();
         $data['sampletype'] = $this->Campy_hemoflow_qpcr_model->getSampleType();
         $data['labtech'] = $this->Campy_hemoflow_qpcr_model->getLabTech();
         $data['tubes'] = $this->Campy_hemoflow_qpcr_model->getTubes();
+        // var_dump($data['id_one']);
+        // die();
+        // $data['id_project'] = $this->Moisture_content_model->generate_project_id();
+        // $data['client'] = $this->Moisture_content_model->generate_client();
+        // $data['id_one_water_sample'] = $this->Moisture_content_model->generate_one_water_sample_id();
         $this->template->load('template','campy_hemoflow_qpcr/index', $data);
     } 
     
@@ -46,24 +50,32 @@ class Campy_hemoflow_qpcr extends CI_Controller
         echo $this->Campy_hemoflow_qpcr_model->json();
     }
 
-    public function subjsonResultQpcr() {
-        $id = $this->input->get('idQpcr',TRUE);
+    public function subjsonMpnpcr() {
+        $id = $this->input->get('idMpnpcr',TRUE);
         header('Content-Type: application/json');
-        echo $this->Campy_hemoflow_qpcr_model->subjsonResultQpcr($id);
+        echo $this->Campy_hemoflow_qpcr_model->subjsonMpnpcr($id);
     }
 
-    // public function subjsonHba() {
-    //     $id = $this->input->get('idHba',TRUE);
-    //     header('Content-Type: application/json');
-    //     echo $this->Campy_hemoflow_qpcr_model->subjsonHba($id);
-    // }
+    public function subjsonHba() {
+        $id = $this->input->get('idHba',TRUE);
+        header('Content-Type: application/json');
+        echo $this->Campy_hemoflow_qpcr_model->subjsonHba($id);
+    }
 
-    // public function subjsonBiochemical() {
-    //     $id = $this->input->get('idBiochemical',TRUE);
-    //     $biochemical_tube = $this->input->get('biochemical_tube', TRUE);
-    //     header('Content-Type: application/json');
-    //     echo $this->Campy_hemoflow_qpcr_model->subjsonBiochemical($id, $biochemical_tube);
-    // }
+    public function subjsonBiochemical() {
+        $id = $this->input->get('idBiochemical',TRUE);
+        $biochemical_tube = $this->input->get('biochemical_tube', TRUE);
+        header('Content-Type: application/json');
+        echo $this->Campy_hemoflow_qpcr_model->subjsonBiochemical($id, $biochemical_tube);
+    }
+
+    // NEW: Biochemical results directly from MPN PCR (bypassing HBA)
+    public function subjsonBiochemicalFromMpnpcr() {
+        $id = $this->input->get('idMpnpcr',TRUE);
+        $biochemical_tube = $this->input->get('biochemical_tube', TRUE);
+        header('Content-Type: application/json');
+        echo $this->Campy_hemoflow_qpcr_model->subjsonBiochemicalFromMpnpcr($id, $biochemical_tube);
+    }
 
     public function read($id)
     {
@@ -71,7 +83,6 @@ class Campy_hemoflow_qpcr extends CI_Controller
 
         if ($row) {
             $data = array(
-
                 'id_campy_hemoflow_qpcr' => $row->id_campy_hemoflow_qpcr,
                 'id_one_water_sample' => $row->id_one_water_sample,
                 'initial' => $row->initial,
@@ -81,30 +92,35 @@ class Campy_hemoflow_qpcr extends CI_Controller
                 'campy_assay_barcode' => $row->campy_assay_barcode,
                 'date_sample_processed' => $row->date_sample_processed,
                 'time_sample_processed' => $row->time_sample_processed,
-                'sample_wetweight' => $row->sample_wetweight,
-                'elution_volume' => $row->elution_volume,
+                // 'sample_wetweight' => $row->sample_wetweight,
+                // 'dry_weight_persen' => $row->dry_weight_persen,
+                // 'sample_dryweight' => $row->sample_dryweight,
+                // 'sample_dryweight_old' => $row->sample_dryweight_old,
+                // 'filtration_volume' => $row->filtration_volume,
                 'vol_sampletube' => $row->vol_sampletube,
                 'tube_number' => $row->tube_number,
-                
+                'full_name' => $row->full_name,
+                'user_review' => $row->user_review,
+                'review' => $row->review,
+                'user_created' => $row->user_created,
             );
-            
-            // Mendapatkan final concentration
-            // $finalConcentration = $this->Campy_hemoflow_qpcr_model->subjsonFinalConcentration($id);
-            // if ($finalConcentration) {
-            //     $data['finalConcentration'] = $finalConcentration;
-            // } else {
-            //     $data['finalConcentration'] = []; // Pastikan ini tidak null
-            // }
+
+            // Mendapatkan final concentration dengan id_campy_hemoflow_qpcr
+            $finalCalculation = $this->Campy_hemoflow_qpcr_model->subjsonFinalCalculation($row->id_campy_hemoflow_qpcr);
+            if ($finalCalculation) {
+                $data['finalCalculation'] = $finalCalculation;
+            } else {
+                $data['finalCalculation'] = [];
+            }
             // var_dump($data);
             // die();
-            $this->template->load('template','campy_hemoflow_qpcr/index_det', $data);
+            $this->template->load('template','Campy_hemoflow_qpcr/index_det', $data);
 
         }
         else {
             // $this->template->load('template','Water_sample_reception/index_det', $test);
         }
-
-    } 
+    }
 
     public function read2($id)
     {
@@ -117,7 +133,7 @@ class Campy_hemoflow_qpcr extends CI_Controller
                 'sample_description' => $row->sample_description,
                 'test' => $this->Campy_hemoflow_qpcr_model->getTest(),
                 );
-                $this->template->load('template','campy_hemoflow_qpcr/index_det2', $data);
+                $this->template->load('template','Campy_hemoflow_qpcr/index_det2', $data);
         }
         else {
             // $this->template->load('template','Water_sample_reception/index_det');
@@ -140,9 +156,11 @@ class Campy_hemoflow_qpcr extends CI_Controller
         $campy_assay_barcode = $this->input->post('campy_assay_barcode', TRUE);
         $date_sample_processed = $this->input->post('date_sample_processed', TRUE);
         $time_sample_processed = $this->input->post('time_sample_processed', TRUE);
-        $sample_wetweight = $this->input->post('sample_wetweight', TRUE);
-        $elution_volume = $this->input->post('elution_volume', TRUE);
-    
+        // $sample_wetweight = $this->input->post('sample_wetweight', TRUE);
+        // $filtration_volume = $this->input->post('filtration_volume', TRUE);
+        // $dry_weight_persen = $this->input->post('dry_weight_persen', TRUE);
+        // $sample_dryweight = $this->input->post('sample_dryweight', TRUE);
+
         if ($mode == "insert") {
             // Insert data into assays table
             $data = array(
@@ -154,8 +172,11 @@ class Campy_hemoflow_qpcr extends CI_Controller
                 'campy_assay_barcode' => $campy_assay_barcode,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
-                'sample_wetweight' => $sample_wetweight,
-                'elution_volume' => $elution_volume,
+                // 'sample_wetweight' => $sample_wetweight,
+                // 'dry_weight_persen' => $dry_weight_persen,
+                // 'sample_dryweight' => $sample_dryweight,
+                // 'sample_dryweight_old' => $sample_dryweight,
+                // 'filtration_volume' => $filtration_volume,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
@@ -163,11 +184,8 @@ class Campy_hemoflow_qpcr extends CI_Controller
                 'date_created' => $dt->format('Y-m-d H:i:s'),
             );
 
-            // var_dump($data);
-            // die();
-    
             $assay_id = $this->Campy_hemoflow_qpcr_model->insert($data);
-    
+
             // Insert sample volumes
             $number_of_tubes = $this->input->post('number_of_tubes', TRUE);
             for ($i = 1; $i <= $number_of_tubes; $i++) {
@@ -199,8 +217,10 @@ class Campy_hemoflow_qpcr extends CI_Controller
                 'campy_assay_barcode' => $campy_assay_barcode,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
-                'sample_wetweight' => $sample_wetweight,
-                'elution_volume' => $elution_volume,
+                // 'sample_wetweight' => $sample_wetweight,
+                // 'dry_weight_persen' => $dry_weight_persen,
+                // 'sample_dryweight' => $sample_dryweight,
+                // 'filtration_volume' => $filtration_volume,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
@@ -211,7 +231,28 @@ class Campy_hemoflow_qpcr extends CI_Controller
             // var_dump($data);
             // die();
 
-            $this->Campy_hemoflow_qpcr_model->updateCampyBiosolids($id_campy_hemoflow_qpcr, $data);
+            $this->Campy_hemoflow_qpcr_model->updateCampyHemoflow($id_campy_hemoflow_qpcr, $data);
+
+            // // Update sample volumes
+            // $number_of_tubes = $this->input->post('number_of_tubes', TRUE);
+            // $this->Campy_hemoflow_qpcr_model->delete_sample_volumes($id_moisture); // Hapus volume yang ada
+    
+            // for ($i = 1; $i <= $number_of_tubes; $i++) {
+            //     $volume = $this->input->post("vol_sampletube{$i}", TRUE);
+            //     var_dump($volume);
+            //     if ($volume) {
+            //         $this->Campy_hemoflow_qpcr_model->insert_sample_volume(array(
+            //             'id_campy_hemoflow_qpcr' => $assay_id,
+            //             'tube_number' => $i,
+            //             'vol_sampletube' => $volume,
+            //             'flag' => '0',
+            //             'lab' => $this->session->userdata('lab'),
+            //             'uuid' => $this->uuid->v4(),
+            //             'user_created' => $this->session->userdata('id_users'),
+            //             'date_created' => $dt->format('Y-m-d H:i:s'),
+            //         ));
+            //     }
+            // }
             // Update sample volumes
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
             // var_dump($number_of_tubes); // var dump jumlah tube
@@ -241,113 +282,172 @@ class Campy_hemoflow_qpcr extends CI_Controller
     
             $this->session->set_flashdata('message', 'Update Record Success');
         }
-
-        redirect(site_url("campy_hemoflow_qpcr"));
+    
+        redirect(site_url("Campy_hemoflow_qpcr"));
     }
 
-    // public function saveResultsCharcoal() {
-    //     $mode = $this->input->post('mode_detResultsCharcoal', TRUE);
-    //     $id_campy_hemoflow_qpcr = $this->input->post('id_campy_hemoflow_qpcr1', TRUE);
-    //     $id_result_qpcr = $this->input->post('id_result_qpcr', TRUE);
-    //     $dt = new DateTime();
-    //     $date_sample_processed = $this->input->post('date_sample_processed1', TRUE);
-    //     $time_sample_processed = $this->input->post('time_sample_processed1', TRUE);
-    
-    //     if ($mode == "insert") {
-    //         // Insert data into assays table
-    //         $data = array(
-    //             'id_campy_hemoflow_qpcr' => $id_campy_hemoflow_qpcr,
-    //             'date_sample_processed' => $date_sample_processed,
-    //             'time_sample_processed' => $time_sample_processed,
-    //             'flag' => '0',
-    //             'lab' => $this->session->userdata('lab'),
-    //             'uuid' => $this->uuid->v4(),
-    //             'user_created' => $this->session->userdata('id_users'),
-    //             'date_created' => $dt->format('Y-m-d H:i:s'),
-    //         );
-
-    //         // var_dump($data);
-    //         // die();
-    
-    //         $assay_id = $this->Campy_hemoflow_qpcr_model->insertResultsCharcoal($data);
-    
-    //         // Insert sample volumes
-    //         $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
-    //         for ($i = 1; $i <= $number_of_tubes; $i++) {
-    //             $plate = $this->input->post("pcr_tube{$i}", TRUE);
-    //             if ($plate) {
-    //                 // Proceed with saving the data
-    //                 $this->Campy_hemoflow_qpcr_model->insert_growth_plate(array(
-    //                     'id_result_qpcr' => $assay_id,
-    //                     'plate_number' => $i,
-    //                     'pcr_tube' => $plate,
-    //                     'flag' => '0',
-    //                     'lab' => $this->session->userdata('lab'),
-    //                     'uuid' => $this->uuid->v4(),
-    //                     'user_created' => $this->session->userdata('id_users'),
-    //                     'date_created' => $dt->format('Y-m-d H:i:s'),
-    //                 ));
-    //             }
-    //         }
-    
-    //         $this->session->set_flashdata('message', 'Create Record Success');
-    
-    //     } else if ($mode == "edit") {
-    //         // Update data in assays table
-    //         $data = array(
-    //             'id_campy_hemoflow_qpcr' => $id_campy_hemoflow_qpcr,
-    //             'date_sample_processed' => $date_sample_processed,
-    //             'time_sample_processed' => $time_sample_processed,
-    //             'flag' => '0',
-    //             'lab' => $this->session->userdata('lab'),
-    //             'uuid' => $this->uuid->v4(),
-    //             'user_updated' => $this->session->userdata('id_users'),
-    //             'date_updated' => $dt->format('Y-m-d H:i:s'),
-    //         );
-
-    //         // var_dump($data);
-    //         // die();
-    
-    //         $this->Campy_hemoflow_qpcr_model->updateResultsCharcoal($id_result_qpcr, $data);
-
-    //         // Update sample volumes
-    //         $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
-    //         $this->Campy_hemoflow_qpcr_model->delete_growth_plates($id_result_qpcr); // Hapus volume yang ada
-
-    //         for ($i = 1; $i <= $number_of_tubes; $i++) {
-    //             $plate = $this->input->post("pcr_tube{$i}", TRUE);
-    //             if ($plate) {
-    //                 $data_plate = array(
-    //                     'id_result_qpcr' => $id_result_qpcr,
-    //                     'plate_number' => $i,
-    //                     'pcr_tube' => $plate,
-    //                     'flag' => '0',
-    //                     'lab' => $this->session->userdata('lab'),
-    //                     'uuid' => $this->uuid->v4(),
-    //                     'user_created' => $this->session->userdata('id_users'),
-    //                     'date_created' => $dt->format('Y-m-d H:i:s'),
-    //                 );
-    //                 $this->Campy_hemoflow_qpcr_model->insert_growth_plate($data_plate);
-    //             }
-    //         }
-    
-    //         $this->session->set_flashdata('message', 'Update Record Success');
-    //     }
-
-    //     redirect(site_url("campy_hemoflow_qpcr/read/" . $id_campy_hemoflow_qpcr));
-    // }
-
-    public function saveResultsQpcr() {
-        $mode = $this->input->post('mode_detResultsQpcr', TRUE);
+    public function saveResultsMpnpcr() {
+        $mode = $this->input->post('mode_detResultsMpnpcr', TRUE);
+        $id_one_water_sample = $this->input->post('idMpnpcr_one_water_sample', TRUE);
         $id_campy_hemoflow_qpcr = $this->input->post('id_campy_hemoflow_qpcr1', TRUE);
-        $id_result_qpcr = $this->input->post('id_result_qpcr', TRUE);
+        $id_campy_hemoflow_qpcr_result_mpnpcr = $this->input->post('id_campy_hemoflow_qpcr_result_mpnpcr', TRUE);
         $dt = new DateTime();
         $date_sample_processed = $this->input->post('date_sample_processed1', TRUE);
         $time_sample_processed = $this->input->post('time_sample_processed1', TRUE);
+        $quality_control = $this->input->post('quality_control', TRUE) ? 1 : 0; // Convert checkbox to integer
     
         if ($mode == "insert") {
             // Insert data into assays table
             $data = array(
+                'id_campy_hemoflow_qpcr' => $id_campy_hemoflow_qpcr,
+                'date_sample_processed' => $date_sample_processed,
+                'time_sample_processed' => $time_sample_processed,
+                'quality_control' => $quality_control,
+                'flag' => '0',
+                'lab' => $this->session->userdata('lab'),
+                'uuid' => $this->uuid->v4(),
+                'user_created' => $this->session->userdata('id_users'),
+                'date_created' => $dt->format('Y-m-d H:i:s'),
+            );
+
+            // var_dump($data);
+            // die();
+    
+            $assay_id = $this->Campy_hemoflow_qpcr_model->insertResultsMpnpcr($data);
+    
+            // Insert sample volumes and check if all growth plates are 0
+            $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
+            $all_plates_zero = true;
+            $growth_plate_data = array();
+            
+            for ($i = 1; $i <= $number_of_tubes; $i++) {
+                $plate = $this->input->post("growth_plate{$i}", TRUE);
+                if ($plate !== null) {
+                    $growth_plate_data[$i] = $plate;
+                    
+                    // Check if this plate is not zero
+                    if ($plate != '0') {
+                        $all_plates_zero = false;
+                    }
+                    
+                    $this->Campy_hemoflow_qpcr_model->insert_growth_plate(array(
+                        'id_campy_hemoflow_qpcr_result_mpnpcr' => $assay_id,
+                        'plate_number' => $i,
+                        'growth_plate' => $plate,
+                        'flag' => '0',
+                        'lab' => $this->session->userdata('lab'),
+                        'uuid' => $this->uuid->v4(),
+                        'user_created' => $this->session->userdata('id_users'),
+                        'date_created' => $dt->format('Y-m-d H:i:s'),
+                    ));
+                }
+            }
+            
+            // Auto-generate HBA results if all growth plates are 0
+            // if ($all_plates_zero && count($growth_plate_data) > 0) {
+            //     try {
+            //         $hba_result = $this->autoGenerateHBAResults($id_campy_hemoflow_qpcr, $assay_id, $date_sample_processed, $time_sample_processed, $growth_plate_data, $dt);
+            //         if ($hba_result) {
+            //             $this->session->set_flashdata('message', 'Create Record Success - HBA Results auto-generated');
+            //         } else {
+            //             $this->session->set_flashdata('message', 'Create Record Success - Note: HBA auto-generation failed, please create manually');
+            //         }
+            //     } catch (Exception $e) {
+            //         log_message('error', 'HBA auto-generation failed: ' . $e->getMessage());
+            //         $this->session->set_flashdata('message', 'Create Record Success - Note: HBA auto-generation failed, please create manually');
+            //     }
+            // } else {
+            //     $this->session->set_flashdata('message', 'Create Record Success');
+            // }
+    
+        } else if ($mode == "edit") {
+            // Update data in assays table
+            $data = array(
+                'id_campy_hemoflow_qpcr' => $id_campy_hemoflow_qpcr,
+                'date_sample_processed' => $date_sample_processed,
+                'time_sample_processed' => $time_sample_processed,
+                'quality_control' => $quality_control,
+                'flag' => '0',
+                'lab' => $this->session->userdata('lab'),
+                'uuid' => $this->uuid->v4(),
+                'user_updated' => $this->session->userdata('id_users'),
+                'date_updated' => $dt->format('Y-m-d H:i:s'),
+            );
+
+            // var_dump($data);
+            // die();
+
+            $this->Campy_hemoflow_qpcr_model->updateResultsMpnpcr($id_campy_hemoflow_qpcr_result_mpnpcr, $data);
+
+            // Update sample volumes and check if all growth plates are 0
+            $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
+            $this->Campy_hemoflow_qpcr_model->delete_growth_plates($id_campy_hemoflow_qpcr_result_mpnpcr); // Hapus volume yang ada
+
+            $all_plates_zero = true;
+            $growth_plate_data = array();
+            
+            for ($i = 1; $i <= $number_of_tubes; $i++) {
+                $plate = $this->input->post("growth_plate{$i}", TRUE);
+                if ($plate !== null) {
+                    $growth_plate_data[$i] = $plate;
+                    
+                    // Check if this plate is not zero
+                    if ($plate != '0') {
+                        $all_plates_zero = false;
+                    }
+                    
+                    $data_plate = array(
+                        'id_campy_hemoflow_qpcr_result_mpnpcr' => $id_campy_hemoflow_qpcr_result_mpnpcr,
+                        'plate_number' => $i,
+                        'growth_plate' => $plate,
+                        'flag' => '0',
+                        'lab' => $this->session->userdata('lab'),
+                        'uuid' => $this->uuid->v4(),
+                        'user_created' => $this->session->userdata('id_users'),
+                        'date_created' => $dt->format('Y-m-d H:i:s'),
+                    );
+                    $this->Campy_hemoflow_qpcr_model->insert_growth_plate($data_plate);
+                }
+            }
+            
+            // Auto-generate or update HBA results if all growth plates are 0
+            // if ($all_plates_zero && count($growth_plate_data) > 0) {
+            //     // Check if HBA data already exists for this MPN PCR result
+            //     $existing_hba = $this->Campy_hemoflow_qpcr_model->get_hba_by_campy_hemoflow_qpcr($id_campy_hemoflow_qpcr);
+                
+            //     if (!$existing_hba) {
+            //         try {
+            //             // Auto-generate new HBA results
+            //             $hba_result = $this->autoGenerateHBAResults($id_campy_hemoflow_qpcr, $id_campy_hemoflow_qpcr_result_mpnpcr, $date_sample_processed, $time_sample_processed, $growth_plate_data, $dt);
+            //             if ($hba_result) {
+            //                 $this->session->set_flashdata('message', 'Update Record Success - HBA Results auto-generated');
+            //             } else {
+            //                 $this->session->set_flashdata('message', 'Update Record Success - Note: HBA auto-generation failed, please create manually');
+            //             }
+            //         } catch (Exception $e) {
+            //             log_message('error', 'HBA auto-generation failed in edit mode: ' . $e->getMessage());
+            //             $this->session->set_flashdata('message', 'Update Record Success - Note: HBA auto-generation failed, please create manually');
+            //         }
+            //     } else {
+            //         $this->session->set_flashdata('message', 'Update Record Success');
+            //     }
+            // } else {
+            //     $this->session->set_flashdata('message', 'Update Record Success');
+            // }
+        }
+
+        redirect(site_url("Campy_hemoflow_qpcr/read/" . $id_one_water_sample));
+    }
+
+    /**
+     * Auto-generate HBA results when all growth plates in MPN PCR are 0
+     * This improves efficiency by eliminating the need for manual HBA data entry
+     * when the outcome is predictable (all zeros)
+     */
+    private function autoGenerateHBAResults($id_campy_hemoflow_qpcr, $id_campy_hemoflow_qpcr_result_mpnpcr, $date_sample_processed, $time_sample_processed, $growth_plate_data, $dt) {
+        try {
+            // Insert HBA result with same basic data as MPN PCR (without campy_assay_barcode)
+            $hba_data = array(
                 'id_campy_hemoflow_qpcr' => $id_campy_hemoflow_qpcr,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
@@ -357,19 +457,76 @@ class Campy_hemoflow_qpcr extends CI_Controller
                 'user_created' => $this->session->userdata('id_users'),
                 'date_created' => $dt->format('Y-m-d H:i:s'),
             );
+            
+            $hba_assay_id = $this->Campy_hemoflow_qpcr_model->insertResultsHba($hba_data);
+            
+            // Insert HBA growth plates (all will be 0 since MPN PCR was all 0)
+            foreach ($growth_plate_data as $plate_number => $plate_value) {
+                $hba_plate_data = array(
+                    'id_campy_hemoflow_result_hba' => $hba_assay_id,
+                    'plate_number' => $plate_number,
+                    'growth_plate' => '0', // Always 0 when auto-generated
+                    'flag' => '0',
+                    'lab' => $this->session->userdata('lab'),
+                    'uuid' => $this->uuid->v4(),
+                    'user_created' => $this->session->userdata('id_users'),
+                    'date_created' => $dt->format('Y-m-d H:i:s'),
+                );
+                $this->Campy_hemoflow_qpcr_model->insert_growth_plate_hba($hba_plate_data);
+            }
+            
+            // Log the auto-generation for audit purposes
+            log_message('info', "Auto-generated HBA results for Campy Hemoflow ID: {$id_campy_hemoflow_qpcr}");
+            
+            return $hba_assay_id;
+            
+        } catch (Exception $e) {
+            // Log error but don't break the main process
+            log_message('error', "Failed to auto-generate HBA results: " . $e->getMessage());
+            throw $e; // Re-throw to be caught by calling method
+        }
+    }
+
+    public function saveResultsHBA() {
+        $mode = $this->input->post('mode_detResultsHBA', TRUE);
+        $id_one_water_sample = $this->input->post('idHba_one_water_sample', TRUE);
+        $id_campy_hemoflow_qpcr = $this->input->post('id_campy_hemoflow_qpcrHBA', TRUE);
+        $id_campy_hemoflow_qpcr_result_hba = $this->input->post('id_campy_hemoflow_qpcr_result_hba', TRUE);
+
+        $dt = new DateTime();
+        $date_sample_processed = $this->input->post('date_sample_processedHBA', TRUE);
+        $time_sample_processed = $this->input->post('time_sample_processedHBA', TRUE);
+        $quality_control = $this->input->post('quality_control_hba', TRUE) ? 1 : 0; // Convert checkbox to integer
     
-            $assay_id = $this->Campy_hemoflow_qpcr_model->insertResultsQpcr($data);
+        if ($mode == "insert") {
+            // Insert data into assays table
+            $data = array(
+                'id_campy_hemoflow_qpcr' => $id_campy_hemoflow_qpcr,
+                'date_sample_processed' => $date_sample_processed,
+                'time_sample_processed' => $time_sample_processed,
+                'quality_control' => $quality_control,
+                'flag' => '0',
+                'lab' => $this->session->userdata('lab'),
+                'uuid' => $this->uuid->v4(),
+                'user_created' => $this->session->userdata('id_users'),
+                'date_created' => $dt->format('Y-m-d H:i:s'),
+            );
+
+            // var_dump($data);
+            // die();
+    
+            $assay_id = $this->Campy_hemoflow_qpcr_model->insertResultsHba($data);
     
             // Insert sample volumes
-            $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
+            $number_of_tubes = $this->input->post('number_of_tubesHba', TRUE);
             for ($i = 1; $i <= $number_of_tubes; $i++) {
-                $plate = $this->input->post("pcr_tube{$i}", TRUE);
-                if ($plate !== null) { // plate is 1 (Yes) or 0 (No)
-                    // Proceed with saving the data
-                    $this->Campy_hemoflow_qpcr_model->insert_growth_plate(array(
-                        'id_result_qpcr' => $assay_id,
+                $plate = $this->input->post("growth_plate{$i}", TRUE);
+
+                if ($plate !== null) {
+                    $this->Campy_hemoflow_qpcr_model->insert_growth_plate_hba(array(
+                        'id_campy_hemoflow_qpcr_result_hba' => $assay_id,
                         'plate_number' => $i,
-                        'pcr_tube' => $plate, // 1 for Yes, 0 for No
+                        'growth_plate' => $plate,
                         'flag' => '0',
                         'lab' => $this->session->userdata('lab'),
                         'uuid' => $this->uuid->v4(),
@@ -377,6 +534,7 @@ class Campy_hemoflow_qpcr extends CI_Controller
                         'date_created' => $dt->format('Y-m-d H:i:s'),
                     ));
                 }
+
             }
     
             $this->session->set_flashdata('message', 'Create Record Success');
@@ -387,262 +545,550 @@ class Campy_hemoflow_qpcr extends CI_Controller
                 'id_campy_hemoflow_qpcr' => $id_campy_hemoflow_qpcr,
                 'date_sample_processed' => $date_sample_processed,
                 'time_sample_processed' => $time_sample_processed,
+                'quality_control' => $quality_control,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
                 'uuid' => $this->uuid->v4(),
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
-    
-            $this->Campy_hemoflow_qpcr_model->updateResultsQpcr($id_result_qpcr, $data);
-    
+
+            $this->Campy_hemoflow_qpcr_model->updateResultsHba($id_campy_hemoflow_qpcr_result_hba, $data);
+
             // Update sample volumes
-            $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
-            $this->Campy_hemoflow_qpcr_model->delete_growth_plates($id_result_qpcr); // Hapus volume yang ada
-    
+            $number_of_tubes = $this->input->post('number_of_tubesHba', TRUE);
+            $this->Campy_hemoflow_qpcr_model->delete_growth_plates_hba($id_campy_hemoflow_qpcr_result_hba); // Hapus volume yang ada
+
             for ($i = 1; $i <= $number_of_tubes; $i++) {
-                $plate = $this->input->post("pcr_tube{$i}", TRUE);
-                if ($plate !== null) { // plate is 1 (Yes) or 0 (No)
+                $plate = $this->input->post("growth_plate{$i}", TRUE);
+                if ($plate !== null) {
                     $data_plate = array(
-                        'id_result_qpcr' => $id_result_qpcr,
+                        'id_campy_hemoflow_qpcr_result_hba' => $id_campy_hemoflow_qpcr_result_hba,
                         'plate_number' => $i,
-                        'pcr_tube' => $plate, // 1 for Yes, 0 for No
+                        'growth_plate' => $plate,
                         'flag' => '0',
                         'lab' => $this->session->userdata('lab'),
                         'uuid' => $this->uuid->v4(),
                         'user_created' => $this->session->userdata('id_users'),
                         'date_created' => $dt->format('Y-m-d H:i:s'),
                     );
-                    $this->Campy_hemoflow_qpcr_model->insert_growth_plate($data_plate);
+                    $this->Campy_hemoflow_qpcr_model->insert_growth_plate_hba($data_plate);
                 }
             }
     
             $this->session->set_flashdata('message', 'Update Record Success');
         }
 
-        redirect(site_url("campy_hemoflow_qpcr/read/" . $id_campy_hemoflow_qpcr));
+        redirect(site_url("Campy_hemoflow_qpcr/read/" . $id_one_water_sample));
+    }
+
+
+    public function saveBiochemical() {
+        $mode = $this->input->post('mode_detResultsBiochemical', TRUE);
+        $id_campy_hemoflow_qpcr_result_biochemical = $this->input->post('id_campy_hemoflow_qpcr_result_biochemical', TRUE);
+        $id_campy_hemoflow_qpcr_result_hba = $this->input->post('id_campy_hemoflow_qpcr_result_hba1', TRUE);
+        $id_campy_hemoflow_qpcr = $this->input->post('id_campy_hemoflow_qpcrBiochemical', TRUE);
+        $gramlysis = $this->input->post('gramlysis', TRUE);
+        $oxidase = $this->input->post('oxidase', TRUE);
+        $catalase = $this->input->post('catalase', TRUE);
+        $confirmation = $this->input->post('confirmation', TRUE);
+        $sample_store = $this->input->post('sample_store', TRUE);
+        $biochemical_tube = $this->input->post('biochemical_tube', TRUE);
+        $id_one_water_sample = $this->input->post('idBiochemical_one_water_sample', TRUE);
+    
+        // Defaukt value if the attribute is null
+        if ($gramlysis === null) $gramlysis = '-';
+        if ($oxidase === null) $oxidase = '-';
+        if ($catalase === null) $catalase = '-';
+    
+        if ($mode == "insert") {
+            $data = array(
+                'id_campy_hemoflow_qpcr' => $id_campy_hemoflow_qpcr,
+                'id_campy_hemoflow_qpcr_result_hba' => $id_campy_hemoflow_qpcr_result_hba,
+                'gramlysis' => $gramlysis,
+                'oxidase' => $oxidase,
+                'catalase' => $catalase,
+                'confirmation' => $confirmation,
+                'sample_store' => $sample_store,
+                'biochemical_tube' => $biochemical_tube,
+                'flag' => '0',
+                'lab' => $this->session->userdata('lab'),
+                'uuid' => $this->uuid->v4(),
+                'user_created' => $this->session->userdata('id_users'),
+                'date_created' => date('Y-m-d H:i:s'),
+            );
+            $this->Campy_hemoflow_qpcr_model->insertResultsBiochemical($data);
+        } else if ($mode == "edit") {
+            $data = array(
+                'id_campy_hemoflow_qpcr' => $id_campy_hemoflow_qpcr,
+                'id_campy_hemoflow_qpcr_result_hba' => $id_campy_hemoflow_qpcr_result_hba,
+                'gramlysis' => $gramlysis,
+                'oxidase' => $oxidase,
+                'catalase' => $catalase,
+                'confirmation' => $confirmation,
+                'sample_store' => $sample_store,
+                'flag' => '0',
+                'lab' => $this->session->userdata('lab'),
+                'uuid' => $this->uuid->v4(),
+                'user_updated' => $this->session->userdata('id_users'),
+                'date_updated' => date('Y-m-d H:i:s'),
+            );
+            $this->Campy_hemoflow_qpcr_model->updateResultsBiochemical($id_campy_hemoflow_qpcr_result_biochemical, $data);
+        }
+
+        redirect(site_url("Campy_hemoflow_qpcr/read/" . $id_one_water_sample));
+    }
+
+    // NEW: Save biochemical results directly from MPN PCR (without HBA dependency)
+    public function saveBiochemicalFromMpnpcr() {
+        $mode = $this->input->post('mode_detResultsBiochemical', TRUE);
+        $id_campy_hemoflow_qpcr_result_biochemical = $this->input->post('id_campy_hemoflow_qpcr_result_biochemical', TRUE);
+        $id_campy_hemoflow_qpcr = $this->input->post('id_campy_hemoflow_qpcrBiochemical', TRUE);
+        $gramlysis = $this->input->post('gramlysis', TRUE);
+        $oxidase = $this->input->post('oxidase', TRUE);
+        $catalase = $this->input->post('catalase', TRUE);
+        $confirmation = $this->input->post('confirmation', TRUE);
+        $sample_store = $this->input->post('sample_store', TRUE);
+        $biochemical_tube = $this->input->post('biochemical_tube', TRUE);
+        $id_one_water_sample = $this->input->post('idBiochemical_one_water_sample', TRUE);
+    
+        // Default value if the attribute is null
+        if ($gramlysis === null) $gramlysis = '-';
+        if ($oxidase === null) $oxidase = '-';
+        if ($catalase === null) $catalase = '-';
+    
+        if ($mode == "insert") {
+            $data = array(
+                'id_campy_hemoflow_qpcr' => $id_campy_hemoflow_qpcr,
+                'id_campy_hemoflow_qpcr_result_mpnpcr' => NULL, // NEW: NULL because we bypass HBA
+                'gramlysis' => $gramlysis,
+                'oxidase' => $oxidase,
+                'catalase' => $catalase,
+                'confirmation' => $confirmation,
+                'sample_store' => $sample_store,
+                'biochemical_tube' => $biochemical_tube,
+                'flag' => '0',
+                'lab' => $this->session->userdata('lab'),
+                'uuid' => $this->uuid->v4(),
+                'user_created' => $this->session->userdata('id_users'),
+                'date_created' => date('Y-m-d H:i:s'),
+            );
+            $this->Campy_hemoflow_qpcr_model->insertResultsBiochemical($data);
+        } else if ($mode == "edit") {
+            $data = array(
+                'id_campy_hemoflow_qpcr' => $id_campy_hemoflow_qpcr,
+                'id_campy_hemoflow_qpcr_result_mpnpcr' => NULL, // NEW: NULL because we bypass HBA
+                'gramlysis' => $gramlysis,
+                'oxidase' => $oxidase,
+                'catalase' => $catalase,
+                'confirmation' => $confirmation,
+                'sample_store' => $sample_store,
+                'flag' => '0',
+                'lab' => $this->session->userdata('lab'),
+                'uuid' => $this->uuid->v4(),
+                'user_updated' => $this->session->userdata('id_users'),
+                'date_updated' => date('Y-m-d H:i:s'),
+            );
+            $this->Campy_hemoflow_qpcr_model->updateResultsBiochemical($id_campy_hemoflow_qpcr_result_biochemical, $data);
+        }
+
+        redirect(site_url("Campy_hemoflow_qpcr/read/" . $id_one_water_sample));
     }
     
-
-    // public function saveResultsHBA() {
-    //     $mode = $this->input->post('mode_detResultsHBA', TRUE);
-    //     $id_campy_hemoflow_qpcr = $this->input->post('id_campy_hemoflow_qpcrHBA', TRUE);
-    //     $id_result_hba_qpcr = $this->input->post('id_result_hba_qpcr', TRUE);
-
-    //     $dt = new DateTime();
-    //     $date_sample_processed = $this->input->post('date_sample_processedHBA', TRUE);
-    //     $time_sample_processed = $this->input->post('time_sample_processedHBA', TRUE);
     
-    //     if ($mode == "insert") {
-    //         // Insert data into assays table
+
+    
+    // public function savedetail24() {
+    //         $mode_det24 = $this->input->post('mode_det24', TRUE);
+    //         $dt = new DateTime();
+    //         // var_dump($id_moisture);
+    //         // die();
+        
+    //         $id_moisture = $this->input->post('idx_moisture24', TRUE);
+    //         $id_moisture24 = $this->input->post('id_moisture24', TRUE);
+    //         $date_moisture24 = $this->input->post('date_moisture24', TRUE);
+    //         $time_moisture24 = $this->input->post('time_moisture24', TRUE);
+    //         $barcode_tray = $this->input->post('barcode_tray24', TRUE);
+    //         $dry_weight24 = $this->input->post('dry_weight24', TRUE);
+    //         $comments24 = $this->input->post('comments24', TRUE);
+        
+    //         if($mode_det24 == "insert") {
+    //             $data = array(
+    //                 'id_moisture' => $id_moisture,
+    //                 'date_moisture24' => $date_moisture24,
+    //                 'time_moisture24' => $time_moisture24,
+    //                 'barcode_tray' => $barcode_tray,
+    //                 'dry_weight24' => $dry_weight24,
+    //                 'comments24' => $comments24,
+    //                 'flag' => '0',
+    //                 'lab' => $this->session->userdata('lab'),
+    //                 'uuid' => $this->uuid->v4(),
+    //                 'user_created' => $this->session->userdata('id_users'),
+    //                 'date_created' => $dt->format('Y-m-d H:i:s'),
+    //             );
+    //             // var_dump($data);
+    //             // die();
+        
+    //             $insert_id = $this->Campy_hemoflow_qpcr_model->insert_det24($data);
+    //             if ($insert_id) {
+    //                 $this->session->set_flashdata('message', 'Create Record Success');
+    //             } else {
+    //                 $this->session->set_flashdata('error', 'Failed to create record');
+    //             }
+    //         } else if($mode_det24 == "edit") {
+    //             $data = array(
+    //                 'date_moisture24' => $date_moisture24,
+    //                 'time_moisture24' => $time_moisture24,
+    //                 'barcode_tray' => $barcode_tray,
+    //                 'dry_weight24' => $dry_weight24,
+    //                 'comments24' => $comments24,
+    //                 'flag' => '0',
+    //                 'lab' => $this->session->userdata('lab'),
+    //                 'uuid' => $this->uuid->v4(),
+    //                 'user_created' => $this->session->userdata('id_users'),
+    //                 'date_created' => $dt->format('Y-m-d H:i:s'),
+    //             );
+    //             // var_dump($data);
+    //             // die();
+    //             $result = $this->Campy_hemoflow_qpcr_model->update_det24($id_moisture24, $data);
+    //             if ($result) {
+    //                 $this->session->set_flashdata('message', 'Update Record Success');
+    //             } else {
+    //                 $this->session->set_flashdata('error', 'Failed to update record');
+    //             }
+    //         }
+
+    //         redirect(site_url("Campy_hemoflow_qpcr/read/" . $id_moisture));
+    // }
+
+
+    // public function savedetail72() {
+    //     $mode_det72 = $this->input->post('mode_det72', TRUE);
+    //     $dt = new DateTime();
+
+    //     $id_moisture = $this->input->post('idx_moisture72', TRUE);
+    //     $id_moisture72 = $this->input->post('id_moisture72', TRUE);
+    //     $date_moisture72 = $this->input->post('date_moisture72', TRUE);
+    //     $time_moisture72 = $this->input->post('time_moisture72', TRUE);
+    //     $barcode_tray = $this->input->post('barcode_tray72', TRUE);
+    //     $dry_weight72 = $this->input->post('dry_weight72', TRUE);
+    //     $dry_weight_persen = $this->input->post('dry_weight_persen', TRUE);
+    //     $comments72 = $this->input->post('comments72', TRUE);
+
+    //     if($mode_det72 == "insert") {
     //         $data = array(
-    //             'id_campy_hemoflow_qpcr' => $id_campy_hemoflow_qpcr,
-    //             'date_sample_processed' => $date_sample_processed,
-    //             'time_sample_processed' => $time_sample_processed,
+    //             'id_moisture' => $id_moisture,
+    //             'date_moisture72' => $date_moisture72,
+    //             'time_moisture72' => $time_moisture72,
+    //             'barcode_tray' => $barcode_tray,
+    //             'dry_weight72' => $dry_weight72,
+    //             'dry_weight_persen' => $dry_weight_persen,
+    //             'comments72' => $comments72,
     //             'flag' => '0',
     //             'lab' => $this->session->userdata('lab'),
     //             'uuid' => $this->uuid->v4(),
     //             'user_created' => $this->session->userdata('id_users'),
     //             'date_created' => $dt->format('Y-m-d H:i:s'),
     //         );
-
     //         // var_dump($data);
     //         // die();
     
-    //         $assay_id = $this->Campy_hemoflow_qpcr_model->insertResultsHba($data);
-    
-    //         // Insert sample volumes
-    //         $number_of_tubes = $this->input->post('number_of_tubesHba', TRUE);
-    //         for ($i = 1; $i <= $number_of_tubes; $i++) {
-    //             $plate = $this->input->post("growth_plate{$i}", TRUE);
-
-    //             if ($plate) {
-    //                 $this->Campy_hemoflow_qpcr_model->insert_growth_plate_hba(array(
-    //                     'id_result_hba_qpcr' => $assay_id,
-    //                     'plate_number' => $i,
-    //                     'growth_plate' => $plate,
-    //                     'flag' => '0',
-    //                     'lab' => $this->session->userdata('lab'),
-    //                     'uuid' => $this->uuid->v4(),
-    //                     'user_created' => $this->session->userdata('id_users'),
-    //                     'date_created' => $dt->format('Y-m-d H:i:s'),
-    //                 ));
-    //             }
-
+    //         $insert_id = $this->Campy_hemoflow_qpcr_model->insert_det72($data);
+    //         if ($insert_id) {
+    //             $this->session->set_flashdata('message', 'Create Record Success');
+    //         } else {
+    //             $this->session->set_flashdata('error', 'Failed to create record');
     //         }
-    
-    //         $this->session->set_flashdata('message', 'Create Record Success');
-    
-    //     } else if ($mode == "edit") {
-    //         // Update data in assays table
+    //     } else if($mode_det72 == "edit") {
     //         $data = array(
-    //             'id_campy_hemoflow_qpcr' => $id_campy_hemoflow_qpcr,
-    //             'date_sample_processed' => $date_sample_processed,
-    //             'time_sample_processed' => $time_sample_processed,
-    //             'flag' => '0',
-    //             'lab' => $this->session->userdata('lab'),
-    //             'uuid' => $this->uuid->v4(),
-    //             'user_updated' => $this->session->userdata('id_users'),
-    //             'date_updated' => $dt->format('Y-m-d H:i:s'),
-    //         );
-    
-    //         $this->Campy_hemoflow_qpcr_model->updateResultsHba($id_result_hba_qpcr, $data);
-    
-    //         // Update sample volumes
-    //         $number_of_tubes = $this->input->post('number_of_tubesHba', TRUE);
-    //         $this->Campy_hemoflow_qpcr_model->delete_growth_plates_hba($id_result_hba_qpcr); // Hapus volume yang ada
-    
-    //         for ($i = 1; $i <= $number_of_tubes; $i++) {
-    //             $plate = $this->input->post("growth_plate{$i}", TRUE);
-    //             if ($plate) {
-    //                 $data_plate = array(
-    //                     'id_result_hba_qpcr' => $id_result_hba_qpcr,
-    //                     'plate_number' => $i,
-    //                     'growth_plate' => $plate,
-    //                     'flag' => '0',
-    //                     'lab' => $this->session->userdata('lab'),
-    //                     'uuid' => $this->uuid->v4(),
-    //                     'user_created' => $this->session->userdata('id_users'),
-    //                     'date_created' => $dt->format('Y-m-d H:i:s'),
-    //                 );
-    //                 $this->Campy_hemoflow_qpcr_model->insert_growth_plate_hba($data_plate);
-    //             }
-    //         }
-    
-    //         $this->session->set_flashdata('message', 'Update Record Success');
-    //     }
-
-    //     redirect(site_url("campy_hemoflow_qpcr/read/" . $id_campy_hemoflow_qpcr));
-    // }
-
-
-    // public function saveBiochemical() {
-    //     $mode = $this->input->post('mode_detResultsBiochemical', TRUE);
-    //     $id_result_biochemical_qpcr = $this->input->post('id_result_biochemical_qpcr', TRUE);
-    //     $id_result_hba_qpcr = $this->input->post('id_result_hba_qpcr1', TRUE);
-    //     $id_campy_hemoflow_qpcr = $this->input->post('id_campy_hemoflow_qpcrBiochemical', TRUE);
-    //     $gramlysis = $this->input->post('gramlysis', TRUE);
-    //     $oxidase = $this->input->post('oxidase', TRUE);
-    //     $catalase = $this->input->post('catalase', TRUE);
-    //     $confirmation = $this->input->post('confirmation', TRUE);
-    //     $sample_store = $this->input->post('sample_store', TRUE);
-    //     $biochemical_tube = $this->input->post('biochemical_tube', TRUE);
-    
-    //     // Defaukt value if the attribute is null
-    //     if ($gramlysis === null) $gramlysis = '-';
-    //     if ($oxidase === null) $oxidase = '-';
-    //     if ($catalase === null) $catalase = '-';
-    
-    //     if ($mode == "insert") {
-    //         $data = array(
-    //             'id_campy_hemoflow_qpcr' => $id_campy_hemoflow_qpcr,
-    //             'id_result_hba_qpcr' => $id_result_hba_qpcr,
-    //             'gramlysis' => $gramlysis,
-    //             'oxidase' => $oxidase,
-    //             'catalase' => $catalase,
-    //             'confirmation' => $confirmation,
-    //             'sample_store' => $sample_store,
-    //             'biochemical_tube' => $biochemical_tube,
+    //             'date_moisture72' => $date_moisture72,
+    //             'time_moisture72' => $time_moisture72,
+    //             'barcode_tray' => $barcode_tray,
+    //             'dry_weight72' => $dry_weight72,
+    //             'dry_weight_persen' => $dry_weight_persen,
+    //             'comments72' => $comments72,
     //             'flag' => '0',
     //             'lab' => $this->session->userdata('lab'),
     //             'uuid' => $this->uuid->v4(),
     //             'user_created' => $this->session->userdata('id_users'),
-    //             'date_created' => date('Y-m-d H:i:s'),
+    //             'date_created' => $dt->format('Y-m-d H:i:s'),
     //         );
-    //         $this->Campy_hemoflow_qpcr_model->insertResultsBiochemical($data);
-    //     } else if ($mode == "edit") {
-    //         $data = array(
-    //             'id_campy_hemoflow_qpcr' => $id_campy_hemoflow_qpcr,
-    //             'id_result_hba_qpcr' => $id_result_hba_qpcr,
-    //             'gramlysis' => $gramlysis,
-    //             'oxidase' => $oxidase,
-    //             'catalase' => $catalase,
-    //             'confirmation' => $confirmation,
-    //             'sample_store' => $sample_store,
-    //             'flag' => '0',
-    //             'lab' => $this->session->userdata('lab'),
-    //             'uuid' => $this->uuid->v4(),
-    //             'user_updated' => $this->session->userdata('id_users'),
-    //             'date_updated' => date('Y-m-d H:i:s'),
-    //         );
-    //         $this->Campy_hemoflow_qpcr_model->updateResultsBiochemical($id_result_biochemical_qpcr, $data);
+    //         // var_dump($data);
+    //         // die();
+    //         $result = $this->Campy_hemoflow_qpcr_model->update_det72($id_moisture72, $data);
+    //         if ($result) {
+    //             $this->session->set_flashdata('message', 'Update Record Success');
+    //         } else {
+    //             $this->session->set_flashdata('error', 'Failed to update record');
+    //         }
     //     }
 
-    //     redirect(site_url("campy_hemoflow_qpcr/read/" . $id_campy_hemoflow_qpcr));
+    //     redirect(site_url("Campy_hemoflow_qpcr/read/" . $id_moisture));
+
+    // }
+  
+
+    // public function delete($id) {
+    //     $row = $this->Campy_hemoflow_qpcr_model->get_by_id($id);
+    //     $data = array(
+    //         'flag' => 1,
+    //         );
+
+    //     if ($row) {
+    //         $this->Campy_hemoflow_qpcr_model->update($id, $data);
+    //         $this->session->set_flashdata('message', 'Delete Record Success');
+    //         redirect(site_url('campy_hemoflow'));
+    //     } else {
+    //         $this->session->set_flashdata('message', 'Record Not Found');
+    //         redirect(site_url('campy_hemoflow'));
+    //     }
     // }
 
 
-    public function delete_campyBiosolids($id) {
-        $row = $this->Campy_hemoflow_qpcr_model->get_by_id_campybiosolids($id);
+    public function delete_campyHemoflow($id) {
+        $row = $this->Campy_hemoflow_qpcr_model->get_by_id_campyhemoflow($id);
         if ($row) {
-            $id_parent = $row->id_result_qpcr; // Retrieve project_id before updating the record
+            $id_parent = $row->id_campy_hemoflow_qpcr_result_mpnpcr; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
-    
-            $this->Campy_hemoflow_qpcr_model->updateCampyBiosolids($id, $data);
+
+            $this->Campy_hemoflow_qpcr_model->updateCampyHemoflow($id, $data);
             $this->Campy_hemoflow_qpcr_model->updateSampleVolume($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
 
-        redirect(site_url('campy_hemoflow_qpcr/read/'.$id_parent));
+        redirect(site_url('Campy_hemoflow_qpcr/read/'.$id_parent));
     }
     
-
-    public function delete_detailQpcr($id) {
-        $row = $this->Campy_hemoflow_qpcr_model->get_by_id_qpcr($id);
+    public function delete_detailMpnpcr($id) {
+        $row = $this->Campy_hemoflow_qpcr_model->get_by_id_mpnpcr($id);
         if ($row) {
-            $id_parent = $row->id_result_qpcr; // Retrieve project_id before updating the record
+            $id_campy_hemoflow_qpcr = $row->id_campy_hemoflow_qpcr;
+            $data = array(
+                'flag' => 1,
+                'user_updated' => $this->session->userdata('id_users'),
+                'date_updated' => date('Y-m-d H:i:s'),
+            );
+
+            $total_biochemical_deleted = 0;
+            $total_hba_deleted = 0;
+            $total_direct_biochemical_deleted = 0;
+
+            // Step 1: Delete direct biochemical results from MPN PCR (new workflow)
+            $direct_biochemical_results = $this->Campy_hemoflow_qpcr_model->get_biochemical_by_mpnpcr_id($id_campy_hemoflow_qpcr);
+            $direct_biochemical_count = count($direct_biochemical_results);
+            
+            if ($direct_biochemical_count > 0) {
+                $total_direct_biochemical_deleted = $this->Campy_hemoflow_qpcr_model->delete_biochemical_by_mpnpcr_id($id_campy_hemoflow_qpcr);
+                log_message('info', "Cascade delete: Deleted {$total_direct_biochemical_deleted} direct biochemical results for MPN PCR ID {$id_campy_hemoflow_qpcr}");
+            }
+
+            // Step 2: Get all HBA results related to this campy_hemoflow (legacy workflow)
+            $hba_results = $this->Campy_hemoflow_qpcr_model->get_hba_by_mpnpcr_id($id_campy_hemoflow_qpcr);
+
+            // Step 3: For each HBA, delete related biochemical results
+            foreach ($hba_results as $hba) {
+                $biochemical_results = $this->Campy_hemoflow_qpcr_model->get_biochemical_by_hba_id($hba->id_campy_hemoflow_qpcr_result_hba);
+                $biochemical_count = count($biochemical_results);
+                
+                if ($biochemical_count > 0) {
+                    $this->Campy_hemoflow_qpcr_model->delete_biochemical_by_hba_id($hba->id_campy_hemoflow_qpcr_result_hba);
+                    $total_biochemical_deleted += $biochemical_count;
+                    
+                    // Log the cascade delete
+                    log_message('info', "Cascade delete: Deleted {$biochemical_count} biochemical results for HBA ID {$hba->id_campy_hemoflow_qpcr_result_hba}");
+                }
+                
+                $total_hba_deleted++;
+            }
+
+            // Step 4: Delete all HBA results for this campy_hemoflow
+            if ($total_hba_deleted > 0) {
+                $this->Campy_hemoflow_qpcr_model->delete_hba_by_campy_hemoflow_qpcr($id_campy_hemoflow_qpcr);
+                log_message('info', "Cascade delete: Deleted {$total_hba_deleted} HBA results for campy_hemoflow ID {$id_campy_hemoflow_qpcr}");
+            }
+
+            // Step 5: Delete the MPN PCR results
+            $this->Campy_hemoflow_qpcr_model->updateResultsMpnpcr($id, $data);
+            $this->Campy_hemoflow_qpcr_model->updateResultsGrowthPlate($id, $data);
+            
+            // Create detailed success message
+            $total_all_biochemical = $total_biochemical_deleted + $total_direct_biochemical_deleted;
+            $message = 'MPN PCR result deleted successfully';
+            
+            $deleted_items = array();
+            if ($total_hba_deleted > 0) {
+                $deleted_items[] = "{$total_hba_deleted} HBA result(s)";
+            }
+            if ($total_all_biochemical > 0) {
+                $deleted_items[] = "{$total_all_biochemical} biochemical result(s)";
+            }
+            
+            if (!empty($deleted_items)) {
+                $message .= " (Also deleted " . implode(" and ", $deleted_items) . ")";
+            }
+            
+            $this->session->set_flashdata('message', $message);
+            log_message('info', "Cascade delete completed: MPN PCR ID {$id} - Direct biochemical: {$total_direct_biochemical_deleted}, HBA biochemical: {$total_biochemical_deleted}, HBA: {$total_hba_deleted}");
+            
+            // Return JSON for AJAX calls
+            if ($this->input->is_ajax_request()) {
+                echo json_encode(array('status' => 'success', 'message' => $message));
+                return;
+            }
+        } else {
+            $message = 'MPN PCR Record Not Found';
+            $this->session->set_flashdata('message', $message);
+            log_message('error', "Failed to delete MPN PCR record - ID: {$id} not found");
+            
+            // Return JSON for AJAX calls
+            if ($this->input->is_ajax_request()) {
+                echo json_encode(array('status' => 'error', 'message' => $message));
+                return;
+            }
+        }
+
+        // Handle redirect for non-AJAX calls
+        if (isset($row) && $row) {
+            redirect(site_url('Campy_hemoflow_qpcr/read/'.$row->id_campy_hemoflow_qpcr));
+        } else {
+            redirect(site_url('campy_hemoflow_qpcr'));
+        }
+    }
+
+    public function delete_detailHba($id) {
+        $row = $this->Campy_hemoflow_qpcr_model->get_by_id_hba($id);
+        if ($row) {
+            $id_parent = $row->id_campy_hemoflow_qpcr_result_mpnpcr; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
     
-            $this->Campy_hemoflow_qpcr_model->updateResultsQpcr($id, $data);
-            $this->Campy_hemoflow_qpcr_model->updateResultsGrowthPlate($id, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
+            // First, check if there are any biochemical results related to this HBA
+            $biochemical_results = $this->Campy_hemoflow_qpcr_model->get_biochemical_by_hba_id($id);
+            $biochemical_count = count($biochemical_results);
+            
+            // Delete HBA results (growth plates and main record)
+            $this->Campy_hemoflow_qpcr_model->updateResultsHba($id, $data);
+            $this->Campy_hemoflow_qpcr_model->updateResultsGrowthPlateHba($id, $data);
+            
+            // Cascade delete: Delete all related biochemical results
+            if ($biochemical_count > 0) {
+                $biochemical_deleted = $this->Campy_hemoflow_qpcr_model->delete_biochemical_by_hba_id($id);
+                if ($biochemical_deleted) {
+                    $this->session->set_flashdata('message', 
+                        "Delete Record Success - HBA and {$biochemical_count} related Biochemical test(s) deleted to maintain data integrity");
+                } else {
+                    $this->session->set_flashdata('message', 
+                        'HBA deleted successfully, but failed to delete related Biochemical tests. Please check data consistency.');
+                }
+            } else {
+                $this->session->set_flashdata('message', 'Delete Record Success');
+            }
+            
+            // Log the cascade delete for audit purposes
+            log_message('info', "HBA Record deleted (ID: {$id}) with cascade delete of {$biochemical_count} biochemical records");
+            
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
 
-        redirect(site_url('campy_hemoflow_qpcr/read/'.$id_parent));
+        redirect(site_url('Campy_hemoflow_qpcr/read/'.$id_parent));
     }
 
-    // public function delete_detailHba($id) {
-    //     $row = $this->Campy_hemoflow_qpcr_model->get_by_id_hba($id);
+    public function delete_detailBiochemical($id) {
+        $row = $this->Campy_hemoflow_qpcr_model->get_by_id_biochemical($id);
+        if ($row) {
+            $id_parent = $row->id_campy_hemoflow_qpcr; // Retrieve project_id before updating the record
+            $data = array(
+                'flag' => 1,
+                'user_updated' => $this->session->userdata('id_users'),
+                'date_updated' => date('Y-m-d H:i:s'),
+            );
+    
+            $affected_rows = $this->Campy_hemoflow_qpcr_model->updateResultsBiochemical($id, $data);
+            
+            if ($affected_rows > 0) {
+                $message = 'Delete Biochemical Record Success';
+                $this->session->set_flashdata('message', $message);
+                // Log the successful deletion
+                log_message('info', "Biochemical record deleted - ID: {$id}, Parent: {$id_parent}, User: " . $this->session->userdata('id_users'));
+                
+                // Return JSON for AJAX calls
+                if ($this->input->is_ajax_request()) {
+                    echo json_encode(array('status' => 'success', 'message' => $message));
+                    return;
+                }
+            } else {
+                $message = 'Failed to delete Biochemical Record - No changes made';
+                $this->session->set_flashdata('message', $message);
+                log_message('error', "Failed to delete biochemical record - ID: {$id}, no rows affected");
+                
+                // Return JSON for AJAX calls
+                if ($this->input->is_ajax_request()) {
+                    echo json_encode(array('status' => 'error', 'message' => $message));
+                    return;
+                }
+            }
+        } else {
+            $message = 'Biochemical Record Not Found';
+            $this->session->set_flashdata('message', $message);
+            log_message('error', "Failed to delete biochemical record - ID: {$id} not found");
+            
+            // Return JSON for AJAX calls
+            if ($this->input->is_ajax_request()) {
+                echo json_encode(array('status' => 'error', 'message' => $message));
+                return;
+            }
+            
+            $id_parent = null;
+        }
+
+        // Handle redirect for non-AJAX calls
+        if (isset($id_parent) && is_numeric($id_parent)) {
+            redirect(site_url('Campy_hemoflow_qpcr/read/'.$id_parent));
+        } else {
+            redirect(site_url('campy_hemoflow_qpcr'));
+        }
+    }
+
+    // public function delete_detail24($id) {
+    //     $row = $this->Campy_hemoflow_qpcr_model->get_by_id_detail24($id);
     //     if ($row) {
-    //         $id_parent = $row->id_result_qpcr; // Retrieve project_id before updating the record
+    //         $id_parent = $row->id_moisture; // Retrieve project_id before updating the record
     //         $data = array(
     //             'flag' => 1,
     //         );
-
-    //         $this->Campy_hemoflow_qpcr_model->updateResultsHba($id, $data);
-    //         $this->Campy_hemoflow_qpcr_model->updateResultsGrowthPlateHba($id, $data);
+    
+    //         $this->Campy_hemoflow_qpcr_model->update_det24($id, $data);
     //         $this->session->set_flashdata('message', 'Delete Record Success');
     //     } else {
     //         $this->session->set_flashdata('message', 'Record Not Found');
     //     }
 
-    //     redirect(site_url('campy_hemoflow_qpcr/read/'.$id_parent));
+    //     redirect(site_url('campy_hemoflow/read/'.$id_parent));
     // }
 
-    // public function delete_detailBiochemical($id) {
-    //     $row = $this->Campy_hemoflow_qpcr_model->get_by_id_biochemical($id);
+    // public function delete_detail72($id) {
+    //     $row = $this->Campy_hemoflow_qpcr_model->get_by_id_detail72($id);
     //     if ($row) {
-    //         $id_parent = $row->id_result_qpcr; // Retrieve project_id before updating the record
+    //         $id_parent = $row->id_moisture; // Retrieve project_id before updating the record
     //         $data = array(
     //             'flag' => 1,
     //         );
     
-    //         $this->Campy_hemoflow_qpcr_model->updateResultsBiochemical($id, $data);
+    //         $this->Campy_hemoflow_qpcr_model->update_det72($id, $data);
     //         $this->session->set_flashdata('message', 'Delete Record Success');
     //     } else {
     //         $this->session->set_flashdata('message', 'Record Not Found');
     //     }
     
-    //     redirect(site_url('campy_hemoflow_qpcr/read/'.$id_parent));
+    //     redirect(site_url('Campy_hemoflow_qpcr/read/'.$id_parent));
     // }
+
 
     public function getIdOneWaterDetails()
     {
@@ -651,20 +1097,20 @@ class Campy_hemoflow_qpcr extends CI_Controller
         echo json_encode($oneWaterSample);
     }
 
-    // public function validate24() {
-    //     $id = $this->input->get('id24');
-    //     $data = $this->Campy_hemoflow_qpcr_model->validate24($id);
-    //     header('Content-Type: application/json');
-    //     echo json_encode($data);
-    // }
+    public function validate24() {
+        $id = $this->input->get('id24');
+        $data = $this->Campy_hemoflow_qpcr_model->validate24($id);
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
 
-    // public function validate72() {
-    //     $id = $this->input->get('id72');
-    //     $data = $this->Campy_hemoflow_qpcr_model->validate72($id);
-    //     header('Content-Type: application/json');
-    //     echo json_encode($data);
-    // }
-
+    public function validate72() {
+        $id = $this->input->get('id72');
+        $data = $this->Campy_hemoflow_qpcr_model->validate72($id);
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
+    
     // public function excel($id) {
     //     $spreadsheet = new Spreadsheet();    
     //     $sheet = $spreadsheet->getActiveSheet();
@@ -691,8 +1137,7 @@ class Campy_hemoflow_qpcr extends CI_Controller
     //         // Add Tube Volume headers
     //         foreach ($finalConcentration[0] as $key => $value) {
     //             if (strpos($key, 'Tube') === 0) {
-    //                 $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
-    //                 $sheet->setCellValue($columnLetter . '1', "$key Volume");
+    //                 $sheet->setCellValue(chr(75 + $tubeIndex) . '1', "$key Volume"); // Start from K (chr(75))
     //                 $tubeIndex++;
     //             }
     //         }
@@ -700,8 +1145,7 @@ class Campy_hemoflow_qpcr extends CI_Controller
     //         // Add Tube Result headers
     //         $plate_numbers = explode(',', $finalConcentration[0]->plate_numbers);
     //         foreach ($plate_numbers as $plate_number) {
-    //             $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
-    //             $sheet->setCellValue($columnLetter . '1', "Tube $plate_number Result");
+    //             $sheet->setCellValue(chr(75 + $tubeIndex) . '1', "Tube $plate_number Result");
     //             $tubeIndex++;
     //         }
     //     }
@@ -719,36 +1163,33 @@ class Campy_hemoflow_qpcr extends CI_Controller
     //         $sheet->setCellValue('G' . $numrow, $concentration->date_sample_processed ?? '');
     //         $sheet->setCellValue('H' . $numrow, $concentration->time_sample_processed ?? '');
     //         $sheet->setCellValue('I' . $numrow, $concentration->sample_wetweight ?? '');
-    //         $sheet->setCellValue('J' . $numrow, $concentration->elution_volume ?? '');
-    
+    //         $sheet->setCellValue('J' . $numrow, $concentration->filtration_volume ?? '');
+
     //         // Fill tube volumes
     //         $tubeIndex = 0;
     //         foreach ($concentration as $key => $value) {
     //             if (strpos($key, 'Tube') === 0) {
-    //                 $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
-    //                 $sheet->setCellValue($columnLetter . $numrow, $value ?? '');
+    //                 $sheet->setCellValue(chr(75 + $tubeIndex) . $numrow, $value ?? ''); // Volume
     //                 $tubeIndex++;
     //             }
     //         }
-    
+
     //         // Fill tube results
     //         $plate_numbers = explode(',', $concentration->plate_numbers);
     //         foreach ($plate_numbers as $plate_number) {
     //             // Set default value for confirmation
     //             $confirmation_value = isset($concentration->confirmation[$plate_number]) ? $concentration->confirmation[$plate_number] : 'No Growth'; 
-                
-    //             // Calculate the column letter dynamically
-    //             $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
-    //             $sheet->setCellValue($columnLetter . $numrow, $confirmation_value);
+    //             $sheet->setCellValue(chr(75 + $tubeIndex) . $numrow, $confirmation_value); // Result
     //             $tubeIndex++;
     //         }
-    
+
     //         $numrow++;
     //     }
+
     
     //     // Set header for the Excel file
     //     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    //     header('Content-Disposition: attachment;filename="Report_Biosolids_Final_Concentrations.xlsx"');
+    //     header('Content-Disposition: attachment;filename="Report_campy_hemoflow.xlsx"');
     //     header('Cache-Control: max-age=0');
     
     //     // Output the Excel file
@@ -759,31 +1200,37 @@ class Campy_hemoflow_qpcr extends CI_Controller
     // public function excel_all() {
     //     $spreadsheet = new Spreadsheet();
     //     $finalConcentration = $this->Campy_hemoflow_qpcr_model->get_all_export();
-    //     // var_dump($finalConcentration);
-    //     // die();
-    //     // Array untuk menyimpan data berdasarkan jumlah tabung
-    //     $dataTubes = [];
+    //     $data1Tubes = [];
+    //     $data5Tubes = [];
+    //     $data11Tubes = [];
     
-    //     // Mengelompokkan data berdasarkan number_of_tubes
     //     foreach ($finalConcentration as $concentration) {
-    //         $numberOfTubes = $concentration->number_of_tubes;
-    //         if (!isset($dataTubes[$numberOfTubes])) {
-    //             $dataTubes[$numberOfTubes] = []; // Inisialisasi array untuk jumlah tabung ini
+    //         if ($concentration->number_of_tubes == 5) {
+    //             $data5Tubes[] = $concentration;
+    //         } elseif ($concentration->number_of_tubes == 11) {
+    //             $data11Tubes[] = $concentration;
+    //         } elseif ($concentration->number_of_tubes == 1) {
+    //             $data1Tubes[] = $concentration;
     //         }
-    //         $dataTubes[$numberOfTubes][] = $concentration; // Tambahkan data ke array
     //     }
     
-    //     // Buat sheet untuk setiap jumlah tabung yang ada
-    //     foreach ($dataTubes as $numberOfTubes => $data) {
-    //         $sheet = $spreadsheet->createSheet();
-    //         $sheet->setTitle("{$numberOfTubes} Tubes");
-    //         $this->setSheetHeaders($sheet, $data, $numberOfTubes);
-    //         $this->fillSheetData($sheet, $data, $numberOfTubes);
-    //     }
+    //     $sheet1 = $spreadsheet->getActiveSheet();
+    //     $sheet1->setTitle('5 Tubes');
+    //     $this->setSheetHeaders($sheet1, $data5Tubes, 5);
+    //     $this->fillSheetData($sheet1, $data5Tubes, 5);
     
-    //     // Set header untuk file Excel
+    //     $sheet2 = $spreadsheet->createSheet();
+    //     $sheet2->setTitle('11 Tubes');
+    //     $this->setSheetHeaders($sheet2, $data11Tubes, 11);
+    //     $this->fillSheetData($sheet2, $data11Tubes, 11);
+
+    //     $sheet3 = $spreadsheet->createSheet();
+    //     $sheet3->setTitle('1 Tube');
+    //     $this->setSheetHeaders($sheet3, $data1Tubes, 1);
+    //     $this->fillSheetData($sheet3, $data1Tubes, 1);
+    
     //     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    //     header('Content-Disposition: attachment;filename="Report_All_Biosolids_Final_Concentrations.xlsx"');
+    //     header('Content-Disposition: attachment;filename="Report_campy_hemoflow.xlsx"');
     //     header('Cache-Control: max-age=0');
     
     //     ob_clean();
@@ -797,75 +1244,311 @@ class Campy_hemoflow_qpcr extends CI_Controller
     //         return;
     //     }
     // }
-    
-    
-    // private function setSheetHeaders($sheet, $data, $numberOfTubes) {
-    //     // Set the headers
-    //     $sheet->setCellValue('A1', "ID One Water Sample");
-    //     $sheet->setCellValue('B1', "Campy Assay Barcode");
-    //     $sheet->setCellValue('C1', "Initial");
-    //     $sheet->setCellValue('D1', "Sample Type");
-    //     $sheet->setCellValue('E1', "Number of Tubes");
-    //     $sheet->setCellValue('F1', "MPN PCR Conducted");
-    //     $sheet->setCellValue('G1', "Date Sample Processed");
-    //     $sheet->setCellValue('H1', "Time Sample Processed");
-    //     $sheet->setCellValue('I1', "Sample Wet Weight");
-    //     $sheet->setCellValue('J1', "Elution Volume");
-    
-    //     // Add Tube Volume headers
-    //     for ($i = 1; $i <= $numberOfTubes; $i++) {
-    //         $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $i);
-    //         $sheet->setCellValue($columnLetter . '1', "Tube $i Volume");
-    //     }
-    
-    //     // Add Tube Result headers
-    //     for ($i = 1; $i <= $numberOfTubes; $i++) {
-    //         $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $numberOfTubes + $i);
-    //         $sheet->setCellValue($columnLetter . '1', "Tube $i Result");
-    //     }
-    // }
-    
-    // private function fillSheetData($sheet, $data, $numberOfTubes) {
-    //     // Mulai mengisi data dari baris kedua
-    //     $numrow = 2;
-    //     foreach ($data as $concentration) {
-    //         // Informasi dasar
-    //         $sheet->setCellValue('A' . $numrow, $concentration->id_one_water_sample ?? '');
-    //         $sheet->setCellValue('B' . $numrow, $concentration->campy_assay_barcode ?? '');
-    //         $sheet->setCellValue('C' . $numrow, $concentration->initial ?? '');
-    //         $sheet->setCellValue('D' . $numrow, $concentration->sampletype ?? '');
-    //         $sheet->setCellValue('E' . $numrow, $concentration->number_of_tubes ?? '');
-    //         $sheet->setCellValue('F' . $numrow, $concentration->mpn_pcr_conducted ?? '');
-    //         $sheet->setCellValue('G' . $numrow, $concentration->date_sample_processed ?? '');
-    //         $sheet->setCellValue('H' . $numrow, $concentration->time_sample_processed ?? '');
-    //         $sheet->setCellValue('I' . $numrow, $concentration->sample_wetweight ?? '');
-    //         $sheet->setCellValue('J' . $numrow, $concentration->elution_volume ?? '');
-    
-    //         // Mengisi volume tabung
-    //         $tubeIndex = 0;
-    //         foreach ($concentration as $key => $value) {
-    //             if (strpos($key, 'Tube') === 0) {
-    //                 $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
-    //                 $sheet->setCellValue($columnLetter . $numrow, $value ?? '');
-    //                 $tubeIndex++;
-    //             }
-    //         }
-    
-    //     // Mengisi hasil tabung
-    //     for ($i = 1; $i <= $numberOfTubes; $i++) {
-    //         $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $numberOfTubes + ($i - 1));
 
-    //         // Mengakses nilai konfirmasi dengan indeks tabung
-    //         $confirmation_value = $concentration->confirmation[$i] ?? 'No Growth'; // Nilai default jika tidak ada konfirmasi
-            
-    //         // Debugging: Cek nilai konfirmasi sebelum diset ke sel
-    //         error_log("Confirmation for Tube {$i}: " . $confirmation_value);
-    //         $sheet->setCellValue($columnLetter . $numrow, $confirmation_value);
-    //     }
+
+    public function excel($id) {
+        $spreadsheet = new Spreadsheet();    
+        $sheet = $spreadsheet->getActiveSheet();
     
-    //         $numrow++;
-    //     }
-    // }
+        // Set the headers
+        $sheet->setCellValue('A1', "ID One Water Sample");
+        $sheet->setCellValue('B1', "Campy Assay Barcode");
+        $sheet->setCellValue('C1', "Initial");
+        $sheet->setCellValue('D1', "Sample Type");
+        $sheet->setCellValue('E1', "Number of Tubes");
+        $sheet->setCellValue('F1', "MPN PCR Conducted");
+        $sheet->setCellValue('G1', "Date Sample Processed");
+        $sheet->setCellValue('H1', "Time Sample Processed");
+        $sheet->setCellValue('I1', "Sample Wet Weight");
+        $sheet->setCellValue('J1', "Elution Volume");
+    
+        // Fetch the concentration data
+        $finalConcentration = $this->Campy_hemoflow_qpcr_model->get_export($id);
+    
+        if (!empty($finalConcentration)) {
+            // Initialize tube index for volumes
+            $tubeIndex = 0;
+    
+            // Add Tube Volume headers
+            foreach ($finalConcentration[0] as $key => $value) {
+                if (strpos($key, 'Tube') === 0) {
+                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+                    $sheet->setCellValue($columnLetter . '1', "$key Volume");
+                    $tubeIndex++;
+                }
+            }
+    
+            // Add Tube Result headers
+            $plate_numbers = explode(',', $finalConcentration[0]->plate_numbers);
+            foreach ($plate_numbers as $plate_number) {
+                $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+                $sheet->setCellValue($columnLetter . '1', "Tube $plate_number Result");
+                $tubeIndex++;
+            }
+            
+            // Add MPN calculation headers after tube results
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $sheet->setCellValue($columnLetter . '1', "MPN Concentration");
+            $tubeIndex++;
+            
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $sheet->setCellValue($columnLetter . '1', "Upper CI");
+            $tubeIndex++;
+            
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $sheet->setCellValue($columnLetter . '1', "Lower CI");
+            $tubeIndex++;
+
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $sheet->setCellValue($columnLetter . '1', "Calculation MPN/g Dw");
+            $tubeIndex++; 
+
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $sheet->setCellValue($columnLetter . '1', "Upper CI MPN/g Dw");
+            $tubeIndex++;
+
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $sheet->setCellValue($columnLetter . '1', "Lower CI MPN/g Dw");
+        }
+    
+        // Start filling data from the second row
+        $numrow = 2;
+        foreach ($finalConcentration as $concentration) {
+            // Basic information
+            $sheet->setCellValue('A' . $numrow, $concentration->id_one_water_sample ?? '');
+            $sheet->setCellValue('B' . $numrow, $concentration->campy_assay_barcode ?? '');
+            $sheet->setCellValue('C' . $numrow, $concentration->initial ?? '');
+            $sheet->setCellValue('D' . $numrow, $concentration->sampletype ?? '');
+            $sheet->setCellValue('E' . $numrow, $concentration->number_of_tubes ?? '');
+            $sheet->setCellValue('F' . $numrow, $concentration->mpn_pcr_conducted ?? '');
+            $sheet->setCellValue('G' . $numrow, $concentration->date_sample_processed ?? '');
+            $sheet->setCellValue('H' . $numrow, $concentration->time_sample_processed ?? '');
+            // $sheet->setCellValue('I' . $numrow, $concentration->sample_wetweight ?? '');
+            // $sheet->setCellValue('I' . $numrow, $concentration->filtration_volume ?? '');
+    
+            // Fill tube volumes
+            $tubeIndex = 0;
+            foreach ($concentration as $key => $value) {
+                if (strpos($key, 'Tube') === 0) {
+                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+                    $sheet->setCellValue($columnLetter . $numrow, $value ?? '');
+                    $tubeIndex++;
+                }
+            }
+    
+            // Fill tube results
+            $plate_numbers = explode(',', $concentration->plate_numbers);
+            foreach ($plate_numbers as $plate_number) {
+                $plate_number = trim($plate_number); // Remove any spaces
+                
+                // Check confirmation array for this plate number
+                $confirmation_value = 'No Growth'; // Default value
+                
+                if (isset($concentration->confirmation[$plate_number])) {
+                    $confirmation_value = $concentration->confirmation[$plate_number];
+                } else {
+                    // Try with space prefix (karena ada spasi di key confirmation)
+                    $spaced_key = ' ' . $plate_number;
+                    if (isset($concentration->confirmation[$spaced_key])) {
+                        $confirmation_value = $concentration->confirmation[$spaced_key];
+                    }
+                }
+                
+                // Calculate the column letter dynamically
+                $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+                $sheet->setCellValue($columnLetter . $numrow, $confirmation_value);
+                $tubeIndex++;
+            }
+            
+            // Fill MPN calculation data after tube results
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $sheet->setCellValue($columnLetter . $numrow, $concentration->mpn_concentration ?? '');
+            $tubeIndex++;
+            
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $sheet->setCellValue($columnLetter . $numrow, $concentration->upper_ci ?? '');
+            $tubeIndex++;
+            
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $sheet->setCellValue($columnLetter . $numrow, $concentration->lower_ci ?? '');
+            $tubeIndex++;
+
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $sheet->setCellValue($columnLetter . $numrow, $concentration->mpn_concentration_dw ?? '');
+            $tubeIndex++;   
+
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $sheet->setCellValue($columnLetter . $numrow, $concentration->upper_ci_dw ?? '');
+            $tubeIndex++;
+
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $sheet->setCellValue($columnLetter . $numrow, $concentration->lower_ci_dw ?? '');
+    
+            $numrow++;
+        }
+    
+        // Set header for the Excel file
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="Report_Hemoflow_Final_Concentrations.xlsx"');
+        header('Cache-Control: max-age=0');
+    
+        // Output the Excel file
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
+    }
+
+    public function excel_all() {
+        $spreadsheet = new Spreadsheet();
+        $finalConcentration = $this->Campy_hemoflow_qpcr_model->get_all_export();
+        // var_dump($finalConcentration);
+        // die();
+        // Array untuk menyimpan data berdasarkan jumlah tabung
+        $dataTubes = [];
+    
+        // Mengelompokkan data berdasarkan number_of_tubes
+        foreach ($finalConcentration as $concentration) {
+            $numberOfTubes = $concentration->number_of_tubes;
+            if (!isset($dataTubes[$numberOfTubes])) {
+                $dataTubes[$numberOfTubes] = []; // Inisialisasi array untuk jumlah tabung ini
+            }
+            $dataTubes[$numberOfTubes][] = $concentration; // Tambahkan data ke array
+        }
+    
+        // Buat sheet untuk setiap jumlah tabung yang ada
+        foreach ($dataTubes as $numberOfTubes => $data) {
+            $sheet = $spreadsheet->createSheet();
+            $sheet->setTitle("{$numberOfTubes} Tubes");
+            $this->setSheetHeaders($sheet, $data, $numberOfTubes);
+            $this->fillSheetData($sheet, $data, $numberOfTubes);
+        }
+    
+        // Set header untuk file Excel
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="Report_All_Hemoflow_Final_Concentrations.xlsx"');
+        header('Cache-Control: max-age=0');
+    
+        ob_clean();
+        flush();
+    
+        try {
+            $writer = new Xlsx($spreadsheet);
+            $writer->save('php://output');
+        } catch (Exception $e) {
+            echo 'Error generating file: ', $e->getMessage();
+            return;
+        }
+    }
+    
+    
+    private function setSheetHeaders($sheet, $data, $numberOfTubes) {
+        // Set the headers
+        $sheet->setCellValue('A1', "ID One Water Sample");
+        $sheet->setCellValue('B1', "Campy Assay Barcode");
+        $sheet->setCellValue('C1', "Initial");
+        $sheet->setCellValue('D1', "Sample Type");
+        $sheet->setCellValue('E1', "Number of Tubes");
+        $sheet->setCellValue('F1', "MPN PCR Conducted");
+        $sheet->setCellValue('G1', "Date Sample Processed");
+        $sheet->setCellValue('H1', "Time Sample Processed");
+        $sheet->setCellValue('I1', "Sample Wet Weight");
+        $sheet->setCellValue('J1', "Elution Volume");
+    
+        // Add Tube Volume headers
+        for ($i = 1; $i <= $numberOfTubes; $i++) {
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $i);
+            $sheet->setCellValue($columnLetter . '1', "Tube $i Volume");
+        }
+    
+        // Add Tube Result headers
+        for ($i = 1; $i <= $numberOfTubes; $i++) {
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $numberOfTubes + $i);
+            $sheet->setCellValue($columnLetter . '1', "Tube $i Result");
+        }
+        
+        // Add MPN calculation headers after tube results
+        $mpnStartIndex = 10 + ($numberOfTubes * 2) + 1;
+        
+        $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex);
+        $sheet->setCellValue($columnLetter . '1', "MPN Concentration");
+        
+        $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex + 1);
+        $sheet->setCellValue($columnLetter . '1', "Upper CI");
+        
+        $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex + 2);
+        $sheet->setCellValue($columnLetter . '1', "Lower CI");
+
+        $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex + 3);
+        $sheet->setCellValue($columnLetter . '1', "Concentration MPN/g Dw");
+
+        $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex + 4);
+        $sheet->setCellValue($columnLetter . '1', "Upper CI MPN/g Dw");
+
+        $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex + 5);
+        $sheet->setCellValue($columnLetter . '1', "Lower CI MPN/g Dw");
+    }
+    
+    private function fillSheetData($sheet, $data, $numberOfTubes) {
+        // Mulai mengisi data dari baris kedua
+        $numrow = 2;
+        foreach ($data as $concentration) {
+            // Informasi dasar
+            $sheet->setCellValue('A' . $numrow, $concentration->id_one_water_sample ?? '');
+            $sheet->setCellValue('B' . $numrow, $concentration->campy_assay_barcode ?? '');
+            $sheet->setCellValue('C' . $numrow, $concentration->initial ?? '');
+            $sheet->setCellValue('D' . $numrow, $concentration->sampletype ?? '');
+            $sheet->setCellValue('E' . $numrow, $concentration->number_of_tubes ?? '');
+            $sheet->setCellValue('F' . $numrow, $concentration->mpn_pcr_conducted ?? '');
+            $sheet->setCellValue('G' . $numrow, $concentration->date_sample_processed ?? '');
+            $sheet->setCellValue('H' . $numrow, $concentration->time_sample_processed ?? '');
+            // $sheet->setCellValue('I' . $numrow, $concentration->sample_wetweight ?? '');
+            // $sheet->setCellValue('I' . $numrow, $concentration->filtration_volume ?? '');
+    
+            // Mengisi volume tabung
+            $tubeIndex = 0;
+            foreach ($concentration as $key => $value) {
+                if (strpos($key, 'Tube') === 0) {
+                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+                    $sheet->setCellValue($columnLetter . $numrow, $value ?? '');
+                    $tubeIndex++;
+                }
+            }
+    
+        // Mengisi hasil tabung
+        for ($i = 1; $i <= $numberOfTubes; $i++) {
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $numberOfTubes + ($i - 1));
+
+            // Mengakses nilai konfirmasi dengan indeks tabung
+            $confirmation_value = $concentration->confirmation[$i] ?? 'No Growth'; // Nilai default jika tidak ada konfirmasi
+            
+            // Debugging: Cek nilai konfirmasi sebelum diset ke sel
+            error_log("Confirmation for Tube {$i}: " . $confirmation_value);
+            $sheet->setCellValue($columnLetter . $numrow, $confirmation_value);
+        }
+        
+        // Fill MPN calculation data after tube results
+        $mpnStartIndex = 10 + ($numberOfTubes * 2) + 1;
+        
+        $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex);
+        $sheet->setCellValue($columnLetter . $numrow, $concentration->mpn_concentration ?? '');
+        
+        $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex + 1);
+        $sheet->setCellValue($columnLetter . $numrow, $concentration->upper_ci ?? '');
+        
+        $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex + 2);
+        $sheet->setCellValue($columnLetter . $numrow, $concentration->lower_ci ?? '');
+
+        $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex + 3);
+        $sheet->setCellValue($columnLetter . $numrow, $concentration->mpn_concentration_dw ?? '');
+
+        $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex + 4);
+        $sheet->setCellValue($columnLetter . $numrow, $concentration->upper_ci_dw ?? '');
+
+        $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($mpnStartIndex + 5);
+        $sheet->setCellValue($columnLetter . $numrow, $concentration->lower_ci_dw ?? '');
+    
+            $numrow++;
+        }
+    }
 
     public function validateCampyAssayBarcode() {
         $id = $this->input->get('id');
@@ -874,7 +1557,471 @@ class Campy_hemoflow_qpcr extends CI_Controller
         echo json_encode($data);
     }
 
+    public function barcode_restrict() 
+    {
+        $id = $this->input->get('id1');
+        $data = $this->Campy_hemoflow_qpcr_model->barcode_restrict($id);
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
+
+    public function saveReview() {
+        header('Content-Type: application/json');
+    
+        $id = $this->input->post('id_one_water_sample', true);
+        $review = $this->input->post('review', true);
+        $user_review = $this->input->post('user_review', true);
+    
+        if (!$id || $review === null || !$user_review) {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Missing required fields.'
+            ]);
+            return;
+        }
+    
+        $data = [
+            'review' => $review,
+            'user_review' => $user_review,
+            'user_updated' => $this->session->userdata('id_users'),
+            'date_updated' => date('Y-m-d H:i:s')
+        ];
+    
+        $this->load->model('Campy_hemoflow_qpcr_model');
+    
+        try {
+            $this->Campy_hemoflow_qpcr_model->update_campy_hemoflow_qpcr($id, $data);
+            echo json_encode([
+                'status' => true,
+                'message' => 'Review saved successfully.'
+            ]);
+        } catch (Exception $e) {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Error saving review: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+    public function cancelReview() {
+        header('Content-Type: application/json');
+    
+        // Ambil data POST
+        $id = $this->input->post('id_one_water_sample', true);
+        $review = $this->input->post('review', true);
+        $user_review = $this->input->post('user_review', true);
+    
+        // Debug log untuk memastikan data yang diterima
+        log_message('debug', "Received data: id=$id, review=$review, user_review=$user_review");
+    
+        // Cek jika data yang dibutuhkan ada
+        if (!$id || $review === null) {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Missing required fields.'
+            ]);
+            return;
+        }
+    
+        // Data yang akan diperbarui jika review dibatalkan
+        $data = [
+            'review' => 0,  // Reset status review
+            'user_review' => '', // Kosongkan user review
+            'user_updated' => $this->session->userdata('id_users'),
+            'date_updated' => date('Y-m-d H:i:s')
+        ];
+
+        // Load model dan update data review di database
+        $this->load->model('Campy_hemoflow_qpcr_model');
+        $updateResult = $this->Campy_hemoflow_qpcr_model->updateCancel($id, $data);
+    
+        // Debug log untuk memeriksa hasil update
+        log_message('debug', "Update result: " . ($updateResult ? 'Success' : 'Failure'));
+    
+        // Cek apakah update berhasil
+        if ($updateResult) {
+            echo json_encode([
+                'status' => true,
+                'message' => 'Review canceled successfully.'
+            ]);
+        } else {
+            echo json_encode([
+                'status' => false,
+                'message' => 'Failed to cancel review.'
+            ]);
+        }
+    }
+
+    public function testCalculateMPN() {
+        header('Content-Type: application/json');
+        
+        try {
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Test endpoint working',
+                'session_data' => [
+                    'user_id' => $this->session->userdata('id_users'),
+                    'lab' => $this->session->userdata('lab')
+                ]
+            ]);
+        } catch (Exception $e) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Test failed: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+    public function testUpdateMPN() {
+        header('Content-Type: application/json');
+        
+        // Test method to check if update works
+        $id_campy_result_mpn = $this->input->get('id', TRUE);
+        
+        if (!$id_campy_result_mpn) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'ID required for test'
+            ]);
+            return;
+        }
+        
+        // Get current data
+        $current_data = $this->Campy_hemoflow_qpcr_model->get_by_id_calculate_mpn($id_campy_result_mpn);
+        
+        if (!$current_data) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Data not found'
+            ]);
+            return;
+        }
+        
+        // Try simple update
+        $test_data = array(
+            'mpn_concentration' => '999.99'
+        );
+        
+        $result = $this->Campy_hemoflow_qpcr_model->updateCalculateMPN($id_campy_result_mpn, $test_data);
+        
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'Test update result: ' . ($result ? 'SUCCESS' : 'FAILED'),
+            'current_data' => $current_data,
+            'test_data' => $test_data
+        ]);
+    }
+
+    // public function saveCalculateMPN() {
+    //     header('Content-Type: application/json');
+        
+    //     try {
+    //         // Get form data
+    //         $mode = $this->input->post('mode_calculateMPN', TRUE);
+    //         $id_campy_hemoflow_qpcr = $this->input->post('id_campy_hemoflow_qpcr_mpn', TRUE);
+    //         $mpn_concentration = $this->input->post('mpn_concentration', FALSE);
+    //         $upper_ci = $this->input->post('upper_ci', FALSE);
+    //         $lower_ci = $this->input->post('lower_ci', FALSE);
+    //         $mpn_concentration_dw = $this->input->post('mpn_concentration_dw', TRUE);
+    //         $upper_ci_dw = $this->input->post('upper_ci_dw', TRUE);
+    //         $lower_ci_dw = $this->input->post('lower_ci_dw', TRUE);
+    //         $current_sample_dryweight = $this->input->post('current_sample_dryweight', TRUE);
+            
+    //         // Validation
+    //         if (!$mode || !in_array($mode, ['insert', 'edit'])) {
+    //             echo json_encode([
+    //                 'status' => 'error',
+    //                 'message' => 'Invalid operation mode.'
+    //             ]);
+    //             return;
+    //         }
+
+    //         if (!$id_campy_hemoflow_qpcr || !$mpn_concentration || !$upper_ci || !$lower_ci) {
+    //             echo json_encode([
+    //                 'status' => 'error',
+    //                 'message' => 'All fields are required.'
+    //             ]);
+    //             return;
+    //         }
+            
+    //         $dt = new DateTime();
+    //         $user_id = $this->session->userdata('id_users');
+    //         $lab = $this->session->userdata('lab');
+            
+    //         if ($mode === 'insert') {
+    //             // Insert mode
+    //             $data = array(
+    //                 'id_campy_hemoflow_qpcr' => $id_campy_hemoflow_qpcr,
+    //                 'mpn_concentration' => $mpn_concentration,
+    //                 'upper_ci' => $upper_ci,
+    //                 'lower_ci' => $lower_ci,
+    //                 'mpn_concentration_dw' => $mpn_concentration_dw,
+    //                 'upper_ci_dw' => $upper_ci_dw,
+    //                 'lower_ci_dw' => $lower_ci_dw,
+    //                 'flag' => '0',
+    //                 'lab' => $lab ? $lab : '1',
+    //                 'uuid' => $this->uuid->v4(),
+    //                 'user_created' => $user_id,
+    //                 'date_created' => $dt->format('Y-m-d H:i:s'),
+    //             );
+                
+    //             $insert_id = $this->Campy_hemoflow_qpcr_model->insertCalculateMPN($data);
+                
+    //             if ($insert_id) {
+    //                 echo json_encode([
+    //                     'status' => 'success',
+    //                     'message' => 'MPN calculation saved successfully.',
+    //                     'id' => $insert_id
+    //                 ]);
+    //             } else {
+    //                 echo json_encode([
+    //                     'status' => 'error',
+    //                     'message' => 'Failed to save MPN calculation.'
+    //                 ]);
+    //             }
+                
+    //         } else if ($mode === 'edit') {
+    //             // Edit mode
+    //             $id_campy_result_mpn = $this->input->post('id_campy_result_mpn', TRUE);
+                
+    //             if (!$id_campy_result_mpn) {
+    //                 echo json_encode([
+    //                     'status' => 'error',
+    //                     'message' => 'MPN calculation ID is required for update.'
+    //                 ]);
+    //                 return;
+    //             }
+                
+    //             // Only update the fields that exist in the table
+    //             $data = array(
+    //                 'id_campy_hemoflow_qpcr' => $id_campy_hemoflow_qpcr,
+    //                 'mpn_concentration' => $mpn_concentration,
+    //                 'upper_ci' => $upper_ci,
+    //                 'lower_ci' => $lower_ci,
+    //                 'mpn_concentration_dw' => $mpn_concentration_dw,
+    //                 'upper_ci_dw' => $upper_ci_dw,
+    //                 'lower_ci_dw' => $lower_ci_dw,
+    //                 'flag' => '0',
+    //                 'lab' => $lab ? $lab : '1',
+    //                 'uuid' => $this->uuid->v4(),
+    //                 // Remove date_updated and user_updated as they don't exist in the table
+    //             );
+                
+    //             $update_result = $this->Campy_hemoflow_qpcr_model->updateCalculateMPN($id_campy_result_mpn, $data);
+                
+    //             if ($update_result) {
+    //                 echo json_encode([
+    //                     'status' => 'success',
+    //                     'message' => 'MPN calculation updated successfully.'
+    //                 ]);
+    //             } else {
+    //                 echo json_encode([
+    //                     'status' => 'error',
+    //                     'message' => 'Failed to update MPN calculation. No changes detected.'
+    //                 ]);
+    //             }
+    //         }
+            
+    //     } catch (Exception $e) {
+    //         echo json_encode([
+    //             'status' => 'error',
+    //             'message' => 'Error: ' . $e->getMessage()
+    //         ]);
+    //     }
+    // }
+    public function saveCalculateMPN() {
+        header('Content-Type: application/json');
+        
+        try {
+            // Get form data
+            $mode = $this->input->post('mode_calculateMPN', TRUE);
+            $id_campy_hemoflow_qpcr = $this->input->post('id_campy_hemoflow_qpcr_mpn', TRUE);
+            $mpn_concentration = $this->input->post('mpn_concentration', FALSE);
+            $upper_ci = $this->input->post('upper_ci', TRUE);
+            $lower_ci = $this->input->post('lower_ci', TRUE);
+            $mpn_concentration_dw = $this->input->post('mpn_concentration_dw', TRUE);
+            $upper_ci_dw = $this->input->post('upper_ci_dw', TRUE);
+            $lower_ci_dw = $this->input->post('lower_ci_dw', TRUE);
+            // $current_sample_dryweight = $this->input->post('current_sample_dryweight', TRUE); // COMMENTED: No longer needed
+            
+            // Validation
+            if (!$mode || !in_array($mode, ['insert', 'edit'])) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Invalid operation mode.'
+                ]);
+                return;
+            }
+            
+            // Modified validation - only check essential fields (removed dry weight requirements)
+            if (!$id_campy_hemoflow_qpcr || !$mpn_concentration || !$upper_ci || !$lower_ci) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Required fields: MPN Concentration, Upper CI, and Lower CI.'
+                ]);
+                return;
+            }
+            
+            $dt = new DateTime();
+            $user_id = $this->session->userdata('id_users');
+            $lab = $this->session->userdata('lab');
+            
+            if ($mode === 'insert') {
+                // Insert mode
+                $data = array(
+                    'id_campy_hemoflow_qpcr' => $id_campy_hemoflow_qpcr,
+                    'mpn_concentration' => $mpn_concentration,
+                    'upper_ci' => $upper_ci,
+                    'lower_ci' => $lower_ci,
+                    'mpn_concentration_dw' => $mpn_concentration_dw ? $mpn_concentration_dw : NULL, // Optional field
+                    'upper_ci_dw' => $upper_ci_dw ? $upper_ci_dw : NULL, // Optional field
+                    'lower_ci_dw' => $lower_ci_dw ? $lower_ci_dw : NULL, // Optional field
+                    'flag' => '0',
+                    'lab' => $lab ? $lab : '1',
+                    'uuid' => $this->uuid->v4(),
+                    'user_created' => $user_id,
+                    'date_created' => $dt->format('Y-m-d H:i:s'),
+                );
+                
+                $insert_id = $this->Campy_hemoflow_qpcr_model->insertCalculateMPN($data);
+                
+                if ($insert_id) {
+                    // COMMENTED OUT: sample_dryweight_old update no longer needed for hemoflow
+                    /*
+                    // Update sample_dryweight_old in campy_hemoflow table to sync with current value
+                    if ($current_sample_dryweight) {
+                        $update_hemoflow_data = array(
+                            'sample_dryweight_old' => $current_sample_dryweight
+                        );
+                        $this->Campy_hemoflow_qpcr_model->updateCampyHemoflow($id_campy_hemoflow_qpcr, $update_hemoflow_data);
+                    }
+                    */
+                    
+                    echo json_encode([
+                        'status' => 'success',
+                        'message' => 'MPN calculation saved successfully.',
+                        'id' => $insert_id
+                    ]);
+                } else {
+                    echo json_encode([
+                        'status' => 'error',
+                        'message' => 'Failed to save MPN calculation.'
+                    ]);
+                }
+                
+            } else if ($mode === 'edit') {
+                // Edit mode
+                $id_campy_result_mpn = $this->input->post('id_campy_result_mpn', TRUE);
+                
+                if (!$id_campy_result_mpn) {
+                    echo json_encode([
+                        'status' => 'error',
+                        'message' => 'MPN calculation ID is required for update.'
+                    ]);
+                    return;
+                }
+                
+                // Only update the fields that exist in the table
+                $data = array(
+                    'id_campy_hemoflow_qpcr' => $id_campy_hemoflow_qpcr,
+                    'mpn_concentration' => $mpn_concentration,
+                    'upper_ci' => $upper_ci,
+                    'lower_ci' => $lower_ci,
+                    'mpn_concentration_dw' => $mpn_concentration_dw ? $mpn_concentration_dw : NULL, // Optional field
+                    'upper_ci_dw' => $upper_ci_dw ? $upper_ci_dw : NULL, // Optional field
+                    'lower_ci_dw' => $lower_ci_dw ? $lower_ci_dw : NULL, // Optional field
+                    'flag' => '0',
+                    'lab' => $lab ? $lab : '1',
+                    'uuid' => $this->uuid->v4(),
+                    // Remove date_updated and user_updated as they don't exist in the table
+                );
+
+                
+                $update_result = $this->Campy_hemoflow_qpcr_model->updateCalculateMPN($id_campy_result_mpn, $data);
+                
+                if ($update_result) {
+                    // COMMENTED OUT: sample_dryweight_old update no longer needed for hemoflow
+                    /*
+                    // Update sample_dryweight_old in campy_hemoflow table to sync with current value
+                    if ($current_sample_dryweight) {
+                        $update_hemoflow_data = array(
+                            'sample_dryweight_old' => $current_sample_dryweight
+                        );
+                        $this->Campy_hemoflow_qpcr_model->updateCampyHemoflow($id_campy_hemoflow_qpcr, $update_hemoflow_data);
+                    }
+                    */
+                    
+                    echo json_encode([
+                        'status' => 'success',
+                        'message' => 'MPN calculation updated successfully.'
+                    ]);
+                } else {
+                    echo json_encode([
+                        'status' => 'error',
+                        'message' => 'Failed to update MPN calculation. No changes detected.'
+                    ]);
+                }
+            }
+            
+        } catch (Exception $e) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Error: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+    public function getCalculateMPN() {
+        header('Content-Type: application/json');
+        
+        $id_campy_hemoflow_qpcr = $this->input->get('id_campy_hemoflow_qpcr', TRUE);
+        
+        if (!$id_campy_hemoflow_qpcr) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'ID Campy Hemoflow QPCR is required.'
+            ]);
+            return;
+        }
+        
+        try {
+            $mpn_data = $this->Campy_hemoflow_qpcr_model->get_calculate_mpn_by_campy_hemoflow_qpcr($id_campy_hemoflow_qpcr);
+            
+            if ($mpn_data) {
+                echo json_encode([
+                    'status' => 'success',
+                    'data' => $mpn_data
+                ]);
+            } else {
+                echo json_encode([
+                    'status' => 'not_found',
+                    'message' => 'No MPN calculation found.'
+                ]);
+            }
+        } catch (Exception $e) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Error retrieving MPN calculation: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+    public function getDryWeight()
+    {
+        $idOneWaterSample = $this->input->post('id_one_water_sample');
+        $oneWaterSample = $this->Campy_hemoflow_qpcr_model->getDryWeight($idOneWaterSample);
+        
+        // Handle null response properly
+        if ($oneWaterSample) {
+            echo json_encode($oneWaterSample);
+        } else {
+            // Return a proper JSON structure when no data is found
+            echo json_encode(['dry_weight_persen' => null]);
+        }
+    }
 }
+/* End of file Campy_hemoflow.php */
+/* Location: ./application/controllers/Campy_hemoflow.php */
 
 /* End of file Water_sample_reception.php */
 /* Location: ./application/controllers/Water_sample_reception.php */
