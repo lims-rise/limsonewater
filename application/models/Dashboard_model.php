@@ -63,10 +63,11 @@ class Dashboard_model extends CI_Model
             'colilert_water_in' => 'Colilert (Water)',
             'protozoa' => 'Protozoa',
             'hemoflow' => 'Hemoflow',
-            'enterolert_hemoflow' => 'Enterolert HemoFlow',
+            'enterolert_hemoflow' => 'Enterolert (HemoFlow)',
             'colilert_hemoflow' => 'Colilert (HemoFlow)',
             'campy_hemoflow' => 'Campy (HemoFlow)',
-            'salmonella_hemoflow' => 'Salmonella (HemoFlow)'
+            'salmonella_hemoflow' => 'Salmonella (HemoFlow)',
+            'campy_hemoflow_qpcr' => 'Campy (HemoFlow qPCR)'
         );
 
         $statistics = array();
@@ -183,7 +184,7 @@ class Dashboard_model extends CI_Model
                         bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
                         ec.review, el.review, em.review, cb.review, mc.review, 
                         ewi.review, ebi.review, cbi.review, cwi.review, 
-                        pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review
+                        pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review
                     ) = 1 THEN 1 END) as completed_tests,
                     sr.date_created
                 FROM sample_reception sr
@@ -211,6 +212,7 @@ class Dashboard_model extends CI_Model
                 LEFT JOIN campy_hemoflow ch ON ch.campy_assay_barcode = srt.barcode AND ch.flag = 0
                 LEFT JOIN extraction_biosolid ex ON ex.barcode_sample = srt.barcode AND ex.flag = 0
                 LEFT JOIN salmonella_hemoflow sh ON sh.salmonella_assay_barcode = srt.barcode AND sh.flag = 0
+                LEFT JOIN campy_hemoflow_qpcr chq ON chq.campy_assay_barcode = srt.barcode AND chq.flag = 0
                 WHERE sr.flag = 0
                 GROUP BY sr.id_project
                 ORDER BY sr.date_created DESC";
@@ -269,7 +271,7 @@ class Dashboard_model extends CI_Model
                 'colilert_biosolids_in', 'colilert_water_in', 'enterolert_biosolids_in', 
                 'enterolert_water_in', 'salmonella_biosolids', 'salmonella_liquids', 
                 'salmonella_pa', 'moisture_content', 'hemoflow', 'protozoa', 'colilert_hemoflow', 'enterolert_hemoflow', 'campy_hemoflow',
-                'extraction_culture', 'extraction_liquid', 'extraction_metagenome', 'extraction_biosolid', 'salmonella_hemoflow'
+                'extraction_culture', 'extraction_liquid', 'extraction_metagenome', 'extraction_biosolid', 'salmonella_hemoflow', 'campy_hemoflow_qpcr'
             );
             
             foreach ($testing_tables as $table) {
@@ -308,17 +310,18 @@ class Dashboard_model extends CI_Model
             'Extraction (Culture)' => 'extraction_culture',
             'Extraction (Liquid)' => 'extraction_liquid',
             'Extraction (Metagenome)' => 'extraction_metagenome',
-            'Extraction (Biosolid)' => 'extraction_biosolid',
+            'Extraction (Biosolids)' => 'extraction_biosolid',
             'Enterolert (Water)' => 'enterolert_water_in',
             'Enterolert (Biosolids)' => 'enterolert_biosolids_in',
             'Colilert (Biosolids)' => 'colilert_biosolids_in',
             'Colilert (Water)' => 'colilert_water_in',
-            'Protozoa Analysis' => 'protozoa',
-            'HemoFlow Analysis' => 'hemoflow',
-            'Enterolert HemoFlow' => 'enterolert_hemoflow',
-            'Colilert HemoFlow' => 'colilert_hemoflow',
-            'Campy HemoFlow' => 'campy_hemoflow',
-            'Salmonella HemoFlow' => 'salmonella_hemoflow'
+            'Protozoa' => 'protozoa',
+            'Enterolert (HemoFlow)' => 'enterolert_hemoflow',
+            'Colilert (HemoFlow)' => 'colilert_hemoflow',
+            'Salmonella (HemoFlow)' => 'salmonella_hemoflow',
+            'Campy (HemoFlow qPCR)' => 'campy_hemoflow_qpcr',
+            'Campy (HemoFlow)' => 'campy_hemoflow',
+            'Hemoflow' => 'hemoflow',
         );
         
         // Module to controller mapping 
@@ -334,17 +337,18 @@ class Dashboard_model extends CI_Model
             'Extraction (Culture)' => 'extraction_culture',
             'Extraction (Liquid)' => 'extraction_liquid',
             'Extraction (Metagenome)' => 'extraction_metagenome',
-            'Extraction (Biosolid)' => 'extraction_biosolid',
+            'Extraction (Biosolids)' => 'extraction_biosolid',
             'Enterolert (Water)' => 'enterolert_idexx_water',
             'Enterolert (Biosolids)' => 'enterolert_idexx_biosolids',
             'Colilert (Biosolids)' => 'colilert_idexx_biosolids',
             'Colilert (Water)' => 'colilert_idexx_water',
-            'Protozoa Analysis' => 'protozoa',
-            'HemoFlow Analysis' => 'hemoflow',
-            'Enterolert HemoFlow' => 'enterolert_hemoflow',
-            'Colilert HemoFlow' => 'colilert_hemoflow',
-            'Campy HemoFlow' => 'campy_hemoflow',
-            'Salmonella HemoFlow' => 'salmonella_hemoflow'
+            'Protozoa' => 'protozoa',
+            'Enterolert (HemoFlow)' => 'enterolert_hemoflow',
+            'Colilert (HemoFlow)' => 'colilert_hemoflow',
+            'Salmonella (HemoFlow)' => 'salmonella_hemoflow',
+            'Campy (HemoFlow qPCR)' => 'campy_hemoflow_qpcr',
+            'Campy (HemoFlow)' => 'campy_hemoflow',
+            'Hemoflow' => 'hemoflow'
         );
 
         if (!isset($modules[$module_name])) {
