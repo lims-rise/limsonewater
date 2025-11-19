@@ -1958,6 +1958,30 @@ class Sample_reception_model extends CI_Model
         }
     }
 
+    // Get all testing types for a project (for report display)
+    function getProjectTestingTypes($id_project) {
+        // Use custom query to handle FIND_IN_SET properly
+        $sql = "SELECT DISTINCT rt.testing_type 
+                FROM sample_reception_testing srt
+                INNER JOIN sample_reception_sample srs ON srt.id_sample = srs.id_sample AND srs.flag = 0
+                INNER JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type) > 0
+                WHERE srs.id_project = ? 
+                AND srt.flag = '0' 
+                AND rt.flag = '0'
+                ORDER BY rt.testing_type ASC";
+        
+        $query = $this->db->query($sql, array($id_project));
+        $results = $query->result_array();
+        
+        // Return array of testing types
+        $testing_types = array();
+        foreach ($results as $result) {
+            $testing_types[] = $result['testing_type'];
+        }
+        
+        return $testing_types;
+    }
+
 }
 
 /* End of file Tbl_delivery_model.php */
