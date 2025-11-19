@@ -170,6 +170,11 @@ class Sample_reception extends CI_Controller
                 'id_person' => $row->id_person,
                 'realname' => $row->realname,
             );
+            
+            // Get testing information for the project
+            $testing_types = $this->Sample_reception_model->getProjectTestingTypes($id);
+            $data['testing_information'] = empty($testing_types) ? 'No tests assigned' : implode(', ', $testing_types);
+            
             $needs_generation_and_save = (
                 empty($data['report_number']) || $data['report_number'] === null || $data['report_number'] === '' ||
                 empty($data['report_date']) || $data['report_date'] === null || $data['report_date'] === '' || trim($data['report_date']) === '0000-00-00'

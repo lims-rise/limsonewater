@@ -196,6 +196,10 @@
                                         <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Analysis</td>
                                         <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">-</td>
                                     </tr>
+                                    <tr>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Tests Conducted</td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo isset($testing_information) ? htmlspecialchars($testing_information) : '-'; ?></td>
+                                    </tr>
                                     <!-- <tr>
                                         <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Test Analyst(s)</td>
                                         <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($realname) && $realname !== 'null') ? $realname : '-'; ?></td>
