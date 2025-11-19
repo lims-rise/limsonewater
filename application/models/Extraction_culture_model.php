@@ -52,6 +52,8 @@ class Extraction_culture_model extends CI_Model
                   ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
         }
 
+        $this->db->order_by('extraction_culture.id_extraction_culture', 'ASC');
+
         return $this->datatables->generate();
     }
 
