@@ -41,6 +41,11 @@
         .report-table tbody tr:nth-child(even) {
             background-color: #f9f9f9;
         }
+
+        /* Logo disembunyikan di layar biasa */
+        .logo-footer-print {
+            display: none;
+        }
     </style>
 
     <style media="print">
@@ -59,9 +64,12 @@
     }
     body {
         margin: 0;
+        /* Pastikan body menjadi referensi posisi absolute */
+        position: relative; 
     }
     .content-wrapper {
         break-inside: avoid;
+        /* position: relative; <--- SAYA HAPUS INI AGAR TIDAK MENGGANGGU LOGO */
     }
     @page {
         size: A4 portrait;
@@ -97,9 +105,29 @@
     .box-body > div[style*="width: 49%"], .box-body > div[style*="width: 30%"] {
         width: 100% !important;
     }
+
+    /* --- PERBAIKAN POSISI LOGO --- */
+    .logo-footer-print {
+        display: block !important;
+        position: absolute; 
+        /* Koordinat ini dihitung dari TITIK 0 KERTAS */
+        /* A4 tinggi = 297mm. Kita taruh di 268mm (aman di footer Halaman 1) */
+        top: 268mm;    
+        left: 0mm; /* Sesuai margin kiri */
+        z-index: 99999;
+    }
+    
+    .logo-footer-print img {
+        height: 35px; 
+        width: auto;
+    }
     </style>
 </head>
 <body>
+
+    <div class="logo-footer-print">
+        <img src="../../../img/bsi.jpeg" alt="BSI Logo">
+    </div>
 
     <div class="noprint">
         <div class="modal-footer clearfix">
@@ -200,10 +228,6 @@
                                         <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Tests Conducted</td>
                                         <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo isset($testing_information) ? htmlspecialchars($testing_information) : '-'; ?></td>
                                     </tr>
-                                    <!-- <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Test Analyst(s)</td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($realname) && $realname !== 'null') ? $realname : '-'; ?></td>
-                                    </tr> -->
                                 </thead>
                             </table>
                         </div>
@@ -567,10 +591,6 @@
                         <li>Faecal community contribution represents normalised microbial community contribution from faecal-origin sources. The faecal community contribution from each sources was calculated by taking the median microbial community contribution of the source of interest, divided by the sum of all the microbial community contributions, excluding the microbial community contribution from unknown sources. An example of this has been illustrated below, using sample P2500148 as an example:</li>
                     </ol>
                     </div>
-                <!-- <div class="box-footer" style="text-align: right; border-top: 1px solid #eee; padding-top: 10px;">
-                    Report Number: M25-00001
-                    <span style="float: right;">Page X of Y</span> 
-                </div> -->
             </div>
         </section>
     </div>
@@ -626,129 +646,6 @@
                 }
             });
 
-            // var table = $("#mytable").DataTable({
-            //     oLanguage: {
-            //         sProcessing: "loading..."
-            //     },
-            //     processing: true,
-            //     serverSide: true,
-            //     ajax: {"url": "Sample_reception/json", "type": "POST"},
-            //     displayStart: lastPage ? (parseInt(lastPage) * 10) : 0, 
-            //     columns: [
-            //         { "data": "toggle", "orderable": false, "searchable": false }, 
-            //         {"data": "id_project"},
-            //         {
-            //             "data": "client_quote_number",
-            //             "render": function(data, type, row) {
-            //                 return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
-            //             }
-            //         },
-            //         {
-            //             "data": "client",
-            //             "render": function(data, type, row) {
-            //                 return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
-            //             }
-            //         },
-            //         {"data": "number_sample"},
-            //         {"data": "id_client_sample"},
-            //         {
-            //             "data": "client_name",
-            //             "render": function(data, type, row) {
-            //                 return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
-            //             }
-            //         },
-            //         {"data": "comments"},
-            //         {"data": "date_collected"},
-            //         {"data": "time_collected"},
-            //         {
-            //             "data": "files",
-            //             "render": function(data, type, row) {
-            //                 if (!data || data === "null") return `<button type="button" class="btn btn-sm btn-light" disabled>
-            //                         <i class="fa fa-times"></i> No scan yet
-            //                     </button>`;
-            //                 const fileURL = `<?= site_url('scan_page/view_file/') ?>${data}`;
-            //                 return `<a href="${fileURL}" target="_blank" class="btn btn-sm btn-success">
-            //                         <i class="fa fa-file-pdf-o"></i> View Scan
-            //                     </a>`;
-            //             }
-            //         },
-            //         { "data": "action", "orderable": false, "searchable": false }
-            //     ],
-            //     columnDefs: [
-            //         {
-            //             targets: [5],
-            //             className: 'text-right'
-            //         }
-            //     ],
-            //     drawCallback: function(settings) {
-            //         let api = this.api();
-            //         let pageInfo = api.page.info();
-
-            //         api.rows().every(function() {
-            //             $(this.node()).removeClass('highlight highlight-edit');
-            //         });
-
-            //         let now = new Date();
-            //         let newestRow = null;
-            //         let newestCreatedDate = null;
-            //         let newestUpdatedDate = null;
-            //         let updatedRow = null;
-
-            //         api.rows().every(function() {
-            //             let data = this.data();
-            //             let createdDate = new Date(data.date_created);
-            //             let updatedDate = new Date(data.date_updated);
-
-            //             if (now - createdDate < 10 * 100) {
-            //                 if (!newestCreatedDate || createdDate > newestCreatedDate) {
-            //                     newestCreatedDate = createdDate;
-            //                     newestRow = this.node();
-            //                 }
-            //             }
-
-            //             if (now - updatedDate < 10 * 1000) {
-            //                 if (!newestUpdatedDate || updatedDate > newestUpdatedDate) {
-            //                     newestUpdatedDate = updatedDate;
-            //                     updatedRow = this.node();
-            //                 }
-            //             }
-            //         });
-
-            //         if (newestRow) {
-            //             $(newestRow).addClass('highlight');
-            //             setTimeout(function() {
-            //                 $(newestRow).removeClass('highlight');
-            //             }, 5000);
-            //         }
-
-            //         if (updatedRow) {
-            //             $(updatedRow).addClass('highlight-edit');
-            //             setTimeout(function() {
-            //                 $(updatedRow).removeClass('highlight-edit');
-            //             }, 5000);
-            //         }
-
-            //         if (pageInfo.page === 0 && api.rows().count() > 0) {
-            //             let firstRow = api.row(0).node();
-            //             setTimeout(function() {
-            //                 $(firstRow).addClass('highlight');
-            //             }, 5000);
-            //         }
-
-            //         if (lastIdProject) {
-            //             api.rows().every(function () {
-            //                 let rowData = this.data();
-            //                 if (rowData.id_project === lastIdProject) {
-            //                     $(this.node()).addClass('highlight');
-            //                     $('html, body').animate({
-            //                         scrollTop: $(this.node()).offset().top - 100
-            //                     }, 1000);
-            //                     openChildRow($(this.node()), rowData);
-            //                 }
-            //             });
-            //         }
-            //     }
-            // });
 
         });
     </script>
