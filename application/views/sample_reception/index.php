@@ -912,6 +912,40 @@
         transform: translateY(-1px);
     } */
 
+    /* Completed Project Row Styling */
+    tr.completed-project {
+        background-color: #f8f9fa !important;
+    }
+    
+    tr.completed-project:hover {
+        background-color: #e9ecef !important;
+    }
+    
+    /* Disabled toggle button styling for completed projects */
+    .toggle-child.btn-secondary {
+        opacity: 0.7;
+    }
+    
+    .toggle-child.btn-secondary:hover {
+        background-color: #95a5a6 !important;
+        border-color: #95a5a6 !important;
+        transform: none !important;
+        box-shadow: none !important;
+    }
+    
+    .toggle-child.disabled-completed {
+        pointer-events: none !important;
+        opacity: 0.6 !important;
+        cursor: not-allowed !important;
+    }
+    
+    .toggle-child.disabled-completed:hover {
+        background-color: #95a5a6 !important;
+        border-color: #95a5a6 !important;
+        transform: none !important;
+        box-shadow: none !important;
+    }
+
     /* General button enhancements */
     [class*="btn-status-"] {
         position: relative;
@@ -1403,6 +1437,53 @@
     }
 </script>
 
+<script>
+// Global function to apply styling to completed project rows
+function applyCompletedProjectStyling() {
+    setTimeout(function() {
+        // Check if table exists
+        if (typeof table === 'undefined' || !table) return;
+        
+        let userLevel = <?php echo $this->session->userdata('id_user_level'); ?>;
+        
+        $('#mytable tbody tr').each(function() {
+            let $row = $(this);
+            let rowData = table.row($row).data();
+            
+            if (rowData && rowData.is_completed == 1) {
+                $row.addClass('completed-project');
+                
+                // Style toggle button for non-admin users
+                if (userLevel != 1) {
+                    let $toggleBtn = $row.find('.toggle-child');
+                    $toggleBtn.removeClass('btn-primary').addClass('btn-secondary');
+                    $toggleBtn.css({
+                        'background-color': '#95a5a6',
+                        'border-color': '#95a5a6',
+                        'cursor': 'not-allowed',
+                        'opacity': '0.6'
+                    });
+                    
+                    // Add disabled attribute to prevent any click handling
+                    $toggleBtn.attr('disabled', true);
+                    $toggleBtn.addClass('disabled-completed');
+                }
+                
+                // Hide edit button for non-admin users, but keep print buttons visible
+                if (userLevel != 1) {
+                    let $editBtn = $row.find('.btn_edit');
+                    $editBtn.hide();
+                    
+                    // Ensure print buttons remain visible and functional
+                    let $printBtns = $row.find('a[href*="rep_print"]');
+                    $printBtns.show().css('display', 'inline-block');
+                }
+            }
+        });
+    }, 100);
+}
+</script>
+
 <!-- <script>
     $(document).ready(function () {
         function updateClientDetails() {
@@ -1814,6 +1895,12 @@
                     className: 'text-right'
                 }
             ],
+            createdRow: function(row, data, dataIndex) {
+                // Add class to completed project rows for styling
+                if (data.is_completed == 1) {
+                    $(row).addClass('completed-project');
+                }
+            },
             drawCallback: function(settings) {
                 let api = this.api();
                 let pageInfo = api.page.info();
@@ -1895,6 +1982,9 @@
                     // localStorage.removeItem('last_id_project');
                     // localStorage.removeItem('last_page');
                 }
+                
+                // Apply styling to completed project rows
+                applyCompletedProjectStyling();
             }
         });
 
@@ -1998,6 +2088,15 @@
         });
 
         function openChildRow(tr, rowData) {
+            // Check if project is completed and user is not admin
+            let isCompleted = rowData ? rowData.is_completed : 0;
+            let userLevel = <?php echo $this->session->userdata('id_user_level'); ?>;
+            
+            if (isCompleted == 1 && userLevel != 1) {
+                // Don't open child row for completed projects (non-admin users)
+                return false;
+            }
+            
             let row = $('#mytable').DataTable().row(tr);
             let id_project = rowData.id_project;
             let icon = tr.find('.toggle-child i');
@@ -2040,8 +2139,39 @@
             }
         }
 
-        $('#mytable tbody').on('click', '.toggle-child', function () {
+        $('#mytable tbody').on('click', '.toggle-child', function (e) {
+            // Check if button is disabled
+            if ($(this).hasClass('disabled-completed') || $(this).attr('disabled')) {
+                e.preventDefault();
+                e.stopPropagation();
+                Swal.fire({
+                    title: 'Project Completed!',
+                    text: 'This project has been completed and cannot be modified. Only administrators can make changes to completed projects.',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                });
+                return false;
+            }
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Check if project is completed and user is not admin (backup check)
             let tr = $(this).closest('tr');
+            let rowData = table.row(tr).data();
+            let isCompleted = rowData ? rowData.is_completed : $(this).data('completed');
+            let userLevel = <?php echo $this->session->userdata('id_user_level'); ?>;
+            
+            if (isCompleted == 1 && userLevel != 1) {
+                Swal.fire({
+                    title: 'Project Completed!',
+                    text: 'This project has been completed and cannot be modified. Only administrators can make changes to completed projects.',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                });
+                return false;
+            }
+            
             let row = $('#mytable').DataTable().row(tr);
             let id_project = row.data().id_project;
             let icon = $(this).find('i');
@@ -2394,8 +2524,23 @@
         });
 
         // Open the modal for editing existing data
-        $('#mytable').on('click', '.btn_edit', function() {
+        $('#mytable').on('click', '.btn_edit', function(e) {
+            // Check if project is completed and user is not admin
             let tr = $(this).closest('tr');
+            let rowData = table.row(tr).data();
+            let isCompleted = rowData ? rowData.is_completed : $(this).data('completed');
+            let userLevel = <?php echo $this->session->userdata('id_user_level'); ?>;
+
+            if (isCompleted == 1 && userLevel != 1) {
+                e.preventDefault();
+                Swal.fire({
+                    title: 'Project Completed!',
+                    text: 'This project has been completed and cannot be modified. Only administrators can make changes to completed projects.',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                });
+                return false;
+            }
             let data = table.row(tr).data(); // Assuming `table` is your DataTable instance
             console.log(data);
             $('#mode').val('edit'); // Set mode to edit
@@ -2988,6 +3133,9 @@ $(document).ready(function() {
             $('#clearSearchBtn').show();
             $('#advanceSearchBtn').addClass('filter-active');
             updateFilterIndicator();
+            
+            // Apply styling to completed project rows
+            applyCompletedProjectStyling();
             
             // Show success message with filter count
             let filterCount = Object.keys(activeAdvancedFilters).length;
