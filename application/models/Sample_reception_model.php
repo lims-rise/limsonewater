@@ -16,7 +16,51 @@ class Sample_reception_model extends CI_Model
 
     public function json() {
         $this->datatables->select('NULL AS toggle, sr.id_project, sr.client_quote_number, sr.client, sr.id_client_sample, COALESCE(cc.client_name, sr.client, "Unknown Client") as client_name, sr.id_client_contact, sr.number_sample, sr.comments, sr.files, sr.supplementary_files, sr.date_arrive, sr.time_arrive, 
-            sr.date_created, sr.date_updated, sr.flag', FALSE);
+            sr.date_created, sr.date_updated, sr.flag, 
+            CASE WHEN (
+                SELECT COUNT(srt.id_testing) 
+                FROM sample_reception_sample srs 
+                LEFT JOIN sample_reception_testing srt ON srs.id_sample = srt.id_sample AND srt.flag = 0 
+                WHERE srs.id_project = sr.id_project AND srs.flag = 0
+            ) > 0 AND (
+                SELECT COUNT(srt.id_testing) 
+                FROM sample_reception_sample srs 
+                LEFT JOIN sample_reception_testing srt ON srs.id_sample = srt.id_sample AND srt.flag = 0 
+                WHERE srs.id_project = sr.id_project AND srs.flag = 0
+            ) = (
+                SELECT COUNT(CASE WHEN COALESCE(
+                    bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
+                    ec.review, el.review, em.review, cb.review, mc.review, 
+                    ewi.review, ebi.review, cbi.review, cwi.review, 
+                    pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review
+                ) = 1 THEN 1 END) 
+                FROM sample_reception_sample srs 
+                LEFT JOIN sample_reception_testing srt ON srs.id_sample = srt.id_sample AND srt.flag = 0
+                LEFT JOIN biobank_in bank ON bank.biobankin_barcode = srt.barcode AND bank.flag = 0
+                LEFT JOIN campy_liquids campy ON campy.campy_assay_barcode = srt.barcode AND campy.flag = 0
+                LEFT JOIN salmonella_liquids salmonellaL ON salmonellaL.salmonella_assay_barcode = srt.barcode AND salmonellaL.flag = 0
+                LEFT JOIN salmonella_biosolids salmonellaB ON salmonellaB.salmonella_assay_barcode = srt.barcode AND salmonellaB.flag = 0
+                LEFT JOIN extraction_culture ec ON ec.extraction_barcode = srt.barcode AND ec.flag = 0
+                LEFT JOIN extraction_liquid el ON el.extraction_barcode = srt.barcode AND el.flag = 0
+                LEFT JOIN extraction_metagenome em ON em.extraction_barcode = srt.barcode AND em.flag = 0
+                LEFT JOIN campy_biosolids cb ON cb.campy_assay_barcode = srt.barcode AND cb.flag = 0
+                LEFT JOIN moisture_content mc ON mc.barcode_moisture_content = srt.barcode AND mc.flag = 0
+                LEFT JOIN enterolert_water_in ewi ON ewi.enterolert_barcode = srt.barcode AND ewi.flag = 0
+                LEFT JOIN enterolert_biosolids_in ebi ON ebi.enterolert_barcode = srt.barcode AND ebi.flag = 0
+                LEFT JOIN colilert_biosolids_in cbi ON cbi.colilert_barcode = srt.barcode AND cbi.flag = 0
+                LEFT JOIN colilert_water_in cwi ON cwi.colilert_barcode = srt.barcode AND cwi.flag = 0
+                LEFT JOIN protozoa pr ON pr.protozoa_barcode = srt.barcode AND pr.flag = 0
+                LEFT JOIN campy_pa cp ON cp.campy_assay_barcode = srt.barcode AND cp.flag = 0
+                LEFT JOIN salmonella_pa sp ON sp.salmonella_assay_barcode = srt.barcode AND sp.flag = 0
+                LEFT JOIN hemoflow hem ON hem.hemoflow_barcode = srt.barcode AND hem.flag = 0
+                LEFT JOIN enterolert_hemoflow ehf ON ehf.enterolert_hemoflow_barcode = srt.barcode AND ehf.flag = 0
+                LEFT JOIN colilert_hemoflow chf ON chf.colilert_hemoflow_barcode = srt.barcode AND chf.flag = 0
+                LEFT JOIN campy_hemoflow ch ON ch.campy_assay_barcode = srt.barcode AND ch.flag = 0
+                LEFT JOIN extraction_biosolid ex ON ex.barcode_sample = srt.barcode AND ex.flag = 0
+                LEFT JOIN salmonella_hemoflow sh ON sh.salmonella_assay_barcode = srt.barcode AND sh.flag = 0
+                LEFT JOIN campy_hemoflow_qpcr chq ON chq.campy_assay_barcode = srt.barcode AND chq.flag = 0
+                WHERE srs.id_project = sr.id_project AND srs.flag = 0
+            ) THEN 1 ELSE 0 END as is_completed', FALSE);
             
         $this->datatables->from('sample_reception sr');
         $this->datatables->join('ref_client cc', 'sr.id_client_contact = cc.id_client_contact AND cc.flag = 0', 'left');
@@ -34,12 +78,12 @@ class Sample_reception_model extends CI_Model
     
         $lvl = $this->session->userdata('id_user_level');
     
-        // Kolom Toggle (Sisi Kiri)
+        // Kolom Toggle (Sisi Kiri) - Add data-completed attribute for all users
         $this->datatables->add_column('toggle', 
-            '<button type="button" class="btn btn-sm btn-primary toggle-child">
+            '<button type="button" class="btn btn-sm btn-primary toggle-child" data-completed="$8">
                 <i class="fa fa-plus-square"></i>
             </button>', 
-        'id_project');
+        'is_completed, id_project');
     
         // Kolom Action
         if ($lvl == 4) {
@@ -48,34 +92,34 @@ class Sample_reception_model extends CI_Model
         } else if ($lvl == 3) {
             // Level 3 (User) - Bisa akses print dan edit, tapi tidak delete
             $this->datatables->add_column('action', 
-            anchor(site_url('sample_reception/rep_print/$1'), 
+            anchor(site_url('sample_reception/rep_print/$2'), 
                 '<i class="fa fa-print" aria-hidden="true"></i>', 
                 array('class' => 'btn btn-warning btn-sm')) . 
             "
-                " . anchor(site_url('sample_reception/rep_print2/$1'), 
+                " . anchor(site_url('sample_reception/rep_print2/$2'), 
                 '<i class="fa fa-print" aria-hidden="true"></i>', 
                 array('class' => 'btn btn-success btn-sm')) . 
             "
-                " . '<button type="button" class="btn_edit btn btn-info btn-sm">
+                " . '<button type="button" class="btn_edit btn btn-info btn-sm" data-completed="$1">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                </button>', 'id_project');
+                </button>', 'is_completed, id_project');
         } else {
             // Level 1 (Super Admin) dan Level 2 (Admin) - Bisa akses semua button
             $this->datatables->add_column('action', 
-            anchor(site_url('sample_reception/rep_print/$1'), 
+            anchor(site_url('sample_reception/rep_print/$2'), 
                 '<i class="fa fa-print" aria-hidden="true"></i>', 
                 array('class' => 'btn btn-warning btn-sm')) . 
             "
-                " . anchor(site_url('sample_reception/rep_print2/$1'), 
+                " . anchor(site_url('sample_reception/rep_print2/$2'), 
                 '<i class="fa fa-print" aria-hidden="true"></i>', 
                 array('class' => 'btn btn-success btn-sm')) . 
             "
-                " . '<button type="button" class="btn_edit btn btn-info btn-sm">
+                " . '<button type="button" class="btn_edit btn btn-info btn-sm" data-completed="$1">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                 </button>' . " 
-                " . '<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1">
+                " . '<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$2">
                     <i class="fa fa-trash-o" aria-hidden="true"></i>
-                </button>', 'id_project');
+                </button>', 'is_completed, id_project');
         }
     
         $this->db->order_by('sr.date_created', 'DESC');
@@ -101,7 +145,51 @@ class Sample_reception_model extends CI_Model
             sr.time_arrive, 
             sr.date_created, 
             sr.date_updated, 
-            sr.flag
+            sr.flag,
+            CASE WHEN (
+                SELECT COUNT(srt.id_testing) 
+                FROM sample_reception_sample srs2 
+                LEFT JOIN sample_reception_testing srt ON srs2.id_sample = srt.id_sample AND srt.flag = 0 
+                WHERE srs2.id_project = sr.id_project AND srs2.flag = 0
+            ) > 0 AND (
+                SELECT COUNT(srt.id_testing) 
+                FROM sample_reception_sample srs2 
+                LEFT JOIN sample_reception_testing srt ON srs2.id_sample = srt.id_sample AND srt.flag = 0 
+                WHERE srs2.id_project = sr.id_project AND srs2.flag = 0
+            ) = (
+                SELECT COUNT(CASE WHEN COALESCE(
+                    bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
+                    ec.review, el.review, em.review, cb.review, mc.review, 
+                    ewi.review, ebi.review, cbi.review, cwi.review, 
+                    pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review
+                ) = 1 THEN 1 END) 
+                FROM sample_reception_sample srs2 
+                LEFT JOIN sample_reception_testing srt ON srs2.id_sample = srt.id_sample AND srt.flag = 0
+                LEFT JOIN biobank_in bank ON bank.biobankin_barcode = srt.barcode AND bank.flag = 0
+                LEFT JOIN campy_liquids campy ON campy.campy_assay_barcode = srt.barcode AND campy.flag = 0
+                LEFT JOIN salmonella_liquids salmonellaL ON salmonellaL.salmonella_assay_barcode = srt.barcode AND salmonellaL.flag = 0
+                LEFT JOIN salmonella_biosolids salmonellaB ON salmonellaB.salmonella_assay_barcode = srt.barcode AND salmonellaB.flag = 0
+                LEFT JOIN extraction_culture ec ON ec.extraction_barcode = srt.barcode AND ec.flag = 0
+                LEFT JOIN extraction_liquid el ON el.extraction_barcode = srt.barcode AND el.flag = 0
+                LEFT JOIN extraction_metagenome em ON em.extraction_barcode = srt.barcode AND em.flag = 0
+                LEFT JOIN campy_biosolids cb ON cb.campy_assay_barcode = srt.barcode AND cb.flag = 0
+                LEFT JOIN moisture_content mc ON mc.barcode_moisture_content = srt.barcode AND mc.flag = 0
+                LEFT JOIN enterolert_water_in ewi ON ewi.enterolert_barcode = srt.barcode AND ewi.flag = 0
+                LEFT JOIN enterolert_biosolids_in ebi ON ebi.enterolert_barcode = srt.barcode AND ebi.flag = 0
+                LEFT JOIN colilert_biosolids_in cbi ON cbi.colilert_barcode = srt.barcode AND cbi.flag = 0
+                LEFT JOIN colilert_water_in cwi ON cwi.colilert_barcode = srt.barcode AND cwi.flag = 0
+                LEFT JOIN protozoa pr ON pr.protozoa_barcode = srt.barcode AND pr.flag = 0
+                LEFT JOIN campy_pa cp ON cp.campy_assay_barcode = srt.barcode AND cp.flag = 0
+                LEFT JOIN salmonella_pa sp ON sp.salmonella_assay_barcode = srt.barcode AND sp.flag = 0
+                LEFT JOIN hemoflow hem ON hem.hemoflow_barcode = srt.barcode AND hem.flag = 0
+                LEFT JOIN enterolert_hemoflow ehf ON ehf.enterolert_hemoflow_barcode = srt.barcode AND ehf.flag = 0
+                LEFT JOIN colilert_hemoflow chf ON chf.colilert_hemoflow_barcode = srt.barcode AND chf.flag = 0
+                LEFT JOIN campy_hemoflow ch ON ch.campy_assay_barcode = srt.barcode AND ch.flag = 0
+                LEFT JOIN extraction_biosolid ex ON ex.barcode_sample = srt.barcode AND ex.flag = 0
+                LEFT JOIN salmonella_hemoflow sh ON sh.salmonella_assay_barcode = srt.barcode AND sh.flag = 0
+                LEFT JOIN campy_hemoflow_qpcr chq ON chq.campy_assay_barcode = srt.barcode AND chq.flag = 0
+                WHERE srs2.id_project = sr.id_project AND srs2.flag = 0
+            ) THEN 1 ELSE 0 END as is_completed
         ', FALSE);
         
         $this->datatables->from('sample_reception sr');
@@ -123,48 +211,48 @@ class Sample_reception_model extends CI_Model
         
         $lvl = $this->session->userdata('id_user_level');
         
-        // Kolom Toggle (Sisi Kiri)
+        // Kolom Toggle (Sisi Kiri) - Add data-completed attribute for all users  
         $this->datatables->add_column('toggle', 
-            '<button type="button" class="btn btn-sm btn-primary toggle-child">
+            '<button type="button" class="btn btn-sm btn-primary toggle-child" data-completed="$17">
                 <i class="fa fa-plus-square"></i>
             </button>', 
-        'id_project');
+        'is_completed, id_project');
         
         // Kolom Action dengan permission levels
         if ($lvl == 4) {
             // Level 4 (ViewOnly) - Tidak ada button yang bisa diakses
             $this->datatables->add_column('action', '-', 'id_project');
         } else if ($lvl == 3) {
-            // Level 3 (User) - Bisa akses print dan edit, tapi tidak delete
+            // Level 3 (User) - Bisa akses print dan edit, tapi tidak delete, check if completed
             $this->datatables->add_column('action', 
-            anchor(site_url('sample_reception/rep_print/$1'), 
+            anchor(site_url('sample_reception/rep_print/$2'), 
                 '<i class="fa fa-print" aria-hidden="true"></i>', 
                 array('class' => 'btn btn-warning btn-sm')) . 
             "
-                " . anchor(site_url('sample_reception/rep_print2/$1'), 
+                " . anchor(site_url('sample_reception/rep_print2/$2'), 
                 '<i class="fa fa-print" aria-hidden="true"></i>', 
                 array('class' => 'btn btn-success btn-sm')) . 
             "
-                " . '<button type="button" class="btn_edit btn btn-info btn-sm">
+                " . '<button type="button" class="btn_edit btn btn-info btn-sm" data-completed="$1">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                </button>', 'id_project');
+                </button>', 'is_completed, id_project');
         } else {
             // Level 1 (Super Admin) dan Level 2 (Admin) - Bisa akses semua button
             $this->datatables->add_column('action', 
-            anchor(site_url('sample_reception/rep_print/$1'), 
+            anchor(site_url('sample_reception/rep_print/$2'), 
                 '<i class="fa fa-print" aria-hidden="true"></i>', 
                 array('class' => 'btn btn-warning btn-sm')) . 
             "
-                " . anchor(site_url('sample_reception/rep_print2/$1'), 
+                " . anchor(site_url('sample_reception/rep_print2/$2'), 
                 '<i class="fa fa-print" aria-hidden="true"></i>', 
                 array('class' => 'btn btn-success btn-sm')) . 
             "
-                " . '<button type="button" class="btn_edit btn btn-info btn-sm">
+                " . '<button type="button" class="btn_edit btn btn-info btn-sm" data-completed="$1">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                 </button>' . " 
-                " . '<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1">
+                " . '<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$2">
                     <i class="fa fa-trash-o" aria-hidden="true"></i>
-                </button>', 'id_project');
+                </button>', 'is_completed, id_project');
         }
         
         $this->db->order_by('sr.date_created', 'DESC');
