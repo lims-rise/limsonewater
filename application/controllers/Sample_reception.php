@@ -1031,7 +1031,7 @@ class Sample_reception extends CI_Controller
         }
     }
 
-    // Method to save sequence data - using same approach as extraction_culture
+    // Method to save sequence data - NEW approach: using barcode_tube but saving to barcode_sample
     public function save_sequence_data()
     {
         header('Content-Type: application/json');
@@ -1039,23 +1039,24 @@ class Sample_reception extends CI_Controller
         try {
             // Get form data
             $id_one_water_sample = $this->input->post('id_one_water_sample');
-            $barcode_sample = $this->input->post('barcode_sample'); // New required field
+            $barcode_tube = $this->input->post('barcode_tube'); // NEW: User selects barcode_tube
+            $barcode_sample = $this->input->post('barcode_sample'); // NEW: Corresponding barcode_sample from mapping
             $sequence = $this->input->post('sequence'); 
             $sequence_id = $this->input->post('sequence_id');
             $other_sequence_name = $this->input->post('other_sequence_name');
             $species_id = $this->input->post('species_id');
             
             // Validate required fields
-            if (empty($barcode_sample)) {
+            if (empty($barcode_tube)) {
                 echo json_encode(array(
                     'status' => 'error',
-                    'message' => 'Barcode Sample is required'
+                    'message' => 'Barcode Tube is required'
                 ));
                 return;
             }
 
-            // Check if sequence data already exists for this specific barcode
-            $existingData = $this->Sample_reception_model->getSequenceDataByBarcode($barcode_sample);
+            // Check if sequence data already exists for this specific barcode combination
+            $existingData = $this->Sample_reception_model->getSequenceDataByBarcodeTube($barcode_tube, $barcode_sample);
             $isUpdate = $existingData !== false;
 
             // Prepare data
@@ -1082,15 +1083,14 @@ class Sample_reception extends CI_Controller
                     $update_data['custom_sequence_type'] = null;
                 }
 
-                // Update existing record using barcode_sample as key
+                // Update existing record using barcode_sample as key (data is saved by barcode_sample as requested)
                 $this->db->where('barcode_sample', $barcode_sample);
                 $this->db->where('flag', 0);
                 $result = $this->db->update('extraction_culture_plate', $update_data);
                 
                 $action = 'updated';
             } else {
-                // For new data, we need to get the id_one_water_sample from the barcode record
-                // Since barcode already exists in extraction_culture_plate, we update instead of insert
+                // For new data, we update the existing record with sequence data
                 $data = array(
                     'sequence' => $sequence,
                     'species_id' => $species_id,
@@ -1110,7 +1110,7 @@ class Sample_reception extends CI_Controller
                     $data['custom_sequence_type'] = null;
                 }
                 
-                // Update the existing barcode record with sequence data
+                // Update the existing record with sequence data (save by barcode_sample as requested)
                 $this->db->where('barcode_sample', $barcode_sample);
                 $this->db->where('flag', 0);
                 $result = $this->db->update('extraction_culture_plate', $data);
@@ -1185,6 +1185,45 @@ class Sample_reception extends CI_Controller
         }
     }
 
+    // NEW METHOD: Get sequence data by barcode tube for editing (NEW approach)
+    public function get_sequence_data_by_tube()
+    {
+        header('Content-Type: application/json');
+        
+        try {
+            $barcode_tube = $this->input->post('barcode_tube');
+            
+            if (empty($barcode_tube)) {
+                echo json_encode(array(
+                    'status' => 'error',
+                    'message' => 'Barcode Tube is required'
+                ));
+                return;
+            }
+
+            $sequence_data = $this->Sample_reception_model->getSequenceDataByBarcodeTube($barcode_tube);
+            
+            if ($sequence_data) {
+                echo json_encode(array(
+                    'status' => 'success',
+                    'data' => $sequence_data,
+                    'message' => 'Sequence data retrieved successfully'
+                ));
+            } else {
+                echo json_encode(array(
+                    'status' => 'error',
+                    'message' => 'No sequence data found for this barcode tube'
+                ));
+            }
+
+        } catch (Exception $e) {
+            echo json_encode(array(
+                'status' => 'error',
+                'message' => 'An error occurred while fetching data'
+            ));
+        }
+    }
+
     // Method to get available barcode samples for selection
     public function get_barcode_samples()
     {
@@ -1213,6 +1252,38 @@ class Sample_reception extends CI_Controller
             echo json_encode(array(
                 'status' => 'error',
                 'message' => 'An error occurred while fetching barcode samples'
+            ));
+        }
+    }
+
+    // NEW METHOD: Get available barcode tubes for selection (NEW approach)
+    public function get_barcode_tubes()
+    {
+        header('Content-Type: application/json');
+        
+        try {
+            $id_one_water_sample = $this->input->post('id_one_water_sample');
+            
+            if (empty($id_one_water_sample)) {
+                echo json_encode(array(
+                    'status' => 'error',
+                    'message' => 'Sample ID is required'
+                ));
+                return;
+            }
+
+            $barcode_tubes = $this->Sample_reception_model->getAvailableBarcodeTubes($id_one_water_sample);
+            
+            echo json_encode(array(
+                'status' => 'success',
+                'data' => $barcode_tubes,
+                'message' => 'Barcode tubes retrieved successfully'
+            ));
+
+        } catch (Exception $e) {
+            echo json_encode(array(
+                'status' => 'error',
+                'message' => 'An error occurred while fetching barcode tubes'
             ));
         }
     }

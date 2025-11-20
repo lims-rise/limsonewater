@@ -1926,6 +1926,28 @@ class Sample_reception_model extends CI_Model
         return $result;
     }
 
+    // Method to get available barcode tubes for a sample ID (NEW approach - user selects tube barcode)
+    function getAvailableBarcodeTubes($id_one_water_sample) {
+        $this->db->select('extraction_culture_plate.barcode_tube, extraction_culture_plate.barcode_sample, extraction_culture_plate.sequence, extraction_culture_plate.sequence_id, rs.sequence_type, extraction_culture_plate.custom_sequence_type, extraction_culture_plate.species_id');
+        $this->db->from('extraction_culture_plate');
+        $this->db->join('ref_sequence rs', 'extraction_culture_plate.sequence_id = rs.sequence_id', 'left');
+        $this->db->where('extraction_culture_plate.id_one_water_sample', $id_one_water_sample);
+        $this->db->where('extraction_culture_plate.flag', '0');
+        $this->db->where('extraction_culture_plate.barcode_tube IS NOT NULL');
+        $this->db->where('extraction_culture_plate.barcode_tube != ""');
+        $this->db->order_by('extraction_culture_plate.barcode_tube', 'ASC');
+        
+        $query = $this->db->get();
+        $result = $query->result_array();
+        
+        // Add sequence_status in PHP instead of SQL
+        foreach ($result as &$row) {
+            $row['sequence_status'] = ($row['sequence'] == 1) ? 'Has Sequence' : 'No Sequence';
+        }
+        
+        return $result;
+    }
+
     // Method to get sequence data by specific barcode sample
     function getSequenceDataByBarcode($barcode_sample) {
         $this->db->where('barcode_sample', $barcode_sample);
@@ -1937,6 +1959,39 @@ class Sample_reception_model extends CI_Model
             return $result; // Return existing data for this specific barcode
         }
         return false; // No data exists for this barcode
+    }
+
+    // Method to get sequence data by specific barcode tube (NEW approach)
+    function getSequenceDataByBarcodeTube($barcode_tube, $barcode_sample = null) {
+        $this->db->select('extraction_culture_plate.barcode_sample, extraction_culture_plate.barcode_tube, extraction_culture_plate.sequence, extraction_culture_plate.sequence_id, rs.sequence_type, extraction_culture_plate.custom_sequence_type, extraction_culture_plate.species_id');
+        $this->db->from('extraction_culture_plate');
+        $this->db->join('ref_sequence rs', 'extraction_culture_plate.sequence_id = rs.sequence_id', 'left');
+        $this->db->where('extraction_culture_plate.barcode_tube', $barcode_tube);
+        
+        // If barcode_sample is provided, use it as additional filter to ensure we get the exact record
+        if (!empty($barcode_sample)) {
+            $this->db->where('extraction_culture_plate.barcode_sample', $barcode_sample);
+        }
+        
+        $this->db->where('extraction_culture_plate.flag', '0');
+        $this->db->order_by('extraction_culture_plate.id_extraction_culture_plate', 'DESC'); // Get most recent if multiple
+        $query = $this->db->get();
+        
+        if ($query->num_rows() > 0) {
+            $result = $query->row();
+            return $result; // Return existing data for this specific barcode tube
+        }
+        return false; // No data exists for this barcode tube
+    }
+
+    // Method to update sequence data using barcode tube but save to barcode sample (NEW approach)  
+    function updateSequenceDataByBarcodeTube($barcode_tube, $data) {
+        $this->db->where('barcode_tube', $barcode_tube);
+        $this->db->where('flag', 0);
+        $this->db->update('extraction_culture_plate', $data);
+        $affected_rows = $this->db->affected_rows();
+        
+        return $affected_rows > 0;
     }
 
 
