@@ -1651,9 +1651,6 @@ function applyCompletedProjectStyling() {
         $('#compose-modal').on('shown.bs.modal', function () {
 			$('#client_quote_number').focus();
             $('.val1tip').tooltipster('hide'); 
-            // $('#budget_req').on('input', function() {
-            //     formatNumber(this);
-            //     });
         });
     
 
