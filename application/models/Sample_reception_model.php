@@ -346,8 +346,8 @@ class Sample_reception_model extends CI_Model
                     sr.id_project,
                     sr.id_client_sample,
                     COUNT(srs.id_sample) as total_samples,
-                    COUNT(srt.id_testing) as total_tests,
-                    COUNT(CASE WHEN COALESCE(
+                    COUNT(CASE WHEN rt.testing_type NOT LIKE '%sequencing%' AND rt.testing_type NOT LIKE '%microbial%' THEN srt.id_testing END) as total_tests,
+                    COUNT(CASE WHEN rt.testing_type NOT LIKE '%sequencing%' AND rt.testing_type NOT LIKE '%microbial%' AND COALESCE(
                         bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
                         ec.review, el.review, em.review, cb.review, mc.review, 
                         ewi.review, ebi.review, cbi.review, cwi.review, 
@@ -356,6 +356,7 @@ class Sample_reception_model extends CI_Model
                 FROM sample_reception sr
                 LEFT JOIN sample_reception_sample srs ON sr.id_project = srs.id_project AND srs.flag = 0
                 LEFT JOIN sample_reception_testing srt ON srs.id_sample = srt.id_sample AND srt.flag = 0
+                LEFT JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)
                 LEFT JOIN biobank_in bank ON bank.biobankin_barcode = srt.barcode AND bank.flag = 0
                 LEFT JOIN campy_liquids campy ON campy.campy_assay_barcode = srt.barcode AND campy.flag = 0
                 LEFT JOIN salmonella_liquids salmonellaL ON salmonellaL.salmonella_assay_barcode = srt.barcode AND salmonellaL.flag = 0
@@ -1027,9 +1028,9 @@ class Sample_reception_model extends CI_Model
         sample_reception_sample.time_arrival,
         COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, ch.review, ex.review, sh.review, chq.review, 0) AS review,
         CASE 
-            WHEN COUNT(testing.id_testing) = 0 THEN "No Tests"
-            WHEN COUNT(CASE WHEN COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review) = 1 THEN 1 END) = COUNT(testing.id_testing) THEN "Complete"
-            WHEN COUNT(CASE WHEN COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review) = 1 THEN 1 END) > 0 THEN "Partial"
+            WHEN COUNT(CASE WHEN rt.testing_type NOT LIKE "%sequencing%" AND rt.testing_type NOT LIKE "%microbial%" THEN testing.id_testing END) = 0 THEN "No Tests"
+            WHEN COUNT(CASE WHEN rt.testing_type NOT LIKE "%sequencing%" AND rt.testing_type NOT LIKE "%microbial%" AND COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review) = 1 THEN 1 END) = COUNT(CASE WHEN rt.testing_type NOT LIKE "%sequencing%" AND rt.testing_type NOT LIKE "%microbial%" THEN testing.id_testing END) THEN "Complete"
+            WHEN COUNT(CASE WHEN rt.testing_type NOT LIKE "%sequencing%" AND rt.testing_type NOT LIKE "%microbial%" AND COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review) = 1 THEN 1 END) > 0 THEN "Partial"
             ELSE "Incomplete"
         END AS review_status
         ');
@@ -1058,6 +1059,7 @@ class Sample_reception_model extends CI_Model
         $this->db->join('extraction_biosolid ex', 'ex.barcode_sample = testing.barcode and ex.flag = 0', 'left');
         $this->db->join('salmonella_hemoflow sh', 'sh.salmonella_assay_barcode = testing.barcode and sh.flag = 0', 'left');
         $this->db->join('campy_hemoflow_qpcr chq', 'chq.campy_assay_barcode = testing.barcode and chq.flag = 0', 'left');
+        $this->db->join('ref_testing rt', 'FIND_IN_SET(rt.id_testing_type, testing.id_testing_type)', 'left');
         $this->db->join('ref_sampletype', 'sample_reception_sample.id_sampletype = ref_sampletype.id_sampletype', 'left');
         $this->db->join('ref_person', 'sample_reception_sample.id_person=ref_person.id_person', 'left');
         $this->db->where('sample_reception_sample.id_project', $id_project);
@@ -1307,7 +1309,7 @@ class Sample_reception_model extends CI_Model
                 // 'LocationDescription' => isset($sample['location_description']) ? $sample['location_description'] : 'Sample Location ' . ($i + 1),
                 // 'AnalysisPO' => isset($sample['analysis_po']) ? $sample['analysis_po'] : 'PO' . rand(1000, 9999),
                 'AnalysisPO' => '',
-                'LABCODE' => '',
+                'LABCODE' => 'Monash OneWater',
                 'LABSAMPLEID' => $sample['id_one_water_sample'] ?? 'LAB' . str_pad(rand(1000, 9999), 4, '0', STR_PAD_LEFT),
                 // 'SAMPLETYPE' => $sample['sampletype'] ?? 'SAMPLE',
                 'SAMPLETYPE' => 'Research',
@@ -1735,6 +1737,8 @@ class Sample_reception_model extends CI_Model
             'campy_hemoflow_qpcr' => 'campy_hemoflow_qpcr',  // Put this BEFORE campy_hemoflow
             'campy_hemoflow' => 'campy_hemoflow',             // Put this AFTER campy_hemoflow_qpcr
             'hemoflow' => 'hemoflow',
+            'sequencing' => 'sequencing',
+            'microbial' => 'microbial'
         );
 
         // Extract table name from URL
@@ -2028,13 +2032,65 @@ class Sample_reception_model extends CI_Model
         $query = $this->db->query($sql, array($id_project));
         $results = $query->result_array();
         
-        // Return array of testing types
-        $testing_types = array();
+        // Define mapping rules for testing types
+        $testing_type_mapping = array(
+            // Campylobacter group
+            'Campylobacter-Biosolids' => 'Campylobacter',
+            'Campylobacter-Liquids' => 'Campylobacter',
+            'Campylobacter-P/A' => 'Campylobacter',
+            'Campylobacter-QPCR' => 'Campylobacter',
+            
+            // E. coli group
+            'Colilert-Idexx-Water' => 'E. coli',
+            'Colilert-Idexx-Biosolids' => 'E. coli',
+            
+            // Enterococci group
+            'Enterolert-Idexx-Water' => 'Enterococci',
+            'Enterolert-Idexx-Biosolids' => 'Enterococci',
+            
+            // Salmonella group
+            'Salmonella-Biosolids' => 'Salmonella',
+            'Salmonella-Liquids' => 'Salmonella',
+            'Salmonella-P/A' => 'Salmonella',
+            
+            // Hemoflow group
+            'Homeflow' => 'Hemoflow',
+            'Campy-Hemoflow' => 'Hemoflow',
+            'Campy-Hemoflow-QPCR' => 'Hemoflow',
+            'Colilert-Hemoflow' => 'Hemoflow',
+            'Enterolert-Hemoflow' => 'Hemoflow',
+            'Salmonella-Hemoflow' => 'Hemoflow',
+            
+            // Other specific mappings
+            'Moisture_content' => 'Moisture Content',
+            'Protozoa' => 'Protozoa qPCR',
+            'Sequencing' => 'Sequencing',
+            'Microbial-Source-Tracking' => 'Microbial Source Tracking'
+        );
+        
+        // Process results and apply mapping
+        $mapped_testing_types = array();
         foreach ($results as $result) {
-            $testing_types[] = $result['testing_type'];
+            $original_type = $result['testing_type'];
+            
+            // Check if there's a mapping rule for this testing type
+            if (isset($testing_type_mapping[$original_type])) {
+                $mapped_type = $testing_type_mapping[$original_type];
+            } else {
+                // Use original name if no mapping rule exists
+                $mapped_type = $original_type;
+            }
+            
+            // Add to array if not already present (avoid duplicates)
+            if (!in_array($mapped_type, $mapped_testing_types)) {
+                $mapped_testing_types[] = $mapped_type;
+            }
         }
         
-        return $testing_types;
+        // Sort the final array
+        sort($mapped_testing_types);
+        
+        return $mapped_testing_types;
     }
 
 }

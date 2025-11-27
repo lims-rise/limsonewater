@@ -16,6 +16,10 @@ class Scan_page extends CI_Controller {
         $this->load->view('scan_page/supplementary');
     }
 
+    public function microbial() {
+        $this->load->view('scan_page/microbial');
+    }
+
     // public function upload()
     // {
     //     // ---------------------------------------------------------------------
@@ -505,8 +509,41 @@ class Scan_page extends CI_Controller {
         }
     }
 
-    public function delete_file()
+    public function do_upload_microbial()
     {
+        // Use server path for microbial uploads
+        $upload_path = 'C:\\onewater\\microbial\\';
+
+        // Ambil project_id dari POST dan validasi
+        $project_id_raw = $this->input->post('project_id', TRUE);
+        $barcode = preg_replace('/[^a-zA-Z0-9_\-]/', '', $project_id_raw);
+        
+        // Generate filename with microbial prefix for storage
+        $filename = 'microbial_' . ($barcode ?: time()) . '_' . date('Ymd_His');
+
+        $config['upload_path']   = $upload_path;
+        $config['allowed_types'] = 'pdf'; // Only PDF for microbial as requested
+        $config['file_name']     = $filename;
+        $config['overwrite']     = FALSE;
+        $config['max_size']      = 10240; // 10MB max
+
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('file')) {
+            $error = $this->upload->display_errors();
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(400)
+                ->set_output(json_encode(['error' => strip_tags($error)]));
+        } else {
+            $data = $this->upload->data();
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode(['filename' => $data['file_name']]));
+        }
+    }
+
+    public function delete_file() {
         // Set headers untuk JSON response
         header('Content-Type: application/json');
         header("Access-Control-Allow-Origin: *");

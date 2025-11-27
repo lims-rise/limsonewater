@@ -776,6 +776,11 @@ background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
 				{
 					"data": "url",
 					"render": function(data, type, row) {
+						// For testing types without independent review system (Sequencing, Microbial Testing)
+						// if (row.testing_type && (row.testing_type.toLowerCase().includes('sequencing') || row.testing_type.toLowerCase().includes('microbial'))) {
+						// 	return `<span class="text-muted">${row.testing_type || '-'} - ${row.id_one_water_sample || '-'}</span>`;
+						// }
+						
 						return `
 							<a href="javascript:void(0);" class="url-link-status"
 								data-url="${data}"
@@ -790,6 +795,17 @@ background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
 				{
 					"data": null, // <- karena kita render manual
 					"render": function(data, type, row) {
+						// Don't show status for testing types without independent review system
+						if (row.testing_type && (
+							row.testing_type.toLowerCase().includes('sequencing') ||
+							row.testing_type.toLowerCase().includes('microbial')
+						)) {
+							let referenceText = row.testing_type.toLowerCase().includes('sequencing') 
+								? 'Extraction Culture' 
+								: 'parent module';
+							return `<span class="btn btn-xs btn-info rounded-pill">No status</span>`;
+						}
+
 						let statusBtn = '';
 						if (row.review == "1") {
 							statusBtn = '<span class="btn btn-xs btn-success rounded-pill">Reviewed</span>';
