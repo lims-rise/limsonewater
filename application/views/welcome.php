@@ -1,19 +1,133 @@
 <style>
+/* ================================
+   🌤️ MODERN UI 2025 — Color System
+=================================*/
+:root {
+  --ui-bg: #F7F8FA;
+  --ui-surface: #FFFFFF;
+  --ui-surface-alt: #F1F3F5;
+
+  --ui-text: #1A1D21;
+  --ui-text-secondary: #6B7178;
+  --ui-border: #E2E4E8;
+
+  /* 2025 accent colors */
+  --ui-accent: #4D6EF5;              /* Soft Indigo Blue */
+  --ui-accent-soft: #E7EBFF;
+
+  /* Feedback colors (muted) */
+  --ui-success: #3FB984;
+  --ui-warning: #F5C04D;
+  --ui-danger: #E05B5B;
+
+  /* Elevation */
+  --ui-shadow-sm: 0 2px 6px rgba(0,0,0,0.05);
+  --ui-shadow-md: 0 4px 12px rgba(0,0,0,0.07);
+  --ui-radius: 12px;
+}
+
+/* Modern Scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.1);
+  background: linear-gradient(180deg, var(--ui-accent), #6B7EF7);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0);
+  background: var(--ui-surface-alt);
+}
+
+/* Dashboard Specific Styling - Scoped to avoid affecting global elements */
+.dashboard-container {
+  background: var(--ui-bg) !important;
+}
+
+.dashboard-container .content-wrapper {
+  background: var(--ui-bg) !important;
+}
+
+/* Modern Box Styling - Dashboard Scoped */
+.dashboard-container .box {
+  background: var(--ui-surface) !important;
+  border: 1px solid var(--ui-border) !important;
+  border-radius: var(--ui-radius) !important;
+  box-shadow: var(--ui-shadow-sm) !important;
+  transition: all 0.3s ease !important;
+}
+
+.dashboard-container .box:hover {
+  box-shadow: var(--ui-shadow-md) !important;
+}
+
+.dashboard-container .box-header {
+  background: var(--ui-surface) !important;
+  border-bottom: 1px solid var(--ui-border) !important;
+  border-radius: var(--ui-radius) var(--ui-radius) 0 0 !important;
+}
+
+.dashboard-container .box-title {
+  color: var(--ui-text) !important;
+  font-weight: 600 !important;
+  font-size: 18px !important;
+}
+
+.dashboard-container .box-body {
+  background: var(--ui-surface) !important;
+  color: var(--ui-text) !important;
+}
+
+/* Modern Summary Cards */
+.small-box {
+  border-radius: var(--ui-radius) !important;
+  box-shadow: var(--ui-shadow-md) !important;
+  border: none !important;
+  transition: all 0.3s ease !important;
+  overflow: hidden !important;
+}
+
+.small-box:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(77, 110, 245, 0.15) !important;
+}
+
+/* Updated Small Box Colors with 2025 Palette */
+.small-box.bg-aqua {
+  background: linear-gradient(135deg, var(--ui-accent) 0%, #6B7EF7 100%) !important;
+}
+
+.small-box.bg-green {
+  background: linear-gradient(135deg, var(--ui-success) 0%, #52C49A 100%) !important;
+}
+
+.small-box.bg-yellow {
+  background: linear-gradient(135deg, var(--ui-warning) 0%, #F7D063 100%) !important;
+}
+
+.small-box.bg-red {
+  background: linear-gradient(135deg, var(--ui-danger) 0%, #E86F6F 100%) !important;
+}
+
+.small-box .inner h3 {
+  color: white !important;
+  font-weight: 700 !important;
+  font-size: 28px !important;
+}
+
+.small-box .inner p {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 500 !important;
+}
+
+.small-box .icon {
+  color: rgba(255, 255, 255, 0.15) !important;
 }
 </style>
 
-<div class="content-wrapper">
+<div class="content-wrapper dashboard-container">
     <section class="content">
                 <!-- Welcome Header -->
         <div class="row">
@@ -650,50 +764,259 @@ $(document).ready(function() {
 </script>
 
 <style>
+/* Modern Tables & Elements - Dashboard Scoped */
+.dashboard-container .table {
+  background: var(--ui-surface) !important;
+  border-radius: var(--ui-radius) !important;
+  overflow: hidden !important;
+}
+
+.dashboard-container .table > thead > tr > th {
+  background: var(--ui-surface-alt) !important;
+  color: var(--ui-text) !important;
+  border-bottom: 2px solid var(--ui-border) !important;
+  font-weight: 600 !important;
+  padding: 16px !important;
+}
+
+.dashboard-container .table > tbody > tr > td {
+  border-top: 1px solid var(--ui-border) !important;
+  color: var(--ui-text) !important;
+  padding: 14px 16px !important;
+}
+
+.dashboard-container .table > tbody > tr:hover {
+  background: var(--ui-surface-alt) !important;
+}
+
+/* Modern Badges */
+.badge {
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  padding: 6px 12px !important;
+  font-size: 12px !important;
+}
+
+.badge.bg-blue {
+  background: var(--ui-accent) !important;
+  color: white !important;
+}
+
+.badge.bg-green {
+  background: var(--ui-success) !important;
+  color: white !important;
+}
+
+.badge.bg-yellow {
+  background: var(--ui-warning) !important;
+  color: white !important;
+}
+
+.badge.bg-aqua {
+  background: var(--ui-accent) !important;
+  color: white !important;
+}
+
+.badge.bg-gray {
+  background: var(--ui-text-secondary) !important;
+  color: white !important;
+}
+
+/* Modern Labels */
+.label {
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  padding: 4px 10px !important;
+}
+
+.label-success {
+  background: var(--ui-success) !important;
+}
+
+.label-warning {
+  background: var(--ui-warning) !important;
+  color: var(--ui-text) !important;
+}
+
+.label-danger {
+  background: var(--ui-danger) !important;
+}
+
+.label-primary {
+  background: var(--ui-accent) !important;
+}
+
+.label-default {
+  background: var(--ui-text-secondary) !important;
+}
+
+/* Modern Progress Bars */
+.progress {
+  background: var(--ui-surface-alt) !important;
+  border-radius: 6px !important;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.05) !important;
+}
+
+.progress-bar-success {
+  background: linear-gradient(90deg, var(--ui-success), #52C49A) !important;
+}
+
+.progress-bar-warning {
+  background: linear-gradient(90deg, var(--ui-warning), #F7D063) !important;
+}
+
+.progress-bar-danger {
+  background: linear-gradient(90deg, var(--ui-danger), #E86F6F) !important;
+}
+
+/* Modern Timeline */
 .timeline > li > .timeline-item {
-    background: #fff;
-    border-radius: 3px;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    background: var(--ui-surface) !important;
+    border: 1px solid var(--ui-border) !important;
+    border-radius: var(--ui-radius) !important;
+    box-shadow: var(--ui-shadow-sm) !important;
     margin-right: 15px;
     margin-left: 15px;
     margin-top: 0;
     padding: 0;
+    transition: all 0.3s ease !important;
+}
+
+.timeline > li > .timeline-item:hover {
+    box-shadow: var(--ui-shadow-md) !important;
 }
 
 .timeline > li > .timeline-item > .timeline-header {
-    border-bottom: 1px solid #f4f4f4;
-    color: #999;
+    border-bottom: 1px solid var(--ui-border) !important;
+    color: var(--ui-text) !important;
+    background: var(--ui-surface-alt) !important;
     font-size: 16px;
     font-weight: 600;
     line-height: 1.1;
     margin: 0;
-    padding: 10px 15px;
+    padding: 12px 16px;
+    border-radius: var(--ui-radius) var(--ui-radius) 0 0 !important;
 }
 
 .timeline > li > .timeline-item > .timeline-body,
 .timeline > li > .timeline-item > .timeline-footer {
-    padding: 10px 15px;
+    padding: 12px 16px;
+    color: var(--ui-text-secondary) !important;
 }
 
-.small-box .icon {
-    color: rgba(0,0,0,0.15);
-    z-index: 0;
+/* Modern Buttons - Dashboard Scoped */
+.dashboard-container .btn {
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+  border: none !important;
+  padding: 10px 20px !important;
 }
 
-.small-box .icon > i {
-    font-size: 90px;
-    position: absolute;
-    right: 15px;
-    top: 15px;
-    transition: all 0.3s linear;
+.dashboard-container .btn-primary {
+  background: linear-gradient(135deg, var(--ui-accent) 0%, #6B7EF7 100%) !important;
+  color: white !important;
 }
 
-.small-box:hover {
-    text-decoration: none;
+.dashboard-container .btn-primary:hover {
+  background: linear-gradient(135deg, #3D5BF2 0%, var(--ui-accent) 100%) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(77, 110, 245, 0.3) !important;
 }
 
-.small-box:hover .icon > i {
-    font-size: 95px;
+.dashboard-container .btn-success {
+  background: linear-gradient(135deg, var(--ui-success) 0%, #52C49A 100%) !important;
+  color: white !important;
+}
+
+.dashboard-container .btn-success:hover {
+  background: linear-gradient(135deg, #2FA876 0%, var(--ui-success) 100%) !important;
+  transform: translateY(-1px) !important;
+}
+
+.dashboard-container .btn-warning {
+  background: linear-gradient(135deg, var(--ui-warning) 0%, #F7D063 100%) !important;
+  color: var(--ui-text) !important;
+}
+
+.dashboard-container .btn-warning:hover {
+  background: linear-gradient(135deg, #F2B53F 0%, var(--ui-warning) 100%) !important;
+  transform: translateY(-1px) !important;
+}
+
+.dashboard-container .btn-app {
+  background: var(--ui-surface) !important;
+  border: 2px solid var(--ui-border) !important;
+  color: var(--ui-text) !important;
+  border-radius: var(--ui-radius) !important;
+  transition: all 0.3s ease !important;
+}
+
+.dashboard-container .btn-app:hover {
+  background: var(--ui-accent-soft) !important;
+  border-color: var(--ui-accent) !important;
+  color: var(--ui-accent) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* DataTables Modern Styling - Dashboard Scoped */
+.dashboard-container .dataTables_wrapper {
+  background: var(--ui-surface) !important;
+  border-radius: var(--ui-radius) !important;
+  padding: 20px !important;
+  box-shadow: var(--ui-shadow-sm) !important;
+}
+
+.dashboard-container .dataTables_filter input {
+  background: var(--ui-surface) !important;
+  border: 2px solid var(--ui-border) !important;
+  border-radius: 8px !important;
+  color: var(--ui-text) !important;
+  padding: 8px 12px !important;
+  transition: all 0.3s ease !important;
+}
+
+.dashboard-container .dataTables_filter input:focus {
+  border-color: var(--ui-accent) !important;
+  box-shadow: 0 0 0 3px var(--ui-accent-soft) !important;
+  outline: none !important;
+}
+
+.dashboard-container .dataTables_length select {
+  background: var(--ui-surface) !important;
+  border: 2px solid var(--ui-border) !important;
+  border-radius: 6px !important;
+  color: var(--ui-text) !important;
+  padding: 6px 10px !important;
+}
+
+/* Pagination Modern Styling - Dashboard Scoped */
+.dashboard-container .dataTables_paginate .paginate_button {
+  background: var(--ui-surface) !important;
+  border: 1px solid var(--ui-border) !important;
+  color: var(--ui-text) !important;
+  border-radius: 6px !important;
+  margin: 0 2px !important;
+  transition: all 0.3s ease !important;
+}
+
+.dashboard-container .dataTables_paginate .paginate_button:hover {
+  background: var(--ui-accent-soft) !important;
+  border-color: var(--ui-accent) !important;
+  color: var(--ui-accent) !important;
+}
+
+.dashboard-container .dataTables_paginate .paginate_button.current {
+  background: var(--ui-accent) !important;
+  border-color: var(--ui-accent) !important;
+  color: white !important;
+}
+
+/* Modern Chart Container */
+#monthly_chart {
+  background: var(--ui-surface) !important;
+  border-radius: var(--ui-radius) !important;
+  padding: 10px !important;
 }
 
 .progress-xs {
@@ -846,15 +1169,63 @@ $(document).ready(function() {
     }
 }
 
-/* Pending Badge Styling */
+/* Modern Modal Styling */
+.modal-content {
+  background: var(--ui-surface) !important;
+  border: none !important;
+  border-radius: var(--ui-radius) !important;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15) !important;
+}
+
+.modal-header {
+  background: linear-gradient(135deg, var(--ui-accent) 0%, #6B7EF7 100%) !important;
+  border: none !important;
+  border-radius: var(--ui-radius) var(--ui-radius) 0 0 !important;
+  color: white !important;
+}
+
+.modal-title {
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+.modal-body {
+  background: var(--ui-surface) !important;
+  color: var(--ui-text) !important;
+}
+
+.modal-footer {
+  background: var(--ui-surface-alt) !important;
+  border-top: 1px solid var(--ui-border) !important;
+  border-radius: 0 0 var(--ui-radius) var(--ui-radius) !important;
+}
+
+/* Alert Styling */
+.alert {
+  border-radius: var(--ui-radius) !important;
+  border: none !important;
+}
+
+.alert-danger {
+  background: rgba(224, 91, 91, 0.1) !important;
+  color: var(--ui-danger) !important;
+  border-left: 4px solid var(--ui-danger) !important;
+}
+
+/* Modern Pending Badge */
 .pending-badge {
     transition: all 0.3s ease;
     position: relative;
+    background: var(--ui-warning) !important;
+    color: white !important;
+    border-radius: 8px !important;
+    cursor: pointer;
 }
 
 .pending-badge:hover {
-    transform: scale(1.1);
-    box-shadow: 0 2px 8px rgba(243, 156, 18, 0.4);
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(245, 192, 77, 0.4) !important;
+    background: #F2B53F !important;
 }
 
 .pending-badge:before {
@@ -881,9 +1252,10 @@ $(document).ready(function() {
 
 /* Modern Table Design */
 .modern-table-container {
-    background: #ffffff;
-    border-radius: 0px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    background: var(--ui-surface) !important;
+    border: 1px solid var(--ui-border) !important;
+    border-radius: var(--ui-radius) !important;
+    box-shadow: var(--ui-shadow-sm) !important;
     overflow: hidden;
 }
 
@@ -893,16 +1265,16 @@ $(document).ready(function() {
 }
 
 .modern-table-container::-webkit-scrollbar-track {
-    background: #f8fafc;
+    background: var(--ui-surface-alt) !important;
 }
 
 .modern-table-container::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #64748b, #94a3b8);
+    background: linear-gradient(180deg, var(--ui-accent), #6B7EF7) !important;
     border-radius: 6px;
 }
 
 .modern-table-container::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #475569, #64748b);
+    background: linear-gradient(180deg, #3D5BF2, var(--ui-accent)) !important;
 }
 
 .modern-table {
@@ -913,14 +1285,15 @@ $(document).ready(function() {
 }
 
 .modern-thead {
-    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    background: linear-gradient(135deg, var(--ui-warning) 0%, #F7D063 100%) !important;
     position: sticky;
     top: 0;
     z-index: 10;
+    box-shadow: 0 2px 4px rgba(245, 192, 77, 0.1) !important;
 }
 
 .modern-th {
-    color: #ffffff;
+    color: #ffffff !important;
     font-weight: 600;
     font-size: 14px;
     text-align: left;
@@ -948,9 +1321,9 @@ $(document).ready(function() {
 }
 
 .modern-tbody tr:hover {
-    background-color: #f8fafc;
+    background-color: var(--ui-surface-alt) !important;
     transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--ui-shadow-sm) !important;
 }
 
 .modern-tbody tr:last-child {
@@ -959,7 +1332,7 @@ $(document).ready(function() {
 
 .modern-tbody td {
     padding: 16px 20px;
-    color: #334155;
+    color: var(--ui-text) !important;
     font-size: 14px;
     line-height: 1.5;
     border: none;
@@ -968,22 +1341,22 @@ $(document).ready(function() {
 
 .modern-tbody td:first-child {
     font-weight: 600;
-    color: #1e293b;
+    color: var(--ui-text) !important;
 }
 
 .modern-tbody tr:nth-child(even) {
-    background-color: #fafbfc;
+    background-color: var(--ui-surface) !important;
 }
 
 .modern-tbody tr:nth-child(odd) {
-    background-color: #ffffff;
+    background-color: var(--ui-surface-alt) !important;
 }
 
 /* Modern Info Bar */
 .modern-info-bar {
     padding: 20px 25px;
-    background: linear-gradient(90deg, #f8fafc 0%, #f1f5f9 100%);
-    border-bottom: 1px solid #e2e8f0;
+    background: linear-gradient(90deg, var(--ui-surface-alt) 0%, var(--ui-surface) 100%) !important;
+    border-bottom: 1px solid var(--ui-border) !important;
 }
 
 .info-content {
@@ -993,57 +1366,121 @@ $(document).ready(function() {
 }
 
 .info-badge {
-    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--ui-warning) 0%, #F7D063 100%) !important;
+    color: var(--ui-text) !important;
     padding: 8px 16px;
     border-radius: 20px;
     font-weight: 700;
     font-size: 14px;
-    box-shadow: 0 2px 8px rgba(243, 156, 18, 0.3);
+    box-shadow: 0 2px 8px rgba(245, 192, 77, 0.3) !important;
 }
 
 .info-text {
-    color: #64748b;
+    color: var(--ui-text-secondary) !important;
     font-size: 14px;
     font-weight: 500;
 }
 
 #pendingModal .modal-header {
-    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    background: linear-gradient(135deg, var(--ui-warning) 0%, #F7D063 100%) !important;
     border: none;
     padding: 20px 25px;
-    border-radius: 8px 8px 0 0;
+    border-radius: var(--ui-radius) var(--ui-radius) 0 0 !important;
+    box-shadow: 0 2px 8px rgba(245, 192, 77, 0.2) !important;
 }
 
 #pendingModal .modal-header .modal-title {
-    color: #ffffff;
+    color: #ffffff !important;
     font-weight: 600;
     font-size: 18px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
 }
 
 #pendingModal .modal-header .close {
-    color: #ffffff;
+    color: #ffffff !important;
     opacity: 0.9;
     text-shadow: none;
     font-size: 24px;
+    transition: all 0.3s ease !important;
+    border-radius: 50% !important;
+    width: 32px !important;
+    height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 #pendingModal .modal-header .close:hover {
     opacity: 1;
-    color: #ffffff;
+    color: #ffffff !important;
+    background: rgba(255,255,255,0.1) !important;
+    transform: scale(1.1) !important;
 }
 
 #pendingModal .modal-footer {
-    background: #f8fafc;
-    border-top: 1px solid #e2e8f0;
-    border-radius: 0 0 8px 8px;
+    background: var(--ui-surface-alt) !important;
+    border-top: 1px solid var(--ui-border) !important;
+    border-radius: 0 0 var(--ui-radius) var(--ui-radius) !important;
     padding: 15px 25px;
+}
+
+/* Modern Pending Modal Buttons */
+#pendingModal .btn-warning {
+    background: linear-gradient(135deg, var(--ui-warning) 0%, #F7D063 100%) !important;
+    color: var(--ui-text) !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 2px 4px rgba(245, 192, 77, 0.2) !important;
+}
+
+#pendingModal .btn-warning:hover {
+    background: linear-gradient(135deg, #F2B53F 0%, var(--ui-warning) 100%) !important;
+    color: var(--ui-text) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(245, 192, 77, 0.3) !important;
+}
+
+/* Modern Table Row Hover in Modal */
+#pendingModal .modern-tbody tr:hover {
+    background-color: rgba(245, 192, 77, 0.05) !important;
+    border-left: 3px solid var(--ui-warning) !important;
+}
+
+/* Modern Scrollbar for Modal Table */
+#pendingModal .modern-table-container::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--ui-warning), #F7D063) !important;
+}
+
+#pendingModal .modern-table-container::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #F2B53F, var(--ui-warning)) !important;
 }
 
 #pendingModal .modal-content {
     border: none;
-    border-radius: 8px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    border-radius: var(--ui-radius) !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15) !important;
+    overflow: hidden !important;
+}
+
+#pendingModal .modal-body {
+    background: var(--ui-surface) !important;
+    padding: 0 !important;
+}
+
+/* Modern Modal Enhancements */
+#pendingModal .modal-dialog {
+    margin: 30px auto !important;
+    transition: all 0.3s ease !important;
+}
+
+#pendingModal.fade .modal-dialog {
+    transform: translate(0, -50px) !important;
+}
+
+#pendingModal.in .modal-dialog {
+    transform: translate(0, 0) !important;
 }
 
 /* Modern Loading Animation */
@@ -1053,7 +1490,7 @@ $(document).ready(function() {
     align-items: center;
     justify-content: center;
     padding: 60px 40px;
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    background: linear-gradient(135deg, var(--ui-surface-alt) 0%, var(--ui-surface) 100%) !important;
 }
 
 .loader-animation {
@@ -1066,7 +1503,7 @@ $(document).ready(function() {
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    background: linear-gradient(135deg, var(--ui-warning) 0%, #F7D063 100%) !important;
     animation: pulseScale 1.5s ease-in-out infinite;
 }
 
@@ -1090,11 +1527,75 @@ $(document).ready(function() {
 }
 
 .loader-text {
-    color: #64748b;
+    color: var(--ui-text-secondary) !important;
     font-size: 16px;
     font-weight: 500;
     margin: 0;
     letter-spacing: 0.5px;
+}
+
+/* Modern Typography - Dashboard Scoped */
+.dashboard-container h1, 
+.dashboard-container h2, 
+.dashboard-container h3, 
+.dashboard-container h4, 
+.dashboard-container h5, 
+.dashboard-container h6 {
+    color: var(--ui-text) !important;
+}
+
+.dashboard-container p {
+    color: var(--ui-text-secondary) !important;
+}
+
+/* Modern Form Controls - Dashboard Scoped */
+.dashboard-container .form-control {
+    background: var(--ui-surface) !important;
+    border: 2px solid var(--ui-border) !important;
+    border-radius: 8px !important;
+    color: var(--ui-text) !important;
+    transition: all 0.3s ease !important;
+}
+
+.dashboard-container .form-control:focus {
+    border-color: var(--ui-accent) !important;
+    box-shadow: 0 0 0 3px var(--ui-accent-soft) !important;
+    background: var(--ui-surface) !important;
+}
+
+/* Modern Navigation */
+.nav-tabs > li > a {
+    background: var(--ui-surface) !important;
+    color: var(--ui-text-secondary) !important;
+    border: 2px solid var(--ui-border) !important;
+    border-radius: 8px 8px 0 0 !important;
+}
+
+.nav-tabs > li.active > a {
+    background: var(--ui-accent) !important;
+    color: white !important;
+    border-color: var(--ui-accent) !important;
+}
+
+/* Modern Box Variants */
+.box-primary {
+    border-top-color: var(--ui-accent) !important;
+}
+
+.box-success {
+    border-top-color: var(--ui-success) !important;
+}
+
+.box-warning {
+    border-top-color: var(--ui-warning) !important;
+}
+
+.box-danger {
+    border-top-color: var(--ui-danger) !important;
+}
+
+.box-info {
+    border-top-color: var(--ui-accent) !important;
 }
 
 /* Responsive Table Adjustments */

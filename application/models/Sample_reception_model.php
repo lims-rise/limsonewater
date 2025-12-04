@@ -16,7 +16,7 @@ class Sample_reception_model extends CI_Model
 
     public function json() {
         $this->datatables->select('NULL AS toggle, sr.id_project, sr.client_quote_number, sr.client, sr.id_client_sample, COALESCE(cc.client_name, sr.client, "Unknown Client") as client_name, sr.id_client_contact, sr.number_sample, sr.comments, sr.files, sr.supplementary_files, sr.date_arrive, sr.time_arrive, 
-            sr.date_created, sr.date_updated, sr.flag, 
+            sr.date_created, sr.date_updated, sr.flag, sr.is_unlocked, sr.unlocked_by, sr.unlocked_at, sr.unlock_reason,
             CASE WHEN (
                 SELECT COUNT(srt.id_testing) 
                 FROM sample_reception_sample srs 
@@ -90,36 +90,54 @@ class Sample_reception_model extends CI_Model
             // Level 4 (ViewOnly) - Tidak ada button yang bisa diakses
             $this->datatables->add_column('action', '-', 'id_project');
         } else if ($lvl == 3) {
-            // Level 3 (User) - Bisa akses print dan edit, tapi tidak delete
+            // Level 3 (User) - Modern 2025 Action Buttons (Limited Access)
             $this->datatables->add_column('action', 
-            anchor(site_url('sample_reception/rep_print/$2'), 
-                '<i class="fa fa-print" aria-hidden="true"></i>', 
-                array('class' => 'btn btn-warning btn-sm')) . 
-            "
-                " . anchor(site_url('sample_reception/rep_print2/$2'), 
-                '<i class="fa fa-print" aria-hidden="true"></i>', 
-                array('class' => 'btn btn-success btn-sm')) . 
-            "
-                " . '<button type="button" class="btn_edit btn btn-info btn-sm" data-completed="$1">
-                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                </button>', 'is_completed, id_project');
+            '<div class="modern-action-group">' .
+                // File Actions Group
+                '<div class="action-section file-actions">' .
+                    anchor(site_url('sample_reception/rep_print/$2'), 
+                        '<i class="fa fa-print"></i>', 
+                        array('class' => 'btn-modern btn-soft-grey', 'title' => 'Print CoC Report')) . 
+                    anchor(site_url('sample_reception/rep_print2/$2'), 
+                        '<i class="fa fa-print"></i>', 
+                        array('class' => 'btn-modern btn-soft-grey-dark', 'title' => 'Print Extended Report')) .
+                '</div>' .
+                // Data Actions Group  
+                '<div class="action-section data-actions">' .
+                    '<button type="button" class="btn-modern btn-accent btn_edit" data-completed="$1" title="Edit Project">
+                        <i class="fa fa-edit"></i>
+                    </button>' .
+                '</div>' .
+            '</div>', 'is_completed, id_project');
         } else {
-            // Level 1 (Super Admin) dan Level 2 (Admin) - Bisa akses semua button
+            // Level 1 (Super Admin) dan Level 2 (Admin) - Modern 2025 Action Buttons
             $this->datatables->add_column('action', 
-            anchor(site_url('sample_reception/rep_print/$2'), 
-                '<i class="fa fa-print" aria-hidden="true"></i>', 
-                array('class' => 'btn btn-warning btn-sm')) . 
-            "
-                " . anchor(site_url('sample_reception/rep_print2/$2'), 
-                '<i class="fa fa-print" aria-hidden="true"></i>', 
-                array('class' => 'btn btn-success btn-sm')) . 
-            "
-                " . '<button type="button" class="btn_edit btn btn-info btn-sm" data-completed="$1">
-                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                </button>' . " 
-                " . '<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$2">
-                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                </button>', 'is_completed, id_project');
+            '<div class="modern-action-group">' .
+                // File Actions Group
+                '<div class="action-section file-actions">' .
+                    anchor(site_url('sample_reception/rep_print/$2'), 
+                        '<i class="fa fa-print"></i>', 
+                        array('class' => 'btn-modern btn-soft-grey', 'title' => 'Print CoC Report')) . 
+                    anchor(site_url('sample_reception/rep_print2/$2'), 
+                        '<i class="fa fa-print"></i>', 
+                        array('class' => 'btn-modern btn-soft-grey-dark', 'title' => 'Print Extended Report')) .
+                '</div>' .
+                // Data Actions Group  
+                '<div class="action-section data-actions">' .
+                    '<button type="button" class="btn-modern btn-accent btn_edit" data-completed="$1" title="Edit Project">
+                        <i class="fa fa-edit"></i>
+                    </button>' .
+                '</div>' .
+                // Danger Actions Group
+                '<div class="action-section danger-actions">' .
+                    '<button type="button" class="btn-modern btn-danger btn_delete" data-id="$2" title="Delete Project">
+                        <i class="fa fa-trash"></i>
+                    </button>' .
+                    '<button type="button" class="btn-modern btn-icon-only btn_unlock" data-id="$2" data-completed="$1" data-unlocked="$16" title="Lock/Unlock Project">
+                        <i class="fa fa-unlock-alt"></i>
+                    </button>' .
+                '</div>' .
+            '</div>', 'is_completed, id_project, client_quote_number, client, id_client_sample, client_name, id_client_contact, number_sample, comments, files, supplementary_files, date_arrive, time_arrive, date_created, date_updated, flag, is_unlocked');
         }
     
         $this->db->order_by('sr.date_created', 'DESC');
@@ -145,7 +163,11 @@ class Sample_reception_model extends CI_Model
             sr.time_arrive, 
             sr.date_created, 
             sr.date_updated, 
-            sr.flag,
+            sr.flag, 
+            sr.is_unlocked, 
+            sr.unlocked_by, 
+            sr.unlocked_at, 
+            sr.unlock_reason,
             CASE WHEN (
                 SELECT COUNT(srt.id_testing) 
                 FROM sample_reception_sample srs2 
@@ -213,46 +235,64 @@ class Sample_reception_model extends CI_Model
         
         // Kolom Toggle (Sisi Kiri) - Add data-completed attribute for all users  
         $this->datatables->add_column('toggle', 
-            '<button type="button" class="btn btn-sm btn-primary toggle-child" data-completed="$17">
+            '<button type="button" class="btn btn-sm btn-primary toggle-child" data-completed="$12">
                 <i class="fa fa-plus-square"></i>
             </button>', 
         'is_completed, id_project');
         
-        // Kolom Action dengan permission levels
+        // Kolom Action
         if ($lvl == 4) {
             // Level 4 (ViewOnly) - Tidak ada button yang bisa diakses
             $this->datatables->add_column('action', '-', 'id_project');
         } else if ($lvl == 3) {
-            // Level 3 (User) - Bisa akses print dan edit, tapi tidak delete, check if completed
+            // Level 3 (User) - Modern 2025 Action Buttons (Limited Access)
             $this->datatables->add_column('action', 
-            anchor(site_url('sample_reception/rep_print/$2'), 
-                '<i class="fa fa-print" aria-hidden="true"></i>', 
-                array('class' => 'btn btn-warning btn-sm')) . 
-            "
-                " . anchor(site_url('sample_reception/rep_print2/$2'), 
-                '<i class="fa fa-print" aria-hidden="true"></i>', 
-                array('class' => 'btn btn-success btn-sm')) . 
-            "
-                " . '<button type="button" class="btn_edit btn btn-info btn-sm" data-completed="$1">
-                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                </button>', 'is_completed, id_project');
+            '<div class="modern-action-group">' .
+                // File Actions Group
+                '<div class="action-section file-actions">' .
+                    anchor(site_url('sample_reception/rep_print/$2'), 
+                        '<i class="fa fa-print"></i>', 
+                        array('class' => 'btn-modern btn-soft-grey', 'title' => 'Print CoC Report')) . 
+                    anchor(site_url('sample_reception/rep_print2/$2'), 
+                        '<i class="fa fa-print"></i>', 
+                        array('class' => 'btn-modern btn-soft-grey-dark', 'title' => 'Print Extended Report')) .
+                '</div>' .
+                // Data Actions Group  
+                '<div class="action-section data-actions">' .
+                    '<button type="button" class="btn-modern btn-accent btn_edit" data-completed="$1" title="Edit Project">
+                        <i class="fa fa-edit"></i>
+                    </button>' .
+                '</div>' .
+            '</div>', 'is_completed, id_project');
         } else {
-            // Level 1 (Super Admin) dan Level 2 (Admin) - Bisa akses semua button
+            // Level 1 (Super Admin) dan Level 2 (Admin) - Modern 2025 Action Buttons
             $this->datatables->add_column('action', 
-            anchor(site_url('sample_reception/rep_print/$2'), 
-                '<i class="fa fa-print" aria-hidden="true"></i>', 
-                array('class' => 'btn btn-warning btn-sm')) . 
-            "
-                " . anchor(site_url('sample_reception/rep_print2/$2'), 
-                '<i class="fa fa-print" aria-hidden="true"></i>', 
-                array('class' => 'btn btn-success btn-sm')) . 
-            "
-                " . '<button type="button" class="btn_edit btn btn-info btn-sm" data-completed="$1">
-                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                </button>' . " 
-                " . '<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$2">
-                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                </button>', 'is_completed, id_project');
+            '<div class="modern-action-group">' .
+                // File Actions Group
+                '<div class="action-section file-actions">' .
+                    anchor(site_url('sample_reception/rep_print/$2'), 
+                        '<i class="fa fa-print"></i>', 
+                        array('class' => 'btn-modern btn-soft-grey', 'title' => 'Print CoC Report')) . 
+                    anchor(site_url('sample_reception/rep_print2/$2'), 
+                        '<i class="fa fa-print"></i>', 
+                        array('class' => 'btn-modern btn-soft-grey-dark', 'title' => 'Print Extended Report')) .
+                '</div>' .
+                // Data Actions Group  
+                '<div class="action-section data-actions">' .
+                    '<button type="button" class="btn-modern btn-accent btn_edit" data-completed="$1" title="Edit Project">
+                        <i class="fa fa-edit"></i>
+                    </button>' .
+                '</div>' .
+                // Danger Actions Group
+                '<div class="action-section danger-actions">' .
+                    '<button type="button" class="btn-modern btn-danger btn_delete" data-id="$2" title="Delete Project">
+                        <i class="fa fa-trash"></i>
+                    </button>' .
+                    '<button type="button" class="btn-modern btn-icon-only btn_unlock" data-id="$2" data-completed="$1" data-unlocked="$16" title="Lock/Unlock Project">
+                        <i class="fa fa-unlock-alt"></i>
+                    </button>' .
+                '</div>' .
+            '</div>', 'is_completed, id_project, client_quote_number, client, id_client_sample, client_name, id_client_contact, number_sample, comments, files, supplementary_files, date_arrive, time_arrive, date_created, date_updated, flag, is_unlocked');
         }
         
         $this->db->order_by('sr.date_created', 'DESC');
@@ -1302,31 +1342,46 @@ class Sample_reception_model extends CI_Model
             
             if ($lvl == 4) {
                 // Level 4 (ViewOnly) - Tidak ada button yang bisa diakses
-                $row->action = '
-                    <a href="' . site_url('sample_reception/read/' . $row->id_one_water_sample) . '" class="btn btn-warning btn-sm">
+                $row->action = '<div class="modern-action-group">
+                    <a href="' . site_url('sample_reception/read/' . $row->id_one_water_sample) . '" 
+                       class="btn-modern btn-accent btn-icon-only" 
+                       title="View Details">
                         <i class="fa fa-eye"></i>
-                    </a>';
+                    </a>
+                </div>';
             } else if ($lvl == 3) {
                 // Level 3 (User) - Bisa akses view dan edit, tapi tidak delete
-                $row->action = '
-                    <a href="' . site_url('sample_reception/read/' . $row->id_one_water_sample) . '" class="btn btn-warning btn-sm">
+                $row->action = '<div class="modern-action-group">
+                    <a href="' . site_url('sample_reception/read/' . $row->id_one_water_sample) . '" 
+                       class="btn-modern btn-accent btn-icon-only" 
+                       title="View Details">
                         <i class="fa fa-eye"></i>
                     </a>
-                    <button class="btn btn-info btn-sm btn_edit_sample" data-id="' . $row->id_one_water_sample . '">
-                        <i class="fa fa-pencil"></i>
-                    </button>';
-            } else {
-                // Level 1 (Super Admin) dan Level 2 (Admin) - Bisa akses semua button
-                $row->action = '
-                    <a href="' . site_url('sample_reception/read/' . $row->id_one_water_sample) . '" class="btn btn-warning btn-sm">
-                        <i class="fa fa-eye"></i>
-                    </a>
-                    <button class="btn btn-info btn-sm btn_edit_sample" data-id="' . $row->id_one_water_sample . '">
+                    <button class="btn-modern btn-accent btn-icon-only btn_edit_sample" 
+                            data-id="' . $row->id_one_water_sample . '"
+                            title="Edit Sample">
                         <i class="fa fa-pencil"></i>
                     </button>
-                    <button class="btn btn-danger btn-sm btn_delete_sample" data-id="' . $row->id_one_water_sample . '">
+                </div>';
+            } else {
+                // Level 1 (Super Admin) dan Level 2 (Admin) - Bisa akses semua button
+                $row->action = '<div class="modern-action-group">
+                    <a href="' . site_url('sample_reception/read/' . $row->id_one_water_sample) . '" 
+                       class="btn-modern btn-accent btn-icon-only" 
+                       title="View Details">
+                        <i class="fa fa-eye"></i>
+                    </a>
+                    <button class="btn-modern btn-accent btn-icon-only btn_edit_sample" 
+                            data-id="' . $row->id_one_water_sample . '"
+                            title="Edit Sample">
+                        <i class="fa fa-pencil"></i>
+                    </button>
+                    <button class="btn-modern btn-accent btn-icon-only btn_delete_sample" 
+                            data-id="' . $row->id_one_water_sample . '"
+                            title="Delete Sample">
                         <i class="fa fa-trash"></i>
-                    </button>';
+                    </button>
+                </div>';
             }
         }
     
@@ -2360,9 +2415,45 @@ class Sample_reception_model extends CI_Model
         return $mapped_testing_types;
     }
 
+    // Unlock/Lock Project Methods
+    public function unlock_project($id_project, $admin_id, $reason) {
+        $data = array(
+            'is_unlocked' => 1,
+            'unlocked_by' => $admin_id,
+            'unlocked_at' => date('Y-m-d H:i:s'),
+            'unlock_reason' => $reason,
+            'date_updated' => date('Y-m-d H:i:s')
+        );
+        
+        $this->db->where('id_project', $id_project);
+        return $this->db->update('sample_reception', $data);
+    }
+    
+    public function lock_project($id_project) {
+        $data = array(
+            'is_unlocked' => 0,
+            'unlocked_by' => NULL,
+            'unlocked_at' => NULL,
+            'unlock_reason' => NULL,
+            'date_updated' => date('Y-m-d H:i:s')
+        );
+        
+        $this->db->where('id_project', $id_project);
+        return $this->db->update('sample_reception', $data);
+    }
+    
+    public function get_unlock_info($id_project) {
+        $this->db->select('sr.is_unlocked, sr.unlocked_by, sr.unlocked_at, sr.unlock_reason, u.realname as admin_name');
+        $this->db->from('sample_reception sr');
+        $this->db->join('tbl_user u', 'sr.unlocked_by = u.id_users', 'left');
+        $this->db->where('sr.id_project', $id_project);
+        $this->db->where('sr.flag', '0');
+        return $this->db->get()->row();
+    }
+
 }
 
-/* End of file Tbl_delivery_model.php */
+/* End of file Sample_reception_model.php */
 /* Location: ./application/models/Tbl_delivery_model.php */
 /* Please DO NOT modify this information : */
 /* Generated by Harviacode Codeigniter CRUD Generator 2022-12-14 03:38:42 */
