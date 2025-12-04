@@ -91,6 +91,7 @@
 											<th>Testing Type</th>
 											<th>Main module</th>
 											<th>Detail module</th>
+											<th>Result</th>
 											<th>Status</th>
 											<th>Action</th>
 										</tr>
@@ -792,6 +793,12 @@ background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
 						`;
 					}
 				},
+				{
+                    "data": "result",
+                    "render": function(data, type, row) {
+                        return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
+                    }
+                },
 				{
 					"data": null, // <- karena kita render manual
 					"render": function(data, type, row) {

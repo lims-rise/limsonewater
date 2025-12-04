@@ -417,12 +417,12 @@
                                 <input type="text" id="species_id" name="species_id" class="form-control">
                             </div> -->
 
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="species_id" class="col-sm-4 control-label">Species ID</label>
                                 <div class="col-sm-8">
                                     <input id="species_id" name="species_id" placeholder="Species ID" class="form-control">
                                 </div>
-                            </div>
+                            </div> -->
 
                         </div>
 
@@ -1030,7 +1030,7 @@
                 $('#sequenceHidden').prop('disabled', false); // Enable hidden input when checkbox is unchecked
                 // Clear values if unchecked (opsional)
                 $('#sequence_id').val('').trigger('change'); // Trigger change to hide other field
-                $('#species_id').val('');
+                // $('#species_id').val('');
             }
         });
 
@@ -1945,7 +1945,7 @@
             $('#sequenceCheckbox').prop('checked', false);
             $('#sequenceFields').hide();
             $('#sequence_id').val('').trigger('change');
-            $('#species_id').val('');
+            // $('#species_id').val('');
             $('#other_sequence_name').hide().val('');
             $('#sequenceHidden').prop('disabled', false);
         });
@@ -2009,7 +2009,7 @@
                         $('#sequenceFields').hide();  // Hide the dependent fields (sequence_id, species_id)
                         $('#sequenceHidden').prop('disabled', false); // Enable hidden input when checkbox is unchecked
                     }
-                    $('#species_id').val(data.species_id);
+                    // $('#species_id').val(data.species_id);
                     $('#id_col').val(data.columns1);
                     $('#comments').val(data.comments);
 

@@ -71,6 +71,13 @@
         break-inside: avoid;
         /* position: relative; <--- SAYA HAPUS INI AGAR TIDAK MENGGANGGU LOGO */
     }
+    
+    /* Khusus untuk page 3 yang berisi analysis table */
+    .content-wrapper:nth-child(4) {
+        position: relative !important;
+        overflow: visible !important;
+        min-height: 270mm !important;
+    }
     @page {
         size: A4 portrait;
         margin: 10mm;
@@ -95,9 +102,21 @@
     }
     h4 {
         font-size: 11pt;
+        margin-bottom: 10px !important;
+        display: block !important;
+        visibility: visible !important;
     }
     ol li {
         font-size: 9pt;
+    }
+    
+    /* Ensure page 3 content is visible */
+    .content-wrapper:nth-child(4) h4 {
+        position: relative !important;
+        z-index: 999 !important;
+        color: black !important;
+        background: white !important;
+        padding: 5px !important;
     }
     .box-body > div[style*="display: flex"] {
         display: block !important;
@@ -120,6 +139,146 @@
     .logo-footer-print img {
         height: 35px; 
         width: auto;
+    }
+    
+    /* --- TABEL ANALYSIS PRINT VIEW (Normal - Tanpa Rotasi) --- */
+    .analysis-table-container {
+        width: 100% !important;
+        margin-bottom: 8px !important;
+        overflow-x: visible !important;
+        page-break-inside: avoid !important;
+    }
+    
+    /* Styling tabel analysis untuk print */
+    .analysis-table-container #analysis-results-table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        font-size: 6pt !important;
+        border: 1px solid #000 !important;
+        margin: 5px 0 !important;
+        page-break-inside: avoid !important;
+    }
+    
+    /* Cell styling untuk print - ultra compact size */
+    .analysis-table-container #analysis-results-table th,
+    .analysis-table-container #analysis-results-table td {
+        font-size: 5pt !important;
+        padding: 0.5px 0.3px !important;
+        border: 0.5px solid #000 !important;
+        text-align: center !important;
+        word-break: break-word !important;
+        vertical-align: middle !important;
+        line-height: 0.9 !important;
+        max-width: 5mm !important;
+        min-width: 4mm !important;
+    }
+    
+    /* Sample column (first column) styling untuk print */
+    .analysis-table-container #analysis-results-table th:first-child,
+    .analysis-table-container #analysis-results-table td:first-child {
+        min-width: 25mm !important;
+        max-width: 30mm !important;
+        text-align: left !important;
+        font-weight: bold !important;
+        font-size: 7pt !important;
+        padding: 3px 4px !important;
+    }
+    
+    /* Header styling untuk print - ultra compact vertical */
+    .analysis-table-container #analysis-results-table th {
+        background-color: #f2f2f2 !important;
+        font-weight: bold !important;
+        font-size: 3pt !important;
+        padding: 0.5px 0.3px !important;
+        word-wrap: break-word !important;
+        height: 35mm !important;
+        writing-mode: vertical-lr !important;
+        text-orientation: mixed !important;
+        max-width: 5mm !important;
+        min-width: 4mm !important;
+    }
+    
+    /* Units text dalam header - micro compact */
+    .analysis-table-container #analysis-results-table th br {
+        line-height: 0.6 !important;
+    }
+    
+
+    
+    /* JANGAN SENTUH TABEL LAIN - Preserve sample table styling */
+    .report-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 7.5pt !important;
+    }
+    
+    .report-table th, .report-table td {
+        font-size: 7.5pt !important;
+        padding: 1.5px 1px !important;
+        border: 1px solid #000;
+    }
+    
+    /* Preserve sample table (halaman 2) styling - ID additional-info */
+    #additional-info {
+        border-collapse: separate !important;
+        border-spacing: 6px !important;
+        font-size: 7.5pt !important;
+    }
+    
+    #additional-info td {
+        font-size: 7.5pt !important;
+        padding: 1.5px 1px !important;
+    }
+    </style>
+
+    <!-- CSS untuk tampilan layar normal (tidak di-print) -->
+    <style media="screen">
+    /* --- TABEL ANALYSIS SCREEN VIEW (Normal) --- */
+    .analysis-table-container {
+        width: 100% !important;
+        margin-bottom: 8px !important;
+        overflow-x: auto !important;
+        transform: none !important;
+        position: relative !important;
+        height: auto !important;
+    }
+
+    #analysis-results-table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        font-size: 7pt !important;
+        margin: 10px 0 !important;
+        border: 1px solid #3c8dbc !important;
+        min-width: 800px !important;
+    }
+
+    #analysis-results-table th, #analysis-results-table td {
+        border: 1px solid #3c8dbc !important;
+        padding: 4px 3px !important;
+        font-size: 7pt !important;
+        vertical-align: middle !important;
+        text-align: center !important;
+        word-wrap: break-word !important;
+        min-width: 50px !important;
+        max-width: 80px !important;
+        white-space: normal !important;
+    }
+
+    #analysis-results-table th {
+        background-color: #f2f2f2 !important;
+        font-weight: bold !important;
+        font-size: 6pt !important;
+        padding: 5px 3px !important;
+        word-break: break-word !important;
+        line-height: 1.1 !important;
+    }
+
+    #analysis-results-table td:first-child, #analysis-results-table th:first-child {
+        text-align: left !important;
+        font-weight: bold !important;
+        min-width: 80px !important;
+        max-width: 100px !important;
+        font-size: 7pt !important;
     }
     </style>
 </head>
@@ -312,50 +471,19 @@
                     </div>
 
 
-                    <?php
-
-                    $q = $this->db->query('SELECT a.id_project, a.id_one_water_sample, c.testing_type, "200uL PBS/glycerol" method, "0" testvalue
-                    FROM sample_reception_sample a
-                    LEFT JOIN sample_reception_testing b ON a.id_sample= b.id_sample
-                            LEFT JOIN ref_testing c ON b.id_testing_type = c.id_testing_type
-                    WHERE a.id_project="'.$id_project.'"
-                    AND a.flag = 0 
-                    ORDER BY a.id_one_water_sample');        
-
-                    $response2 = $q->result();
-
-                    ?>
-                    <div style="width: 100%; border-top: 0px solid #ddd; margin: 5px 0;"></div>
-
-                    <div style="width: 60%; margin-bottom: 8px;">
-                        <table id="additional-info" width="100%" style="border:1px solid #3c8dbc; border-collapse: separate; border-spacing: 6px;">
-                            <thead>
-                                <tr>
-                                    <td width="20%" style="border:0px solid black; padding: 2px 0; vertical-align: top; font-weight: bold;" align="left">Analysis - Analyte</td>
-                                    <td width="20%" style="border:0px solid black; padding: 2px 0; vertical-align: top; font-weight: bold;" align="left">Units</td>
-                                    <td width="10%" style="border:0px solid black; padding: 2px 0; vertical-align: top; font-weight: bold;" align="left">Values</td>
-                                </tr>
-                                <?php foreach ($response2 as $row2): ?>
-                                <tr>
-                                    <td width="20%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $row2->testing_type; ?></td>
-                                    <td width="20%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $row2->method; ?></td>
-                                    <td width="10%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo $row2->testvalue; ?></td>
-                                </tr>
-                                <?php endforeach; ?>                                  
-                            </thead>
-                        </table>
-                    </div>                    
+                    
                 </div>
             </div>
         </section>
     </div>
 
+    <!-- Page 3: Analysis Results Table (Rotated) -->
     <div class="content-wrapper page-break">
         <section class="content">
             <div class="box box-primary">
                 <div class="box-header">
-                    <img src="../../../img/monash.png" height="50px" class="icon" style="padding: 0px; float: left;">
-                    <img src="../../../img/onewaterlogo.png" height="40px" class="icon" style="padding: 0px; float: right;">
+                    <img src="../../../img/onewaterlogo.png" height="40px" class="icon" style="padding: 0px; float: left;">
+                    <img src="../../../img/monash.png" height="40px" class="icon" style="padding: 0px; float: right;">
                 </div>
                 <div class="box-body">
                     <div style="position: relative; height: 8px; margin-bottom: 5px;">
@@ -364,233 +492,153 @@
                             alt="Background" />
                     </div>
 
-                    <input type='hidden' id='id_project' value='<?php echo $id_project; ?>'>
+                    <h4 style="margin-bottom: 10px; font-weight: bold;">Analysis Results</h4>
 
                     <?php
-                    $all_sample_headers = [
-                        'P2500143', 'P2500144', 'P2500145', 'P2500146', 'P2500147', 'P2500148',
-                        // 'P2500149', 'P2500150', 'P2500151', 'P2500152', 'P2500153', 'P2500154',
-                        // 'P2500155', 'P2500156', 'P2500157', 'P2500158', 'P2500159', 'P2500160', 
-                        // 'P2500161', 'P2500162', 'P2500163', 'P2500164', 'P2500165' 
-                    ];
-
-                    $human_specific_all_data = [
-                        'Human' => ['0.00%', '0.00%', '0.00%', '0.01%', '0.00%', '0.01%', '0.02%', '0.00%', '0.01%', '0.00%', '0.00%', '0.01%', '0.00%', '0.01%', '0.00%', '0.00%', '0.01%', '0.00%', '0.00%', '0.01%', '0.00%'],
-                        'Unknown' => ['100.00%', '100.00%', '100.00%', '99.99%', '100.00%', '99.99%', '99.98%', '100.00%', '99.99%', '100.00%', '100.00%', '99.99%', '100.00%', '99.99%', '100.00%', '100.00%', '99.99%', '100.00%', '100.00%', '99.99%', '100.00%']
-                    ];
-
-                    $faecal_specific_all_data = [
-                        'Bat' => ['0.00%', '', '', '0.00%', '0.21%', '', '0.00%', '', '', '0.00%', '', '', '0.00%', '0.01%', '', '0.00%', '', '', '0.00%', '', ''],
-                        'Bird' => ['0.00%', '', '', '0.00%', '0.03%', '', '0.00%', '', '', '0.00%', '', '', '0.00%', '0.00%', '', '0.00%', '', '', '0.00%', '', ''],
-                        'Cat' => ['', '', '', '0.00%', '0.00%', '', '0.00%', '', '', '0.00%', '', '', '0.00%', '0.00%', '', '0.00%', '', '', '0.00%', '', ''],
-                        'Chicken' => ['0.00%', '0.00%', '', '0.00%', '0.00%', '', '0.00%', '', '', '0.00%', '', '', '0.00%', '0.00%', '', '0.00%', '', '', '0.00%', '', ''],
-                        'Cow' => ['0.00%', '0.00%', '', '0.00%', '0.00%', '0.01%', '0.00%', '0.00%', '', '0.00%', '0.00%', '0.01%', '0.00%', '0.00%', '', '0.00%', '0.00%', '0.01%', '0.00%', '0.00%', ''],
-                        'Deer' => ['0.00%', '0.00%', '', '0.00%', '0.00%', '0.02%', '0.00%', '0.00%', '', '0.00%', '0.00%', '0.02%', '0.00%', '0.00%', '', '0.00%', '0.00%', '0.02%', '0.00%', '0.00%', ''],
-                        'Dog' => ['', '', '', '0.00%', '0.01%', '', '0.00%', '', '', '0.00%', '', '', '0.00%', '0.00%', '', '0.00%', '', '', '0.00%', '', ''],
-                        'Fox' => ['0.00%', '0.00%', '', '0.00%', '0.00%', '', '0.00%', '0.00%', '', '0.00%', '0.00%', '', '0.00%', '0.00%', '', '0.00%', '0.00%', '', '0.00%', '', ''],
-                        'Horse' => ['', '', '', '', '', '0.00%', '', '', '', '', '', '0.00%', '', '', '', '', '', '0.00%', '', '', ''],
-                        'Human' => ['0.00%', '0.00%', '0.01%', '0.01%', '0.00%', '0.00%', '0.00%', '0.00%', '0.01%', '0.01%', '0.00%', '0.00%', '0.00%', '0.00%', '0.01%', '0.00%', '0.00%', '0.01%', '0.01%', '0.00%', '0.01%'],
-                        'Kangaroo' => ['', '', '', '', '', '0.00%', '', '', '', '', '', '0.00%', '', '', '', '', '', '0.00%', '', '', ''],
-                        'Possum' => ['0.00%', '0.00%', '0.01%', '0.01%', '0.00%', '0.01%', '0.00%', '0.00%', '0.01%', '0.01%', '0.00%', '0.01%', '0.00%', '0.00%', '0.01%', '0.00%', '0.00%', '0.01%', '0.01%', '0.00%', '0.01%'],
-                        'Rabbit' => ['', '', '', '', '', '0.00%', '', '', '', '', '', '0.00%', '', '', '', '', '', '0.00%', '', '', ''],
-                        'Rat' => ['0.01%', '0.00%', '0.00%', '0.00%', '0.00%', '0.00%', '0.01%', '0.00%', '0.00%', '0.00%', '0.00%', '0.00%', '0.01%', '0.00%', '0.00%', '0.01%', '0.00%', '0.00%', '0.00%', '0.00%', '0.01%'],
-                        'Sheep' => ['0.00%', '0.00%', '', '0.00%', '0.00%', '0.01%', '0.00%', '0.00%', '', '0.00%', '0.00%', '0.01%', '0.00%', '0.00%', '', '0.00%', '0.00%', '0.01%', '0.00%', '0.00%', ''],
-                        'Wallaby' => ['0.00%', '0.00%', '', '', '', '', '0.00%', '0.00%', '', '', '', '', '0.00%', '0.00%', '', '0.00%', '0.00%', '', '', '', ''],
-                        'Waterbird' => ['0.02%', '0.01%', '0.01%', '0.01%', '0.02%', '0.02%', '0.02%', '0.01%', '0.01%', '0.01%', '0.02%', '0.02%', '0.02%', '0.01%', '0.01%', '0.02%', '0.01%', '0.01%', '0.01%', '0.02%', '0.02%'],
-                        'Wombat' => ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-                        'Unknown' => ['99.95%', '99.97%', '99.96%', '99.95%', '99.95%', '99.65%', '99.97%', '99.99%', '99.97%', '99.98%', '99.98%', '99.63%', '99.97%', '99.97%', '99.97%', '99.97%', '99.99%', '99.97%', '99.97%', '99.98%', '99.97%']
-                    ];
-                    
-                    $samples_per_row = 6;
-                    $num_samples = count($all_sample_headers);
-                    $num_chunks = ceil($num_samples / $samples_per_row);
-                    $page_counter = 2; 
-
-                    // --- GENERASI TABEL 1 (HUMAN-SPECIFIC) ---
-                    echo '<h4 style="margin-top: 0; margin-bottom: 5px;">Table 1 - Human-specific contribution within total microbial community:</h4>';
-                    for ($chunk_idx = 0; $chunk_idx < $num_chunks; $chunk_idx++) {
-                        $start_col_idx = $chunk_idx * $samples_per_row;
-                        $end_col_idx = min(($chunk_idx + 1) * $samples_per_row, $num_samples);
-                        $current_sample_headers_chunk = array_slice($all_sample_headers, $start_col_idx, $samples_per_row);
-                    ?>
-                        <?php if ($chunk_idx > 0): ?>
-                        <div class="page-break"></div>
-                        <div class="box-header">
-                            <img src="../../../img/monash.png" height="50px" class="icon" style="padding: 0px; float: left;">
-                            <img src="../../../img/onewaterlogo.png" height="40px" class="icon" style="padding: 0px; float: right;">
-                        </div>
-                        <div style="position: relative; height: 8px; margin-bottom: 5px;">
-                            <img src="../../../img/bluebar.png" 
-                                style="position: absolute; top: 0; left: 0; width: 100%; height: 10%; object-fit: cover; z-index: 0;" 
-                                alt="Background" />
-                        </div>
-                        <?php endif; ?>
-                        
-                        <table class="report-table" style="margin-bottom: 8px;">
-                            <thead>
-                                <tr>
-                                    <th>Sources</th>
-                                    <?php foreach ($current_sample_headers_chunk as $sample_name): ?>
-                                    <th>Sample # <?php echo htmlspecialchars($sample_name); ?></th> 
-                                    <?php endforeach; ?>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($human_specific_all_data as $source => $values): ?>
-                                <tr>
-                                    <td><?php echo htmlspecialchars($source); ?></td>
-                                    <?php for ($col_idx = $start_col_idx; $col_idx < $end_col_idx; $col_idx++): ?>
-                                    <td><?php echo htmlspecialchars($values[$col_idx] ?? ''); ?></td>
-                                    <?php endfor; ?>
-                                </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    <?php 
-                    } // End of Human-specific chunk loop 
+                    // Use testing results with actual values from controller
+                    $response2 = isset($testing_results) ? $testing_results : array();
                     ?>
 
-                    <?php
-                    // --- GENERASI TABEL 2 (FAECAL-SPECIFIC) ---
-                    echo '<h4 style="margin-top: 5px; margin-bottom: 5px;">Table 2 - Faecal-specific contribution within total microbial community:</h4>';
-                    for ($chunk_idx = 0; $chunk_idx < $num_chunks; $chunk_idx++) {
-                        $start_col_idx = $chunk_idx * $samples_per_row;
-                        $end_col_idx = min(($chunk_idx + 1) * $samples_per_row, $num_samples);
-                        $current_sample_headers_chunk = array_slice($all_sample_headers, $start_col_idx, $samples_per_row);
-                    ?>
-                        <?php if ($chunk_idx > 0): ?>
-                        <div class="page-break"></div>
-                        <div class="box-header">
-                            <img src="../../../img/monash.png" height="50px" class="icon" style="padding: 0px; float: left;">
-                            <img src="../../../img/onewaterlogo.png" height="40px" class="icon" style="padding: 0px; float: right;">
-                        </div>
-                        <div style="position: relative; height: 8px; margin-bottom: 5px;">
-                            <img src="../../../img/bluebar.png" 
-                                style="position: absolute; top: 0; left: 0; width: 100%; height: 10%; object-fit: cover; z-index: 0;" 
-                                alt="Background" />
-                        </div>
-                        <?php endif; ?>
-
-                        <table class="report-table" style="margin-bottom: 8px;">
-                            <thead>
-                                <tr>
-                                    <th>Sources</th>
-                                    <?php foreach ($current_sample_headers_chunk as $sample_name): ?>
-                                    <th>Sample # <?php echo htmlspecialchars($sample_name); ?></th> 
-                                    <?php endforeach; ?>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($faecal_specific_all_data as $source => $values): ?>
-                                <tr>
-                                    <td><?php echo htmlspecialchars($source); ?></td>
-                                    <?php for ($col_idx = $start_col_idx; $col_idx < $end_col_idx; $col_idx++): ?>
-                                    <td><?php echo htmlspecialchars($values[$col_idx] ?? ''); ?></td>
-                                    <?php endfor; ?>
-                                </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    <?php 
-                    } // End of Faecal-specific chunk loop 
-                    ?>
-
-                    <h4 style="margin-top: 8px; margin-bottom: 5px;">Note for interpretation of microbial community contribution report(s):</h4>
-                    <ol style="margin-left: 15px; margin-bottom: 8px;">
-                        <li>Values displayed represent significant relative median microbial community contribution (relative standard deviation <100%). The results were taken as the average of five replicate SourceTracker runs.</li>
-                        <li>Values with relative standard deviation ≥100% were deemed non-significant result, and therefore omitted from the report.</li>
-                        <li>Values were rounded-off to the nearest 2 decimal places.</li>
-                        <li>Unknown represents the proportion of microbial community which do not belong to any of the sources (i.e., microbial communities not of faecal-origin, or undetected sources).</li>
-                    </ol>
-
-                    <div class="page-break"></div>
-                    <div class="box-header">
-                        <img src="../../../img/monash.png" height="50px" class="icon" style="padding: 0px; float: left;">
-                        <img src="../../../img/onewaterlogo.png" height="40px" class="icon" style="padding: 0px; float: right;">
-                    </div>
-                    <div style="position: relative; height: 8px; margin-bottom: 5px;">
-                        <img src="../../../img/bluebar.png" 
-                            style="position: absolute; top: 0; left: 0; width: 100%; height: 10%; object-fit: cover; z-index: 0;" 
-                            alt="Background" />
-                    </div>
-
-                    <?php
-                    // Dummy data for Table 3 - Faecal-source contribution
-                    $faecal_source_all_data = [
-                        'Bat' => ['2.26%', '8.87%', '', '7.61%', '1.79%', '10.21%'],
-                        'Bird' => ['8.87%', '', '', '', '3.98%', '1.72%'],
-                        'Cat' => ['3.33%', '', '', '', '5.27%', '3.81%'],
-                        'Chicken' => ['4.06%', '7.66%', '', '6.79%', '4.25%', '0.31%'],
-                        'Cow' => ['9.01%', '3.22%', '', '7.16%', '2.79%', '2.48%'],
-                        'Deer' => ['3.30%', '7.50%', '', '1.86%', '13.31%', ''],
-                        'Dog' => ['', '', '', '', '', '0.64%'],
-                        'Fox' => ['5.76%', '13.73%', '12.33%', '10.89%', '10.52%', '0.84%'],
-                        'Horse' => ['8.28%', '14.32%', '25.31%', '16.60%', '7.74%', '2.48%'],
-                        'Human' => ['10.39%', '7.88%', '9.65%', '8.26%', '13.02%', '1.47%'],
-                        'Kangaroo' => ['7.36%', '5.44%', '', '3.85%', '3.51%', '2.92%'],
-                        'Possum' => ['1.65%', '5.00%', '', '', '', ''],
-                        'Rabbit' => ['36.93%', '28.67%', '34.80%', '29.11%', '30.51%', '5.87%'],
-                        'Rat' => ['0.02%', '', '', '', '', ''],
-                        'Sheep' => ['', '', '', '', '', ''],
-                        'Wallaby' => ['', '', '', '', '', ''],
-                        'Waterbird' => ['', '', '', '', '', ''],
-                        'Wombat' => ['', '', '', '', '', ''],
-                    ];
-                    ?>
-
-                    <h4 style="margin-top: 5px; margin-bottom: 5px;">Table 3 - Faecal-source contribution within faecal component of microbial community:</h4>
-                    <?php for ($chunk_idx = 0; $chunk_idx < $num_chunks; $chunk_idx++): ?>
+                    <div class="analysis-table-container" style="width: 100%; margin-bottom: 8px; overflow-x: auto;">
                         <?php
-                        $start_col_idx = $chunk_idx * $samples_per_row;
-                        $end_col_idx = min(($chunk_idx + 1) * $samples_per_row, $num_samples);
-                        $current_sample_headers_chunk = array_slice($all_sample_headers, $start_col_idx, $samples_per_row);
-                        ?>
-                        <?php if ($chunk_idx > 0): ?>
-                        <div class="page-break"></div>
-                        <div class="box-header">
-                            <img src="../../../img/monash.png" height="50px" class="icon" style="padding: 0px; float: left;">
-                            <img src="../../../img/onewaterlogo.png" height="40px" class="icon" style="padding: 0px; float: right;">
-                        </div>
-                        <div style="position: relative; height: 8px; margin-bottom: 5px;">
-                            <img src="../../../img/bluebar.png" 
-                                style="position: absolute; top: 0; left: 0; width: 100%; height: 10%; object-fit: cover; z-index: 0;" 
-                                alt="Background" />
-                        </div>
-                        <?php endif; ?>
+                        // Group data by sample and create horizontal table
+                        $samples = [];
+                        $all_testing_types = [];
                         
-                        <table class="report-table" style="margin-bottom: 8px;">
+                        // Collect all unique testing types and organize data by sample
+                        foreach ($response2 as $row2) {
+                            $sample_id = $row2->id_one_water_sample;
+                            $testing_type = $row2->testing_type;
+                            
+                            // Store all unique testing types
+                            if (!in_array($testing_type, $all_testing_types)) {
+                                $all_testing_types[] = $testing_type;
+                            }
+                            
+                            // Group by sample
+                            if (!isset($samples[$sample_id])) {
+                                $samples[$sample_id] = [];
+                            }
+                            
+                            $samples[$sample_id][$testing_type] = [
+                                'value' => (!empty($row2->testvalue) && $row2->testvalue !== null) ? $row2->testvalue : '-',
+                                'units' => (!empty($row2->units) && $row2->units !== null) ? $row2->units : '-'
+                            ];
+                        }
+                        
+                        // Sort testing types alphabetically
+                        sort($all_testing_types);
+                        ?>
+                        
+                        <table id="analysis-results-table" width="100%" style="border:1px solid #3c8dbc; border-collapse: collapse;">
                             <thead>
                                 <tr>
-                                    <th rowspan="2">Sources</th> <th colspan="<?php echo count($current_sample_headers_chunk); ?>">Sample #</th> </tr>
-                                <tr>
-                                    <?php foreach ($current_sample_headers_chunk as $sample_name): ?>
-                                    <th><?php echo htmlspecialchars($sample_name); ?></th> <?php endforeach; ?>
+                                    <th style="border:1px solid #3c8dbc; padding: 8px; background-color: #f2f2f2; font-weight: bold; text-align: center; min-width: 100px;"></th>
+                                    <?php foreach ($all_testing_types as $testing_type): ?>
+                                        <th style="border:1px solid #3c8dbc; padding: 0.5px 0.3px; background-color: #f2f2f2; font-weight: bold; text-align: center; min-width: 18px; max-width: 22px; font-size: 3.5pt; line-height: 0.7; word-break: break-word; writing-mode: vertical-lr; text-orientation: mixed;">
+                                            <?php 
+                                            // Get units for this testing type
+                                            $units = '';
+                                            foreach ($response2 as $row2) {
+                                                if ($row2->testing_type == $testing_type && !empty($row2->units)) {
+                                                    $units = $row2->units;
+                                                    break;
+                                                }
+                                            }
+                                            
+                                            // Extremely compact testing type names - max 4 characters
+                                            $display_name = $testing_type;
+                                            
+                                            // Ultra aggressive shortening for maximum space efficiency
+                                            $display_name = str_replace('Biobank-In', 'BioI', $display_name);
+                                            $display_name = str_replace('Campylobacter-Hemoflow-QPCR', 'CHQ', $display_name);
+                                            $display_name = str_replace('Campylobacter-Hemoflow', 'CHF', $display_name);
+                                            $display_name = str_replace('Campylobacter-Biosolids', 'CB', $display_name);
+                                            $display_name = str_replace('Campylobacter-Liquids', 'CL', $display_name);
+                                            $display_name = str_replace('Campylobacter-MPN', 'CM', $display_name);
+                                            $display_name = str_replace('Campylobacter-P/A', 'CPA', $display_name);
+                                            $display_name = str_replace('Campylobacter-QPCR', 'CQ', $display_name);
+                                            $display_name = str_replace('Colilert-Hemoflow', 'CoH', $display_name);
+                                            $display_name = str_replace('Colilert-Idexx-Biosolids', 'CoB', $display_name);
+                                            $display_name = str_replace('Colilert-Idexx-Water', 'CoW', $display_name);
+                                            $display_name = str_replace('Enterolert-Hemoflow', 'EH', $display_name);
+                                            $display_name = str_replace('Enterolert-Idexx-Biosolids', 'EB', $display_name);
+                                            $display_name = str_replace('Enterolert-Idexx-Water', 'EW', $display_name);
+                                            $display_name = str_replace('Extraction-Biosolid', 'ExB', $display_name);
+                                            $display_name = str_replace('Extraction-Culture-Plate', 'ExC', $display_name);
+                                            $display_name = str_replace('Extraction-Liquid', 'ExL', $display_name);
+                                            $display_name = str_replace('Extraction-Metagenome', 'ExM', $display_name);
+                                            $display_name = str_replace('Hemoflow', 'HF', $display_name);
+                                            $display_name = str_replace('Microbial-Source-Tracking', 'MST', $display_name);
+                                            $display_name = str_replace('Moisture_content', 'Mst', $display_name);
+                                            $display_name = str_replace('Salmonella-Biosolids', 'SB', $display_name);
+                                            $display_name = str_replace('Salmonella-Hemoflow', 'SHF', $display_name);
+                                            $display_name = str_replace('Salmonella-Liquids', 'SL', $display_name);
+                                            $display_name = str_replace('Salmonella-P/A', 'SPA', $display_name);
+                                            $display_name = str_replace('Sequencing', 'Seq', $display_name);
+                                            $display_name = str_replace('Protozoa', 'Ptz', $display_name);
+                                            
+                                            // Micro compact units - only essential info
+                                            $short_units = '';
+                                            if ($units && $units !== '-') {
+                                                // Extreme abbreviations
+                                                $short_units = str_replace('MPN/100 mL', 'M/100', $units);
+                                                $short_units = str_replace('MPN/g dw', 'M/g', $short_units);
+                                                $short_units = str_replace('copies/L', 'c/L', $short_units);
+                                                $short_units = str_replace('copies/g dw', 'c/g', $short_units);
+                                                $short_units = str_replace('CFU/100 mL', 'C/100', $short_units);
+                                                $short_units = str_replace('% moisture', '%', $short_units);
+                                                $short_units = str_replace('Positive/Negative', 'P/N', $short_units);
+                                                $short_units = str_replace('Detected/Not Detected', 'D/N', $short_units);
+                                                // Max 4 characters for units
+                                                if (strlen($short_units) > 4) {
+                                                    $short_units = substr($short_units, 0, 4);
+                                                }
+                                            }
+                                            
+                                            // Show only testing name, units in parentheses if space allows
+                                            echo $display_name . ($short_units && strlen($short_units) <= 4 ? '(' . $short_units . ')' : '');
+                                            ?>
+                                        </th>
+                                    <?php endforeach; ?>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($faecal_source_all_data as $source => $values): ?>
+                                <?php foreach ($samples as $sample_id => $sample_data): ?>
                                 <tr>
-                                    <td><?php echo htmlspecialchars($source); ?></td>
-                                    <?php 
-                                    for ($col_idx = $start_col_idx; $col_idx < $end_col_idx; $col_idx++): 
-                                        $current_sample_data_idx = $col_idx - $start_col_idx; 
-                                    ?>
-                                    <td><?php echo htmlspecialchars($values[$current_sample_data_idx] ?? ''); ?></td>
-                                    <?php endfor; ?>
+                                    <td style="border:1px solid #3c8dbc; padding: 3px 2px; font-weight: bold; text-align: left; font-size: 6pt; max-width: 70px; word-break: break-word;"><?php echo $sample_id; ?></td>
+                                    <?php foreach ($all_testing_types as $testing_type): ?>
+                                        <td style="border:1px solid #3c8dbc; padding: 2px 1px; text-align: center; font-size: 6pt; max-width: 50px; word-break: break-word;">
+                                            <?php 
+                                            if (isset($sample_data[$testing_type])) {
+                                                $value = $sample_data[$testing_type]['value'];
+                                                
+                                                // Special formatting untuk Protozoa data
+                                                if ($testing_type === 'Protozoa' && $value !== '-') {
+                                                    // Format original: Giardia/L: <0.03 | Crypto/L: - | Giardia/g: 4 | Crypto/g: -
+                                                    // Format baru: G/L:<0.03 C/L:- G/g:4 C/g:-
+                                                    $compact_value = $value;
+                                                    $compact_value = str_replace('Giardia/', 'G/', $compact_value);
+                                                    $compact_value = str_replace('Crypto/', 'C/', $compact_value);
+                                                    $compact_value = str_replace(': ', ':', $compact_value);
+                                                    $compact_value = str_replace(' | ', ' ', $compact_value);
+                                                    $compact_value = str_replace('|', '', $compact_value);
+                                                    echo $compact_value;
+                                                } else {
+                                                    echo $value;
+                                                }
+                                            } else {
+                                                echo '-';
+                                            }
+                                            ?>
+                                        </td>
+                                    <?php endforeach; ?>
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
-                    <?php endfor; // End of Faecal-source chunk loop ?>
-
-                    <h4 style="margin-top: 8px; margin-bottom: 5px;">Note for faecal community contribution report(s):</h4>
-                    <ol style="margin-left: 15px; margin-bottom: 5px;">
-                        <li>Values displayed represent significant relative median faecal community contribution (relative standard deviation <100%). The results were taken as the average of five replicate SourceTracker runs.</li>
-                        <li>Values with relative standard deviation ≥100% were deemed non-significant result, and therefore omitted from the report.</li>
-                        <li>Values were rounded-off to the nearest 2 decimal places.</li>
-                        <li>Faecal community contribution represents normalised microbial community contribution from faecal-origin sources. The faecal community contribution from each sources was calculated by taking the median microbial community contribution of the source of interest, divided by the sum of all the microbial community contributions, excluding the microbial community contribution from unknown sources. An example of this has been illustrated below, using sample P2500148 as an example:</li>
-                    </ol>
                     </div>
+                </div>
             </div>
         </section>
     </div>

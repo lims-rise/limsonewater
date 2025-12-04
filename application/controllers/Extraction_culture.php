@@ -256,7 +256,7 @@ class Extraction_culture extends CI_Controller
     
         $sequence = $this->input->post('sequence', TRUE);
         $sequence_id = $this->input->post('sequence_id', TRUE);
-        $species_id = $this->input->post('species_id', TRUE);
+        // $species_id = $this->input->post('species_id', TRUE);
         $other_kit = $this->input->post('other_kit', TRUE);
     
         // Handle custom sequence type input
@@ -286,7 +286,7 @@ class Extraction_culture extends CI_Controller
                 'review' => $review,
                 'user_review' => $user_review,
                 'sequence' => $sequence,
-                'species_id' => $species_id,
+                // 'species_id' => $species_id,
                 'other_kit' => $other_kit,
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),

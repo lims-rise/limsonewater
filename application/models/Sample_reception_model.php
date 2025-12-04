@@ -455,7 +455,75 @@ class Sample_reception_model extends CI_Model
             COALESCE(bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review, ec.user_review, el.user_review, em.user_review, cb.user_review, mc.user_review, ewi.user_review, ebi.user_review, cbi.user_review, cwi.user_review, pr.user_review, cp.user_review, sp.user_review, hem.user_review, ehf.user_review, chf.user_review, ch.user_review, ex.user_review, sh.user_review, chq.user_review) AS user_review, 
             COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review) AS review,
             tbl_user.full_name, 
-            testing.flag
+            testing.flag,
+            CASE 
+                WHEN retest.testing_type = 'Campylobacter-Biosolids' THEN crm.mpn_concentration_dw
+                WHEN retest.testing_type = 'Campylobacter-Liquids' THEN crml.mpn_concentration_dw
+                WHEN retest.testing_type = 'Campylobacter-P/A' THEN crbp.confirmation
+                WHEN retest.testing_type = 'Colilert-Idexx-Water' THEN cwo.ecoli
+                WHEN retest.testing_type = 'Colilert-Idexx-Biosolids' THEN cbo.ecoli_dryweight
+                WHEN retest.testing_type = 'Enterolert-Idexx-Water' THEN ewo.enterococcus
+                WHEN retest.testing_type = 'Enterolert-Idexx-Biosolids' THEN ebo.ecoli_dryweight
+                WHEN retest.testing_type = 'Salmonella-Biosolids' THEN srmb.mpn_concentration_dw
+                WHEN retest.testing_type = 'Salmonella-Liquids' THEN srml.mpn_concentration
+                WHEN retest.testing_type = 'Salmonella-P/A' THEN srbp.confirmation
+                WHEN retest.testing_type = 'Campy-Hemoflow' THEN 
+                    CASE 
+                        WHEN crmh.mpn_concentration IS NOT NULL AND hem.volume_eluted IS NOT NULL AND hem.volume_filter IS NOT NULL AND hem.volume_filter > 0 THEN
+                            CASE 
+                                WHEN crmh.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND(((CAST(SUBSTRING(crmh.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hem.volume_eluted / hem.volume_filter), 2))
+                                WHEN crmh.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND(((CAST(SUBSTRING(crmh.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hem.volume_eluted / hem.volume_filter), 2))
+                                ELSE ROUND(((CAST(crmh.mpn_concentration AS DECIMAL(10,2)) / 1000) * hem.volume_eluted / hem.volume_filter), 2)
+                            END
+                        ELSE NULL 
+                    END
+                WHEN retest.testing_type = 'Campy-Hemoflow-QPCR' OR retest.testing_type = 'Campy-Hemoflow-qPCR' THEN 
+                    CASE 
+                        WHEN crmhq.mpn_concentration IS NOT NULL AND hem.volume_filter IS NOT NULL AND hem.volume_filter > 0 THEN
+                            CASE 
+                                WHEN crmhq.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND((CAST(SUBSTRING(crmhq.mpn_concentration, 2) AS DECIMAL(10,2)) / hem.volume_filter), 2))
+                                WHEN crmhq.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND((CAST(SUBSTRING(crmhq.mpn_concentration, 2) AS DECIMAL(10,2)) / hem.volume_filter), 2))
+                                ELSE ROUND((CAST(crmhq.mpn_concentration AS DECIMAL(10,2)) / hem.volume_filter), 2)
+                            END
+                        ELSE NULL 
+                    END
+                WHEN retest.testing_type = 'Colilert-Hemoflow' THEN 
+                    CASE 
+                        WHEN chd.ecoli IS NOT NULL AND hem.volume_eluted IS NOT NULL AND hem.volume_filter IS NOT NULL AND hem.volume_filter > 0 THEN
+                            ROUND(((chd.ecoli / 100) * hem.volume_eluted / hem.volume_filter / 10), 2)
+                        ELSE NULL 
+                    END
+                WHEN retest.testing_type = 'Enterolert-Hemoflow' THEN
+                    CASE 
+                        WHEN ehd.enterococcus IS NOT NULL AND hem.volume_eluted IS NOT NULL AND hem.volume_filter IS NOT NULL AND hem.volume_filter > 0 THEN
+                            ROUND(((ehd.enterococcus / 100) * hem.volume_eluted / hem.volume_filter / 10), 2)
+                        ELSE NULL 
+                    END
+                WHEN retest.testing_type = 'Salmonella-Hemoflow' THEN 
+                    CASE 
+                        WHEN shrm.mpn_concentration IS NOT NULL AND hem.volume_eluted IS NOT NULL AND hem.volume_filter IS NOT NULL AND hem.volume_filter > 0 THEN
+                            CASE 
+                                WHEN shrm.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND(((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hem.volume_eluted / hem.volume_filter), 2))
+                                WHEN shrm.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND(((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hem.volume_eluted / hem.volume_filter), 2))
+                                ELSE ROUND(((CAST(shrm.mpn_concentration AS DECIMAL(10,2)) / 1000) * hem.volume_eluted / hem.volume_filter), 2)
+                            END
+                        ELSE NULL 
+                    END
+                WHEN retest.testing_type = 'Homeflow' THEN hem.volume_eluted
+                WHEN retest.testing_type = 'Moisture_content' THEN m72.moisture_content_persen
+                WHEN retest.testing_type = 'Protozoa' THEN 
+                    CASE 
+                        WHEN ptz.conc_copies_per_L_giardia IS NOT NULL OR ptz.conc_copies_per_L_crypto IS NOT NULL OR ptz.conc_copies_per_g_dw_giardia IS NOT NULL OR ptz.conc_copies_per_g_dw_crypto IS NOT NULL THEN
+                            CONCAT_WS(' | ',
+                                CASE WHEN ptz.conc_copies_per_L_giardia IS NOT NULL AND ptz.conc_copies_per_L_giardia != '' THEN CONCAT('Giardia/L: ', ptz.conc_copies_per_L_giardia) ELSE 'Giardia/L: -' END,
+                                CASE WHEN ptz.conc_copies_per_L_crypto IS NOT NULL AND ptz.conc_copies_per_L_crypto != '' THEN CONCAT('Crypto/L: ', ptz.conc_copies_per_L_crypto) ELSE 'Crypto/L: -' END,
+                                CASE WHEN ptz.conc_copies_per_g_dw_giardia IS NOT NULL AND ptz.conc_copies_per_g_dw_giardia != '' THEN CONCAT('Giardia/g: ', ptz.conc_copies_per_g_dw_giardia) ELSE 'Giardia/g: -' END,
+                                CASE WHEN ptz.conc_copies_per_g_dw_crypto IS NOT NULL AND ptz.conc_copies_per_g_dw_crypto != '' THEN CONCAT('Crypto/g: ', ptz.conc_copies_per_g_dw_crypto) ELSE 'Crypto/g: -' END
+                            )
+                        ELSE NULL 
+                    END
+                ELSE NULL 
+            END AS result
         ");
         $this->datatables->from('sample_reception_testing testing');
         $this->datatables->join('ref_testing retest', 'FIND_IN_SET(retest.id_testing_type, testing.id_testing_type)', 'left');
@@ -476,13 +544,31 @@ class Sample_reception_model extends CI_Model
         $this->datatables->join('protozoa pr', 'pr.protozoa_barcode = testing.barcode and pr.flag = 0', 'left');
         $this->datatables->join('campy_pa cp', 'cp.campy_assay_barcode = testing.barcode and cp.flag = 0', 'left');
         $this->datatables->join('salmonella_pa sp', 'sp.salmonella_assay_barcode = testing.barcode and sp.flag = 0', 'left');
-        $this->datatables->join('hemoflow hem', 'hem.hemoflow_barcode = testing.barcode and hem.flag = 0', 'left');
+        $this->datatables->join('hemoflow hem', 'sample.id_one_water_sample = hem.id_one_water_sample and hem.flag = 0', 'left');
         $this->datatables->join('enterolert_hemoflow ehf', 'ehf.enterolert_hemoflow_barcode = testing.barcode and ehf.flag = 0', 'left');
         $this->datatables->join('colilert_hemoflow chf', 'chf.colilert_hemoflow_barcode = testing.barcode and chf.flag = 0', 'left');
         $this->datatables->join('campy_hemoflow ch', 'ch.campy_assay_barcode = testing.barcode and ch.flag = 0', 'left');
         $this->datatables->join('extraction_biosolid ex', 'ex.barcode_sample = testing.barcode and ex.flag = 0', 'left');
         $this->datatables->join('salmonella_hemoflow sh', 'sh.salmonella_assay_barcode = testing.barcode and sh.flag = 0', 'left');
         $this->datatables->join('campy_hemoflow_qpcr chq', 'chq.campy_assay_barcode = testing.barcode and chq.flag = 0', 'left');
+        $this->datatables->join('campy_result_mpn crm', 'cb.id_campy_biosolids = crm.id_campy_biosolids and crm.flag = 0', 'left');
+        $this->datatables->join('campy_result_mpn_liquids crml', 'campy.id_campy_liquids = crml.id_campy_liquids and crml.flag = 0', 'left');
+        $this->datatables->join('campy_result_biochemical_pa crbp', 'cp.id_campy_pa = crbp.id_campy_pa and crbp.flag = 0', 'left');
+        $this->datatables->join('colilert_water_out cwo', 'cwi.id_colilert_in = cwo.id_colilert_in and cwo.flag = 0', 'left');
+        $this->datatables->join('colilert_biosolids_out cbo', 'cbi.id_colilert_bio_in = cbo.id_colilert_bio_in and cbo.flag = 0', 'left');
+        $this->datatables->join('enterolert_water_out ewo', 'ewi.id_enterolert_in = ewo.id_enterolert_in and ewo.flag = 0', 'left');
+        $this->datatables->join('enterolert_biosolids_out ebo', 'ebi.id_enterolert_bio_in = ebo.id_enterolert_bio_in and ebo.flag = 0', 'left');
+        $this->datatables->join('salmonella_result_mpn_biosolids srmb', 'salmonellaB.id_salmonella_biosolids = srmb.id_salmonella_biosolids and srmb.flag = 0', 'left');
+        $this->datatables->join('salmonella_result_mpn_liquids srml', 'salmonellaL.id_salmonella_liquids = srml.id_salmonella_liquids and srml.flag = 0', 'left');
+        $this->datatables->join('salmonella_result_biochemical_pa srbp', 'sp.id_salmonella_pa = srbp.id_salmonella_pa and srbp.flag = 0', 'left');
+        $this->datatables->join('campy_hemoflow_result_mpn crmh', 'ch.id_campy_hemoflow = crmh.id_campy_hemoflow and crmh.flag = 0', 'left');
+        $this->datatables->join('campy_hemoflow_qpcr_result_mpn crmhq', 'chq.id_campy_hemoflow_qpcr = crmhq.id_campy_hemoflow_qpcr and crmhq.flag = 0', 'left');
+        $this->datatables->join('colilert_hemoflow_detail chd', 'chf.id_colilert_hemoflow = chd.id_colilert_hemoflow and chd.flag = 0', 'left');
+        $this->datatables->join('enterolert_hemoflow_detail ehd', 'ehf.id_enterolert_hemoflow = ehd.id_enterolert_hemoflow and ehd.flag = 0', 'left');
+        $this->datatables->join('salmonella_hemoflow_result_mpn shrm', 'sh.id_salmonella_hemoflow = shrm.id_salmonella_hemoflow and shrm.flag = 0', 'left');
+        $this->datatables->join('moisture72 m72', 'mc.id_moisture = m72.id_moisture and m72.flag = 0', 'left');
+        $this->datatables->join('protozoa ptz', 'sample.id_one_water_sample = ptz.id_one_water_sample and ptz.flag = 0', 'left');
+        // $this->datatables->join('campy_hemoflow_qpcr_result_mpn crmhq', 'chq.id_campy_hemoflow_qpcr = crmhq.id_campy_hemoflow_qpcr and crmhq.flag = 0', 'left');
         $this->datatables->join('tbl_user', 'tbl_user.id_users = COALESCE(bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review, ec.user_review, el.user_review, em.user_review, cb.user_review, mc.user_review, ewi.user_review, ebi.user_review, cbi.user_review, cwi.user_review, pr.user_review, cp.user_review, sp.user_review, hem.user_review, ehf.user_review, chf.user_review, ch.user_review, ex.user_review, sh.user_review, chq.user_review)', 'left');
         $this->datatables->where('testing.flag', '0');
         $this->datatables->where('testing.id_sample', $id);
@@ -501,6 +587,141 @@ class Sample_reception_model extends CI_Model
                
         }
         return $this->datatables->generate();
+    }
+
+    function get_testing_results_for_report($id_project) {
+        $sql = "SELECT 
+            testing.id_testing, 
+            testing.id_sample, 
+            testing.id_testing_type, 
+            sample.id_one_water_sample, 
+            testing.barcode, 
+            retest.testing_type AS testing_type, 
+            '200uL PBS/glycerol' AS method,
+            retest.testing_type AS units_type,
+            CASE 
+                WHEN retest.testing_type = 'Campylobacter-Biosolids' THEN crm.mpn_concentration_dw
+                WHEN retest.testing_type = 'Campylobacter-Liquids' THEN crml.mpn_concentration_dw
+                WHEN retest.testing_type = 'Campylobacter-P/A' THEN crbp.confirmation
+                WHEN retest.testing_type = 'Colilert-Idexx-Water' THEN cwo.ecoli
+                WHEN retest.testing_type = 'Colilert-Idexx-Biosolids' THEN cbo.ecoli_dryweight
+                WHEN retest.testing_type = 'Enterolert-Idexx-Water' THEN ewo.enterococcus
+                WHEN retest.testing_type = 'Enterolert-Idexx-Biosolids' THEN ebo.ecoli_dryweight
+                WHEN retest.testing_type = 'Salmonella-Biosolids' THEN srmb.mpn_concentration_dw
+                WHEN retest.testing_type = 'Salmonella-Liquids' THEN srml.mpn_concentration
+                WHEN retest.testing_type = 'Salmonella-P/A' THEN srbp.confirmation
+                WHEN retest.testing_type = 'Campy-Hemoflow' THEN 
+                    CASE 
+                        WHEN crmh.mpn_concentration IS NOT NULL AND hem.volume_eluted IS NOT NULL AND hem.volume_filter IS NOT NULL AND hem.volume_filter > 0 THEN
+                            CASE 
+                                WHEN crmh.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND(((CAST(SUBSTRING(crmh.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hem.volume_eluted / hem.volume_filter), 2))
+                                WHEN crmh.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND(((CAST(SUBSTRING(crmh.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hem.volume_eluted / hem.volume_filter), 2))
+                                ELSE ROUND(((CAST(crmh.mpn_concentration AS DECIMAL(10,2)) / 1000) * hem.volume_eluted / hem.volume_filter), 2)
+                            END
+                        ELSE NULL 
+                    END
+                WHEN retest.testing_type = 'Campy-Hemoflow-QPCR' OR retest.testing_type = 'Campy-Hemoflow-qPCR' THEN 
+                    CASE 
+                        WHEN crmhq.mpn_concentration IS NOT NULL AND hem.volume_filter IS NOT NULL AND hem.volume_filter > 0 THEN
+                            CASE 
+                                WHEN crmhq.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND((CAST(SUBSTRING(crmhq.mpn_concentration, 2) AS DECIMAL(10,2)) / hem.volume_filter), 2))
+                                WHEN crmhq.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND((CAST(SUBSTRING(crmhq.mpn_concentration, 2) AS DECIMAL(10,2)) / hem.volume_filter), 2))
+                                ELSE ROUND((CAST(crmhq.mpn_concentration AS DECIMAL(10,2)) / hem.volume_filter), 2)
+                            END
+                        ELSE NULL 
+                    END
+                WHEN retest.testing_type = 'Colilert-Hemoflow' THEN 
+                    CASE 
+                        WHEN chd.ecoli IS NOT NULL AND hem.volume_eluted IS NOT NULL AND hem.volume_filter IS NOT NULL AND hem.volume_filter > 0 THEN
+                            ROUND(((chd.ecoli / 100) * hem.volume_eluted / hem.volume_filter / 10), 2)
+                        ELSE NULL 
+                    END
+                WHEN retest.testing_type = 'Enterolert-Hemoflow' THEN
+                    CASE 
+                        WHEN ehd.enterococcus IS NOT NULL AND hem.volume_eluted IS NOT NULL AND hem.volume_filter IS NOT NULL AND hem.volume_filter > 0 THEN
+                            ROUND(((ehd.enterococcus / 100) * hem.volume_eluted / hem.volume_filter / 10), 2)
+                        ELSE NULL 
+                    END
+                WHEN retest.testing_type = 'Salmonella-Hemoflow' THEN 
+                    CASE 
+                        WHEN shrm.mpn_concentration IS NOT NULL AND hem.volume_eluted IS NOT NULL AND hem.volume_filter IS NOT NULL AND hem.volume_filter > 0 THEN
+                            CASE 
+                                WHEN shrm.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND(((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hem.volume_eluted / hem.volume_filter), 2))
+                                WHEN shrm.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND(((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hem.volume_eluted / hem.volume_filter), 2))
+                                ELSE ROUND(((CAST(shrm.mpn_concentration AS DECIMAL(10,2)) / 1000) * hem.volume_eluted / hem.volume_filter), 2)
+                            END
+                        ELSE NULL 
+                    END
+                WHEN retest.testing_type = 'Homeflow' THEN hem.volume_eluted
+                WHEN retest.testing_type = 'Moisture_content' THEN m72.moisture_content_persen
+                WHEN retest.testing_type = 'Protozoa' THEN 
+                    CASE 
+                        WHEN ptz.conc_copies_per_L_giardia IS NOT NULL OR ptz.conc_copies_per_L_crypto IS NOT NULL OR ptz.conc_copies_per_g_dw_giardia IS NOT NULL OR ptz.conc_copies_per_g_dw_crypto IS NOT NULL THEN
+                            CONCAT_WS(' | ',
+                                CASE WHEN ptz.conc_copies_per_L_giardia IS NOT NULL AND ptz.conc_copies_per_L_giardia != '' THEN CONCAT('Giardia/L: ', ptz.conc_copies_per_L_giardia) ELSE 'Giardia/L: -' END,
+                                CASE WHEN ptz.conc_copies_per_L_crypto IS NOT NULL AND ptz.conc_copies_per_L_crypto != '' THEN CONCAT('Crypto/L: ', ptz.conc_copies_per_L_crypto) ELSE 'Crypto/L: -' END,
+                                CASE WHEN ptz.conc_copies_per_g_dw_giardia IS NOT NULL AND ptz.conc_copies_per_g_dw_giardia != '' THEN CONCAT('Giardia/g: ', ptz.conc_copies_per_g_dw_giardia) ELSE 'Giardia/g: -' END,
+                                CASE WHEN ptz.conc_copies_per_g_dw_crypto IS NOT NULL AND ptz.conc_copies_per_g_dw_crypto != '' THEN CONCAT('Crypto/g: ', ptz.conc_copies_per_g_dw_crypto) ELSE 'Crypto/g: -' END
+                            )
+                        ELSE NULL 
+                    END
+                ELSE NULL
+            END AS testvalue
+        FROM sample_reception_testing testing
+        LEFT JOIN ref_testing retest ON FIND_IN_SET(retest.id_testing_type, testing.id_testing_type)
+        LEFT JOIN sample_reception_sample sample ON sample.id_sample = testing.id_sample AND sample.flag = 0
+        LEFT JOIN biobank_in bank ON bank.biobankin_barcode = testing.barcode AND bank.flag = 0
+        LEFT JOIN campy_liquids campy ON campy.campy_assay_barcode = testing.barcode AND campy.flag = 0
+        LEFT JOIN salmonella_liquids salmonellaL ON salmonellaL.salmonella_assay_barcode = testing.barcode AND salmonellaL.flag = 0
+        LEFT JOIN salmonella_biosolids salmonellaB ON salmonellaB.salmonella_assay_barcode = testing.barcode AND salmonellaB.flag = 0
+        LEFT JOIN extraction_culture ec ON ec.extraction_barcode = testing.barcode AND ec.flag = 0
+        LEFT JOIN extraction_liquid el ON el.extraction_barcode = testing.barcode AND el.flag = 0
+        LEFT JOIN extraction_metagenome em ON em.extraction_barcode = testing.barcode AND em.flag = 0
+        LEFT JOIN campy_biosolids cb ON cb.campy_assay_barcode = testing.barcode AND cb.flag = 0
+        LEFT JOIN moisture_content mc ON mc.barcode_moisture_content = testing.barcode AND mc.flag = 0
+        LEFT JOIN enterolert_water_in ewi ON ewi.enterolert_barcode = testing.barcode AND ewi.flag = 0
+        LEFT JOIN enterolert_biosolids_in ebi ON ebi.enterolert_barcode = testing.barcode AND ebi.flag = 0
+        LEFT JOIN colilert_biosolids_in cbi ON cbi.colilert_barcode = testing.barcode AND cbi.flag = 0
+        LEFT JOIN colilert_water_in cwi ON cwi.colilert_barcode = testing.barcode AND cwi.flag = 0
+        LEFT JOIN protozoa pr ON pr.protozoa_barcode = testing.barcode AND pr.flag = 0
+        LEFT JOIN campy_pa cp ON cp.campy_assay_barcode = testing.barcode AND cp.flag = 0
+        LEFT JOIN salmonella_pa sp ON sp.salmonella_assay_barcode = testing.barcode AND sp.flag = 0
+        LEFT JOIN hemoflow hem ON sample.id_one_water_sample = hem.id_one_water_sample AND hem.flag = 0
+        LEFT JOIN enterolert_hemoflow ehf ON ehf.enterolert_hemoflow_barcode = testing.barcode AND ehf.flag = 0
+        LEFT JOIN colilert_hemoflow chf ON chf.colilert_hemoflow_barcode = testing.barcode AND chf.flag = 0
+        LEFT JOIN campy_hemoflow ch ON ch.campy_assay_barcode = testing.barcode AND ch.flag = 0
+        LEFT JOIN extraction_biosolid ex ON ex.barcode_sample = testing.barcode AND ex.flag = 0
+        LEFT JOIN salmonella_hemoflow sh ON sh.salmonella_assay_barcode = testing.barcode AND sh.flag = 0
+        LEFT JOIN campy_hemoflow_qpcr chq ON chq.campy_assay_barcode = testing.barcode AND chq.flag = 0
+        LEFT JOIN campy_result_mpn crm ON cb.id_campy_biosolids = crm.id_campy_biosolids AND crm.flag = 0
+        LEFT JOIN campy_result_mpn_liquids crml ON campy.id_campy_liquids = crml.id_campy_liquids AND crml.flag = 0
+        LEFT JOIN campy_result_biochemical_pa crbp ON cp.id_campy_pa = crbp.id_campy_pa AND crbp.flag = 0
+        LEFT JOIN colilert_water_out cwo ON cwi.id_colilert_in = cwo.id_colilert_in AND cwo.flag = 0
+        LEFT JOIN colilert_biosolids_out cbo ON cbi.id_colilert_bio_in = cbo.id_colilert_bio_in AND cbo.flag = 0
+        LEFT JOIN enterolert_water_out ewo ON ewi.id_enterolert_in = ewo.id_enterolert_in AND ewo.flag = 0
+        LEFT JOIN enterolert_biosolids_out ebo ON ebi.id_enterolert_bio_in = ebo.id_enterolert_bio_in AND ebo.flag = 0
+        LEFT JOIN salmonella_result_mpn_biosolids srmb ON salmonellaB.id_salmonella_biosolids = srmb.id_salmonella_biosolids AND srmb.flag = 0
+        LEFT JOIN salmonella_result_mpn_liquids srml ON salmonellaL.id_salmonella_liquids = srml.id_salmonella_liquids AND srml.flag = 0
+        LEFT JOIN salmonella_result_biochemical_pa srbp ON sp.id_salmonella_pa = srbp.id_salmonella_pa AND srbp.flag = 0
+        LEFT JOIN campy_hemoflow_result_mpn crmh ON ch.id_campy_hemoflow = crmh.id_campy_hemoflow AND crmh.flag = 0
+        LEFT JOIN campy_hemoflow_qpcr_result_mpn crmhq ON chq.id_campy_hemoflow_qpcr = crmhq.id_campy_hemoflow_qpcr AND crmhq.flag = 0
+        LEFT JOIN colilert_hemoflow_detail chd ON chf.id_colilert_hemoflow = chd.id_colilert_hemoflow AND chd.flag = 0
+        LEFT JOIN enterolert_hemoflow_detail ehd ON ehf.id_enterolert_hemoflow = ehd.id_enterolert_hemoflow AND ehd.flag = 0
+        LEFT JOIN salmonella_hemoflow_result_mpn shrm ON sh.id_salmonella_hemoflow = shrm.id_salmonella_hemoflow AND shrm.flag = 0
+        LEFT JOIN moisture72 m72 ON mc.id_moisture = m72.id_moisture AND m72.flag = 0
+        LEFT JOIN protozoa ptz ON sample.id_one_water_sample = ptz.id_one_water_sample AND ptz.flag = 0
+        WHERE sample.id_project = ? AND testing.flag = 0 AND sample.flag = 0
+        ORDER BY sample.id_one_water_sample, retest.testing_type ASC, testing.id_testing";
+        
+        $query = $this->db->query($sql, array($id_project));
+        $results = $query->result();
+        
+        // Add units using the new method
+        foreach ($results as $result) {
+            $result->units = $this->getUnitsForReport($result->units_type);
+        }
+        
+        return $results;
     }
 
     // function get_rep($id)
@@ -1521,14 +1742,59 @@ class Sample_reception_model extends CI_Model
     }
     
     private function getUnits($testing_type) {
+        // Original units mapping untuk export data (untuk backward compatibility)
         $units = [
-            // 'Colilert' => 'MPN/100mL',
-            // 'Enterolert' => 'MPN/100mL',
             'Campylobacter-Biosolids' => 'MPN/g dw',
-            // 'Salmonella' => '-',
             'Moisture_content' => '%'
         ];
         
+        foreach ($units as $test => $unit) {
+            if (stripos($testing_type, $test) !== false) {
+                return $unit;
+            }
+        }
+        return '';
+    }
+    
+    private function getUnitsForReport($testing_type) {
+        // Units mapping khusus untuk report (sesuai instruksi terbaru)
+        $units = [
+            'Biobank-In' => 'Biobank In',
+            'Colilert-Idexx-Water' => 'E.coli MPN/100 mL',
+            'Enterolert-Idexx-Water' => 'Enterococci MPN/100 mL',
+            'Moisture_content' => 'Moisture Content %',
+            'Salmonella-P/A' => 'Salmonella',
+            'Protozoa' => 'Cryptosporidium qPCR copies/L, Cryptosporidium qPCR copies/g dw, Giardia qPCR copies/L, Giardia qPCR copies/g dw',
+            'Enterolert-Hemoflow' => 'Enterococci MPN/100 mL',
+            'Colilert-Hemoflow' => 'E.coli MPN/100 mL',
+            'Campy-Hemoflow' => 'Campylobacter MPN/L',
+            'Salmonella-Hemoflow' => 'Salmonella MPN/L',
+            'Campy-Hemoflow-QPCR' => 'Campylobacter MPN/L',
+            'Campy-Hemoflow-qPCR' => 'Campylobacter MPN/L',
+            'Sequencing' => 'Sequencing',
+            'Microbial-Source-Tracking' => 'Microbial Source Tracking',
+            'Homeflow' => 'Homeflow',
+            'Colilert-Idexx-Biosolids' => 'E.coli MPN/g dw',
+            'Enterolert-Idexx-Biosolids' => 'Enterococci MPN/g dw',
+            'Extraction-Metagenome' => 'Extraction Metagenome',
+            'Extraction-Culture-Plate' => 'Extraction Culture',
+            'Extraction-Liquids' => 'Extraction Liquids',
+            'Campylobacter-Biosolids' => 'Campylobacter MPN/g dw',
+            'Salmonella-Biosolids' => 'Salmonella MPN/g dw',
+            'Extraction-Biosolids' => 'Extraction Biosolids',
+            'Salmonella-Liquids' => 'Salmonella MPN/L',
+            'Campylobacter-Liquids' => 'Campylobacter MPN/L',
+            'Campylobacter-QPCR' => 'Campylobacter MPN/g dw',
+            'Campylobacter-P/A' => 'Campylobacter',
+            'Campylobacter-MPN' => 'Campylobacter MPN'
+        ];
+        
+        // Exact match first
+        if (isset($units[$testing_type])) {
+            return $units[$testing_type];
+        }
+        
+        // Partial match for backward compatibility
         foreach ($units as $test => $unit) {
             if (stripos($testing_type, $test) !== false) {
                 return $unit;
@@ -1716,6 +1982,7 @@ class Sample_reception_model extends CI_Model
             'colilert_idexx_biosolids' => 'colilert_biosolids_in',
             'enterolert_idexx_water' => 'enterolert_water_in',
             'enterolert_idexx_biosolids' => 'enterolert_biosolids_in',
+            'campy_biosolids_qpcr' => 'campy_biosolids_qpcr',
             'campy_biosolids' => 'campy_biosolids',
             'campy_liquids' => 'campy_liquids',
             'moisture_content' => 'moisture_content',
@@ -1738,7 +2005,7 @@ class Sample_reception_model extends CI_Model
             'campy_hemoflow' => 'campy_hemoflow',             // Put this AFTER campy_hemoflow_qpcr
             'hemoflow' => 'hemoflow',
             'sequencing' => 'sequencing',
-            'microbial' => 'microbial'
+            'microbial' => 'microbial',
         );
 
         // Extract table name from URL
