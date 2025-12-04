@@ -946,6 +946,253 @@
         box-shadow: none !important;
     }
 
+    /* Unlocked project styling */
+    tr.unlocked-project {
+        background-color: #f8fff8 !important;
+        border-left: 3px solid #27ae60 !important;
+    }
+    
+    tr.unlocked-project:hover {
+        background-color: #f0fff0 !important;
+    }
+    
+    /* Unlock button styling */
+    .btn_unlock {
+        transition: all 0.3s ease;
+        position: relative;
+        border-radius: 4px;
+        font-weight: 500;
+    }
+    
+    .btn_unlock:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+    
+    .btn-purple {
+        background-color: #9b59b6 !important;
+        border-color: #8e44ad !important;
+        color: white !important;
+    }
+    
+    .btn-purple:hover {
+        background-color: #8e44ad !important;
+        border-color: #7d3c98 !important;
+    }
+    
+    .btn-orange {
+        background-color: #f39c12 !important;
+        border-color: #e67e22 !important;
+        color: white !important;
+    }
+    
+    .btn-orange:hover {
+        background-color: #e67e22 !important;
+        border-color: #d35400 !important;
+    }
+    
+    /* Success toggle button for unlocked completed projects */
+    .toggle-child.btn-success {
+        position: relative;
+        background-color: #27ae60 !important;
+        border-color: #27ae60 !important;
+    }
+    
+    .toggle-child.btn-success:hover {
+        background-color: #229954 !important;
+        border-color: #229954 !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 8px rgba(39, 174, 96, 0.3) !important;
+    }
+
+    /* ===== MODERN 2025 ACTION BUTTONS ===== */
+    .modern-action-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: nowrap;
+    }
+    
+    .action-section {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+    
+    .action-section.file-actions {
+        border-right: 1px solid #E5E7EB;
+        padding-right: 8px;
+    }
+    
+    .action-section.data-actions {
+        border-right: 1px solid #E5E7EB;
+        padding-right: 8px;
+    }
+    
+    /* Base Modern Button */
+    .btn-modern {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 36px;
+        height: 36px;
+        padding: 8px;
+        border: none;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        text-decoration: none;
+    }
+    
+    .btn-modern:hover {
+        text-decoration: none;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-modern:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-modern i {
+        font-size: 14px;
+        line-height: 1;
+    }
+    
+    /* Accent Button (Primary Action - Edit) */
+    .btn-accent {
+        background-color: #3B82F6;
+        color: white;
+        box-shadow: 0 1px 3px rgba(59, 130, 246, 0.12);
+    }
+    
+    .btn-accent:hover {
+        background-color: #2563EB;
+        color: white;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+    }
+    
+    /* Soft Grey Button (File Actions - Print, Download) */
+    .btn-soft-grey {
+        background-color: #F9FAFB;
+        color: #6B7280;
+        border: 1px solid #E5E7EB;
+    }
+
+    .btn-soft-grey-dark {
+        background-color: #E5E7EB; /* abu lebih gelap dari F9FAFB */
+        color: #4B5563;           /* text abu lebih gelap */
+        border: 1px solid #D1D5DB;
+    }
+    
+    .btn-soft-grey:hover {
+        background-color: #F3F4F6;
+        color: #4B5563;
+        border-color: #D1D5DB;
+    }
+    
+    /* Danger Button (Delete) */
+    .btn-danger {
+        background-color: #EF4444;
+        color: white;
+        box-shadow: 0 1px 3px rgba(239, 68, 68, 0.12);
+    }
+    
+    .btn-danger:hover {
+        background-color: #DC2626;
+        color: white;
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+    }
+    
+    /* Icon-only Button (Lock/Unlock) */
+    .btn-icon-only {
+        background-color: transparent;
+        color: #6B7280;
+        border: 1px solid transparent;
+        min-width: 32px;
+        height: 32px;
+        border-radius: 8px;
+    }
+    
+    .btn-icon-only:hover {
+        background-color: #F3F4F6;
+        color: #374151;
+    }
+    
+    /* Dynamic Lock/Unlock States */
+    .btn-icon-only.unlocked-state {
+        background-color: #FEF3C7;
+        color: #D97706;
+        border-color: #FCD34D;
+    }
+    
+    .btn-icon-only.unlocked-state:hover {
+        background-color: #FDE68A;
+        color: #B45309;
+    }
+    
+    .btn-icon-only.locked-state {
+        background-color: #EDE9FE;
+        color: #7C3AED;
+        border-color: #C4B5FD;
+    }
+    
+    .btn-icon-only.locked-state:hover {
+        background-color: #DDD6FE;
+        color: #6D28D9;
+    }
+    
+    /* Tooltip Enhancement */
+    .btn-modern[title] {
+        position: relative;
+    }
+    
+    /* Ripple Effect (Subtle) */
+    .btn-modern::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.3s, height 0.3s;
+        pointer-events: none;
+    }
+    
+    .btn-modern:active::after {
+        width: 120%;
+        height: 120%;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .modern-action-group {
+            gap: 4px;
+        }
+        
+        .action-section {
+            gap: 2px;
+        }
+        
+        .btn-modern {
+            min-width: 32px;
+            height: 32px;
+            padding: 6px;
+        }
+        
+        .btn-modern i {
+            font-size: 12px;
+        }
+    }
+
     /* General button enhancements */
     [class*="btn-status-"] {
         position: relative;
@@ -1438,7 +1685,7 @@
 </script>
 
 <script>
-// Global function to apply styling to completed project rows
+// Global function to apply styling to completed project rows with unlock logic
 function applyCompletedProjectStyling() {
     setTimeout(function() {
         // Check if table exists
@@ -1453,26 +1700,76 @@ function applyCompletedProjectStyling() {
             if (rowData && rowData.is_completed == 1) {
                 $row.addClass('completed-project');
                 
-                // Style toggle button for non-admin users
-                if (userLevel != 1) {
-                    let $toggleBtn = $row.find('.toggle-child');
-                    $toggleBtn.removeClass('btn-primary').addClass('btn-secondary');
-                    $toggleBtn.css({
-                        'background-color': '#95a5a6',
-                        'border-color': '#95a5a6',
-                        'cursor': 'not-allowed',
-                        'opacity': '0.6'
-                    });
-                    
-                    // Add disabled attribute to prevent any click handling
-                    $toggleBtn.attr('disabled', true);
-                    $toggleBtn.addClass('disabled-completed');
+                // Check if project is unlocked by admin
+                let isUnlocked = rowData.is_unlocked == 1;
+                
+                // For admin users (level 1 & 2) - Modern unlock/lock button styling
+                if (userLevel <= 2) {
+                    let $unlockBtn = $row.find('.btn_unlock');
+                    if (isUnlocked) {
+                        // Project is unlocked - show lock button
+                        $unlockBtn.removeClass('locked-state').addClass('unlocked-state')
+                                 .find('i').removeClass('fa-unlock-alt').addClass('fa-lock');
+                        
+                        let unlockInfo = '';
+                        if (rowData.unlocked_at && rowData.unlock_reason) {
+                            let unlockDate = new Date(rowData.unlocked_at).toLocaleDateString();
+                            unlockInfo = `🔓 Currently Unlocked\nUnlocked on: ${unlockDate}\nReason: ${rowData.unlock_reason}\n\nClick to lock project`;
+                        } else {
+                            unlockInfo = '🔓 Currently unlocked - Click to lock project';
+                        }
+                        
+                        $unlockBtn.attr('title', unlockInfo);
+                    } else {
+                        // Project is locked - show unlock button
+                        $unlockBtn.removeClass('unlocked-state').addClass('locked-state')
+                                 .find('i').removeClass('fa-lock').addClass('fa-unlock-alt');
+                        $unlockBtn.attr('title', '🔒 Currently locked - Click to unlock for user access');
+                    }
                 }
                 
-                // Hide edit button for non-admin users, but keep print buttons visible
-                if (userLevel != 1) {
+                // For non-admin users (level 3 & 4)
+                if (userLevel > 2) {
+                    let $toggleBtn = $row.find('.toggle-child');
                     let $editBtn = $row.find('.btn_edit');
-                    $editBtn.hide();
+                    
+                    if (isUnlocked) {
+                        // Project is unlocked - allow access
+                        $toggleBtn.removeClass('btn-secondary disabled-completed')
+                                 .addClass('btn-success')
+                                 .removeAttr('disabled')
+                                 .css({
+                                     'background-color': '#27ae60',
+                                     'border-color': '#27ae60',
+                                     'cursor': 'pointer',
+                                     'opacity': '1'
+                                 });
+                        $toggleBtn.attr('title', 'Project unlocked by admin - access allowed');
+                        
+                        $editBtn.show(); // Show edit button when unlocked
+                        
+                        // Add modern unlocked indicator
+                        if (!$row.find('.unlock-indicator').length) {
+                            $row.addClass('unlocked-project');
+                            $toggleBtn.append('<span class="unlock-indicator modern-badge" style="position: absolute; top: -3px; right: -3px; background: #D97706; color: white; border-radius: 50%; width: 12px; height: 12px; font-size: 8px; display: flex; align-items: center; justify-content: center;"><i class="fa fa-unlock"></i></span>');
+                        }
+                    } else {
+                        // Project is locked - disable access
+                        $toggleBtn.removeClass('btn-primary btn-success')
+                                 .addClass('btn-secondary disabled-completed')
+                                 .attr('disabled', true)
+                                 .css({
+                                     'background-color': '#95a5a6',
+                                     'border-color': '#95a5a6',
+                                     'cursor': 'not-allowed',
+                                     'opacity': '0.6'
+                                 });
+                        $toggleBtn.attr('title', 'Project completed and locked');
+                        
+                        $editBtn.hide(); // Hide edit button when locked
+                        $row.removeClass('unlocked-project');
+                        $toggleBtn.find('.unlock-indicator').remove();
+                    }
                     
                     // Ensure print buttons remain visible and functional
                     let $printBtns = $row.find('a[href*="rep_print"]');
@@ -2085,13 +2382,18 @@ function applyCompletedProjectStyling() {
         });
 
         function openChildRow(tr, rowData) {
-            // Check if project is completed and user is not admin
+            // Check if project is completed and user access status
             let isCompleted = rowData ? rowData.is_completed : 0;
+            let isUnlocked = rowData ? rowData.is_unlocked : 0;
             let userLevel = <?php echo $this->session->userdata('id_user_level'); ?>;
             
-            if (isCompleted == 1 && userLevel != 1) {
-                // Don't open child row for completed projects (non-admin users)
-                return false;
+            // For non-admin users on completed projects
+            if (isCompleted == 1 && userLevel > 2) {
+                // Check if project is unlocked by admin
+                if (isUnlocked != 1) {
+                    // Don't open child row for locked completed projects (non-admin users)
+                    return false;
+                }
             }
             
             let row = $('#mytable').DataTable().row(tr);
@@ -2153,20 +2455,25 @@ function applyCompletedProjectStyling() {
             e.preventDefault();
             e.stopPropagation();
             
-            // Check if project is completed and user is not admin (backup check)
+            // Check if project is completed and user access status
             let tr = $(this).closest('tr');
             let rowData = table.row(tr).data();
             let isCompleted = rowData ? rowData.is_completed : $(this).data('completed');
+            let isUnlocked = rowData ? rowData.is_unlocked : 0;
             let userLevel = <?php echo $this->session->userdata('id_user_level'); ?>;
             
-            if (isCompleted == 1 && userLevel != 1) {
-                Swal.fire({
-                    title: 'Project Completed!',
-                    text: 'This project has been completed and cannot be modified. Only administrators can make changes to completed projects.',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                });
-                return false;
+            // For non-admin users on completed projects
+            if (isCompleted == 1 && userLevel > 2) {
+                // Check if project is unlocked by admin
+                if (isUnlocked != 1) {
+                    Swal.fire({
+                        title: 'Project Completed & Locked!',
+                        html: 'This project has been completed and is currently <strong>locked</strong>.<br><br>Only administrators can unlock completed projects for modification.',
+                        icon: 'warning',
+                        confirmButtonText: 'OK'
+                    });
+                    return false;
+                }
             }
             
             let row = $('#mytable').DataTable().row(tr);
@@ -2249,6 +2556,132 @@ function applyCompletedProjectStyling() {
                 });
             }
         }); 
+
+        // Unlock/Lock Project Handler
+        $('#mytable tbody').on('click', '.btn_unlock', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            let $btn = $(this);
+            let tr = $btn.closest('tr');
+            let rowData = table.row(tr).data();
+            let id_project = rowData.id_project;
+            let isCompleted = rowData.is_completed;
+            let isUnlocked = rowData.is_unlocked == 1;
+            
+            // Only show for completed projects
+            if (isCompleted != 1) {
+                Swal.fire({
+                    title: 'Info',
+                    text: 'This feature is only available for completed projects.',
+                    icon: 'info',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+            
+            if (isUnlocked) {
+                // Lock the project
+                Swal.fire({
+                    title: 'Lock Completed Project?',
+                    text: 'This will remove access for regular users to modify this completed project.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#f39c12',
+                    cancelButtonColor: '#95a5a6',
+                    confirmButtonText: 'Yes, Lock Project',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: 'Sample_reception/lock_project',
+                            type: 'POST',
+                            data: {
+                                id_project: id_project
+                            },
+                            dataType: 'json',
+                            success: function(response) {
+                                if (response.status === 'success') {
+                                    Swal.fire({
+                                        title: 'Success!',
+                                        text: 'Project has been locked successfully.',
+                                        icon: 'success',
+                                        timer: 2000,
+                                        showConfirmButton: false
+                                    });
+                                    table.ajax.reload(null, false); // Reload table without reset paging
+                                } else {
+                                    Swal.fire('Error!', response.message, 'error');
+                                }
+                            },
+                            error: function() {
+                                Swal.fire('Error!', 'An error occurred while locking the project.', 'error');
+                            }
+                        });
+                    }
+                });
+            } else {
+                // Unlock the project with reason
+                Swal.fire({
+                    title: 'Unlock Completed Project',
+                    html: `
+                        <div class="text-left">
+                            <p style="margin-bottom: 15px;">This will allow regular users to modify this completed project.</p>
+                            <label for="unlock-reason" style="font-weight: bold; display: block; margin-bottom: 5px;">Reason for unlocking:</label>
+                            <textarea id="unlock-reason" class="swal2-input" placeholder="Enter reason for unlocking this project..." style="height: 80px; resize: vertical;"></textarea>
+                        </div>
+                    `,
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#9b59b6',
+                    cancelButtonColor: '#95a5a6',
+                    confirmButtonText: 'Unlock Project',
+                    cancelButtonText: 'Cancel',
+                    focusConfirm: false,
+                    preConfirm: () => {
+                        const reason = Swal.getPopup().querySelector('#unlock-reason').value;
+                        if (!reason || reason.trim() === '') {
+                            Swal.showValidationMessage('Please enter a reason for unlocking');
+                            return false;
+                        }
+                        if (reason.trim().length < 0) {
+                            Swal.showValidationMessage('Reason must be at least 0 characters long');
+                            return false;
+                        }
+                        return { reason: reason.trim() };
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: 'Sample_reception/unlock_project',
+                            type: 'POST',
+                            data: {
+                                id_project: id_project,
+                                reason: result.value.reason
+                            },
+                            dataType: 'json',
+                            success: function(response) {
+                                if (response.status === 'success') {
+                                    Swal.fire({
+                                        title: 'Success!',
+                                        text: 'Project has been unlocked successfully.',
+                                        icon: 'success',
+                                        timer: 2000,
+                                        showConfirmButton: false
+                                    });
+                                    table.ajax.reload(null, false); // Reload table without reset paging
+                                } else {
+                                    Swal.fire('Error!', response.message, 'error');
+                                }
+                            },
+                            error: function() {
+                                Swal.fire('Error!', 'An error occurred while unlocking the project.', 'error');
+                            }
+                        });
+                    }
+                });
+            }
+        });
 
         $('#mytable').on('click', '.btn_edit_sample', function() {
             let id_one_water_sample = $(this).data('id');
@@ -3307,3 +3740,27 @@ $(document).ready(function() {
     }
 }
 </style>
+
+<!-- Unlock Information Modal -->
+<div class="modal fade" id="unlockInfoModal" tabindex="-1" role="dialog" aria-labelledby="unlockInfoModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="unlockInfoModalLabel">
+                    <i class="fa fa-info-circle"></i> Project Unlock Information
+                </h4>
+            </div>
+            <div class="modal-body" id="unlockInfoBody">
+                <div class="text-center py-3">
+                    <i class="fa fa-spinner fa-spin"></i> Loading unlock information...
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
