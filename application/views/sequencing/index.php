@@ -35,13 +35,39 @@
         color: white !important;
         background-color: #9CDCFE !important;
     }
+    
+    .barcode-group {
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        border-left: 4px solid #3c8dbc;
+    }
+    
+    .barcode-group hr {
+        margin-top: 0 !important;
+    }
+    
+    .barcode-group h5 {
+        font-weight: bold;
+    }
+    
+    .sequence-fields {
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 3px;
+        border: 1px solid #e0e0e0;
+        margin-top: 10px;
+    }
+    
+
 </style>
 
     <!-- MODAL SEQUENCE DATA - Opened from Sample Reception -->
     <div class="modal fade" id="sequence-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header" style="background-color: #9c27b0; color: white;">
+                <div class="modal-header" style="background-color: #3c8dbc; color: white;">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
                     <h4 class="modal-title"><i class="fa fa-dna"></i> Sequencing Module | Sequence Data Entry</h4>
                 </div>
@@ -58,43 +84,12 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="barcode_tube" class="col-sm-4 control-label">Barcode Tube <span style="color: red;">*</span></label>
-                            <div class="col-sm-8">
-                                <select id="barcode_tube" name="barcode_tube" class="form-control" required>
-                                    <option value="" disabled selected>-- Loading Barcode Tubes --</option>
-                                </select>
-                                <small class="help-block">Select which barcode tube to add sequence data to</small>
-                            </div>
+                        <!-- Dynamic Barcode Groups Container -->
+                        <div id="barcodeGroupsContainer">
+                            <!-- Groups will be auto-generated based on available barcode tubes -->
                         </div>
-
+                        
                         <div class="form-group">
-                            <label for="sequenceCheckbox" class="col-sm-4 control-label">Sequence</label>
-                            <div class="col-sm-8" style="padding-top: 7px;">
-                                <input type="hidden" id="sequenceHidden" name="sequence" value="0">
-                                <input type="checkbox" id="sequenceCheckbox" name="sequence" value="1" disabled>
-                                <span id="sequenceHelpText" style="margin-left: 10px; font-size: 12px; color: #999;">Please select a barcode tube first</span>
-                            </div>
-                        </div>
-
-                        <div id="sequenceFields" style="display: none;">
-                            <div class="form-group">
-                                <label for="sequence_id" class="col-sm-4 control-label">Sequence Type</label>
-                                <div class="col-sm-8">
-                                    <select id="sequence_id" name="sequence_id" class="form-control">
-                                        <option value="" disabled selected>-- Select Sequence Type --</option>
-                                        <!-- Sequence types will be loaded via AJAX -->
-                                    </select>
-                                    <input type="text" id="other_sequence_name" name="other_sequence_name" class="form-control" placeholder="Enter new sequence type" style="display:none; margin-top:5px;">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="species_id" class="col-sm-4 control-label">Species ID</label>
-                                <div class="col-sm-8">
-                                    <input id="species_id" name="species_id" placeholder="Enter Species ID" class="form-control">
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="modal-footer clearfix">
@@ -180,8 +175,8 @@
                 sequencing_barcode: $('#sequencing_barcode').val()
             });
             
-            // Load sequence types
-            loadSequenceTypes();
+            // Load sequence types - COMMENTED FOR FUTURE USE
+            // loadSequenceTypes();
             
             // Load barcode tubes for this sample
             loadBarcodeTubesFromSampleReception(idOneWaterSampleFromUrl);
@@ -421,13 +416,13 @@
                             '<th>Barcode Sample</th>' +
                             '<th>Barcode Tube</th>' +
                             '<th>Sequence</th>' +
-                            '<th>Sequence Type</th>' +
+                            // '<th>Sequence Type</th>' +
                             '<th>Species ID</th>' +
                             '<th>Comments</th>' +
                         '</tr>' +
                     '</thead>' +
                     '<tbody>' +
-                        '<tr><td colspan="6" class="text-center">Loading...</td></tr>' +
+                        '<tr><td colspan="5" class="text-center">Loading...</td></tr>' +
                     '</tbody>' +
                 '</table>');
                 
@@ -453,18 +448,19 @@
                             },
                             "className": "text-center"
                         },
-                        {
-                            "data": null,
-                            "render": function(data, type, row) {
-                                if (row.sequence_type) {
-                                    return row.sequence_type;
-                                } else if (row.custom_sequence_type) {
-                                    return row.custom_sequence_type + ' (Custom)';
-                                } else {
-                                    return '-';
-                                }
-                            }
-                        },
+                        // SEQUENCE TYPE COLUMN - COMMENTED FOR FUTURE USE
+                        // {
+                        //     "data": null,
+                        //     "render": function(data, type, row) {
+                        //         if (row.sequence_type) {
+                        //             return row.sequence_type;
+                        //         } else if (row.custom_sequence_type) {
+                        //             return row.custom_sequence_type + ' (Custom)';
+                        //         } else {
+                        //             return '-';
+                        //         }
+                        //     }
+                        // },
                         {"data": "species_id", "defaultContent": "-"},
                         {"data": "comments", "defaultContent": "-"}
                     ],
@@ -521,29 +517,46 @@
 
         // ============ SEQUENCE MODAL FUNCTIONS ============
         
-        // Function to load sequence types
-        function loadSequenceTypes() {
-            $.ajax({
-                url: '<?php echo site_url('Sequencing/get_sequence_types'); ?>',
-                type: 'POST',
-                dataType: 'json',
-                success: function(response) {
-                    $('#sequence_id').html('<option value="" disabled selected>-- Select Sequence Type --</option>');
-                    
-                    if (response.status === 'success' && response.data && response.data.length > 0) {
-                        $.each(response.data, function(index, item) {
-                            $('#sequence_id').append(`<option value="${item.sequence_id}">${item.sequence_type}</option>`);
-                        });
-                        $('#sequence_id').append('<option value="other">Other</option>');
-                    }
-                },
-                error: function() {
-                    $('#sequence_id').html('<option value="" disabled>Error loading sequence types</option>');
-                }
-            });
-        }
+        let barcodeGroupCounter = 0;
+        let sequenceTypesData = [];
         
-        // Function to load barcode tubes from Sample Reception
+        // Function to load sequence types - COMMENTED FOR FUTURE USE
+        // function loadSequenceTypes() {
+        //     $.ajax({
+        //         url: '<?php echo site_url('Sequencing/get_sequence_types'); ?>',
+        //         type: 'POST',
+        //         dataType: 'json',
+        //         success: function(response) {
+        //             if (response.status === 'success' && response.data && response.data.length > 0) {
+        //                 sequenceTypesData = response.data;
+        //                 // Update all existing sequence type selects
+        //                 updateAllSequenceTypeSelects();
+        //             }
+        //         },
+        //         error: function() {
+        //             console.error('Error loading sequence types');
+        //         }
+        //     });
+        // }
+        
+        // Function to update all sequence type selects - COMMENTED FOR FUTURE USE
+        // function updateAllSequenceTypeSelects() {
+        //     $('.sequence-type-select').each(function() {
+        //         let currentVal = $(this).val();
+        //         $(this).html('<option value="" disabled selected>-- Select Sequence Type --</option>');
+        //         
+        //         $.each(sequenceTypesData, function(index, item) {
+        //             $(this).append(`<option value="${item.sequence_id}">${item.sequence_type}</option>`);
+        //         }.bind(this));
+        //         $(this).append('<option value="other">Other</option>');
+        //         
+        //         if (currentVal) {
+        //             $(this).val(currentVal);
+        //         }
+        //     });
+        // }
+        
+        // Function to load barcode tubes data and auto-generate groups
         function loadBarcodeTubesFromSampleReception(idOneWaterSample) {
             $.ajax({
                 url: '<?php echo site_url('Sequencing/get_barcode_tubes_for_sequence'); ?>',
@@ -551,118 +564,150 @@
                 data: { id_one_water_sample: idOneWaterSample },
                 dataType: 'json',
                 success: function(response) {
-                    $('#barcode_tube').html('<option value="" disabled selected>-- Select Barcode Tube --</option>');
-                    
                     if (response.status === 'success' && response.data && response.data.length > 0) {
                         // Store tube-to-sample mapping
                         window.barcodeTubeMapping = {};
+                        window.availableBarcodes = [];
                         
                         $.each(response.data, function(index, item) {
                             window.barcodeTubeMapping[item.barcode_tube] = {
                                 barcode_sample: item.barcode_sample,
                                 sequence: item.sequence,
-                                sequence_id: item.sequence_id,
-                                sequence_type: item.sequence_type,
-                                custom_sequence_type: item.custom_sequence_type,
+                                // sequence_id: item.sequence_id, // COMMENTED FOR FUTURE USE
+                                // sequence_type: item.sequence_type, // COMMENTED FOR FUTURE USE
+                                // custom_sequence_type: item.custom_sequence_type, // COMMENTED FOR FUTURE USE
                                 species_id: item.species_id
                             };
-                            
-                            let optionText = item.barcode_tube + ' (' + item.sequence_status + ')';
-                            $('#barcode_tube').append(`<option value="${item.barcode_tube}">${optionText}</option>`);
+                            window.availableBarcodes.push(item.barcode_tube);
                         });
+                        
+                        // Auto-generate groups based on available barcode tubes
+                        generateBarcodeGroups();
                     } else {
-                        $('#barcode_tube').append('<option value="" disabled>No barcode tubes found for this sample</option>');
+                        // Show error message
+                        $('#barcodeGroupsContainer').html('<div class="alert alert-warning">No barcode tubes found for this sample</div>');
                     }
                 },
                 error: function() {
-                    $('#barcode_tube').html('<option value="" disabled>Error loading barcode tubes</option>');
+                    $('#barcodeGroupsContainer').html('<div class="alert alert-danger">Error loading barcode tubes</div>');
                 }
             });
         }
         
-        // Handle barcode tube selection - enable sequence checkbox and load existing data
-        $('#barcode_tube').change(function() {
-            let selectedBarcodeTube = $(this).val();
+        // Function to auto-generate barcode groups based on available tubes
+        function generateBarcodeGroups() {
+            $('#barcodeGroupsContainer').empty();
+            barcodeGroupCounter = 0;
             
-            if (selectedBarcodeTube) {
-                // Enable sequence checkbox
-                $('#sequenceCheckbox').prop('disabled', false);
-                $('#sequenceHelpText').text('Check to show sequence fields').css('color', '#666');
+            if (!window.availableBarcodes || window.availableBarcodes.length === 0) {
+                $('#barcodeGroupsContainer').html('<div class="alert alert-warning">No barcode tubes available</div>');
+                return;
+            }
+            
+            // Create a group for each available barcode tube
+            $.each(window.availableBarcodes, function(index, barcodeTube) {
+                barcodeGroupCounter++;
+                let data = window.barcodeTubeMapping[barcodeTube];
                 
-                // Load existing data from mapping
-                if (window.barcodeTubeMapping && window.barcodeTubeMapping[selectedBarcodeTube]) {
-                    let data = window.barcodeTubeMapping[selectedBarcodeTube];
-                    
-                    // Pre-populate form with existing data
-                    let isSequenceEnabled = (data.sequence == '1');
-                    $('#sequenceCheckbox').prop('checked', isSequenceEnabled);
-                    
-                    // Set hidden field state
-                    if (isSequenceEnabled) {
-                        $('#sequenceHidden').prop('disabled', true);
-                        $('#sequenceFields').show();
-                    } else {
-                        $('#sequenceHidden').prop('disabled', false);
-                        $('#sequenceFields').hide();
-                    }
-                    
-                    // Populate fields if sequence is enabled
-                    if (data.sequence_id) {
-                        $('#sequence_id').val(data.sequence_id);
-                    }
-                    if (data.species_id) {
-                        $('#species_id').val(data.species_id);
-                    }
-                    if (data.custom_sequence_type) {
-                        $('#sequence_id').val('other').trigger('change');
-                        $('#other_sequence_name').val(data.custom_sequence_type);
-                    }
-                } else {
-                    // Reset form
-                    $('#sequenceCheckbox').prop('checked', false).trigger('change');
-                }
-            } else {
-                // Disable sequence checkbox
-                $('#sequenceCheckbox').prop('disabled', true).prop('checked', false);
-                $('#sequenceFields').hide();
-                $('#sequenceHidden').prop('disabled', false);
-                $('#sequenceHelpText').text('Please select a barcode tube first').css('color', '#999');
-            }
-        });
+                let groupHtml = `
+                    <div class="barcode-group" data-group-id="${barcodeGroupCounter}" data-barcode="${barcodeTube}">
+                        <div class="form-group">
+                            <label for="barcode_tube_${barcodeGroupCounter}" class="col-sm-4 control-label">Barcode Tube <span style="color: red;">*</span></label>
+                            <div class="col-sm-8">
+                                <input type="text" id="barcode_tube_${barcodeGroupCounter}" name="barcode_tube[]" class="form-control barcode-tube-input" 
+                                       value="${barcodeTube}" readonly data-group-id="${barcodeGroupCounter}">
+                                <small class="help-block">Pre-filled with available barcode tube</small>
+                            </div>
+                        </div>
 
-        // Handle sequence checkbox toggle
-        $('#sequenceCheckbox').change(function() {
+                        <div class="form-group">
+                            <label for="sequenceCheckbox_${barcodeGroupCounter}" class="col-sm-4 control-label">Sequence</label>
+                            <div class="col-sm-8" style="padding-top: 7px;">
+                                <input type="hidden" name="sequence_hidden[]" value="0" class="sequence-hidden-input" data-group-id="${barcodeGroupCounter}">
+                                <input type="checkbox" id="sequenceCheckbox_${barcodeGroupCounter}" name="sequence[]" value="1" 
+                                       class="sequence-checkbox" data-group-id="${barcodeGroupCounter}" ${data.sequence == '1' ? 'checked' : ''}>
+                                <span style="margin-left: 10px; font-size: 12px; color: #666;">Check to enable sequence fields</span>
+                            </div>
+                        </div>
+
+                        <div class="sequence-fields" data-group-id="${barcodeGroupCounter}" style="${data.sequence == '1' ? 'display: block;' : 'display: none;'}">
+                            <!-- SEQUENCE TYPE FORM FIELD REMOVED FOR CLEAN UI - CODE SAVED IN COMMENT FOR FUTURE USE -->
+
+                            <div class="form-group">
+                                <label for="species_id_${barcodeGroupCounter}" class="col-sm-4 control-label">Species ID</label>
+                                <div class="col-sm-8">
+                                    <input id="species_id_${barcodeGroupCounter}" name="species_id[]" placeholder="Enter Species ID" 
+                                           class="form-control species-id-input" data-group-id="${barcodeGroupCounter}" 
+                                           value="${data.species_id || ''}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                $('#barcodeGroupsContainer').append(groupHtml);
+            });
+            
+            // Update all sequence type selects and pre-populate data - COMMENTED FOR FUTURE USE
+            // updateAllSequenceTypeSelects();
+            
+            // Pre-populate existing sequence types - COMMENTED FOR FUTURE USE
+            // setTimeout(function() {
+            //     $.each(window.availableBarcodes, function(index, barcodeTube) {
+            //         let groupId = index + 1;
+            //         let data = window.barcodeTubeMapping[barcodeTube];
+            //         
+            //         if (data.sequence_id) {
+            //             $(`#sequence_id_${groupId}`).val(data.sequence_id);
+            //         } else if (data.custom_sequence_type) {
+            //             $(`#sequence_id_${groupId}`).val('other').trigger('change');
+            //         }
+            //     });
+            // }, 100);
+        }
+        
+
+        
+        // Event handlers for dynamic groups
+        $(document).on('change', '.sequence-checkbox', function() {
+            let groupId = $(this).data('group-id');
+            let sequenceFields = $(`.sequence-fields[data-group-id="${groupId}"]`);
+            let hiddenInput = $(`.sequence-hidden-input[data-group-id="${groupId}"]`);
+            
             if ($(this).is(':checked')) {
-                $('#sequenceFields').show();
-                $('#sequenceHidden').prop('disabled', true);
-                $('#sequenceHidden').val('1');
+                sequenceFields.show();
+                hiddenInput.prop('disabled', true);
             } else {
-                $('#sequenceFields').hide();
-                $('#sequenceHidden').prop('disabled', false);
-                $('#sequenceHidden').val('0');
+                sequenceFields.hide();
+                hiddenInput.prop('disabled', false);
                 // Clear fields when unchecked
-                $('#species_id').val('');
-                $('#sequence_id').val('').trigger('change');
-                $('#other_sequence_name').hide().val('');
+                $(`.species-id-input[data-group-id="${groupId}"]`).val('');
+                // $(`.sequence-type-select[data-group-id="${groupId}"]`).val('').trigger('change'); // COMMENTED FOR FUTURE USE
+                // $(`.other-sequence-input[data-group-id="${groupId}"]`).hide().val(''); // COMMENTED FOR FUTURE USE
             }
         });
+        
+        // SEQUENCE TYPE SELECT CHANGE EVENT - COMMENTED FOR FUTURE USE
+        // $(document).on('change', '.sequence-type-select', function() {
+        //     let groupId = $(this).data('group-id');
+        //     let otherInput = $(`.other-sequence-input[data-group-id="${groupId}"]`);
+        //     
+        //     if ($(this).val() === 'other') {
+        //         otherInput.show().prop('required', true);
+        //     } else {
+        //         otherInput.hide().prop('required', false).val('');
+        //     }
+        // });
+        
+        // Note: Auto-population is now handled during group generation
+        // No manual barcode input blur handler needed since barcodes are pre-filled
 
-        // Handle sequence type dropdown change
-        $('#sequence_id').change(function() {
-            if ($(this).val() === 'other') {
-                $('#other_sequence_name').show().prop('required', true);
-            } else {
-                $('#other_sequence_name').hide().prop('required', false).val('');
-            }
-        });
-
-        // Handle sequence form submission
+        // Handle sequence form submission for multiple barcode tubes
         $('#sequenceForm').on('submit', function(e) {
             e.preventDefault();
             
-            // Validate required fields
-            let selectedBarcodeTube = $('#barcode_tube').val();
             let sampleId = $('#seq_id_one_water_sample').val();
+            let sequencingBarcode = $('#sequencing_barcode').val();
             
             if (!sampleId) {
                 Swal.fire({
@@ -674,49 +719,54 @@
                 return false;
             }
             
-            if (!selectedBarcodeTube) {
+            // Collect data from all barcode groups
+            let barcodeGroups = [];
+            let hasValidData = false;
+            
+            $('.barcode-group').each(function() {
+                let groupId = $(this).data('group-id');
+                let barcodeTube = $(`.barcode-tube-input[data-group-id="${groupId}"]`).val().trim();
+                
+                if (barcodeTube) {
+                    hasValidData = true;
+                    
+                    // Get corresponding barcode_sample from mapping
+                    let correspondingBarcodeSample = '';
+                    if (window.barcodeTubeMapping && window.barcodeTubeMapping[barcodeTube]) {
+                        correspondingBarcodeSample = window.barcodeTubeMapping[barcodeTube].barcode_sample;
+                    }
+                    
+                    // Get sequence value - check if checkbox is checked
+                    let isSequenceChecked = $(`.sequence-checkbox[data-group-id="${groupId}"]`).is(':checked');
+                    let sequence = isSequenceChecked ? '1' : '0';
+                    
+                    let groupData = {
+                        barcode_tube: barcodeTube,
+                        barcode_sample: correspondingBarcodeSample,
+                        sequence: sequence,
+                        // sequence_id: $(`.sequence-type-select[data-group-id="${groupId}"]`).val() || '', // COMMENTED FOR FUTURE USE
+                        // other_sequence_name: $(`.other-sequence-input[data-group-id="${groupId}"]`).val() || '', // COMMENTED FOR FUTURE USE
+                        species_id: $(`.species-id-input[data-group-id="${groupId}"]`).val() || ''
+                    };
+                    
+                    barcodeGroups.push(groupData);
+                }
+            });
+            
+            if (!hasValidData) {
                 Swal.fire({
                     icon: 'warning',
                     title: 'Validation Error',
-                    text: 'Please select a barcode tube.',
+                    text: 'Please enter at least one barcode tube.',
                     confirmButtonColor: '#f39c12'
                 });
                 return false;
             }
 
-            // Get corresponding barcode_sample from mapping
-            let correspondingBarcodeSample = '';
-            if (window.barcodeTubeMapping && window.barcodeTubeMapping[selectedBarcodeTube]) {
-                correspondingBarcodeSample = window.barcodeTubeMapping[selectedBarcodeTube].barcode_sample;
-            }
-            
-            let formData = {
-                id_one_water_sample: sampleId,
-                sequencing_barcode: $('#sequencing_barcode').val(),
-                barcode_tube: selectedBarcodeTube,
-                barcode_sample: correspondingBarcodeSample,
-                sequence_id: $('#sequence_id').val(),
-                other_sequence_name: $('#other_sequence_name').val(),
-                species_id: $('#species_id').val()
-            };
-
-            // Get sequence value from form
-            let formElement = document.getElementById('sequenceForm');
-            let formDataObj = new FormData(formElement);
-            formData.sequence = formDataObj.get('sequence');
-
-            // Debug log untuk memastikan sequencing_barcode terkirim
-            console.log('Data yang akan dikirim ke server:', {
-                id_one_water_sample: formData.id_one_water_sample,
-                sequencing_barcode: formData.sequencing_barcode,
-                barcode_tube: formData.barcode_tube,
-                barcode_sample: formData.barcode_sample
-            });
-
             // Show loading
             Swal.fire({
                 title: 'Saving Sequence Data...',
-                html: 'Please wait while we save the sequence information.',
+                html: `Please wait while we save ${barcodeGroups.length} barcode tube(s).`,
                 allowOutsideClick: false,
                 showConfirmButton: false,
                 willOpen: () => {
@@ -724,63 +774,100 @@
                 }
             });
 
-            $.ajax({
-                url: '<?php echo site_url('Sequencing/save_sequence_data'); ?>',
-                type: 'POST',
-                data: formData,
-                dataType: 'json',
-                success: function(response) {
+            // Process each barcode tube sequentially
+            let processedCount = 0;
+            let errors = [];
+            
+            function processBarcodeGroup(index) {
+                if (index >= barcodeGroups.length) {
+                    // All done
                     Swal.close();
                     
-                    if (response.status === 'success') {
+                    if (errors.length === 0) {
                         Swal.fire({
                             icon: 'success',
                             title: 'Success!',
-                            text: response.message,
+                            text: `Successfully saved ${processedCount} barcode tube(s).`,
                             confirmButtonColor: '#27ae60'
                         }).then(() => {
-                            // Close modal
-                            $('#sequence-modal').modal('hide');
-                            
-                            // Check if we came from Sample Reception (has URL parameters)
-                            const params = new URLSearchParams(window.location.search);
-                            const barcodeFromUrl = params.get('barcode');
-                            const idOneWaterSampleFromUrl = params.get('idOneWaterSample');
-                            const idTestingTypeFromUrl = params.get('idTestingType');
-                            
-                            if (barcodeFromUrl && idOneWaterSampleFromUrl && idTestingTypeFromUrl) {
-                                // Redirect back to Sample Reception if came from there
-                                if (document.referrer) {
-                                    window.location.href = document.referrer;
-                                } else {
-                                    // Fallback: redirect to sample reception
-                                    window.location.href = '<?php echo site_url("Sample_reception"); ?>';
-                                }
-                            } else {
-                                // If editing from sequencing table, just reload to show updated data
-                                table.ajax.reload(null, false);
+                            handleFormSuccess();
+                        });
+                    } else {
+                        let errorMsg = `Saved ${processedCount} barcode tube(s).\nErrors:\n${errors.join('\n')}`;
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Partial Success',
+                            text: errorMsg,
+                            confirmButtonColor: '#f39c12'
+                        }).then(() => {
+                            if (processedCount > 0) {
+                                handleFormSuccess();
                             }
                         });
-                        
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Save Failed',
-                            text: response.message || 'Could not save sequence data',
-                            confirmButtonColor: '#e74c3c'
-                        });
                     }
-                },
-                error: function() {
-                    Swal.close();
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Connection Error',
-                        text: 'Could not connect to server. Please try again.',
-                        confirmButtonColor: '#e74c3c'
-                    });
+                    return;
                 }
-            });
+                
+                let groupData = barcodeGroups[index];
+                let formData = {
+                    id_one_water_sample: sampleId,
+                    sequencing_barcode: sequencingBarcode,
+                    barcode_tube: groupData.barcode_tube,
+                    barcode_sample: groupData.barcode_sample,
+                    sequence: groupData.sequence,
+                    sequence_id: groupData.sequence_id,
+                    other_sequence_name: groupData.other_sequence_name,
+                    species_id: groupData.species_id
+                };
+                
+                $.ajax({
+                    url: '<?php echo site_url('Sequencing/save_sequence_data'); ?>',
+                    type: 'POST',
+                    data: formData,
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            processedCount++;
+                        } else {
+                            errors.push(`${groupData.barcode_tube}: ${response.message}`);
+                        }
+                        // Process next group
+                        processBarcodeGroup(index + 1);
+                    },
+                    error: function() {
+                        errors.push(`${groupData.barcode_tube}: Connection error`);
+                        // Process next group
+                        processBarcodeGroup(index + 1);
+                    }
+                });
+            }
+            
+            // Start processing
+            processBarcodeGroup(0);
+            
+            function handleFormSuccess() {
+                // Close modal
+                $('#sequence-modal').modal('hide');
+                
+                // Check if we came from Sample Reception (has URL parameters)
+                const params = new URLSearchParams(window.location.search);
+                const barcodeFromUrl = params.get('barcode');
+                const idOneWaterSampleFromUrl = params.get('idOneWaterSample');
+                const idTestingTypeFromUrl = params.get('idTestingType');
+                
+                if (barcodeFromUrl && idOneWaterSampleFromUrl && idTestingTypeFromUrl) {
+                    // Redirect back to Sample Reception if came from there
+                    if (document.referrer) {
+                        window.location.href = document.referrer;
+                    } else {
+                        // Fallback: redirect to sample reception
+                        window.location.href = '<?php echo site_url("Sample_reception"); ?>';
+                    }
+                } else {
+                    // If editing from sequencing table, just reload to show updated data
+                    table.ajax.reload(null, false);
+                }
+            }
         });
 
         // Handle Edit Sequence button click
@@ -801,8 +888,8 @@
             // Change modal title to indicate edit mode
             $('.modal-title').html('<i class="fa fa-dna"></i> Sequencing Module | Edit Sequence Data');
             
-            // Load sequence types
-            loadSequenceTypes();
+            // Load sequence types - COMMENTED FOR FUTURE USE
+            // loadSequenceTypes();
             
             // Load barcode tubes for this sample
             loadBarcodeTubesFromSampleReception(idSample);
@@ -830,19 +917,17 @@
             } else {
                 // Reset form for normal usage
                 $('#sequenceForm')[0].reset();
-                $('#sequenceCheckbox').prop('checked', false).prop('disabled', true).trigger('change');
-                $('#barcode_tube').html('<option value="" disabled selected>-- Select Barcode Tube --</option>');
-                $('#sequenceHelpText').text('Please select a barcode tube first').css('color', '#999');
+                $('#barcodeGroupsContainer').empty();
+                barcodeGroupCounter = 0;
                 $('#seq_id_one_water_sample').val('');
                 $('#sample_info').val('');
                 window.barcodeTubeMapping = {};
+                window.availableBarcodes = [];
                 
                 // Reset modal title to default
                 $('.modal-title').html('<i class="fa fa-dna"></i> Sequencing Module | Sequence Data Entry');
             }
         });
-
-
                             
     });
 </script>

@@ -164,8 +164,8 @@ class Sequencing extends CI_Controller
             $barcode_tube = $this->input->post('barcode_tube');
             $barcode_sample = $this->input->post('barcode_sample');
             $sequence = $this->input->post('sequence'); 
-            $sequence_id = $this->input->post('sequence_id');
-            $other_sequence_name = $this->input->post('other_sequence_name');
+            // $sequence_id = $this->input->post('sequence_id'); // COMMENTED FOR FUTURE USE
+            // $other_sequence_name = $this->input->post('other_sequence_name'); // COMMENTED FOR FUTURE USE
             $species_id = $this->input->post('species_id');
             
             // Validate required fields
@@ -201,17 +201,17 @@ class Sequencing extends CI_Controller
                 'date_updated' => $dt->format('Y-m-d H:i:s')
             );
 
-            // Handle sequence type
-            if ($sequence_id === 'other' && !empty($other_sequence_name)) {
-                $extraction_update_data['sequence_id'] = null;
-                $extraction_update_data['custom_sequence_type'] = $other_sequence_name;
-            } else if (!empty($sequence_id) && $sequence_id !== 'other') {
-                $extraction_update_data['sequence_id'] = $sequence_id;
-                $extraction_update_data['custom_sequence_type'] = null;
-            } else {
-                $extraction_update_data['sequence_id'] = null;
-                $extraction_update_data['custom_sequence_type'] = null;
-            }
+            // Handle sequence type - COMMENTED FOR FUTURE USE
+            // if ($sequence_id === 'other' && !empty($other_sequence_name)) {
+            //     $extraction_update_data['sequence_id'] = null;
+            //     $extraction_update_data['custom_sequence_type'] = $other_sequence_name;
+            // } else if (!empty($sequence_id) && $sequence_id !== 'other') {
+            //     $extraction_update_data['sequence_id'] = $sequence_id;
+            //     $extraction_update_data['custom_sequence_type'] = null;
+            // } else {
+            //     $extraction_update_data['sequence_id'] = null;
+            //     $extraction_update_data['custom_sequence_type'] = null;
+            // }
 
             // Update extraction_culture_plate table (same as Sample_reception approach)
             $this->db->where('barcode_sample', $barcode_sample);

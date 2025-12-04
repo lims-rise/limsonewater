@@ -105,8 +105,7 @@ class Extraction_culture_model extends CI_Model
             extraction_culture_plate.comments,
             extraction_culture_plate.sequence_id,
             ref_sequence.sequence_type,
-            extraction_culture_plate.sequence,
-            extraction_culture_plate.species_id
+            extraction_culture_plate.sequence
         ');
         $this->db->from('extraction_culture_plate');
         $this->db->join('ref_sampletype', 'extraction_culture_plate.id_sampletype = ref_sampletype.id_sampletype', 'left');
@@ -457,7 +456,6 @@ class Extraction_culture_model extends CI_Model
             rs.sequence_type,
             ecp.custom_sequence_type,
             ecp.sequence,
-            ecp.species_id,
             ecp.other_kit
         ');
         $this->db->from('extraction_culture_plate ecp');
@@ -549,8 +547,7 @@ class Extraction_culture_model extends CI_Model
             extraction_culture_plate.comments,
             extraction_culture_plate.sequence_id,
             ref_sequence.sequence_type,
-            extraction_culture_plate.sequence,
-            extraction_culture_plate.species_id
+            extraction_culture_plate.sequence
         ');
         $this->db->from('extraction_culture_plate');
         $this->db->join('ref_sampletype', 'extraction_culture_plate.id_sampletype = ref_sampletype.id_sampletype', 'left');

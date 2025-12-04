@@ -175,6 +175,9 @@ class Sample_reception extends CI_Controller
             $testing_types = $this->Sample_reception_model->getProjectTestingTypes($id);
             $data['testing_information'] = empty($testing_types) ? 'No tests assigned' : implode(', ', $testing_types);
             
+            // Get testing results with actual values for the report
+            $data['testing_results'] = $this->Sample_reception_model->get_testing_results_for_report($id);
+            
             $needs_generation_and_save = (
                 empty($data['report_number']) || $data['report_number'] === null || $data['report_number'] === '' ||
                 empty($data['report_date']) || $data['report_date'] === null || $data['report_date'] === '' || trim($data['report_date']) === '0000-00-00'
