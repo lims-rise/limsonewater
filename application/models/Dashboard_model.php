@@ -186,7 +186,9 @@ class Dashboard_model extends CI_Model
                         ewi.review, ebi.review, cbi.review, cwi.review, 
                         pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review
                     ) = 1 THEN 1 END) as completed_tests,
-                    sr.date_created
+                    sr.date_created,
+                    sr.time_arrive,
+                    sr.date_updated
                 FROM sample_reception sr
                 LEFT JOIN sample_reception_sample srs ON sr.id_project = srs.id_project AND srs.flag = 0
                 LEFT JOIN sample_reception_testing srt ON srs.id_sample = srt.id_sample AND srt.flag = 0
@@ -215,7 +217,7 @@ class Dashboard_model extends CI_Model
                 LEFT JOIN campy_hemoflow_qpcr chq ON chq.campy_assay_barcode = srt.barcode AND chq.flag = 0
                 WHERE sr.flag = 0
                 GROUP BY sr.id_project
-                ORDER BY sr.date_created DESC";
+                ORDER BY sr.date_created DESC, sr.time_arrive DESC, sr.id_project DESC";
 
         $query = $this->db->query($sql);
         
@@ -234,9 +236,31 @@ class Dashboard_model extends CI_Model
                 'completed_tests' => $row->completed_tests,
                 'completion_rate' => $completion_rate,
                 'status' => $status,
-                'date_created' => $row->date_created
+                'date_created' => $row->date_created,
+                'time_arrive' => $row->time_arrive,
+                'date_updated' => $row->date_updated
             );
         }
+
+        // Additional PHP sorting to ensure correct order with NULL handling
+        usort($workflow, function($a, $b) {
+            // First sort by date_created (newest first) - handle NULL values
+            $date_a = !empty($a['date_created']) ? strtotime($a['date_created']) : 0;
+            $date_b = !empty($b['date_created']) ? strtotime($b['date_created']) : 0;
+            $date_compare = $date_b - $date_a;
+            if ($date_compare !== 0) return $date_compare;
+            
+            // Then by time_arrive (newest first) - handle NULL values  
+            $time_a = !empty($a['time_arrive']) ? strtotime($a['time_arrive']) : 0;
+            $time_b = !empty($b['time_arrive']) ? strtotime($b['time_arrive']) : 0;
+            $time_compare = $time_b - $time_a;
+            if ($time_compare !== 0) return $time_compare;
+            
+            // Finally by project_id (highest first) - handle NULL values
+            $id_a = !empty($a['project_id']) ? (int)$a['project_id'] : 0;
+            $id_b = !empty($b['project_id']) ? (int)$b['project_id'] : 0;
+            return $id_b - $id_a;
+        });
 
         return $workflow;
     }
