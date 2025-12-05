@@ -142,6 +142,7 @@
 									<thead>
 										<tr>
 											<th>Barcode Tube</th>
+											<th>Comment</th>
 											<th>Weight (g)</th>
 											<th>Concentration (ng/uL)</th>
 											<th>Volume (mL)</th>
@@ -1129,6 +1130,7 @@
                         return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
                     }
                 },
+				{"data": "comments"},
 				{"data": "weight"}, 
 				{"data": "concentration_dna"}, 
 				{"data": "volume"}, 

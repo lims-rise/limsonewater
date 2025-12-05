@@ -98,7 +98,7 @@ class Biobankin_model extends CI_Model
 
     function subjsonreplicate($id) {
         $this->datatables->select('a.id_biobankin_replicate, a.id_biobankin_detail, a.barcode_water, e.id_one_water_sample, a.weight,
-                             a.concentration_dna, a.volume, b.culture, 
+                             a.concentration_dna, a.volume, b.culture, a.comments,
                              a.barcode_tube, a.cryobox, 
                              concat("F",c.freezer,"-","S",c.shelf,"-","R",c.rack,"-","T",c.tray) AS location,
                              a.comments, a.id_culture, a.id_location, a.id_pos, 
