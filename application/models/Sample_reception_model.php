@@ -109,8 +109,34 @@ class Sample_reception_model extends CI_Model
                     </button>' .
                 '</div>' .
             '</div>', 'is_completed, id_project');
+        } else if ($lvl == 2) {
+            // Level 2 (Admin) - Modern 2025 Action Buttons (No Lock/Unlock)
+            $this->datatables->add_column('action', 
+            '<div class="modern-action-group">' .
+                // File Actions Group
+                '<div class="action-section file-actions">' .
+                    anchor(site_url('sample_reception/rep_print/$2'), 
+                        '<i class="fa fa-print"></i>', 
+                        array('class' => 'btn-modern btn-soft-grey', 'title' => 'Print CoC Report')) . 
+                    anchor(site_url('sample_reception/rep_print2/$2'), 
+                        '<i class="fa fa-print"></i>', 
+                        array('class' => 'btn-modern btn-soft-grey-dark', 'title' => 'Print Extended Report')) .
+                '</div>' .
+                // Data Actions Group  
+                '<div class="action-section data-actions">' .
+                    '<button type="button" class="btn-modern btn-accent btn_edit" data-completed="$1" title="Edit Project">
+                        <i class="fa fa-edit"></i>
+                    </button>' .
+                '</div>' .
+                // Danger Actions Group
+                '<div class="action-section danger-actions">' .
+                    '<button type="button" class="btn-modern btn-danger btn_delete" data-id="$2" title="Delete Project">
+                        <i class="fa fa-trash"></i>
+                    </button>' .
+                '</div>' .
+            '</div>', 'is_completed, id_project, client_quote_number, client, id_client_sample, client_name, id_client_contact, number_sample, comments, files, supplementary_files, date_arrive, time_arrive, date_created, date_updated, flag, is_unlocked');
         } else {
-            // Level 1 (Super Admin) dan Level 2 (Admin) - Modern 2025 Action Buttons
+            // Level 1 (Super Admin) - Modern 2025 Action Buttons (With Lock/Unlock)
             $this->datatables->add_column('action', 
             '<div class="modern-action-group">' .
                 // File Actions Group
@@ -264,8 +290,34 @@ class Sample_reception_model extends CI_Model
                     </button>' .
                 '</div>' .
             '</div>', 'is_completed, id_project');
+        } else if ($lvl == 2) {
+            // Level 2 (Admin) - Modern 2025 Action Buttons (No Lock/Unlock)
+            $this->datatables->add_column('action', 
+            '<div class="modern-action-group">' .
+                // File Actions Group
+                '<div class="action-section file-actions">' .
+                    anchor(site_url('sample_reception/rep_print/$2'), 
+                        '<i class="fa fa-print"></i>', 
+                        array('class' => 'btn-modern btn-soft-grey', 'title' => 'Print CoC Report')) . 
+                    anchor(site_url('sample_reception/rep_print2/$2'), 
+                        '<i class="fa fa-print"></i>', 
+                        array('class' => 'btn-modern btn-soft-grey-dark', 'title' => 'Print Extended Report')) .
+                '</div>' .
+                // Data Actions Group  
+                '<div class="action-section data-actions">' .
+                    '<button type="button" class="btn-modern btn-accent btn_edit" data-completed="$1" title="Edit Project">
+                        <i class="fa fa-edit"></i>
+                    </button>' .
+                '</div>' .
+                // Danger Actions Group
+                '<div class="action-section danger-actions">' .
+                    '<button type="button" class="btn-modern btn-danger btn_delete" data-id="$2" title="Delete Project">
+                        <i class="fa fa-trash"></i>
+                    </button>' .
+                '</div>' .
+            '</div>', 'is_completed, id_project, client_quote_number, client, id_client_sample, client_name, id_client_contact, number_sample, comments, files, supplementary_files, date_arrive, time_arrive, date_created, date_updated, flag, is_unlocked');
         } else {
-            // Level 1 (Super Admin) dan Level 2 (Admin) - Modern 2025 Action Buttons
+            // Level 1 (Super Admin) - Modern 2025 Action Buttons (With Lock/Unlock)
             $this->datatables->add_column('action', 
             '<div class="modern-action-group">' .
                 // File Actions Group
@@ -498,7 +550,7 @@ class Sample_reception_model extends CI_Model
             testing.flag,
             CASE 
                 WHEN retest.testing_type = 'Campylobacter-Biosolids' THEN crm.mpn_concentration_dw
-                WHEN retest.testing_type = 'Campylobacter-Liquids' THEN crml.mpn_concentration_dw
+                WHEN retest.testing_type = 'Campylobacter-Liquids' THEN crml.mpn_concentration
                 WHEN retest.testing_type = 'Campylobacter-P/A' THEN crbp.confirmation
                 WHEN retest.testing_type = 'Colilert-Idexx-Water' THEN cwo.ecoli
                 WHEN retest.testing_type = 'Colilert-Idexx-Biosolids' THEN cbo.ecoli_dryweight
@@ -584,7 +636,7 @@ class Sample_reception_model extends CI_Model
         $this->datatables->join('protozoa pr', 'pr.protozoa_barcode = testing.barcode and pr.flag = 0', 'left');
         $this->datatables->join('campy_pa cp', 'cp.campy_assay_barcode = testing.barcode and cp.flag = 0', 'left');
         $this->datatables->join('salmonella_pa sp', 'sp.salmonella_assay_barcode = testing.barcode and sp.flag = 0', 'left');
-        $this->datatables->join('hemoflow hem', 'sample.id_one_water_sample = hem.id_one_water_sample and hem.flag = 0', 'left');
+        $this->datatables->join('hemoflow hem', 'hem.hemoflow_barcode = testing.barcode and hem.flag = 0', 'left');
         $this->datatables->join('enterolert_hemoflow ehf', 'ehf.enterolert_hemoflow_barcode = testing.barcode and ehf.flag = 0', 'left');
         $this->datatables->join('colilert_hemoflow chf', 'chf.colilert_hemoflow_barcode = testing.barcode and chf.flag = 0', 'left');
         $this->datatables->join('campy_hemoflow ch', 'ch.campy_assay_barcode = testing.barcode and ch.flag = 0', 'left');
@@ -641,7 +693,7 @@ class Sample_reception_model extends CI_Model
             retest.testing_type AS units_type,
             CASE 
                 WHEN retest.testing_type = 'Campylobacter-Biosolids' THEN crm.mpn_concentration_dw
-                WHEN retest.testing_type = 'Campylobacter-Liquids' THEN crml.mpn_concentration_dw
+                WHEN retest.testing_type = 'Campylobacter-Liquids' THEN crml.mpn_concentration
                 WHEN retest.testing_type = 'Campylobacter-P/A' THEN crbp.confirmation
                 WHEN retest.testing_type = 'Colilert-Idexx-Water' THEN cwo.ecoli
                 WHEN retest.testing_type = 'Colilert-Idexx-Biosolids' THEN cbo.ecoli_dryweight
@@ -726,7 +778,7 @@ class Sample_reception_model extends CI_Model
         LEFT JOIN protozoa pr ON pr.protozoa_barcode = testing.barcode AND pr.flag = 0
         LEFT JOIN campy_pa cp ON cp.campy_assay_barcode = testing.barcode AND cp.flag = 0
         LEFT JOIN salmonella_pa sp ON sp.salmonella_assay_barcode = testing.barcode AND sp.flag = 0
-        LEFT JOIN hemoflow hem ON sample.id_one_water_sample = hem.id_one_water_sample AND hem.flag = 0
+        LEFT JOIN hemoflow hem ON hem.hemoflow_barcode = testing.barcode AND hem.flag = 0
         LEFT JOIN enterolert_hemoflow ehf ON ehf.enterolert_hemoflow_barcode = testing.barcode AND ehf.flag = 0
         LEFT JOIN colilert_hemoflow chf ON chf.colilert_hemoflow_barcode = testing.barcode AND chf.flag = 0
         LEFT JOIN campy_hemoflow ch ON ch.campy_assay_barcode = testing.barcode AND ch.flag = 0

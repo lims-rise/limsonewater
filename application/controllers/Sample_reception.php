@@ -1293,10 +1293,10 @@ class Sample_reception extends CI_Controller
 
     // Unlock/Lock Project Methods
     public function unlock_project() {
-        // Check if user is admin (level 1 or 2)
+        // Check if user is Super Admin (level 1 only)
         $user_level = $this->session->userdata('id_user_level');
-        if ($user_level > 2) {
-            echo json_encode(array('status' => 'error', 'message' => 'Unauthorized access'));
+        if ($user_level != 1) {
+            echo json_encode(array('status' => 'error', 'message' => 'Unauthorized access - Super Admin only'));
             return;
         }
         
@@ -1322,10 +1322,10 @@ class Sample_reception extends CI_Controller
     }
     
     public function lock_project() {
-        // Check if user is admin (level 1 or 2)
+        // Check if user is Super Admin (level 1 only)
         $user_level = $this->session->userdata('id_user_level');
-        if ($user_level > 2) {
-            echo json_encode(array('status' => 'error', 'message' => 'Unauthorized access'));
+        if ($user_level != 1) {
+            echo json_encode(array('status' => 'error', 'message' => 'Unauthorized access - Super Admin only'));
             return;
         }
         
@@ -1349,6 +1349,13 @@ class Sample_reception extends CI_Controller
     }
     
     public function get_unlock_info() {
+        // Check if user is Super Admin (level 1 only)
+        $user_level = $this->session->userdata('id_user_level');
+        if ($user_level != 1) {
+            echo json_encode(array('status' => 'error', 'message' => 'Unauthorized access - Super Admin only'));
+            return;
+        }
+        
         $id_project = $this->input->get('id_project');
         
         if (empty($id_project)) {

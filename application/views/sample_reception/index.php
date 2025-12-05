@@ -1703,8 +1703,8 @@ function applyCompletedProjectStyling() {
                 // Check if project is unlocked by admin
                 let isUnlocked = rowData.is_unlocked == 1;
                 
-                // For admin users (level 1 & 2) - Modern unlock/lock button styling
-                if (userLevel <= 2) {
+                // For Super Admin users (level 1 only) - Modern unlock/lock button styling
+                if (userLevel == 1) {
                     let $unlockBtn = $row.find('.btn_unlock');
                     if (isUnlocked) {
                         // Project is unlocked - show lock button
@@ -1728,8 +1728,8 @@ function applyCompletedProjectStyling() {
                     }
                 }
                 
-                // For non-admin users (level 3 & 4)
-                if (userLevel > 2) {
+                // For non-Super Admin users (level 2, 3 & 4)
+                if (userLevel > 1) {
                     let $toggleBtn = $row.find('.toggle-child');
                     let $editBtn = $row.find('.btn_edit');
                     
@@ -1747,6 +1747,12 @@ function applyCompletedProjectStyling() {
                         $toggleBtn.attr('title', 'Project unlocked by admin - access allowed');
                         
                         $editBtn.show(); // Show edit button when unlocked
+                        
+                        // Show delete button for level 2 users when unlocked
+                        if (userLevel == 2) {
+                            let $deleteBtn = $row.find('.btn_delete');
+                            $deleteBtn.show();
+                        }
                         
                         // Add modern unlocked indicator
                         if (!$row.find('.unlock-indicator').length) {
@@ -1767,6 +1773,13 @@ function applyCompletedProjectStyling() {
                         $toggleBtn.attr('title', 'Project completed and locked');
                         
                         $editBtn.hide(); // Hide edit button when locked
+                        
+                        // Hide delete button for level 2 users on locked projects
+                        if (userLevel == 2) {
+                            let $deleteBtn = $row.find('.btn_delete');
+                            $deleteBtn.hide();
+                        }
+                        
                         $row.removeClass('unlocked-project');
                         $toggleBtn.find('.unlock-indicator').remove();
                     }
@@ -2387,11 +2400,11 @@ function applyCompletedProjectStyling() {
             let isUnlocked = rowData ? rowData.is_unlocked : 0;
             let userLevel = <?php echo $this->session->userdata('id_user_level'); ?>;
             
-            // For non-admin users on completed projects
-            if (isCompleted == 1 && userLevel > 2) {
+            // For non-Super Admin users on completed projects
+            if (isCompleted == 1 && userLevel > 1) {
                 // Check if project is unlocked by admin
                 if (isUnlocked != 1) {
-                    // Don't open child row for locked completed projects (non-admin users)
+                    // Don't open child row for locked completed projects (non-Super Admin users)
                     return false;
                 }
             }
@@ -2462,13 +2475,13 @@ function applyCompletedProjectStyling() {
             let isUnlocked = rowData ? rowData.is_unlocked : 0;
             let userLevel = <?php echo $this->session->userdata('id_user_level'); ?>;
             
-            // For non-admin users on completed projects
-            if (isCompleted == 1 && userLevel > 2) {
+            // For non-Super Admin users on completed projects
+            if (isCompleted == 1 && userLevel > 1) {
                 // Check if project is unlocked by admin
                 if (isUnlocked != 1) {
                     Swal.fire({
                         title: 'Project Completed & Locked!',
-                        html: 'This project has been completed and is currently <strong>locked</strong>.<br><br>Only administrators can unlock completed projects for modification.',
+                        html: 'This project has been completed and is currently <strong>locked</strong>.<br><br>Only Super Administrator can unlock completed projects for modification.',
                         icon: 'warning',
                         confirmButtonText: 'OK'
                     });
