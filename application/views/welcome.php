@@ -421,7 +421,7 @@
                                                     </span>
                                                 </td>
                                                 <td class="text-center">
-                                                    <small><?php echo date('M j, Y', strtotime($workflow['date_created'])); ?></small>
+                                                    <small><?php echo !empty($workflow['date_created']) ? date('M j, Y', strtotime($workflow['date_created'])) : '-'; ?></small>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
@@ -618,7 +618,7 @@ $(document).ready(function() {
             { "orderable": false, "targets": [5] }, // Disable ordering for Progress column (contains HTML)
             { "className": "text-center", "targets": [2, 3, 4, 5, 6, 7] } // Center align specified columns
         ],
-        "order": [[7, 'desc']], // Default sort by Date Created (newest first)
+        "order": [], // No default sorting - preserve database order
         "dom": "<'row'<'col-sm-6'l><'col-sm-6'f>>" +
                "<'row'<'col-sm-12'tr>>" +
                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
