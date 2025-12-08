@@ -43,9 +43,11 @@ class Biobankin extends CI_Controller
     }
 
     public function subjson() {
-        $id = $this->input->get('id',TRUE);
+        // $id = $this->input->get('id',TRUE);
+        $id_one_water_sample = $this->input->get('id');
+        $id_biobankin = $this->input->get('id_biobankin');
         header('Content-Type: application/json');
-        echo $this->Biobankin_model->subjson($id);
+        echo $this->Biobankin_model->subjson($id_one_water_sample, $id_biobankin);
     }
 
     public function subjson2() {
@@ -67,6 +69,7 @@ class Biobankin extends CI_Controller
         if ($row) {
             $data = array(
                 'id_one_water_sample' => $row->id_one_water_sample,
+                'id_biobankin' => $row->id_biobankin,
                 // 'sampletype' => $row->sampletype,
                 // 'sampletypecombination' => $row->sampletypecombination,
                 'date_conduct' => $row->date_conduct,
@@ -95,14 +98,10 @@ class Biobankin extends CI_Controller
 
         }
         else {
-            if (!$data) {
-                // Jika data tidak ditemukan, tampilkan halaman dengan pesan
-                $this->load->view('errors/custom_not_found', [
-                    'message' => 'No detail data available for this sample ID.',
-                    'sample_id' => $id
-                ]);
-                return;
-            }
+            // Jika data tidak ditemukan, redirect ke index dengan pesan error
+            $this->session->set_flashdata('message', 'No detail data available for this sample ID: ' . $id);
+            redirect(site_url('Biobankin'));
+            return;
         }
 
     }
@@ -141,14 +140,10 @@ class Biobankin extends CI_Controller
 
         }
         else {
-            if (!$data) {
-                // Jika data tidak ditemukan, tampilkan halaman dengan pesan
-                $this->load->view('errors/custom_not_found', [
-                    'message' => 'No detail data available for this sample ID.',
-                    'sample_id' => $id
-                ]);
-                return;
-            }
+            // Jika data tidak ditemukan, redirect ke index dengan pesan error
+            $this->session->set_flashdata('message', 'No replicate data available for this detail ID: ' . $id);
+            redirect(site_url('Biobankin'));
+            return;
         }
 
     } 
@@ -382,6 +377,7 @@ class Biobankin extends CI_Controller
 
         $id_sampletype = $this->input->post('id_sampletype', TRUE);
         $id_biobankin_detail = $this->input->post('id_biobankin_detail', TRUE);
+        $id_biobankin = $this->input->post('id_biobankin', TRUE);
         $replicates = $this->input->post('replicates', TRUE);
 
         $comments = $this->input->post('comments', TRUE);        
@@ -395,6 +391,7 @@ class Biobankin extends CI_Controller
         if ($mode == "insert") {
             $data = array(
                 'id_one_water_sample' => $id_one_water_sample,
+                'id_biobankin' => $id_biobankin,
                 'id_sampletype' => $id_sampletype,
                 'replicates' => $replicates,
                 'comments' => $comments,
@@ -428,13 +425,13 @@ class Biobankin extends CI_Controller
         } else if ($mode == "edit") {
             $data = array(
                 'id_one_water_sample' => $id_one_water_sample,
+                'id_biobankin' => $id_biobankin,
                 'id_sampletype' => $id_sampletype,
                 'replicates' => $replicates,
                 'comments' => $comments,
                 'flag' => '0',
-                'uuid' => $this->uuid->v4(),
-                'user_created' => $this->session->userdata('id_users'),
-                'date_created' => $dt->format('Y-m-d H:i:s'),
+                'user_updated' => $this->session->userdata('id_users'),
+                'date_updated' => $dt->format('Y-m-d H:i:s'),
             );
             $this->Biobankin_model->update_det($id_biobankin_detail, $data);
 
@@ -586,8 +583,16 @@ class Biobankin extends CI_Controller
             );
 
         if ($row) {
+            // Delete parent record (biobank_in)
             $this->Biobankin_model->update($id, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
+            
+            // Cascade delete: Delete all related detail records (biobank_in_detail)
+            $this->Biobankin_model->delete_all_details_by_one_water_sample($id);
+            
+            // Cascade delete: Delete all related replicate records (biobank_in_replicate)
+            $this->Biobankin_model->delete_all_replicates_by_one_water_sample($id);
+            
+            $this->session->set_flashdata('message', 'Delete Record and All Related Data Success');
             redirect(site_url('Biobankin'));
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
@@ -597,7 +602,7 @@ class Biobankin extends CI_Controller
 
     public function delete_detail($id) 
     {
-        $row = $this->Biobankin_model->get_by_id_detail($id);
+        $row = $this->Biobankin_model->get_by_id_biobankin_detail($id);
 
         if ($row) {
             $id_parent = $row->id_one_water_sample; // Retrieve project_id before updating the record
@@ -605,13 +610,33 @@ class Biobankin extends CI_Controller
                 'flag' => 1,
             );
     
+            // Delete detail (soft delete)
             $this->Biobankin_model->update_det($id, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
+            
+            // Cascade delete: Delete all related replicate data (soft delete)
+            $this->Biobankin_model->delete_replicate_by_detail($id);
+            
+            $this->session->set_flashdata('message', 'Delete Detail and Related Replicate Records Success');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
     
         redirect(site_url('Biobankin/read/'.$id_parent));
+    }
+
+    public function delete_replicate($id) 
+    {
+        $row = $this->Biobankin_model->get_by_id_replicate($id);
+
+        if ($row) {
+            $id_parent = $row->id_biobankin_detail; // Get parent detail id for redirect
+            $this->Biobankin_model->delete_replicate($id);
+            $this->session->set_flashdata('message', 'Delete Replicate Record Success');
+        } else {
+            $this->session->set_flashdata('message', 'Replicate Record Not Found');
+        }
+    
+        redirect(site_url('Biobankin/read2/'.$id_parent));
     }
 
     public function samplecheck() 
