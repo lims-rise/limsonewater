@@ -121,7 +121,7 @@
 									$lvl = $this->session->userdata('id_user_level');
 									if ($lvl != 4){
 										$q = $this->db->query('
-										SELECT a.replicates, COUNT(b.barcode_water) as cb_detail
+										SELECT a.replicates, COUNT(CASE WHEN b.flag = 0 THEN b.barcode_water END) as cb_detail
 										FROM biobank_in_detail a
 										LEFT JOIN biobank_in_replicate b ON a.id_biobankin_detail = b.id_biobankin_detail
 										WHERE a.id_biobankin_detail = "' . $id_biobankin_detail .'"');        
@@ -975,7 +975,7 @@
         // Handle the delete button click
         $(document).on('click', '.btn_delete', function() {
             let id = $(this).data('id');
-            let url = '<?php echo site_url('Biobankin/delete_detail'); ?>/' + id;
+            let url = '<?php echo site_url('Biobankin/delete_replicate'); ?>/' + id;
             $('#confirm-modal-delete #id').text(id);
             console.log(id);
             showConfirmationDelete(url);

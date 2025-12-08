@@ -12,6 +12,7 @@
 							<label for="id_one_water_sample1" class="col-sm-2 control-label">ID One water</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="id_one_water_sample1" name="id_one_water_sample1" value="<?php echo $id_one_water_sample ?>"  disabled>
+								<input class="form-control " id="id_biobankin" name="id_biobankin" type="hidden" value="<?php echo $id_biobankin ?>"  disabled>
 							</div>
 
 							<label for="date_conduct" class="col-sm-2 control-label">Date conduct</label>
@@ -56,6 +57,7 @@
 				</form>
 				<form id="formSampleReview" method="post">
 					<input type="hidden" name="id_one_water_sample" id="id_one_water_sample" value="<?php echo $id_one_water_sample ?>">
+					<input type="hidden" name="id_biobankin" id="id_biobankin" value="<?php echo $id_biobankin ?>">
 					<input type="hidden" id="review" name="review" value="<?php echo $review ?>">
 					<input type="hidden" id="user_review" name="user_review" value="<?php echo $user_review ?>">
 					<input type="hidden" id="user_created" name="user_created" value="<?php echo $user_created ?>">
@@ -152,6 +154,7 @@
 					<input id="date_conduct2" type="hidden" name="date_conduct2" value="<?php echo $date_conduct ?>">
 					<input id="id_person" type="hidden" name="id_person" value="<?php echo $id_person ?>">
 					<input id="id_biobankin_detail" name="id_biobankin_detail" type="hidden" class="form-control input-sm">
+					<input id="id_biobankin_modal" name="id_biobankin" type="hidden" class="form-control input-sm" value="<?php echo $id_biobankin ?>">
 				
 					<!-- <div class="form-group">
 						<label for="weight" class="col-sm-4 control-label">Weight (g)</label>
@@ -665,6 +668,7 @@
 <script type="text/javascript">
     let table;
 	let id_one_water_sample = $('#id_one_water_sample1').val();
+	let id_biobankin = $('#id_biobankin').val();
 	let barcode_water = $('#barcode_water').val();
 	let base_url = location.hostname;
 	$(document).ready(function() {
@@ -1299,7 +1303,7 @@
 			// ordering: false,
 			info: false,
 			bFilter: false,
-			ajax: {"url": "../../Biobankin/subjson?id="+id_one_water_sample, "type": "POST"},
+			ajax: {"url": "../../Biobankin/subjson?id="+id_one_water_sample+"&id_biobankin="+id_biobankin, "type": "POST"},
 			columns: [
 				  {
                     "data": "sampletype",
@@ -1370,6 +1374,7 @@
             // $('#barcode_water').attr('readonly', false);
 			// $('#barcode_water').val('');
 			$('#id_one_water_samplex').val(id_one_water_sample);
+			$('#id_biobankin_modal').val(id_biobankin);
 			// $('#weight').val('');
 			// $('#concentration_dna').val('');
 			// $('#volume').val('');
@@ -1427,6 +1432,7 @@
             // $('#id_biobankin_detail').attr('readonly', true);
 			$('#id_biobankin_detail').val(data.id_biobankin_detail);
 			$('#id_one_water_samplex').val(id_one_water_sample);
+			$('#id_biobankin_modal').val(id_biobankin);
 			$('#weight').val(data.weight);
 			$('#concentration_dna').val(data.concentration_dna);
 			$('#volume').val(data.volume);
