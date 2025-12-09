@@ -21,12 +21,16 @@ class Sample_reception_model extends CI_Model
                 SELECT COUNT(srt.id_testing) 
                 FROM sample_reception_sample srs 
                 LEFT JOIN sample_reception_testing srt ON srs.id_sample = srt.id_sample AND srt.flag = 0 
-                WHERE srs.id_project = sr.id_project AND srs.flag = 0
+                LEFT JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)
+                WHERE srs.id_project = sr.id_project AND srs.flag = 0 
+                AND rt.testing_type NOT LIKE "%sequencing%" AND rt.testing_type NOT LIKE "%microbial%"
             ) > 0 AND (
                 SELECT COUNT(srt.id_testing) 
                 FROM sample_reception_sample srs 
                 LEFT JOIN sample_reception_testing srt ON srs.id_sample = srt.id_sample AND srt.flag = 0 
-                WHERE srs.id_project = sr.id_project AND srs.flag = 0
+                LEFT JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)
+                WHERE srs.id_project = sr.id_project AND srs.flag = 0 
+                AND rt.testing_type NOT LIKE "%sequencing%" AND rt.testing_type NOT LIKE "%microbial%"
             ) = (
                 SELECT COUNT(CASE WHEN COALESCE(
                     bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
@@ -36,6 +40,7 @@ class Sample_reception_model extends CI_Model
                 ) = 1 THEN 1 END) 
                 FROM sample_reception_sample srs 
                 LEFT JOIN sample_reception_testing srt ON srs.id_sample = srt.id_sample AND srt.flag = 0
+                LEFT JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)
                 LEFT JOIN biobank_in bank ON bank.biobankin_barcode = srt.barcode AND bank.flag = 0
                 LEFT JOIN campy_liquids campy ON campy.campy_assay_barcode = srt.barcode AND campy.flag = 0
                 LEFT JOIN salmonella_liquids salmonellaL ON salmonellaL.salmonella_assay_barcode = srt.barcode AND salmonellaL.flag = 0
@@ -59,7 +64,8 @@ class Sample_reception_model extends CI_Model
                 LEFT JOIN extraction_biosolid ex ON ex.barcode_sample = srt.barcode AND ex.flag = 0
                 LEFT JOIN salmonella_hemoflow sh ON sh.salmonella_assay_barcode = srt.barcode AND sh.flag = 0
                 LEFT JOIN campy_hemoflow_qpcr chq ON chq.campy_assay_barcode = srt.barcode AND chq.flag = 0
-                WHERE srs.id_project = sr.id_project AND srs.flag = 0
+                WHERE srs.id_project = sr.id_project AND srs.flag = 0 
+                AND rt.testing_type NOT LIKE "%sequencing%" AND rt.testing_type NOT LIKE "%microbial%"
             ) THEN 1 ELSE 0 END as is_completed', FALSE);
             
         $this->datatables->from('sample_reception sr');
@@ -198,12 +204,16 @@ class Sample_reception_model extends CI_Model
                 SELECT COUNT(srt.id_testing) 
                 FROM sample_reception_sample srs2 
                 LEFT JOIN sample_reception_testing srt ON srs2.id_sample = srt.id_sample AND srt.flag = 0 
+                LEFT JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)
                 WHERE srs2.id_project = sr.id_project AND srs2.flag = 0
+                AND rt.testing_type NOT LIKE "%sequencing%" AND rt.testing_type NOT LIKE "%microbial%"
             ) > 0 AND (
                 SELECT COUNT(srt.id_testing) 
                 FROM sample_reception_sample srs2 
                 LEFT JOIN sample_reception_testing srt ON srs2.id_sample = srt.id_sample AND srt.flag = 0 
+                LEFT JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)
                 WHERE srs2.id_project = sr.id_project AND srs2.flag = 0
+                AND rt.testing_type NOT LIKE "%sequencing%" AND rt.testing_type NOT LIKE "%microbial%"
             ) = (
                 SELECT COUNT(CASE WHEN COALESCE(
                     bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
@@ -213,6 +223,7 @@ class Sample_reception_model extends CI_Model
                 ) = 1 THEN 1 END) 
                 FROM sample_reception_sample srs2 
                 LEFT JOIN sample_reception_testing srt ON srs2.id_sample = srt.id_sample AND srt.flag = 0
+                LEFT JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)
                 LEFT JOIN biobank_in bank ON bank.biobankin_barcode = srt.barcode AND bank.flag = 0
                 LEFT JOIN campy_liquids campy ON campy.campy_assay_barcode = srt.barcode AND campy.flag = 0
                 LEFT JOIN salmonella_liquids salmonellaL ON salmonellaL.salmonella_assay_barcode = srt.barcode AND salmonellaL.flag = 0
@@ -237,6 +248,7 @@ class Sample_reception_model extends CI_Model
                 LEFT JOIN salmonella_hemoflow sh ON sh.salmonella_assay_barcode = srt.barcode AND sh.flag = 0
                 LEFT JOIN campy_hemoflow_qpcr chq ON chq.campy_assay_barcode = srt.barcode AND chq.flag = 0
                 WHERE srs2.id_project = sr.id_project AND srs2.flag = 0
+                AND rt.testing_type NOT LIKE "%sequencing%" AND rt.testing_type NOT LIKE "%microbial%"
             ) THEN 1 ELSE 0 END as is_completed
         ', FALSE);
         
