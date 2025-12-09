@@ -601,7 +601,7 @@ class Sample_reception_model extends CI_Model
                             END
                         ELSE NULL 
                     END
-                WHEN retest.testing_type = 'Homeflow' THEN hem.volume_eluted
+                WHEN retest.testing_type = 'Hemoflow' THEN hem.volume_eluted
                 WHEN retest.testing_type = 'Moisture_content' THEN m72.moisture_content_persen
                 WHEN retest.testing_type = 'Protozoa' THEN 
                     CASE 
@@ -744,7 +744,7 @@ class Sample_reception_model extends CI_Model
                             END
                         ELSE NULL 
                     END
-                WHEN retest.testing_type = 'Homeflow' THEN hem.volume_eluted
+                WHEN retest.testing_type = 'Hemoflow' THEN hem.volume_eluted
                 WHEN retest.testing_type = 'Moisture_content' THEN m72.moisture_content_persen
                 WHEN retest.testing_type = 'Protozoa' THEN 
                     CASE 
@@ -803,6 +803,17 @@ class Sample_reception_model extends CI_Model
         LEFT JOIN moisture72 m72 ON mc.id_moisture = m72.id_moisture AND m72.flag = 0
         LEFT JOIN protozoa ptz ON sample.id_one_water_sample = ptz.id_one_water_sample AND ptz.flag = 0
         WHERE sample.id_project = ? AND testing.flag = 0 AND sample.flag = 0
+        AND retest.testing_type IN (
+            'Campylobacter-Biosolids', 'Campylobacter-Liquids', 'Campylobacter-P/A',
+            'Colilert-Idexx-Water', 'Colilert-Idexx-Biosolids',
+            'Enterolert-Idexx-Water', 'Enterolert-Idexx-Biosolids',
+            'Salmonella-Biosolids', 'Salmonella-Liquids', 'Salmonella-P/A',
+            'Hemoflow', 'Campy-Hemoflow', 'Campy-Hemoflow-QPCR', 'Colilert-Hemoflow', 'Enterolert-Hemoflow', 'Salmonella-Hemoflow',
+            'Moisture_content',
+            'Protozoa',
+            'Sequencing',
+            'Microbial-Source-Tracking'
+        )
         ORDER BY sample.id_one_water_sample, retest.testing_type ASC, testing.id_testing";
         
         $query = $this->db->query($sql, array($id_project));
@@ -1708,7 +1719,7 @@ class Sample_reception_model extends CI_Model
             'Colilert-Idexx-Water' => 'Colilert-Idexx-Water',
             'Enterolert-Idexx-Water' => 'Enterolert-Idexx-Water',
             'Moisture_content' => 'Moisture_content',
-            'Homeflow' => 'Homeflow',
+            'Hemoflow' => 'Hemoflow',
             'Colilert-Idexx-Biosolids' => 'Colilert-Idexx-Biosolids',
             'Enterolert-Idexx-Biosolids' => 'Enterolert-Idexx-Biosolids',
             'Extraction-Metagenome' => 'Extraction-Metagenome',
@@ -1746,7 +1757,7 @@ class Sample_reception_model extends CI_Model
             'Colilert-Idexx-Water' => 'COLILERT IDEXX WATER',
             'Enterolert-Idexx-Water' => 'ENTEROLERT IDEXX WATER',
             'Moisture_content' => 'MOISTURE CONTENT',
-            'Homeflow' => 'HOMEFLOW',
+            'Hemoflow' => 'HEMOFLOW',
             'Colilert-Idexx-Biosolids' => 'COLILERT IDEXX BIOSOLIDS',
             'Enterolert-Idexx-Biosolids' => 'ENTEROLERT IDEXX BIOSOLIDS',
             'Extraction-Metagenome' => 'EXTRACTION METAGENOME',
@@ -1782,7 +1793,7 @@ class Sample_reception_model extends CI_Model
             'Colilert-Idexx-Water' => 'ECOLI_W',
             'Enterolert-Idexx-Water' => 'ENTERO_W',
             'Moisture_content' => 'MOIST',
-            'Homeflow' => 'FLOW',
+            'Hemoflow' => 'FLOW',
             'Colilert-Idexx-Biosolids' => 'ECOLI_B',
             'Enterolert-Idexx-Biosolids' => 'ENTERO_B',
             'Extraction-Metagenome' => 'META_EXT',
@@ -1818,7 +1829,7 @@ class Sample_reception_model extends CI_Model
             'Colilert-Idexx-Water' => 'Colilert Idexx Water',
             'Enterolert-Idexx-Water' => 'Enterolert Idexx Water',
             'Moisture_content' => 'Moisture Content',
-            'Homeflow' => 'Homeflow',
+            'Hemoflow' => 'Hemoflow',
             'Colilert-Idexx-Biosolids' => 'Colilert Idexx Biosolids',
             'Enterolert-Idexx-Biosolids' => 'Enterolert Idexx Biosolids',
             'Extraction-Metagenome' => 'Extraction Metagenome',
@@ -1880,7 +1891,7 @@ class Sample_reception_model extends CI_Model
             'Campy-Hemoflow-qPCR' => 'Campylobacter MPN/L',
             'Sequencing' => 'Sequencing',
             'Microbial-Source-Tracking' => 'Microbial Source Tracking',
-            'Homeflow' => 'Homeflow',
+            'Hemoflow' => 'Hemoflow',
             'Colilert-Idexx-Biosolids' => 'E.coli MPN/g dw',
             'Enterolert-Idexx-Biosolids' => 'Enterococci MPN/g dw',
             'Extraction-Metagenome' => 'Extraction Metagenome',
@@ -2427,8 +2438,8 @@ class Sample_reception_model extends CI_Model
             'Salmonella-Liquids' => 'Salmonella',
             'Salmonella-P/A' => 'Salmonella',
             
-            // Hemoflow group
-            'Homeflow' => 'Hemoflow',
+            // Hemoflow group - all hemoflow variants grouped together
+            'Hemoflow' => 'Hemoflow',
             'Campy-Hemoflow' => 'Hemoflow',
             'Campy-Hemoflow-QPCR' => 'Hemoflow',
             'Colilert-Hemoflow' => 'Hemoflow',
@@ -2461,10 +2472,26 @@ class Sample_reception_model extends CI_Model
             }
         }
         
-        // Sort the final array
-        sort($mapped_testing_types);
+        // Filter to show only specific testing types
+        $allowed_testing_types = array(
+            'Campylobacter',
+            'E. coli',
+            'Enterococci',
+            'Salmonella',
+            'Hemoflow',
+            'Moisture Content',
+            'Protozoa qPCR',
+            'Sequencing',
+            'Microbial Source Tracking'
+        );
         
-        return $mapped_testing_types;
+        // Filter mapped testing types to only include allowed ones
+        $filtered_testing_types = array_intersect($mapped_testing_types, $allowed_testing_types);
+        
+        // Sort the final array
+        sort($filtered_testing_types);
+        
+        return $filtered_testing_types;
     }
 
     // Unlock/Lock Project Methods

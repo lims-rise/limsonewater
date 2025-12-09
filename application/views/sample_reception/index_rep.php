@@ -149,58 +149,48 @@
         page-break-inside: avoid !important;
     }
     
-    /* Styling tabel analysis untuk print */
+    /* Styling tabel analysis untuk print - disesuaikan dengan screen view */
     .analysis-table-container #analysis-results-table {
         width: 100% !important;
         border-collapse: collapse !important;
-        font-size: 6pt !important;
-        border: 1px solid #000 !important;
-        margin: 5px 0 !important;
+        font-size: 7pt !important;
+        border: 1px solid #3c8dbc !important;
+        margin: 10px 0 !important;
         page-break-inside: avoid !important;
     }
     
-    /* Cell styling untuk print - ultra compact size */
+    /* Cell styling untuk print - sama dengan screen view */
     .analysis-table-container #analysis-results-table th,
     .analysis-table-container #analysis-results-table td {
-        font-size: 5pt !important;
-        padding: 0.5px 0.3px !important;
-        border: 0.5px solid #000 !important;
-        text-align: center !important;
-        word-break: break-word !important;
+        border: 1px solid #3c8dbc !important;
+        padding: 4px 3px !important;
+        font-size: 7pt !important;
         vertical-align: middle !important;
-        line-height: 0.9 !important;
-        max-width: 5mm !important;
-        min-width: 4mm !important;
+        text-align: center !important;
+        word-wrap: break-word !important;
+        white-space: normal !important;
     }
     
     /* Sample column (first column) styling untuk print */
     .analysis-table-container #analysis-results-table th:first-child,
     .analysis-table-container #analysis-results-table td:first-child {
-        min-width: 25mm !important;
-        max-width: 30mm !important;
         text-align: left !important;
         font-weight: bold !important;
         font-size: 7pt !important;
-        padding: 3px 4px !important;
+        padding: 4px 3px !important;
     }
     
-    /* Header styling untuk print - ultra compact vertical */
+    /* Header styling untuk print - sama dengan screen view */
     .analysis-table-container #analysis-results-table th {
         background-color: #f2f2f2 !important;
         font-weight: bold !important;
-        font-size: 3pt !important;
-        padding: 0.5px 0.3px !important;
-        word-wrap: break-word !important;
-        height: 35mm !important;
-        writing-mode: vertical-lr !important;
-        text-orientation: mixed !important;
-        max-width: 5mm !important;
-        min-width: 4mm !important;
-    }
-    
-    /* Units text dalam header - micro compact */
-    .analysis-table-container #analysis-results-table th br {
-        line-height: 0.6 !important;
+        font-size: 6pt !important;
+        padding: 5px 3px !important;
+        word-break: break-word !important;
+        line-height: 1.1 !important;
+        writing-mode: horizontal-tb !important;
+        text-orientation: initial !important;
+        text-align: center !important;
     }
     
 
@@ -228,6 +218,24 @@
     #additional-info td {
         font-size: 7.5pt !important;
         padding: 1.5px 1px !important;
+    }
+    
+    /* Legend table styling untuk print */
+    .legend-table {
+        font-size: 7pt !important;
+        border-collapse: collapse !important;
+        page-break-inside: avoid !important;
+    }
+    
+    .legend-table th, .legend-table td {
+        border: 0px solid #3c8dbc !important;
+        padding: 2px 3px !important;
+        font-size: 7pt !important;
+    }
+    
+    .legend-table th {
+        background-color: #f2f2f2 !important;
+        font-weight: bold !important;
     }
     </style>
 
@@ -271,6 +279,9 @@
         padding: 5px 3px !important;
         word-break: break-word !important;
         line-height: 1.1 !important;
+        writing-mode: horizontal-tb !important;
+        text-orientation: initial !important;
+        text-align: center !important;
     }
 
     #analysis-results-table td:first-child, #analysis-results-table th:first-child {
@@ -279,6 +290,24 @@
         min-width: 80px !important;
         max-width: 100px !important;
         font-size: 7pt !important;
+    }
+    
+    /* Legend table styling untuk screen */
+    .legend-table {
+        font-size: 7pt !important;
+        border-collapse: collapse !important;
+        width: 100% !important;
+    }
+    
+    .legend-table th, .legend-table td {
+        border: 0px solid #3c8dbc !important;
+        padding: 3px 5px !important;
+        font-size: 7pt !important;
+    }
+    
+    .legend-table th {
+        background-color: #f2f2f2 !important;
+        font-weight: bold !important;
     }
     </style>
 </head>
@@ -505,17 +534,34 @@
                         $samples = [];
                         $all_testing_types = [];
                         
+                        // Define allowed testing types for filtering
+                        $allowed_testing_types = array(
+                            'Campylobacter-Biosolids', 'Campylobacter-Liquids', 'Campylobacter-P/A',
+                            'Colilert-Idexx-Water', 'Colilert-Idexx-Biosolids',
+                            'Enterolert-Idexx-Water', 'Enterolert-Idexx-Biosolids',
+                            'Salmonella-Biosolids', 'Salmonella-Liquids', 'Salmonella-P/A',
+                            'Hemoflow', 'Campy-Hemoflow', 'Campy-Hemoflow-QPCR', 'Colilert-Hemoflow', 'Enterolert-Hemoflow', 'Salmonella-Hemoflow',
+                            'Moisture_content',
+                            'Protozoa',
+                            'Sequencing',
+                            'Microbial-Source-Tracking'
+                        );
                         // Collect all unique testing types and organize data by sample
                         foreach ($response2 as $row2) {
                             $sample_id = $row2->id_one_water_sample;
                             $testing_type = $row2->testing_type;
+                            
+                            // Only process allowed testing types
+                            if (!in_array($testing_type, $allowed_testing_types)) {
+                                continue;
+                            }
                             
                             // Store all unique testing types
                             if (!in_array($testing_type, $all_testing_types)) {
                                 $all_testing_types[] = $testing_type;
                             }
                             
-                            // Group by sample
+                            // Group by sample (only for allowed testing types)
                             if (!isset($samples[$sample_id])) {
                                 $samples[$sample_id] = [];
                             }
@@ -535,48 +581,55 @@
                                 <tr>
                                     <th style="border:1px solid #3c8dbc; padding: 8px; background-color: #f2f2f2; font-weight: bold; text-align: center; min-width: 100px;"></th>
                                     <?php foreach ($all_testing_types as $testing_type): ?>
-                                        <th style="border:1px solid #3c8dbc; padding: 0.5px 0.3px; background-color: #f2f2f2; font-weight: bold; text-align: center; min-width: 18px; max-width: 22px; font-size: 3.5pt; line-height: 0.7; word-break: break-word; writing-mode: vertical-lr; text-orientation: mixed;">
+                                        <th style="border:1px solid #3c8dbc; padding: 5px 3px; background-color: #f2f2f2; font-weight: bold; text-align: center; font-size: 6pt; line-height: 1.1; word-break: break-word;">
                                             <?php 
-                                            // Get units for this testing type
+                                            // Get units for this testing type (only for allowed types)
                                             $units = '';
                                             foreach ($response2 as $row2) {
-                                                if ($row2->testing_type == $testing_type && !empty($row2->units)) {
+                                                if ($row2->testing_type == $testing_type && !empty($row2->units) 
+                                                    && in_array($row2->testing_type, $allowed_testing_types)) {
                                                     $units = $row2->units;
                                                     break;
                                                 }
                                             }
                                             
-                                            // Extremely compact testing type names - max 4 characters
-                                            $display_name = $testing_type;
+                                            // Create clean display name mapping without suffixes
+                                            $display_mappings = array(
+                                                // Hemoflow variants
+                                                'Campy-Hemoflow-QPCR' => 'C-HF-QPCR',
+                                                'Campy-Hemoflow' => 'C-HF', 
+                                                'Colilert-Hemoflow' => 'CoH',
+                                                'Enterolert-Hemoflow' => 'EH',
+                                                'Salmonella-Hemoflow' => 'S-HF',
+                                                'Hemoflow' => 'HF',
+                                                
+                                                // Campylobacter variants
+                                                'Campylobacter-Biosolids' => 'CB',
+                                                'Campylobacter-Liquids' => 'CL',
+                                                'Campylobacter-P/A' => 'CPA',
+                                                
+                                                // E. coli variants
+                                                'Colilert-Idexx-Biosolids' => 'CoB',
+                                                'Colilert-Idexx-Water' => 'CoW',
+                                                
+                                                // Enterococci variants
+                                                'Enterolert-Idexx-Biosolids' => 'EB',
+                                                'Enterolert-Idexx-Water' => 'EW',
+                                                
+                                                // Salmonella variants
+                                                'Salmonella-Biosolids' => 'SB',
+                                                'Salmonella-Liquids' => 'SL', 
+                                                'Salmonella-P/A' => 'SPA',
+                                                
+                                                // Other types
+                                                'Microbial-Source-Tracking' => 'Microbial',
+                                                'Moisture_content' => 'Moisture',
+                                                'Protozoa' => 'Ptz',
+                                                'Sequencing' => 'Seq'
+                                            );
                                             
-                                            // Ultra aggressive shortening for maximum space efficiency
-                                            $display_name = str_replace('Biobank-In', 'BioI', $display_name);
-                                            $display_name = str_replace('Campylobacter-Hemoflow-QPCR', 'CHQ', $display_name);
-                                            $display_name = str_replace('Campylobacter-Hemoflow', 'CHF', $display_name);
-                                            $display_name = str_replace('Campylobacter-Biosolids', 'CB', $display_name);
-                                            $display_name = str_replace('Campylobacter-Liquids', 'CL', $display_name);
-                                            $display_name = str_replace('Campylobacter-MPN', 'CM', $display_name);
-                                            $display_name = str_replace('Campylobacter-P/A', 'CPA', $display_name);
-                                            $display_name = str_replace('Campylobacter-QPCR', 'CQ', $display_name);
-                                            $display_name = str_replace('Colilert-Hemoflow', 'CoH', $display_name);
-                                            $display_name = str_replace('Colilert-Idexx-Biosolids', 'CoB', $display_name);
-                                            $display_name = str_replace('Colilert-Idexx-Water', 'CoW', $display_name);
-                                            $display_name = str_replace('Enterolert-Hemoflow', 'EH', $display_name);
-                                            $display_name = str_replace('Enterolert-Idexx-Biosolids', 'EB', $display_name);
-                                            $display_name = str_replace('Enterolert-Idexx-Water', 'EW', $display_name);
-                                            $display_name = str_replace('Extraction-Biosolid', 'ExB', $display_name);
-                                            $display_name = str_replace('Extraction-Culture-Plate', 'ExC', $display_name);
-                                            $display_name = str_replace('Extraction-Liquid', 'ExL', $display_name);
-                                            $display_name = str_replace('Extraction-Metagenome', 'ExM', $display_name);
-                                            $display_name = str_replace('Hemoflow', 'HF', $display_name);
-                                            $display_name = str_replace('Microbial-Source-Tracking', 'MST', $display_name);
-                                            $display_name = str_replace('Moisture_content', 'Mst', $display_name);
-                                            $display_name = str_replace('Salmonella-Biosolids', 'SB', $display_name);
-                                            $display_name = str_replace('Salmonella-Hemoflow', 'SHF', $display_name);
-                                            $display_name = str_replace('Salmonella-Liquids', 'SL', $display_name);
-                                            $display_name = str_replace('Salmonella-P/A', 'SPA', $display_name);
-                                            $display_name = str_replace('Sequencing', 'Seq', $display_name);
-                                            $display_name = str_replace('Protozoa', 'Ptz', $display_name);
+                                            // Apply mapping - get mapped display name or use original
+                                            $display_name = isset($display_mappings[$testing_type]) ? $display_mappings[$testing_type] : $testing_type;
                                             
                                             // Micro compact units - only essential info
                                             $short_units = '';
@@ -596,8 +649,8 @@
                                                 }
                                             }
                                             
-                                            // Show only testing name, units in parentheses if space allows
-                                            echo $display_name . ($short_units && strlen($short_units) <= 4 ? '(' . $short_units . ')' : '');
+                                            // Show only testing name, no units in header
+                                            echo $display_name;
                                             ?>
                                         </th>
                                     <?php endforeach; ?>
@@ -633,6 +686,39 @@
                                             ?>
                                         </td>
                                     <?php endforeach; ?>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Tabel Keterangan Singkatan -->
+                    <div style="margin-top: 15px; page-break-inside: avoid;">
+                        <h5 style="font-size: 9pt; font-weight: bold; margin-bottom: 8px;">Abbreviation Legend:</h5>
+                        <table class="legend-table" style="width: 50%; border: 0px solid #3c8dbc;">
+                            <thead>
+                                <tr>
+                                    <th style="border: 0px solid #3c8dbc; padding: 3px 5px; background-color: #f2f2f2; font-weight: bold; text-align: left; width: 15%;">Code</th>
+                                    <th style="border: 0px solid #3c8dbc; padding: 3px 5px; background-color: #f2f2f2; font-weight: bold; text-align: left; width: 85%;">Full Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                // Create legend based on what's actually displayed
+                                $legend_mappings = array();
+                                foreach ($all_testing_types as $testing_type) {
+                                    if (isset($display_mappings[$testing_type])) {
+                                        $legend_mappings[$display_mappings[$testing_type]] = $testing_type;
+                                    }
+                                }
+                                // Sort by abbreviation for easier reading
+                                ksort($legend_mappings);
+                                
+                                foreach ($legend_mappings as $abbrev => $full_name):
+                                ?>
+                                <tr>
+                                    <td style="border: 1px solid #3c8dbc; padding: 2px 5px; font-weight: bold;"><?php echo $abbrev; ?></td>
+                                    <td style="border: 1px solid #3c8dbc; padding: 2px 5px;"><?php echo $full_name; ?></td>
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>
