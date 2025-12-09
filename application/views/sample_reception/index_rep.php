@@ -408,12 +408,12 @@
                                         <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Date of Sample Received</td>
                                         <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($from_date) && $from_date !== 'null' && !empty($to_date) && $to_date !== 'null') ? $from_date . "&nbsp &nbsp~&nbsp &nbsp" . $to_date : '-'; ?></td>
                                     </tr>
-                                    <tr>
+                                    <!-- <tr>
                                         <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Analysis</td>
                                         <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">-</td>
-                                    </tr>
+                                    </tr> -->
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Tests Conducted</td>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Analysis</td>
                                         <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo isset($testing_information) ? htmlspecialchars($testing_information) : '-'; ?></td>
                                     </tr>
                                 </thead>
