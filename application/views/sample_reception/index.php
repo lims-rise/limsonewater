@@ -705,7 +705,7 @@
                                     <option value="Colilert-Hemoflow">Colilert Hemoflow</option>
                                     <option value="Campy-Hemoflow">Campy Hemoflow</option>
                                     <option value="Salmonella-Hemoflow">Salmonella Hemoflow</option>
-                                    <option value="Homeflow">Homeflow</option>
+                                    <option value="Hemoflow">Hemoflow</option>
                                     <option value="Colilert-Idexx-Biosolids">Colilert Idexx Biosolids</option>
                                     <option value="Enterolert-Idexx-Biosolids">Enterolert Idexx Biosolids</option>
                                     <option value="Extraction-Metagenome">Extraction Metagenome</option>
