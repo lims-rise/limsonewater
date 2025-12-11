@@ -32,12 +32,17 @@ class Sample_reception_model extends CI_Model
                 WHERE srs.id_project = sr.id_project AND srs.flag = 0 
                 AND rt.testing_type NOT LIKE "%microbial%"
             ) = (
-                SELECT COUNT(CASE WHEN COALESCE(
-                    bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
-                    ec.review, el.review, em.review, cb.review, mc.review, 
-                    ewi.review, ebi.review, cbi.review, cwi.review, 
-                    pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review, seq.is_status
-                ) = 1 THEN 1 END) 
+                SELECT COUNT(CASE WHEN CASE
+                    WHEN rt.testing_type = "Sequencing" THEN 
+                        CASE WHEN seq.is_status = 1 AND ecp.species_id IS NOT NULL AND ecp.species_id != "" THEN 1 ELSE 0 END
+                    ELSE
+                        COALESCE(
+                            bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
+                            ec.review, el.review, em.review, cb.review, mc.review, 
+                            ewi.review, ebi.review, cbi.review, cwi.review, 
+                            pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review
+                        )
+                    END = 1 THEN 1 END) 
                 FROM sample_reception_sample srs 
                 LEFT JOIN sample_reception_testing srt ON srs.id_sample = srt.id_sample AND srt.flag = 0
                 LEFT JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)
@@ -65,6 +70,8 @@ class Sample_reception_model extends CI_Model
                 LEFT JOIN salmonella_hemoflow sh ON sh.salmonella_assay_barcode = srt.barcode AND sh.flag = 0
                 LEFT JOIN campy_hemoflow_qpcr chq ON chq.campy_assay_barcode = srt.barcode AND chq.flag = 0
                 LEFT JOIN sequencing seq ON seq.sequencing_barcode = srt.barcode AND seq.flag = 0
+                LEFT JOIN sample_reception_sample srs2 ON srs2.id_one_water_sample = srs.id_one_water_sample AND srs2.flag = 0
+                LEFT JOIN extraction_culture_plate ecp ON ecp.id_one_water_sample = srs2.id_one_water_sample AND ecp.flag = 0
                 WHERE srs.id_project = sr.id_project AND srs.flag = 0 
                 AND rt.testing_type NOT LIKE "%microbial%"
             ) THEN 1 ELSE 0 END as is_completed', FALSE);
@@ -216,12 +223,17 @@ class Sample_reception_model extends CI_Model
                 WHERE srs2.id_project = sr.id_project AND srs2.flag = 0
                 AND rt.testing_type NOT LIKE "%microbial%"
             ) = (
-                SELECT COUNT(CASE WHEN COALESCE(
-                    bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
-                    ec.review, el.review, em.review, cb.review, mc.review, 
-                    ewi.review, ebi.review, cbi.review, cwi.review, 
-                    pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review, seq.is_status
-                ) = 1 THEN 1 END) 
+                SELECT COUNT(CASE WHEN CASE
+                    WHEN rt.testing_type = "Sequencing" THEN 
+                        CASE WHEN seq.is_status = 1 AND ecp.species_id IS NOT NULL AND ecp.species_id != "" THEN 1 ELSE 0 END
+                    ELSE
+                        COALESCE(
+                            bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
+                            ec.review, el.review, em.review, cb.review, mc.review, 
+                            ewi.review, ebi.review, cbi.review, cwi.review, 
+                            pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review
+                        )
+                    END = 1 THEN 1 END) 
                 FROM sample_reception_sample srs2 
                 LEFT JOIN sample_reception_testing srt ON srs2.id_sample = srt.id_sample AND srt.flag = 0
                 LEFT JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)
@@ -249,6 +261,8 @@ class Sample_reception_model extends CI_Model
                 LEFT JOIN salmonella_hemoflow sh ON sh.salmonella_assay_barcode = srt.barcode AND sh.flag = 0
                 LEFT JOIN campy_hemoflow_qpcr chq ON chq.campy_assay_barcode = srt.barcode AND chq.flag = 0
                 LEFT JOIN sequencing seq ON seq.sequencing_barcode = srt.barcode AND seq.flag = 0
+                LEFT JOIN sample_reception_sample srs3 ON srs3.id_one_water_sample = srs2.id_one_water_sample AND srs3.flag = 0
+                LEFT JOIN extraction_culture_plate ecp ON ecp.id_one_water_sample = srs3.id_one_water_sample AND ecp.flag = 0
                 WHERE srs2.id_project = sr.id_project AND srs2.flag = 0
                 AND rt.testing_type NOT LIKE "%microbial%"
             ) THEN 1 ELSE 0 END as is_completed
@@ -453,12 +467,18 @@ class Sample_reception_model extends CI_Model
                     sr.id_client_sample,
                     COUNT(srs.id_sample) as total_samples,
                     COUNT(CASE WHEN rt.testing_type NOT LIKE '%microbial%' THEN srt.id_testing END) as total_tests,
-                    COUNT(CASE WHEN rt.testing_type NOT LIKE '%microbial%' AND COALESCE(
-                        bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
-                        ec.review, el.review, em.review, cb.review, mc.review, 
-                        ewi.review, ebi.review, cbi.review, cwi.review, 
-                        pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review, seq.is_status
-                    ) = 1 THEN 1 END) as completed_tests
+                    COUNT(CASE WHEN rt.testing_type NOT LIKE '%microbial%' AND 
+                        CASE
+                            WHEN rt.testing_type = 'Sequencing' THEN 
+                                CASE WHEN seq.is_status = 1 AND ecp.species_id IS NOT NULL AND ecp.species_id != '' THEN 1 ELSE 0 END
+                            ELSE
+                                COALESCE(
+                                    bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
+                                    ec.review, el.review, em.review, cb.review, mc.review, 
+                                    ewi.review, ebi.review, cbi.review, cwi.review, 
+                                    pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review
+                                )
+                        END = 1 THEN 1 END) as completed_tests
                 FROM sample_reception sr
                 LEFT JOIN sample_reception_sample srs ON sr.id_project = srs.id_project AND srs.flag = 0
                 LEFT JOIN sample_reception_testing srt ON srs.id_sample = srt.id_sample AND srt.flag = 0
@@ -487,6 +507,8 @@ class Sample_reception_model extends CI_Model
                 LEFT JOIN salmonella_hemoflow sh ON sh.salmonella_assay_barcode = srt.barcode AND sh.flag = 0
                 LEFT JOIN campy_hemoflow_qpcr chq ON chq.campy_assay_barcode = srt.barcode AND chq.flag = 0
                 LEFT JOIN sequencing seq ON seq.sequencing_barcode = srt.barcode AND seq.flag = 0
+                LEFT JOIN sample_reception_sample srs4 ON srs4.id_one_water_sample = srs.id_one_water_sample AND srs4.flag = 0
+                LEFT JOIN extraction_culture_plate ecp ON ecp.id_one_water_sample = srs4.id_one_water_sample AND ecp.flag = 0
                 WHERE sr.id_project = ? AND sr.flag = 0
                 GROUP BY sr.id_project";
 
@@ -560,7 +582,12 @@ class Sample_reception_model extends CI_Model
             retest.testing_type AS testing_type, 
             retest.url, 
             COALESCE(bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review, ec.user_review, el.user_review, em.user_review, cb.user_review, mc.user_review, ewi.user_review, ebi.user_review, cbi.user_review, cwi.user_review, pr.user_review, cp.user_review, sp.user_review, hem.user_review, ehf.user_review, chf.user_review, ch.user_review, ex.user_review, sh.user_review, chq.user_review) AS user_review, 
-            COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review, seq.is_status) AS review,
+            CASE 
+                WHEN retest.testing_type = \"Sequencing\" THEN 
+                    CASE WHEN seq.is_status = 1 AND ecp.species_id IS NOT NULL AND ecp.species_id != \"\" THEN 1 ELSE 0 END
+                ELSE
+                    COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review)
+            END AS review,
             tbl_user.full_name,
             ecp.species_id, 
             testing.flag,
@@ -1371,11 +1398,28 @@ class Sample_reception_model extends CI_Model
         $this->db->select('sample_reception_sample.id_one_water_sample, sample_reception_sample.id_project, sample_reception_sample.date_collected, sample_reception_sample.time_collected, sample_reception_sample.date_created,
         ref_person.initial, ref_sampletype.sampletype, sample_reception_sample.quality_check, sample_reception_sample.client_id, sample_reception_sample.comments, sample_reception_sample.date_arrival, 
         sample_reception_sample.time_arrival,
-        COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, ch.review, ex.review, sh.review, chq.review, seq.is_status, 0) AS review,
+        CASE 
+            WHEN rt.testing_type = "Sequencing" THEN 
+                CASE WHEN seq.is_status = 1 AND ecp.species_id IS NOT NULL AND ecp.species_id != "" THEN 1 ELSE 0 END
+            ELSE
+                COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, ch.review, ex.review, sh.review, chq.review, 0)
+        END AS review,
         CASE 
             WHEN COUNT(CASE WHEN rt.testing_type NOT LIKE "%microbial%" THEN testing.id_testing END) = 0 THEN "No Tests"
-            WHEN COUNT(CASE WHEN rt.testing_type NOT LIKE "%microbial%" AND COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review, seq.is_status) = 1 THEN 1 END) = COUNT(CASE WHEN rt.testing_type NOT LIKE "%microbial%" THEN testing.id_testing END) THEN "Complete"
-            WHEN COUNT(CASE WHEN rt.testing_type NOT LIKE "%microbial%" AND COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review, seq.is_status) = 1 THEN 1 END) > 0 THEN "Partial"
+            WHEN COUNT(CASE WHEN rt.testing_type NOT LIKE "%microbial%" AND 
+                CASE
+                    WHEN rt.testing_type = "Sequencing" THEN 
+                        CASE WHEN seq.is_status = 1 AND ecp.species_id IS NOT NULL AND ecp.species_id != "" THEN 1 ELSE 0 END
+                    ELSE
+                        COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review)
+                END = 1 THEN 1 END) = COUNT(CASE WHEN rt.testing_type NOT LIKE "%microbial%" THEN testing.id_testing END) THEN "Complete"
+            WHEN COUNT(CASE WHEN rt.testing_type NOT LIKE "%microbial%" AND 
+                CASE
+                    WHEN rt.testing_type = "Sequencing" THEN 
+                        CASE WHEN seq.is_status = 1 AND ecp.species_id IS NOT NULL AND ecp.species_id != "" THEN 1 ELSE 0 END
+                    ELSE
+                        COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review)
+                END = 1 THEN 1 END) > 0 THEN "Partial"
             ELSE "Incomplete"
         END AS review_status
         ');
@@ -1405,6 +1449,7 @@ class Sample_reception_model extends CI_Model
         $this->db->join('salmonella_hemoflow sh', 'sh.salmonella_assay_barcode = testing.barcode and sh.flag = 0', 'left');
         $this->db->join('campy_hemoflow_qpcr chq', 'chq.campy_assay_barcode = testing.barcode and chq.flag = 0', 'left');
         $this->db->join('sequencing seq', 'seq.sequencing_barcode = testing.barcode and seq.flag = 0', 'left');
+        $this->db->join('extraction_culture_plate ecp', 'ecp.id_one_water_sample = sample_reception_sample.id_one_water_sample and ecp.flag = 0', 'left');
         $this->db->join('ref_testing rt', 'FIND_IN_SET(rt.id_testing_type, testing.id_testing_type)', 'left');
         $this->db->join('ref_sampletype', 'sample_reception_sample.id_sampletype = ref_sampletype.id_sampletype', 'left');
         $this->db->join('ref_person', 'sample_reception_sample.id_person=ref_person.id_person', 'left');
