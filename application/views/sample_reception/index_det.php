@@ -813,10 +813,9 @@ background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
 							let statusBtn = '';
 							if (row.review == "1") {
 								statusBtn = '<span class="btn btn-xs btn-primary rounded-pill">Completed</span>';
-							} else if (row.review == "0") {
-								statusBtn = '<span class="btn btn-xs btn-warning rounded-pill" style="background-color: #f39c12; border-color: #f39c12;">Pending</span>';
 							} else {
-								statusBtn = '<span class="btn btn-xs btn-info rounded-pill">No status</span>';
+								// Both is_status = 0 (data exists but pending) and no data (null/undefined) show as Pending
+								statusBtn = '<span class="btn btn-xs btn-warning rounded-pill" style="background-color: #f39c12; border-color: #f39c12;">Pending</span>';
 							}
 							return statusBtn;
 						}
