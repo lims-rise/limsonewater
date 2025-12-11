@@ -107,12 +107,20 @@ class Sequencing_model extends CI_Model
 
     // Fuction insert data
     public function insert($data) {
+        // Ensure is_status is set to 1 (Completed) for all new sequencing records
+        if (!isset($data['is_status'])) {
+            $data['is_status'] = 1;
+        }
         $this->db->insert('sequencing', $data);
     }
 
 
 
     function updateSequencingData($id_sequencing, $data) {
+        // Ensure is_status is set to 1 (Completed) for all sequencing updates
+        if (!isset($data['is_status'])) {
+            $data['is_status'] = 1;
+        }
         $this->db->where('id_sequencing', $id_sequencing);
         $this->db->update('sequencing', $data);
     }

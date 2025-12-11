@@ -236,18 +236,20 @@ class Sequencing extends CI_Controller
                 $existing_sequencing = $this->Sequencing_model->getSequencingRecord($id_one_water_sample, $sequencing_barcode);
                 
                 if ($existing_sequencing) {
-                    // Update existing sequencing record with minimal fields
+                    // Update existing sequencing record - set is_status to 1 (Completed)
                     $update_data = array(
+                        'is_status' => 1,
                         'user_updated' => $this->session->userdata('id_users'),
                         'date_updated' => $dt->format('Y-m-d H:i:s')
                     );
                     $this->db->where('id_sequencing', $existing_sequencing->id_sequencing);
                     $this->db->update('sequencing', $update_data);
                 } else {
-                    // Insert new sequencing record with minimal required fields
+                    // Insert new sequencing record - set is_status to 1 (Completed)
                     $insert_data = array(
                         'id_one_water_sample' => $id_one_water_sample,
                         'sequencing_barcode' => $sequencing_barcode,
+                        'is_status' => 1,
                         'user_created' => $this->session->userdata('id_users'),
                         'date_created' => $dt->format('Y-m-d H:i:s'),
                         'flag' => '0'
