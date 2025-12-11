@@ -23,7 +23,7 @@ class Moisture_content_model extends CI_Model
     function json() {
         $this->datatables->select('moisture_content.id_moisture, moisture_content.id_one_water_sample, moisture_content.id_person, ref_person.initial, moisture_content.date_start,
         moisture_content.id_sampletype, ref_sampletype.sampletype, moisture_content.barcode_moisture_content, moisture_content.tray_weight, moisture_content.traysample_wetweight,
-        moisture_content.time_incubator, moisture_content.comments, moisture_content.date_created, moisture_content.date_updated, GREATEST(moisture_content.date_created, moisture_content.date_updated) AS latest_date');
+        moisture_content.date_incubator, moisture_content.time_incubator, moisture_content.comments, moisture_content.date_created, moisture_content.date_updated, GREATEST(moisture_content.date_created, moisture_content.date_updated) AS latest_date');
         $this->datatables->from($this->table);
         $this->datatables->join('ref_person', 'moisture_content.id_person = ref_person.id_person', 'left');
         $this->datatables->join('ref_sampletype', 'moisture_content.id_sampletype = ref_sampletype.id_sampletype', 'left');
@@ -123,7 +123,7 @@ class Moisture_content_model extends CI_Model
         mc.review, 
         user.full_name,
         mc.id_sampletype, rs.sampletype, mc.barcode_moisture_content, mc.tray_weight, mc.traysample_wetweight,
-        mc.time_incubator, mc.comments');
+        mc.date_incubator, mc.time_incubator, mc.comments');
       $this->db->from('moisture_content AS mc');
       $this->db->join('ref_sampletype AS rs', 'mc.id_sampletype = rs.id_sampletype', 'left');
       $this->db->join('ref_person AS rp',  'mc.id_person = rp.id_person', 'left');

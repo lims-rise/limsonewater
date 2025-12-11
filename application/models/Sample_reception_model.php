@@ -561,7 +561,8 @@ class Sample_reception_model extends CI_Model
             retest.url, 
             COALESCE(bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review, ec.user_review, el.user_review, em.user_review, cb.user_review, mc.user_review, ewi.user_review, ebi.user_review, cbi.user_review, cwi.user_review, pr.user_review, cp.user_review, sp.user_review, hem.user_review, ehf.user_review, chf.user_review, ch.user_review, ex.user_review, sh.user_review, chq.user_review) AS user_review, 
             COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review, seq.is_status) AS review,
-            tbl_user.full_name, 
+            tbl_user.full_name,
+            ecp.species_id, 
             testing.flag,
             CASE 
                 WHEN retest.testing_type = 'Campylobacter-Biosolids' THEN crm.mpn_concentration_dw
@@ -574,6 +575,7 @@ class Sample_reception_model extends CI_Model
                 WHEN retest.testing_type = 'Salmonella-Biosolids' THEN srmb.mpn_concentration_dw
                 WHEN retest.testing_type = 'Salmonella-Liquids' THEN srml.mpn_concentration
                 WHEN retest.testing_type = 'Salmonella-P/A' THEN srbp.confirmation
+                WHEN retest.testing_type = 'Sequencing' THEN ecp.species_id
                 WHEN retest.testing_type = 'Campy-Hemoflow' THEN 
                     CASE 
                         WHEN crmh.mpn_concentration IS NOT NULL AND hem.volume_eluted IS NOT NULL AND hem.volume_filter IS NOT NULL AND hem.volume_filter > 0 THEN
@@ -676,6 +678,7 @@ class Sample_reception_model extends CI_Model
         $this->datatables->join('moisture72 m72', 'mc.id_moisture = m72.id_moisture and m72.flag = 0', 'left');
         $this->datatables->join('protozoa ptz', 'sample.id_one_water_sample = ptz.id_one_water_sample and ptz.flag = 0', 'left');
         $this->datatables->join('sequencing seq', 'seq.sequencing_barcode = testing.barcode and seq.flag = 0', 'left');
+        $this->datatables->join('extraction_culture_plate ecp', 'ecp.id_one_water_sample = sample.id_one_water_sample and ecp.flag = 0', 'left');
         // $this->datatables->join('campy_hemoflow_qpcr_result_mpn crmhq', 'chq.id_campy_hemoflow_qpcr = crmhq.id_campy_hemoflow_qpcr and crmhq.flag = 0', 'left');
         $this->datatables->join('tbl_user', 'tbl_user.id_users = COALESCE(bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review, ec.user_review, el.user_review, em.user_review, cb.user_review, mc.user_review, ewi.user_review, ebi.user_review, cbi.user_review, cwi.user_review, pr.user_review, cp.user_review, sp.user_review, hem.user_review, ehf.user_review, chf.user_review, ch.user_review, ex.user_review, sh.user_review, chq.user_review)', 'left');
         $this->datatables->where('testing.flag', '0');
@@ -718,6 +721,7 @@ class Sample_reception_model extends CI_Model
                 WHEN retest.testing_type = 'Salmonella-Biosolids' THEN srmb.mpn_concentration_dw
                 WHEN retest.testing_type = 'Salmonella-Liquids' THEN srml.mpn_concentration
                 WHEN retest.testing_type = 'Salmonella-P/A' THEN srbp.confirmation
+                WHEN retest.testing_type = 'Sequencing' THEN ecp.species_id
                 WHEN retest.testing_type = 'Campy-Hemoflow' THEN 
                     CASE 
                         WHEN crmh.mpn_concentration IS NOT NULL AND hem.volume_eluted IS NOT NULL AND hem.volume_filter IS NOT NULL AND hem.volume_filter > 0 THEN
@@ -818,6 +822,7 @@ class Sample_reception_model extends CI_Model
         LEFT JOIN salmonella_hemoflow_result_mpn shrm ON sh.id_salmonella_hemoflow = shrm.id_salmonella_hemoflow AND shrm.flag = 0
         LEFT JOIN moisture72 m72 ON mc.id_moisture = m72.id_moisture AND m72.flag = 0
         LEFT JOIN protozoa ptz ON sample.id_one_water_sample = ptz.id_one_water_sample AND ptz.flag = 0
+        LEFT JOIN extraction_culture_plate ecp ON ecp.id_one_water_sample = sample.id_one_water_sample AND ecp.flag = 0
         WHERE sample.id_project = ? AND testing.flag = 0 AND sample.flag = 0
         AND retest.testing_type IN (
             'Campylobacter-Biosolids', 'Campylobacter-Liquids', 'Campylobacter-P/A',

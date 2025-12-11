@@ -71,6 +71,7 @@ class Moisture_content extends CI_Controller
                 'barcode_moisture_content' => $row->barcode_moisture_content,
                 'tray_weight' => $row->tray_weight,
                 'traysample_wetweight' => $row->traysample_wetweight,
+                'date_incubator' => $row->date_incubator,
                 'time_incubator' => $row->time_incubator,
                 'comments' =>$row->comments,
                 'full_name' => $row->full_name,
@@ -121,6 +122,7 @@ class Moisture_content extends CI_Controller
         $barcode_moisture_content = $this->input->post('barcode_moisture_content', TRUE);
         $tray_weight = $this->input->post('tray_weight', TRUE);
         $traysample_wetweight = $this->input->post('traysample_wetweight', TRUE);
+        $date_incubator = $this->input->post('date_incubator', TRUE);
         $time_incubator = $this->input->post('time_incubator', TRUE);
         $comments = $this->input->post('comments', TRUE);
         // $date_collected = $this->input->post('date_collected',TRUE);
@@ -136,6 +138,7 @@ class Moisture_content extends CI_Controller
                 'barcode_moisture_content' => $barcode_moisture_content,
                 'tray_weight' => $tray_weight,
                 'traysample_wetweight' => $traysample_wetweight,
+                'date_incubator' => $date_incubator,
                 'time_incubator' => $time_incubator,
                 'comments' => $comments,
                 'flag' => '0',
@@ -160,6 +163,7 @@ class Moisture_content extends CI_Controller
                 'barcode_moisture_content' => $barcode_moisture_content,
                 'tray_weight' => $tray_weight,
                 'traysample_wetweight' => $traysample_wetweight,
+                'date_incubator' => $date_incubator,
                 'time_incubator' => $time_incubator,
                 'comments' => $comments,
                 'flag' => '0',
