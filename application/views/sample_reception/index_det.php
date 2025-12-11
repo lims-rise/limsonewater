@@ -810,11 +810,19 @@ background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
 						
 						// Handle Sequencing (uses is_status from sequencing table)
 						if (row.testing_type && row.testing_type.toLowerCase().includes('sequencing')) {
+							// Debug logging
+							console.log('Sequencing row data:', {
+								review: row.review,
+								species_id: row.species_id,
+								barcode: row.barcode
+							});
+							
 							let statusBtn = '';
-							if (row.review == "1") {
+							if (row.review == "1" && row.species_id && row.species_id.trim() !== '') {
+								// Complete only if is_status = 1 AND species_id is filled
 								statusBtn = '<span class="btn btn-xs btn-primary rounded-pill">Completed</span>';
 							} else {
-								// Both is_status = 0 (data exists but pending) and no data (null/undefined) show as Pending
+								// Pending if: is_status = 0, no data, OR species_id is empty
 								statusBtn = '<span class="btn btn-xs btn-warning rounded-pill" style="background-color: #f39c12; border-color: #f39c12;">Pending</span>';
 							}
 							return statusBtn;

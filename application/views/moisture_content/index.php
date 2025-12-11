@@ -42,6 +42,7 @@
                                             <th>Barcode Moisture Content</th>
                                             <th>Tray Weight(g)</th>
                                             <th>Tray Sample(g) Wet Weight</th>
+                                            <th>Date Incubator</th>
                                             <th>Time Incubator</th>
                                             <th>Comments</th>
                                             <!-- <th>Date of Collected</th>
@@ -179,9 +180,24 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="time_incubator" class="col-sm-4 control-label">Time in Incubator</label>
+                                <label for="date_incubator" class="col-sm-4 control-label">Date Incubator</label>
                                 <div class="col-sm-8">
-                                    <input id="time_incubator" name="time_incubator" type="date" class="form-control" placeholder="Time in Incubator" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
+                                    <input id="date_incubator" name="date_incubator" type="date" class="form-control" placeholder="Date Incubator" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="time_incubator" class="col-sm-4 control-label">Time Incubator</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group clockpicker">
+                                        <input id="time_incubator" name="time_incubator" class="form-control" placeholder="Time Incubator" value="<?php 
+                                        $datetime = new DateTime();
+                                        echo $datetime->format('H:i');
+                                        ?>">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-time"></span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -560,6 +576,7 @@
                 {"data": "barcode_moisture_content"},
                 {"data": "tray_weight"},
                 {"data": "traysample_wetweight"},
+                {"data": "date_incubator"},
                 {"data": "time_incubator"},
                 {"data": "comments"},
                 // {"data": "date_collected"},
@@ -672,6 +689,7 @@
             }).val(data.sampletype).trigger('input');
             $('#tray_weight').val(data.tray_weight);
             $('#traysample_wetweight').val(data.traysample_wetweight);
+            $('#date_incubator').val(data.date_incubator);
             $('#time_incubator').val(data.time_incubator);
             $('#comments').val(data.comments);
             $('#barcode_moisture_content').val(data.barcode_moisture_content).attr('readonly', true);

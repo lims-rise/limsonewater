@@ -50,13 +50,18 @@
 								<input class="form-control " id="traysample_wetweight" name="traysample_wetweight" value="<?php echo $traysample_wetweight ?>" disabled>
 							</div>
 
-							<label for="time_incubator" class="col-sm-2 control-label">Time in Incubator</label>
+							<label for="time_incubator" class="col-sm-2 control-label">Time Incubator</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="time_incubator" name="time_incubator" value="<?php echo $time_incubator ?>"  disabled>
 							</div>
 						</div>
 
 						<div class="form-group">
+                            <label for="date_incubator" class="col-sm-2 control-label">Date Incubator</label>
+							<div class="col-sm-4">
+								<input class="form-control " id="date_incubator" name="date_incubator" value="<?php echo $date_incubator ?>"  disabled>
+							</div>
+
 							<label for="comments" class="col-sm-2 control-label">Comments</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="comments" name="comments" value="<?php echo $comments ?>"  disabled>
