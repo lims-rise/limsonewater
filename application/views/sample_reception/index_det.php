@@ -808,36 +808,17 @@ background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
 							return `<span class="btn btn-xs btn-info rounded-pill">No status</span>`;
 						}
 						
-						// Handle Sequencing - get extraction culture status from current table data
+						// Handle Sequencing (uses is_status from sequencing table)
 						if (row.testing_type && row.testing_type.toLowerCase().includes('sequencing')) {
-							// Find extraction culture row in current DataTable
-							let table = $('#example2').DataTable();
-							let extractionCultureRow = null;
-							
-							// Search through all current data for extraction culture with same sample ID
-							table.rows().data().each(function(rowData) {
-								if (rowData.testing_type && 
-									rowData.testing_type.toLowerCase().includes('extraction') && 
-									rowData.testing_type.toLowerCase().includes('culture') &&
-									rowData.id_one_water_sample === row.id_one_water_sample) {
-									extractionCultureRow = rowData;
-								}
-							});
-							
-							if (extractionCultureRow) {
-								let statusBtn = '';
-								if (extractionCultureRow.review == "1") {
-									statusBtn = '<span class="btn btn-xs btn-success rounded-pill">Reviewed</span>';
-								} else if (extractionCultureRow.review == "0") {
-									statusBtn = '<span class="btn btn-xs btn-warning rounded-pill">Unreview</span>';
-								} else {
-									statusBtn = '<span class="btn btn-xs btn-dark rounded-pill">No data has been entered</span>';
-								}
-								let fullNameBtn = `<span class="btn btn-xs btn-primary rounded-pill">${extractionCultureRow.full_name || 'No user'}</span>`;
-								return `${statusBtn} - ${fullNameBtn} <small class="text-muted">(from Extraction Culture)</small>`;
+							let statusBtn = '';
+							if (row.review == "1") {
+								statusBtn = '<span class="btn btn-xs btn-primary rounded-pill">Completed</span>';
+							} else if (row.review == "0") {
+								statusBtn = '<span class="btn btn-xs btn-warning rounded-pill" style="background-color: #f39c12; border-color: #f39c12;">Pending</span>';
 							} else {
-								return `<span class="btn btn-xs btn-info rounded-pill">No extraction culture found</span>`;
+								statusBtn = '<span class="btn btn-xs btn-info rounded-pill">No status</span>';
 							}
+							return statusBtn;
 						}
 
 						let statusBtn = '';
