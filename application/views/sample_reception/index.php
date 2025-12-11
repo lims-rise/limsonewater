@@ -2080,9 +2080,10 @@ function applyCompletedProjectStyling() {
                                         let completedTests = data.completed_tests || 0;
                                         
                                         // Determine progress bar color based on completion rate
-                                        let progressColor = '#d32f2f'; // red for low completion
-                                        if (completionRate >= 80) progressColor = '#388e3c'; // green
-                                        else if (completionRate >= 50) progressColor = '#f57c00'; // orange
+                                        let progressColor = '#d32f2f'; // red for low completion (0-49%)
+                                        if (completionRate >= 100) progressColor = '#388e3c'; // green for 100% complete
+                                        else if (completionRate >= 80) progressColor = '#1976d2'; // blue for nearly complete (80-99%)
+                                        else if (completionRate >= 50) progressColor = '#f57c00'; // orange for moderate (50-79%)
                                         
                                         // Build comprehensive status HTML
                                         let statusHtml = '<div style="text-align: center; padding: 4px;">' +
@@ -3698,9 +3699,10 @@ $(document).ready(function() {
 }
 
 /* Status Icons */
-.status-icon-completed { color: #22c55e !important; }
-.status-icon-in-progress { color: #3498db !important; }
-.status-icon-pending { color: #f39c12 !important; }
+.status-icon-completed { color: #22c55e !important; } /* Green: 100% Complete */
+.status-icon-nearly-complete { color: #1976d2 !important; } /* Blue: 80-99% Nearly Complete */
+.status-icon-in-progress { color: #3498db !important; } /* Light Blue: In Progress */
+.status-icon-pending { color: #f39c12 !important; } /* Orange: Pending */
 .status-icon-no-samples { color: #6b7280 !important; }
 .status-icon-no-tests { color: #e67e22 !important; }
 .status-icon-not-found { color: #6b7280 !important; }
@@ -3709,6 +3711,12 @@ $(document).ready(function() {
 .project-progress-bar {
     transition: width 0.5s ease-in-out;
 }
+
+/* Progress Bar Colors */
+.progress-bar-danger { background-color: #d32f2f !important; } /* Red: 0-49% */
+.progress-bar-warning { background-color: #f57c00 !important; } /* Orange: 50-79% */
+.progress-bar-info { background-color: #1976d2 !important; } /* Blue: 80-99% */
+.progress-bar-success { background-color: #388e3c !important; } /* Green: 100% */
 
 /* Status Text */
 .project-status-text {
