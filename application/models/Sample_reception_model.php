@@ -552,12 +552,17 @@ class Sample_reception_model extends CI_Model
             $status = 'Completed';
             $class = 'status-icon-completed';
             $icon = 'fa-check-circle';
-            $color = '#22c55e';
+            $color = '#22c55e'; // Green for 100%
+        } elseif ($completion_rate >= 80) {
+            $status = 'Almost Done';
+            $class = 'status-icon-nearly-complete';
+            $icon = 'fa-check-circle-o';
+            $color = '#1976d2'; // Blue for 80-99%
         } elseif ($completion_rate > 0) {
             $status = 'In Progress';
             $class = 'status-icon-in-progress';
             $icon = 'fa-spinner';
-            $color = '#3498db';
+            $color = '#3498db'; // Light blue for ongoing
         }
 
         return array(
