@@ -220,22 +220,9 @@
         padding: 1.5px 1px !important;
     }
     
-    /* Legend table styling untuk print */
-    .legend-table {
-        font-size: 7pt !important;
-        border-collapse: collapse !important;
-        page-break-inside: avoid !important;
-    }
-    
-    .legend-table th, .legend-table td {
-        border: 0px solid #3c8dbc !important;
-        padding: 2px 3px !important;
-        font-size: 7pt !important;
-    }
-    
-    .legend-table th {
-        background-color: #f2f2f2 !important;
-        font-weight: bold !important;
+    /* Hide Analysis Methods Overview section completely in print */
+    .analysis-methods-overview {
+        display: none !important;
     }
     </style>
 
@@ -534,16 +521,34 @@
                         $samples = [];
                         $all_testing_types = [];
                         
-                        // Define allowed testing types for filtering
+                        // Define allowed testing types for filtering - organized by microorganism
                         $allowed_testing_types = array(
+                            // 🧫 Campylobacter group
                             'Campylobacter-Biosolids', 'Campylobacter-Liquids', 'Campylobacter-P/A',
-                            'Colilert-Idexx-Water', 'Colilert-Idexx-Biosolids',
-                            'Enterolert-Idexx-Water', 'Enterolert-Idexx-Biosolids',
-                            'Salmonella-Biosolids', 'Salmonella-Liquids', 'Salmonella-P/A',
-                            'Hemoflow', 'Campy-Hemoflow', 'Campy-Hemoflow-QPCR', 'Colilert-Hemoflow', 'Enterolert-Hemoflow', 'Salmonella-Hemoflow',
+                            'Campy-Hemoflow', 'Campy-Hemoflow-QPCR',
+                            
+                            // 🦠 E. coli group  
+                            'Colilert-Idexx-Water', 'Colilert-Idexx-Biosolids', 'Colilert-Hemoflow',
+                            
+                            // 🧪 Enterococci group
+                            'Enterolert-Idexx-Water', 'Enterolert-Idexx-Biosolids', 'Enterolert-Hemoflow',
+                            
+                            // 🧬 Salmonella group
+                            'Salmonella-Biosolids', 'Salmonella-Liquids', 'Salmonella-P/A', 'Salmonella-Hemoflow',
+                            
+                            // 🩸 Hemoflow Volume
+                            'Hemoflow',
+                            
+                            // 💧 Moisture Content
                             'Moisture_content',
+                            
+                            // 🧬 Protozoa qPCR
                             'Protozoa',
+                            
+                            // 🧬 Sequencing
                             'Sequencing',
+                            
+                            // 🧭 Microbial Source Tracking
                             'Microbial-Source-Tracking'
                         );
                         // Collect all unique testing types and organize data by sample
@@ -593,64 +598,95 @@
                                                 }
                                             }
                                             
-                                            // Create clean display name mapping without suffixes
+                                            // Enhanced display mapping with Parameter-Method/Sample-Units format
                                             $display_mappings = array(
-                                                // Hemoflow variants
-                                                'Campy-Hemoflow-QPCR' => 'C-HF-QPCR',
-                                                'Campy-Hemoflow' => 'C-HF', 
-                                                'Colilert-Hemoflow' => 'CoH',
-                                                'Enterolert-Hemoflow' => 'EH',
-                                                'Salmonella-Hemoflow' => 'S-HF',
-                                                'Hemoflow' => 'HF',
+                                                // 🧫 Campylobacter group
+                                                'Campylobacter-Biosolids' => 'Campylobacter-Biosolids',
+                                                'Campylobacter-Liquids' => 'Campylobacter-Liquids', 
+                                                'Campylobacter-P/A' => 'Campylobacter-P/A',
+                                                'Campy-Hemoflow' => 'Campylobacter-Hemoflow',
+                                                'Campy-Hemoflow-QPCR' => 'Campylobacter-Hemoflow (qPCR)',
                                                 
-                                                // Campylobacter variants
-                                                'Campylobacter-Biosolids' => 'CB',
-                                                'Campylobacter-Liquids' => 'CL',
-                                                'Campylobacter-P/A' => 'CPA',
+                                                // 🦠 E. coli group
+                                                'Colilert-Idexx-Water' => 'E.coli-Water',
+                                                'Colilert-Idexx-Biosolids' => 'E.coli-Biosolids',
+                                                'Colilert-Hemoflow' => 'E.coli-Hemoflow',
                                                 
-                                                // E. coli variants
-                                                'Colilert-Idexx-Biosolids' => 'CoB',
-                                                'Colilert-Idexx-Water' => 'CoW',
+                                                // 🧪 Enterococci group
+                                                'Enterolert-Idexx-Water' => 'Enterococci-Water',
+                                                'Enterolert-Idexx-Biosolids' => 'Enterococci-Biosolids',
+                                                'Enterolert-Hemoflow' => 'Enterococci-Hemoflow',
                                                 
-                                                // Enterococci variants
-                                                'Enterolert-Idexx-Biosolids' => 'EB',
-                                                'Enterolert-Idexx-Water' => 'EW',
+                                                // 🧬 Salmonella group
+                                                'Salmonella-Biosolids' => 'Salmonella-Biosolids',
+                                                'Salmonella-Liquids' => 'Salmonella-Liquids',
+                                                'Salmonella-P/A' => 'Salmonella-P/A', 
+                                                'Salmonella-Hemoflow' => 'Salmonella-Hemoflow',
                                                 
-                                                // Salmonella variants
-                                                'Salmonella-Biosolids' => 'SB',
-                                                'Salmonella-Liquids' => 'SL', 
-                                                'Salmonella-P/A' => 'SPA',
+                                                // 🩸 Hemoflow Volume
+                                                'Hemoflow' => 'Hemoflow',
                                                 
-                                                // Other types
-                                                'Microbial-Source-Tracking' => 'Microbial',
-                                                'Moisture_content' => 'Moisture',
-                                                'Protozoa' => 'Ptz',
-                                                'Sequencing' => 'Seq'
+                                                // 💧 Moisture Content
+                                                'Moisture_content' => 'Moisture Content',
+                                                
+                                                // 🧬 Protozoa qPCR
+                                                'Protozoa' => 'Protozoa-qPCR',
+                                                
+                                                // 🧬 Sequencing
+                                                'Sequencing' => 'Sequencing',
+                                                
+                                                // 🧭 Microbial Source Tracking
+                                                'Microbial-Source-Tracking' => 'Microbial Source Tracking'
                                             );
                                             
                                             // Apply mapping - get mapped display name or use original
                                             $display_name = isset($display_mappings[$testing_type]) ? $display_mappings[$testing_type] : $testing_type;
                                             
-                                            // Micro compact units - only essential info
-                                            $short_units = '';
+                                            // Create header format: Parameter-Method/Sample (Units only)
+                                            $header_with_units = $display_name;
                                             if ($units && $units !== '-') {
-                                                // Extreme abbreviations
-                                                $short_units = str_replace('MPN/100 mL', 'M/100', $units);
-                                                $short_units = str_replace('MPN/g dw', 'M/g', $short_units);
-                                                $short_units = str_replace('copies/L', 'c/L', $short_units);
-                                                $short_units = str_replace('copies/g dw', 'c/g', $short_units);
-                                                $short_units = str_replace('CFU/100 mL', 'C/100', $short_units);
-                                                $short_units = str_replace('% moisture', '%', $short_units);
-                                                $short_units = str_replace('Positive/Negative', 'P/N', $short_units);
-                                                $short_units = str_replace('Detected/Not Detected', 'D/N', $short_units);
-                                                // Max 4 characters for units
-                                                if (strlen($short_units) > 4) {
-                                                    $short_units = substr($short_units, 0, 4);
+                                                // Extract only the actual units, remove parameter names
+                                                $clean_units = $units;
+                                                
+                                                // Remove parameter names from units - extract only measurement units
+                                                $clean_units = preg_replace('/^.*?\s+/', '', $clean_units); // Remove leading words
+                                                $clean_units = str_replace('% moisture', '%', $clean_units);
+                                                
+                                                // Special handling for different testing types
+                                                if ($testing_type === 'Protozoa') {
+                                                    $clean_units = 'c/L & c/g dw';
+                                                } elseif (strpos($clean_units, 'Detected') !== false || strpos($clean_units, 'Positive') !== false) {
+                                                    $clean_units = '–'; // For presence/absence tests
+                                                } elseif (strpos($units, 'MPN') !== false) {
+                                                    // Extract MPN units only
+                                                    if (strpos($units, 'MPN/100 mL') !== false) {
+                                                        $clean_units = 'MPN/100 mL';
+                                                    } elseif (strpos($units, 'MPN/g dw') !== false) {
+                                                        $clean_units = 'MPN/g dw';
+                                                    } elseif (strpos($units, 'MPN/L') !== false) {
+                                                        $clean_units = 'MPN/L';
+                                                    }
+                                                } elseif (strpos($units, 'copies') !== false) {
+                                                    // Extract copies units only
+                                                    if (strpos($units, 'copies/L') !== false) {
+                                                        $clean_units = 'copies/L';
+                                                    } elseif (strpos($units, 'copies/g dw') !== false) {
+                                                        $clean_units = 'copies/g dw';
+                                                    }
+                                                } elseif ($testing_type === 'Hemoflow') {
+                                                    $clean_units = 'L';
+                                                } elseif ($testing_type === 'Moisture_content') {
+                                                    $clean_units = '%';
+                                                } elseif ($testing_type === 'Sequencing' || $testing_type === 'Microbial-Source-Tracking') {
+                                                    $clean_units = '–';
                                                 }
+                                                
+                                                // Add only clean units in parentheses
+                                                $header_with_units = $display_name . ' (' . $clean_units . ')';
                                             }
                                             
-                                            // Show only testing name, no units in header
-                                            echo $display_name;
+                                            // Display the complete header
+                                            echo $header_with_units;
                                             ?>
                                         </th>
                                     <?php endforeach; ?>
@@ -692,35 +728,74 @@
                         </table>
                     </div>
 
-                    <!-- Tabel Keterangan Singkatan -->
-                    <div style="margin-top: 15px; page-break-inside: avoid;">
-                        <h5 style="font-size: 9pt; font-weight: bold; margin-bottom: 8px;">Abbreviation Legend:</h5>
-                        <table class="legend-table" style="width: 50%; border: 0px solid #3c8dbc;">
+                    <!-- Testing Types Information by Category -->
+                    <div class="analysis-methods-overview" style="margin-top: 15px; page-break-inside: avoid;">
+                        <h5 style="font-size: 9pt; font-weight: bold; margin-bottom: 8px;">Analysis Methods Overview:</h5>
+                        <table class="legend-table" style="width: 100%; border: 0px solid #3c8dbc;">
                             <thead>
                                 <tr>
-                                    <th style="border: 0px solid #3c8dbc; padding: 3px 5px; background-color: #f2f2f2; font-weight: bold; text-align: left; width: 15%;">Code</th>
-                                    <th style="border: 0px solid #3c8dbc; padding: 3px 5px; background-color: #f2f2f2; font-weight: bold; text-align: left; width: 85%;">Full Name</th>
+                                    <th style="border: 1px solid #3c8dbc; padding: 3px 5px; background-color: #f2f2f2; font-weight: bold; text-align: left; width: 30%;">Category</th>
+                                    <th style="border: 1px solid #3c8dbc; padding: 3px 5px; background-color: #f2f2f2; font-weight: bold; text-align: left; width: 50%;">Analysis Name</th>
+                                    <th style="border: 1px solid #3c8dbc; padding: 3px 5px; background-color: #f2f2f2; font-weight: bold; text-align: left; width: 20%;">Units</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                // Create legend based on what's actually displayed
-                                $legend_mappings = array();
-                                foreach ($all_testing_types as $testing_type) {
-                                    if (isset($display_mappings[$testing_type])) {
-                                        $legend_mappings[$display_mappings[$testing_type]] = $testing_type;
-                                    }
-                                }
-                                // Sort by abbreviation for easier reading
-                                ksort($legend_mappings);
+                                // Create comprehensive testing information by category
+                                $testing_categories = array(
+                                    '🧫 Campylobacter' => array(
+                                        'Campylobacter-Biosolids' => array('name' => 'Campy Biosolids', 'method' => 'Biosolids', 'units' => 'MPN/g dw'),
+                                        'Campylobacter-Liquids' => array('name' => 'Campy Liquids', 'method' => 'Liquids', 'units' => 'MPN/L'),
+                                        'Campylobacter-P/A' => array('name' => 'Campy PA', 'method' => 'Presence/Absence', 'units' => '–'),
+                                        'Campy-Hemoflow' => array('name' => 'Campy Hemoflow', 'method' => 'Hemoflow', 'units' => 'MPN/L'),
+                                        'Campy-Hemoflow-QPCR' => array('name' => 'Campy qPCR Hemoflow', 'method' => 'Hemoflow (qPCR)', 'units' => 'copies/L')
+                                    ),
+                                    '🦠 E. coli' => array(
+                                        'Colilert-Idexx-Water' => array('name' => 'Colilert Idexx – Water', 'method' => 'Water', 'units' => 'MPN/100 mL'),
+                                        'Colilert-Idexx-Biosolids' => array('name' => 'Colilert Idexx – Biosolids', 'method' => 'Biosolids', 'units' => 'MPN/g dw'),
+                                        'Colilert-Hemoflow' => array('name' => 'Colilert Hemoflow', 'method' => 'Hemoflow', 'units' => 'MPN/100 mL')
+                                    ),
+                                    '🧪 Enterococci' => array(
+                                        'Enterolert-Idexx-Water' => array('name' => 'Enterolert Idexx – Water', 'method' => 'Water', 'units' => 'MPN/100 mL'),
+                                        'Enterolert-Idexx-Biosolids' => array('name' => 'Enterolert Idexx – Biosolids', 'method' => 'Biosolids', 'units' => 'MPN/g dw'),
+                                        'Enterolert-Hemoflow' => array('name' => 'Enterolert Hemoflow', 'method' => 'Hemoflow', 'units' => 'MPN/100 mL')
+                                    ),
+                                    '🧬 Salmonella' => array(
+                                        'Salmonella-Biosolids' => array('name' => 'Salmonella Biosolids', 'method' => 'Biosolids', 'units' => 'MPN/g dw'),
+                                        'Salmonella-Liquids' => array('name' => 'Salmonella Liquids', 'method' => 'Liquids', 'units' => 'MPN/L'),
+                                        'Salmonella-P/A' => array('name' => 'Salmonella PA', 'method' => 'Presence/Absence', 'units' => '–'),
+                                        'Salmonella-Hemoflow' => array('name' => 'Salmonella Hemoflow', 'method' => 'Hemoflow', 'units' => 'MPN/L')
+                                    ),
+                                    '🩸 Hemoflow' => array(
+                                        'Hemoflow' => array('name' => 'Hemoflow', 'method' => 'Hemoflow', 'units' => 'L')
+                                    ),
+                                    '💧 Other Tests' => array(
+                                        'Moisture_content' => array('name' => 'Moisture Content', 'method' => 'Standard', 'units' => '%'),
+                                        'Protozoa' => array('name' => 'Protozoa qPCR', 'method' => 'qPCR', 'units' => 'copies/L & copies/g dw'),
+                                        'Sequencing' => array('name' => 'Sequencing', 'method' => '-', 'units' => '–'),
+                                        'Microbial-Source-Tracking' => array('name' => 'Microbial Source Tracking', 'method' => 'MST', 'units' => '–')
+                                    )
+                                );
                                 
-                                foreach ($legend_mappings as $abbrev => $full_name):
+                                foreach ($testing_categories as $category => $tests):
+                                    $first_in_category = true;
+                                    foreach ($tests as $test_key => $test_info):
+                                        // Only show tests that are actually present in data
+                                        if (in_array($test_key, $all_testing_types)):
                                 ?>
                                 <tr>
-                                    <td style="border: 1px solid #3c8dbc; padding: 2px 5px; font-weight: bold;"><?php echo $abbrev; ?></td>
-                                    <td style="border: 1px solid #3c8dbc; padding: 2px 5px;"><?php echo $full_name; ?></td>
+                                    <td style="border: 1px solid #3c8dbc; padding: 2px 5px; font-weight: <?php echo $first_in_category ? 'bold' : 'normal'; ?>;">
+                                        <?php echo $first_in_category ? $category : ''; ?>
+                                    </td>
+                                    <td style="border: 1px solid #3c8dbc; padding: 2px 5px;"><?php echo $test_info['name']; ?></td>
+                                    <td style="border: 1px solid #3c8dbc; padding: 2px 5px;"><?php echo $test_info['units']; ?></td>
                                 </tr>
-                                <?php endforeach; ?>
+                                <?php
+                                            $first_in_category = false;
+                                        endif;
+                                    endforeach;
+                                endforeach;
+                                ?>
                             </tbody>
                         </table>
                     </div>

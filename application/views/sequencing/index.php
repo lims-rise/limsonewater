@@ -332,6 +332,7 @@
                 {
                     "className": 'details-control',
                     "orderable": false,
+                    "searchable": false,
                     "data": null,
                     "defaultContent": '<button type="button" class="btn btn-sm btn-primary toggle-child"><i class="fa fa-plus-square"></i></button>'
                 },
@@ -352,7 +353,8 @@
                         let color = sequenced > 0 ? 'green' : 'red';
                         
                         return `<span style="color: ${color};">${status} (${sequenced}/${total})</span>`;
-                    }
+                    },
+                    "searchable": false
                 },
                 {
                     "data": null,
