@@ -608,14 +608,14 @@
                                                 'Campy-Hemoflow-QPCR' => 'Campylobacter-Hemoflow (qPCR)',
                                                 
                                                 // 🦠 E. coli group
-                                                'Colilert-Idexx-Water' => 'E.coli-Water',
-                                                'Colilert-Idexx-Biosolids' => 'E.coli-Biosolids',
-                                                'Colilert-Hemoflow' => 'E.coli-Hemoflow',
+                                                'Colilert-Idexx-Water' => 'Colilert-Idexx-Water',
+                                                'Colilert-Idexx-Biosolids' => 'Colilert-Idexx-Biosolids',
+                                                'Colilert-Hemoflow' => 'Colilert-Hemoflow',
                                                 
                                                 // 🧪 Enterococci group
-                                                'Enterolert-Idexx-Water' => 'Enterococci-Water',
-                                                'Enterolert-Idexx-Biosolids' => 'Enterococci-Biosolids',
-                                                'Enterolert-Hemoflow' => 'Enterococci-Hemoflow',
+                                                'Enterolert-Idexx-Water' => 'Enterolert-Idexx-Water',
+                                                'Enterolert-Idexx-Biosolids' => 'Enterolert-Idexx-Biosolids',
+                                                'Enterolert-Hemoflow' => 'Enterolert-Hemoflow',
                                                 
                                                 // 🧬 Salmonella group
                                                 'Salmonella-Biosolids' => 'Salmonella-Biosolids',
