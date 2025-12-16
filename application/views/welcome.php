@@ -110,7 +110,7 @@
 }
 #workflow-table .progress-bar-info,
 .dashboard-container .progress-bar-info { 
-    background: linear-gradient(90deg, #E1F5FE, #00c0ef) !important; /* Light Blue: 80-99% - Light to dark blue gradient */
+    background: linear-gradient(90deg, #E3F2FD, #2196F3) !important; /* Blue: 80-99% - Light to dark blue gradient matching badges */
 }
 #workflow-table .progress-bar-success,
 .dashboard-container .progress-bar-success { 
@@ -136,9 +136,9 @@
 }
 #workflow-table .label-info, 
 .dashboard-container .label-info {
-    background-color: #00c0ef !important; /* Light Blue: Almost Done - AdminLTE solid blue */
+    background-color: #2196F3 !important; /* Blue: Almost Done - Consistent with progress bar */
     border: none !important;
-    box-shadow: 0 2px 8px rgba(0, 192, 239, 0.25) !important;
+    box-shadow: 0 2px 8px rgba(33, 150, 243, 0.25) !important;
     border-radius: 10px !important;
     color: #ffffff !important; /* White text for better contrast */
 }
