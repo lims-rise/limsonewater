@@ -179,19 +179,30 @@ class Dashboard_model extends CI_Model
                     sr.id_project,
                     sr.id_client_sample,
                     COUNT(srs.id_sample) as total_samples,
-                    COUNT(srt.id_testing) as total_tests,
-                    COUNT(CASE WHEN COALESCE(
-                        bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
-                        ec.review, el.review, em.review, cb.review, mc.review, 
-                        ewi.review, ebi.review, cbi.review, cwi.review, 
-                        pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review
-                    ) = 1 THEN 1 END) as completed_tests,
+                    COUNT(DISTINCT CASE WHEN rt.testing_type NOT LIKE '%microbial%' THEN srt.id_testing END) as total_tests,
+                    COUNT(DISTINCT CASE 
+                        WHEN rt.testing_type NOT LIKE '%microbial%' AND rt.testing_type = 'Sequencing' AND seq.is_status = 1 AND NOT EXISTS(
+                            SELECT 1 FROM extraction_culture_plate ecp3 
+                            WHERE ecp3.id_one_water_sample = srs.id_one_water_sample 
+                            AND ecp3.flag = 0 
+                            AND (ecp3.species_id IS NULL OR ecp3.species_id = '')
+                        ) THEN srt.id_testing
+                        WHEN rt.testing_type NOT LIKE '%microbial%' AND rt.testing_type != 'Sequencing' AND COALESCE(
+                            bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
+                            ec.review, el.review, em.review, cb.review, mc.review, 
+                            ewi.review, ebi.review, cbi.review, cwi.review, 
+                            pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review
+                        ) = 1 THEN srt.id_testing
+                        ELSE NULL 
+                    END) as completed_tests,
                     sr.date_created,
                     sr.time_arrive,
                     sr.date_updated
                 FROM sample_reception sr
                 LEFT JOIN sample_reception_sample srs ON sr.id_project = srs.id_project AND srs.flag = 0
                 LEFT JOIN sample_reception_testing srt ON srs.id_sample = srt.id_sample AND srt.flag = 0
+                LEFT JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)
+                LEFT JOIN sequencing seq ON seq.sequencing_barcode = srt.barcode AND seq.flag = 0
                 LEFT JOIN biobank_in bank ON bank.biobankin_barcode = srt.barcode AND bank.flag = 0
                 LEFT JOIN campy_liquids campy ON campy.campy_assay_barcode = srt.barcode AND campy.flag = 0
                 LEFT JOIN salmonella_liquids salmonellaL ON salmonellaL.salmonella_assay_barcode = srt.barcode AND salmonellaL.flag = 0

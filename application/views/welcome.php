@@ -94,6 +94,71 @@
   box-shadow: 0 8px 25px rgba(77, 110, 245, 0.15) !important;
 }
 
+/* Modern 4-Level Progress Bar System (Matching Sample Reception) */
+.dashboard-container .progress-bar {
+    transition: width 0.5s ease-in-out !important;
+}
+
+/* Modern 4-Level Progress Bar System with Right-to-Left Darker Gradient */
+#workflow-table .progress-bar-danger,
+.dashboard-container .progress-bar-danger { 
+    background: linear-gradient(90deg, #FFCDD2, #dd4b39) !important; /* Red: 0-49% - Light to dark red gradient */
+}
+#workflow-table .progress-bar-warning,
+.dashboard-container .progress-bar-warning { 
+    background: linear-gradient(90deg, #FFF3E0, #f39c12) !important; /* Yellow-Orange: 50-79% - Light to dark orange gradient */
+}
+#workflow-table .progress-bar-info,
+.dashboard-container .progress-bar-info { 
+    background: linear-gradient(90deg, #E1F5FE, #00c0ef) !important; /* Light Blue: 80-99% - Light to dark blue gradient */
+}
+#workflow-table .progress-bar-success,
+.dashboard-container .progress-bar-success { 
+    background: linear-gradient(90deg, #E8F5E8, #00a65a) !important; /* Green: 100% - Light to dark green gradient */
+}
+
+/* Modern Status Labels - Solid Colors for Clean Look */
+#workflow-table .label-danger, 
+.dashboard-container .label-danger {
+    background-color: #dd4b39 !important; /* Red: Incomplete - AdminLTE solid red */
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(221, 75, 57, 0.25) !important;
+    border-radius: 10px !important;
+    color: #ffffff !important; /* White text for better contrast */
+}
+#workflow-table .label-warning, 
+.dashboard-container .label-warning {
+    background-color: #f39c12 !important; /* Yellow-Orange: In Progress - AdminLTE solid orange */
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(243, 156, 18, 0.25) !important;
+    border-radius: 10px !important;
+    color: #ffffff !important; /* White text for better contrast */
+}
+#workflow-table .label-info, 
+.dashboard-container .label-info {
+    background-color: #00c0ef !important; /* Light Blue: Almost Done - AdminLTE solid blue */
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(0, 192, 239, 0.25) !important;
+    border-radius: 10px !important;
+    color: #ffffff !important; /* White text for better contrast */
+}
+#workflow-table .label-success, 
+.dashboard-container .label-success {
+    background-color: #00a65a !important; /* Green: Complete - AdminLTE solid green */
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(0, 166, 90, 0.25) !important;
+    border-radius: 10px !important;
+    color: #ffffff !important; /* White text for better contrast */
+}
+#workflow-table .label-default, 
+.dashboard-container .label-default {
+    background-color: #95a5a6 !important; /* Grey: No Tests - AdminLTE solid grey */
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(149, 165, 166, 0.25) !important;
+    border-radius: 10px !important;
+    color: #ffffff !important; /* White text for better contrast on grey background */
+}
+
 /* Updated Small Box Colors with 2025 Palette */
 .small-box.bg-aqua {
   background: linear-gradient(135deg, var(--ui-accent) 0%, #6B7EF7 100%) !important;
@@ -266,8 +331,21 @@
                                                     </span>
                                                 </td>
                                                 <td class="text-center">
+                                                    <?php
+                                                    // Modern 4-level progress system for Module Performance
+                                                    $module_completion = $module['completion_rate'];
+                                                    if ($module_completion >= 100) {
+                                                        $module_progress_class = 'success'; // Green: 100%
+                                                    } elseif ($module_completion >= 80) {
+                                                        $module_progress_class = 'info'; // Light Blue: 80-99% (Almost Done)
+                                                    } elseif ($module_completion >= 50) {
+                                                        $module_progress_class = 'warning'; // Yellow-Orange: 50-79%
+                                                    } else {
+                                                        $module_progress_class = 'danger'; // Red: 0-49%
+                                                    }
+                                                    ?>
                                                     <div class="progress progress-xs">
-                                                        <div class="progress-bar progress-bar-<?php echo $module['completion_rate'] >= 80 ? 'success' : ($module['completion_rate'] >= 50 ? 'warning' : 'danger'); ?>" 
+                                                        <div class="progress-bar progress-bar-<?php echo $module_progress_class; ?>" 
                                                              style="width: <?php echo $module['completion_rate']; ?>%"></div>
                                                     </div>
                                                     <span class="badge bg-gray"><?php echo $module['completion_rate']; ?>%</span>
@@ -405,19 +483,61 @@
                                                     <span class="badge bg-green"><?php echo $workflow['completed_tests']; ?></span>
                                                 </td>
                                                 <td class="text-center">
+                                                    <?php
+                                                    // Modern 4-level progress system using AdminLTE colors
+                                                    $completion_rate = $workflow['completion_rate'];
+                                                    $progress_color = '#dd4b39'; // AdminLTE red for 0-49%
+                                                    $progress_class = 'danger';
+                                                    
+                                                    if ($completion_rate >= 100) {
+                                                        $progress_color = '#00a65a'; // AdminLTE green for 100%
+                                                        $progress_class = 'success';
+                                                    } elseif ($completion_rate >= 80) {
+                                                        $progress_color = '#00c0ef'; // AdminLTE light blue for 80-99% (Almost Done)
+                                                        $progress_class = 'info';
+                                                    } elseif ($completion_rate >= 50) {
+                                                        $progress_color = '#f39c12'; // AdminLTE yellow-orange for 50-79%
+                                                        $progress_class = 'warning';
+                                                    }
+                                                    ?>
                                                     <div class="progress progress-xs">
-                                                        <div class="progress-bar progress-bar-<?php echo $workflow['completion_rate'] >= 80 ? 'success' : ($workflow['completion_rate'] >= 50 ? 'warning' : 'danger'); ?>" 
-                                                             style="width: <?php echo $workflow['completion_rate']; ?>%"></div>
+                                                        <div class="progress-bar progress-bar-<?php echo $progress_class; ?>" 
+                                                             style="width: <?php echo $completion_rate; ?>%; background-color: <?php echo $progress_color; ?> !important;"></div>
                                                     </div>
-                                                    <span class="badge bg-gray"><?php echo $workflow['completion_rate']; ?>%</span>
+                                                    <span class="badge bg-gray"><?php echo $completion_rate; ?>%</span>
                                                 </td>
                                                 <td class="text-center">
                                                     <?php 
-                                                    $status_class = $workflow['status'] == 'completed' ? 'success' : ($workflow['status'] == 'in-progress' ? 'warning' : 'danger');
-                                                    $status_text = ucfirst(str_replace('-', ' ', $workflow['status']));
+                                                    // Modern 5-level status system with proper 0% handling
+                                                    if ($completion_rate >= 100) {
+                                                        $status_color = '#00a65a'; // AdminLTE green for 100%
+                                                        $status_class = 'success';
+                                                        $status_text = 'Complete';
+                                                        $status_icon = 'fa-check-circle';
+                                                    } elseif ($completion_rate >= 80) {
+                                                        $status_color = '#00c0ef'; // AdminLTE light blue for 80-99% (Almost Done)
+                                                        $status_class = 'info';
+                                                        $status_text = 'Almost Done';
+                                                        $status_icon = 'fa-clock-o';
+                                                    } elseif ($completion_rate >= 50) {
+                                                        $status_color = '#f39c12'; // AdminLTE yellow-orange for 50-79%
+                                                        $status_class = 'warning';
+                                                        $status_text = 'In Progress';
+                                                        $status_icon = 'fa-hourglass-half';
+                                                    } elseif ($completion_rate > 0) {
+                                                        $status_color = '#dd4b39'; // AdminLTE red for 1-49%
+                                                        $status_class = 'danger';
+                                                        $status_text = 'In Progress';
+                                                        $status_icon = 'fa-exclamation-triangle';
+                                                    } else {
+                                                        $status_color = '#95a5a6'; // AdminLTE grey for 0%
+                                                        $status_class = 'default';
+                                                        $status_text = 'No Tests';
+                                                        $status_icon = 'fa-minus-circle';
+                                                    }
                                                     ?>
                                                     <span class="label label-<?php echo $status_class; ?>">
-                                                        <?php echo $status_text; ?>
+                                                        <i class="fa <?php echo $status_icon; ?>"></i> <?php echo $status_text; ?>
                                                     </span>
                                                 </td>
                                                 <td class="text-center">
