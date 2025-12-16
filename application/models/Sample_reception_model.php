@@ -18,31 +18,35 @@ class Sample_reception_model extends CI_Model
         $this->datatables->select('NULL AS toggle, sr.id_project, sr.client_quote_number, sr.client, sr.id_client_sample, COALESCE(cc.client_name, sr.client, "Unknown Client") as client_name, sr.id_client_contact, sr.number_sample, sr.comments, sr.files, sr.supplementary_files, sr.date_arrive, sr.time_arrive, 
             sr.date_created, sr.date_updated, sr.flag, sr.is_unlocked, sr.unlocked_by, sr.unlocked_at, sr.unlock_reason,
             CASE WHEN (
-                SELECT COUNT(srt.id_testing) 
+                SELECT COUNT(DISTINCT srt.id_testing) 
                 FROM sample_reception_sample srs 
                 LEFT JOIN sample_reception_testing srt ON srs.id_sample = srt.id_sample AND srt.flag = 0 
                 LEFT JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)
                 WHERE srs.id_project = sr.id_project AND srs.flag = 0 
                 AND rt.testing_type NOT LIKE "%microbial%"
             ) > 0 AND (
-                SELECT COUNT(srt.id_testing) 
+                SELECT COUNT(DISTINCT srt.id_testing) 
                 FROM sample_reception_sample srs 
                 LEFT JOIN sample_reception_testing srt ON srs.id_sample = srt.id_sample AND srt.flag = 0 
                 LEFT JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)
                 WHERE srs.id_project = sr.id_project AND srs.flag = 0 
                 AND rt.testing_type NOT LIKE "%microbial%"
             ) = (
-                SELECT COUNT(CASE WHEN CASE
-                    WHEN rt.testing_type = "Sequencing" THEN 
-                        CASE WHEN seq.is_status = 1 AND ecp.species_id IS NOT NULL AND ecp.species_id != "" THEN 1 ELSE 0 END
-                    ELSE
-                        COALESCE(
-                            bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
-                            ec.review, el.review, em.review, cb.review, mc.review, 
-                            ewi.review, ebi.review, cbi.review, cwi.review, 
-                            pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review
-                        )
-                    END = 1 THEN 1 END) 
+                SELECT COUNT(DISTINCT CASE 
+                    WHEN rt.testing_type = "Sequencing" AND seq.is_status = 1 AND NOT EXISTS(
+                        SELECT 1 FROM extraction_culture_plate ecp3 
+                        WHERE ecp3.id_one_water_sample = srs.id_one_water_sample 
+                        AND ecp3.flag = 0 
+                        AND (ecp3.species_id IS NULL OR ecp3.species_id = "")
+                    ) THEN srt.id_testing
+                    WHEN rt.testing_type != "Sequencing" AND COALESCE(
+                        bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
+                        ec.review, el.review, em.review, cb.review, mc.review, 
+                        ewi.review, ebi.review, cbi.review, cwi.review, 
+                        pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review
+                    ) = 1 THEN srt.id_testing
+                    ELSE NULL 
+                END) 
                 FROM sample_reception_sample srs 
                 LEFT JOIN sample_reception_testing srt ON srs.id_sample = srt.id_sample AND srt.flag = 0
                 LEFT JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)
@@ -70,8 +74,6 @@ class Sample_reception_model extends CI_Model
                 LEFT JOIN salmonella_hemoflow sh ON sh.salmonella_assay_barcode = srt.barcode AND sh.flag = 0
                 LEFT JOIN campy_hemoflow_qpcr chq ON chq.campy_assay_barcode = srt.barcode AND chq.flag = 0
                 LEFT JOIN sequencing seq ON seq.sequencing_barcode = srt.barcode AND seq.flag = 0
-                LEFT JOIN sample_reception_sample srs2 ON srs2.id_one_water_sample = srs.id_one_water_sample AND srs2.flag = 0
-                LEFT JOIN extraction_culture_plate ecp ON ecp.id_one_water_sample = srs2.id_one_water_sample AND ecp.flag = 0
                 WHERE srs.id_project = sr.id_project AND srs.flag = 0 
                 AND rt.testing_type NOT LIKE "%microbial%"
             ) THEN 1 ELSE 0 END as is_completed', FALSE);
@@ -209,31 +211,35 @@ class Sample_reception_model extends CI_Model
             sr.unlocked_at, 
             sr.unlock_reason,
             CASE WHEN (
-                SELECT COUNT(srt.id_testing) 
+                SELECT COUNT(DISTINCT srt.id_testing) 
                 FROM sample_reception_sample srs2 
                 LEFT JOIN sample_reception_testing srt ON srs2.id_sample = srt.id_sample AND srt.flag = 0 
                 LEFT JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)
                 WHERE srs2.id_project = sr.id_project AND srs2.flag = 0
                 AND rt.testing_type NOT LIKE "%microbial%"
             ) > 0 AND (
-                SELECT COUNT(srt.id_testing) 
+                SELECT COUNT(DISTINCT srt.id_testing) 
                 FROM sample_reception_sample srs2 
                 LEFT JOIN sample_reception_testing srt ON srs2.id_sample = srt.id_sample AND srt.flag = 0 
                 LEFT JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)
                 WHERE srs2.id_project = sr.id_project AND srs2.flag = 0
                 AND rt.testing_type NOT LIKE "%microbial%"
             ) = (
-                SELECT COUNT(CASE WHEN CASE
-                    WHEN rt.testing_type = "Sequencing" THEN 
-                        CASE WHEN seq.is_status = 1 AND ecp.species_id IS NOT NULL AND ecp.species_id != "" THEN 1 ELSE 0 END
-                    ELSE
-                        COALESCE(
-                            bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
-                            ec.review, el.review, em.review, cb.review, mc.review, 
-                            ewi.review, ebi.review, cbi.review, cwi.review, 
-                            pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review
-                        )
-                    END = 1 THEN 1 END) 
+                SELECT COUNT(DISTINCT CASE 
+                    WHEN rt.testing_type = "Sequencing" AND seq.is_status = 1 AND NOT EXISTS(
+                        SELECT 1 FROM extraction_culture_plate ecp3 
+                        WHERE ecp3.id_one_water_sample = srs2.id_one_water_sample 
+                        AND ecp3.flag = 0 
+                        AND (ecp3.species_id IS NULL OR ecp3.species_id = "")
+                    ) THEN srt.id_testing
+                    WHEN rt.testing_type != "Sequencing" AND COALESCE(
+                        bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
+                        ec.review, el.review, em.review, cb.review, mc.review, 
+                        ewi.review, ebi.review, cbi.review, cwi.review, 
+                        pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review
+                    ) = 1 THEN srt.id_testing
+                    ELSE NULL 
+                END) 
                 FROM sample_reception_sample srs2 
                 LEFT JOIN sample_reception_testing srt ON srs2.id_sample = srt.id_sample AND srt.flag = 0
                 LEFT JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)
@@ -261,8 +267,6 @@ class Sample_reception_model extends CI_Model
                 LEFT JOIN salmonella_hemoflow sh ON sh.salmonella_assay_barcode = srt.barcode AND sh.flag = 0
                 LEFT JOIN campy_hemoflow_qpcr chq ON chq.campy_assay_barcode = srt.barcode AND chq.flag = 0
                 LEFT JOIN sequencing seq ON seq.sequencing_barcode = srt.barcode AND seq.flag = 0
-                LEFT JOIN sample_reception_sample srs3 ON srs3.id_one_water_sample = srs2.id_one_water_sample AND srs3.flag = 0
-                LEFT JOIN extraction_culture_plate ecp ON ecp.id_one_water_sample = srs3.id_one_water_sample AND ecp.flag = 0
                 WHERE srs2.id_project = sr.id_project AND srs2.flag = 0
                 AND rt.testing_type NOT LIKE "%microbial%"
             ) THEN 1 ELSE 0 END as is_completed
@@ -466,19 +470,22 @@ class Sample_reception_model extends CI_Model
                     sr.id_project,
                     sr.id_client_sample,
                     COUNT(srs.id_sample) as total_samples,
-                    COUNT(CASE WHEN rt.testing_type NOT LIKE '%microbial%' THEN srt.id_testing END) as total_tests,
-                    COUNT(CASE WHEN rt.testing_type NOT LIKE '%microbial%' AND 
-                        CASE
-                            WHEN rt.testing_type = 'Sequencing' THEN 
-                                CASE WHEN seq.is_status = 1 AND ecp.species_id IS NOT NULL AND ecp.species_id != '' THEN 1 ELSE 0 END
-                            ELSE
-                                COALESCE(
-                                    bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
-                                    ec.review, el.review, em.review, cb.review, mc.review, 
-                                    ewi.review, ebi.review, cbi.review, cwi.review, 
-                                    pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review
-                                )
-                        END = 1 THEN 1 END) as completed_tests
+                    COUNT(DISTINCT CASE WHEN rt.testing_type NOT LIKE '%microbial%' THEN srt.id_testing END) as total_tests,
+                    COUNT(DISTINCT CASE 
+                        WHEN rt.testing_type NOT LIKE '%microbial%' AND rt.testing_type = 'Sequencing' AND seq.is_status = 1 AND NOT EXISTS(
+                            SELECT 1 FROM extraction_culture_plate ecp3 
+                            WHERE ecp3.id_one_water_sample = srs4.id_one_water_sample 
+                            AND ecp3.flag = 0 
+                            AND (ecp3.species_id IS NULL OR ecp3.species_id = '')
+                        ) THEN srt.id_testing
+                        WHEN rt.testing_type NOT LIKE '%microbial%' AND rt.testing_type != 'Sequencing' AND COALESCE(
+                            bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
+                            ec.review, el.review, em.review, cb.review, mc.review, 
+                            ewi.review, ebi.review, cbi.review, cwi.review, 
+                            pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review
+                        ) = 1 THEN srt.id_testing
+                        ELSE NULL 
+                    END) as completed_tests
                 FROM sample_reception sr
                 LEFT JOIN sample_reception_sample srs ON sr.id_project = srs.id_project AND srs.flag = 0
                 LEFT JOIN sample_reception_testing srt ON srs.id_sample = srt.id_sample AND srt.flag = 0
@@ -589,12 +596,26 @@ class Sample_reception_model extends CI_Model
             COALESCE(bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review, ec.user_review, el.user_review, em.user_review, cb.user_review, mc.user_review, ewi.user_review, ebi.user_review, cbi.user_review, cwi.user_review, pr.user_review, cp.user_review, sp.user_review, hem.user_review, ehf.user_review, chf.user_review, ch.user_review, ex.user_review, sh.user_review, chq.user_review) AS user_review, 
             CASE 
                 WHEN retest.testing_type = \"Sequencing\" THEN 
-                    CASE WHEN seq.is_status = 1 AND ecp.species_id IS NOT NULL AND ecp.species_id != \"\" THEN 1 ELSE 0 END
+                    CASE WHEN seq.is_status = 1 AND NOT EXISTS(
+                        SELECT 1 FROM extraction_culture_plate ecp3 
+                        WHERE ecp3.id_one_water_sample = sample.id_one_water_sample 
+                        AND ecp3.flag = 0 
+                        AND (ecp3.species_id IS NULL OR ecp3.species_id = \"\")
+                    ) THEN 1 ELSE 0 END
                 ELSE
                     COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review)
             END AS review,
             tbl_user.full_name,
-            ecp.species_id, 
+            CASE 
+                WHEN retest.testing_type = 'Sequencing' THEN 
+                    (SELECT GROUP_CONCAT(DISTINCT ecp2.species_id SEPARATOR ', ') 
+                        FROM extraction_culture_plate ecp2 
+                        WHERE ecp2.id_one_water_sample = sample.id_one_water_sample 
+                        AND ecp2.flag = 0 
+                        AND ecp2.species_id IS NOT NULL 
+                        AND ecp2.species_id != '')
+                ELSE ecp.species_id 
+            END AS species_id,
             testing.flag,
             CASE 
                 WHEN retest.testing_type = 'Campylobacter-Biosolids' THEN crm.mpn_concentration_dw
@@ -607,50 +628,56 @@ class Sample_reception_model extends CI_Model
                 WHEN retest.testing_type = 'Salmonella-Biosolids' THEN srmb.mpn_concentration_dw
                 WHEN retest.testing_type = 'Salmonella-Liquids' THEN srml.mpn_concentration
                 WHEN retest.testing_type = 'Salmonella-P/A' THEN srbp.confirmation
-                WHEN retest.testing_type = 'Sequencing' THEN ecp.species_id
+                WHEN retest.testing_type = 'Sequencing' THEN 
+                    (SELECT GROUP_CONCAT(DISTINCT ecp2.species_id SEPARATOR ', ') 
+                     FROM extraction_culture_plate ecp2 
+                     WHERE ecp2.id_one_water_sample = sample.id_one_water_sample 
+                     AND ecp2.flag = 0 
+                     AND ecp2.species_id IS NOT NULL 
+                     AND ecp2.species_id != '')
                 WHEN retest.testing_type = 'Campy-Hemoflow' THEN 
                     CASE 
-                        WHEN crmh.mpn_concentration IS NOT NULL AND hem.volume_eluted IS NOT NULL AND hem.volume_filter IS NOT NULL AND hem.volume_filter > 0 THEN
+                        WHEN crmh.mpn_concentration IS NOT NULL AND hv.volume_eluted IS NOT NULL AND hv.volume_filter IS NOT NULL AND hv.volume_filter > 0 THEN
                             CASE 
-                                WHEN crmh.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND(((CAST(SUBSTRING(crmh.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hem.volume_eluted / hem.volume_filter), 2))
-                                WHEN crmh.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND(((CAST(SUBSTRING(crmh.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hem.volume_eluted / hem.volume_filter), 2))
-                                ELSE ROUND(((CAST(crmh.mpn_concentration AS DECIMAL(10,2)) / 1000) * hem.volume_eluted / hem.volume_filter), 2)
+                                WHEN crmh.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND(((CAST(SUBSTRING(crmh.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hv.volume_eluted / hv.volume_filter), 2))
+                                WHEN crmh.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND(((CAST(SUBSTRING(crmh.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hv.volume_eluted / hv.volume_filter), 2))
+                                ELSE ROUND(((CAST(crmh.mpn_concentration AS DECIMAL(10,2)) / 1000) * hv.volume_eluted / hv.volume_filter), 2)
                             END
                         ELSE NULL 
                     END
                 WHEN retest.testing_type = 'Campy-Hemoflow-QPCR' OR retest.testing_type = 'Campy-Hemoflow-qPCR' THEN 
                     CASE 
-                        WHEN crmhq.mpn_concentration IS NOT NULL AND hem.volume_filter IS NOT NULL AND hem.volume_filter > 0 THEN
+                        WHEN crmhq.mpn_concentration IS NOT NULL AND hv.volume_filter IS NOT NULL AND hv.volume_filter > 0 THEN
                             CASE 
-                                WHEN crmhq.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND((CAST(SUBSTRING(crmhq.mpn_concentration, 2) AS DECIMAL(10,2)) / hem.volume_filter), 2))
-                                WHEN crmhq.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND((CAST(SUBSTRING(crmhq.mpn_concentration, 2) AS DECIMAL(10,2)) / hem.volume_filter), 2))
-                                ELSE ROUND((CAST(crmhq.mpn_concentration AS DECIMAL(10,2)) / hem.volume_filter), 2)
+                                WHEN crmhq.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND((CAST(SUBSTRING(crmhq.mpn_concentration, 2) AS DECIMAL(10,2)) / hv.volume_filter), 2))
+                                WHEN crmhq.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND((CAST(SUBSTRING(crmhq.mpn_concentration, 2) AS DECIMAL(10,2)) / hv.volume_filter), 2))
+                                ELSE ROUND((CAST(crmhq.mpn_concentration AS DECIMAL(10,2)) / hv.volume_filter), 2)
                             END
                         ELSE NULL 
                     END
                 WHEN retest.testing_type = 'Colilert-Hemoflow' THEN 
                     CASE 
-                        WHEN chd.ecoli IS NOT NULL AND hem.volume_eluted IS NOT NULL AND hem.volume_filter IS NOT NULL AND hem.volume_filter > 0 THEN
-                            ROUND(((chd.ecoli / 100) * hem.volume_eluted / hem.volume_filter / 10), 2)
+                        WHEN chd.ecoli IS NOT NULL AND hv.volume_eluted IS NOT NULL AND hv.volume_filter IS NOT NULL AND hv.volume_filter > 0 THEN
+                            ROUND(((chd.ecoli / 100) * hv.volume_eluted / hv.volume_filter / 10), 2)
                         ELSE NULL 
                     END
                 WHEN retest.testing_type = 'Enterolert-Hemoflow' THEN
                     CASE 
-                        WHEN ehd.enterococcus IS NOT NULL AND hem.volume_eluted IS NOT NULL AND hem.volume_filter IS NOT NULL AND hem.volume_filter > 0 THEN
-                            ROUND(((ehd.enterococcus / 100) * hem.volume_eluted / hem.volume_filter / 10), 2)
+                        WHEN ehd.enterococcus IS NOT NULL AND hv.volume_eluted IS NOT NULL AND hv.volume_filter IS NOT NULL AND hv.volume_filter > 0 THEN
+                            ROUND(((ehd.enterococcus / 100) * hv.volume_eluted / hv.volume_filter / 10), 2)
                         ELSE NULL 
                     END
                 WHEN retest.testing_type = 'Salmonella-Hemoflow' THEN 
                     CASE 
-                        WHEN shrm.mpn_concentration IS NOT NULL AND hem.volume_eluted IS NOT NULL AND hem.volume_filter IS NOT NULL AND hem.volume_filter > 0 THEN
+                        WHEN shrm.mpn_concentration IS NOT NULL AND hv.volume_eluted IS NOT NULL AND hv.volume_filter IS NOT NULL AND hv.volume_filter > 0 THEN
                             CASE 
-                                WHEN shrm.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND(((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hem.volume_eluted / hem.volume_filter), 2))
-                                WHEN shrm.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND(((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hem.volume_eluted / hem.volume_filter), 2))
-                                ELSE ROUND(((CAST(shrm.mpn_concentration AS DECIMAL(10,2)) / 1000) * hem.volume_eluted / hem.volume_filter), 2)
+                                WHEN shrm.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND(((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hv.volume_eluted / hv.volume_filter), 2))
+                                WHEN shrm.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND(((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hv.volume_eluted / hv.volume_filter), 2))
+                                ELSE ROUND(((CAST(shrm.mpn_concentration AS DECIMAL(10,2)) / 1000) * hv.volume_eluted / hv.volume_filter), 2)
                             END
                         ELSE NULL 
                     END
-                WHEN retest.testing_type = 'Hemoflow' THEN hem.volume_eluted
+                WHEN retest.testing_type = 'Hemoflow' THEN hem.volume_filter
                 WHEN retest.testing_type = 'Moisture_content' THEN m72.moisture_content_persen
                 WHEN retest.testing_type = 'Protozoa' THEN 
                     CASE 
@@ -686,6 +713,7 @@ class Sample_reception_model extends CI_Model
         $this->datatables->join('campy_pa cp', 'cp.campy_assay_barcode = testing.barcode and cp.flag = 0', 'left');
         $this->datatables->join('salmonella_pa sp', 'sp.salmonella_assay_barcode = testing.barcode and sp.flag = 0', 'left');
         $this->datatables->join('hemoflow hem', 'hem.hemoflow_barcode = testing.barcode and hem.flag = 0', 'left');
+        $this->datatables->join('hemoflow hv', 'hv.id_one_water_sample = sample.id_one_water_sample and hv.flag = 0', 'left');
         $this->datatables->join('enterolert_hemoflow ehf', 'ehf.enterolert_hemoflow_barcode = testing.barcode and ehf.flag = 0', 'left');
         $this->datatables->join('colilert_hemoflow chf', 'chf.colilert_hemoflow_barcode = testing.barcode and chf.flag = 0', 'left');
         $this->datatables->join('campy_hemoflow ch', 'ch.campy_assay_barcode = testing.barcode and ch.flag = 0', 'left');
@@ -753,50 +781,56 @@ class Sample_reception_model extends CI_Model
                 WHEN retest.testing_type = 'Salmonella-Biosolids' THEN srmb.mpn_concentration_dw
                 WHEN retest.testing_type = 'Salmonella-Liquids' THEN srml.mpn_concentration
                 WHEN retest.testing_type = 'Salmonella-P/A' THEN srbp.confirmation
-                WHEN retest.testing_type = 'Sequencing' THEN ecp.species_id
+                WHEN retest.testing_type = 'Sequencing' THEN 
+                    (SELECT GROUP_CONCAT(DISTINCT ecp2.species_id SEPARATOR ', ') 
+                     FROM extraction_culture_plate ecp2 
+                     WHERE ecp2.id_one_water_sample = sample.id_one_water_sample 
+                     AND ecp2.flag = 0 
+                     AND ecp2.species_id IS NOT NULL 
+                     AND ecp2.species_id != '')
                 WHEN retest.testing_type = 'Campy-Hemoflow' THEN 
                     CASE 
-                        WHEN crmh.mpn_concentration IS NOT NULL AND hem.volume_eluted IS NOT NULL AND hem.volume_filter IS NOT NULL AND hem.volume_filter > 0 THEN
+                        WHEN crmh.mpn_concentration IS NOT NULL AND hem_vol.volume_eluted IS NOT NULL AND hem_vol.volume_filter IS NOT NULL AND hem_vol.volume_filter > 0 THEN
                             CASE 
-                                WHEN crmh.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND(((CAST(SUBSTRING(crmh.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hem.volume_eluted / hem.volume_filter), 2))
-                                WHEN crmh.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND(((CAST(SUBSTRING(crmh.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hem.volume_eluted / hem.volume_filter), 2))
-                                ELSE ROUND(((CAST(crmh.mpn_concentration AS DECIMAL(10,2)) / 1000) * hem.volume_eluted / hem.volume_filter), 2)
+                                WHEN crmh.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND(((CAST(SUBSTRING(crmh.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hem_vol.volume_eluted / hem_vol.volume_filter), 2))
+                                WHEN crmh.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND(((CAST(SUBSTRING(crmh.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hem_vol.volume_eluted / hem_vol.volume_filter), 2))
+                                ELSE ROUND(((CAST(crmh.mpn_concentration AS DECIMAL(10,2)) / 1000) * hem_vol.volume_eluted / hem_vol.volume_filter), 2)
                             END
                         ELSE NULL 
                     END
                 WHEN retest.testing_type = 'Campy-Hemoflow-QPCR' OR retest.testing_type = 'Campy-Hemoflow-qPCR' THEN 
                     CASE 
-                        WHEN crmhq.mpn_concentration IS NOT NULL AND hem.volume_filter IS NOT NULL AND hem.volume_filter > 0 THEN
+                        WHEN crmhq.mpn_concentration IS NOT NULL AND hem_vol.volume_filter IS NOT NULL AND hem_vol.volume_filter > 0 THEN
                             CASE 
-                                WHEN crmhq.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND((CAST(SUBSTRING(crmhq.mpn_concentration, 2) AS DECIMAL(10,2)) / hem.volume_filter), 2))
-                                WHEN crmhq.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND((CAST(SUBSTRING(crmhq.mpn_concentration, 2) AS DECIMAL(10,2)) / hem.volume_filter), 2))
-                                ELSE ROUND((CAST(crmhq.mpn_concentration AS DECIMAL(10,2)) / hem.volume_filter), 2)
+                                WHEN crmhq.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND((CAST(SUBSTRING(crmhq.mpn_concentration, 2) AS DECIMAL(10,2)) / hem_vol.volume_filter), 2))
+                                WHEN crmhq.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND((CAST(SUBSTRING(crmhq.mpn_concentration, 2) AS DECIMAL(10,2)) / hem_vol.volume_filter), 2))
+                                ELSE ROUND((CAST(crmhq.mpn_concentration AS DECIMAL(10,2)) / hem_vol.volume_filter), 2)
                             END
                         ELSE NULL 
                     END
                 WHEN retest.testing_type = 'Colilert-Hemoflow' THEN 
                     CASE 
-                        WHEN chd.ecoli IS NOT NULL AND hem.volume_eluted IS NOT NULL AND hem.volume_filter IS NOT NULL AND hem.volume_filter > 0 THEN
-                            ROUND(((chd.ecoli / 100) * hem.volume_eluted / hem.volume_filter / 10), 2)
+                        WHEN chd.ecoli IS NOT NULL AND hem_vol.volume_eluted IS NOT NULL AND hem_vol.volume_filter IS NOT NULL AND hem_vol.volume_filter > 0 THEN
+                            ROUND(((chd.ecoli / 100) * hem_vol.volume_eluted / hem_vol.volume_filter / 10), 2)
                         ELSE NULL 
                     END
                 WHEN retest.testing_type = 'Enterolert-Hemoflow' THEN
                     CASE 
-                        WHEN ehd.enterococcus IS NOT NULL AND hem.volume_eluted IS NOT NULL AND hem.volume_filter IS NOT NULL AND hem.volume_filter > 0 THEN
-                            ROUND(((ehd.enterococcus / 100) * hem.volume_eluted / hem.volume_filter / 10), 2)
+                        WHEN ehd.enterococcus IS NOT NULL AND hem_vol.volume_eluted IS NOT NULL AND hem_vol.volume_filter IS NOT NULL AND hem_vol.volume_filter > 0 THEN
+                            ROUND(((ehd.enterococcus / 100) * hem_vol.volume_eluted / hem_vol.volume_filter / 10), 2)
                         ELSE NULL 
                     END
                 WHEN retest.testing_type = 'Salmonella-Hemoflow' THEN 
                     CASE 
-                        WHEN shrm.mpn_concentration IS NOT NULL AND hem.volume_eluted IS NOT NULL AND hem.volume_filter IS NOT NULL AND hem.volume_filter > 0 THEN
+                        WHEN shrm.mpn_concentration IS NOT NULL AND hem_vol.volume_eluted IS NOT NULL AND hem_vol.volume_filter IS NOT NULL AND hem_vol.volume_filter > 0 THEN
                             CASE 
-                                WHEN shrm.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND(((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hem.volume_eluted / hem.volume_filter), 2))
-                                WHEN shrm.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND(((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hem.volume_eluted / hem.volume_filter), 2))
-                                ELSE ROUND(((CAST(shrm.mpn_concentration AS DECIMAL(10,2)) / 1000) * hem.volume_eluted / hem.volume_filter), 2)
+                                WHEN shrm.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND(((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hem_vol.volume_eluted / hem_vol.volume_filter), 2))
+                                WHEN shrm.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND(((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hem_vol.volume_eluted / hem_vol.volume_filter), 2))
+                                ELSE ROUND(((CAST(shrm.mpn_concentration AS DECIMAL(10,2)) / 1000) * hem_vol.volume_eluted / hem_vol.volume_filter), 2)
                             END
                         ELSE NULL 
                     END
-                WHEN retest.testing_type = 'Hemoflow' THEN hem.volume_eluted
+                WHEN retest.testing_type = 'Hemoflow' THEN hem.volume_filter
                 WHEN retest.testing_type = 'Moisture_content' THEN m72.moisture_content_persen
                 WHEN retest.testing_type = 'Protozoa' THEN 
                     CASE 
@@ -831,6 +865,7 @@ class Sample_reception_model extends CI_Model
         LEFT JOIN campy_pa cp ON cp.campy_assay_barcode = testing.barcode AND cp.flag = 0
         LEFT JOIN salmonella_pa sp ON sp.salmonella_assay_barcode = testing.barcode AND sp.flag = 0
         LEFT JOIN hemoflow hem ON hem.hemoflow_barcode = testing.barcode AND hem.flag = 0
+        LEFT JOIN hemoflow hem_vol ON hem_vol.id_one_water_sample = sample.id_one_water_sample AND hem_vol.flag = 0
         LEFT JOIN enterolert_hemoflow ehf ON ehf.enterolert_hemoflow_barcode = testing.barcode AND ehf.flag = 0
         LEFT JOIN colilert_hemoflow chf ON chf.colilert_hemoflow_barcode = testing.barcode AND chf.flag = 0
         LEFT JOIN campy_hemoflow ch ON ch.campy_assay_barcode = testing.barcode AND ch.flag = 0
@@ -1405,26 +1440,37 @@ class Sample_reception_model extends CI_Model
         sample_reception_sample.time_arrival,
         CASE 
             WHEN rt.testing_type = "Sequencing" THEN 
-                CASE WHEN seq.is_status = 1 AND ecp.species_id IS NOT NULL AND ecp.species_id != "" THEN 1 ELSE 0 END
+                CASE WHEN seq.is_status = 1 AND NOT EXISTS(
+                    SELECT 1 FROM extraction_culture_plate ecp3 
+                    WHERE ecp3.id_one_water_sample = sample_reception_sample.id_one_water_sample 
+                    AND ecp3.flag = 0 
+                    AND (ecp3.species_id IS NULL OR ecp3.species_id = "")
+                ) THEN 1 ELSE 0 END
             ELSE
                 COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, ch.review, ex.review, sh.review, chq.review, 0)
         END AS review,
         CASE 
-            WHEN COUNT(CASE WHEN rt.testing_type NOT LIKE "%microbial%" THEN testing.id_testing END) = 0 THEN "No Tests"
-            WHEN COUNT(CASE WHEN rt.testing_type NOT LIKE "%microbial%" AND 
-                CASE
-                    WHEN rt.testing_type = "Sequencing" THEN 
-                        CASE WHEN seq.is_status = 1 AND ecp.species_id IS NOT NULL AND ecp.species_id != "" THEN 1 ELSE 0 END
-                    ELSE
-                        COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review)
-                END = 1 THEN 1 END) = COUNT(CASE WHEN rt.testing_type NOT LIKE "%microbial%" THEN testing.id_testing END) THEN "Complete"
-            WHEN COUNT(CASE WHEN rt.testing_type NOT LIKE "%microbial%" AND 
-                CASE
-                    WHEN rt.testing_type = "Sequencing" THEN 
-                        CASE WHEN seq.is_status = 1 AND ecp.species_id IS NOT NULL AND ecp.species_id != "" THEN 1 ELSE 0 END
-                    ELSE
-                        COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review)
-                END = 1 THEN 1 END) > 0 THEN "Partial"
+            WHEN COUNT(DISTINCT CASE WHEN rt.testing_type NOT LIKE "%microbial%" THEN testing.id_testing END) = 0 THEN "No Tests"
+            WHEN COUNT(DISTINCT CASE 
+                WHEN rt.testing_type NOT LIKE "%microbial%" AND rt.testing_type = "Sequencing" AND seq.is_status = 1 AND NOT EXISTS(
+                    SELECT 1 FROM extraction_culture_plate ecp3 
+                    WHERE ecp3.id_one_water_sample = sample_reception_sample.id_one_water_sample 
+                    AND ecp3.flag = 0 
+                    AND (ecp3.species_id IS NULL OR ecp3.species_id = "")
+                ) THEN testing.id_testing
+                WHEN rt.testing_type NOT LIKE "%microbial%" AND rt.testing_type != "Sequencing" AND COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review) = 1 THEN testing.id_testing
+                ELSE NULL 
+            END) = COUNT(DISTINCT CASE WHEN rt.testing_type NOT LIKE "%microbial%" THEN testing.id_testing END) THEN "Complete"
+            WHEN COUNT(DISTINCT CASE 
+                WHEN rt.testing_type NOT LIKE "%microbial%" AND rt.testing_type = "Sequencing" AND seq.is_status = 1 AND NOT EXISTS(
+                    SELECT 1 FROM extraction_culture_plate ecp3 
+                    WHERE ecp3.id_one_water_sample = sample_reception_sample.id_one_water_sample 
+                    AND ecp3.flag = 0 
+                    AND (ecp3.species_id IS NULL OR ecp3.species_id = "")
+                ) THEN testing.id_testing
+                WHEN rt.testing_type NOT LIKE "%microbial%" AND rt.testing_type != "Sequencing" AND COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review) = 1 THEN testing.id_testing
+                ELSE NULL 
+            END) > 0 THEN "Partial"
             ELSE "Incomplete"
         END AS review_status
         ');
