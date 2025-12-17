@@ -2033,7 +2033,7 @@ a:visited .card-label {
                                                         } else {
                                                             $progress_color = '#E05B5B'; // Red
                                                             $progress_status = 'Starting';
-                                                            $progress_icon = 'fa-play-circle';
+                                                            $progress_icon = 'fa-hourglass-half';
                                                         }
                                                         ?>
                                                         <div class="modern-progress-container">
@@ -2246,7 +2246,7 @@ a:visited .card-label {
                                                     } else {
                                                         $progress_color = '#E05B5B';
                                                         $progress_status = 'Starting';
-                                                        $progress_icon = 'fa-play-circle';
+                                                        $progress_icon = 'fa-hourglass-half';
                                                     }
                                                     ?>
                                                     <div class="modern-progress-wrapper">
