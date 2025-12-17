@@ -309,9 +309,9 @@
   overflow: hidden !important;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
   position: relative !important;
-  box-shadow: 
-    0 12px 40px rgba(0, 0, 0, 0.15),
-    0 4px 20px rgba(0, 0, 0, 0.08) !important;
+  /* box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.01),
+    0 4px 20px rgba(0, 0, 0, 0.1) !important; */
 }
 
 .modern-summary-card:hover {
@@ -436,7 +436,7 @@ a:visited .card-label {
 }
 
 .card-icon {
-  font-size: 28px !important;
+  font-size: 58px !important;
   opacity: 0.85 !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
