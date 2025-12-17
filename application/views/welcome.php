@@ -330,7 +330,7 @@
   left: 0 !important;
   right: 0 !important;
   bottom: 0 !important;
-  background: linear-gradient(135deg, rgba(77, 110, 245, 0.35) 0%, rgba(107, 126, 247, 0.25) 100%) !important;
+  background: linear-gradient(135deg, rgba(77, 110, 245, 0.75) 0%, rgba(107, 126, 247, 0.65) 100%) !important;
   pointer-events: none !important;
 }
 
@@ -341,7 +341,7 @@
   left: 0 !important;
   right: 0 !important;
   bottom: 0 !important;
-  background: linear-gradient(135deg, rgba(63, 185, 132, 0.35) 0%, rgba(82, 196, 154, 0.25) 100%) !important;
+  background: linear-gradient(135deg, rgba(63, 185, 132, 0.75) 0%, rgba(82, 196, 154, 0.65) 100%) !important;
   pointer-events: none !important;
 }
 
@@ -352,7 +352,7 @@
   left: 0 !important;
   right: 0 !important;
   bottom: 0 !important;
-  background: linear-gradient(135deg, rgba(245, 192, 77, 0.35) 0%, rgba(247, 208, 99, 0.25) 100%) !important;
+  background: linear-gradient(135deg, rgba(245, 192, 77, 0.75) 0%, rgba(247, 208, 99, 0.65) 100%) !important;
   pointer-events: none !important;
 }
 
@@ -363,7 +363,7 @@
   left: 0 !important;
   right: 0 !important;
   bottom: 0 !important;
-  background: linear-gradient(135deg, rgba(224, 91, 91, 0.35) 0%, rgba(231, 111, 111, 0.25) 100%) !important;
+  background: linear-gradient(135deg, rgba(224, 91, 91, 0.75) 0%, rgba(231, 111, 111, 0.65) 100%) !important;
   pointer-events: none !important;
 }
 
@@ -389,18 +389,34 @@
   font-size: 32px !important;
   font-weight: 800 !important;
   line-height: 1 !important;
-  color: var(--ui-text) !important;
+  color: white !important;
   margin: 0 !important;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Override untuk memastikan warna putih tetap tampil */
+a .card-number,
+a:hover .card-number,
+a:focus .card-number,
+a:visited .card-number {
+  color: white !important;
 }
 
 .card-label {
   font-size: 14px !important;
   font-weight: 600 !important;
-  color: var(--ui-text-secondary) !important;
+  color: white !important;
   margin: 0 !important;
   text-transform: uppercase !important;
   letter-spacing: 0.5px !important;
+}
+
+/* Override untuk memastikan warna putih tetap tampil */
+a .card-label,
+a:hover .card-label,
+a:focus .card-label,
+a:visited .card-label {
+  color: white !important;
 }
 
 .card-icon-wrapper {
@@ -1833,7 +1849,7 @@
         <!-- Summary Cards -->
         <div class="row" style="margin-bottom: 30px;">
             <div class="col-lg-3 col-xs-6 card-aqua">
-                <a href="<?php echo site_url('sample_reception'); ?>" style="text-decoration: none; color: inherit;">
+                <a href="#" style="text-decoration: none; color: inherit;">
                     <div class="modern-summary-card card-animate-1">
                         <div class="card-content-wrapper">
                             <div class="card-info">
@@ -1850,7 +1866,7 @@
             </div>
 
             <div class="col-lg-3 col-xs-6 card-green">
-                <a href="<?php echo site_url('sample_reception'); ?>" style="text-decoration: none; color: inherit;">
+                <a href="#" style="text-decoration: none; color: inherit;">
                     <div class="modern-summary-card card-animate-2">
                         <div class="card-content-wrapper">
                             <div class="card-info">
@@ -1884,7 +1900,7 @@
             </div>
 
             <div class="col-lg-3 col-xs-6 card-red">
-                <a href="<?php echo site_url('sample_reception'); ?>" style="text-decoration: none; color: inherit;">
+                <a href="#" style="text-decoration: none; color: inherit;">
                     <div class="modern-summary-card card-animate-4">
                         <div class="card-content-wrapper">
                             <div class="card-info">
