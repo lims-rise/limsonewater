@@ -19,6 +19,7 @@ class Welcome extends CI_Controller {
         $data['recent_activities'] = $this->Dashboard_model->get_recent_activities(8);
         $data['workflow_status'] = $this->Dashboard_model->get_workflow_status();
         $data['monthly_statistics'] = $this->Dashboard_model->get_monthly_statistics();
+        $data['available_years'] = $this->Dashboard_model->get_available_years();
         
         $this->template->load('template', 'welcome', $data);
     }
@@ -77,6 +78,31 @@ class Welcome extends CI_Controller {
             echo json_encode([
                 'success' => false,
                 'message' => 'Failed to retrieve pending items',
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
+    
+    public function get_monthly_statistics_by_year() {
+        $year = $this->input->post('year');
+        
+        if (empty($year)) {
+            echo json_encode(['success' => false, 'message' => 'Year is required']);
+            return;
+        }
+        
+        try {
+            $monthly_statistics = $this->Dashboard_model->get_monthly_statistics($year);
+            
+            echo json_encode([
+                'success' => true,
+                'data' => $monthly_statistics,
+                'message' => 'Monthly statistics retrieved successfully'
+            ]);
+        } catch (Exception $e) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Failed to retrieve monthly statistics',
                 'error' => $e->getMessage()
             ]);
         }

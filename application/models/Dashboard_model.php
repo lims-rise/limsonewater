@@ -277,13 +277,18 @@ class Dashboard_model extends CI_Model
     }
 
     // Get monthly statistics for charts
-    public function get_monthly_statistics() {
+    public function get_monthly_statistics($year = null) {
         $months = array();
         
-        // Get last 6 months data
-        for ($i = 5; $i >= 0; $i--) {
-            $date = date('Y-m', strtotime("-{$i} months"));
-            $month_name = date('M Y', strtotime("-{$i} months"));
+        // Use current year if no year specified
+        if ($year === null) {
+            $year = date('Y');
+        }
+        
+        // Get 12 months data for specified year
+        for ($i = 1; $i <= 12; $i++) {
+            $date = $year . '-' . str_pad($i, 2, '0', STR_PAD_LEFT);
+            $month_name = date('M Y', strtotime($date . '-01'));
             
             // Projects count
             $this->db->select('COUNT(*) as count');
@@ -328,6 +333,26 @@ class Dashboard_model extends CI_Model
         }
 
         return $months;
+    }
+    
+    // Get available years for monthly statistics
+    public function get_available_years() {
+        $years = array();
+        
+        // Get first year from sample_reception table
+        $this->db->select('MIN(YEAR(date_created)) as first_year');
+        $this->db->where('flag', '0');
+        $query = $this->db->get('sample_reception');
+        $first_year = $query->row()->first_year;
+        
+        if ($first_year) {
+            $current_year = date('Y');
+            for ($year = $first_year; $year <= $current_year; $year++) {
+                $years[] = $year;
+            }
+        }
+        
+        return array_reverse($years); // Most recent first
     }
     
     // Get pending items by module for detailed view
