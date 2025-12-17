@@ -2282,7 +2282,7 @@ a:visited .card-label {
                                                     } elseif ($completion_rate > 0) {
                                                         $status_color = '#E05B5B';
                                                         $status_text = 'In Progress';
-                                                        $status_icon = 'fa-exclamation-triangle';
+                                                        $status_icon = 'fa-hourglass-half';
                                                     } else {
                                                         $status_color = '#6B7178';
                                                         $status_text = 'No Tests';
