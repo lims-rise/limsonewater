@@ -654,7 +654,7 @@
                                                 
                                                 // Special handling for different testing types
                                                 if ($testing_type === 'Protozoa') {
-                                                    $clean_units = 'c/L & c/g dw';
+                                                    $clean_units = 'copies/L';
                                                 } elseif (strpos($clean_units, 'Detected') !== false || strpos($clean_units, 'Positive') !== false) {
                                                     $clean_units = '–'; // For presence/absence tests
                                                 } elseif (strpos($units, 'MPN') !== false) {
@@ -707,8 +707,8 @@
                                                     // Format original: Giardia/L: <0.03 | Crypto/L: - | Giardia/g: 4 | Crypto/g: -
                                                     // Format baru: G/L:<0.03 C/L:- G/g:4 C/g:-
                                                     $compact_value = $value;
-                                                    $compact_value = str_replace('Giardia/', 'G/', $compact_value);
-                                                    $compact_value = str_replace('Crypto/', 'C/', $compact_value);
+                                                    $compact_value = str_replace('Giardia/', 'Giardia/', $compact_value);
+                                                    $compact_value = str_replace('Crypto/', 'Cryptosporidium/', $compact_value);
                                                     $compact_value = str_replace(': ', ':', $compact_value);
                                                     $compact_value = str_replace(' | ', ' ', $compact_value);
                                                     $compact_value = str_replace('|', '', $compact_value);
@@ -771,7 +771,7 @@
                                     ),
                                     '💧 Other Tests' => array(
                                         'Moisture_content' => array('name' => 'Moisture Content', 'method' => 'Standard', 'units' => '%'),
-                                        'Protozoa' => array('name' => 'Protozoa qPCR', 'method' => 'qPCR', 'units' => 'copies/L & copies/g dw'),
+                                        'Protozoa' => array('name' => 'Protozoa qPCR', 'method' => 'qPCR', 'units' => 'copies/L'),
                                         'Sequencing' => array('name' => 'Sequencing', 'method' => '-', 'units' => '–'),
                                         'Microbial-Source-Tracking' => array('name' => 'Microbial Source Tracking', 'method' => 'MST', 'units' => '–')
                                     )
