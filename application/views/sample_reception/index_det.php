@@ -1040,33 +1040,6 @@ background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
 												<p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px;">Data already exists in the system</p>
 											</div>
 										</div>
-										${isExtractionCulture ? `
-										<div style="
-											display: flex;
-											align-items: center;
-											background: rgba(156, 39, 176, 0.2);
-											border-radius: 10px;
-											padding: 15px;
-											margin-top: 15px;
-											border: 2px solid rgba(156, 39, 176, 0.3);
-										">
-											<div style="
-												width: 50px;
-												height: 50px;
-												background: rgba(156, 39, 176, 0.3);
-												border-radius: 50%;
-												display: flex;
-												align-items: center;
-												justify-content: center;
-												margin-right: 15px;
-												font-size: 24px;
-											">🧬</div>
-											<div style="text-align: left;">
-												<h4 style="margin: 0; font-size: 18px; font-weight: 600;">Sequence Data</h4>
-												<p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px;">Add sequence information for this sample</p>
-											</div>
-										</div>
-										` : ''}
 									</div>
 								`,
 								confirmButtonText: '✨ Got it!',
@@ -1085,13 +1058,13 @@ background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
 							};
 
 							// Add sequence button only for extraction_culture
-							if (isExtractionCulture) {
-								sweetAlertConfig.showCancelButton = true;
-								sweetAlertConfig.cancelButtonText = '🧬 Add Sequence';
-								sweetAlertConfig.cancelButtonColor = '#9c27b0';
-								sweetAlertConfig.customClass.cancelButton = 'futuristic-button-sequence';
-								sweetAlertConfig.buttonsStyling = false;
-							}
+							// if (isExtractionCulture) {
+							// 	sweetAlertConfig.showCancelButton = true;
+							// 	sweetAlertConfig.cancelButtonText = '🧬 Add Sequence';
+							// 	sweetAlertConfig.cancelButtonColor = '#9c27b0';
+							// 	sweetAlertConfig.customClass.cancelButton = 'futuristic-button-sequence';
+							// 	sweetAlertConfig.buttonsStyling = false;
+							// }
 
 							Swal.fire(sweetAlertConfig).then((result) => {
 								if (result.dismiss === Swal.DismissReason.cancel && isExtractionCulture) {
