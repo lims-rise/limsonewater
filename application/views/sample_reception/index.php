@@ -59,7 +59,7 @@
                                         <th>Comments</th>
                                         <th>Date Arrived</th>
                                         <th>Time Arrived</th>
-                                        <th>File Status</th>
+                                        <th>Documents</th>
                                         <th>Supplementary File</th>
                                         <th width="120px">Action</th>
                                     </tr>
