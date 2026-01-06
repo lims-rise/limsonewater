@@ -178,7 +178,7 @@ class Dashboard_model extends CI_Model
         $sql = "SELECT 
                     sr.id_project,
                     sr.id_client_sample,
-                    COUNT(srs.id_sample) as total_samples,
+                    COUNT(DISTINCT srs.id_sample) as total_samples,
                     COUNT(DISTINCT CASE WHEN rt.testing_type NOT LIKE '%microbial%' THEN srt.id_testing END) as total_tests,
                     COUNT(DISTINCT CASE 
                         WHEN rt.testing_type NOT LIKE '%microbial%' AND rt.testing_type = 'Sequencing' AND seq.is_status = 1 AND NOT EXISTS(
