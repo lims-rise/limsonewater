@@ -305,24 +305,31 @@ class Dashboard_model extends CI_Model
             $samples = $query->row()->count;
 
             // Tests count (approximate based on all testing modules)
-            $tests = 0;
-            $testing_tables = array(
-                'campy_biosolids_qpcr', 'campy_biosolids', 'campy_liquids', 'campy_pa',
-                'colilert_biosolids_in', 'colilert_water_in', 'enterolert_biosolids_in', 
-                'enterolert_water_in', 'salmonella_biosolids', 'salmonella_liquids', 
-                'salmonella_pa', 'moisture_content', 'hemoflow', 'protozoa', 'colilert_hemoflow', 'enterolert_hemoflow', 'campy_hemoflow',
-                'extraction_culture', 'extraction_liquid', 'extraction_metagenome', 'extraction_biosolid', 'salmonella_hemoflow', 'campy_hemoflow_qpcr'
-            );
+            // $tests = 0;
+            // $testing_tables = array(
+            //     'campy_biosolids_qpcr', 'campy_biosolids', 'campy_liquids', 'campy_pa',
+            //     'colilert_biosolids_in', 'colilert_water_in', 'enterolert_biosolids_in', 
+            //     'enterolert_water_in', 'salmonella_biosolids', 'salmonella_liquids', 
+            //     'salmonella_pa', 'moisture_content', 'hemoflow', 'protozoa', 'colilert_hemoflow', 'enterolert_hemoflow', 'campy_hemoflow',
+            //     'extraction_culture', 'extraction_liquid', 'extraction_metagenome', 'extraction_biosolid', 'salmonella_hemoflow', 'campy_hemoflow_qpcr'
+            // );
             
-            foreach ($testing_tables as $table) {
-                $this->db->select('COUNT(*) as count');
-                $this->db->where('flag', '0');
-                $this->db->where("DATE_FORMAT(date_created, '%Y-%m') =", $date);
-                $result = $this->db->get($table);
-                if ($result && $result->num_rows() > 0) {
-                    $tests += $result->row()->count;
-                }
-            }
+            // foreach ($testing_tables as $table) {
+            //     $this->db->select('COUNT(*) as count');
+            //     $this->db->where('flag', '0');
+            //     $this->db->where("DATE_FORMAT(date_created, '%Y-%m') =", $date);
+            //     $result = $this->db->get($table);
+            //     if ($result && $result->num_rows() > 0) {
+            //         $tests += $result->row()->count;
+            //     }
+            // }
+
+            // Tests count (based on sample_reception_testing which is the source of truth)
+            $this->db->select('COUNT(*) as count');
+            $this->db->where('flag', '0');
+            $this->db->where("DATE_FORMAT(date_created, '%Y-%m') =", $date);
+            $query = $this->db->get('sample_reception_testing');
+            $tests = $query->row()->count;
 
             $months[] = array(
                 'month' => $month_name,
