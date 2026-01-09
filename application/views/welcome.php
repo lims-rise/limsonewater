@@ -2243,10 +2243,14 @@ a:visited .card-label {
                                                         $progress_color = '#F5C04D';
                                                         $progress_status = 'In Progress';
                                                         $progress_icon = 'fa-hourglass-half';
-                                                    } else {
+                                                    } else if ($completion_rate > 0){
                                                         $progress_color = '#E05B5B';
                                                         $progress_status = 'Starting';
                                                         $progress_icon = 'fa-hourglass-half';
+                                                    } else {
+                                                        $progress_color = '#6B7178';
+                                                        $progress_status = 'No Progress';
+                                                        $progress_icon = 'fa-play-circle';
                                                     }
                                                     ?>
                                                     <div class="modern-progress-wrapper">
@@ -2285,8 +2289,8 @@ a:visited .card-label {
                                                         $status_icon = 'fa-hourglass-half';
                                                     } else {
                                                         $status_color = '#6B7178';
-                                                        $status_text = 'No Tests';
-                                                        $status_icon = 'fa-minus-circle';
+                                                        $status_text = 'No Progress';
+                                                        $status_icon = 'fa-play-circle';
                                                     }
                                                     ?>
                                                     <div class="modern-status-badge" style="background: <?php echo $status_color; ?>10; border: 1px solid <?php echo $status_color; ?>30;">
