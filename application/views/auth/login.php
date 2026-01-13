@@ -107,22 +107,22 @@
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
             padding: 0;
             width: 100%;
-            max-width: 440px;
+            max-width: 600px;
             margin: 20px;
             overflow: hidden;
             transition: var(--ui-transition);
         }
 
-        .login-container:hover {
+        /* .login-container:hover {
             transform: translateY(-5px);
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
-        }
+        } */
 
         /* Login Header */
         .login-header {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(20px);
-            padding: 40px 32px 32px 32px;
+            padding: 32px 32px 32px 32px;
             text-align: center;
             position: relative;
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
@@ -138,10 +138,29 @@
             background: radial-gradient(circle at top right, rgba(77, 110, 245, 0.1), transparent 70%);
         }
 
+        /* Brand Logo Container */
+        .brand-logo-container {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .brand-logo-container img {
+            transition: var(--ui-transition);
+        }
+
+        .brand-logo-container img:hover {
+            opacity: 1 !important;
+            transform: scale(1.05);
+        }
+
         /* Time Display */
         .time-display {
             color: rgba(255, 255, 255, 0.95);
-            font-size: 28px;
+            font-size: 18px;
             font-weight: 700;
             margin-bottom: 12px;
             font-family: 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
@@ -154,7 +173,7 @@
         /* Logo */
         .login-logo {
             color: rgba(255, 255, 255, 0.95);
-            font-size: 24px;
+            font-size: 34px;
             font-weight: 800;
             margin-bottom: 8px;
             position: relative;
@@ -483,10 +502,15 @@
     <div class="login-container">
         <!-- Login Header -->
         <div class="login-header">
-            <div class="time-display" id="time"></div>
-            <div class="login-logo">
-                <span class="brand-accent">LIMS</span>-One Water | LOGIN
+            <!-- OneWater Logo -->
+            <div class="brand-logo-container" style="margin-bottom: 20px;">
+                <img src="<?php echo base_url('img/onewater-white.png'); ?>" alt="OneWater Logo" 
+                     style="height: 80px; width: auto; opacity: 0.9; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));">
             </div>
+            <div class="login-logo">
+                <span class="brand-accent">LIMS</span> | LOGIN
+            </div>
+            <div class="time-display" id="time"></div>
             <?php
             $status_login = $this->session->userdata('status_login');
             if (empty($status_login)) {
