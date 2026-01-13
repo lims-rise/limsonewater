@@ -416,19 +416,139 @@
                         </ul>
                     </div>
 
-                     <!-- Global Search Component -->
+                     <!-- Smart Global Search Component -->
                     <div class="navbar-form navbar-right" style="margin-top: 8px; margin-right: 10px; z-index: 999; position: relative;">
                         <div class="form-group">
-                            <div class="input-group" style="width: 280px;">
-                                <input type="text" id="global-search-input" class="form-control" placeholder="Search Project ID or Sample ID..." style="border-radius: 15px 0 0 15px;" autocomplete="on">
+                            <div class="input-group smart-search-container" style="width: 350px;">
+                                <input type="text" id="global-search-input" class="form-control smart-search-input" placeholder="Search Project ID or Sample ID..." style="border-radius: 15px 0 0 15px;" autocomplete="off">
                                 <span class="input-group-btn">
                                     <button type="button" id="global-search-btn" class="btn btn-primary" style="border-radius: 0 15px 15px 0; height: 34px;" tabindex="-1">
                                         <i class="fa fa-search"></i>
                                     </button>
                                 </span>
                             </div>
+                            <!-- Smart Suggestions Dropdown -->
+                            <div id="search-suggestions" class="search-suggestions-dropdown">
+                                <div class="suggestions-header">
+                                    <span class="suggestions-title">Recent Searches</span>
+                                    <button class="clear-history-btn" onclick="clearSearchHistory()">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div>
+                                <div class="suggestions-list" id="suggestions-list">
+                                    <!-- Dynamic suggestions will be populated here -->
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    <!-- Smart Search Styles -->
+                    <style>
+                        .smart-search-container {
+                            position: relative;
+                        }
+
+                        .search-suggestions-dropdown {
+                            position: absolute;
+                            top: 100%;
+                            left: 0;
+                            right: 0;
+                            background: white;
+                            border: 1px solid #ddd;
+                            border-radius: 12px;
+                            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+                            z-index: 9999;
+                            max-height: 300px;
+                            overflow-y: auto;
+                            display: none;
+                            margin-top: 4px;
+                        }
+
+                        .suggestions-header {
+                            padding: 12px 16px;
+                            border-bottom: 1px solid #eee;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            background: #f8f9fa;
+                            border-radius: 12px 12px 0 0;
+                        }
+
+                        .suggestions-title {
+                            font-size: 12px;
+                            color: #666;
+                            font-weight: 600;
+                        }
+
+                        .clear-history-btn {
+                            background: none;
+                            border: none;
+                            color: #999;
+                            cursor: pointer;
+                            padding: 4px 8px;
+                            border-radius: 4px;
+                            font-size: 11px;
+                        }
+
+                        .clear-history-btn:hover {
+                            background: #e9ecef;
+                            color: #666;
+                        }
+
+                        .suggestion-item {
+                            padding: 12px 16px;
+                            cursor: pointer;
+                            border-bottom: 1px solid #f0f0f0;
+                            transition: background 0.2s ease;
+                            display: flex;
+                            align-items: center;
+                        }
+
+                        .suggestion-item:hover {
+                            background: #f8f9fa;
+                        }
+
+                        .suggestion-item:last-child {
+                            border-bottom: none;
+                            border-radius: 0 0 12px 12px;
+                        }
+
+                        .suggestion-icon {
+                            margin-right: 10px;
+                            color: #4D6EF5;
+                            width: 16px;
+                        }
+
+                        .suggestion-text {
+                            flex-grow: 1;
+                            font-size: 14px;
+                        }
+
+                        .suggestion-type {
+                            font-size: 11px;
+                            color: #888;
+                            background: #e9ecef;
+                            padding: 2px 6px;
+                            border-radius: 8px;
+                        }
+
+                        .smart-search-input:focus + .input-group-btn + .search-suggestions-dropdown {
+                            display: block;
+                        }
+
+                        .no-suggestions {
+                            padding: 20px;
+                            text-align: center;
+                            color: #999;
+                            font-style: italic;
+                        }
+
+                        .placeholder-cycling {
+                            color: #999;
+                            font-style: italic;
+                            transition: opacity 0.5s ease;
+                        }
+                    </style>
                     <!-- <marquee behavior="scroll" direction="left" scrollamount="30">
                         <h6><i class='fa fa-qrcode'></i><b> Indonesia</b> Lab data </h6>
                     </marquee> -->
@@ -465,7 +585,7 @@
                 <div class="pull-right hidden-xs">
                     <b>Version</b> 1.1.0
                 </div>
-                <strong><img src="../img/lims_logo4.png" height='25px'>  Copyright &copy; 2024 LIMS-1Water | 
+                <strong><img src="../img/lims_logo4.png" height='25px'>  Copyright &copy; 2026 LIMS-OneWater | 
                 <a href="https://www.linkedin.com/in/zainal-enal-452b4414a/" target="_blank">One Water Team</a>.</strong> All rights reserved.
             </footer>
             </div>
@@ -740,7 +860,119 @@
         });
             //================
             
-            // Global Search Functionality - Isolated to prevent sidebar interference
+            // ================================
+            // 🔍 Smart Global Search with Dynamic Placeholders
+            // ================================
+            
+            // Smart Placeholder Cycling
+            const smartPlaceholders = [
+                'Search Project ID... (e.g., MU2500001)',
+                'Search Sample ID... (e.g., P2500001)',
+                'Try: MU2500001, P2500001...',
+                'Search by Project or Sample ID',
+                'Find your data quickly...'
+            ];
+            
+            let currentPlaceholderIndex = 0;
+            let placeholderInterval;
+            
+            function cyclePlaceholders() {
+                const input = $('#global-search-input');
+                if (!input.is(':focus') && input.val() === '') {
+                    input.attr('placeholder', smartPlaceholders[currentPlaceholderIndex]);
+                    currentPlaceholderIndex = (currentPlaceholderIndex + 1) % smartPlaceholders.length;
+                }
+            }
+            
+            // Start placeholder cycling
+            placeholderInterval = setInterval(cyclePlaceholders, 3000);
+            
+            // Search History Management
+            function getSearchHistory() {
+                return JSON.parse(localStorage.getItem('lims_search_history') || '[]');
+            }
+            
+            function saveSearchHistory(searchTerm) {
+                let history = getSearchHistory();
+                
+                // Remove existing entry if present
+                history = history.filter(item => item.term !== searchTerm);
+                
+                // Add new entry at the beginning
+                history.unshift({
+                    term: searchTerm,
+                    timestamp: new Date().toISOString(),
+                    type: searchTerm.startsWith('MU') ? 'project' : 'sample'
+                });
+                
+                // Keep only last 10 searches
+                history = history.slice(0, 10);
+                
+                localStorage.setItem('lims_search_history', JSON.stringify(history));
+                updateSuggestions();
+            }
+            
+            function clearSearchHistory() {
+                localStorage.removeItem('lims_search_history');
+                updateSuggestions();
+                $('#search-suggestions').hide();
+            }
+            
+            function updateSuggestions() {
+                const history = getSearchHistory();
+                const suggestionsList = $('#suggestions-list');
+                
+                if (history.length === 0) {
+                    suggestionsList.html('<div class="no-suggestions">No recent searches</div>');
+                    return;
+                }
+                
+                let html = '';
+                history.forEach(item => {
+                    const icon = item.type === 'project' ? 'fa-folder' : 'fa-flask';
+                    const typeLabel = item.type === 'project' ? 'Project' : 'Sample';
+                    
+                    html += `
+                        <div class="suggestion-item" onclick="selectSuggestion('${item.term}')">
+                            <i class="fa ${icon} suggestion-icon"></i>
+                            <span class="suggestion-text">${item.term}</span>
+                            <span class="suggestion-type">${typeLabel}</span>
+                        </div>
+                    `;
+                });
+                
+                suggestionsList.html(html);
+            }
+            
+            function selectSuggestion(term) {
+                $('#global-search-input').val(term);
+                $('#search-suggestions').hide();
+                performGlobalSearch(term);
+            }
+            
+            // Enhanced search input events
+            $('#global-search-input').on('focus', function() {
+                clearInterval(placeholderInterval);
+                $(this).attr('placeholder', 'Type to search...');
+                updateSuggestions();
+                $('#search-suggestions').show();
+            }).on('blur', function() {
+                // Delay hiding to allow clicks on suggestions
+                setTimeout(() => {
+                    $('#search-suggestions').hide();
+                    placeholderInterval = setInterval(cyclePlaceholders, 3000);
+                }, 200);
+            }).on('input', function() {
+                const value = $(this).val();
+                if (value.length > 0) {
+                    $('#search-suggestions').hide();
+                } else {
+                    updateSuggestions();
+                    $('#search-suggestions').show();
+                }
+            });
+
+            // Global Search Functionality - Enhanced with history
             $('#global-search-btn').on('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -767,6 +999,9 @@
             });
             
             function performGlobalSearch(searchTerm) {
+                // Save to search history before searching
+                saveSearchHistory(searchTerm);
+                
                 console.log('Performing search for:', searchTerm);
                 $.ajax({
                     url: '<?php echo site_url('Sample_reception/global_search'); ?>',
@@ -813,6 +1048,17 @@
                     }
                 });
             }
+
+            // Initialize Smart Search on page load
+            $(document).ready(function() {
+                updateSuggestions();
+                cyclePlaceholders(); // Set initial placeholder
+                
+                // Prevent suggestions dropdown from interfering with other elements
+                $('#search-suggestions').on('click', function(e) {
+                    e.stopPropagation();
+                });
+            });
 
             // ================================
             // 🌟 Modern Profile Dropdown 2026
