@@ -38,43 +38,293 @@
               <!-- href="<?php //echo base_url() ?>assets/adminlte/dist/css/googleapis.css/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"> -->
     </head>
     <style>
-    @media print{
-        .noprint{
-            display:none;
+        .system-title {
+            font-weight: 600;
+            color: #FFFFFF;
+            font-size: 20px;
+            margin: 0;
+            padding: 12px 0;
+            line-height: 1.2;
+            vertical-align: middle;
+            display: inline-block;
+            letter-spacing: 1px;
+            word-spacing: 1px;
         }
-    @page { margin: 0; }
-    body { margin: 1.6cm; }
-    }
-    h6 {
-        /* display: block; */
-        /* position: relative; */
-        padding: 5px 15px 0 15px;
-        /* background-color: #08C; */
-        font-size: 20px;
-        color: white;
-    }
-    .tab1 { tab-size: 2; }
-    .table tbody tr.active td,
-    .table tbody tr.active th {
-        background-color: #08C;
-        color: white;
-        /* cursor: pointer; */
-    }
 
-    /* Global Search - Ensure no interference with sidebar */
-    #global-search-input, #global-search-btn {
-        pointer-events: auto;
-        z-index: 999;
-    }
-    
-    /* Ensure sidebar has higher priority */
-    .main-sidebar {
-        z-index: 1001 !important;
-    }
-    
-    .sidebar-toggle {
-        z-index: 1002 !important;
-    }
+        @media print{
+            .noprint{
+                display:none;
+            }
+        @page { margin: 0; }
+        body { margin: 1.6cm; }
+        }
+        h6 {
+            /* display: block; */
+            /* position: relative; */
+            padding: 5px 15px 0 15px;
+            /* background-color: #08C; */
+            font-size: 20px;
+            color: white;
+        }
+        .tab1 { tab-size: 2; }
+        .table tbody tr.active td,
+        .table tbody tr.active th {
+            background-color: #08C;
+            color: white;
+            /* cursor: pointer; */
+        }
+
+        /* Global Search - Ensure no interference with sidebar */
+        #global-search-input, #global-search-btn {
+            pointer-events: auto;
+            z-index: 999;
+        }
+        
+        /* Ensure sidebar has higher priority */
+        .main-sidebar {
+            z-index: 1001 !important;
+        }
+        
+        .sidebar-toggle {
+            z-index: 1002 !important;
+        }
+
+        /* ================================
+        🌟 2026 USER PROFILE DROPDOWN 
+        Using Dashboard Color System
+        =================================*/
+        :root {
+            /* Using existing dashboard colors */
+            --profile-accent: #4D6EF5;              /* Soft Indigo Blue */
+            --profile-accent-light: #E7EBFF;        /* Soft accent background */
+            --profile-surface: #FFFFFF;             /* Pure white surface */
+            --profile-surface-glass: rgba(255, 255, 255, 0.95); /* Glass effect */
+            --profile-border: #E2E4E8;              /* Light border */
+            --profile-shadow: 0 20px 40px rgba(77, 110, 245, 0.15);
+            --profile-text: #1A1D21;                /* Primary text */
+            --profile-text-secondary: #6B7178;      /* Secondary text */
+            --profile-danger: #E05B5B;              /* Muted red for logout */
+            --profile-success: #3FB984;             /* Success green */
+            --profile-radius: 18px;
+            --profile-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Modern Profile Avatar Button - Keep original header style */
+        .modern-profile-trigger {
+            /* Remove custom styling to preserve original header look */
+        }
+
+        /* Modern Glassmorphism Dropdown Card */
+        .modern-profile-card {
+            position: absolute !important;
+            top: 100% !important;
+            right: 0 !important;
+            width: 340px !important;
+            margin-top: 12px !important;
+            background: var(--profile-surface) !important;
+            backdrop-filter: blur(30px) !important;
+            -webkit-backdrop-filter: blur(30px) !important;
+            border: 1px solid var(--profile-border) !important;
+            border-radius: var(--profile-radius) !important;
+            box-shadow: 
+                0 25px 60px rgba(0, 0, 0, 0.12),
+                0 12px 30px rgba(77, 110, 245, 0.1) !important;
+            padding: 0 !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            transform: translateY(-10px) scale(0.95) !important;
+            transition: var(--profile-transition) !important;
+            z-index: 9999 !important;
+            overflow: hidden !important;
+        }
+
+        .modern-profile-card.show {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: translateY(0) scale(1) !important;
+        }
+
+        /* Profile Header Section */
+        .profile-card-header {
+            padding: 24px 24px 20px 24px !important;
+            background: linear-gradient(135deg, var(--profile-accent-light), rgba(255,255,255,0.1)) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+            text-align: center !important;
+            position: relative !important;
+        }
+
+        .profile-card-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at top right, rgba(77, 110, 245, 0.1), transparent 50%);
+        }
+
+        .profile-header-avatar {
+            width: 72px !important;
+            height: 72px !important;
+            border-radius: 50% !important;
+            border: 3px solid rgba(255, 255, 255, 0.9) !important;
+            margin: 0 auto 16px auto !important;
+            display: block !important;
+            object-fit: cover !important;
+            box-shadow: 
+                0 12px 25px rgba(0, 0, 0, 0.15),
+                0 0 0 4px rgba(77, 110, 245, 0.1) !important;
+            transition: var(--profile-transition) !important;
+            position: relative !important;
+            z-index: 1 !important;
+        }
+
+        .profile-header-name {
+            color: var(--profile-text) !important;
+            font-size: 20px !important;
+            font-weight: 700 !important;
+            margin-bottom: 4px !important;
+            letter-spacing: 0.02em !important;
+            position: relative !important;
+            z-index: 1 !important;
+        }
+
+        .profile-header-email {
+            color: var(--profile-text-secondary) !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            opacity: 0.8 !important;
+            position: relative !important;
+            z-index: 1 !important;
+        }
+
+        /* Profile Actions Section */
+        .profile-card-actions {
+            padding: 20px 0 !important;
+        }
+
+        .profile-action-item {
+            display: flex !important;
+            align-items: center !important;
+            padding: 14px 24px !important;
+            color: var(--profile-text) !important;
+            text-decoration: none !important;
+            transition: var(--profile-transition) !important;
+            border: none !important;
+            background: none !important;
+            width: 100% !important;
+            text-align: left !important;
+            cursor: pointer !important;
+            font-size: 15px !important;
+            font-weight: 500 !important;
+            position: relative !important;
+            overflow: hidden !important;
+        }
+
+        .profile-action-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--profile-accent-light), rgba(77, 110, 245, 0.05));
+            transition: var(--profile-transition);
+            z-index: 0;
+        }
+
+        .profile-action-item:hover {
+            color: var(--profile-accent) !important;
+            text-decoration: none !important;
+            background: rgba(77, 110, 245, 0.04) !important;
+        }
+
+        .profile-action-item:hover::before {
+            width: 100%;
+        }
+
+        .profile-action-item.danger:hover {
+            color: var(--profile-danger) !important;
+            background: rgba(224, 91, 91, 0.04) !important;
+        }
+
+        .profile-action-item.danger::before {
+            background: linear-gradient(90deg, rgba(224, 91, 91, 0.1), rgba(224, 91, 91, 0.02));
+        }
+
+        .profile-action-icon {
+            width: 20px !important;
+            height: 20px !important;
+            margin-right: 14px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border-radius: 8px !important;
+            background: rgba(77, 110, 245, 0.1) !important;
+            transition: var(--profile-transition) !important;
+            position: relative !important;
+            z-index: 1 !important;
+        }
+
+        .profile-action-item:hover .profile-action-icon {
+            background: var(--profile-accent) !important;
+            color: white !important;
+            transform: scale(1.1) !important;
+        }
+
+        .profile-action-item.danger .profile-action-icon {
+            background: rgba(224, 91, 91, 0.1) !important;
+        }
+
+        .profile-action-item.danger:hover .profile-action-icon {
+            background: var(--profile-danger) !important;
+            color: white !important;
+        }
+
+        .profile-action-text {
+            position: relative !important;
+            z-index: 1 !important;
+        }
+
+        /* Divider */
+        .profile-divider {
+            height: 1px !important;
+            background: linear-gradient(90deg, transparent, var(--profile-border), transparent) !important;
+            margin: 8px 24px !important;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .modern-profile-card {
+                width: 300px !important;
+                right: -30px !important;
+            }
+            
+            .modern-profile-trigger .profile-name {
+                display: none !important;
+            }
+            
+            .modern-profile-trigger {
+                padding: 8px 12px !important;
+                border-radius: 50% !important;
+            }
+        }
+
+        /* Animation for entrance */
+        @keyframes profileDropFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-15px) scale(0.92);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modern-profile-card.animate-in {
+            animation: profileDropFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
 
     </style>
     <body class="hold-transition skin-blue sidebar-mini">
@@ -87,7 +337,7 @@
                     <span class="logo-mini">R<b>L</b></span>
                     <!-- logo for regular state and mobile devices -->
                     <span class="logo-lg">
-                    <img src="<?php echo base_url('img/onewaterlogo.png'); ?>" class="user-image" alt="User Image" style="width: 200px; height: 36px; float: left; margin-top: 3px;">
+                    <img src="<?php echo base_url('img/onewater-white.png'); ?>" class="user-image" alt="User Image" style="width: 200px; height: 42px; float: left; margin-top: 3px;">
                     </span>
                     <!-- <span class="logo-lg">RISE|<b><mark>LIMS</mark>2.0</b></span> -->
                     <!-- <span class="logo-lg">RISE|<b><span style="background-color: #FFFFFF; color: #000000">LIMS</span>2.0</b></span> -->
@@ -126,46 +376,43 @@
                             </li>
                             <!-- </ul> -->
                             <li class="dropdown user user-menu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <a href="#" class="dropdown-toggle modern-profile-trigger" onclick="toggleProfileDropdown(event)" data-toggle="">
                                     <img src="<?php echo base_url() ?>assets/foto_profil/<?php echo $this->session->userdata('images'); ?>" class="user-image" alt="User Image">
-                                    <span class="hidden-xs"><?php echo $this->session->userdata('full_name'); ?> </span>
+                                    <span class="hidden-xs"><?php echo $this->session->userdata('full_name'); ?></span>
                                 </a>
-                                <ul class="dropdown-menu">
-                                    <!-- User image -->
-                                    <li class="user-header">
-                                        <img src="<?php echo base_url() ?>assets/foto_profil/<?php echo $this->session->userdata('images'); ?> " class="img-circle" alt="User Image">
-
-                                        <p>
-                                            <?php echo $this->session->userdata('full_name'); ?>                                         
-                                            <small><?php echo $this->session->userdata('email'); ?></small>
-                                        </p>
-                                    </li>
-                                    <!-- Menu Footer-->
-                                    <li class="user-footer">
-                                        <div class="pull-left">
-                                            <?php echo anchor('tbl_user_profile', 'Profile', array('class' => 'btn btn-warning btn-flat')); ?>
-                                            <!--<a href="#" class="btn btn-default btn-flat">Profile</a>-->
-                                        </div>
-                                         <div class="pull-left">
-                                            <!-- <button id="btn1">Alert</button> -->
-                                        </div>
-                                        <!-- <div class="pull-left">
-                                            <?php //echo anchor('tbl_user_profile', 'Indonesia', array('class' => 'btn btn-default btn-flat')); ?>
-                                        </div>
-                                        <div class="pull-left">
-                                            <?php //echo anchor('auth/logout', 'Fiji', array('class' => 'btn btn-default btn-flat')); ?>
-                                        </div> -->
-                                        <div class="pull-right">
-                                            <?php echo anchor('auth/logout', 'Logout', array('class' => 'btn btn-danger btn-flat')); ?>
-                                            <!--<a href="#" class="btn btn-default btn-flat">Sign out</a>-->
-                                        </div>
-                                    </li>
-                                </ul>
+                                
+                                <div class="modern-profile-card" id="profileDropdownCard">
+                                    <!-- Profile Header -->
+                                    <div class="profile-card-header">
+                                        <img src="<?php echo base_url() ?>assets/foto_profil/<?php echo $this->session->userdata('images'); ?>" class="profile-header-avatar" alt="User Image">
+                                        <div class="profile-header-name"><?php echo $this->session->userdata('full_name'); ?></div>
+                                        <div class="profile-header-email"><?php echo $this->session->userdata('email'); ?></div>
+                                    </div>
+                                    
+                                    <!-- Profile Actions -->
+                                    <div class="profile-card-actions">
+                                        <a href="<?php echo base_url('index.php/tbl_user_profile'); ?>" class="profile-action-item">
+                                            <div class="profile-action-icon">
+                                                <i class="fa fa-user" style="font-size: 12px;"></i>
+                                            </div>
+                                            <div class="profile-action-text">View Profile</div>
+                                        </a>
+                                        
+                                        <div class="profile-divider"></div>
+                                        
+                                        <a href="<?php echo base_url('index.php/auth/logout'); ?>" class="profile-action-item danger">
+                                            <div class="profile-action-icon">
+                                                <i class="fa fa-sign-out" style="font-size: 12px;"></i>
+                                            </div>
+                                            <div class="profile-action-text">Sign Out</div>
+                                        </a>
+                                    </div>
+                                </div>
                             </li>
                             <!-- Control Sidebar Toggle Button -->
-                            <li>
+                            <!-- <li>
                                 <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
 
@@ -190,10 +437,10 @@
                         if ($this->session->userdata('lab') == 1) {
                             // echo "<span class=\"\"><b>Welcome to the LIMS2.0</b>RISE Indonesia</span>
                             // <h6><i class='fa fa-flag'></i> Indonesia Lab data </h6>
-                            echo "<h6><i class='fa fa-qrcode'></i> One Water Laboratory Data </h6>";
+                            echo "<h1 class=\"system-title\">Laboratory Information Management System</h1>";
                         }
                         else {
-                            echo "<h6><i class='fa fa-qrcode'></i> One Water Laboratory Data </h6>";
+                            echo "<h1 class=\"system-title\">Laboratory Information Management System</h1>";
                             // echo "<span class=\"\"><b>Welcome to the LIMS2.0</b>RISE Fiji</span>";
                         }
                     ?>
@@ -415,7 +662,7 @@
             <!-- /.control-sidebar -->
             <!-- Add the sidebar's background. This div must be placed
                  immediately after the control sidebar -->
-            <div class="control-sidebar-bg"></div>
+            <!-- <div class="control-sidebar-bg"></div> -->
         </div>
         <!-- ./wrapper -->
         <script type="text/javascript" src="<?php echo base_url() ?>assets/js/jquery-1.9.1.min.js"></script>
@@ -566,6 +813,69 @@
                     }
                 });
             }
+
+            // ================================
+            // 🌟 Modern Profile Dropdown 2026
+            // ================================
+            function toggleProfileDropdown(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                
+                const card = document.getElementById('profileDropdownCard');
+                const isShowing = card.classList.contains('show');
+                
+                // Close all other dropdowns first
+                document.querySelectorAll('.modern-profile-card.show').forEach(dropdown => {
+                    dropdown.classList.remove('show', 'animate-in');
+                });
+                
+                if (!isShowing) {
+                    // Show with animation
+                    card.classList.add('show', 'animate-in');
+                    
+                    // Add click outside listener
+                    setTimeout(() => {
+                        document.addEventListener('click', closeProfileOnClickOutside);
+                    }, 10);
+                }
+            }
+
+            function closeProfileOnClickOutside(event) {
+                const card = document.getElementById('profileDropdownCard');
+                const trigger = document.querySelector('.modern-profile-trigger');
+                
+                if (!card.contains(event.target) && !trigger.contains(event.target)) {
+                    card.classList.remove('show', 'animate-in');
+                    document.removeEventListener('click', closeProfileOnClickOutside);
+                }
+            }
+
+            // Close dropdown on escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    const card = document.getElementById('profileDropdownCard');
+                    if (card.classList.contains('show')) {
+                        card.classList.remove('show', 'animate-in');
+                        document.removeEventListener('click', closeProfileOnClickOutside);
+                    }
+                }
+            });
+
+            // Prevent dropdown from closing when clicking inside
+            document.getElementById('profileDropdownCard').addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
+
+            // Add smooth hover effects to action items
+            document.querySelectorAll('.profile-action-item').forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateX(4px)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateX(0)';
+                });
+            });
 
             // $(function () {
             //     $('.select2').select2()
