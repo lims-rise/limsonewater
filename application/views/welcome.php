@@ -1968,7 +1968,7 @@ a:visited .card-label {
                         </div>
                     </div>
                     <div class="box-body">
-                        <div class="modern-table-wrapper">
+                        <div class="modern-table-wrapper" style="max-height: 775px; overflow-y: auto;">
                             <div class="modern-table-container">
                                 <table class="modern-performance-table">
                                     <thead class="modern-performance-thead">
