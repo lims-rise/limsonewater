@@ -2125,8 +2125,11 @@ a:visited .card-label {
                                             <div class="timeline-header">
                                                 <div class="timeline-meta">
                                                     <span class="timeline-time">
-                                                        <i class="fa fa-clock-o"></i> 
-                                                        <?php echo date('H:i', strtotime($activity['date'])); ?>
+                                                      <i class="fa fa-calendar-o"></i> 
+                                                      <?php echo date('M d, Y', strtotime($activity['date'])); ?>
+                                                      <br>
+                                                      <i class="fa fa-clock-o"></i> 
+                                                      <?php echo date('H:i', strtotime($activity['date'])); ?>
                                                     </span>
                                                     <span class="timeline-module"><?php echo htmlspecialchars($activity['module']); ?></span>
                                                 </div>
