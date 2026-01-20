@@ -218,7 +218,7 @@
                                     <div class="form-group">
                                         <label for="ecoli" class="col-sm-4 control-label">E. Coli (MPN/100mL)</label>
                                         <div class="col-sm-8">
-                                            <input id="ecoli" name="ecoli" type="text"  placeholder="E. Coli (MPN/100mL)" class="form-control">
+                                            <input id="ecoli" name="ecoli" type="text"  placeholder="E. Coli (MPN/100mL)" class="form-control" readonly>
                                             <!-- <div class="val1tip"></div> -->
                                         </div>
                                     </div>
@@ -248,7 +248,7 @@
                                     <div class="form-group">
                                         <label for="total_coliforms" class="col-sm-4 control-label">Total Coliforms (MPN/100mL)</label>
                                         <div class="col-sm-8">
-                                            <input id="total_coliforms" name="total_coliforms" type="text"  placeholder="Total Coliforms (MPN/100mL)" class="form-control">
+                                            <input id="total_coliforms" name="total_coliforms" type="text"  placeholder="Total Coliforms (MPN/100mL)" class="form-control" readonly>
                                             <!-- <div class="val1tip"></div> -->
                                         </div>
                                     </div>
@@ -1088,85 +1088,92 @@
 
 
         function datachart(valueLargeWells, valueSmallWells) {
+            let result = 'Invalid';
             $.ajax({
                 type: "GET",
                 url: `${BASE_URL}/Colilert_idexx_water/data_chart?valueLargeWells=`+valueLargeWells+"&valueSmallWells="+valueSmallWells,
                 dataType: "json",
+                async: false, // Make synchronous to get result immediately
                 success: function(data) {
-                    console.log('data mpm '+ data);
+                    console.log('data mpn: ', data);
                     if (data.length > 0) {
-                        if (data[0].mpn == '<Detection') {
-                            result = "<"+ Math.round(1 / dilution);
+                        if (data[0].MPN_mean == '<Detection') {
+                            result = "<"+ (1 / dilution);
                         }
-                        else if (data[0].mpn == '>Detection') {
-                            result = ">"+ Math.round(2082 / dilution);
+                        else if (data[0].MPN_mean == '>Detection') {
+                            result = ">"+ (2082 / dilution);
                         }
                         else {
-                            result = Math.round(data[0].mpn / dilution);
+                            // Preserve exact decimal precision from backend
+                            let calculatedValue = parseFloat(data[0].MPN_mean) / parseFloat(dilution);
+                            result = calculatedValue.toString();
                         }
                     }
                     else {
                         result = 'Invalid';     
                     }
+                },
+                error: function() {
+                    result = 'Invalid';
                 }
             });
             
             return result; 
         }
 
-        // $('#ecoli_largewells').on('change keypress keyup keydown', function(event) {        
-        //     let empn = datachart($('#ecoli_largewells').val(), $('#ecoli_smallwells').val());
-        //     if (empn == 'Invalid'){
-        //         $('#ecoli').css({'background-color' : '#FFE6E7'});
-        //         $('#ecoli_largewells').val('0');
-        //         $('#ecoli_smallwells').val('0');
-        //     }
-        //     else {
-        //         $('#ecoli').css({'background-color' : '#EEEEEE'});
-        //     }
-        //     $("#ecoli").val(empn);
-        // });
+        // E. coli calculation functions
+        $('#ecoli_largewells').on('change keypress keyup keydown', function(event) {        
+            let empn = datachart($('#ecoli_largewells').val(), $('#ecoli_smallwells').val());
+            if (empn == 'Invalid'){
+                $('#ecoli').css({'background-color' : '#FFE6E7'});
+                $('#ecoli_largewells').val('0');
+                $('#ecoli_smallwells').val('0');
+            }
+            else {
+                $('#ecoli').css({'background-color' : '#EEEEEE'});
+            }
+            $("#ecoli").val(empn);
+        });
 
-        // $('#ecoli_smallwells').on('change keypress keyup keydown', function(event) {        
-        //     let empn = datachart($('#ecoli_largewells').val(), $('#ecoli_smallwells').val());
-        //     if (empn == 'Invalid'){
-        //         $('#ecoli').css({'background-color' : '#FFE6E7'});
-        //         $('#ecoli_largewells').val('0');
-        //         $('#ecoli_smallwells').val('0');
-        //     }
-        //     else {
-        //         $('#ecoli').css({'background-color' : '#EEEEEE'});
-        //     }
-        //     $("#ecoli").val(empn);
-        // });
+        $('#ecoli_smallwells').on('change keypress keyup keydown', function(event) {        
+            let empn = datachart($('#ecoli_largewells').val(), $('#ecoli_smallwells').val());
+            if (empn == 'Invalid'){
+                $('#ecoli').css({'background-color' : '#FFE6E7'});
+                $('#ecoli_largewells').val('0');
+                $('#ecoli_smallwells').val('0');
+            }
+            else {
+                $('#ecoli').css({'background-color' : '#EEEEEE'});
+            }
+            $("#ecoli").val(empn);
+        });
 
+        // Total coliforms calculation functions  
+        $('#coliforms_largewells').on('change keypress keyup keydown', function(event) {        
+            let empn = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
+            if (empn == 'Invalid'){
+                $('#total_coliforms').css({'background-color' : '#FFE6E7'});
+                $('#coliforms_largewells').val('0');
+                $('#coliforms_smallwells').val('0');
+            }
+            else {
+                $('#total_coliforms').css({'background-color' : '#EEEEEE'});
+            }
+            $("#total_coliforms").val(empn);
+        });
 
-
-        // $('#coliforms_largewells').on('change keypress keyup keydown', function(event) {        
-        //     let empn = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
-        //     if (empn == 'Invalid'){
-        //         $('#total_coliforms').css({'background-color' : '#FFE6E7'});
-        //         $('#coliforms_largewells').val('0');
-        //         $('#coliforms_smallwells').val('0');
-        //     }
-        //     else {
-        //         $('#total_coliforms').css({'background-color' : '#EEEEEE'});
-        //     }
-        //     $("#total_coliforms").val(empn);
-        // });
-
-        // $('#coliforms_smallwells').on('change keypress keyup keydown', function(event) {        
-        //     let empn = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
-        //     if (empn == 'Invalid'){
-        //         $('#total_coliforms').css({'background-color' : '#FFE6E7'});
-        //         $('#coliforms_largewells').val('0');
-        //         $('#coliforms_smallwells').val('0');
-        //     }
-        //     else {
-        //         $('#total_coliforms').css({'background-color' : '#EEEEEE'});
-        //     }
-        //     $("#total_coliforms").val(empn);
-        // });
+        $('#coliforms_smallwells').on('change keypress keyup keydown', function(event) {        
+            let empn = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
+            if (empn == 'Invalid'){
+                $('#total_coliforms').css({'background-color' : '#FFE6E7'});
+                $('#coliforms_largewells').val('0');
+                $('#coliforms_smallwells').val('0');
+            }
+            else {
+                $('#total_coliforms').css({'background-color' : '#EEEEEE'});
+            }
+            $("#total_coliforms").val(empn);
+        });
 
         function showConfirmationDelete(url) {
             deleteUrl = url; // Set the URL to the variable
@@ -1385,16 +1392,31 @@
             $('#ecoli_largewells').val(data.ecoli_largewells);
             $('#ecoli_smallwells').val(data.ecoli_smallwells);
             $('#ecoli').val(data.ecoli);
-            // $('#ecoli').attr('readonly', true);
             $('#lowerdetection').val(data.lowerdetection);
             $('#coliforms_largewells').val(data.coliforms_largewells);
             $('#coliforms_smallwells').val(data.coliforms_smallwells);
             $('#total_coliforms').val(data.total_coliforms);
-            // $('#total_coliforms').attr('readonly', true);
             $('#remarks').val(data.remarks);
             // Set quality control checkbox
             $('#quality_control_ciw').prop('checked', data.quality_control == '1');
             $('#compose-modal').modal('show');
+            
+            // Auto calculation when modal opens for edit
+            setTimeout(function() {
+                // Trigger calculation for E.coli
+                let ecoliMpn = datachart($('#ecoli_largewells').val(), $('#ecoli_smallwells').val());
+                if (ecoliMpn != 'Invalid') {
+                    $('#ecoli').css({'background-color' : '#EEEEEE'});
+                    $('#ecoli').val(ecoliMpn);
+                }
+                
+                // Trigger calculation for total coliforms
+                let coliformsMpn = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
+                if (coliformsMpn != 'Invalid') {
+                    $('#total_coliforms').css({'background-color' : '#EEEEEE'});
+                    $('#total_coliforms').val(coliformsMpn);
+                }
+            }, 100);
         });
 
     });
