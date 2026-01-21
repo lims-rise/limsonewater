@@ -1088,7 +1088,7 @@
 
 
         function datachart(valueLargeWells, valueSmallWells) {
-            let result = 'Invalid';
+            let result = { mpn: 'Invalid', lower: 'Invalid' };
             $.ajax({
                 type: "GET",
                 url: `${BASE_URL}/Colilert_idexx_water/data_chart?valueLargeWells=`+valueLargeWells+"&valueSmallWells="+valueSmallWells,
@@ -1098,23 +1098,27 @@
                     console.log('data mpn: ', data);
                     if (data.length > 0) {
                         if (data[0].MPN_mean == '0') {
-                            result = "<"+ (1 / dilution);
+                            result.mpn = "<"+ (1 / dilution);
+                            result.lower = "<"+ (1 / dilution);
                         }
                         else if (data[0].MPN_mean == '9999') {
-                            result = ">"+ (2419 / dilution);
+                            result.mpn = ">"+ (2419 / dilution);
+                            result.lower = ">"+ (2419 / dilution);
                         }
                         else {
                             // Preserve exact decimal precision from backend
-                            let calculatedValue = parseFloat(data[0].MPN_mean) / parseFloat(dilution);
-                            result = calculatedValue.toString();
+                            let calculatedMpn = parseFloat(data[0].MPN_mean) / parseFloat(dilution);
+                            let calculatedLower = parseFloat(data[0].MPN_95lo) / parseFloat(dilution);
+                            result.mpn = calculatedMpn.toString();
+                            result.lower = calculatedLower.toString();
                         }
                     }
                     else {
-                        result = 'Invalid';     
+                        result = { mpn: 'Invalid', lower: 'Invalid' };     
                     }
                 },
                 error: function() {
-                    result = 'Invalid';
+                    result = { mpn: 'Invalid', lower: 'Invalid' };
                 }
             });
             
@@ -1123,35 +1127,41 @@
 
         // E. coli calculation functions
         $('#ecoli_largewells').on('change keypress keyup keydown', function(event) {        
-            let empn = datachart($('#ecoli_largewells').val(), $('#ecoli_smallwells').val());
-            if (empn == 'Invalid'){
+            let empnResult = datachart($('#ecoli_largewells').val(), $('#ecoli_smallwells').val());
+            if (empnResult.mpn == 'Invalid'){
                 $('#ecoli').css({'background-color' : '#FFE6E7'});
+                $('#lowerdetection').css({'background-color' : '#FFE6E7'});
                 $('#ecoli_largewells').val('0');
                 $('#ecoli_smallwells').val('0');
             }
             else {
                 $('#ecoli').css({'background-color' : '#EEEEEE'});
+                $('#lowerdetection').css({'background-color' : '#EEEEEE'});
             }
-            $("#ecoli").val(empn);
+            $("#ecoli").val(empnResult.mpn);
+            $("#lowerdetection").val(empnResult.lower);
         });
 
         $('#ecoli_smallwells').on('change keypress keyup keydown', function(event) {        
-            let empn = datachart($('#ecoli_largewells').val(), $('#ecoli_smallwells').val());
-            if (empn == 'Invalid'){
+            let empnResult = datachart($('#ecoli_largewells').val(), $('#ecoli_smallwells').val());
+            if (empnResult.mpn == 'Invalid'){
                 $('#ecoli').css({'background-color' : '#FFE6E7'});
+                $('#lowerdetection').css({'background-color' : '#FFE6E7'});
                 $('#ecoli_largewells').val('0');
                 $('#ecoli_smallwells').val('0');
             }
             else {
                 $('#ecoli').css({'background-color' : '#EEEEEE'});
+                $('#lowerdetection').css({'background-color' : '#EEEEEE'});
             }
-            $("#ecoli").val(empn);
+            $("#ecoli").val(empnResult.mpn);
+            $("#lowerdetection").val(empnResult.lower);
         });
 
         // Total coliforms calculation functions  
         $('#coliforms_largewells').on('change keypress keyup keydown', function(event) {        
-            let empn = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
-            if (empn == 'Invalid'){
+            let empnResult = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
+            if (empnResult.mpn == 'Invalid'){
                 $('#total_coliforms').css({'background-color' : '#FFE6E7'});
                 $('#coliforms_largewells').val('0');
                 $('#coliforms_smallwells').val('0');
@@ -1159,12 +1169,12 @@
             else {
                 $('#total_coliforms').css({'background-color' : '#EEEEEE'});
             }
-            $("#total_coliforms").val(empn);
+            $("#total_coliforms").val(empnResult.mpn);
         });
 
         $('#coliforms_smallwells').on('change keypress keyup keydown', function(event) {        
-            let empn = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
-            if (empn == 'Invalid'){
+            let empnResult = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
+            if (empnResult.mpn == 'Invalid'){
                 $('#total_coliforms').css({'background-color' : '#FFE6E7'});
                 $('#coliforms_largewells').val('0');
                 $('#coliforms_smallwells').val('0');
@@ -1172,7 +1182,7 @@
             else {
                 $('#total_coliforms').css({'background-color' : '#EEEEEE'});
             }
-            $("#total_coliforms").val(empn);
+            $("#total_coliforms").val(empnResult.mpn);
         });
 
         function showConfirmationDelete(url) {
@@ -1404,17 +1414,19 @@
             // Auto calculation when modal opens for edit
             setTimeout(function() {
                 // Trigger calculation for E.coli
-                let ecoliMpn = datachart($('#ecoli_largewells').val(), $('#ecoli_smallwells').val());
-                if (ecoliMpn != 'Invalid') {
+                let ecoliResult = datachart($('#ecoli_largewells').val(), $('#ecoli_smallwells').val());
+                if (ecoliResult.mpn != 'Invalid') {
                     $('#ecoli').css({'background-color' : '#EEEEEE'});
-                    $('#ecoli').val(ecoliMpn);
+                    $('#lowerdetection').css({'background-color' : '#EEEEEE'});
+                    $('#ecoli').val(ecoliResult.mpn);
+                    $('#lowerdetection').val(ecoliResult.lower);
                 }
                 
                 // Trigger calculation for total coliforms
-                let coliformsMpn = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
-                if (coliformsMpn != 'Invalid') {
+                let coliformsResult = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
+                if (coliformsResult.mpn != 'Invalid') {
                     $('#total_coliforms').css({'background-color' : '#EEEEEE'});
-                    $('#total_coliforms').val(coliformsMpn);
+                    $('#total_coliforms').val(coliformsResult.mpn);
                 }
             }, 100);
         });
