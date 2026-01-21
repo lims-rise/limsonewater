@@ -1097,11 +1097,11 @@
                 success: function(data) {
                     console.log('data mpn: ', data);
                     if (data.length > 0) {
-                        if (data[0].MPN_mean == '<Detection') {
+                        if (data[0].MPN_mean == '0') {
                             result = "<"+ (1 / dilution);
                         }
-                        else if (data[0].MPN_mean == '>Detection') {
-                            result = ">"+ (2082 / dilution);
+                        else if (data[0].MPN_mean == '9999') {
+                            result = ">"+ (2419 / dilution);
                         }
                         else {
                             // Preserve exact decimal precision from backend
