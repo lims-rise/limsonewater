@@ -1087,7 +1087,20 @@
         });
 
 
+        // Cache untuk menyimpan hasil calculation
+        let calculationCache = {};
+        let debounceTimer = null;
+        
         function datachart(valueLargeWells, valueSmallWells) {
+            // Create cache key
+            const cacheKey = `${valueLargeWells}_${valueSmallWells}`;
+            
+            // Check cache first
+            if (calculationCache[cacheKey]) {
+                console.log('Using cached result for:', cacheKey);
+                return calculationCache[cacheKey];
+            }
+            
             let result = { mpn: 'Invalid', lower: 'Invalid' };
             $.ajax({
                 type: "GET",
@@ -1098,8 +1111,6 @@
                     console.log('data mpn: ', data);
                     if (data.length > 0) {
                         if (data[0].MPN_mean == '0') {
-                            // result.mpn = "<"+ (1 / dilution);
-                            // result.lower = "<"+ (1 / dilution);
                             let calculatedMpn = parseFloat(data[0].MPN_mean) / parseFloat(dilution);
                             let calculatedLower = parseFloat(data[0].MPN_95lo) / parseFloat(dilution);
                             result.mpn = calculatedMpn.toString();
@@ -1108,7 +1119,6 @@
                         else if (data[0].MPN_mean == '9999') {
                             result.mpn = ">"+ (2419 / dilution);
                             let calculatedLower = parseFloat(data[0].MPN_95lo) / parseFloat(dilution);
-                            // result.lower = ">"+ (2419 / dilution);
                             result.lower = calculatedLower.toString();
                         }
                         else {
@@ -1118,6 +1128,9 @@
                             result.mpn = calculatedMpn.toString();
                             result.lower = calculatedLower.toString();
                         }
+                        
+                        // Store in cache
+                        calculationCache[cacheKey] = result;
                     }
                     else {
                         result = { mpn: 'Invalid', lower: 'Invalid' };     
@@ -1131,64 +1144,51 @@
             return result; 
         }
 
-        // E. coli calculation functions
-        $('#ecoli_largewells').on('change keypress keyup keydown', function(event) {        
-            let empnResult = datachart($('#ecoli_largewells').val(), $('#ecoli_smallwells').val());
-            if (empnResult.mpn == 'Invalid'){
-                $('#ecoli').css({'background-color' : '#FFE6E7'});
-                $('#lowerdetection').css({'background-color' : '#FFE6E7'});
-                $('#ecoli_largewells').val('0');
-                $('#ecoli_smallwells').val('0');
-            }
-            else {
-                $('#ecoli').css({'background-color' : '#EEEEEE'});
-                $('#lowerdetection').css({'background-color' : '#EEEEEE'});
-            }
-            $("#ecoli").val(empnResult.mpn);
-            $("#lowerdetection").val(empnResult.lower);
+        // Debounced calculation function
+        function performCalculation(largeWellsId, smallWellsId, targetFields) {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(function() {
+                let empnResult = datachart($(largeWellsId).val(), $(smallWellsId).val());
+                if (empnResult.mpn == 'Invalid'){
+                    targetFields.forEach(field => {
+                        $(field).css({'background-color' : '#FFE6E7'});
+                    });
+                    $(largeWellsId).val('0');
+                    $(smallWellsId).val('0');
+                }
+                else {
+                    targetFields.forEach(field => {
+                        $(field).css({'background-color' : '#EEEEEE'});
+                    });
+                    
+                    // Set values based on target fields
+                    if (targetFields.includes("#ecoli")) {
+                        $("#ecoli").val(empnResult.mpn);
+                        $("#lowerdetection").val(empnResult.lower);
+                    }
+                    if (targetFields.includes("#total_coliforms")) {
+                        $("#total_coliforms").val(empnResult.mpn);
+                    }
+                }
+            }, 300); // 300ms delay
+        }
+
+        // E. coli calculation functions with debouncing
+        $('#ecoli_largewells').on('input change', function(event) {        
+            performCalculation('#ecoli_largewells', '#ecoli_smallwells', ['#ecoli', '#lowerdetection']);
         });
 
-        $('#ecoli_smallwells').on('change keypress keyup keydown', function(event) {        
-            let empnResult = datachart($('#ecoli_largewells').val(), $('#ecoli_smallwells').val());
-            if (empnResult.mpn == 'Invalid'){
-                $('#ecoli').css({'background-color' : '#FFE6E7'});
-                $('#lowerdetection').css({'background-color' : '#FFE6E7'});
-                $('#ecoli_largewells').val('0');
-                $('#ecoli_smallwells').val('0');
-            }
-            else {
-                $('#ecoli').css({'background-color' : '#EEEEEE'});
-                $('#lowerdetection').css({'background-color' : '#EEEEEE'});
-            }
-            $("#ecoli").val(empnResult.mpn);
-            $("#lowerdetection").val(empnResult.lower);
+        $('#ecoli_smallwells').on('input change', function(event) {        
+            performCalculation('#ecoli_largewells', '#ecoli_smallwells', ['#ecoli', '#lowerdetection']);
         });
 
-        // Total coliforms calculation functions  
-        $('#coliforms_largewells').on('change keypress keyup keydown', function(event) {        
-            let empnResult = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
-            if (empnResult.mpn == 'Invalid'){
-                $('#total_coliforms').css({'background-color' : '#FFE6E7'});
-                $('#coliforms_largewells').val('0');
-                $('#coliforms_smallwells').val('0');
-            }
-            else {
-                $('#total_coliforms').css({'background-color' : '#EEEEEE'});
-            }
-            $("#total_coliforms").val(empnResult.mpn);
+        // Total coliforms calculation functions with debouncing
+        $('#coliforms_largewells').on('input change', function(event) {        
+            performCalculation('#coliforms_largewells', '#coliforms_smallwells', ['#total_coliforms']);
         });
 
-        $('#coliforms_smallwells').on('change keypress keyup keydown', function(event) {        
-            let empnResult = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
-            if (empnResult.mpn == 'Invalid'){
-                $('#total_coliforms').css({'background-color' : '#FFE6E7'});
-                $('#coliforms_largewells').val('0');
-                $('#coliforms_smallwells').val('0');
-            }
-            else {
-                $('#total_coliforms').css({'background-color' : '#EEEEEE'});
-            }
-            $("#total_coliforms").val(empnResult.mpn);
+        $('#coliforms_smallwells').on('input change', function(event) {        
+            performCalculation('#coliforms_largewells', '#coliforms_smallwells', ['#total_coliforms']);
         });
 
         function showConfirmationDelete(url) {
