@@ -1098,12 +1098,18 @@
                     console.log('data mpn: ', data);
                     if (data.length > 0) {
                         if (data[0].MPN_mean == '0') {
-                            result.mpn = "<"+ (1 / dilution);
-                            result.lower = "<"+ (1 / dilution);
+                            // result.mpn = "<"+ (1 / dilution);
+                            // result.lower = "<"+ (1 / dilution);
+                            let calculatedMpn = parseFloat(data[0].MPN_mean) / parseFloat(dilution);
+                            let calculatedLower = parseFloat(data[0].MPN_95lo) / parseFloat(dilution);
+                            result.mpn = calculatedMpn.toString();
+                            result.lower = calculatedLower.toString();
                         }
                         else if (data[0].MPN_mean == '9999') {
                             result.mpn = ">"+ (2419 / dilution);
-                            result.lower = ">"+ (2419 / dilution);
+                            let calculatedLower = parseFloat(data[0].MPN_95lo) / parseFloat(dilution);
+                            // result.lower = ">"+ (2419 / dilution);
+                            result.lower = calculatedLower.toString();
                         }
                         else {
                             // Preserve exact decimal precision from backend
