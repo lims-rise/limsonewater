@@ -226,7 +226,7 @@
                                     <div class="form-group">
                                         <label for="lowerdetection" class="col-sm-4 control-label">Lower confidence limit MPN/100 mL</label>
                                         <div class="col-sm-8">
-                                            <input id="lowerdetection" name="lowerdetection" type="text"  placeholder="Lower confidence limit MPN/100 mL" class="form-control">
+                                            <input id="lowerdetection" name="lowerdetection" type="text"  placeholder="Lower confidence limit MPN/100 mL" class="form-control" readonly>
                                             <!-- <div class="val1tip"></div> -->
                                         </div>
                                     </div>
