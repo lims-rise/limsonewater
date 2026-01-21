@@ -228,7 +228,7 @@ class Colilert_idexx_water_model extends CI_Model
 
     function data_chart($valueLargeWells, $valueSmallWells){
         $q = $this->db->query('
-        select MPN_mean FROM idexx_mpn WHERE count_large = "'.$valueLargeWells.'" AND count_small = "'.$valueSmallWells.'"
+        select MPN_mean, MPN_95lo FROM idexx_mpn WHERE count_large = "'.$valueLargeWells.'" AND count_small = "'.$valueSmallWells.'"
         ');        
         $response = $q->result_array();
         return $response;
