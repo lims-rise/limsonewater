@@ -167,44 +167,21 @@
                             <div class="form-group">
                                 <label for="dry_weight_persen" class="col-sm-4 control-label">Dry weight %</label>
                                 <div class="col-sm-8">
-                                    <select id="dry_weight_persen" name="dry_weight_persen" class="form-control" required>
-                                        <option value="" disabled>-- Select Dry weight % --</option>
-                                        <?php
-                                            if (isset($dryweight) && is_array($dryweight)) {
-                                                foreach($dryweight as $row) {
-                                                    $selected = (isset($dry_weight_persen) && $dry_weight_persen == $row['dry_weight_persen']) ? "selected='selected'" : "";
-                                                    echo "<option value='".$row['dry_weight_persen']."' $selected>".$row['dry_weight_persen']."</option>";
-                                                }
-                                            } else {
-                                                echo "<option value=''>No data available</option>";
-                                            }
-                                        ?>
-                                    </select>
+                                    <div class="input-group">
+                                        <input id="dry_weight_persen" name="dry_weight_persen" type="number" step="any" class="form-control" placeholder="Dry weight %" required>
+                                        <span class="input-group-btn">
+                                            <button id="checkDryWeightBtn" class="btn btn-info btnx_check_dry_weight" type="button">
+                                                <i class="fa fa-search"></i> Check
+                                            </button>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-
-                            <!-- <div class="form-group">
-                                <label for="dry_weight_persen" class="col-sm-4 control-label">Dry weight %</label>
-                                <div class="col-sm-8">
-                                    <select id="dry_weight_persen" name="dry_weight_persen" class="form-control" required>
-                                        <option value="" disabled>-- Select Dry weight % --</option>
-                                        <?php
-                                            foreach($dryweight as $row) {
-                                                if ($id_moisture == $row['dry_weight_persen']) {
-                                                    echo "<option value='".$row['dry_weight24']."' selected='selected'>".$row['dry_weight_persen']."</option>";
-                                                } else {
-                                                    echo "<option value='".$row['dry_weight24']."'>".$row['dry_weight24']."</option>";
-                                                }
-                                            }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div> -->
 
                             <div class="form-group">
                                 <label for="sample_dry_weight" class="col-sm-4 control-label">Sample dry weight (g)</label>
                                 <div class="col-sm-8">
-                                    <input id="sample_dry_weight" name="sample_dry_weight" type="number" step="any"  class="form-control" placeholder="Sample dry weight (g)" required>
+                                    <input id="sample_dry_weight" name="sample_dry_weight" type="number" step="any" class="form-control" placeholder="Sample dry weight (g)" readonly>
                                 </div>
                             </div>
 
@@ -272,7 +249,8 @@
         overflow: hidden;
     }
 </style>
-
+<!-- SweetAlert2 CSS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
@@ -348,15 +326,127 @@
         });
 
         $('#wet_weight, #dry_weight_persen').on("keyup change", function() {
+            calculateSampleDryWeight();
+        });
+
+        // Function to calculate sample dry weight (matches Campy Biosolids)
+        function calculateSampleDryWeight() {
             let wetWeight = parseFloat($('#wet_weight').val()) || 0;
             let dryWeightPersen = parseFloat($('#dry_weight_persen').val()) || 0;
+            
+            if (wetWeight > 0 && dryWeightPersen > 0) {
+                // Calculate Sample Dry Weight = wet_weight * dry_weight_persen / 100
+                let sampleDryWeight = (wetWeight * dryWeightPersen / 100).toFixed(4);
+                $('#sample_dry_weight').val(sampleDryWeight);
+            } else {
+                $('#sample_dry_weight').val('');
+            }
+        }
 
-            // Jika dryWeightPersen dalam persen (misal 25), ubah ke desimal
-            dryWeightPersen = dryWeightPersen / 100;
+        // Check Dry Weight Button functionality - Enhanced version matching Campy Biosolids
+        // Reusable function for dry weight check with race condition prevention
+        let isDryWeightChecking = false; // Prevent multiple simultaneous requests
+        function checkDryWeight(buttonElement, inputSelector) {
+            // Prevent multiple simultaneous requests
+            if (isDryWeightChecking) {
+                console.log('Dry weight check already in progress, skipping...');
+                return;
+            }
 
-            let sampleDryWeight = wetWeight * dryWeightPersen;
+            // Wait a moment to ensure DOM is fully updated
+            setTimeout(function() {
+                const $input = $(inputSelector);
+                const id_one_water_sample = $input.val();
 
-            $('#sample_dry_weight').val(sampleDryWeight.toFixed(2)); // 2 angka desimal
+                // Validation: element must exist and value must not be empty
+                if (!$input.length || !id_one_water_sample || id_one_water_sample.trim() === '') {
+                    Swal.fire({
+                        title: 'Warning!',
+                        text: 'Please select One Water Sample ID first.',
+                        icon: 'warning',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+
+                isDryWeightChecking = true; // lock
+
+                // Clear previous value first
+                $('#dry_weight_persen').val('');
+
+                // Show loading state
+                buttonElement.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Checking...');
+
+                // Log the request for debugging
+                console.log('Sending dry weight request for ID:', id_one_water_sample.trim());
+
+                $.ajax({
+                    url: '<?php echo site_url('Colilert_idexx_biosolids/checkDryWeight'); ?>',
+                    type: 'POST',
+                    data: { id_one_water_sample: id_one_water_sample.trim() },
+                    dataType: 'json',
+                    cache: false,
+                    timeout: 10000,
+                    success: function(response) {
+                        console.log('Dry weight check response for [' + id_one_water_sample.trim() + ']:', response);
+
+                        if (response && response.dry_weight_persen !== null && response.dry_weight_persen !== undefined) {
+                            const dryWeight = parseFloat(response.dry_weight_persen);
+                            if (!isNaN(dryWeight)) {
+                                $('#dry_weight_persen').val(response.dry_weight_persen);
+                                // Trigger calculation update
+                                calculateSampleDryWeight();
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'Dry weight data found: ' + response.dry_weight_persen + '%',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                });
+                            } else {
+                                $('#dry_weight_persen').val('');
+                                Swal.fire({
+                                    title: 'Invalid Data',
+                                    text: 'Dry weight data found but value is invalid.',
+                                    icon: 'warning',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
+                        } else {
+                            $('#dry_weight_persen').val('');
+                            Swal.fire({
+                                title: 'Data Not Available',
+                                html: '<b>Dry weight % </b>data is not yet available for <b>' + id_one_water_sample.trim() + '</b>. Please check <b>Moisture Content</b>.',
+                                icon: 'info',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('AJAX error for [' + id_one_water_sample.trim() + ']:', textStatus, errorThrown);
+                        $('#dry_weight_persen').val('');
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'An error occurred while checking dry weight data. Please try again.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    },
+                    complete: function() {
+                        buttonElement.prop('disabled', false).html('<i class="fa fa-search"></i> Check');
+                        isDryWeightChecking = false; // unlock
+                        console.log('Dry weight check completed for:', id_one_water_sample.trim());
+                    }
+                });
+            }, 100);
+        }
+
+        // Event handler using the reusable function (single binding)
+        $(document).on('click', '#checkDryWeightBtn', function() {
+            // Choose the visible/active input: use id_one or idx_one depending on modal state
+            const selector = ($('#id_one_water_sample').is(':visible') && $('#id_one_water_sample').val())
+                ? '#id_one_water_sample'
+                : '#idx_one_water_sample';
+            checkDryWeight($(this), selector);
         });
 
 
