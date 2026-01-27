@@ -247,6 +247,23 @@ class Enterolert_idexx_biosolids_model extends CI_Model
         return $response;
     }
 
+    function checkDryWeight($oneWaterSampleId){
+        $response = array();
+        $this->db->select('mc.id_moisture, mc.barcode_moisture_content, m72.dry_weight_persen, mc.date_created');
+        $this->db->from('moisture_content AS mc');
+        $this->db->join('moisture72 AS m72', 'mc.id_moisture = m72.id_moisture', 'left');
+        $this->db->where('mc.flag', '0');
+        $this->db->where('m72.flag', '0'); 
+        $this->db->where('mc.id_one_water_sample', $oneWaterSampleId);
+        $this->db->where('m72.dry_weight_persen IS NOT NULL', null, false);
+        $this->db->order_by('mc.date_created', 'DESC');
+        $dryWeight = $this->db->get();
+        if ($dryWeight->num_rows() > 0) {
+            $response = $dryWeight->row_array();
+        }
+        return $response;
+    }
+
     function barcode_restrict($id){
 
         $q = $this->db->query('

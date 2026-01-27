@@ -596,9 +596,23 @@ class Colilert_idexx_biosolids extends CI_Controller
             ]);
         } else {
             echo json_encode([
-                'status' => false,
+                'success' => false,
                 'message' => 'Failed to cancel review.'
             ]);
+        }
+    }
+
+    public function checkDryWeight()
+    {
+        $idOneWaterSample = $this->input->post('id_one_water_sample');
+        $oneWaterSample = $this->Colilert_idexx_biosolids_model->checkDryWeight($idOneWaterSample);
+        
+        // Handle null response properly
+        if ($oneWaterSample) {
+            echo json_encode($oneWaterSample);
+        } else {
+            // Return a proper JSON structure when no data is found
+            echo json_encode(['dry_weight_persen' => null]);
         }
     }
 
