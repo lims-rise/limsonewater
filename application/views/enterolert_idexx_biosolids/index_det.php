@@ -234,7 +234,7 @@
                                     <div class="form-group">
                                         <label for="enterococcus" class="col-sm-4 control-label">Enterococcus (Raw MPN)</label>
                                         <div class="col-sm-8">
-                                            <input id="enterococcus" name="enterococcus" type="text"  placeholder="Enterococcus (Raw MPN)" class="form-control">
+                                            <input id="enterococcus" name="enterococcus" type="text"  placeholder="Enterococcus (Raw MPN)" class="form-control" readonly>
                                             <!-- <div class="val1tip"></div> -->
                                         </div>
                                     </div>
@@ -1087,6 +1087,101 @@
             $('#textInform2').fadeOut();
         });
 
+                // Cache untuk menyimpan hasil calculation
+        let calculationCache = {};
+        let debounceTimer = null;
+        
+        function datachart(valueLargeWells, valueSmallWells) {
+            // Create cache key
+            const cacheKey = `${valueLargeWells}_${valueSmallWells}`;
+            
+            // Check cache first
+            if (calculationCache[cacheKey]) {
+                console.log('Using cached result for:', cacheKey);
+                return calculationCache[cacheKey];
+            }
+            
+            let result = { mpn: 'Invalid', lower: 'Invalid' };
+            $.ajax({
+                type: "GET",
+                url: `${BASE_URL}/Enterolert_idexx_biosolids/data_chart?valueLargeWells=`+valueLargeWells+"&valueSmallWells="+valueSmallWells,
+                dataType: "json",
+                async: false, // Make synchronous to get result immediately
+                success: function(data) {
+                    console.log('data mpn: ', data);
+                    if (data.length > 0) {
+                        if (data[0].MPN_mean == '0') {
+                            let calculatedMpn = parseFloat(data[0].MPN_mean) / parseFloat(dilution);
+                            let calculatedLower = parseFloat(data[0].MPN_95lo) / parseFloat(dilution);
+                            result.mpn = calculatedMpn.toString();
+                            result.lower = calculatedLower.toString();
+                        }
+                        else if (data[0].MPN_mean == '9999') {
+                            result.mpn = ">"+ (2419 / dilution);
+                            let calculatedLower = parseFloat(data[0].MPN_95lo) / parseFloat(dilution);
+                            result.lower = calculatedLower.toString();
+                        }
+                        else {
+                            // Preserve exact decimal precision from backend
+                            let calculatedMpn = parseFloat(data[0].MPN_mean) / parseFloat(dilution);
+                            let calculatedLower = parseFloat(data[0].MPN_95lo) / parseFloat(dilution);
+                            result.mpn = calculatedMpn.toString();
+                            result.lower = calculatedLower.toString();
+                        }
+                        
+                        // Store in cache
+                        calculationCache[cacheKey] = result;
+                    }
+                    else {
+                        result = { mpn: 'Invalid', lower: 'Invalid' };     
+                    }
+                },
+                error: function() {
+                    result = { mpn: 'Invalid', lower: 'Invalid' };
+                }
+            });
+            
+            return result; 
+        }
+
+        // Debounced calculation function
+        function performCalculation(largeWellsId, smallWellsId, targetFields) {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(function() {
+                let empnResult = datachart($(largeWellsId).val(), $(smallWellsId).val());
+                if (empnResult.mpn == 'Invalid'){
+                    targetFields.forEach(field => {
+                        $(field).css({'background-color' : '#FFE6E7'});
+                    });
+                    $(largeWellsId).val('');
+                    $(smallWellsId).val('');
+                }
+                else {
+                    targetFields.forEach(field => {
+                        $(field).css({'background-color' : '#EEEEEE'});
+                    });
+                    
+                    // Set values based on target fields
+                    if (targetFields.includes("#enterococcus")) {
+                        $("#enterococcus").val(empnResult.mpn);
+                        $("#lowerdetection").val(empnResult.lower);
+                    }
+                    if (targetFields.includes("#total_coliforms")) {
+                        $("#total_coliforms").val(empnResult.mpn);
+                    }
+                }
+            }, 300); // 300ms delay
+        }
+
+        // E. coli calculation functions with debouncing
+        $('#enterococcus_largewells').on('input change', function(event) {        
+            performCalculation('#enterococcus_largewells', '#enterococcus_smallwells', ['#enterococcus', '#lowerdetection']);
+        });
+
+        $('#enterococcus_smallwells').on('input change', function(event) {        
+            performCalculation('#enterococcus_largewells', '#enterococcus_smallwells', ['#enterococcus', '#lowerdetection']);
+        });
+
         //ini yang betul
         // $('#enterococcus, #enterococcus_largewells, #enterococcus_smallwells').on("keyup change", function() {
         //     let enterococcusMPN = parseFloat($('#enterococcus').val()) || 0;
@@ -1148,31 +1243,31 @@
 
 
 
-        function datachart(valueLargeWells, valueSmallWells) {
-            $.ajax({
-                type: "GET",
-                url: `${BASE_URL}/Enterolert_idexx_biosolids/data_chart?valueLargeWells=`+valueLargeWells+"&valueSmallWells="+valueSmallWells,
-                dataType: "json",
-                success: function(data) {
-                    console.log('data mpm '+ data);
-                    if (data.length > 0) {
-                        if (data[0].mpn == '<Detection') {
-                            result = "<"+ Math.round(1 / dilution);
-                        }
-                        else if (data[0].mpn == '>Detection') {
-                            result = ">"+ Math.round(2082 / dilution);
-                        }
-                        else {
-                            result = Math.round(data[0].mpn / dilution);
-                        }
-                    }
-                    else {
-                        result = 'Invalid';     
-                    }
-                }
-            });
-            return result; 
-        }
+        // function datachart(valueLargeWells, valueSmallWells) {
+        //     $.ajax({
+        //         type: "GET",
+        //         url: `${BASE_URL}/Enterolert_idexx_biosolids/data_chart?valueLargeWells=`+valueLargeWells+"&valueSmallWells="+valueSmallWells,
+        //         dataType: "json",
+        //         success: function(data) {
+        //             console.log('data mpm '+ data);
+        //             if (data.length > 0) {
+        //                 if (data[0].mpn == '<Detection') {
+        //                     result = "<"+ Math.round(1 / dilution);
+        //                 }
+        //                 else if (data[0].mpn == '>Detection') {
+        //                     result = ">"+ Math.round(2082 / dilution);
+        //                 }
+        //                 else {
+        //                     result = Math.round(data[0].mpn / dilution);
+        //                 }
+        //             }
+        //             else {
+        //                 result = 'Invalid';     
+        //             }
+        //         }
+        //     });
+        //     return result; 
+        // }
 
         // $('#enterococcus_largewells').on('change keypress keyup keydown', function(event) {        
         //     let empn = datachart($('#enterococcus_largewells').val(), $('#enterococcus_smallwells').val());
@@ -1389,9 +1484,9 @@
             $('#enterococcus_smallwells').val('');
             $('#enterococcus').val('0');
             // $('#enterococcus').attr('readonly', true);
-            $('#ecoli_dryweight').val('0');
+            $('#ecoli_dryweight').val('');
             // $('#ecoli_dryweight').attr('readonly', true);
-            $('#lowerdetection_dryweight').val('0');
+            $('#lowerdetection_dryweight').val('');
             // $('#lowerdetection_dryweight').attr('readonly', true);
             $('#remarks').val('');
             // Reset quality control checkbox for new record
