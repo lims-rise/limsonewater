@@ -1153,8 +1153,8 @@
                     targetFields.forEach(field => {
                         $(field).css({'background-color' : '#FFE6E7'});
                     });
-                    $(largeWellsId).val('0');
-                    $(smallWellsId).val('0');
+                    $(largeWellsId).val('');
+                    $(smallWellsId).val('');
                 }
                 else {
                     targetFields.forEach(field => {
@@ -1378,13 +1378,13 @@
             $('#colilert_barcodex').val(colilertBarcode);
             $('#colilert_barcodex').attr('readonly', true);
             $('#idx_colilert_in').val(idColilertIn);
-            $('#ecoli_largewells').val('0');
-            $('#ecoli_smallwells').val('0');
+            $('#ecoli_largewells').val('');
+            $('#ecoli_smallwells').val('');
             $('#ecoli').val('');
             $('#lowerdetection').val('0');
-            $('#coliforms_largewells').val('0');
-            $('#coliforms_smallwells').val('0');
-            $('#total_coliforms').val('');
+            $('#coliforms_largewells').val('');
+            $('#coliforms_smallwells').val('');
+            $('#total_coliforms').val('0');
             $('#remarks').val('');
             // Reset quality control checkbox for new record
             $('#quality_control_ciw').prop('checked', false);

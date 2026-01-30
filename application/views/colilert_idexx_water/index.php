@@ -178,7 +178,7 @@
                             <div class="form-group">
                                 <label for="dilution" class="col-sm-4 control-label">Dilution</label>
                                 <div class="col-sm-8">
-                                    <input id="dilution" name="dilution" type="text" class="form-control" placeholder="Dilution">
+                                    <input id="dilution" name="dilution" type="text" class="form-control" placeholder="Dilution" readonly>
                                 </div>
                             </div>
 
