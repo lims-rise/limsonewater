@@ -1145,20 +1145,20 @@
                         if (data[0].MPN_mean == '0') {
                             let calculatedMpn = parseFloat(data[0].MPN_mean) / parseFloat(dilution);
                             let calculatedLower = parseFloat(data[0].MPN_95lo) / parseFloat(dilution);
-                            result.mpn = calculatedMpn.toString();
-                            result.lower = calculatedLower.toString();
+                            result.mpn = calculatedMpn.toFixed(1);
+                            result.lower = calculatedLower.toFixed(1);
                         }
                         else if (data[0].MPN_mean == '9999') {
-                            result.mpn = ">"+ (2419 / dilution);
+                            result.mpn = ">"+ (2419 / dilution).toFixed(1);
                             let calculatedLower = parseFloat(data[0].MPN_95lo) / parseFloat(dilution);
-                            result.lower = calculatedLower.toString();
+                            result.lower = calculatedLower.toFixed(1);
                         }
                         else {
-                            // Preserve exact decimal precision from backend
+                            // Format to 1 decimal place for display
                             let calculatedMpn = parseFloat(data[0].MPN_mean) / parseFloat(dilution);
                             let calculatedLower = parseFloat(data[0].MPN_95lo) / parseFloat(dilution);
-                            result.mpn = calculatedMpn.toString();
-                            result.lower = calculatedLower.toString();
+                            result.mpn = calculatedMpn.toFixed(1);
+                            result.lower = calculatedLower.toFixed(1);
                         }
                         
                         // Store in cache
@@ -1464,13 +1464,40 @@
                 {"data": "time_sample"}, 
                 {"data": "ecoli_largewells"}, 
                 {"data": "ecoli_smallwells"},
-                {"data": "ecoli"},
-                {"data": "lowerdetection"},
+                // {"data": "ecoli"},
+                // {"data": "lowerdetection"},
+                {
+                    "data": "ecoli",
+                    "render": function(data, type, row) {
+                        if (data && data !== '' && data !== '0' && !isNaN(parseFloat(data))) {
+                            return parseFloat(data).toFixed(1);
+                        }
+                        return data;
+                    }
+                },
+                {
+                    "data": "lowerdetection",
+                    "render": function(data, type, row) {
+                        if (data && data !== '' && data !== '0' && !isNaN(parseFloat(data))) {
+                            return parseFloat(data).toFixed(1);
+                        }
+                        return data;
+                    }
+                },
                 {"data": "ecoli_dryweight"},
                 {"data": "lowerdetection_dryweight"},
                 {"data": "coliforms_largewells"}, 
                 {"data": "coliforms_smallwells"},
-                {"data": "total_coliforms"},
+                // {"data": "total_coliforms"},
+                {
+                    "data": "total_coliforms",
+                    "render": function(data, type, row) {
+                        if (data && data !== '' && data !== '0' && !isNaN(parseFloat(data))) {
+                            return parseFloat(data).toFixed(1);
+                        }
+                        return data;
+                    }
+                },
                 {"data": "remarks"},
                 {
                     "data": "quality_control",
@@ -1563,6 +1590,25 @@
             // Set quality control checkbox
             $('#quality_control_cib').prop('checked', data.quality_control == '1');
             $('#compose-modal').modal('show');
+            
+            // Auto calculation when modal opens for edit - display formatted values
+            setTimeout(function() {
+                // Trigger calculation for E.coli - display formatted values
+                let ecoliResult = datachart($('#ecoli_largewells').val(), $('#ecoli_smallwells').val());
+                if (ecoliResult.mpn != 'Invalid') {
+                    $('#ecoli').css({'background-color' : '#EEEEEE'});
+                    $('#lowerdetection').css({'background-color' : '#EEEEEE'});
+                    $('#ecoli').val(ecoliResult.mpn);
+                    $('#lowerdetection').val(ecoliResult.lower);
+                }
+                
+                // Trigger calculation for total coliforms - display formatted values
+                let coliformsResult = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
+                if (coliformsResult.mpn != 'Invalid') {
+                    $('#total_coliforms').css({'background-color' : '#EEEEEE'});
+                    $('#total_coliforms').val(coliformsResult.mpn);
+                }
+            }, 100);
         });
 
     });
