@@ -2537,6 +2537,8 @@ class Sample_reception_model extends CI_Model
                 return 'enterolert_hemoflow_barcode';
             case 'colilert_hemoflow':
                 return 'colilert_hemoflow_barcode';
+            case 'salmonella_hemoflow':
+                return 'salmonella_assay_barcode';
             case 'hemoflow':
                 return 'hemoflow_barcode';
             case 'campy_hemoflow_qpcr':
