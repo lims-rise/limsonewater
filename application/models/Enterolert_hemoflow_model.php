@@ -236,7 +236,7 @@ class Enterolert_hemoflow_model extends CI_Model
         $q = $this->db->query('
         select id_one_water_sample
         from enterolert_hemoflow
-        WHERE id_one_water_sample = "'.$id.'"
+        WHERE id_one_water_sample = "'.$id.'" and flag = "0"
         ');        
         $response = $q->result_array();
         return $response;

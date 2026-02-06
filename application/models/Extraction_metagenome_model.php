@@ -204,7 +204,7 @@ class Extraction_metagenome_model extends CI_Model
         $q = $this->db->query('
         select id_one_water_sample
         from extraction_metagenome
-        WHERE id_one_water_sample = "'.$id.'"
+        WHERE id_one_water_sample = "'.$id.'" and flag = "0"
         ');        
         $response = $q->result_array();
         return $response;
