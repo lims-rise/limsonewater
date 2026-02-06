@@ -158,7 +158,7 @@ class Extraction_biosolid_model extends CI_Model
         $q = $this->db->query('
         select barcode_sample
         from extraction_biosolid
-        WHERE barcode_sample = "'.$id.'"
+        WHERE barcode_sample = "'.$id.'" and flag = "0"
         ');        
         $response = $q->result_array();
         return $response;
