@@ -168,7 +168,7 @@
                                 <label for="dry_weight_persen" class="col-sm-4 control-label">Dry weight %</label>
                                 <div class="col-sm-8">
                                     <div class="input-group">
-                                        <input id="dry_weight_persen" name="dry_weight_persen" type="number" step="any" class="form-control" placeholder="Dry weight %" required>
+                                        <input id="dry_weight_persen" name="dry_weight_persen" type="number" step="any" class="form-control" placeholder="Dry weight %" required readonly>
                                         <span class="input-group-btn">
                                             <button id="checkDryWeightBtn" class="btn btn-info btnx_check_dry_weight" type="button">
                                                 <i class="fa fa-search"></i> Check
