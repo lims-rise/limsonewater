@@ -253,14 +253,14 @@
                                     <div class="form-group">
                                         <label for="ecoli_dryweight" class="col-sm-4 control-label">E.Coli MPN/g Dryweight</label>
                                         <div class="col-sm-8">
-                                            <input id="ecoli_dryweight" name="ecoli_dryweight" type="text"  placeholder="E.Coli MPN/g Dryweight" class="form-control">
+                                            <input id="ecoli_dryweight" name="ecoli_dryweight" type="text"  placeholder="E.Coli MPN/g Dryweight" class="form-control" readonly>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="lowerdetection_dryweight" class="col-sm-4 control-label">Lowerdetection MPN/g Dryweight</label>
                                         <div class="col-sm-8">
-                                            <input id="lowerdetection_dryweight" name="lowerdetection_dryweight" type="text"  placeholder="Lowerdetection MPN/g Dryweight" class="form-control">
+                                            <input id="lowerdetection_dryweight" name="lowerdetection_dryweight" type="text"  placeholder="Lowerdetection MPN/g Dryweight" class="form-control" readonly>
                                         </div>
                                     </div>
 
@@ -664,6 +664,8 @@
     let idColilertBioIn = $('#id_colilert_bio_in').val();
     console.log(idColilertBioIn);
     let dilution = $('#dilution').val();
+    let sample_dry_weight = $('#sample_dry_weight').val();
+    let elution_volume = $('#elution_volume').val();
     const BASE_URL = '/limsonewater/index.php';
     let result;
 
@@ -1197,12 +1199,36 @@
                     if (targetFields.includes("#ecoli")) {
                         $("#ecoli").val(empnResult.mpn);
                         $("#lowerdetection").val(empnResult.lower);
+                        
+                        // Calculate dryweight values when ecoli values change
+                        calculateDryweightValues();
                     }
                     if (targetFields.includes("#total_coliforms")) {
                         $("#total_coliforms").val(empnResult.mpn);
                     }
                 }
             }, 300); // 300ms delay
+        }
+
+        // Function to calculate dryweight values
+        function calculateDryweightValues() {
+            let eColi = parseFloat($('#ecoli').val()) || 0;
+            let lowerDetection = parseFloat($('#lowerdetection').val()) || 0;
+            let elutionVol = parseFloat($('#elution_volume').val()) || 0;
+            let sampleDryWeight = parseFloat($('#sample_dry_weight').val()) || 0;
+
+            if (sampleDryWeight > 0) {
+                // ecoli_dryweight = ((ecoli/100) * elution_volume) / sample_dry_weight
+                let ecoliDryweight = ((eColi / 100) * elutionVol) / sampleDryWeight;
+                $('#ecoli_dryweight').val(ecoliDryweight.toFixed(1));
+
+                // lowerdetection_dryweight = ((lowerdetection/100) * elution_volume) / sample_dry_weight  
+                let lowerdetectionDryweight = ((lowerDetection / 100) * elutionVol) / sampleDryWeight;
+                $('#lowerdetection_dryweight').val(lowerdetectionDryweight.toFixed(1));
+            } else {
+                $('#ecoli_dryweight').val('');
+                $('#lowerdetection_dryweight').val('');
+            }
         }
 
         // E. coli calculation functions with debouncing
@@ -1223,26 +1249,10 @@
             performCalculation('#coliforms_largewells', '#coliforms_smallwells', ['#total_coliforms']);
         });
 
-        // $('#ecoli, #lowerdetection, #ecoli_largewells, #ecoli_smallwells').on("keyup change", function() {
-        //     let eColi = parseFloat($('#ecoli').val()) || 0;
-        //     let loweDetection = parseFloat($('#lowerdetection').val()) || 0;
-        //     let elutionVol = parseFloat($('#elution_volume').val()) || 0;
-        //     let sampleDryWeight = parseFloat($('#sample_dry_weight').val()) || 0;
-
-        //     eColi = eColi / 100;
-        //     let ecoliDryweight = (eColi * elutionVol) / sampleDryWeight;
-        //     $('#ecoli_dryweight').val(ecoliDryweight.toFixed(2)); // 2 angka desimal
-        // });
-
-        // $('#ecoli, #lowerdetection, #ecoli_largewells, #ecoli_smallwells').on("keyup change", function() {
-        //     let loweDetection = parseFloat($('#lowerdetection').val()) || 0;
-        //     let elutionVol = parseFloat($('#elution_volume').val()) || 0;
-        //     let sampleDryWeight = parseFloat($('#sample_dry_weight').val()) || 0;
-
-        //     loweDetection = loweDetection / 100;
-        //     let lowerdetectionDryweight = (loweDetection * elutionVol) / sampleDryWeight;
-        //     $('#lowerdetection_dryweight').val(lowerdetectionDryweight.toFixed(2)); // 2 angka desimal
-        // });
+        // Recalculate dryweight values when manual values change
+        $('#ecoli, #lowerdetection').on('input change', function() {
+            calculateDryweightValues();
+        });
 
         // function datachart(valueLargeWells, valueSmallWells) {
         //     $.ajax({
@@ -1600,6 +1610,9 @@
                     $('#lowerdetection').css({'background-color' : '#EEEEEE'});
                     $('#ecoli').val(ecoliResult.mpn);
                     $('#lowerdetection').val(ecoliResult.lower);
+                    
+                    // Calculate dryweight values after setting ecoli and lowerdetection
+                    calculateDryweightValues();
                 }
                 
                 // Trigger calculation for total coliforms - display formatted values
