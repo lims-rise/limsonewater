@@ -232,9 +232,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="enterococcus" class="col-sm-4 control-label">Enterococcus (Raw MPN)</label>
+                                        <label for="enterococcus" class="col-sm-4 control-label">Enterococcus MPN/100 mL</label>
                                         <div class="col-sm-8">
-                                            <input id="enterococcus" name="enterococcus" type="text"  placeholder="Enterococcus (Raw MPN)" class="form-control" readonly>
+                                            <input id="enterococcus" name="enterococcus" type="text"  placeholder="Enterococcus MPN/100 mL" class="form-control" readonly>
                                             <!-- <div class="val1tip"></div> -->
                                         </div>
                                     </div>

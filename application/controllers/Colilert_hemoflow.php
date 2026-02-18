@@ -105,7 +105,7 @@ class Colilert_hemoflow extends CI_Controller
 
     public function save() {
         $mode = $this->input->post('mode', TRUE);
-        $idx_colilert_water_in = $this->input->post('idx_colilert_water_in', TRUE);
+        $idx_colilert_hemoflow = $this->input->post('idx_colilert_hemoflow', TRUE);
         $dt = new DateTime();
 
         $id_one_water_sample = $this->input->post('id_one_water_sample', TRUE);
@@ -161,7 +161,7 @@ class Colilert_hemoflow extends CI_Controller
             // var_dump($data);
             // die();
 
-            $this->Colilert_hemoflow_model->update($idx_colilert_water_in, $data);
+            $this->Colilert_hemoflow_model->update($idx_colilert_hemoflow, $data);
             $this->session->set_flashdata('message', 'Update Record Success');
         }
 
