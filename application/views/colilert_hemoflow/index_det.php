@@ -1481,11 +1481,35 @@
                 {"data": "time_sample"}, 
                 {"data": "ecoli_largewells"}, 
                 {"data": "ecoli_smallwells"},
-                {"data": "ecoli"},
-                {"data": "lowerconfidence"},
+                {
+                    "data": "ecoli",
+                    "render": function(data, type, row) {
+                        if (data && data !== '' && data !== '0' && !isNaN(parseFloat(data))) {
+                            return parseFloat(data).toFixed(1);
+                        }
+                        return data;
+                    }
+                },
+                {
+                    "data": "lowerconfidence",
+                    "render": function(data, type, row) {
+                        if (data && data !== '' && data !== '0' && !isNaN(parseFloat(data))) {
+                            return parseFloat(data).toFixed(1);
+                        }
+                        return data;
+                    }
+                },
                 {"data": "coliforms_largewells"}, 
                 {"data": "coliforms_smallwells"},
-                {"data": "coliforms"},
+                {
+                    "data": "coliforms",
+                    "render": function(data, type, row) {
+                        if (data && data !== '' && data !== '0' && !isNaN(parseFloat(data))) {
+                            return parseFloat(data).toFixed(1);
+                        }
+                        return data;
+                    }
+                },
                 {"data": "remarks"},
                 {
                     "data": "quality_control",
@@ -1568,6 +1592,25 @@
             // Set quality control checkbox
             $('#quality_control_ciw').prop('checked', data.quality_control == '1');
             $('#compose-modal').modal('show');
+            
+            // Auto calculation when modal opens for edit
+            setTimeout(function() {
+                // Trigger calculation for E.coli
+                let ecoliResult = datachart($('#ecoli_largewells').val(), $('#ecoli_smallwells').val());
+                if (ecoliResult.mpn != 'Invalid') {
+                    $('#ecoli').css({'background-color' : '#EEEEEE'});
+                    $('#lowerconfidence').css({'background-color' : '#EEEEEE'});
+                    $('#ecoli').val(ecoliResult.mpn);
+                    $('#lowerconfidence').val(ecoliResult.lower);
+                }
+                
+                // Trigger calculation for coliforms
+                let coliformsResult = datachart($('#coliforms_largewells').val(), $('#coliforms_smallwells').val());
+                if (coliformsResult.mpn != 'Invalid') {
+                    $('#coliforms').css({'background-color' : '#EEEEEE'});
+                    $('#coliforms').val(coliformsResult.mpn);
+                }
+            }, 100);
         });
 
     });
