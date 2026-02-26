@@ -376,7 +376,10 @@
                 <div class="modal-body">
                     <div id="confirmation-content">
                         <div class="modal-body">
-                            <p class="text-center" style="font-size: 15px;">Are you sure you want to delete ID <span id="id" style="font-weight: bold;"></span> ?</p>
+                            <p class="text-center" style="font-size: 15px;">Are you sure you want to delete ?</p>
+                            <div id="cascade-warning" class="text-center" style="display: none;">
+                                <i class="fa fa-exclamation-triangle"></i> <strong>Warning:</strong> This will also delete all related <strong>48 Hour Moisture</strong> data.
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1164,10 +1167,14 @@
                 url = '<?php echo site_url('Moisture_content/delete_detail24'); ?>/' + id;
                 $('.modal-title').html('<i class="fa fa-trash"></i> 24 Hour Moisture | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
+                // Show cascade warning for 24 Hour Moisture
+                $('#cascade-warning').show();
             } else if ($(this).hasClass('btn_delete72')) {
                 url = '<?php echo site_url('Moisture_content/delete_detail72'); ?>/' + id;
                 $('.modal-title').html('<i class="fa fa-trash"></i> 48 Hour Moisture | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
+                // Hide cascade warning for 48 Hour Moisture
+                $('#cascade-warning').hide();
             }
 
             showConfirmationDelete(url);

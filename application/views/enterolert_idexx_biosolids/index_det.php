@@ -296,7 +296,7 @@
             <div class="modal-body">
                 <div id="confirmation-content">
                     <div class="modal-body">
-                        <p class="text-center" style="font-size: 15px;">Are you sure you want to delete Sample <span id="id" style="font-weight: bold;"></span> ?</p>
+                        <p class="text-center" style="font-size: 15px;">Are you sure you want to delete this sample ?</p>
                     </div>
                 </div>
             </div>

@@ -479,7 +479,8 @@ class Salmonella_liquids_model extends CI_Model
     }
     
     function updateSalmonellaLiquids($id, $data) {
-        $this->db->where('id_salmonella_liquids', $id);
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->where('flag', '0');
         $this->db->update('salmonella_liquids', $data);
     }
 
@@ -521,13 +522,14 @@ class Salmonella_liquids_model extends CI_Model
 
     function get_by_id_salmonella_liquids($id)
     {
-        $this->db->where('id_salmonella_liquids', $id);
+        $this->db->where('id_one_water_sample', $id);
         $this->db->where('flag', '0');
         return $this->db->get('salmonella_liquids')->row();
     }
 
     function updateSampleVolume($id, $data) {
         $this->db->where('id_salmonella_liquids', $id);
+        $this->db->where('flag', '0');
         $this->db->update('salmonella_sample_volumes_liquids', $data);
     }
 

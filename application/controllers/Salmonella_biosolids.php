@@ -845,12 +845,13 @@ class Salmonella_biosolids extends CI_Controller
         $row = $this->Salmonella_biosolids_model->get_by_id_salmonella_biosolids($id);
         if ($row) {
             $id_parent = $row->id_result_xld; // Retrieve project_id before updating the record
+            $id_salmonella_biosolids = $row->id_salmonella_biosolids; // Retrieve id_salmonella_biosolids for related updates
             $data = array(
                 'flag' => 1,
             );
     
             $this->Salmonella_biosolids_model->updateSalmonellaBiosolids($id, $data);
-            $this->Salmonella_biosolids_model->updateSampleVolume($id, $data);
+            $this->Salmonella_biosolids_model->updateSampleVolume($id_salmonella_biosolids, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');

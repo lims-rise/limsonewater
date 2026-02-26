@@ -686,6 +686,23 @@ class Sample_reception extends CI_Controller
 
         if ($row) {
             $id_parent = $row->id_project; // Retrieve project_id before updating the record
+            $barcode = $row->barcode; // Get barcode for cascade delete
+            
+            // Get testing type name from ref_testing
+            $testing_type = $this->Sample_reception_model->get_name_by_id($row->id_testing_type);
+            
+            // Cascade delete related module data (Protozoa only for now)
+            if (strtolower($testing_type) == 'protozoa') {
+                $this->Sample_reception_model->cascade_delete_protozoa($barcode);
+            } else if (strtolower($testing_type) == 'moisture_content') {
+                $this->Sample_reception_model->cascade_delete_moisture_content($barcode);
+            } else if (strtolower($testing_type) == 'biobank-in') {
+                $this->Sample_reception_model->cascade_delete_biobank_in($barcode);
+            } else if (strtolower($testing_type) == 'hemoflow') {
+                $this->Sample_reception_model->cascade_delete_hemoflow($barcode);
+            }
+            
+            // Soft-delete the testing record
             $data = array(
                 'flag' => 1,
             );

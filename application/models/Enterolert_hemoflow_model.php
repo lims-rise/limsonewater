@@ -74,10 +74,10 @@ class Enterolert_hemoflow_model extends CI_Model
 
     function get_by_id($id)
     {
-        $this->db->where($this->id, $id);
+        $this->db->where('id_one_water_sample', $id);
         $this->db->where('flag', '0');
         // $this->db->where('lab', $this->session->userdata('lab'));
-        return $this->db->get($this->table)->row();
+        return $this->db->get('enterolert_hemoflow')->row();
     }
 
     function get_by_id_detail($id)
@@ -121,8 +121,9 @@ class Enterolert_hemoflow_model extends CI_Model
     // Function update data
     function update($id, $data)
     {
-        $this->db->where('id_enterolert_hemoflow', $id);
-        $this->db->update($this->table, $data);
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->where('flag', '0');
+        $this->db->update('enterolert_hemoflow', $data);
     }
 
     function insert_det($data) {

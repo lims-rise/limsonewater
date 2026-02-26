@@ -780,12 +780,13 @@ class Campy_biosolids extends CI_Controller
         $row = $this->Campy_biosolids_model->get_by_id_campybiosolids($id);
         if ($row) {
             $id_parent = $row->id_result_charcoal; // Retrieve project_id before updating the record
+            $id_campy_biosolids = $row->id_campy_biosolids;
             $data = array(
                 'flag' => 1,
             );
     
             $this->Campy_biosolids_model->updateCampyBiosolids($id, $data);
-            $this->Campy_biosolids_model->updateSampleVolume($id, $data);
+            $this->Campy_biosolids_model->updateSampleVolume($id_campy_biosolids, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');

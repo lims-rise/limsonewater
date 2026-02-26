@@ -785,12 +785,13 @@ class Campy_hemoflow extends CI_Controller
         $row = $this->Campy_hemoflow_model->get_by_id_campyhemoflow($id);
         if ($row) {
             $id_parent = $row->id_chrc; // Retrieve project_id before updating the record
+            $id_campy_hemoflow = $row->id_campy_hemoflow;
             $data = array(
                 'flag' => 1,
             );
 
             $this->Campy_hemoflow_model->updateCampyHemoflow($id, $data);
-            $this->Campy_hemoflow_model->updateSampleVolume($id, $data);
+            $this->Campy_hemoflow_model->updateSampleVolume($id_campy_hemoflow, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');

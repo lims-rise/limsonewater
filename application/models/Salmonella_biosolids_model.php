@@ -480,7 +480,8 @@ class Salmonella_biosolids_model extends CI_Model
     }
     
     function updateSalmonellaBiosolids($id, $data) {
-        $this->db->where('id_salmonella_biosolids', $id);
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->where('flag', '0');
         $this->db->update('salmonella_biosolids', $data);
     }
 
@@ -522,7 +523,7 @@ class Salmonella_biosolids_model extends CI_Model
 
     function get_by_id_salmonella_biosolids($id)
     {
-        $this->db->where('id_salmonella_biosolids', $id);
+        $this->db->where('id_one_water_sample', $id);
         $this->db->where('flag', '0');
         return $this->db->get('salmonella_biosolids')->row();
     }

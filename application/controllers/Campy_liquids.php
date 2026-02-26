@@ -596,12 +596,13 @@ class Campy_liquids extends CI_Controller
         $row = $this->Campy_liquids_model->get_by_id_campyliquids($id);
         if ($row) {
             $id_parent = $row->id_result_charcoal; // Retrieve project_id before updating the record
+            $id_campy_liquids = $row->id_campy_liquids; // Get the ID of the campy_liquids to be deleted
             $data = array(
                 'flag' => 1,
             );
     
             $this->Campy_liquids_model->updateCampyLiquids($id, $data);
-            $this->Campy_liquids_model->updateSampleVolume($id, $data);
+            $this->Campy_liquids_model->updateSampleVolume($id_campy_liquids, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');

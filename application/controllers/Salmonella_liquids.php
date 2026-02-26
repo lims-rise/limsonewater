@@ -982,12 +982,13 @@ class Salmonella_liquids extends CI_Controller
         $row = $this->Salmonella_liquids_model->get_by_id_salmonella_liquids($id);
         if ($row) {
             $id_parent = $row->id_result_xld; // Retrieve project_id before updating the record
+            $id_salmonella_liquids = $row->id_salmonella_liquids; // Get the main salmonella_liquids ID
             $data = array(
                 'flag' => 1,
             );
     
             $this->Salmonella_liquids_model->updateSalmonellaLiquids($id, $data);
-            $this->Salmonella_liquids_model->updateSampleVolume($id, $data);
+            $this->Salmonella_liquids_model->updateSampleVolume($id_salmonella_liquids, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');

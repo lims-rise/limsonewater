@@ -92,10 +92,10 @@ class Moisture_content_model extends CI_Model
 
     function get_by_id($id)
     {
-        $this->db->where($this->id, $id);
+        $this->db->where('id_one_water_sample', $id);
         $this->db->where('flag', '0');
         // $this->db->where('lab', $this->session->userdata('lab'));
-        return $this->db->get($this->table)->row();
+        return $this->db->get('moisture_content')->row();
     }
 
     function get_by_id_detail24($id)
@@ -158,8 +158,8 @@ class Moisture_content_model extends CI_Model
     // Function update data
     function update($id, $data)
     {
-        $this->db->where('id_moisture', $id);
-        $this->db->update($this->table, $data);
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->update('moisture_content', $data);
     }
 
     function insert_det24($data) {
@@ -180,6 +180,47 @@ class Moisture_content_model extends CI_Model
     function update_det72($id, $data) {
         $this->db->where('id_moisture72', $id);
         $this->db->update('moisture72', $data);
+    }
+
+    /**
+     * Cascade soft delete moisture72 records when moisture24 is deleted
+     * @param int $id_moisture The id_moisture (parent ID)
+     * @return bool Success status
+     */
+    function cascade_delete_moisture72($id_moisture) {
+        if (empty($id_moisture)) {
+            return false;
+        }
+        
+        // Soft delete all moisture72 records with matching id_moisture
+        $this->db->where('id_moisture', $id_moisture);
+        $this->db->where('flag', '0');
+        $this->db->update('moisture72', array('flag' => '1'));
+        
+        return true;
+    }
+
+    /**
+     * Cascade soft delete moisture24 and moisture72 when parent moisture_content is deleted
+     * @param int $id_moisture The id_moisture (parent ID from moisture_content)
+     * @return bool Success status
+     */
+    function cascade_delete_moisture24_72($id_moisture) {
+        if (empty($id_moisture)) {
+            return false;
+        }
+        
+        // Soft delete all moisture24 records with matching id_moisture
+        $this->db->where('id_moisture', $id_moisture);
+        $this->db->where('flag', '0');
+        $this->db->update('moisture24', array('flag' => '1'));
+        
+        // Soft delete all moisture72 records with matching id_moisture
+        $this->db->where('id_moisture', $id_moisture);
+        $this->db->where('flag', '0');
+        $this->db->update('moisture72', array('flag' => '1'));
+        
+        return true;
     }
 
     // delete data

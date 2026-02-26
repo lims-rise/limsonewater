@@ -526,7 +526,7 @@ class Extraction_liquid_model extends CI_Model
         $this->db->where('id_one_water_sample', $id_one_water_sample);
         $this->db->where('flag', '0');
         // $this->db->where('lab', $this->session->userdata('lab'));
-        return $this->db->get('extraction_culture')->row();
+        return $this->db->get('extraction_liquid')->row();
     }
 
     public function update_extraction_child($barcode_sample, $data) {

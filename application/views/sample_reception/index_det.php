@@ -221,7 +221,8 @@
             <div class="modal-body">
                 <div id="confirmation-content">
                     <div class="modal-body">
-                        <p class="text-center" style="font-size: 15px;">Are you sure you want to delete ID <span id="id" style="font-weight: bold;"></span> ?</p>
+                        <p class="text-center" style="font-size: 15px;">Are you sure you want to delete <span id="delete_testing_type" style="font-weight: bold; color: #3c8dbc;"></span> - <span id="delete_barcode" style="font-weight: bold; color: #d9534f;"></span> ?</p>
+                        <input type="hidden" id="delete_id" value="">
                     </div>
                 </div>
             </div>
@@ -601,8 +602,16 @@ background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
         // Handle the delete button click
         $(document).on('click', '.btn_delete', function() {
             let id = $(this).data('id');
+            let tr = $(this).closest('tr');
+            let rowData = table.row(tr).data();
+            let testingType = rowData ? rowData.testing_type : '-';
+            let barcode = rowData ? rowData.barcode : '-';
             let url = '<?php echo site_url('Sample_reception/delete_detail'); ?>/' + id;
-            $('#confirm-modal-delete #id').text(id);
+            
+            // Update modal dengan informasi spesifik
+            $('#delete_testing_type').text(testingType);
+            $('#delete_barcode').text(barcode);
+            $('#delete_id').val(id);
             showConfirmationDelete(url);
         });
 

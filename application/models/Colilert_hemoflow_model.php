@@ -76,10 +76,10 @@ class Colilert_hemoflow_model extends CI_Model
 
     function get_by_id($id)
     {
-        $this->db->where($this->id, $id);
+        $this->db->where('id_one_water_sample', $id);
         $this->db->where('flag', '0');
         // $this->db->where('lab', $this->session->userdata('lab'));
-        return $this->db->get($this->table)->row();
+        return $this->db->get('colilert_hemoflow')->row();
     }
 
     function get_by_id_detail($id)
@@ -123,8 +123,9 @@ class Colilert_hemoflow_model extends CI_Model
     // Function update data
     function update($id, $data)
     {
-        $this->db->where('id_colilert_hemoflow', $id);
-        $this->db->update($this->table, $data);
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->where('flag', '0');
+        $this->db->update('colilert_hemoflow', $data);
     }
 
     function insert_det($data) {
