@@ -160,7 +160,7 @@ class Hemoflow extends CI_Controller
             );
 
         if ($row) {
-            $this->Hemoflow_model->update($id, $data);
+            $this->Hemoflow_model->updateHemoflow($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
             redirect(site_url('Hemoflow'));
         } else {

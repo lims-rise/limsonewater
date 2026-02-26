@@ -583,14 +583,15 @@ class Biobankin extends CI_Controller
             );
 
         if ($row) {
-            // Delete parent record (biobank_in)
-            $this->Biobankin_model->update($id, $data);
+            // Cascade delete: Delete from deepest child first (replicates)
+            // Must be called BEFORE deleting details to ensure subquery finds the detail records
+            $this->Biobankin_model->delete_all_replicates_by_one_water_sample($id);
             
             // Cascade delete: Delete all related detail records (biobank_in_detail)
             $this->Biobankin_model->delete_all_details_by_one_water_sample($id);
             
-            // Cascade delete: Delete all related replicate records (biobank_in_replicate)
-            $this->Biobankin_model->delete_all_replicates_by_one_water_sample($id);
+            // Delete parent record (biobank_in) last
+            $this->Biobankin_model->update($id, $data);
             
             $this->session->set_flashdata('message', 'Delete Record and All Related Data Success');
             redirect(site_url('Biobankin'));

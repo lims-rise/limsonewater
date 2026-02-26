@@ -63,20 +63,21 @@ class Hemoflow_model extends CI_Model
 
     function get_by_id($id)
     {
-        $this->db->where($this->id, $id);
+        $this->db->where('id_one_water_sample', $id);
         $this->db->where('flag', '0');
         // $this->db->where('lab', $this->session->userdata('lab'));
-        return $this->db->get($this->table)->row();
+        return $this->db->get('hemoflow')->row();
     }
 
     // Fuction insert data
     public function insert($data) {
-        $this->db->insert('Hemoflow', $data);
+        $this->db->insert('hemoflow', $data);
     }
 
     // Function update data
     function updateHemoflow($id_one_water_sample, $data) {
         $this->db->where('id_one_water_sample', $id_one_water_sample);
+        $this->db->where('flag', '0');
         $this->db->update('hemoflow', $data);
     }
 

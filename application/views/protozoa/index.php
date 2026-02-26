@@ -161,6 +161,7 @@
                             <label for="weight" class="col-sm-4 control-label">Weight (g)</label>
                             <div class="col-sm-8">
                                 <input id="weight" name="weight" type="number" step="any" class="form-control" placeholder="Weight (g)" required readonly>
+                                <p style="font-size: 11px; color: #999; opacity: 0.8; margin-top: 3px;"><i>The result from extraction biosolids module (Sample ID: <span id="weight_source_sample_id" style="font-weight: 600; color: #6c9ec4;">-</span>)</i></p>
                             </div>
                         </div>
 
@@ -168,6 +169,7 @@
                             <label for="dry_weight_persen" class="col-sm-4 control-label">Dry Weight (%)</label>
                             <div class="col-sm-8">
                                 <input id="dry_weight_persen" name="dry_weight_persen" type="number" step="any" class="form-control" placeholder="Dry Weight (%)" required readonly>
+                                <p style="font-size: 11px; color: #999; opacity: 0.8; margin-top: 3px;"><i>The result from moisture content module (Sample ID: <span id="dryweight_source_sample_id" style="font-weight: 600; color: #6c9ec4;">-</span>)</i></p>
                             </div>
                         </div>
 
@@ -1165,6 +1167,9 @@
                 // Set default values to 0 if no sample ID
                 $('#weight').val('0');
                 $('#dry_weight_persen').val('0');
+                // Reset source sample ID display
+                $('#weight_source_sample_id').text('-');
+                $('#dryweight_source_sample_id').text('-');
                 calculateMassAnalysed();
                 return;
             }
@@ -1172,6 +1177,10 @@
             // Clear previous values first
             $('#weight').val('');
             $('#dry_weight_persen').val('');
+            
+            // Immediately set source sample ID display from the input value (simplified)
+            $('#weight_source_sample_id').text(id_one_water_sample.trim());
+            $('#dryweight_source_sample_id').text(id_one_water_sample.trim());
 
             // Log the request for debugging
             console.log('Auto fetching weight data for ID:', id_one_water_sample.trim());

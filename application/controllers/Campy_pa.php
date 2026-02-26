@@ -694,12 +694,13 @@ class Campy_pa extends CI_Controller
         $row = $this->Campy_pa_model->get_by_id_campybiosolids($id);
         if ($row) {
             $id_parent = $row->id_result_charcoal_pa; // Retrieve project_id before updating the record
+            $id_campy_pa = $row->id_campy_pa; // Get campy_pa ID for cascade delete
             $data = array(
                 'flag' => 1,
             );
     
             $this->Campy_pa_model->updateCampyBiosolids($id, $data);
-            $this->Campy_pa_model->updateSampleVolume($id, $data);
+            $this->Campy_pa_model->updateSampleVolume($id_campy_pa, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');

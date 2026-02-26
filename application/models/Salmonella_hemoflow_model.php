@@ -519,7 +519,8 @@ class Salmonella_hemoflow_model extends CI_Model
     }
     
     function updateSalmonellaHemoflow($id, $data) {
-        $this->db->where('id_salmonella_hemoflow', $id);
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->where('flag', '0');
         $this->db->update('salmonella_hemoflow', $data);
     }
 
@@ -561,13 +562,14 @@ class Salmonella_hemoflow_model extends CI_Model
 
     function get_by_id_salmonella_hemoflow($id)
     {
-        $this->db->where('id_salmonella_hemoflow', $id);
+        $this->db->where('id_one_water_sample', $id);
         $this->db->where('flag', '0');
         return $this->db->get('salmonella_hemoflow')->row();
     }
 
     function updateSampleVolume($id, $data) {
         $this->db->where('id_salmonella_hemoflow', $id);
+        $this->db->where('flag', '0');
         $this->db->update('salmonella_hemoflow_sample_volumes', $data);
     }
 

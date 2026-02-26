@@ -231,6 +231,9 @@
                 <div id="confirmation-content">
                     <div class="modal-body">
                         <p class="text-center" style="font-size: 15px;">Are you sure you want to delete ID <span id="id" style="font-weight: bold;"></span> ?</p>
+                        <div class="alert" class="text-center">
+                            <i class="fa fa-exclamation-triangle"></i> <strong>Warning:</strong> This will also delete all related <strong>24 Hour </strong> and <strong>48 Hour Moistures</strong> data.
+                        </div>
                     </div>
                 </div>
             </div>

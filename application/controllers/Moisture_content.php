@@ -320,12 +320,19 @@ class Moisture_content extends CI_Controller
     public function delete($id) 
     {
         $row = $this->Moisture_content_model->get_by_id($id);
-        $data = array(
-            'flag' => 1,
-            );
-
+        
         if ($row) {
+            $id_moisture = $row->id_moisture;
+            
+            // Cascade delete: soft delete all moisture24 and moisture72 records
+            $this->Moisture_content_model->cascade_delete_moisture24_72($id_moisture);
+            
+            // Soft-delete the moisture_content record
+            $data = array(
+                'flag' => 1,
+            );
             $this->Moisture_content_model->update($id, $data);
+            
             $this->session->set_flashdata('message', 'Delete Record Success');
             redirect(site_url('moisture_content'));
         } else {
@@ -338,7 +345,12 @@ class Moisture_content extends CI_Controller
     {
         $row = $this->Moisture_content_model->get_by_id_detail24($id);
         if ($row) {
-            $id_parent = $row->id_moisture; // Retrieve project_id before updating the record
+            $id_parent = $row->id_moisture; // Retrieve id_moisture before updating the record
+            
+            // Cascade delete: soft delete all moisture72 records with same id_moisture
+            $this->Moisture_content_model->cascade_delete_moisture72($id_parent);
+            
+            // Soft-delete the moisture24 record
             $data = array(
                 'flag' => 1,
             );

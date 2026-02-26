@@ -536,7 +536,7 @@ class Campy_hemoflow_model extends CI_Model
     }
     
     function updateCampyHemoflow($id, $data) {
-        $this->db->where('id_campy_hemoflow', $id);
+        $this->db->where('id_one_water_sample', $id);
         $this->db->update('campy_hemoflow', $data);
     }
 
@@ -578,13 +578,14 @@ class Campy_hemoflow_model extends CI_Model
 
     function get_by_id_campyhemoflow($id)
     {
-        $this->db->where('id_campy_hemoflow', $id);
+        $this->db->where('id_one_water_sample', $id);
         $this->db->where('flag', '0');
         return $this->db->get('campy_hemoflow')->row();
     }
 
     function updateSampleVolume($id, $data) {
         $this->db->where('id_campy_hemoflow', $id);
+        $this->db->where('flag', '0');
         $this->db->update('campy_hemoflow_sample_volumes', $data);
     }
 

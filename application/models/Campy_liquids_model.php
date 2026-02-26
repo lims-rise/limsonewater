@@ -487,7 +487,8 @@ class Campy_liquids_model extends CI_Model
     }
     
     function updateCampyLiquids($id, $data) {
-        $this->db->where('id_campy_liquids', $id);
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->where('flag', '0');
         $this->db->update('campy_liquids', $data);
     }
 
@@ -529,14 +530,15 @@ class Campy_liquids_model extends CI_Model
 
     function get_by_id_campyliquids($id)
     {
-        $this->db->where('id_campy_liquids', $id);
+        $this->db->where('id_one_water_sample', $id);
         $this->db->where('flag', '0');
         return $this->db->get('campy_liquids')->row();
     }
 
     function updateSampleVolume($id, $data) {
         $this->db->where('id_campy_liquids', $id);
-        $this->db->update('sample_volumes', $data);
+        $this->db->where('flag', '0');
+        $this->db->update('campy_sample_volumes_liquids', $data);
     }
 
     function insertResultsHba($data) {

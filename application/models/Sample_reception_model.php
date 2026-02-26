@@ -2548,6 +2548,277 @@ class Sample_reception_model extends CI_Model
         }
     }
 
+    /**
+     * Cascade soft delete for Protozoa module
+     * @param string $barcode The barcode from sample_reception_testing
+     * @return bool Success status
+     */
+    public function cascade_delete_protozoa($barcode) {
+        if (empty($barcode)) {
+            return false;
+        }
+        
+        // Soft delete protozoa records with matching barcode
+        $this->db->where('protozoa_barcode', $barcode);
+        $this->db->where('flag', '0');
+        $this->db->update('protozoa', array('flag' => '1'));
+        
+        return true;
+    }
+
+    public function cascade_delete_moisture_content($barcode) {
+        if (empty($barcode)) {
+            return false;
+        }
+        
+        // First, get the id_moisture from moisture_content to cascade delete children
+        $this->db->select('id_moisture');
+        $this->db->where('barcode_moisture_content', $barcode);
+        $this->db->where('flag', '0');
+        $moisture_records = $this->db->get('moisture_content')->result();
+        
+        // Cascade delete moisture24 and moisture72 for each moisture_content record
+        foreach ($moisture_records as $record) {
+            // Soft delete moisture24 records
+            $this->db->where('id_moisture', $record->id_moisture);
+            $this->db->where('flag', '0');
+            $this->db->update('moisture24', array('flag' => '1'));
+            
+            // Soft delete moisture72 records
+            $this->db->where('id_moisture', $record->id_moisture);
+            $this->db->where('flag', '0');
+            $this->db->update('moisture72', array('flag' => '1'));
+        }
+        
+        // Soft delete moisture_content records with matching barcode
+        $this->db->where('barcode_moisture_content', $barcode);
+        $this->db->where('flag', '0');
+        $this->db->update('moisture_content', array('flag' => '1'));
+        
+        return true;
+    }
+
+    public function cascade_delete_biobank_in($barcode) {
+        if (empty($barcode)) {
+            return false;
+        }
+        
+        // Get id_one_water_sample from biobank_in records with matching barcode
+        $this->db->select('id_one_water_sample');
+        $this->db->where('biobankin_barcode', $barcode);
+        $this->db->where('flag', '0');
+        $biobank_records = $this->db->get('biobank_in')->result();
+        
+        foreach ($biobank_records as $record) {
+            $id_one_water_sample = $record->id_one_water_sample;
+            
+            // Level 3: Soft delete biobank_in_replicate (grandchild) - delete first
+            // Get all detail IDs for this one_water_sample
+            $sql = "UPDATE biobank_in_replicate 
+                    SET flag = '1' 
+                    WHERE id_biobankin_detail IN (
+                        SELECT id_biobankin_detail 
+                        FROM biobank_in_detail 
+                        WHERE id_one_water_sample = ?
+                    )";
+            $this->db->query($sql, array($id_one_water_sample));
+            
+            // Level 2: Soft delete biobank_in_detail (child)
+            $this->db->where('id_one_water_sample', $id_one_water_sample);
+            $this->db->update('biobank_in_detail', array('flag' => '1'));
+        }
+        
+        // Level 1: Soft delete biobank_in (parent) - delete last
+        $this->db->where('biobankin_barcode', $barcode);
+        $this->db->where('flag', '0');
+        $this->db->update('biobank_in', array('flag' => '1'));
+        
+        return true;
+        
+    }
+
+    public function cascade_delete_hemoflow($barcode) {
+        if (empty($barcode)) {
+            return false;
+        }
+        
+        // Soft delete hemoflow records with matching barcode
+        $this->db->where('hemoflow_barcode', $barcode);
+        $this->db->where('flag', '0');
+        $this->db->update('hemoflow', array('flag' => '1'));
+        
+        return true;
+    }
+
+    /**
+     * Cascade soft delete related data when testing record is deleted
+     * This method soft deletes all data in related modules based on barcode
+     * 
+     * @param string $barcode The barcode from sample_reception_testing
+     * @param string $testing_type The testing type name (e.g., 'Protozoa', 'Colilert IDEXX Water')
+     * @return array Result with status and affected tables
+     */
+    public function cascade_delete_by_testing($barcode, $testing_type) {
+        $result = array(
+            'status' => true,
+            'affected_tables' => array(),
+            'errors' => array()
+        );
+
+        // Mapping testing_type to table name and barcode field
+        $testing_table_mapping = array(
+            // Protozoa
+            'protozoa' => array('table' => 'protozoa', 'barcode_field' => 'protozoa_barcode'),
+            
+            // Colilert IDEXX
+            'colilert idexx water' => array('table' => 'colilert_water_in', 'barcode_field' => 'colilert_barcode'),
+            'colilert idexx biosolids' => array('table' => 'colilert_biosolids_in', 'barcode_field' => 'colilert_barcode'),
+            
+            // Enterolert IDEXX
+            'enterolert idexx water' => array('table' => 'enterolert_water_in', 'barcode_field' => 'enterolert_barcode'),
+            'enterolert idexx biosolids' => array('table' => 'enterolert_biosolids_in', 'barcode_field' => 'enterolert_barcode'),
+            
+            // Salmonella
+            'salmonella pa' => array('table' => 'salmonella_pa', 'barcode_field' => 'salmonella_barcode'),
+            'salmonella biosolids' => array('table' => 'salmonella_biosolids', 'barcode_field' => 'salmonella_barcode'),
+            'salmonella liquids' => array('table' => 'salmonella_liquids', 'barcode_field' => 'salmonella_barcode'),
+            'salmonella hemoflow' => array('table' => 'salmonella_hemoflow', 'barcode_field' => 'salmonella_assay_barcode'),
+            
+            // Campy
+            'campy pa' => array('table' => 'campy_pa', 'barcode_field' => 'campy_barcode'),
+            'campy biosolids' => array('table' => 'campy_biosolids', 'barcode_field' => 'campy_barcode'),
+            'campy liquids' => array('table' => 'campy_liquids', 'barcode_field' => 'campy_barcode'),
+            'campy biosolids qpcr' => array('table' => 'campy_biosolids_qpcr', 'barcode_field' => 'campy_barcode'),
+            'campy hemoflow' => array('table' => 'campy_hemoflow', 'barcode_field' => 'campy_assay_barcode'),
+            'campy hemoflow qpcr' => array('table' => 'campy_hemoflow_qpcr', 'barcode_field' => 'campy_assay_barcode'),
+            
+            // Hemoflow
+            'hemoflow' => array('table' => 'hemoflow', 'barcode_field' => 'hemoflow_barcode'),
+            'enterolert hemoflow' => array('table' => 'enterolert_hemoflow', 'barcode_field' => 'enterolert_hemoflow_barcode'),
+            'colilert hemoflow' => array('table' => 'colilert_hemoflow', 'barcode_field' => 'colilert_hemoflow_barcode'),
+            
+            // Extraction
+            'extraction biosolid' => array('table' => 'extraction_biosolid', 'barcode_field' => 'extraction_barcode'),
+            'extraction liquid' => array('table' => 'extraction_liquid', 'barcode_field' => 'extraction_barcode'),
+            'extraction culture' => array('table' => 'extraction_culture', 'barcode_field' => 'extraction_barcode'),
+            'extraction metagenome' => array('table' => 'extraction_metagenome', 'barcode_field' => 'extraction_barcode'),
+            
+            // Others
+            'moisture content' => array('table' => 'moisture_content', 'barcode_field' => 'barcode_moisture_content'),
+            'freezer in' => array('table' => 'freezer_in', 'barcode_field' => 'freezer_barcode'),
+            'freezer out' => array('table' => 'freezer_out', 'barcode_field' => 'freezer_barcode'),
+            'biobank in' => array('table' => 'biobank_in', 'barcode_field' => 'biobankin_barcode'),
+            'sequencing' => array('table' => 'sequencing', 'barcode_field' => 'sequencing_barcode'),
+            'microbial' => array('table' => 'microbial', 'barcode_field' => 'microbial_barcode'),
+        );
+
+        // Normalize testing_type to lowercase for matching
+        $testing_type_lower = strtolower(trim($testing_type));
+
+        // Find the matching table configuration
+        $table_config = null;
+        foreach ($testing_table_mapping as $key => $config) {
+            if (strpos($testing_type_lower, $key) !== false || $key === $testing_type_lower) {
+                $table_config = $config;
+                break;
+            }
+        }
+
+        if (!$table_config) {
+            // No matching table found, return success (nothing to delete)
+            return $result;
+        }
+
+        try {
+            // Perform soft delete on the related table
+            $this->db->where($table_config['barcode_field'], $barcode);
+            $this->db->where('flag', '0');
+            $this->db->update($table_config['table'], array('flag' => '1'));
+
+            $affected_rows = $this->db->affected_rows();
+            
+            if ($affected_rows > 0) {
+                $result['affected_tables'][] = array(
+                    'table' => $table_config['table'],
+                    'barcode_field' => $table_config['barcode_field'],
+                    'affected_rows' => $affected_rows
+                );
+            }
+
+            // Handle cascade for child tables (e.g., colilert_water_in -> colilert_water_out)
+            $this->cascade_delete_child_tables($table_config['table'], $barcode, $table_config['barcode_field'], $result);
+
+        } catch (Exception $e) {
+            $result['status'] = false;
+            $result['errors'][] = $e->getMessage();
+        }
+
+        return $result;
+    }
+
+    /**
+     * Helper function to cascade delete child tables
+     */
+    private function cascade_delete_child_tables($parent_table, $barcode, $barcode_field, &$result) {
+        // Define parent-child relationships for _in/_out tables
+        $parent_child_mapping = array(
+            'colilert_water_in' => array(
+                'child_table' => 'colilert_water_out',
+                'parent_id_field' => 'id_colilert_in',
+                'parent_table_pk' => 'id_colilert_in'
+            ),
+            'colilert_biosolids_in' => array(
+                'child_table' => 'colilert_biosolids_out',
+                'parent_id_field' => 'id_colilert_bio_in',
+                'parent_table_pk' => 'id_colilert_bio_in'
+            ),
+            'enterolert_water_in' => array(
+                'child_table' => 'enterolert_water_out',
+                'parent_id_field' => 'id_enterolert_in',
+                'parent_table_pk' => 'id_enterolert_in'
+            ),
+            'enterolert_biosolids_in' => array(
+                'child_table' => 'enterolert_biosolids_out',
+                'parent_id_field' => 'id_enterolert_bio_in',
+                'parent_table_pk' => 'id_enterolert_bio_in'
+            ),
+        );
+
+        if (!isset($parent_child_mapping[$parent_table])) {
+            return; // No child table to cascade
+        }
+
+        $child_config = $parent_child_mapping[$parent_table];
+
+        try {
+            // Get parent IDs that were soft deleted
+            $this->db->select($child_config['parent_table_pk']);
+            $this->db->where($barcode_field, $barcode);
+            $this->db->where('flag', '1'); // Already soft deleted
+            $parent_records = $this->db->get($parent_table)->result();
+
+            foreach ($parent_records as $parent) {
+                $parent_id = $parent->{$child_config['parent_table_pk']};
+                
+                // Soft delete child records
+                $this->db->where($child_config['parent_id_field'], $parent_id);
+                $this->db->where('flag', '0');
+                $this->db->update($child_config['child_table'], array('flag' => '1'));
+
+                $child_affected = $this->db->affected_rows();
+                if ($child_affected > 0) {
+                    $result['affected_tables'][] = array(
+                        'table' => $child_config['child_table'],
+                        'parent_id' => $parent_id,
+                        'affected_rows' => $child_affected
+                    );
+                }
+            }
+        } catch (Exception $e) {
+            $result['errors'][] = 'Child cascade error: ' . $e->getMessage();
+        }
+    }
+
     // Get all testing types for a project (for report display)
     function getProjectTestingTypes($id_project) {
         // Use custom query to handle FIND_IN_SET properly

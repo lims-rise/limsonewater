@@ -390,14 +390,13 @@ class Biobankin_model extends CI_Model
 
     function delete_all_replicates_by_one_water_sample($id_one_water_sample)
     {
-        // Gunakan raw query untuk UPDATE dengan JOIN
+        // Note: Tidak menggunakan kondisi flag = '0' di subquery karena detail mungkin sudah di-soft delete
         $sql = "UPDATE biobank_in_replicate 
                 SET flag = '1' 
                 WHERE id_biobankin_detail IN (
                     SELECT id_biobankin_detail 
                     FROM biobank_in_detail 
-                    WHERE id_one_water_sample = ? 
-                    AND flag = '0'
+                    WHERE id_one_water_sample = ?
                 )";
         $this->db->query($sql, array($id_one_water_sample));
     }
