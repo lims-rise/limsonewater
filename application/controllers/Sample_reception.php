@@ -365,6 +365,7 @@ class Sample_reception extends CI_Controller
     public function save() {
         $mode = $this->input->post('mode', TRUE);
         $dt = new DateTime();
+        $id_sample_reception = $this->input->post('id_sample_reception', TRUE); // Primary key for update
         $id_project = $this->input->post('idx_project', TRUE);
         $client_quote_number = $this->input->post('client_quote_number', TRUE);
         $client = $this->input->post('client', TRUE);
@@ -439,7 +440,7 @@ class Sample_reception extends CI_Controller
                 );
                 // var_dump($data);
                 // die();
-                $this->Sample_reception_model->update($id_project, $data);
+                $this->Sample_reception_model->update($id_sample_reception, $data);
                 
                 // Update all child samples with new parent date/time arrival
                 $child_update_data = array(
@@ -655,8 +656,12 @@ class Sample_reception extends CI_Controller
             );
 
         if ($row) {
+            // Cascade delete: Delete all samples and their testing records first
+            $this->Sample_reception_model->cascade_delete_samples_by_project($id);
+            
+            // Then soft delete the parent project
             $this->Sample_reception_model->update($id, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
+            $this->session->set_flashdata('message', 'Delete Record and All Related Data Success');
             redirect(site_url('sample_reception'));
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
@@ -671,8 +676,12 @@ class Sample_reception extends CI_Controller
             );
 
         if ($row) {
+            // Cascade delete: Delete all testing records for this sample first
+            $this->Sample_reception_model->cascade_delete_testing_by_sample($row->id_sample);
+            
+            // Then soft delete the sample
             $this->Sample_reception_model->update_sample($id_one_water_sample, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');    
+            $this->session->set_flashdata('message', 'Delete Sample and All Related Testing Data Success');    
             redirect(site_url('sample_reception'));
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
