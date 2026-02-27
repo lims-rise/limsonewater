@@ -15,7 +15,7 @@ class Sample_reception_model extends CI_Model
     }
 
     public function json() {
-        $this->datatables->select('NULL AS toggle, sr.id_project, sr.client_quote_number, sr.client, sr.id_client_sample, COALESCE(cc.client_name, sr.client, "Unknown Client") as client_name, sr.id_client_contact, sr.number_sample, sr.comments, sr.files, sr.supplementary_files, sr.date_arrive, sr.time_arrive, 
+        $this->datatables->select('NULL AS toggle, sr.id_sample_reception, sr.id_project, sr.client_quote_number, sr.client, sr.id_client_sample, COALESCE(cc.client_name, sr.client, "Unknown Client") as client_name, sr.id_client_contact, sr.number_sample, sr.comments, sr.files, sr.supplementary_files, sr.date_arrive, sr.time_arrive, 
             sr.date_created, sr.date_updated, sr.flag, sr.is_unlocked, sr.unlocked_by, sr.unlocked_at, sr.unlock_reason,
             CASE WHEN (
                 SELECT COUNT(DISTINCT srt.id_testing) 
@@ -1111,6 +1111,7 @@ class Sample_reception_model extends CI_Model
     public function get_latest_project_id() {
         $this->db->select('id_project');
         $this->db->order_by('id_project', 'DESC');
+        $this->db->where('flag', '0');
         $this->db->limit(1);
         $query = $this->db->get('sample_reception');
 
@@ -1235,10 +1236,10 @@ class Sample_reception_model extends CI_Model
         $this->db->insert('sample_reception_sample', $data);
     }
 
-    // Function update data
-    function update($id, $data)
+    // Function update data - uses id_sample_reception as primary key
+    function update($id_sample_reception, $data)
     {
-        $this->db->where('id_project', $id);
+        $this->db->where('id_sample_reception', $id_sample_reception);
         $this->db->update('sample_reception', $data);
     }
 
@@ -2646,6 +2647,81 @@ class Sample_reception_model extends CI_Model
         $this->db->where('hemoflow_barcode', $barcode);
         $this->db->where('flag', '0');
         $this->db->update('hemoflow', array('flag' => '1'));
+        
+        return true;
+    }
+
+    /**
+     * Cascade soft delete for sample_reception_sample when parent sample_reception is deleted
+     * Also cascades to sample_reception_testing for each sample
+     * @param string $id_project The project ID from sample_reception
+     * @return bool Success status
+     */
+    public function cascade_delete_samples_by_project($id_project) {
+        if (empty($id_project)) {
+            return false;
+        }
+        
+        // Get all samples for this project
+        $this->db->select('id_sample');
+        $this->db->where('id_project', $id_project);
+        $this->db->where('flag', '0');
+        $samples = $this->db->get('sample_reception_sample')->result();
+        
+        // Cascade delete testing records for each sample
+        foreach ($samples as $sample) {
+            $this->cascade_delete_testing_by_sample($sample->id_sample);
+        }
+        
+        // Soft delete all samples for this project
+        $this->db->where('id_project', $id_project);
+        $this->db->where('flag', '0');
+        $this->db->update('sample_reception_sample', array('flag' => '1'));
+        
+        return true;
+    }
+
+    /**
+     * Cascade soft delete for sample_reception_testing when parent sample is deleted
+     * Also cascades to related module tables based on barcode
+     * @param int $id_sample The sample ID from sample_reception_sample
+     * @return bool Success status
+     */
+    public function cascade_delete_testing_by_sample($id_sample) {
+        if (empty($id_sample)) {
+            return false;
+        }
+        
+        // Get all testing records for this sample with their barcode and testing type
+        $this->db->select('srt.id_testing, srt.barcode, srt.id_testing_type, rt.testing_type');
+        $this->db->from('sample_reception_testing srt');
+        $this->db->join('ref_testing rt', 'rt.id_testing_type = srt.id_testing_type', 'left');
+        $this->db->where('srt.id_sample', $id_sample);
+        $this->db->where('srt.flag', '0');
+        $testing_records = $this->db->get()->result();
+        
+        // Cascade delete module data for each testing record
+        foreach ($testing_records as $testing) {
+            $testing_type = strtolower($testing->testing_type);
+            $barcode = $testing->barcode;
+            
+            // Call appropriate cascade delete based on testing type
+            if (stripos($testing_type, 'protozoa') !== false) {
+                $this->cascade_delete_protozoa($barcode);
+            } else if (stripos($testing_type, 'moisture') !== false) {
+                $this->cascade_delete_moisture_content($barcode);
+            } else if (stripos($testing_type, 'biobank') !== false) {
+                $this->cascade_delete_biobank_in($barcode);
+            } else if (stripos($testing_type, 'hemoflow') !== false && stripos($testing_type, 'colilert') === false && stripos($testing_type, 'enterolert') === false && stripos($testing_type, 'campy') === false && stripos($testing_type, 'salmonella') === false) {
+                $this->cascade_delete_hemoflow($barcode);
+            }
+            // Add more cascade deletes for other modules as needed
+        }
+        
+        // Soft delete all testing records for this sample
+        $this->db->where('id_sample', $id_sample);
+        $this->db->where('flag', '0');
+        $this->db->update('sample_reception_testing', array('flag' => '1'));
         
         return true;
     }

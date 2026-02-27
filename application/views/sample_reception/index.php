@@ -133,6 +133,7 @@
                     <form id="formSample"  action= <?php echo site_url('Sample_reception/save') ?> method="post" class="form-horizontal">
                         <div class="modal-body">
                             <input id="mode" name="mode" type="hidden" class="form-control input-sm">
+                            <input id="id_sample_reception" name="id_sample_reception" type="hidden" class="form-control input-sm">
                             <!-- <input id="id_req" name="id_req" type="hidden" class="form-control input-sm"> -->
 
                             <div class="form-group">
@@ -2943,6 +2944,7 @@ function applyCompletedProjectStyling() {
         // Open the modal for adding new data
         $('#addtombol').click(function() {
             $('#mode').val('insert'); // Set mode to insert
+            $('#id_sample_reception').val(''); // Clear primary key for new entry
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Sample reception | New <span id="my-another-cool-loader"></span>');
 
             // Reset form fields for new entry
@@ -2991,6 +2993,7 @@ function applyCompletedProjectStyling() {
             $('#modal-title').html('<i class="fa fa-pencil-square"></i> Sample reception | Update <span id="my-another-cool-loader"></span>');
 
             // Pre-fill fields with the selected data for editing
+            $('#id_sample_reception').val(data.id_sample_reception); // Set primary key for update
             $('#idx_project').val(data.id_project).attr('readonly', true);
             $('#client_quote_number').val(data.client_quote_number);
             $('#client').hide();

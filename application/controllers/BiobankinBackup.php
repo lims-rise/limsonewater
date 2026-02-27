@@ -30,7 +30,7 @@ class Biobankin extends CI_Controller
     {
         $data['id_one'] = $this->Biobankin_model->getID_one();
         $data['sampletype'] = $this->Biobankin_model->getSampleType();
-        $data['labtech'] = $this->Biobankin_model->getLabTech();
+        $data['labtech'] = $this->Biobankin_model->getLabTech()
         // $data['id_project'] = $this->Biobankin_model->generate_project_id();
         // $data['client'] = $this->Biobankin_model->generate_client();
         // $data['id_one_water_sample'] = $this->Biobankin_model->generate_one_water_sample_id();
