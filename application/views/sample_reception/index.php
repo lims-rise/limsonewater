@@ -192,8 +192,10 @@
                             <div class="form-group">
                                 <label for="number_sample" class="col-sm-4 control-label">Number of Samples</label>
                                 <div class="col-sm-8">
-                                    <input id="number_sample" name="number_sample" placeholder="Number of Samples" type="text" class="form-control" required>
+                                    <input id="old_number_sample" name="old_number_sample" type="hidden">
+                                    <input id="number_sample" name="number_sample" placeholder="Number of Samples" type="number" min="1" class="form-control" required>
                                     <div class="val1tip"></div>
+                                    <small id="number_sample_help" class="text-info" style="display:none;"><i class="fa fa-info-circle"></i> <span id="number_sample_help_text"></span></small>
                                 </div>
                             </div>
 
@@ -2955,7 +2957,9 @@ function applyCompletedProjectStyling() {
             $('#client').show();
             $('#id_client_contact').val(''); // Clear client contact dropdown
             $('#id_client_sample').val('').attr('readonly', false);
-            $('#number_sample').val('').attr('readonly', false);
+            $('#number_sample').val('').attr('readonly', false).attr('min', 1);
+            $('#old_number_sample').val('');
+            $('#number_sample_help').hide();
             $('#files').val('');
             $('#supplementary_files').val('');
             $('#comments').val('');
@@ -3004,8 +3008,11 @@ function applyCompletedProjectStyling() {
             // Populate client details
             populateClientDetails();
 
-            // Pre-fill other form fields
-            $('#number_sample').val(data.number_sample).attr('readonly', true);
+            // Pre-fill other form fields - allow editing number_sample but only increasing
+            $('#old_number_sample').val(data.number_sample);
+            $('#number_sample').val(data.number_sample).attr('readonly', false).attr('min', data.number_sample);
+            $('#number_sample_help').show();
+            $('#number_sample_help_text').html('Current: ' + data.number_sample + ' sample(s). You can only add more samples, not reduce.');
             $('#files').val(data.files).attr('readonly', true);
             $('#supplementary_files').val(data.supplementary_files).attr('readonly', true);
             $('#date_arrive').val(data.date_arrive);
@@ -3087,12 +3094,76 @@ function applyCompletedProjectStyling() {
             toggleDateInput(); // This will call validateTimeCollected internally
         });
 
-        // Form submission validation
+        // Form submission validation for SAMPLE DETAIL form (form-sample)
         $(document).on('submit', '#form-sample', function(e) {
-            console.log('Form submitting, validating...'); // Debug log
+            console.log('Sample detail form submitting, validating...'); // Debug log
             if (!validateTimeCollected()) {
                 e.preventDefault(); // Prevent form submission if validation fails
-                console.log('Validation failed, form submission prevented'); // Debug log
+                console.log('Time validation failed, form submission prevented'); // Debug log
+                return false;
+            }
+        });
+        
+        // Form submission validation for SAMPLE RECEPTION form (formSample)
+        $(document).on('submit', '#formSample', function(e) {
+            console.log('Sample reception form submitting, validating...'); // Debug log
+            
+            // Validate number_sample in edit mode (only for sample reception form)
+            if (!validateNumberSample()) {
+                e.preventDefault();
+                console.log('Number of samples validation failed, form submission prevented');
+                return false;
+            }
+        });
+        
+        // Validation function for number_sample (only in edit mode)
+        function validateNumberSample() {
+            var mode = $('#mode').val();
+            if (mode !== 'edit') {
+                return true; // Skip validation for insert mode
+            }
+            
+            var oldValue = parseInt($('#old_number_sample').val()) || 0;
+            var newValue = parseInt($('#number_sample').val()) || 0;
+            
+            if (newValue < oldValue) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error',
+                    text: 'Number of samples cannot be reduced. Current: ' + oldValue + ', Entered: ' + newValue,
+                    confirmButtonText: 'OK'
+                });
+                $('#number_sample').val(oldValue).focus();
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Live validation for number_sample field
+        $(document).on('change keyup', '#number_sample', function() {
+            var mode = $('#mode').val();
+            if (mode !== 'edit') return;
+            
+            var oldValue = parseInt($('#old_number_sample').val()) || 0;
+            var newValue = parseInt($(this).val()) || 0;
+            
+            if (newValue < oldValue) {
+                $(this).addClass('is-invalid');
+                if (!$('#number_sample_error').length) {
+                    $(this).after('<small id="number_sample_error" class="text-danger">Cannot reduce samples. Minimum: ' + oldValue + '</small>');
+                }
+            } else {
+                $(this).removeClass('is-invalid');
+                $('#number_sample_error').remove();
+                
+                // Update help text to show how many samples will be added
+                if (newValue > oldValue) {
+                    var additionalSamples = newValue - oldValue;
+                    $('#number_sample_help_text').html('Current: ' + oldValue + ' sample(s). Will add <strong>' + additionalSamples + '</strong> new sample(s).');
+                } else {
+                    $('#number_sample_help_text').html('Current: ' + oldValue + ' sample(s). You can only add more samples, not reduce.');
+                }
             }
         });
 

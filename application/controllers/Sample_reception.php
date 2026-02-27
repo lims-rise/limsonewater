@@ -421,6 +421,9 @@ class Sample_reception extends CI_Controller
             
             $this->session->set_flashdata('message', 'Create Record Success');
         } else if($mode == "edit") {
+            // Get old_number_sample for comparison (to generate additional samples)
+            $old_number_sample = (int) $this->input->post('old_number_sample', TRUE);
+            
             // Update ke sample_reception
                 $data = array(
                             'client_quote_number' => $client_quote_number,
@@ -451,7 +454,29 @@ class Sample_reception extends CI_Controller
                 );
                 $this->Sample_reception_model->update_all_samples_by_project($id_project, $child_update_data);
                 
-                $this->session->set_flashdata('message', 'Update Record Success');
+                // Generate additional samples if number_sample increased
+                if ($number_sample > $old_number_sample) {
+                    $additional_samples = $number_sample - $old_number_sample;
+                    
+                    for ($i = 0; $i < $additional_samples; $i++) {
+                        $id_one_water_sample = $this->Sample_reception_model->generate_one_water_sample_id();
+                        $sample_data = array(
+                            'id_project' => $id_project,
+                            'id_one_water_sample' => $id_one_water_sample,
+                            'date_arrival' => $date_arrive,  // Inherit from parent
+                            'time_arrival' => $time_arrive,  // Inherit from parent
+                            'flag' => '0',
+                            'uuid' => $this->uuid->v4(),
+                            'user_created' => $this->session->userdata('id_users'),
+                            'date_created' => $dt->format('Y-m-d H:i:s'),
+                        );
+                        $this->Sample_reception_model->insert_sample($sample_data);
+                    }
+                    
+                    $this->session->set_flashdata('message', 'Update Record Success. Added ' . $additional_samples . ' new sample(s).');
+                } else {
+                    $this->session->set_flashdata('message', 'Update Record Success');
+                }
         }
         
         redirect(site_url("sample_reception"));
