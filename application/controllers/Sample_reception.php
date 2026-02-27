@@ -659,8 +659,8 @@ class Sample_reception extends CI_Controller
             // Cascade delete: Delete all samples and their testing records first
             $this->Sample_reception_model->cascade_delete_samples_by_project($id);
             
-            // Then soft delete the parent project
-            $this->Sample_reception_model->update($id, $data);
+            // Then soft delete the parent project (use update_by_project since $id is id_project)
+            $this->Sample_reception_model->update_by_project($id, $data);
             $this->session->set_flashdata('message', 'Delete Record and All Related Data Success');
             redirect(site_url('sample_reception'));
         } else {

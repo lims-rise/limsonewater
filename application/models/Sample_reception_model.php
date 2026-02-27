@@ -1243,6 +1243,13 @@ class Sample_reception_model extends CI_Model
         $this->db->update('sample_reception', $data);
     }
 
+    // Function update data by id_project - for delete operations and other legacy uses
+    function update_by_project($id_project, $data)
+    {
+        $this->db->where('id_project', $id_project);
+        $this->db->update('sample_reception', $data);
+    }
+
     // function update_sample($id_one_water_sample, $data)
     // {
     //     $this->db->where('id_one_water_sample', $id_one_water_sample);
