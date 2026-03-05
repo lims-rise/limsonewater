@@ -19,7 +19,8 @@ class Extraction_culture_model extends CI_Model
     function json() {
         $this->datatables->select('NULL AS toggle, extraction_culture.id_extraction_culture, extraction_culture.number_sample, extraction_culture.id_one_water_sample, ref_person.initial, extraction_culture.user_created, ref_person.realname,
         extraction_culture.id_person, extraction_culture.flag, extraction_culture.user_review,
-        extraction_culture.review, user.full_name
+        extraction_culture.review, user.full_name,
+        (SELECT COUNT(*) FROM extraction_culture_plate WHERE extraction_culture_plate.id_one_water_sample = extraction_culture.id_one_water_sample AND extraction_culture_plate.flag = "0") AS active_samples,
         ', FALSE);
         $this->datatables->from('extraction_culture');
         $this->datatables->join('ref_person', 'extraction_culture.id_person = ref_person.id_person', 'left');
