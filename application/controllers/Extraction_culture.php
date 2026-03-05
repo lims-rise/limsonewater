@@ -128,6 +128,9 @@ class Extraction_culture extends CI_Controller
             $this->session->set_flashdata('message', 'Create Record Success');
 
         } else if ($mode == "edit") {
+            // Get old_number_sample for comparison (to generate additional samples)
+            $old_number_sample = (int) $this->input->post('old_number_sample', TRUE);
+            
             $data = array(
                 'id_one_water_sample' => $id_one_water_sample,
                 'id_person' => $id_person,
@@ -138,7 +141,47 @@ class Extraction_culture extends CI_Controller
                 'flag' => '0',
             );
             $this->Extraction_culture_model->update_extraction($id_one_water_sample, $data);
-            $this->session->set_flashdata('message', 'Update Record Success');
+            
+            // Generate additional samples if number_sample increased
+            if ($number_sample > $old_number_sample) {
+                $additional_samples = $number_sample - $old_number_sample;
+                
+                // Get existing barcode to determine prefix for new barcodes
+                $existing_barcode = $this->Extraction_culture_model->get_first_child_barcode($id_one_water_sample);
+                
+                for ($i = 0; $i < $additional_samples; $i++) {
+                    // Generate barcode based on existing prefix
+                    $barcode_sample = $this->Extraction_culture_model->generate_barcode_from_existing($existing_barcode);
+                    
+                    if ($barcode_sample) {
+                        $extraction_data = array(
+                            'id_one_water_sample' => $id_one_water_sample,
+                            'barcode_sample' => $barcode_sample,
+                            'flag' => '0',
+                            'uuid' => $this->uuid->v4(),
+                            'user_created' => $this->session->userdata('id_users'),
+                            'date_created' => $dt->format('Y-m-d H:i:s'),
+                        );
+                        $this->Extraction_culture_model->insert_extraction($extraction_data);
+
+                        $data_freez = array(
+                            'barcode_sample' => $barcode_sample,
+                            'uuid' => $this->uuid->v4(),
+                            'user_created' => $this->session->userdata('id_users'),
+                            'date_created' => $dt->format('Y-m-d H:i:s'),
+                            'flag' => '0',
+                        );
+                        $this->Extraction_culture_model->insert_freez($data_freez);
+                        
+                        // Update existing_barcode for next iteration to get correct sequence
+                        $existing_barcode = $barcode_sample;
+                    }
+                }
+                
+                $this->session->set_flashdata('message', 'Update Record Success. Added ' . $additional_samples . ' new sample(s).');
+            } else {
+                $this->session->set_flashdata('message', 'Update Record Success');
+            }
         }
     
         redirect(site_url("Extraction_culture"));
