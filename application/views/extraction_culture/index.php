@@ -1286,7 +1286,7 @@
                 {"data": "id_one_water_sample"},
                 // {"data": "barcode_sample"},
                 {"data": "initial"},
-                {"data": "number_sample"},
+                {"data": "active_samples"},
                 { "data": "action", "orderable": false, "searchable": false }
             ],
             columnDefs: [
@@ -2100,10 +2100,10 @@
             $('#id_person').val(data.id_person);
             
             // Set old_number_sample and allow editing with min validation
-            $('#old_number_sample').val(data.number_sample);
-            $('#number_sample').val(data.number_sample || '').attr('readonly', false).attr('min', data.number_sample);
+            $('#old_number_sample').val(data.active_samples);
+            $('#number_sample').val(data.active_samples || '').attr('readonly', false).attr('min', data.active_samples);
             $('#number_sample_help').show();
-            $('#number_sample_help_text').html('Current: ' + data.number_sample + ' sample(s). You can only add more samples, not reduce.');
+            $('#number_sample_help_text').html('Current: ' + data.active_samples + ' sample(s). You can only add more samples, not reduce.');
             // $('#user_created').val(data.user_created || '');  // Set barcode jika ada
             // $('#user_created').attr('readonly', true);
             // $('#sampletype').attr('readonly', true);
