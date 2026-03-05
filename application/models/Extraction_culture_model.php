@@ -581,6 +581,68 @@ class Extraction_culture_model extends CI_Model
     
         return $query;
     }
+    
+    /**
+     * Get the first child barcode for a given id_one_water_sample
+     * Used to determine the prefix for generating new barcodes in edit mode
+     */
+    public function get_first_child_barcode($id_one_water_sample) {
+        $this->db->select('barcode_sample');
+        $this->db->where('id_one_water_sample', $id_one_water_sample);
+        $this->db->where('flag', '0');
+        $this->db->order_by('id_extraction_culture_plate', 'ASC');
+        $this->db->limit(1);
+        $result = $this->db->get('extraction_culture_plate')->row();
+        
+        if ($result) {
+            return $result->barcode_sample;
+        }
+        return null;
+    }
+    
+    /**
+     * Generate barcode based on existing prefix from another barcode
+     * Extract prefix from existing barcode and generate new sequential barcode
+     */
+    public function generate_barcode_from_existing($existing_barcode) {
+        if (empty($existing_barcode)) {
+            return null;
+        }
+        
+        // Extract prefix from existing barcode (e.g., "EXC2500001" -> prefix "EXC", year "25")
+        // Pattern: PREFIX + YEAR(2) + NUMBER(5)
+        // We need to find the prefix by matching against ref_testing
+        
+        $this->db->select('prefix, testing_type');
+        $query = $this->db->get('ref_testing');
+        $testing_types = $query->result();
+        
+        $matched_prefix = null;
+        foreach ($testing_types as $type) {
+            if (!empty($type->prefix) && strpos($existing_barcode, $type->prefix) === 0) {
+                $matched_prefix = $type->prefix;
+                break;
+            }
+        }
+        
+        if (!$matched_prefix) {
+            return null;
+        }
+        
+        // Get the current year
+        $year = date('y');
+        
+        // Get max barcode with this prefix and year
+        $this->db->select_max('CAST(SUBSTR(barcode_sample, ' . (strlen($matched_prefix . $year) + 1) . ') AS UNSIGNED)', 'max_barcode');
+        $this->db->like('barcode_sample', $matched_prefix . $year, 'after');
+        $query = $this->db->get('extraction_culture_plate');
+        $result = $query->row();
+        
+        $next_number = ($result->max_barcode ?? 0) + 1;
+        $padded_number = str_pad($next_number, 5, '0', STR_PAD_LEFT);
+        
+        return $matched_prefix . $year . $padded_number;
+    }
       
 }
 

@@ -84,7 +84,9 @@
                         <div class="form-group">
                             <label for="number_sample" class="col-sm-4 control-label">Number of Samples</label>
                             <div class="col-sm-8">
-                                <input id="number_sample" name="number_sample" placeholder="Number of Samples" type="text" class="form-control" required>
+                                <input id="old_number_sample" name="old_number_sample" type="hidden">
+                                <input id="number_sample" name="number_sample" placeholder="Number of Samples" type="number" min="1" class="form-control" required>
+                                <small id="number_sample_help" class="text-info" style="display:none;"><i class="fa fa-info-circle"></i> <span id="number_sample_help_text"></span></small>
                             </div>
                         </div>
                         <hr>
@@ -1058,7 +1060,9 @@
             // $('#sampletype').attr('readonly', true);
             // $('#sampletype').val('');
             $('#comments').val('');
-            $('#number_sample').val();
+            $('#number_sample').val('').attr('readonly', false).attr('min', 1);
+            $('#old_number_sample').val('');
+            $('#number_sample_help').hide();
 
             // Tampilkan modal
             $('#compose-modal').modal('show');
@@ -2094,8 +2098,12 @@
             $('#id_one_water_sample').val(data.id_one_water_sample || '');  // Set ID jika ada
             // $('#id_testing_type').val(idTestingTypeFromUrl);
             $('#id_person').val(data.id_person);
-            $('#number_sample').attr('readonly', true);
-            $('#number_sample').val(data.number_sample || '');  // Set barcode jika ada
+            
+            // Set old_number_sample and allow editing with min validation
+            $('#old_number_sample').val(data.number_sample);
+            $('#number_sample').val(data.number_sample || '').attr('readonly', false).attr('min', data.number_sample);
+            $('#number_sample_help').show();
+            $('#number_sample_help_text').html('Current: ' + data.number_sample + ' sample(s). You can only add more samples, not reduce.');
             // $('#user_created').val(data.user_created || '');  // Set barcode jika ada
             // $('#user_created').attr('readonly', true);
             // $('#sampletype').attr('readonly', true);
@@ -2119,7 +2127,70 @@
             //     showInfoCard('#textInform1', '<i class="fa fa-times-circle"></i> You are not the creator', "You can only view this data and cannot make changes.", false);
             // }
             $('#compose-modal').modal('show');
-        });  
+        });
+        
+        // Form submission validation for Extraction Culture form
+        $(document).on('submit', '#formSample', function(e) {
+            console.log('Extraction culture form submitting, validating...'); // Debug log
+            
+            // Validate number_sample in edit mode
+            if (!validateNumberSample()) {
+                e.preventDefault();
+                console.log('Number of samples validation failed, form submission prevented');
+                return false;
+            }
+        });
+        
+        // Validation function for number_sample (only in edit mode)
+        function validateNumberSample() {
+            const mode = $('#mode').val();
+            if (mode !== 'edit') {
+                return true; // Skip validation for insert mode
+            }
+            
+            const oldValue = parseInt($('#old_number_sample').val()) || 0;
+            const newValue = parseInt($('#number_sample').val()) || 0;
+            
+            if (newValue < oldValue) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error',
+                    text: `Number of samples cannot be reduced. Current: ${oldValue}, Entered: ${newValue}`,
+                    confirmButtonText: 'OK'
+                });
+                $('#number_sample').val(oldValue).focus();
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Live validation for number_sample field
+        $(document).on('change keyup', '#number_sample', function() {
+            const mode = $('#mode').val();
+            if (mode !== 'edit') return;
+            
+            const oldValue = parseInt($('#old_number_sample').val()) || 0;
+            const newValue = parseInt($(this).val()) || 0;
+            
+            if (newValue < oldValue) {
+                $(this).addClass('is-invalid');
+                if (!$('#number_sample_error').length) {
+                    $(this).after(`<small id="number_sample_error" class="text-danger">Cannot reduce samples. Minimum: ${oldValue}</small>`);
+                }
+            } else {
+                $(this).removeClass('is-invalid');
+                $('#number_sample_error').remove();
+                
+                // Update help text to show how many samples will be added
+                if (newValue > oldValue) {
+                    const additionalSamples = newValue - oldValue;
+                    $('#number_sample_help_text').html(`Current: ${oldValue} sample(s). Will add <strong>${additionalSamples}</strong> new sample(s).`);
+                } else {
+                    $('#number_sample_help_text').html(`Current: ${oldValue} sample(s). You can only add more samples, not reduce.`);
+                }
+            }
+        });
     });
 
 </script>

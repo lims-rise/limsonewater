@@ -3118,19 +3118,19 @@ function applyCompletedProjectStyling() {
         
         // Validation function for number_sample (only in edit mode)
         function validateNumberSample() {
-            var mode = $('#mode').val();
+            const mode = $('#mode').val();
             if (mode !== 'edit') {
                 return true; // Skip validation for insert mode
             }
             
-            var oldValue = parseInt($('#old_number_sample').val()) || 0;
-            var newValue = parseInt($('#number_sample').val()) || 0;
+            const oldValue = parseInt($('#old_number_sample').val()) || 0;
+            const newValue = parseInt($('#number_sample').val()) || 0;
             
             if (newValue < oldValue) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Validation Error',
-                    text: 'Number of samples cannot be reduced. Current: ' + oldValue + ', Entered: ' + newValue,
+                    text: `Number of samples cannot be reduced. Current: ${oldValue}, Entered: ${newValue}`,
                     confirmButtonText: 'OK'
                 });
                 $('#number_sample').val(oldValue).focus();
@@ -3142,16 +3142,16 @@ function applyCompletedProjectStyling() {
         
         // Live validation for number_sample field
         $(document).on('change keyup', '#number_sample', function() {
-            var mode = $('#mode').val();
+            const mode = $('#mode').val();
             if (mode !== 'edit') return;
             
-            var oldValue = parseInt($('#old_number_sample').val()) || 0;
-            var newValue = parseInt($(this).val()) || 0;
+            const oldValue = parseInt($('#old_number_sample').val()) || 0;
+            const newValue = parseInt($(this).val()) || 0;
             
             if (newValue < oldValue) {
                 $(this).addClass('is-invalid');
                 if (!$('#number_sample_error').length) {
-                    $(this).after('<small id="number_sample_error" class="text-danger">Cannot reduce samples. Minimum: ' + oldValue + '</small>');
+                    $(this).after(`<small id="number_sample_error" class="text-danger">Cannot reduce samples. Minimum: ${oldValue}</small>`);
                 }
             } else {
                 $(this).removeClass('is-invalid');
@@ -3159,10 +3159,10 @@ function applyCompletedProjectStyling() {
                 
                 // Update help text to show how many samples will be added
                 if (newValue > oldValue) {
-                    var additionalSamples = newValue - oldValue;
-                    $('#number_sample_help_text').html('Current: ' + oldValue + ' sample(s). Will add <strong>' + additionalSamples + '</strong> new sample(s).');
+                    const additionalSamples = newValue - oldValue;
+                    $('#number_sample_help_text').html(`Current: ${oldValue} sample(s). Will add <strong>${additionalSamples}</strong> new sample(s).`);
                 } else {
-                    $('#number_sample_help_text').html('Current: ' + oldValue + ' sample(s). You can only add more samples, not reduce.');
+                    $('#number_sample_help_text').html(`Current: ${oldValue} sample(s). You can only add more samples, not reduce.`);
                 }
             }
         });
@@ -3177,7 +3177,7 @@ function applyCompletedProjectStyling() {
             console.log('Date collected:', $('#date_collected_sample').val());
             console.log('Time collected:', $('#time_collected_sample').val());
             
-            var result = validateTimeCollected();
+            const result = validateTimeCollected();
             console.log('Validation result:', result);
             return result;
         };
