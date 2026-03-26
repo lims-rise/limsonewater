@@ -34,12 +34,12 @@
 						</div>
 
 						<div class="form-group">
-							<label for="date_sample" class="col-sm-2 control-label">Date Sample</label>
+							<label for="date_sample" class="col-sm-2 control-label">Date Processing</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="date_sample" name="date_sample" value="<?php echo $date_sample ?>"  disabled>
 							</div>
 
-                            <label for="time_sample" class="col-sm-2 control-label">Time Sample</label>
+                            <label for="time_sample" class="col-sm-2 control-label">Time Processing</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="time_sample" name="time_sample" value="<?php echo $time_sample ?>" disabled>
 							</div>
@@ -118,8 +118,8 @@
 									<thead>
 										<tr>
 											<th>Colilert Barcode</th>
-											<th>Date Sample</th>
-                                            <th>Time Sample</th>
+											<th>Date Processing</th>
+                                            <th>Time Processing</th>
                                             <th>E. Coli large wells</th>
                                             <th>E. Coli small wells</th>
                                             <th>E. Coli (MPN/100mL)</th>
@@ -248,14 +248,14 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="date_sample_detail" class="col-sm-4 control-label">Date Sample</label>
+                                        <label for="date_sample_detail" class="col-sm-4 control-label">Date Processing</label>
                                         <div class="col-sm-8">
                                             <input id="date_sample_detail" name="date_sample_detail" type="date" class="form-control" placeholder="Date Sample" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="time_sample_detail" class="col-sm-4 control-label">Time Sample</label>
+                                        <label for="time_sample_detail" class="col-sm-4 control-label">Time Processing</label>
                                         <div class="col-sm-8">
                                             <div class="input-group clockpicker">
                                             <input id="time_sample_detail" name="time_sample_detail" class="form-control" placeholder="Time Sample" value="<?php 
