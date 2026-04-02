@@ -105,6 +105,7 @@ class Protozoa extends CI_Controller
         $protozoa_barcode = $this->input->post('protozoa_barcode', TRUE);
         $quality_control_giardia = $this->input->post('quality_control_giardia', TRUE) ? 1 : 0; // Convert checkbox to integer
         $quality_control_crypto = $this->input->post('quality_control_crypto', TRUE) ? 1 : 0; // Convert checkbox to integer
+        $return_url = $this->input->post('return_url', TRUE);
 
 
         if ($mode == "insert") {
@@ -172,8 +173,44 @@ class Protozoa extends CI_Controller
             $this->Protozoa_model->updateProtozoaData($id_protozoa, $data);
             $this->session->set_flashdata('message', 'Update Record Success');
         }
+
+        if ($this->is_valid_return_url($return_url)) {
+            redirect($return_url);
+            return;
+        }
     
         redirect(site_url("Protozoa"));
+    }
+
+    private function is_valid_return_url($url)
+    {
+        if (empty($url)) {
+            return false;
+        }
+
+        $url = trim($url);
+
+        if (preg_match('/[\r\n]/', $url)) {
+            return false;
+        }
+
+        $parsed_url = parse_url($url);
+        if ($parsed_url === false) {
+            return false;
+        }
+
+        if (isset($parsed_url['scheme'])) {
+            if (!in_array(strtolower($parsed_url['scheme']), ['http', 'https'])) {
+                return false;
+            }
+
+            $base_host = parse_url(base_url(), PHP_URL_HOST);
+            $url_host = isset($parsed_url['host']) ? $parsed_url['host'] : '';
+
+            return !empty($base_host) && $url_host === $base_host;
+        }
+
+        return true;
     }
     
     public function barcode_check() 

@@ -66,6 +66,7 @@
                     <div class="modal-body">
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
                         <input id="id_protozoa" name="id_protozoa" type="hidden" class="form-control input-sm">
+                        <input id="return_url" name="return_url" type="hidden" class="form-control input-sm">
 
                         <div class="form-group">
                             <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
@@ -622,6 +623,7 @@
         const barcodeFromUrl = params.get('barcode');
         const idOneWaterSampleFromUrl = params.get('idOneWaterSample');
         const idTestingTypeFromUrl = params.get('idTestingType');
+        const previousUrl = document.referrer;
 
         if (barcodeFromUrl) {
             $('#mode').val('insert');
@@ -672,8 +674,13 @@
                     autoFetchWeightData('#id_one_water_sample');
                 }
             }, 500);
+
+            if (idOneWaterSampleFromUrl && idTestingTypeFromUrl && previousUrl) {
+                $('#return_url').val(previousUrl);
+            }
         } else {
             console.log('Barcode tidak ditemukan di URL');
+             $('#return_url').val('');
         }
 
         // Pembatalan dan kembali ke halaman sebelumnya

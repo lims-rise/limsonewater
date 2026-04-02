@@ -587,7 +587,7 @@
                         generateBarcodeGroups();
                     } else {
                         // Show error message
-                        $('#barcodeGroupsContainer').html('<div class="alert alert-warning">No barcode tubes found for this sample</div>');
+                        $('#barcodeGroupsContainer').html('<div class="alert alert-warning">No barcode tubes found. Check extraction module</div>');
                     }
                 },
                 error: function() {
@@ -618,7 +618,7 @@
                             <div class="col-sm-8">
                                 <input type="text" id="barcode_tube_${barcodeGroupCounter}" name="barcode_tube[]" class="form-control barcode-tube-input" 
                                        value="${barcodeTube}" readonly data-group-id="${barcodeGroupCounter}">
-                                <small class="help-block">Pre-filled with available barcode tube</small>
+                                <small class="help-block">Auto-filled from extraction culture</small>
                             </div>
                         </div>
 

@@ -118,7 +118,8 @@ class Extraction_biosolid extends CI_Controller
         $loc_obj = $this->Extraction_biosolid_model->get_freezx($id_freez, $id_shelf, $id_rack, $id_tray);
         $pos_obj = $this->Extraction_biosolid_model->get_posx($id_row, $id_col);
         $id_loc = $loc_obj->id_location;
-        $id_pos = $pos_obj->id_pos;        
+        $id_pos = $pos_obj->id_pos;   
+        $return_url = $this->input->post('return_url', TRUE);       
 
         if ($mode == "insert") {
             $data = array(
@@ -211,8 +212,44 @@ class Extraction_biosolid extends CI_Controller
 
             $this->session->set_flashdata('message', 'Update Record Success');
         }
+
+        if ($this->is_valid_return_url($return_url)) {
+            redirect($return_url);
+            return;
+        }
     
         redirect(site_url("Extraction_biosolid"));
+    }
+
+    private function is_valid_return_url($url)
+    {
+        if (empty($url)) {
+            return false;
+        }
+
+        $url = trim($url);
+
+        if (preg_match('/[\r\n]/', $url)) {
+            return false;
+        }
+
+        $parsed_url = parse_url($url);
+        if ($parsed_url === false) {
+            return false;
+        }
+
+        if (isset($parsed_url['scheme'])) {
+            if (!in_array(strtolower($parsed_url['scheme']), ['http', 'https'])) {
+                return false;
+            }
+
+            $base_host = parse_url(base_url(), PHP_URL_HOST);
+            $url_host = isset($parsed_url['host']) ? $parsed_url['host'] : '';
+
+            return !empty($base_host) && $url_host === $base_host;
+        }
+
+        return true;
     }
     
     public function barcode_restrict() 

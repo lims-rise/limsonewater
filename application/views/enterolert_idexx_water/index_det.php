@@ -1085,7 +1085,8 @@
                         if (data[0].MPN_mean == '0') {
                             let calculatedMpn = parseFloat(data[0].MPN_mean) / parseFloat(dilution);
                             let calculatedLower = parseFloat(data[0].MPN_95lo) / parseFloat(dilution);
-                            result.mpn = calculatedMpn.toString();
+                            // result.mpn = calculatedMpn.toString();
+                            result.mpn = "<"+ (calculatedMpn.toFixed(1) == "0.0" ? "1.0" : calculatedMpn.toFixed(1)); 
                             result.lower = calculatedLower.toString();
                         }
                         else if (data[0].MPN_mean == '9999') {

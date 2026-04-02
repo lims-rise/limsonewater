@@ -56,7 +56,7 @@
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
                         <input id="id_campy_liquids" name="id_campy_liquids" type="hidden" class="form-control input-sm">
                         <input id="user_review" name="user_review" type="hidden" class="form-control input-sm">
-                        
+                        <input id="return_url" name="return_url" type="hidden" class="form-control input-sm">
                         <!-- <div class="form-group">
                             <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
                             <div class="col-sm-8">
@@ -784,6 +784,7 @@
         const barcodeFromUrl = params.get('barcode');
         const idOneWaterSampleFromUrl = params.get('idOneWaterSample');
         const idTestingTypeFromUrl = params.get('idTestingType');
+        const previousUrl = document.referrer;
 
         if (barcodeFromUrl  && idOneWaterSampleFromUrl) {
             $('#mode').val('insert');
@@ -804,8 +805,12 @@
             $('#mpn_pcr_conducted').val('');
             $('#barcode_moisture_content').val('');
             $('#compose-modal').modal('show');
+            if (idOneWaterSampleFromUrl && idTestingTypeFromUrl && previousUrl) {
+                $('#return_url').val(previousUrl);
+            }
         } else {
             console.log('Barcode tidak ditemukan di URL');
+            $('#return_url').val('');
         }
 
         // Pembatalan dan kembali ke halaman sebelumnya
