@@ -282,13 +282,30 @@ class Colilert_hemoflow_model extends CI_Model
         chd.coliforms as coliforms_raw,
         chd.id_colilert_hemoflow_detail,
         CASE 
-            WHEN chd.ecoli IS NOT NULL AND hm.volume_eluted IS NOT NULL 
-            THEN ROUND((chd.ecoli / 100) * hm.volume_eluted, 2)
+            WHEN chd.ecoli IS NOT NULL AND hm.volume_eluted IS NOT NULL AND chd.ecoli != ""
+            AND CAST(REPLACE(REPLACE(chd.ecoli, ">", ""), "<", "") AS DECIMAL(10,2)) > 0
+            THEN CONCAT(
+                CASE 
+                    WHEN chd.ecoli LIKE ">%" THEN ">"
+                    WHEN chd.ecoli LIKE "<%" THEN "<"
+                    ELSE ""
+                END,
+                ROUND((CAST(REPLACE(REPLACE(chd.ecoli, ">", ""), "<", "") AS DECIMAL(10,2)) / 100) * hm.volume_eluted, 2)
+            )
             ELSE NULL 
         END as total_ecoli,
         CASE 
-            WHEN chd.ecoli IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0
-            THEN ROUND(((chd.ecoli / 100) * hm.volume_eluted / hm.volume_filter / 10), 2)
+            WHEN chd.ecoli IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL 
+            AND hm.volume_filter > 0 AND chd.ecoli != ""
+            AND CAST(REPLACE(REPLACE(chd.ecoli, ">", ""), "<", "") AS DECIMAL(10,2)) > 0
+            THEN CONCAT(
+                CASE 
+                    WHEN chd.ecoli LIKE ">%" THEN ">"
+                    WHEN chd.ecoli LIKE "<%" THEN "<"
+                    ELSE ""
+                END,
+                ROUND(((CAST(REPLACE(REPLACE(chd.ecoli, ">", ""), "<", "") AS DECIMAL(10,2)) / 100) * hm.volume_eluted / hm.volume_filter / 10), 2)
+            )
             ELSE NULL 
         END as ecolimpn,
         CASE 

@@ -117,6 +117,7 @@ class Colilert_hemoflow extends CI_Controller
         $time_sample = $this->input->post('time_sample', TRUE);
         $volume_bottle = $this->input->post('volume_bottle', TRUE);
         $dilution = $this->input->post('dilution', TRUE);
+        $return_url = $this->input->post('return_url', TRUE);  
         
     
         if ($mode == "insert") {
@@ -165,7 +166,43 @@ class Colilert_hemoflow extends CI_Controller
             $this->session->set_flashdata('message', 'Update Record Success');
         }
 
+        if ($this->is_valid_return_url($return_url)) {
+            redirect($return_url);
+            return;
+        }
+
         redirect(site_url("colilert_hemoflow"));
+    }
+
+    private function is_valid_return_url($url)
+    {
+        if (empty($url)) {
+            return false;
+        }
+
+        $url = trim($url);
+
+        if (preg_match('/[\r\n]/', $url)) {
+            return false;
+        }
+
+        $parsed_url = parse_url($url);
+        if ($parsed_url === false) {
+            return false;
+        }
+
+        if (isset($parsed_url['scheme'])) {
+            if (!in_array(strtolower($parsed_url['scheme']), ['http', 'https'])) {
+                return false;
+            }
+
+            $base_host = parse_url(base_url(), PHP_URL_HOST);
+            $url_host = isset($parsed_url['host']) ? $parsed_url['host'] : '';
+
+            return !empty($base_host) && $url_host === $base_host;
+        }
+
+        return true;
     }
 
     
@@ -182,7 +219,7 @@ class Colilert_hemoflow extends CI_Controller
             $time_sample = $this->input->post('time_sample_detail', TRUE);
             $ecoli_largewells = $this->input->post('ecoli_largewells', TRUE);
             $ecoli_smallwells = $this->input->post('ecoli_smallwells', TRUE);
-            $ecoli = $this->input->post('ecoli', TRUE);
+            $ecoli = $this->input->post('ecoli', FALSE);
             $lowerconfidence = $this->input->post('lowerconfidence', TRUE);
             $coliforms_largewells = $this->input->post('coliforms_largewells', TRUE);
             $coliforms_smallwells = $this->input->post('coliforms_smallwells', TRUE);

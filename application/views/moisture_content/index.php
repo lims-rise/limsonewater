@@ -87,6 +87,7 @@
                         <div class="modal-body">
                             <input id="mode" name="mode" type="hidden" class="form-control input-sm">
                             <input id="idx_moisture" name="idx_moisture" type="hidden" class="form-control input-sm">
+                            <input id="return_url" name="return_url" type="hidden" class="form-control input-sm">
                             <!-- <input id="id_req" name="id_req" type="hidden" class="form-control input-sm"> -->
                             
                             <!-- <div class="form-group">
@@ -274,6 +275,7 @@
         const barcodeFromUrl = params.get('barcode');
         const idOneWaterSampleFromUrl = params.get('idOneWaterSample');
         const idTestingTypeFromUrl = params.get('idTestingType');
+        const previousUrl = document.referrer;
 
         if (barcodeFromUrl) {
             $('#barcode_moisture_content').val(barcodeFromUrl);
@@ -294,8 +296,13 @@
             $('#tray_weight').val('');
             $('#traysample_wetweight').val('');
             $('#comments').val('');
+
+            if (idOneWaterSampleFromUrl && idTestingTypeFromUrl && previousUrl) {
+                $('#return_url').val(previousUrl);
+            }
         } else {
             console.log('Barcode tidak ditemukan di URL');
+            $('#return_url').val('');
         }
 
         // Pembatalan dan kembali ke halaman sebelumnya

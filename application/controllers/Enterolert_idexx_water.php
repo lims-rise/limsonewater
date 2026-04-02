@@ -105,6 +105,7 @@ class Enterolert_idexx_water extends CI_Controller
         $dilution = $this->input->post('dilution', TRUE);
         // $date_collected = $this->input->post('date_collected',TRUE);
         // $time_collected = $this->input->post('time_collected',TRUE);
+        $return_url = $this->input->post('return_url', TRUE);  
         
     
         if ($mode == "insert") {
@@ -154,9 +155,44 @@ class Enterolert_idexx_water extends CI_Controller
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
+        if ($this->is_valid_return_url($return_url)) {
+            redirect($return_url);
+            return;
+        }
+
         redirect(site_url("enterolert_idexx_water"));
     }
 
+    private function is_valid_return_url($url)
+    {
+        if (empty($url)) {
+            return false;
+        }
+
+        $url = trim($url);
+
+        if (preg_match('/[\r\n]/', $url)) {
+            return false;
+        }
+
+        $parsed_url = parse_url($url);
+        if ($parsed_url === false) {
+            return false;
+        }
+
+        if (isset($parsed_url['scheme'])) {
+            if (!in_array(strtolower($parsed_url['scheme']), ['http', 'https'])) {
+                return false;
+            }
+
+            $base_host = parse_url(base_url(), PHP_URL_HOST);
+            $url_host = isset($parsed_url['host']) ? $parsed_url['host'] : '';
+
+            return !empty($base_host) && $url_host === $base_host;
+        }
+
+        return true;
+    }
     
     public function savedetail() {
             $mode_det = $this->input->post('mode_det', TRUE);
@@ -171,7 +207,7 @@ class Enterolert_idexx_water extends CI_Controller
             $time_sample = $this->input->post('time_sample_out', TRUE);
             $enterococcus_largewells = $this->input->post('enterococcus_largewells', TRUE);
             $enterococcus_smallwells = $this->input->post('enterococcus_smallwells', TRUE);
-            $enterococcus = $this->input->post('enterococcus', TRUE);
+            $enterococcus = $this->input->post('enterococcus', FALSE);
             $lowerdetection = $this->input->post('lowerdetection', TRUE);
             $remarks = $this->input->post('remarks', TRUE);
             $id_one_water_sample = $this->input->post('idx_one_water_sample', TRUE);

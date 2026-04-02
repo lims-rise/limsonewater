@@ -140,6 +140,7 @@ class Salmonella_biosolids extends CI_Controller
         $enrichment_media = $this->input->post('enrichment_media', TRUE) ? '1' : '0';
         $review = $this->input->post('review', TRUE);
         $user_review = $this->input->post('user_review', TRUE);
+        $return_url = $this->input->post('return_url', TRUE);   
     
         if ($mode == "insert") {
             // Insert data into assays table
@@ -245,7 +246,43 @@ class Salmonella_biosolids extends CI_Controller
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
+        if ($this->is_valid_return_url($return_url)) {
+            redirect($return_url);
+            return;
+        }
+
         redirect(site_url("salmonella_biosolids"));
+    }
+
+    private function is_valid_return_url($url)
+    {
+        if (empty($url)) {
+            return false;
+        }
+
+        $url = trim($url);
+
+        if (preg_match('/[\r\n]/', $url)) {
+            return false;
+        }
+
+        $parsed_url = parse_url($url);
+        if ($parsed_url === false) {
+            return false;
+        }
+
+        if (isset($parsed_url['scheme'])) {
+            if (!in_array(strtolower($parsed_url['scheme']), ['http', 'https'])) {
+                return false;
+            }
+
+            $base_host = parse_url(base_url(), PHP_URL_HOST);
+            $url_host = isset($parsed_url['host']) ? $parsed_url['host'] : '';
+
+            return !empty($base_host) && $url_host === $base_host;
+        }
+
+        return true;
     }
 
     public function saveResultsXld() {

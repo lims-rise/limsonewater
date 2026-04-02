@@ -164,7 +164,7 @@
                                         <thead>
                                             <tr>
                                                 <th>ID One Water Sample</th>
-                                                <th>Enterolert Hemoflow Barcode</th>
+                                                <th>Colilert Hemoflow Barcode</th>
                                                 <th>Initial</th>
                                                 <th>Sample Type</th>
                                                 <th>Volume Filtered (L)</th>
@@ -1208,7 +1208,8 @@
                         if (data[0].MPN_mean == '0') {
                             let calculatedMpn = parseFloat(data[0].MPN_mean) / parseFloat(dilution);
                             let calculatedLower = parseFloat(data[0].MPN_95lo) / parseFloat(dilution);
-                            result.mpn = calculatedMpn.toFixed(1);
+                            // result.mpn = calculatedMpn.toFixed(1);
+                            result.mpn = "<"+ (calculatedMpn.toFixed(1) == "0.0" ? "1.0" : calculatedMpn.toFixed(1)); // Pastikan tampil sebagai "<1.0" jika hasilnya 0.0
                             result.lower = calculatedLower.toFixed(1);
                         }
                         else if (data[0].MPN_mean == '9999') {
@@ -1352,7 +1353,7 @@
             let url;
             if ($(this).hasClass('btn_delete')) {
                 url = '<?php echo site_url('Colilert_hemoflow/delete_detail'); ?>/' + id;
-                $('.modal-title').html('<i class="fa fa-trash"></i> Enterolert Out | Delete <span id="my-another-cool-loader"></span>');
+                $('.modal-title').html('<i class="fa fa-trash"></i> Colilert Out | Delete <span id="my-another-cool-loader"></span>');
                 $('#confirm-modal-delete #id').text(id);
             } else if ($(this).hasClass('btn_delete72')) {
                 url = '<?php echo site_url('Moisture_content/delete_detail72'); ?>/' + id;

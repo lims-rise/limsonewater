@@ -54,6 +54,7 @@
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
                         <input id="id_testing_type" name="id_testing_type" type="hidden" class="form-control input-sm">
                         <input id="barcode_sample" name="barcode_sample" type="hidden" class="form-control input-sm">
+                        <input id="return_url" name="return_url" type="hidden" class="form-control input-sm">
 
                         <div class="form-group">
                             <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
@@ -1021,6 +1022,7 @@
         const barcodeFromUrl = params.get('barcode');
         const idOneWaterSampleFromUrl = params.get('idOneWaterSample');
         const idTestingTypeFromUrl = params.get('idTestingType');
+        const previousUrl = document.referrer;
 
          // Toggle sequence fields
         $('#sequenceCheckbox').on('change', function () {
@@ -1066,8 +1068,14 @@
 
             // Tampilkan modal
             $('#compose-modal').modal('show');
+
+            if (idOneWaterSampleFromUrl && idTestingTypeFromUrl && previousUrl) {
+                $('#return_url').val(previousUrl);
+            }
+
         } else {
             console.log('Barcode atau ID One Water Sample tidak ditemukan di URL');
+            $('#return_url').val('');
         }
 
         $(document).on('click', '#cancelButton', function() {

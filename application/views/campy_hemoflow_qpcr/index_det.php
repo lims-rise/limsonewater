@@ -341,7 +341,7 @@
 
 				<div class="form-group">
 					<div class="modal-footer clearfix">
-						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('campy_hemoflow'); ?>';">
+						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('campy_hemoflow_qpcr'); ?>';">
 							<i class="fa fa-times"></i> Close
 						</button>
 					</div>

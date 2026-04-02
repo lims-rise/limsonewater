@@ -136,6 +136,7 @@ class Campy_biosolids_qpcr extends CI_Controller
         $time_sample_processed = $this->input->post('time_sample_processed', TRUE);
         $sample_wetweight = $this->input->post('sample_wetweight', TRUE);
         $elution_volume = $this->input->post('elution_volume', TRUE);
+        $return_url = $this->input->post('return_url', TRUE);   
     
         if ($mode == "insert") {
             // Insert data into assays table
@@ -236,7 +237,43 @@ class Campy_biosolids_qpcr extends CI_Controller
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
+        if ($this->is_valid_return_url($return_url)) {
+            redirect($return_url);
+            return;
+        }
+
         redirect(site_url("campy_biosolids_qpcr"));
+    }
+
+    private function is_valid_return_url($url)
+    {
+        if (empty($url)) {
+            return false;
+        }
+
+        $url = trim($url);
+
+        if (preg_match('/[\r\n]/', $url)) {
+            return false;
+        }
+
+        $parsed_url = parse_url($url);
+        if ($parsed_url === false) {
+            return false;
+        }
+
+        if (isset($parsed_url['scheme'])) {
+            if (!in_array(strtolower($parsed_url['scheme']), ['http', 'https'])) {
+                return false;
+            }
+
+            $base_host = parse_url(base_url(), PHP_URL_HOST);
+            $url_host = isset($parsed_url['host']) ? $parsed_url['host'] : '';
+
+            return !empty($base_host) && $url_host === $base_host;
+        }
+
+        return true;
     }
 
     // public function saveResultsCharcoal() {
