@@ -188,7 +188,7 @@
                                                         <td><?= htmlspecialchars($calculation['volume_eluted'] ?? '-') ?></td>
                                                         <td><?= htmlspecialchars($calculation['total_ecoli'] ?? '-') ?></td>
                                                         <td><?= htmlspecialchars($calculation['ecolimpn'] ?? '-') ?></td>
-                                                        <td><?= htmlspecialchars($calculation['lowermpn'] ?? '-') ?></td>
+                                                        <td><?= htmlspecialchars((array_key_exists('lowermpn', $calculation) && $calculation['lowermpn'] === null) ? 'N/A' : ($calculation['lowermpn'] ?? '-')) ?></td>
                                                         <td><?= htmlspecialchars($calculation['totalcoliforms'] ?? '-') ?></td>
                                                         <td><?= htmlspecialchars($calculation['coliformmpn'] ?? '-') ?></td>
                                                     </tr>
@@ -1215,7 +1215,11 @@
                         else if (data[0].MPN_mean == '9999') {
                             result.mpn = ">"+ (2419 / dilution).toFixed(1);
                             let calculatedLower = parseFloat(data[0].MPN_95lo) / parseFloat(dilution);
-                            result.lower = calculatedLower.toFixed(1);
+                            lowermpn = calculatedLower.toFixed(1);
+                            if (lowermpn == "14395.0") {
+                                lowermpn = null;
+                            }
+                            result.lower = lowermpn; // Tampilkan "N/A" untuk lower confidence jika MPN mean > detection limit
                         }
                         else {
                             // Format to 1 decimal place for display
@@ -1260,7 +1264,7 @@
                     // Set values based on target fields
                     if (targetFields.includes("#ecoli")) {
                         $("#ecoli").val(empnResult.mpn);
-                        $("#lowerconfidence").val(empnResult.lower);
+                        $("#lowerconfidence").val(empnResult.lower === null ? 'N/A' : empnResult.lower);
                     }
                     if (targetFields.includes("#coliforms")) {
                         $("#coliforms").val(empnResult.mpn);
@@ -1494,6 +1498,9 @@
                 {
                     "data": "lowerconfidence",
                     "render": function(data, type, row) {
+                        if (data === null || data === '') {
+                            return 'N/A';
+                        }
                         if (data && data !== '' && data !== '0' && !isNaN(parseFloat(data))) {
                             return parseFloat(data).toFixed(1);
                         }
@@ -1584,7 +1591,7 @@
             $('#ecoli_smallwells').val(data.ecoli_smallwells);
             $('#ecoli').val(data.ecoli);
             // $('#ecoli').attr('readonly', true);
-            $('#lowerconfidence').val(data.lowerconfidence);
+            $('#lowerconfidence').val((data.lowerconfidence === null || data.lowerconfidence === '') ? 'N/A' : data.lowerconfidence);
             $('#coliforms_largewells').val(data.coliforms_largewells);
             $('#coliforms_smallwells').val(data.coliforms_smallwells);
             $('#coliforms').val(data.coliforms);
@@ -1602,7 +1609,7 @@
                     $('#ecoli').css({'background-color' : '#EEEEEE'});
                     $('#lowerconfidence').css({'background-color' : '#EEEEEE'});
                     $('#ecoli').val(ecoliResult.mpn);
-                    $('#lowerconfidence').val(ecoliResult.lower);
+                    $('#lowerconfidence').val(ecoliResult.lower === null ? 'N/A' : ecoliResult.lower);
                 }
                 
                 // Trigger calculation for coliforms
