@@ -228,6 +228,11 @@ class Colilert_hemoflow extends CI_Controller
             $id_one_water_sample = $this->input->post('idx_one_water_sample', TRUE);
             $quality_control = $this->input->post('quality_control_ciw', TRUE) ? 1 : 0; // Convert checkbox to integer
 
+            $lowerconfidence_value = trim((string) $lowerconfidence);
+            if ($lowerconfidence_value === '' || strtoupper($lowerconfidence_value) === 'N/A') {
+                $lowerconfidence = null;
+            }
+
             if($mode_det == "insert") {
                 $data = array(
                     'id_colilert_hemoflow' => $idx_colilert_hemoflow,
