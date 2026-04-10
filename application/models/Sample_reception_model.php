@@ -657,8 +657,17 @@ class Sample_reception_model extends CI_Model
                     END
                 WHEN retest.testing_type = 'Colilert-Hemoflow' THEN 
                     CASE 
-                        WHEN chd.ecoli IS NOT NULL AND hv.volume_eluted IS NOT NULL AND hv.volume_filter IS NOT NULL AND hv.volume_filter > 0 THEN
-                            ROUND(((chd.ecoli / 100) * hv.volume_eluted / hv.volume_filter / 10), 2)
+                        WHEN chd.ecoli IS NOT NULL AND hv.volume_eluted IS NOT NULL AND hv.volume_filter IS NOT NULL 
+                        AND hv.volume_filter > 0 AND chd.ecoli != ''
+                        AND CAST(REPLACE(REPLACE(chd.ecoli, '>', ''), '<', '') AS DECIMAL(10,2)) > 0
+                            THEN CONCAT(
+                                CASE 
+                                    WHEN chd.ecoli LIKE '>%' THEN '>'
+                                    WHEN chd.ecoli LIKE '<%' THEN '<'
+                                    ELSE ''
+                                END,
+                                ROUND(((CAST(REPLACE(REPLACE(chd.ecoli, '>', ''), '<', '') AS DECIMAL(10,2)) / 100) * hv.volume_eluted / hv.volume_filter / 10), 2)
+                            )
                         ELSE NULL 
                     END
                 WHEN retest.testing_type = 'Enterolert-Hemoflow' THEN
@@ -817,8 +826,17 @@ class Sample_reception_model extends CI_Model
                     END
                 WHEN retest.testing_type = 'Colilert-Hemoflow' THEN 
                     CASE 
-                        WHEN chd.ecoli IS NOT NULL AND hem_vol.volume_eluted IS NOT NULL AND hem_vol.volume_filter IS NOT NULL AND hem_vol.volume_filter > 0 THEN
-                            ROUND(((chd.ecoli / 100) * hem_vol.volume_eluted / hem_vol.volume_filter / 10), 2)
+                        WHEN chd.ecoli IS NOT NULL AND hem_vol.volume_eluted IS NOT NULL AND hem_vol.volume_filter IS NOT NULL 
+                        AND hem_vol.volume_filter > 0 AND chd.ecoli != ''
+                        AND CAST(REPLACE(REPLACE(chd.ecoli, '>', ''), '<', '') AS DECIMAL(10,2)) > 0
+                            THEN CONCAT(
+                                CASE 
+                                    WHEN chd.ecoli LIKE '>%' THEN '>'
+                                    WHEN chd.ecoli LIKE '<%' THEN '<'
+                                    ELSE ''
+                                END,
+                                ROUND(((CAST(REPLACE(REPLACE(chd.ecoli, '>', ''), '<', '') AS DECIMAL(10,2)) / 100) * hem_vol.volume_eluted / hem_vol.volume_filter / 10), 2)
+                            )
                         ELSE NULL 
                     END
                 WHEN retest.testing_type = 'Enterolert-Hemoflow' THEN
