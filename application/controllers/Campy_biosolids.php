@@ -67,6 +67,11 @@ class Campy_biosolids extends CI_Controller
     public function read($id)
     {
         $row = $this->Campy_biosolids_model->get_detail($id);
+        $return_url = $this->input->get('return_url', TRUE);
+
+        if (!$this->is_valid_return_url($return_url)) {
+            $return_url = site_url("campy_biosolids");
+        }
 
         if ($row) {
             $data = array(
@@ -90,6 +95,7 @@ class Campy_biosolids extends CI_Controller
                 'user_review' => $row->user_review,
                 'review' => $row->review,
                 'user_created' => $row->user_created,
+                'return_url' => $return_url,
             );
 
             // Mendapatkan final concentration dengan id_campy_biosolids
@@ -315,6 +321,7 @@ class Campy_biosolids extends CI_Controller
         $id_one_water_sample = $this->input->post('idCharcoal_one_water_sample', TRUE);
         $id_campy_biosolids = $this->input->post('id_campy_biosolids1', TRUE);
         $id_result_charcoal = $this->input->post('id_result_charcoal', TRUE);
+        $return_url = $this->input->post('return_url', TRUE);
         $dt = new DateTime();
         $date_sample_processed = $this->input->post('date_sample_processed1', TRUE);
         $time_sample_processed = $this->input->post('time_sample_processed1', TRUE);
@@ -460,7 +467,12 @@ class Campy_biosolids extends CI_Controller
             }
         }
     
-        redirect(site_url("campy_biosolids/read/" . $id_one_water_sample));
+        $redirect_url = site_url("campy_biosolids/read/" . $id_one_water_sample);
+        if ($this->is_valid_return_url($return_url)) {
+            $redirect_url .= '?return_url=' . rawurlencode($return_url);
+        }
+
+        redirect($redirect_url);
     }
 
     /**
@@ -516,6 +528,7 @@ class Campy_biosolids extends CI_Controller
         $id_one_water_sample = $this->input->post('idHba_one_water_sample', TRUE);
         $id_campy_biosolids = $this->input->post('id_campy_biosolidsHBA', TRUE);
         $id_result_hba = $this->input->post('id_result_hba', TRUE);
+        $return_url = $this->input->post('return_url', TRUE);
 
         $dt = new DateTime();
         $date_sample_processed = $this->input->post('date_sample_processedHBA', TRUE);
@@ -603,7 +616,12 @@ class Campy_biosolids extends CI_Controller
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
-        redirect(site_url("campy_biosolids/read/" . $id_one_water_sample));
+        $redirect_url = site_url("campy_biosolids/read/" . $id_one_water_sample);
+        if ($this->is_valid_return_url($return_url)) {
+            $redirect_url .= '?return_url=' . rawurlencode($return_url);
+        }
+
+        redirect($redirect_url);
     }
 
 
@@ -619,6 +637,7 @@ class Campy_biosolids extends CI_Controller
         $sample_store = $this->input->post('sample_store', TRUE);
         $biochemical_tube = $this->input->post('biochemical_tube', TRUE);
         $id_one_water_sample = $this->input->post('idBiochemical_one_water_sample', TRUE);
+        $return_url = $this->input->post('return_url', TRUE);
     
         // Defaukt value if the attribute is null
         if ($gramlysis === null) $gramlysis = '-';
@@ -660,7 +679,12 @@ class Campy_biosolids extends CI_Controller
             $this->Campy_biosolids_model->updateResultsBiochemical($id_result_biochemical, $data);
         }
 
-        redirect(site_url("campy_biosolids/read/" . $id_one_water_sample));
+        $redirect_url = site_url("campy_biosolids/read/" . $id_one_water_sample);
+        if ($this->is_valid_return_url($return_url)) {
+            $redirect_url .= '?return_url=' . rawurlencode($return_url);
+        }
+
+        redirect($redirect_url);
     }
     
     

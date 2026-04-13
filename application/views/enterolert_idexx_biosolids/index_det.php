@@ -156,7 +156,7 @@
 
 				<div class="form-group">
 					<div class="modal-footer clearfix">
-						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('enterolert_idexx_biosolids'); ?>';">
+                        <button type="button" name="batal" value="batal" class="btn btn-warning" onclick='window.location.href=<?= json_encode(isset($return_url) ? $return_url : site_url("enterolert_idexx_biosolids")); ?>;'>
 							<i class="fa fa-times"></i> Close
 						</button>
 					</div>
@@ -184,6 +184,7 @@
                                             <input id="id_enterolert_bio_in" name="id_enterolert_bio_in" type="hidden" class="form-control input-sm">
                                             <input id="id_enterolert_bio_out" name="id_enterolert_bio_out" type="hidden" class="form-control input-sm">
                                             <input id="idx_one_water_sample" name="idx_one_water_sample" type="hidden" class="form-control input-sm">
+                                            <input id="return_urlDetail" name="return_url" type="hidden" value="<?= htmlspecialchars(isset($return_url) ? $return_url : site_url('enterolert_idexx_biosolids'), ENT_QUOTES, 'UTF-8'); ?>" class="form-control input-sm">
                                         </div>
                                     </div>
 

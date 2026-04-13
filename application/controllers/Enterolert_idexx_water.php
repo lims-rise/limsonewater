@@ -61,6 +61,12 @@ class Enterolert_idexx_water extends CI_Controller
         // var_dump($id);
         // die();
         $row = $this->Enterolert_idexx_water_model->get_detail($id);
+        $return_url = $this->input->get('return_url', TRUE);
+
+        if (!$this->is_valid_return_url($return_url)) {
+            $return_url = site_url("enterolert_idexx_water");
+        }
+
         if ($row) {
             $data = array(
                 'id_enterolert_in' => $row->id_enterolert_in,
@@ -76,6 +82,7 @@ class Enterolert_idexx_water extends CI_Controller
                 'user_review' => $row->user_review,
                 'review' => $row->review,
                 'user_created'  => $row->user_created,
+                'return_url' => $return_url,
             );
 
 
@@ -211,6 +218,7 @@ class Enterolert_idexx_water extends CI_Controller
             $lowerdetection = $this->input->post('lowerdetection', TRUE);
             $remarks = $this->input->post('remarks', TRUE);
             $id_one_water_sample = $this->input->post('idx_one_water_sample', TRUE);
+            $return_url = $this->input->post('return_url', TRUE);
             $quality_control = $this->input->post('quality_control_eiw', TRUE) ? 1 : 0; // Convert checkbox to integer
         
             if($mode_det == "insert") {
@@ -267,7 +275,12 @@ class Enterolert_idexx_water extends CI_Controller
                 }
             }
         
-            redirect(site_url("enterolert_idexx_water/read/" . $id_one_water_sample));
+            $redirect_url = site_url("enterolert_idexx_water/read/" . $id_one_water_sample);
+            if ($this->is_valid_return_url($return_url)) {
+                $redirect_url .= '?return_url=' . rawurlencode($return_url);
+            }
+
+            redirect($redirect_url);
     }
 
 

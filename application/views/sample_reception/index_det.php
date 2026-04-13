@@ -1126,13 +1126,15 @@ background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
 									// Do nothing, dialog will close automatically
 								} else if (!isExtractionCulture) {
 									// It's not extraction culture - proceed to module directly
-									let fullUrl = `${window.location.origin}/limsonewater/index.php/${url}?barcode=${barcode}&idOneWaterSample=${idOneWaterSample}&idTestingType=${idTestingType}`;
+									let returnUrl = encodeURIComponent(window.location.href);
+									let fullUrl = `${window.location.origin}/limsonewater/index.php/${url}?barcode=${barcode}&idOneWaterSample=${idOneWaterSample}&idTestingType=${idTestingType}&return_url=${returnUrl}`;
 									window.location.href = fullUrl;
 								}
 							});
 						} else {
 							// Data doesn't exist or status is not success, proceed to module
-							let fullUrl = `${window.location.origin}/limsonewater/index.php/${url}?barcode=${barcode}&idOneWaterSample=${idOneWaterSample}&idTestingType=${idTestingType}`;
+							let returnUrl = encodeURIComponent(window.location.href);
+							let fullUrl = `${window.location.origin}/limsonewater/index.php/${url}?barcode=${barcode}&idOneWaterSample=${idOneWaterSample}&idTestingType=${idTestingType}&return_url=${returnUrl}`;
 							window.location.href = fullUrl;
 						}
 					},
@@ -1243,7 +1245,8 @@ background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
 								popup: 'animate__animated animate__fadeOutDown animate__faster'
 							}
 						}).then(() => {
-							let fullUrl = `${window.location.origin}/limsonewater/index.php/${url}?barcode=${barcode}&idOneWaterSample=${idOneWaterSample}&idTestingType=${idTestingType}`;
+							let returnUrl = encodeURIComponent(window.location.href);
+							let fullUrl = `${window.location.origin}/limsonewater/index.php/${url}?barcode=${barcode}&idOneWaterSample=${idOneWaterSample}&idTestingType=${idTestingType}&return_url=${returnUrl}`;
 							window.location.href = fullUrl;
 						});
 					}
@@ -1260,7 +1263,8 @@ background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
 			let testingType = $(this).text().split(' - ')[0]; // Extract testing type name
 
 			if (url) {
-				let fullUrlStatus = `${window.location.origin}/limsonewater/index.php/${url}/read/${idOneWaterSample}`;
+				let returnUrl = encodeURIComponent(window.location.href);
+				let fullUrlStatus = `${window.location.origin}/limsonewater/index.php/${url}/read/${idOneWaterSample}?return_url=${returnUrl}`;
 
 				// Show enhanced loading indicator for status check
 				Swal.fire({

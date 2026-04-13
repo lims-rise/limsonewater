@@ -66,6 +66,12 @@ class Biobankin extends CI_Controller
     public function read($id)
     {
         $row = $this->Biobankin_model->get_detail($id);
+        $return_url = $this->input->get('return_url', TRUE);
+
+        if (!$this->is_valid_return_url($return_url)) {
+            $return_url = site_url("Biobankin");
+        }
+
         if ($row) {
             $data = array(
                 'id_one_water_sample' => $row->id_one_water_sample,
@@ -92,6 +98,7 @@ class Biobankin extends CI_Controller
                 // 'testing_type' => $this->Biobankin_model->getTest(),
                 // 'barcode' => $this->Water_Biobankin_model->getBarcode(),
                 'sampletype' => $this->Biobankin_model->getSampleType(),
+                'return_url' => $return_url,
             );
                 
             $this->template->load('template','Biobankin/index_det', $data);
@@ -110,6 +117,17 @@ class Biobankin extends CI_Controller
     {
         $row = $this->Biobankin_model->get_detail_replicate($id);
         if ($row) {
+            $return_url = $this->input->get('return_url', TRUE);
+
+            if (!$this->is_valid_return_url($return_url)) {
+                $return_url = '';
+            }
+
+            $detail_url = site_url("Biobankin/read/" . $row->id_one_water_sample);
+            if ($this->is_valid_return_url($return_url)) {
+                $detail_url .= '?return_url=' . rawurlencode($return_url);
+            }
+
             $data = array(
                 'id_biobankin_detail' => $row->id_biobankin_detail,
                 'id_one_water_sample' => $row->id_one_water_sample,
@@ -132,6 +150,8 @@ class Biobankin extends CI_Controller
                 'tray1' => $this->Biobankin_model->getFreezer4(),
                 'row1' => $this->Biobankin_model->getPos1(),
                 'col1' => $this->Biobankin_model->getPos2(),
+                'return_url' => $return_url,
+                'detail_url' => $detail_url,
                 // 'testing_type' => $this->Biobankin_model->getTest(),
                 // 'barcode' => $this->Water_Biobankin_model->getBarcode(),
             );
@@ -416,6 +436,7 @@ class Biobankin extends CI_Controller
         $id_biobankin_detail = $this->input->post('id_biobankin_detail', TRUE);
         $id_biobankin = $this->input->post('id_biobankin', TRUE);
         $replicates = $this->input->post('replicates', TRUE);
+        $return_url = $this->input->post('return_url', TRUE);
 
         $comments = $this->input->post('comments', TRUE);        
 
@@ -489,7 +510,12 @@ class Biobankin extends CI_Controller
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
-        redirect(site_url("Biobankin/read/" . $id_one_water_sample));
+        $redirect_url = site_url("Biobankin/read/" . $id_one_water_sample);
+        if ($this->is_valid_return_url($return_url)) {
+            $redirect_url .= '?return_url=' . rawurlencode($return_url);
+        }
+
+        redirect($redirect_url);
     }
 
     public function savereplicate() {
@@ -518,6 +544,7 @@ class Biobankin extends CI_Controller
 
         $id_row = $this->input->post('id_row', TRUE);
         $id_col = $this->input->post('id_col', TRUE);
+        $return_url = $this->input->post('return_url', TRUE);
 
         $comments = $this->input->post('comments', TRUE);        
 
@@ -608,7 +635,12 @@ class Biobankin extends CI_Controller
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
-        redirect(site_url("Biobankin/read2/" . $id_biobankin_detail));
+        $redirect_url = site_url("Biobankin/read2/" . $id_biobankin_detail);
+        if ($this->is_valid_return_url($return_url)) {
+            $redirect_url .= '?return_url=' . rawurlencode($return_url);
+        }
+
+        redirect($redirect_url);
     }
 
 

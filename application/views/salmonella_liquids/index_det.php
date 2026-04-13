@@ -322,7 +322,7 @@
 
 				<div class="form-group">
 					<div class="modal-footer clearfix">
-						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('salmonella_liquids'); ?>';">
+                        <button type="button" name="batal" value="batal" class="btn btn-warning" onclick='window.location.href=<?= json_encode(isset($return_url) ? $return_url : site_url("salmonella_liquids")); ?>;'>
 							<i class="fa fa-times"></i> Close
 						</button>
 					</div>
@@ -350,6 +350,7 @@
                                             <input id="number_of_tubes1" name="number_of_tubes1" type="hidden" class="form-control input-sm">
                                             <input id="id_result_xld" name="id_result_xld" type="hidden" class="form-control input-sm">
                                             <input id="idXld_one_water_sample" name="idXld_one_water_sample" type="hidden" class="form-control input-sm">
+                                            <input id="return_urlXld" name="return_url" type="hidden" value="<?= htmlspecialchars(isset($return_url) ? $return_url : site_url('salmonella_liquids'), ENT_QUOTES, 'UTF-8'); ?>" class="form-control input-sm">
                                         </div>
                                     </div>
 
@@ -434,6 +435,7 @@
                                             <input id="number_of_tubesChromagar" name="number_of_tubesChromagar" type="hidden" class="form-control input-sm">
                                             <input id="id_result_chromagar" name="id_result_chromagar" type="hidden" class="form-control input-sm">
                                             <input id="idChromagar_one_water_sample" name="idChromagar_one_water_sample" type="hidden" class="form-control input-sm">
+                                            <input id="return_urlChromagar" name="return_url" type="hidden" value="<?= htmlspecialchars(isset($return_url) ? $return_url : site_url('salmonella_liquids'), ENT_QUOTES, 'UTF-8'); ?>" class="form-control input-sm">
                                         </div>
                                     </div>
 
@@ -520,6 +522,7 @@
                     <input id="biochemical_tube" name="biochemical_tube" type="hidden" class="form-control input-sm">
                     <input id="id_result_chromagar1" name="id_result_chromagar1" type="hidden" class="form-control input-sm">
                     <input id="idBiochemical_one_water_sample" name="idBiochemical_one_water_sample" type="hidden" class="form-control input-sm">
+                    <input id="return_urlBiochemical" name="return_url" type="hidden" value="<?= htmlspecialchars(isset($return_url) ? $return_url : site_url('salmonella_liquids'), ENT_QUOTES, 'UTF-8'); ?>" class="form-control input-sm">
                     
                     <!-- Confirmation -->
                     <!-- <div class="form-group">

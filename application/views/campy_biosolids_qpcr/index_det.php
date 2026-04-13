@@ -230,7 +230,7 @@
 
 				<div class="form-group">
 					<div class="modal-footer clearfix">
-						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('campy_biosolids_qpcr'); ?>';">
+                        <button type="button" name="batal" value="batal" class="btn btn-warning" onclick='window.location.href=<?= json_encode(isset($return_url) ? $return_url : site_url("campy_biosolids_qpcr")); ?>;'>
 							<i class="fa fa-times"></i> Close
 						</button>
 					</div>
@@ -259,6 +259,7 @@
                                             <input id="id_campy_biosolids_qpcr1" name="id_campy_biosolids_qpcr1" type="hidden" class="form-control input-sm">
                                             <input id="number_of_tubes1" name="number_of_tubes1" type="hidden" class="form-control input-sm">
                                             <input id="id_result_qpcr" name="id_result_qpcr" type="hidden" class="form-control input-sm">
+                                            <input id="return_urlQpcr" name="return_url" type="hidden" value="<?= htmlspecialchars(isset($return_url) ? $return_url : site_url('campy_biosolids_qpcr'), ENT_QUOTES, 'UTF-8'); ?>" class="form-control input-sm">
                                         </div>
                                     </div>
 

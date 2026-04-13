@@ -59,6 +59,12 @@ class Salmonella_biosolids extends CI_Controller
     {
         $row = $this->Salmonella_biosolids_model->get_detail($id);
 
+        $return_url = $this->input->get('return_url', TRUE);
+
+        if (!$this->is_valid_return_url($return_url)) {
+            $return_url = site_url("salmonella_biosolids");
+        }
+
         if ($row) {
             $data = array(
 
@@ -80,6 +86,7 @@ class Salmonella_biosolids extends CI_Controller
                 'user_review' => $row->user_review,
                 'review' => $row->review,
                 'user_created' => $row->user_created,
+                'return_url' => $return_url,
                 
             );
             
@@ -254,37 +261,6 @@ class Salmonella_biosolids extends CI_Controller
         redirect(site_url("salmonella_biosolids"));
     }
 
-    private function is_valid_return_url($url)
-    {
-        if (empty($url)) {
-            return false;
-        }
-
-        $url = trim($url);
-
-        if (preg_match('/[\r\n]/', $url)) {
-            return false;
-        }
-
-        $parsed_url = parse_url($url);
-        if ($parsed_url === false) {
-            return false;
-        }
-
-        if (isset($parsed_url['scheme'])) {
-            if (!in_array(strtolower($parsed_url['scheme']), ['http', 'https'])) {
-                return false;
-            }
-
-            $base_host = parse_url(base_url(), PHP_URL_HOST);
-            $url_host = isset($parsed_url['host']) ? $parsed_url['host'] : '';
-
-            return !empty($base_host) && $url_host === $base_host;
-        }
-
-        return true;
-    }
-
     public function saveResultsXld() {
         $mode = $this->input->post('mode_detResultsXld', TRUE);
         $id_one_water_sample = $this->input->post('idXld_one_water_sample', TRUE);
@@ -294,6 +270,7 @@ class Salmonella_biosolids extends CI_Controller
         $date_sample_processed = $this->input->post('date_sample_processed1', TRUE);
         $time_sample_processed = $this->input->post('time_sample_processed1', TRUE);
         $quality_control = $this->input->post('quality_control_xld', TRUE) ? 1 : 0; // Convert checkbox to integer
+        $return_url = $this->input->post('return_url', TRUE);
     
         if ($mode == "insert") {
             // Insert data into assays table
@@ -389,7 +366,13 @@ class Salmonella_biosolids extends CI_Controller
         // Auto-update biochemical results when XLD data changes
         $this->autoUpdateBiochemicalFromXldChange($id_salmonella_biosolids, $number_of_tubes);
     
-        redirect(site_url("salmonella_biosolids/read/" . $id_one_water_sample));
+        // redirect(site_url("salmonella_biosolids/read/" . $id_one_water_sample));
+        $redirect_url = site_url("salmonella_biosolids/read/" . $id_one_water_sample);
+        if ($this->is_valid_return_url($return_url)) {
+            $redirect_url .= '?return_url=' . rawurlencode($return_url);
+        }
+
+        redirect($redirect_url);
     }
 
     public function saveResultsChromagar() {
@@ -402,6 +385,7 @@ class Salmonella_biosolids extends CI_Controller
         $date_sample_processed = $this->input->post('date_sample_processedChromagar', TRUE);
         $time_sample_processed = $this->input->post('time_sample_processedChromagar', TRUE);
         $quality_control = $this->input->post('quality_control_chromagar', TRUE) ? 1 : 0; // Convert checkbox to integer
+             $return_url = $this->input->post('return_url', TRUE);
     
         if ($mode == "insert") {
             // Insert data into assays table
@@ -491,7 +475,13 @@ class Salmonella_biosolids extends CI_Controller
             $this->autoGenerateBiochemicalResults($id_salmonella_biosolids, $id_result_chromagar, $number_of_tubes);
         }
     
-        redirect(site_url("salmonella_biosolids/read/" . $id_one_water_sample));
+        // redirect(site_url("salmonella_biosolids/read/" . $id_one_water_sample));
+        $redirect_url = site_url("salmonella_biosolids/read/" . $id_one_water_sample);
+        if ($this->is_valid_return_url($return_url)) {
+            $redirect_url .= '?return_url=' . rawurlencode($return_url);
+        }
+
+        redirect($redirect_url);
     }
 
     /**
@@ -773,6 +763,7 @@ class Salmonella_biosolids extends CI_Controller
         $confirmation = $this->input->post('confirmation', TRUE);
         $sample_store = $this->input->post('sample_store', TRUE);
         $biochemical_tube = $this->input->post('biochemical_tube', TRUE);
+        $return_url = $this->input->post('return_url', TRUE);
 
         // Check if this is an AJAX request
         $is_ajax = $this->input->is_ajax_request();
@@ -794,6 +785,10 @@ class Salmonella_biosolids extends CI_Controller
                 return;
             } else {
                 $this->session->set_flashdata('error', 'Missing required fields.');
+                if ($this->is_valid_return_url($return_url)) {
+                    redirect($return_url);
+                    return;
+                }
                 redirect(site_url("salmonella_liquids/read/" . $id_one_water_sample));
                 return;
             }
@@ -860,6 +855,10 @@ class Salmonella_biosolids extends CI_Controller
             }
 
             // For non-AJAX requests (traditional form submission)
+            if ($this->is_valid_return_url($return_url)) {
+                redirect($return_url);
+                return;
+            }
             redirect(site_url("salmonella_liquids/read/" . $id_one_water_sample));
             
         } catch (Exception $e) {
@@ -872,6 +871,10 @@ class Salmonella_biosolids extends CI_Controller
                 return;
             } else {
                 $this->session->set_flashdata('error', 'Error saving biochemical result: ' . $e->getMessage());
+                if ($this->is_valid_return_url($return_url)) {
+                    redirect($return_url);
+                    return;
+                }
                 redirect(site_url("salmonella_liquids/read/" . $id_one_water_sample));
             }
         }
@@ -1523,6 +1526,37 @@ class Salmonella_biosolids extends CI_Controller
                 'hasData' => false
             ]);
         }
+    }
+
+    private function is_valid_return_url($url)
+    {
+        if (empty($url)) {
+            return false;
+        }
+
+        $url = trim($url);
+
+        if (preg_match('/[\r\n]/', $url)) {
+            return false;
+        }
+
+        $parsed_url = parse_url($url);
+        if ($parsed_url === false) {
+            return false;
+        }
+
+        if (isset($parsed_url['scheme'])) {
+            if (!in_array(strtolower($parsed_url['scheme']), ['http', 'https'])) {
+                return false;
+            }
+
+            $base_host = parse_url(base_url(), PHP_URL_HOST);
+            $url_host = isset($parsed_url['host']) ? $parsed_url['host'] : '';
+
+            return !empty($base_host) && $url_host === $base_host;
+        }
+
+        return true;
     }
 
 }
