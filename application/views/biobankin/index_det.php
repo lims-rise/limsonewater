@@ -127,7 +127,7 @@
 
 				<div class="form-group">
 					<div class="modal-footer clearfix">
-						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('Biobankin'); ?>';">
+						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick='window.location.href=<?= json_encode(isset($return_url) ? $return_url : site_url("Biobankin")); ?>;'>
 							<i class="fa fa-times"></i> Close
 						</button>
 					</div>
@@ -155,6 +155,7 @@
 					<input id="id_person" type="hidden" name="id_person" value="<?php echo $id_person ?>">
 					<input id="id_biobankin_detail" name="id_biobankin_detail" type="hidden" class="form-control input-sm">
 					<input id="id_biobankin_modal" name="id_biobankin" type="hidden" class="form-control input-sm" value="<?php echo $id_biobankin ?>">
+					<input id="return_urlDetail" name="return_url" type="hidden" value="<?= htmlspecialchars(isset($return_url) ? $return_url : site_url('Biobankin'), ENT_QUOTES, 'UTF-8'); ?>" class="form-control input-sm">
 				
 					<!-- <div class="form-group">
 						<label for="weight" class="col-sm-4 control-label">Weight (g)</label>
@@ -670,7 +671,24 @@
 	let id_one_water_sample = $('#id_one_water_sample1').val();
 	let id_biobankin = $('#id_biobankin').val();
 	let barcode_water = $('#barcode_water').val();
+	let return_url = <?= json_encode(isset($return_url) ? $return_url : ''); ?>;
 	let base_url = location.hostname;
+
+	function appendReplicateNavigationParams() {
+		$('#example2 a[href*="Biobankin/read2/"]').each(function() {
+			let href = $(this).attr('href');
+			if (!href) {
+				return;
+			}
+
+			if (return_url && href.indexOf('return_url=') === -1) {
+				href += (href.indexOf('?') === -1 ? '?' : '&') + 'return_url=' + encodeURIComponent(return_url);
+			}
+
+			$(this).attr('href', href);
+		});
+	}
+
 	$(document).ready(function() {
 	 	let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
 		let userCreated = $('#user_created').val();
@@ -1331,6 +1349,9 @@
 				let length = info.iLength;
 				// var index = page * length + (iDisplayIndex + 1);
 				// $('td:eq(0)', row).html(index);
+			},
+			drawCallback: function() {
+				appendReplicateNavigationParams();
 			}
 		});
 

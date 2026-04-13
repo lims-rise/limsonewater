@@ -62,6 +62,11 @@ class Campy_biosolids_qpcr extends CI_Controller
     public function read($id)
     {
         $row = $this->Campy_biosolids_qpcr_model->get_detail($id);
+        $return_url = $this->input->get('return_url', TRUE);
+
+        if (!$this->is_valid_return_url($return_url)) {
+            $return_url = site_url("campy_biosolids_qpcr");
+        }
 
         if ($row) {
             $data = array(
@@ -79,6 +84,7 @@ class Campy_biosolids_qpcr extends CI_Controller
                 'elution_volume' => $row->elution_volume,
                 'vol_sampletube' => $row->vol_sampletube,
                 'tube_number' => $row->tube_number,
+                'return_url' => $return_url,
                 
             );
             
@@ -372,6 +378,7 @@ class Campy_biosolids_qpcr extends CI_Controller
         $mode = $this->input->post('mode_detResultsQpcr', TRUE);
         $id_campy_biosolids_qpcr = $this->input->post('id_campy_biosolids_qpcr1', TRUE);
         $id_result_qpcr = $this->input->post('id_result_qpcr', TRUE);
+        $return_url = $this->input->post('return_url', TRUE);
         $dt = new DateTime();
         $date_sample_processed = $this->input->post('date_sample_processed1', TRUE);
         $time_sample_processed = $this->input->post('time_sample_processed1', TRUE);
@@ -451,7 +458,12 @@ class Campy_biosolids_qpcr extends CI_Controller
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
-        redirect(site_url("campy_biosolids_qpcr/read/" . $id_campy_biosolids_qpcr));
+        $redirect_url = site_url("campy_biosolids_qpcr/read/" . $id_campy_biosolids_qpcr);
+        if ($this->is_valid_return_url($return_url)) {
+            $redirect_url .= '?return_url=' . rawurlencode($return_url);
+        }
+
+        redirect($redirect_url);
     }
     
 

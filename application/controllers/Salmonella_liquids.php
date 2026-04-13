@@ -58,6 +58,11 @@ class Salmonella_liquids extends CI_Controller
     public function read($id)
     {
         $row = $this->Salmonella_liquids_model->get_detail($id);
+        $return_url = $this->input->get('return_url', TRUE);
+
+        if (!$this->is_valid_return_url($return_url)) {
+            $return_url = site_url("salmonella_liquids");
+        }
 
         if ($row) {
             $data = array(
@@ -80,6 +85,7 @@ class Salmonella_liquids extends CI_Controller
                 'user_review' => $row->user_review,
                 'review' => $row->review,
                 'user_created' => $row->user_created,
+                'return_url' => $return_url,
                 
             );
             
@@ -381,6 +387,7 @@ class Salmonella_liquids extends CI_Controller
         $id_one_water_sample = $this->input->post('idXld_one_water_sample', TRUE);
         $id_salmonella_liquids = $this->input->post('id_salmonella_liquids1', TRUE);
         $id_result_xld = $this->input->post('id_result_xld', TRUE);
+        $return_url = $this->input->post('return_url', TRUE);
         $dt = new DateTime();
         $date_sample_processed = $this->input->post('date_sample_processed1', TRUE);
         $time_sample_processed = $this->input->post('time_sample_processed1', TRUE);
@@ -480,7 +487,12 @@ class Salmonella_liquids extends CI_Controller
         // Auto-update biochemical results when XLD data changes
         $this->autoUpdateBiochemicalFromXldChange($id_salmonella_liquids, $number_of_tubes);
     
-        redirect(site_url("salmonella_liquids/read/" . $id_one_water_sample));
+        $redirect_url = site_url("salmonella_liquids/read/" . $id_one_water_sample);
+        if ($this->is_valid_return_url($return_url)) {
+            $redirect_url .= '?return_url=' . rawurlencode($return_url);
+        }
+
+        redirect($redirect_url);
     }
 
     // public function saveResultsChromagar() {
@@ -578,6 +590,7 @@ class Salmonella_liquids extends CI_Controller
         $id_one_water_sample = $this->input->post('idChromagar_one_water_sample', TRUE);
         $id_salmonella_liquids = $this->input->post('id_salmonella_liquidsChromagar', TRUE);
         $id_result_chromagar = $this->input->post('id_result_chromagar', TRUE);
+        $return_url = $this->input->post('return_url', TRUE);
 
         $dt = new DateTime();
         $date_sample_processed = $this->input->post('date_sample_processedChromagar', TRUE);
@@ -672,7 +685,12 @@ class Salmonella_liquids extends CI_Controller
             $this->autoGenerateBiochemicalResults($id_salmonella_liquids, $id_result_chromagar, $number_of_tubes);
         }
     
-        redirect(site_url("salmonella_liquids/read/" . $id_one_water_sample));
+        $redirect_url = site_url("salmonella_liquids/read/" . $id_one_water_sample);
+        if ($this->is_valid_return_url($return_url)) {
+            $redirect_url .= '?return_url=' . rawurlencode($return_url);
+        }
+
+        redirect($redirect_url);
     }
 
 
@@ -690,6 +708,7 @@ class Salmonella_liquids extends CI_Controller
         $confirmation = $this->input->post('confirmation', TRUE);
         $sample_store = $this->input->post('sample_store', TRUE);
         $biochemical_tube = $this->input->post('biochemical_tube', TRUE);
+        $return_url = $this->input->post('return_url', TRUE);
 
         // Check if this is an AJAX request
         $is_ajax = $this->input->is_ajax_request();
@@ -711,6 +730,10 @@ class Salmonella_liquids extends CI_Controller
                 return;
             } else {
                 $this->session->set_flashdata('error', 'Missing required fields.');
+                if ($this->is_valid_return_url($return_url)) {
+                    redirect($return_url);
+                    return;
+                }
                 redirect(site_url("salmonella_liquids/read/" . $id_one_water_sample));
                 return;
             }
@@ -777,6 +800,10 @@ class Salmonella_liquids extends CI_Controller
             }
 
             // For non-AJAX requests (traditional form submission)
+            if ($this->is_valid_return_url($return_url)) {
+                redirect($return_url);
+                return;
+            }
             redirect(site_url("salmonella_liquids/read/" . $id_one_water_sample));
             
         } catch (Exception $e) {
@@ -789,6 +816,10 @@ class Salmonella_liquids extends CI_Controller
                 return;
             } else {
                 $this->session->set_flashdata('error', 'Error saving biochemical result: ' . $e->getMessage());
+                if ($this->is_valid_return_url($return_url)) {
+                    redirect($return_url);
+                    return;
+                }
                 redirect(site_url("salmonella_liquids/read/" . $id_one_water_sample));
             }
         }

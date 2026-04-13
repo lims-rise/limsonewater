@@ -171,8 +171,8 @@
                 <!--</div> row -->    
 
 				<div class="form-group">
-					<div class="modal-footer clearfix">
-						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="window.location.href='<?= site_url('moisture_content'); ?>';">
+                    <div class="modal-footer clearfix">
+                        <button type="button" name="batal" value="batal" class="btn btn-warning" onclick='window.location.href=<?= json_encode(isset($return_url) ? $return_url : site_url("moisture_content")); ?>;'>
 							<i class="fa fa-times"></i> Close
 						</button>
 					</div>
@@ -199,6 +199,7 @@
                                             <input id="idx_moisture24" name="idx_moisture24" type="hidden" class="form-control input-sm">
                                             <input id="id_moisture24" name="id_moisture24" type="hidden" class="form-control input-sm">
                                             <input id="id24_one_water_sample" name="id24_one_water_sample" type="hidden" class="form-control input-sm">
+                                            <input id="return_url24" name="return_url" type="hidden" value="<?= htmlspecialchars(isset($return_url) ? $return_url : site_url('moisture_content'), ENT_QUOTES, 'UTF-8'); ?>" class="form-control input-sm">
                                         </div>
                                     </div>
 
@@ -273,6 +274,7 @@
                                             <input id="idx_moisture72" name="idx_moisture72" type="hidden" class="form-control input-sm">
                                             <input id="id_moisture72" name="id_moisture72" type="hidden" class="form-control input-sm">
                                             <input id="id27_one_water_sample" name="id27_one_water_sample" type="hidden" class="form-control input-sm">
+                                            <input id="return_url72" name="return_url" type="hidden" value="<?= htmlspecialchars(isset($return_url) ? $return_url : site_url('moisture_content'), ENT_QUOTES, 'UTF-8'); ?>" class="form-control input-sm">
                                         </div>
                                     </div>
 

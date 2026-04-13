@@ -159,7 +159,7 @@
 
 				<div class="form-group">
 					<div class="modal-footer clearfix">
-						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick="redirectToBiobankin();">
+						<button type="button" name="batal" value="batal" class="btn btn-warning" onclick='window.location.href=<?= json_encode(isset($detail_url) ? $detail_url : site_url("Biobankin/read/" . $id_one_water_sample)); ?>;'>
 							<i class="fa fa-times"></i> Close
 						</button>
 					</div>
@@ -187,6 +187,7 @@
 					<input id="id_person" type="hidden" name="id_person" value="<?php echo $id_person ?>">
 					<input id="id_biobankin_detailx" name="id_biobankin_detailx" type="hidden" class="form-control input-sm">
 					<input id="id_biobankin_replicatex" name="id_biobankin_replicatex" type="hidden" class="form-control input-sm">
+					<input id="return_urlReplicate" name="return_url" type="hidden" value="<?= htmlspecialchars(isset($return_url) ? $return_url : '', ENT_QUOTES, 'UTF-8'); ?>" class="form-control input-sm">
 				
 					<div class="form-group">
 						<label for="weight" class="col-sm-4 control-label">Weight (g)</label>
@@ -682,11 +683,6 @@
 	let barcode_water = $('#barcode_water').val();
 	let id_biobankin_detail = $('#id_biobankin_detail').val();
 	let base_url = location.hostname;
-
-	function redirectToBiobankin() {
-		let id = document.getElementById('id_one_water_sample').value;
-		window.location.href = '<?= site_url('Biobankin/read/'); ?>' + id;
-	}
 
 	$(document).ready(function() {
 	 	let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';

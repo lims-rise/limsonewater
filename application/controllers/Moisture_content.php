@@ -61,6 +61,12 @@ class Moisture_content extends CI_Controller
         // var_dump($id);
         // die();
         $row = $this->Moisture_content_model->get_detail($id);
+        $return_url = $this->input->get('return_url', TRUE);
+
+        if (!$this->is_valid_return_url($return_url)) {
+            $return_url = site_url("moisture_content");
+        }
+
         if ($row) {
             $data = array(
                 'id_moisture' => $row->id_moisture,
@@ -78,6 +84,7 @@ class Moisture_content extends CI_Controller
                 'user_review' => $row->user_review,
                 'review' => $row->review,
                 'user_created'  => $row->user_created,
+                'return_url' => $return_url,
             );
 
 
@@ -224,6 +231,7 @@ class Moisture_content extends CI_Controller
     public function savedetail24() {
             $mode_det24 = $this->input->post('mode_det24', TRUE);
             $dt = new DateTime();
+            $return_url = $this->input->post('return_url', TRUE);
             // var_dump($id_moisture);
             // die();
             $id_one_water_sample = $this->input->post('id24_one_water_sample', TRUE);
@@ -281,13 +289,19 @@ class Moisture_content extends CI_Controller
                 }
             }
         
-            redirect(site_url("moisture_content/read/" . $id_one_water_sample));
+            $redirect_url = site_url("moisture_content/read/" . $id_one_water_sample);
+            if ($this->is_valid_return_url($return_url)) {
+                $redirect_url .= '?return_url=' . rawurlencode($return_url);
+            }
+
+            redirect($redirect_url);
     }
 
 
     public function savedetail72() {
         $mode_det72 = $this->input->post('mode_det72', TRUE);
         $dt = new DateTime();
+        $return_url = $this->input->post('return_url', TRUE);
         $id_one_water_sample = $this->input->post('id27_one_water_sample', TRUE);
         $id_moisture = $this->input->post('idx_moisture72', TRUE);
         $id_moisture72 = $this->input->post('id_moisture72', TRUE);
@@ -349,7 +363,12 @@ class Moisture_content extends CI_Controller
             }
         }
     
-        redirect(site_url("moisture_content/read/" . $id_one_water_sample));
+        $redirect_url = site_url("moisture_content/read/" . $id_one_water_sample);
+        if ($this->is_valid_return_url($return_url)) {
+            $redirect_url .= '?return_url=' . rawurlencode($return_url);
+        }
+
+        redirect($redirect_url);
 
     }
   

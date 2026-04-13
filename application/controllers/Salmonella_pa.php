@@ -67,6 +67,11 @@ class Salmonella_pa extends CI_Controller
     public function read($id)
     {
         $row = $this->Salmonella_pa_model->get_detail($id);
+        $return_url = $this->input->get('return_url', TRUE);
+
+        if (!$this->is_valid_return_url($return_url)) {
+            $return_url = site_url("salmonella_pa");
+        }
 
         if ($row) {
             $data = array(
@@ -89,6 +94,7 @@ class Salmonella_pa extends CI_Controller
                 'user_review' => $row->user_review,
                 'review' => $row->review,
                 'user_created' => $row->user_created,
+                'return_url' => $return_url,
                 
             );
             
@@ -295,6 +301,7 @@ class Salmonella_pa extends CI_Controller
         $id_one_water_sample = $this->input->post('idXldAgar_one_water_sample', TRUE);
         $id_salmonella_pa = $this->input->post('id_salmonella_pa1', TRUE);
         $id_result_xld_agar_pa = $this->input->post('id_result_xld_agar_pa', TRUE);
+        $return_url = $this->input->post('return_url', TRUE);
         $dt = new DateTime();
         $date_sample_processed = $this->input->post('date_sample_processed1', TRUE);
         $time_sample_processed = $this->input->post('time_sample_processed1', TRUE);
@@ -419,7 +426,12 @@ class Salmonella_pa extends CI_Controller
             }
         }
 
-        redirect(site_url("salmonella_pa/read/" . $id_one_water_sample));
+        $redirect_url = site_url("salmonella_pa/read/" . $id_one_water_sample);
+        if ($this->is_valid_return_url($return_url)) {
+            $redirect_url .= '?return_url=' . rawurlencode($return_url);
+        }
+
+        redirect($redirect_url);
     }
 
     /**
@@ -499,6 +511,7 @@ class Salmonella_pa extends CI_Controller
         $id_one_water_sample = $this->input->post('idChromagar_one_water_sample', TRUE);
         $id_salmonella_pa = $this->input->post('id_salmonella_paChromagar', TRUE);
         $id_result_chromagar_pa = $this->input->post('id_result_chromagar_pa', TRUE);
+        $return_url = $this->input->post('return_url', TRUE);
 
         $dt = new DateTime();
         $date_sample_processed = $this->input->post('date_sample_processedChromagar', TRUE);
@@ -600,7 +613,12 @@ class Salmonella_pa extends CI_Controller
             }
         }
 
-        redirect(site_url("salmonella_pa/read/" . $id_one_water_sample));
+        $redirect_url = site_url("salmonella_pa/read/" . $id_one_water_sample);
+        if ($this->is_valid_return_url($return_url)) {
+            $redirect_url .= '?return_url=' . rawurlencode($return_url);
+        }
+
+        redirect($redirect_url);
     }
 
 
@@ -612,6 +630,7 @@ class Salmonella_pa extends CI_Controller
         $confirmation = $this->input->post('confirmation', TRUE);
         $biochemical_tube = $this->input->post('biochemical_tube', TRUE);
         $id_one_water_sample = $this->input->post('idBiochemical_one_water_sample', TRUE);
+        $return_url = $this->input->post('return_url', TRUE);
 
         if ($mode == "insert") {
             $data = array(
@@ -643,6 +662,11 @@ class Salmonella_pa extends CI_Controller
             // var_dump($data);
             // die();
             $this->Salmonella_pa_model->updateResultsBiochemical($id_result_biochemical_pa, $data);
+        }
+
+        if ($this->is_valid_return_url($return_url)) {
+            redirect($return_url);
+            return;
         }
 
         redirect(site_url("salmonella_pa/read/" . $id_one_water_sample));
