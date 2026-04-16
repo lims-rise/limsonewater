@@ -1359,6 +1359,12 @@ class Sample_reception extends CI_Controller
             echo json_encode(array('status' => 'error', 'message' => 'Project ID and reason are required'));
             return;
         }
+
+        $status_data = $this->Sample_reception_model->get_project_status($id_project);
+        if (!$status_data || !in_array($status_data['status'], array('Completed', 'No Tests'), true)) {
+            echo json_encode(array('status' => 'error', 'message' => 'Unlock is only available for Completed or No Tests projects'));
+            return;
+        }
         
         try {
             $result = $this->Sample_reception_model->unlock_project($id_project, $admin_id, $reason);
@@ -1384,6 +1390,12 @@ class Sample_reception extends CI_Controller
         
         if (empty($id_project)) {
             echo json_encode(array('status' => 'error', 'message' => 'Project ID is required'));
+            return;
+        }
+
+        $status_data = $this->Sample_reception_model->get_project_status($id_project);
+        if (!$status_data || !in_array($status_data['status'], array('Completed', 'No Tests'), true)) {
+            echo json_encode(array('status' => 'error', 'message' => 'Lock is only available for Completed or No Tests projects'));
             return;
         }
         
