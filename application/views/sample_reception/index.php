@@ -1700,19 +1700,14 @@ function applyCompletedProjectStyling() {
             let $row = $(this);
             let rowData = table.row($row).data();
             
-            if (rowData) {
-                let isCompleted = rowData.is_completed == 1;
-                let isNoTests = rowData.is_no_tests == 1;
-
-                if (isCompleted) {
-                    $row.addClass('completed-project');
-                }
-
+            if (rowData && rowData.is_completed == 1) {
+                $row.addClass('completed-project');
+                
                 // Check if project is unlocked by admin
                 let isUnlocked = rowData.is_unlocked == 1;
                 
                 // For Super Admin users (level 1 only) - Modern unlock/lock button styling
-                if (userLevel == 1 && (isCompleted || isNoTests)) {
+                if (userLevel == 1) {
                     let $unlockBtn = $row.find('.btn_unlock');
                     if (isUnlocked) {
                         // Project is unlocked - show lock button
@@ -1737,16 +1732,18 @@ function applyCompletedProjectStyling() {
                 }
                 
                 // For non-Super Admin users (level 2, 3 & 4)
-                if (userLevel > 1 && (isCompleted || isNoTests)) {
+                if (userLevel > 1) {
                     let $toggleBtn = $row.find('.toggle-child');
                     let $editBtn = $row.find('.btn_edit');
                     
                     if (isUnlocked) {
                         // Project is unlocked - allow access
                         $toggleBtn.removeClass('btn-secondary disabled-completed')
-                                 .addClass('btn-primary')
+                                 .addClass('btn-success')
                                  .removeAttr('disabled')
                                  .css({
+                                     'background-color': '#27ae60',
+                                     'border-color': '#27ae60',
                                      'cursor': 'pointer',
                                      'opacity': '1'
                                  });
@@ -1760,7 +1757,11 @@ function applyCompletedProjectStyling() {
                             $deleteBtn.show();
                         }
                         
-                        $row.addClass('unlocked-project');
+                        // Add modern unlocked indicator
+                        if (!$row.find('.unlock-indicator').length) {
+                            $row.addClass('unlocked-project');
+                            $toggleBtn.append('<span class="unlock-indicator modern-badge" style="position: absolute; top: -3px; right: -3px; background: #D97706; color: white; border-radius: 50%; width: 12px; height: 12px; font-size: 8px; display: flex; align-items: center; justify-content: center;"><i class="fa fa-unlock"></i></span>');
+                        }
                     } else {
                         // Project is locked - disable access
                         $toggleBtn.removeClass('btn-primary btn-success')
@@ -1772,7 +1773,7 @@ function applyCompletedProjectStyling() {
                                      'cursor': 'not-allowed',
                                      'opacity': '0.6'
                                  });
-                        $toggleBtn.attr('title', 'Project locked');
+                        $toggleBtn.attr('title', 'Project completed and locked');
                         
                         $editBtn.hide(); // Hide edit button when locked
                         
@@ -1783,6 +1784,7 @@ function applyCompletedProjectStyling() {
                         }
                         
                         $row.removeClass('unlocked-project');
+                        $toggleBtn.find('.unlock-indicator').remove();
                     }
                     
                     // Ensure print buttons remain visible and functional
@@ -2399,15 +2401,14 @@ function applyCompletedProjectStyling() {
         function openChildRow(tr, rowData) {
             // Check if project is completed and user access status
             let isCompleted = rowData ? rowData.is_completed : 0;
-            let isNoTests = rowData ? rowData.is_no_tests : 0;
             let isUnlocked = rowData ? rowData.is_unlocked : 0;
             let userLevel = <?php echo $this->session->userdata('id_user_level'); ?>;
             
-            // For non-Super Admin users on completed or no tests projects
-            if ((isCompleted == 1 || isNoTests == 1) && userLevel > 1) {
+            // For non-Super Admin users on completed projects
+            if (isCompleted == 1 && userLevel > 1) {
                 // Check if project is unlocked by admin
                 if (isUnlocked != 1) {
-                    // Don't open child row for locked completed/no tests projects (non-Super Admin users)
+                    // Don't open child row for locked completed projects (non-Super Admin users)
                     return false;
                 }
             }
@@ -2460,8 +2461,8 @@ function applyCompletedProjectStyling() {
                 e.preventDefault();
                 e.stopPropagation();
                 Swal.fire({
-                    title: 'Project Locked!',
-                    text: 'This project is locked. Only administrators can make changes to completed or no tests projects.',
+                    title: 'Project Completed!',
+                    text: 'This project has been completed and cannot be modified. Only administrators can make changes to completed projects.',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                 });
@@ -2475,17 +2476,16 @@ function applyCompletedProjectStyling() {
             let tr = $(this).closest('tr');
             let rowData = table.row(tr).data();
             let isCompleted = rowData ? rowData.is_completed : $(this).data('completed');
-            let isNoTests = rowData ? rowData.is_no_tests : 0;
             let isUnlocked = rowData ? rowData.is_unlocked : 0;
             let userLevel = <?php echo $this->session->userdata('id_user_level'); ?>;
             
-            // For non-Super Admin users on completed or no tests projects
-            if ((isCompleted == 1 || isNoTests == 1) && userLevel > 1) {
+            // For non-Super Admin users on completed projects
+            if (isCompleted == 1 && userLevel > 1) {
                 // Check if project is unlocked by admin
                 if (isUnlocked != 1) {
                     Swal.fire({
-                        title: 'Project Locked!',
-                        html: 'This project is currently <strong>locked</strong>.<br><br>Only Super Administrator can unlock completed or no tests projects for modification.',
+                        title: 'Project Completed & Locked!',
+                        html: 'This project has been completed and is currently <strong>locked</strong>.<br><br>Only Super Administrator can unlock completed projects for modification.',
                         icon: 'warning',
                         confirmButtonText: 'OK'
                     });
@@ -2584,14 +2584,13 @@ function applyCompletedProjectStyling() {
             let rowData = table.row(tr).data();
             let id_project = rowData.id_project;
             let isCompleted = rowData.is_completed;
-            let isNoTests = rowData.is_no_tests == 1;
             let isUnlocked = rowData.is_unlocked == 1;
             
-            // Only show for completed or no tests projects
-            if (isCompleted != 1 && !isNoTests) {
+            // Only show for completed projects
+            if (isCompleted != 1) {
                 Swal.fire({
                     title: 'Info',
-                    text: 'This feature is only available for completed or no tests projects.',
+                    text: 'This feature is only available for completed projects.',
                     icon: 'info',
                     confirmButtonText: 'OK'
                 });
@@ -2601,8 +2600,8 @@ function applyCompletedProjectStyling() {
             if (isUnlocked) {
                 // Lock the project
                 Swal.fire({
-                    title: 'Lock Project?',
-                    text: 'This will remove access for regular users to modify this project.',
+                    title: 'Lock Completed Project?',
+                    text: 'This will remove access for regular users to modify this completed project.',
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#f39c12',
@@ -2641,10 +2640,10 @@ function applyCompletedProjectStyling() {
             } else {
                 // Unlock the project with reason
                 Swal.fire({
-                    title: 'Unlock Project',
+                    title: 'Unlock Completed Project',
                     html: `
                         <div class="text-left">
-                            <p style="margin-bottom: 15px;">This will allow regular users to modify this project.</p>
+                            <p style="margin-bottom: 15px;">This will allow regular users to modify this completed project.</p>
                             <label for="unlock-reason" style="font-weight: bold; display: block; margin-bottom: 5px;">Reason for unlocking:</label>
                             <textarea id="unlock-reason" class="swal2-input" placeholder="Enter reason for unlocking this project..." style="height: 80px; resize: vertical;"></textarea>
                         </div>
@@ -2982,14 +2981,11 @@ function applyCompletedProjectStyling() {
             let isCompleted = rowData ? rowData.is_completed : $(this).data('completed');
             let userLevel = <?php echo $this->session->userdata('id_user_level'); ?>;
 
-            let isNoTests = rowData ? rowData.is_no_tests : 0;
-            let isUnlocked = rowData ? rowData.is_unlocked : 0;
-
-            if ((isCompleted == 1 || isNoTests == 1) && userLevel != 1 && isUnlocked != 1) {
+            if (isCompleted == 1 && userLevel != 1) {
                 e.preventDefault();
                 Swal.fire({
-                    title: 'Project Locked!',
-                    text: 'This project is locked. Only administrators can make changes to completed or no tests projects.',
+                    title: 'Project Completed!',
+                    text: 'This project has been completed and cannot be modified. Only administrators can make changes to completed projects.',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                 });
