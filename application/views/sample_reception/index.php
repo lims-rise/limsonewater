@@ -2221,38 +2221,27 @@ function applyCompletedProjectStyling() {
                     $(this.node()).removeClass('highlight highlight-edit');
                 });
 
-                // Dapatkan waktu saat ini
+                // Highlight baris yang paling baru dimasukkan berdasarkan date_created (tanpa highlight update)
+                api.rows().every(function() {
+                    $(this.node()).removeClass('highlight');
+                });
+
                 let now = new Date();
                 let newestRow = null;
                 let newestCreatedDate = null;
-                let newestUpdatedDate = null;
-                let updatedRow = null;
 
-                // Cari baris dengan date_created paling baru dan date_updated paling baru
                 api.rows().every(function() {
                     let data = this.data();
                     let createdDate = new Date(data.date_created);
-                    let updatedDate = new Date(data.date_updated);
 
-                    // Cari baris dengan date_created paling baru
-                    if (now - createdDate < 10 * 100) {
+                    if (now - createdDate < 10 * 1000) {
                         if (!newestCreatedDate || createdDate > newestCreatedDate) {
                             newestCreatedDate = createdDate;
                             newestRow = this.node();
                         }
                     }
-
-
-                    // Cari baris dengan date_updated paling baru (terbaru dalam 5 detik terakhir)
-                    if (now - updatedDate < 10 * 1000) {
-                        if (!newestUpdatedDate || updatedDate > newestUpdatedDate) {
-                            newestUpdatedDate = updatedDate;
-                            updatedRow = this.node();
-                        }
-                    }
                 });
 
-                // Highlight baris yang paling baru dimasukkan berdasarkan date_created
                 if (newestRow) {
                     $(newestRow).addClass('highlight');
                     setTimeout(function() {
@@ -2260,28 +2249,10 @@ function applyCompletedProjectStyling() {
                     }, 5000);
                 }
 
-                if (updatedRow) {
-                    $(updatedRow).addClass('highlight-edit');
-                    
-                    // Hilangkan highlight-edit setelah 10 detik
-                    setTimeout(function() {
-                        $(updatedRow).removeClass('highlight-edit');
-                    }, 5000);
-                }
-
-                // Pastikan baris pertama di halaman pertama tetap disorot jika ada baris dalam tabel
-                if (pageInfo.page === 0 && api.rows().count() > 0) {
-                    let firstRow = api.row(0).node();
-                    setTimeout(function() {
-                        $(firstRow).addClass('highlight');
-                    }, 5000);
-                }
-
                 if (lastIdProject) {
                     api.rows().every(function () {
                         let rowData = this.data();
                         if (rowData.id_project === lastIdProject) {
-                            $(this.node()).addClass('highlight');
                             $('html, body').animate({
                                 scrollTop: $(this.node()).offset().top - 100
                             }, 1000);
