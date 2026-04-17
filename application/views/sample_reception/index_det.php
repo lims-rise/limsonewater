@@ -772,6 +772,10 @@ background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
 				{
 					"data": "url",
 					"render": function(data, type, row) {
+						const isSampleCollection = row.testing_type && row.testing_type.toLowerCase() === 'sample-collection';
+						if (isSampleCollection) {
+							return '<span class="text-muted" title="Administrative record">N/A</span>';
+						}
 						return `
 							<a href="javascript:void(0);" class="url-link-detail"
 								data-url="${data}"
@@ -786,6 +790,10 @@ background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
 				{
 					"data": "url",
 					"render": function(data, type, row) {
+						const isSampleCollection = row.testing_type && row.testing_type.toLowerCase() === 'sample-collection';
+						if (isSampleCollection) {
+							return '<span class="text-muted" title="Administrative record">N/A</span>';
+						}
 						// For testing types without independent review system (Microbial Testing only)
 						// Sequencing now follows Extraction Culture status
 						// if (row.testing_type && row.testing_type.toLowerCase().includes('microbial')) {
@@ -806,12 +814,19 @@ background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
 				{
                     "data": "result",
                     "render": function(data, type, row) {
-                        return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
+						const isSampleCollection = row.testing_type && row.testing_type.toLowerCase() === 'sample-collection';
+						if (isSampleCollection) {
+							return '<span class="text-muted" title="Administrative record">N/A</span>';
+						}
+						return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
                     }
                 },
 				{
 					"data": null, // <- karena kita render manual
 					"render": function(data, type, row) {
+						if (row.testing_type && row.testing_type.toLowerCase() === 'sample-collection') {
+							return '<span class="btn btn-xs btn-default rounded-pill" title="Administrative record">N/A</span>';
+						}
 						// Handle Microbial (still no independent review system)
 						if (row.testing_type && row.testing_type.toLowerCase().includes('microbial')) {
 							return `<span class="btn btn-xs btn-info rounded-pill">No status</span>`;
