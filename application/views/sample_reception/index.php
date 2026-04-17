@@ -1703,6 +1703,8 @@ function applyCompletedProjectStyling() {
             if (rowData) {
                 let isCompleted = rowData.is_completed == 1;
                 let isNoTests = rowData.is_no_tests == 1;
+                let isSampleCollection = rowData.is_sample_collection == 1;
+                let isLockEligible = isCompleted || (isNoTests && isSampleCollection);
 
                 if (isCompleted) {
                     $row.addClass('completed-project');
@@ -1712,7 +1714,7 @@ function applyCompletedProjectStyling() {
                 let isUnlocked = rowData.is_unlocked == 1;
                 
                 // For Super Admin users (level 1 only) - Modern unlock/lock button styling
-                if (userLevel == 1 && (isCompleted || isNoTests)) {
+                if (userLevel == 1 && isLockEligible) {
                     let $unlockBtn = $row.find('.btn_unlock');
                     if (isUnlocked) {
                         // Project is unlocked - show lock button
@@ -1734,12 +1736,19 @@ function applyCompletedProjectStyling() {
                                  .find('i').removeClass('fa-lock').addClass('fa-unlock-alt');
                         $unlockBtn.attr('title', '🔒 Currently locked - Click to unlock for user access');
                     }
+                } else if (userLevel == 1) {
+                    $row.find('.btn_unlock').hide();
                 }
                 
                 // For non-Super Admin users (level 2, 3 & 4)
-                if (userLevel > 1 && (isCompleted || isNoTests)) {
+                if (userLevel > 1 && isLockEligible) {
                     let $toggleBtn = $row.find('.toggle-child');
                     let $editBtn = $row.find('.btn_edit');
+                    // let $actionCell = $row.find('td').last();
+
+                    // if (isNoTests && isSampleCollection && !isUnlocked && $actionCell.find('.pending-approval-badge').length === 0) {
+                    //     $actionCell.append('<span class="badge bg-warning pending-approval-badge" style="margin-left:5px;">Menunggu Konfirmasi</span>');
+                    // }
                     
                     if (isUnlocked) {
                         // Project is unlocked - allow access
@@ -1788,6 +1797,8 @@ function applyCompletedProjectStyling() {
                     // Ensure print buttons remain visible and functional
                     let $printBtns = $row.find('a[href*="rep_print"]');
                     $printBtns.show().css('display', 'inline-block');
+                } else if (userLevel > 1) {
+                    $row.find('.pending-approval-badge').remove();
                 }
             }
         });
@@ -2371,11 +2382,13 @@ function applyCompletedProjectStyling() {
             // Check if project is completed and user access status
             let isCompleted = rowData ? rowData.is_completed : 0;
             let isNoTests = rowData ? rowData.is_no_tests : 0;
+            let isSampleCollection = rowData ? rowData.is_sample_collection : 0;
+            let isLockEligible = (isCompleted == 1) || (isNoTests == 1 && isSampleCollection == 1);
             let isUnlocked = rowData ? rowData.is_unlocked : 0;
             let userLevel = <?php echo $this->session->userdata('id_user_level'); ?>;
             
             // For non-Super Admin users on completed or no tests projects
-            if ((isCompleted == 1 || isNoTests == 1) && userLevel > 1) {
+            if (isLockEligible && userLevel > 1) {
                 // Check if project is unlocked by admin
                 if (isUnlocked != 1) {
                     // Don't open child row for locked completed/no tests projects (non-Super Admin users)
@@ -2432,7 +2445,7 @@ function applyCompletedProjectStyling() {
                 e.stopPropagation();
                 Swal.fire({
                     title: 'Project Locked!',
-                    text: 'This project is locked. Only administrators can make changes to completed or no tests projects.',
+                    text: 'This project is locked. Only administrators can make changes to completed projects or No Tests projects with Sample-Collection.',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                 });
@@ -2447,16 +2460,18 @@ function applyCompletedProjectStyling() {
             let rowData = table.row(tr).data();
             let isCompleted = rowData ? rowData.is_completed : $(this).data('completed');
             let isNoTests = rowData ? rowData.is_no_tests : 0;
+            let isSampleCollection = rowData ? rowData.is_sample_collection : 0;
+            let isLockEligible = (isCompleted == 1) || (isNoTests == 1 && isSampleCollection == 1);
             let isUnlocked = rowData ? rowData.is_unlocked : 0;
             let userLevel = <?php echo $this->session->userdata('id_user_level'); ?>;
             
             // For non-Super Admin users on completed or no tests projects
-            if ((isCompleted == 1 || isNoTests == 1) && userLevel > 1) {
+            if (isLockEligible && userLevel > 1) {
                 // Check if project is unlocked by admin
                 if (isUnlocked != 1) {
                     Swal.fire({
                         title: 'Project Locked!',
-                        html: 'This project is currently <strong>locked</strong>.<br><br>Only Super Administrator can unlock completed or no tests projects for modification.',
+                        html: 'This project is currently <strong>locked</strong>.<br><br>Only Super Administrator can unlock completed projects or No Tests projects with Sample-Collection for modification.',
                         icon: 'warning',
                         confirmButtonText: 'OK'
                     });
@@ -2556,13 +2571,15 @@ function applyCompletedProjectStyling() {
             let id_project = rowData.id_project;
             let isCompleted = rowData.is_completed;
             let isNoTests = rowData.is_no_tests == 1;
+            let isSampleCollection = rowData.is_sample_collection == 1;
+            let isLockEligible = (isCompleted == 1) || (isNoTests && isSampleCollection);
             let isUnlocked = rowData.is_unlocked == 1;
             
             // Only show for completed or no tests projects
-            if (isCompleted != 1 && !isNoTests) {
+            if (!isLockEligible) {
                 Swal.fire({
                     title: 'Info',
-                    text: 'This feature is only available for completed or no tests projects.',
+                    text: 'This feature is only available for completed projects or No Tests projects with Sample-Collection.',
                     icon: 'info',
                     confirmButtonText: 'OK'
                 });
@@ -2954,13 +2971,15 @@ function applyCompletedProjectStyling() {
             let userLevel = <?php echo $this->session->userdata('id_user_level'); ?>;
 
             let isNoTests = rowData ? rowData.is_no_tests : 0;
+            let isSampleCollection = rowData ? rowData.is_sample_collection : 0;
+            let isLockEligible = (isCompleted == 1) || (isNoTests == 1 && isSampleCollection == 1);
             let isUnlocked = rowData ? rowData.is_unlocked : 0;
 
-            if ((isCompleted == 1 || isNoTests == 1) && userLevel != 1 && isUnlocked != 1) {
+            if (isLockEligible && userLevel != 1 && isUnlocked != 1) {
                 e.preventDefault();
                 Swal.fire({
                     title: 'Project Locked!',
-                    text: 'This project is locked. Only administrators can make changes to completed or no tests projects.',
+                    text: 'This project is locked. Only administrators can make changes to completed projects or No Tests projects with Sample-Collection.',
                     icon: 'warning',
                     confirmButtonText: 'OK'
                 });

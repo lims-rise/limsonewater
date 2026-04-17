@@ -1361,8 +1361,17 @@ class Sample_reception extends CI_Controller
         }
 
         $status_data = $this->Sample_reception_model->get_project_status($id_project);
-        if (!$status_data || !in_array($status_data['status'], array('Completed', 'No Tests'), true)) {
+        $normalized_status = $status_data ? strtolower(trim($status_data['status'])) : '';
+        $is_completed = ($normalized_status === 'completed');
+        $is_no_tests = ($normalized_status === 'no tests');
+
+        if (!$status_data || (!$is_completed && !$is_no_tests)) {
             echo json_encode(array('status' => 'error', 'message' => 'Unlock is only available for Completed or No Tests projects'));
+            return;
+        }
+
+        if ($is_no_tests && !$this->Sample_reception_model->has_sample_collection_test($id_project)) {
+            echo json_encode(array('status' => 'error', 'message' => 'Unlock is only available for No Tests projects with Sample-Collection'));
             return;
         }
         
@@ -1394,8 +1403,17 @@ class Sample_reception extends CI_Controller
         }
 
         $status_data = $this->Sample_reception_model->get_project_status($id_project);
-        if (!$status_data || !in_array($status_data['status'], array('Completed', 'No Tests'), true)) {
+        $normalized_status = $status_data ? strtolower(trim($status_data['status'])) : '';
+        $is_completed = ($normalized_status === 'completed');
+        $is_no_tests = ($normalized_status === 'no tests');
+
+        if (!$status_data || (!$is_completed && !$is_no_tests)) {
             echo json_encode(array('status' => 'error', 'message' => 'Lock is only available for Completed or No Tests projects'));
+            return;
+        }
+
+        if ($is_no_tests && !$this->Sample_reception_model->has_sample_collection_test($id_project)) {
+            echo json_encode(array('status' => 'error', 'message' => 'Lock is only available for No Tests projects with Sample-Collection'));
             return;
         }
         
