@@ -16,7 +16,7 @@ class Welcome extends CI_Controller {
         // Get dashboard data
         $data['summary'] = $this->Dashboard_model->get_dashboard_summary();
         $data['module_statistics'] = $this->Dashboard_model->get_module_statistics();
-        $data['recent_activities'] = $this->Dashboard_model->get_recent_activities(8);
+        $data['recent_activities'] = $this->Dashboard_model->get_recent_activities(7);
         $data['workflow_status'] = $this->Dashboard_model->get_workflow_status();
         $data['monthly_statistics'] = $this->Dashboard_model->get_monthly_statistics();
         $data['available_years'] = $this->Dashboard_model->get_available_years();
