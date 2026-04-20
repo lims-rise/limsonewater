@@ -2124,10 +2124,10 @@ a:visited .card-label {
                                         <div class="timeline-content">
                                             <div class="timeline-header">
                                                 <div class="timeline-meta">
-                                                    <span class="timeline-time">
+                                                    <span class="timeline-time ">
                                                       <i class="fa fa-calendar-o"></i> 
                                                       <?php echo date('M d, Y', strtotime($activity['date'])); ?>
-                                                      <br>
+                                                      <!-- <br> -->
                                                       <i class="fa fa-clock-o"></i> 
                                                       <?php echo date('H:i', strtotime($activity['date'])); ?>
                                                     </span>
@@ -2135,8 +2135,13 @@ a:visited .card-label {
                                                 </div>
                                             </div>
                                             <div class="timeline-body">
-                                                <div class="activity-title"><?php echo htmlspecialchars($activity['action']); ?></div>
-                                                <div class="activity-description"><?php echo htmlspecialchars($activity['description']); ?></div>
+                                              <div class="activity-title"><?php echo htmlspecialchars($activity['action']); ?></div>
+                                              <div class="activity-description"><?php echo htmlspecialchars($activity['description']); ?></div>
+                                              <?php if (!empty($activity['created_by'])): ?>
+                                                <div class="activity-description" style="font-size: 12px; color: #6B7178;">
+                                                  <i class="fa fa-user"></i> Created by: <?php echo htmlspecialchars($activity['created_by']); ?>
+                                                </div>
+                                              <?php endif; ?>
                                             </div>
                                         </div>
                                     </li>

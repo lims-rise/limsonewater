@@ -119,42 +119,75 @@ class Dashboard_model extends CI_Model
         $activities = array();
 
         // Recent sample receptions
-        $this->db->select('id_project, client, id_client_sample, date_created, "sample_reception" as module_type');
-        $this->db->where('flag', '0');
-        $this->db->order_by('date_created', 'DESC');
+        $this->db->select('sr.id_project, sr.client, sr.id_client_sample, sr.date_created, tu.full_name as created_by, "sample_reception" as module_type');
+        $this->db->from('sample_reception sr');
+        $this->db->join('tbl_user tu', 'sr.user_created = tu.id_users', 'left');
+        $this->db->where('sr.flag', '0');
+        $this->db->order_by('sr.date_created', 'DESC');
         $this->db->limit($limit/2);
-        $query = $this->db->get('sample_reception');
+        $query = $this->db->get();
         
         foreach ($query->result() as $row) {
             $activities[] = array(
                 'module' => 'Sample Reception',
                 'action' => 'New Project Created',
                 'description' => "Project {$row->id_project} - {$row->id_client_sample}",
+                'created_by' => $row->created_by,
                 'date' => $row->date_created,
                 'icon' => 'fa-plus',
                 'color' => 'bg-blue'
             );
         }
 
-        // Recent test completions (from review status)
-        $modules_with_review = array('campy_biosolids', 'campy_liquids', 'salmonella_liquids', 'salmonella_biosolids');
+        // Recent test creations (from created status)
+        $modules_with_review = array(
+            'biobank_in',
+            'moisture_content',
+            'campy_biosolids',
+            'campy_liquids',
+            'campy_pa',
+            'salmonella_liquids',
+            'salmonella_biosolids',
+            'salmonella_pa',
+            'extraction_culture',
+            'extraction_liquid',
+            'extraction_metagenome',
+            'extraction_biosolid',
+            'enterolert_water_in',
+            'enterolert_biosolids_in',
+            'colilert_biosolids_in',
+            'colilert_water_in',
+            'protozoa',
+            'hemoflow',
+            'enterolert_hemoflow',
+            'colilert_hemoflow',
+            'campy_hemoflow',
+            'salmonella_hemoflow',
+            'campy_hemoflow_qpcr'
+        );
         
         foreach ($modules_with_review as $table) {
-            if ($this->db->table_exists($table)) {
-                $this->db->select("id_one_water_sample, date_updated, '{$table}' as module_type");
-                $this->db->where('flag', '0');
-                $this->db->where('review', '1');
-                $this->db->order_by('date_updated', 'DESC');
+            if ($this->db->table_exists($table) && $this->db->field_exists('date_created', $table)) {
+                $this->db->select("{$table}.id_one_water_sample, {$table}.date_created, {$table}.user_created, tu.full_name as created_by, '{$table}' as module_type");
+                $this->db->from($table);
+                if ($this->db->field_exists('user_created', $table)) {
+                    $this->db->join('tbl_user tu', "{$table}.user_created = tu.id_users", 'left');
+                } else {
+                    $this->db->join('tbl_user tu', '1=0', 'left');
+                }
+                $this->db->where("{$table}.flag", '0');
+                $this->db->order_by("{$table}.date_created", 'DESC');
                 $this->db->limit(2);
-                $query = $this->db->get($table);
+                $query = $this->db->get();
                 
                 foreach ($query->result() as $row) {
                     $module_name = ucwords(str_replace('_', ' ', $table));
                     $activities[] = array(
                         'module' => $module_name,
-                        'action' => 'Test Completed',
+                        'action' => 'New Test Created',
                         'description' => "Sample {$row->id_one_water_sample}",
-                        'date' => $row->date_updated,
+                        'created_by' => $row->created_by,
+                        'date' => $row->date_created,
                         'icon' => 'fa-check',
                         'color' => 'bg-green'
                     );
