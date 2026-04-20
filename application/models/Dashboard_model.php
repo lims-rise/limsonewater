@@ -134,7 +134,7 @@ class Dashboard_model extends CI_Model
                 'description' => "Project {$row->id_project} - {$row->id_client_sample}",
                 'created_by' => $row->created_by,
                 'date' => $row->date_created,
-                'icon' => 'fa-plus',
+                'icon' => 'fa-folder',
                 'color' => 'bg-blue'
             );
         }
@@ -188,8 +188,8 @@ class Dashboard_model extends CI_Model
                         'description' => "Sample {$row->id_one_water_sample}",
                         'created_by' => $row->created_by,
                         'date' => $row->date_created,
-                        'icon' => 'fa-check',
-                        'color' => 'bg-green'
+                        'icon' => 'fa-flask',
+                        'color' => 'bg-blue'
                     );
                 }
             }
