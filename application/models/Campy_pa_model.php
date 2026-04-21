@@ -601,7 +601,7 @@ class Campy_pa_model extends CI_Model
     }
     
     function updateCampyBiosolids($id, $data) {
-        $this->db->where('id_one_water_sample', $id);
+        $this->db->where('id_campy_pa', $id);
         $this->db->where('flag', '0');
         $this->db->update('campy_pa', $data);
     }

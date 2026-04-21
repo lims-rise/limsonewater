@@ -121,7 +121,7 @@ class Enterolert_hemoflow_model extends CI_Model
     // Function update data
     function update($id, $data)
     {
-        $this->db->where('id_one_water_sample', $id);
+        $this->db->where('id_enterolert_hemoflow', $id);
         $this->db->where('flag', '0');
         $this->db->update('enterolert_hemoflow', $data);
     }

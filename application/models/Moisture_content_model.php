@@ -158,7 +158,7 @@ class Moisture_content_model extends CI_Model
     // Function update data
     function update($id, $data)
     {
-        $this->db->where('id_one_water_sample', $id);
+        $this->db->where('id_moisture', $id);
         $this->db->update('moisture_content', $data);
     }
 
