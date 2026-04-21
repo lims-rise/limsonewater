@@ -825,7 +825,7 @@ background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
 					"data": null, // <- karena kita render manual
 					"render": function(data, type, row) {
 						if (row.testing_type && row.testing_type.toLowerCase() === 'sample-collection') {
-							return '<span class="btn btn-xs btn-default rounded-pill" title="Administrative record">N/A</span>';
+							return '<span class="btn btn-xs btn-success rounded-pill" title="Sample Collection - Completed">Completed</span>';
 						}
 						// Handle Microbial (still no independent review system)
 						if (row.testing_type && row.testing_type.toLowerCase().includes('microbial')) {

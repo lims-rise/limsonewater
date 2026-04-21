@@ -536,7 +536,7 @@ class Campy_hemoflow_model extends CI_Model
     }
     
     function updateCampyHemoflow($id, $data) {
-        $this->db->where('id_one_water_sample', $id);
+        $this->db->where('id_campy_hemoflow', $id);
         $this->db->update('campy_hemoflow', $data);
     }
 

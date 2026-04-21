@@ -487,7 +487,7 @@ class Campy_liquids_model extends CI_Model
     }
     
     function updateCampyLiquids($id, $data) {
-        $this->db->where('id_one_water_sample', $id);
+        $this->db->where('id_campy_liquids', $id);
         $this->db->where('flag', '0');
         $this->db->update('campy_liquids', $data);
     }

@@ -98,7 +98,7 @@ class Enterolert_idexx_water extends CI_Controller
 
     public function save() {
         $mode = $this->input->post('mode', TRUE);
-        $id_enterolert = $this->input->post('idx_enterolert', TRUE);
+        $id_enterolert_in = $this->input->post('idx_enterolert', TRUE);
         $dt = new DateTime();
 
         $id_one_water_sample = $this->input->post('id_one_water_sample', TRUE);
@@ -158,7 +158,7 @@ class Enterolert_idexx_water extends CI_Controller
             // var_dump($data);
             // die();
 
-            $this->Enterolert_idexx_water_model->update($id_enterolert, $data);
+            $this->Enterolert_idexx_water_model->update($id_enterolert_in, $data);
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
