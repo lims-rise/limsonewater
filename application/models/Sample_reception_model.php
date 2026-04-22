@@ -23,14 +23,14 @@ class Sample_reception_model extends CI_Model
                 LEFT JOIN sample_reception_testing srt ON srs.id_sample = srt.id_sample AND srt.flag = 0 
                 LEFT JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)
                 WHERE srs.id_project = sr.id_project AND srs.flag = 0 
-                AND rt.testing_type NOT LIKE "%microbial%" AND rt.testing_type != "Sample-Collection"
+                AND rt.testing_type NOT LIKE "%microbial%"
             ) > 0 AND (
                 SELECT COUNT(DISTINCT srt.id_testing) 
                 FROM sample_reception_sample srs 
                 LEFT JOIN sample_reception_testing srt ON srs.id_sample = srt.id_sample AND srt.flag = 0 
                 LEFT JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)
                 WHERE srs.id_project = sr.id_project AND srs.flag = 0 
-                AND rt.testing_type NOT LIKE "%microbial%" AND rt.testing_type != "Sample-Collection"
+                AND rt.testing_type NOT LIKE "%microbial%"
             ) = (
                 SELECT COUNT(DISTINCT CASE 
                     WHEN rt.testing_type = "Sequencing" AND seq.is_status = 1 AND NOT EXISTS(
@@ -75,7 +75,7 @@ class Sample_reception_model extends CI_Model
                 LEFT JOIN campy_hemoflow_qpcr chq ON chq.campy_assay_barcode = srt.barcode AND chq.flag = 0
                 LEFT JOIN sequencing seq ON seq.sequencing_barcode = srt.barcode AND seq.flag = 0
                 WHERE srs.id_project = sr.id_project AND srs.flag = 0 
-                AND rt.testing_type NOT LIKE "%microbial%" AND rt.testing_type != "Sample-Collection"
+                AND rt.testing_type NOT LIKE "%microbial%"
             ) THEN 1 ELSE 0 END as is_completed,
             CASE WHEN (
                 SELECT COUNT(DISTINCT srt.id_testing) 
@@ -83,17 +83,8 @@ class Sample_reception_model extends CI_Model
                 LEFT JOIN sample_reception_testing srt ON srs.id_sample = srt.id_sample AND srt.flag = 0 
                 LEFT JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)
                 WHERE srs.id_project = sr.id_project AND srs.flag = 0 
-                AND rt.testing_type NOT LIKE "%microbial%" AND rt.testing_type != "Sample-Collection"
-            ) = 0 THEN 1 ELSE 0 END as is_no_tests,
-            CASE WHEN EXISTS (
-                SELECT 1
-                FROM sample_reception_sample srs
-                LEFT JOIN sample_reception_testing srt ON srs.id_sample = srt.id_sample AND srt.flag = 0
-                LEFT JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)
-                WHERE srs.id_project = sr.id_project AND srs.flag = 0
-                AND rt.testing_type = "Sample-Collection"
-                LIMIT 1
-            ) THEN 1 ELSE 0 END as is_sample_collection', FALSE);
+                AND rt.testing_type NOT LIKE "%microbial%"
+            ) = 0 THEN 1 ELSE 0 END as is_no_tests', FALSE);
             
         $this->datatables->from('sample_reception sr');
         $this->datatables->join('ref_client cc', 'sr.id_client_contact = cc.id_client_contact AND cc.flag = 0', 'left');
@@ -233,7 +224,7 @@ class Sample_reception_model extends CI_Model
                 LEFT JOIN sample_reception_testing srt ON srs2.id_sample = srt.id_sample AND srt.flag = 0 
                 LEFT JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)
                 WHERE srs2.id_project = sr.id_project AND srs2.flag = 0
-                AND rt.testing_type NOT LIKE "%microbial%" AND rt.testing_type != "Sample-Collection"
+                AND rt.testing_type NOT LIKE "%microbial%"
             ) > 0 AND (
                 SELECT COUNT(DISTINCT srt.id_testing) 
                 FROM sample_reception_sample srs2 
@@ -294,16 +285,7 @@ class Sample_reception_model extends CI_Model
                 LEFT JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)
                 WHERE srs2.id_project = sr.id_project AND srs2.flag = 0
                 AND rt.testing_type NOT LIKE "%microbial%"
-            ) = 0 THEN 1 ELSE 0 END as is_no_tests,
-            CASE WHEN EXISTS (
-                SELECT 1
-                FROM sample_reception_sample srs2
-                LEFT JOIN sample_reception_testing srt ON srs2.id_sample = srt.id_sample AND srt.flag = 0
-                LEFT JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)
-                WHERE srs2.id_project = sr.id_project AND srs2.flag = 0
-                AND rt.testing_type = "Sample-Collection"
-                LIMIT 1
-            ) THEN 1 ELSE 0 END as is_sample_collection
+            ) = 0 THEN 1 ELSE 0 END as is_no_tests
         ', FALSE);
         
         $this->datatables->from('sample_reception sr');
@@ -504,15 +486,15 @@ class Sample_reception_model extends CI_Model
                     sr.id_project,
                     sr.id_client_sample,
                     COUNT(srs.id_sample) as total_samples,
-                    COUNT(DISTINCT CASE WHEN rt.testing_type NOT LIKE '%microbial%' AND rt.testing_type != 'Sample-Collection' THEN srt.id_testing END) as total_tests,
+                    COUNT(DISTINCT CASE WHEN rt.testing_type NOT LIKE '%microbial%' THEN srt.id_testing END) as total_tests,
                     COUNT(DISTINCT CASE 
-                        WHEN rt.testing_type NOT LIKE '%microbial%' AND rt.testing_type != 'Sample-Collection' AND rt.testing_type = 'Sequencing' AND seq.is_status = 1 AND NOT EXISTS(
+                        WHEN rt.testing_type NOT LIKE '%microbial%' AND rt.testing_type = 'Sequencing' AND seq.is_status = 1 AND NOT EXISTS(
                             SELECT 1 FROM extraction_culture_plate ecp3 
                             WHERE ecp3.id_one_water_sample = srs4.id_one_water_sample 
                             AND ecp3.flag = 0 
                             AND (ecp3.species_id IS NULL OR ecp3.species_id = '')
                         ) THEN srt.id_testing
-                        WHEN rt.testing_type NOT LIKE '%microbial%' AND rt.testing_type != 'Sample-Collection' AND rt.testing_type != 'Sequencing' AND COALESCE(
+                        WHEN rt.testing_type NOT LIKE '%microbial%' AND rt.testing_type != 'Sequencing' AND COALESCE(
                             bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
                             ec.review, el.review, em.review, cb.review, mc.review, 
                             ewi.review, ebi.review, cbi.review, cwi.review, 
@@ -1536,25 +1518,25 @@ class Sample_reception_model extends CI_Model
                 COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, ch.review, ex.review, sh.review, chq.review, 0)
         END AS review,
         CASE 
-            WHEN COUNT(DISTINCT CASE WHEN rt.testing_type NOT LIKE "%microbial%" AND rt.testing_type != "Sample-Collection" THEN testing.id_testing END) = 0 THEN "No Tests"
+            WHEN COUNT(DISTINCT CASE WHEN rt.testing_type NOT LIKE "%microbial%" THEN testing.id_testing END) = 0 THEN "No Tests"
             WHEN COUNT(DISTINCT CASE 
-                WHEN rt.testing_type NOT LIKE "%microbial%" AND rt.testing_type != "Sample-Collection" AND rt.testing_type = "Sequencing" AND seq.is_status = 1 AND NOT EXISTS(
+                WHEN rt.testing_type NOT LIKE "%microbial%" AND rt.testing_type = "Sequencing" AND seq.is_status = 1 AND NOT EXISTS(
                     SELECT 1 FROM extraction_culture_plate ecp3 
                     WHERE ecp3.id_one_water_sample = sample_reception_sample.id_one_water_sample 
                     AND ecp3.flag = 0 
                     AND (ecp3.species_id IS NULL OR ecp3.species_id = "")
                 ) THEN testing.id_testing
-                WHEN rt.testing_type NOT LIKE "%microbial%" AND rt.testing_type != "Sample-Collection" AND rt.testing_type != "Sequencing" AND COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review) = 1 THEN testing.id_testing
+                WHEN rt.testing_type NOT LIKE "%microbial%" AND rt.testing_type != "Sequencing" AND COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review) = 1 THEN testing.id_testing
                 ELSE NULL 
-            END) = COUNT(DISTINCT CASE WHEN rt.testing_type NOT LIKE "%microbial%" AND rt.testing_type != "Sample-Collection" THEN testing.id_testing END) THEN "Complete"
+            END) = COUNT(DISTINCT CASE WHEN rt.testing_type NOT LIKE "%microbial%" THEN testing.id_testing END) THEN "Complete"
             WHEN COUNT(DISTINCT CASE 
-                WHEN rt.testing_type NOT LIKE "%microbial%" AND rt.testing_type != "Sample-Collection" AND rt.testing_type = "Sequencing" AND seq.is_status = 1 AND NOT EXISTS(
+                WHEN rt.testing_type NOT LIKE "%microbial%" AND rt.testing_type = "Sequencing" AND seq.is_status = 1 AND NOT EXISTS(
                     SELECT 1 FROM extraction_culture_plate ecp3 
                     WHERE ecp3.id_one_water_sample = sample_reception_sample.id_one_water_sample 
                     AND ecp3.flag = 0 
                     AND (ecp3.species_id IS NULL OR ecp3.species_id = "")
                 ) THEN testing.id_testing
-                WHEN rt.testing_type NOT LIKE "%microbial%" AND rt.testing_type != "Sample-Collection" AND rt.testing_type != "Sequencing" AND COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review) = 1 THEN testing.id_testing
+                WHEN rt.testing_type NOT LIKE "%microbial%" AND rt.testing_type != "Sequencing" AND COALESCE(bank.review, campy.review, salmonellaL.review, salmonellaB.review, ec.review, el.review, em.review, cb.review, mc.review, ewi.review, ebi.review, cbi.review, cwi.review, pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review) = 1 THEN testing.id_testing
                 ELSE NULL 
             END) > 0 THEN "Partial"
             ELSE "Incomplete"
@@ -3071,19 +3053,6 @@ class Sample_reception_model extends CI_Model
         
         $this->db->where('id_project', $id_project);
         return $this->db->update('sample_reception', $data);
-    }
-
-    public function has_sample_collection_test($id_project) {
-        $this->db->select('1', false);
-        $this->db->from('sample_reception_sample srs');
-        $this->db->join('sample_reception_testing srt', 'srs.id_sample = srt.id_sample AND srt.flag = 0', 'left');
-        $this->db->join('ref_testing rt', 'FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)', 'left');
-        $this->db->where('srs.id_project', $id_project);
-        $this->db->where('srs.flag', '0');
-        $this->db->where('rt.testing_type', 'Sample-Collection');
-        $this->db->limit(1);
-
-        return $this->db->get()->num_rows() > 0;
     }
     
     public function get_unlock_info($id_project) {
