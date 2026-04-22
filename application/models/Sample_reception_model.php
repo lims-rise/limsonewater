@@ -76,15 +76,7 @@ class Sample_reception_model extends CI_Model
                 LEFT JOIN sequencing seq ON seq.sequencing_barcode = srt.barcode AND seq.flag = 0
                 WHERE srs.id_project = sr.id_project AND srs.flag = 0 
                 AND rt.testing_type NOT LIKE "%microbial%"
-            ) THEN 1 ELSE 0 END as is_completed,
-            CASE WHEN (
-                SELECT COUNT(DISTINCT srt.id_testing) 
-                FROM sample_reception_sample srs 
-                LEFT JOIN sample_reception_testing srt ON srs.id_sample = srt.id_sample AND srt.flag = 0 
-                LEFT JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)
-                WHERE srs.id_project = sr.id_project AND srs.flag = 0 
-                AND rt.testing_type NOT LIKE "%microbial%"
-            ) = 0 THEN 1 ELSE 0 END as is_no_tests', FALSE);
+            ) THEN 1 ELSE 0 END as is_completed', FALSE);
             
         $this->datatables->from('sample_reception sr');
         $this->datatables->join('ref_client cc', 'sr.id_client_contact = cc.id_client_contact AND cc.flag = 0', 'left');
@@ -277,15 +269,7 @@ class Sample_reception_model extends CI_Model
                 LEFT JOIN sequencing seq ON seq.sequencing_barcode = srt.barcode AND seq.flag = 0
                 WHERE srs2.id_project = sr.id_project AND srs2.flag = 0
                 AND rt.testing_type NOT LIKE "%microbial%"
-            ) THEN 1 ELSE 0 END as is_completed,
-            CASE WHEN (
-                SELECT COUNT(DISTINCT srt.id_testing) 
-                FROM sample_reception_sample srs2 
-                LEFT JOIN sample_reception_testing srt ON srs2.id_sample = srt.id_sample AND srt.flag = 0 
-                LEFT JOIN ref_testing rt ON FIND_IN_SET(rt.id_testing_type, srt.id_testing_type)
-                WHERE srs2.id_project = sr.id_project AND srs2.flag = 0
-                AND rt.testing_type NOT LIKE "%microbial%"
-            ) = 0 THEN 1 ELSE 0 END as is_no_tests
+            ) THEN 1 ELSE 0 END as is_completed
         ', FALSE);
         
         $this->datatables->from('sample_reception sr');
