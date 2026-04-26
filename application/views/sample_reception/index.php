@@ -2029,8 +2029,14 @@ function applyCompletedProjectStyling() {
         let searchSample = getUrlParameter('sample_id');
         let generalSearch = getUrlParameter('search');
 
-        let lastIdProject = localStorage.getItem('last_id_project');
-        let lastPage = localStorage.getItem('last_page');
+        // Clean up old localStorage data from previous feature
+        localStorage.removeItem('last_id_project');
+        localStorage.removeItem('last_page');
+
+        // Disabled: Auto-expand last opened project feature
+        // let lastIdProject = localStorage.getItem('last_id_project');
+        // let lastPage = localStorage.getItem('last_page');
+        
         table = $("#mytable").DataTable({
             oLanguage: {
                 sProcessing: "loading..."
@@ -2038,7 +2044,7 @@ function applyCompletedProjectStyling() {
             processing: true,
             serverSide: true,
             ajax: {"url": "Sample_reception/json", "type": "POST"},
-            displayStart: lastPage ? (parseInt(lastPage) * 10) : 0, // <-- ini di sini ya!
+            // displayStart: lastPage ? (parseInt(lastPage) * 10) : 0, // Disabled: auto-navigate to last page
             columns: [
                 { "data": "toggle", "orderable": false, "searchable": false }, // Ikon toggle di awal
                 {
@@ -2238,21 +2244,21 @@ function applyCompletedProjectStyling() {
                     }, 5000);
                 }
 
-                if (lastIdProject) {
-                    api.rows().every(function () {
-                        let rowData = this.data();
-                        if (rowData.id_project === lastIdProject) {
-                            $('html, body').animate({
-                                scrollTop: $(this.node()).offset().top - 100
-                            }, 1000);
-                            // buka child-nya otomatis
-                            openChildRow($(this.node()), rowData);
-                        }
-                    });
-
-                    // localStorage.removeItem('last_id_project');
-                    // localStorage.removeItem('last_page');
-                }
+                // Disabled: Auto-expand last opened project
+                // if (lastIdProject) {
+                //     api.rows().every(function () {
+                //         let rowData = this.data();
+                //         if (rowData.id_project === lastIdProject) {
+                //             $('html, body').animate({
+                //                 scrollTop: $(this.node()).offset().top - 100
+                //             }, 1000);
+                //             // buka child-nya otomatis
+                //             openChildRow($(this.node()), rowData);
+                //         }
+                //     });
+                //     localStorage.removeItem('last_id_project');
+                //     localStorage.removeItem('last_page');
+                // }
                 
                 // Apply styling to completed project rows
                 applyCompletedProjectStyling();
@@ -2335,18 +2341,17 @@ function applyCompletedProjectStyling() {
             });
         }
 
-        $('#mytable tbody').on('click', 'tr', function () {
-            const table = $('#mytable').DataTable();
-            const rowData = table.row(this).data(); // Ambil data dari DataTable, bukan dari DOM
-
-            if (rowData) {
-                const id = rowData.id_project; // pastikan nama field sesuai dari server
-
-                const pageInfo = table.page.info();
-                localStorage.setItem('last_id_project', id);
-                localStorage.setItem('last_page', pageInfo.page);
-            }
-        });
+        // Disabled: Save last opened project to localStorage
+        // $('#mytable tbody').on('click', 'tr', function () {
+        //     const table = $('#mytable').DataTable();
+        //     const rowData = table.row(this).data();
+        //     if (rowData) {
+        //         const id = rowData.id_project;
+        //         const pageInfo = table.page.info();
+        //         localStorage.setItem('last_id_project', id);
+        //         localStorage.setItem('last_page', pageInfo.page);
+        //     }
+        // });
 
 
 

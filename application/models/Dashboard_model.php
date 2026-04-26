@@ -43,7 +43,21 @@ class Dashboard_model extends CI_Model
     }
 
     // Get module statistics
-    public function get_module_statistics() {
+    public function get_module_statistics($year = null) {
+        // Validate and sanitize year parameter
+        if (empty($year)) {
+            $year = (int)date('Y');
+        } else {
+            // Force integer type and validate range
+            $year = (int)$year;
+            $current_year = (int)date('Y');
+            
+            // Ensure year is within reasonable range (2000 to current year + 1)
+            if ($year < 2000 || $year > ($current_year + 1)) {
+                $year = $current_year;
+            }
+        }
+        
         $modules = array(
             'biobank_in' => 'Biobank Storage',
             'moisture_content' => 'Moisture Content',
@@ -74,9 +88,12 @@ class Dashboard_model extends CI_Model
         
         foreach ($modules as $table => $name) {
             if ($this->db->table_exists($table)) {
-                // Total records
+                // Total records (filtered by year)
                 $this->db->select('COUNT(*) as total');
                 $this->db->where('flag', '0');
+                if ($this->db->field_exists('date_created', $table)) {
+                    $this->db->where('YEAR(date_created)', $year);
+                }
                 $query = $this->db->get($table);
                 $total = $query->row()->total;
 
@@ -84,13 +101,19 @@ class Dashboard_model extends CI_Model
                 $this->db->select('COUNT(*) as today');
                 $this->db->where('flag', '0');
                 $this->db->where('DATE(date_created)', date('Y-m-d'));
+                if ($this->db->field_exists('date_created', $table)) {
+                    $this->db->where('YEAR(date_created)', $year);
+                }
                 $query = $this->db->get($table);
                 $today = $query->row()->today;
 
-                // Completed tests (where review = 1)
+                // Completed tests (where review = 1, filtered by year)
                 $this->db->select('COUNT(*) as completed');
                 $this->db->where('flag', '0');
                 $this->db->where('review', '1');
+                if ($this->db->field_exists('date_created', $table)) {
+                    $this->db->where('YEAR(date_created)', $year);
+                }
                 $query = $this->db->get($table);
                 $completed = $query->row()->completed;
 
