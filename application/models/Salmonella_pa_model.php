@@ -533,6 +533,11 @@ class Salmonella_pa_model extends CI_Model
         $this->db->update('salmonella_pa', $data);
     }
 
+    function deleteSalmonellaPA($id, $data) {
+        $this->db->where('id_salmonella_pa', $id);
+        $this->db->update('salmonella_pa', $data);
+    }
+
     public function delete_sample_volumes($id_salmonella_pa) {
         $this->db->where('id_salmonella_pa', $id_salmonella_pa);
         $this->db->delete('salmonella_sample_volumes_pa');

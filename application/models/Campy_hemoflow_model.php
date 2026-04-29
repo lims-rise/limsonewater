@@ -540,6 +540,12 @@ class Campy_hemoflow_model extends CI_Model
         $this->db->update('campy_hemoflow', $data);
     }
 
+    function deleteCampyHemoflow($id, $data) {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->where('flag', '0');
+        $this->db->update('campy_hemoflow', $data);
+    }
+
     public function delete_sample_volumes($id_campy_hemoflow) {
         $this->db->where('id_campy_hemoflow', $id_campy_hemoflow);
         $this->db->delete('campy_hemoflow_sample_volumes');

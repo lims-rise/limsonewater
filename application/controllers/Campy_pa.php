@@ -221,7 +221,7 @@ class Campy_pa extends CI_Controller
             // var_dump($data);
             // die();
     
-            $this->Campy_pa_model->updateCampyBiosolids($id_campy_pa, $data);
+            $this->Campy_pa_model->updateCampyPa($id_campy_pa, $data);
     
             // Update sample volumes
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
@@ -751,8 +751,8 @@ class Campy_pa extends CI_Controller
     }
 
 
-    public function delete_campyBiosolids($id) {
-        $row = $this->Campy_pa_model->get_by_id_campybiosolids($id);
+    public function delete_campyPa($id) {
+        $row = $this->Campy_pa_model->get_by_id_campypa($id);
         if ($row) {
             $id_parent = $row->id_result_charcoal_pa; // Retrieve project_id before updating the record
             $id_campy_pa = $row->id_campy_pa; // Get campy_pa ID for cascade delete
@@ -760,7 +760,7 @@ class Campy_pa extends CI_Controller
                 'flag' => 1,
             );
     
-            $this->Campy_pa_model->updateCampyBiosolids($id, $data);
+            $this->Campy_pa_model->deleteCampyPa($id, $data);
             $this->Campy_pa_model->updateSampleVolume($id_campy_pa, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {

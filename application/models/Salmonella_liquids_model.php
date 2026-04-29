@@ -484,6 +484,12 @@ class Salmonella_liquids_model extends CI_Model
         $this->db->update('salmonella_liquids', $data);
     }
 
+    function deleteSalmonellaLiquids($id, $data) {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->where('flag', '0');
+        $this->db->update('salmonella_liquids', $data);
+    }
+
     public function delete_sample_volumes($id_salmonella_liquids) {
         $this->db->where('id_salmonella_liquids', $id_salmonella_liquids);
         $this->db->delete('salmonella_sample_volumes_liquids');

@@ -851,7 +851,7 @@ class Campy_hemoflow extends CI_Controller
                 'flag' => 1,
             );
 
-            $this->Campy_hemoflow_model->updateCampyHemoflow($id, $data);
+            $this->Campy_hemoflow_model->deleteCampyHemoflow($id, $data);
             $this->Campy_hemoflow_model->updateSampleVolume($id_campy_hemoflow, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {

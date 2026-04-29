@@ -448,8 +448,13 @@ class Campy_biosolids_qpcr_model extends CI_Model
         $this->db->insert('campy_sample_volumes_qpcr', $data);
     }
     
-    function updateCampyBiosolids($id, $data) {
+    function updateCampyBiosolidsqpcr($id, $data) {
         $this->db->where('id_campy_biosolids_qpcr', $id);
+        $this->db->update('campy_biosolids_qpcr', $data);
+    }
+
+    function deleteCampyBiosolidsqpcr($id, $data) {
+        $this->db->where('id_one_water_sample', $id);
         $this->db->update('campy_biosolids_qpcr', $data);
     }
 
@@ -491,7 +496,7 @@ class Campy_biosolids_qpcr_model extends CI_Model
         $this->db->update('campy_sample_qpcr_tube', $data);
     }
 
-    function get_by_id_campybiosolids($id)
+    function get_by_id_campybiosolidsqpcr($id)
     {
         $this->db->where('id_campy_biosolids_qpcr', $id);
         $this->db->where('flag', '0');

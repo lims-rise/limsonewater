@@ -348,7 +348,7 @@
         // Handle the delete button click
         $(document).on('click', '.btn_deleteCampyBiosolids', function() {
             let id = $(this).data('id');
-            let url = '<?php echo site_url('Campy_biosolids_qpcr/delete_campyBiosolids'); ?>/' + id;
+            let url = '<?php echo site_url('Campy_biosolids_qpcr/delete_campyBiosolidsQpcr'); ?>/' + id;
             $('#confirm-modal #id').text(id);
             console.log(id);
             showConfirmation(url);

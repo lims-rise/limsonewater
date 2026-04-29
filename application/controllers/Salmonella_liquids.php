@@ -1055,7 +1055,7 @@ class Salmonella_liquids extends CI_Controller
                 'flag' => 1,
             );
     
-            $this->Salmonella_liquids_model->updateSalmonellaLiquids($id, $data);
+            $this->Salmonella_liquids_model->deleteSalmonellaLiquids($id, $data);
             $this->Salmonella_liquids_model->updateSampleVolume($id_salmonella_liquids, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {

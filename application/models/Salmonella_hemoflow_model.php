@@ -524,6 +524,12 @@ class Salmonella_hemoflow_model extends CI_Model
         $this->db->update('salmonella_hemoflow', $data);
     }
 
+    function deleteSalmonellaHemoflow($id, $data) {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->where('flag', '0');
+        $this->db->update('salmonella_hemoflow', $data);
+    }
+
     public function delete_sample_volumes($id_salmonella_hemoflow) {
         $this->db->where('id_salmonella_hemoflow', $id_salmonella_hemoflow);
         $this->db->delete('salmonella_hemoflow_sample_volumes');

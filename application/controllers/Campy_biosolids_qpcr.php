@@ -212,7 +212,7 @@ class Campy_biosolids_qpcr extends CI_Controller
             // var_dump($data);
             // die();
     
-            $this->Campy_biosolids_qpcr_model->updateCampyBiosolids($id_campy_biosolids_qpcr, $data);
+            $this->Campy_biosolids_qpcr_model->updateCampyBiosolidsqpcr($id_campy_biosolids_qpcr, $data);
             // Update sample volumes
             $number_of_tubes = $this->input->post('number_of_tubes1', TRUE);
             // var_dump($number_of_tubes); // var dump jumlah tube
@@ -615,15 +615,15 @@ class Campy_biosolids_qpcr extends CI_Controller
     // }
 
 
-    public function delete_campyBiosolids($id) {
-        $row = $this->Campy_biosolids_qpcr_model->get_by_id_campybiosolids($id);
+    public function delete_campyBiosolidsQpcr($id) {
+        $row = $this->Campy_biosolids_qpcr_model->get_by_id_campybiosolidsqpcr($id);
         if ($row) {
             $id_parent = $row->id_result_qpcr; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
     
-            $this->Campy_biosolids_qpcr_model->updateCampyBiosolids($id, $data);
+            $this->Campy_biosolids_qpcr_model->deleteCampyBiosolidsqpcr($id, $data);
             $this->Campy_biosolids_qpcr_model->updateSampleVolume($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {

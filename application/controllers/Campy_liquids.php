@@ -662,7 +662,7 @@ class Campy_liquids extends CI_Controller
                 'flag' => 1,
             );
     
-            $this->Campy_liquids_model->updateCampyLiquids($id, $data);
+            $this->Campy_liquids_model->deleteCampyLiquids($id, $data);
             $this->Campy_liquids_model->updateSampleVolume($id_campy_liquids, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {

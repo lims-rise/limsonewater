@@ -162,6 +162,12 @@ class Moisture_content_model extends CI_Model
         $this->db->update('moisture_content', $data);
     }
 
+    function delete_moisture_content($id, $data)
+    {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->update('moisture_content', $data);
+    }
+
     function insert_det24($data) {
         $this->db->insert($this->table24, $data);
         return $this->db->insert_id(); // Return the ID of the newly inserted row

@@ -846,7 +846,7 @@ class Campy_biosolids extends CI_Controller
                 'flag' => 1,
             );
     
-            $this->Campy_biosolids_model->updateCampyBiosolids($id, $data);
+            $this->Campy_biosolids_model->deleteCampyBiosolids($id, $data);
             $this->Campy_biosolids_model->updateSampleVolume($id_campy_biosolids, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {

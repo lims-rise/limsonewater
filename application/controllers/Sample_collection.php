@@ -14,13 +14,13 @@ if (!defined('BASEPATH'))
 // use PhpOffice\PhpSpreadsheet\Spreadsheet;
 // use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
     
-class Moisture_content extends CI_Controller
+class Sample_collection extends CI_Controller
 {
     function __construct()
     {
         parent::__construct();
         is_login();
-        $this->load->model('Moisture_content_model');
+        $this->load->model('Sample_collection_model');
         $this->load->library('form_validation');        
 	    $this->load->library('datatables');
 	    $this->load->library('uuid');
@@ -28,57 +28,57 @@ class Moisture_content extends CI_Controller
 
     public function index()
     {
-        $data['id_one'] = $this->Moisture_content_model->getID_one();
-        $data['sampletype'] = $this->Moisture_content_model->getSampleType();
-        $data['labtech'] = $this->Moisture_content_model->getLabTech();
-        // $data['id_project'] = $this->Moisture_content_model->generate_project_id();
-        // $data['client'] = $this->Moisture_content_model->generate_client();
-        // $data['id_one_water_sample'] = $this->Moisture_content_model->generate_one_water_sample_id();
-        $this->template->load('template','moisture_content/index', $data);
+        $data['id_one'] = $this->Sample_collection_model->getID_one();
+        $data['sampletype'] = $this->Sample_collection_model->getSampleType();
+        $data['labtech'] = $this->Sample_collection_model->getLabTech();
+        // $data['id_project'] = $this->Sample_collection_model->generate_project_id();
+        // $data['client'] = $this->Sample_collection_model->generate_client();
+        // $data['id_one_water_sample'] = $this->Sample_collection_model->generate_one_water_sample_id();
+        $this->template->load('template','sample_collection/index', $data);
     } 
     
     public function json() {
         header('Content-Type: application/json');
-        echo $this->Moisture_content_model->json();
+        echo $this->Sample_collection_model->json();
     }
 
-    public function subjson24() {
-        $id = $this->input->get('id24',TRUE);
+    public function subjson() {
+        $id = $this->input->get('id_sample_collection',TRUE);
         header('Content-Type: application/json');
-        echo $this->Moisture_content_model->subjson24($id);
+        echo $this->Sample_collection_model->subjson($id);
     }
 
     public function subjson72() {
         $id = $this->input->get('id72',TRUE);
         header('Content-Type: application/json');
-        echo $this->Moisture_content_model->subjson72($id);
+        echo $this->Sample_collection_model->subjson72($id);
     }
 
     public function read($id)
     {
-        // $data['testing_type'] = $this->Moisture_content_model->getTest();
+        // $data['testing_type'] = $this->Sample_collection_model->getTest();
         // $data['barcode'] = $this->Water_sample_reception_model->getBarcode();
         // var_dump($id);
         // die();
-        $row = $this->Moisture_content_model->get_detail($id);
+        $row = $this->Sample_collection_model->get_detail($id);
         $return_url = $this->input->get('return_url', TRUE);
 
         if (!$this->is_valid_return_url($return_url)) {
-            $return_url = site_url("moisture_content");
+            $return_url = site_url("sample_collection");
         }
 
         if ($row) {
             $data = array(
-                'id_moisture' => $row->id_moisture,
+                'id_sample_collection' => $row->id_sample_collection,
                 'id_one_water_sample' => $row->id_one_water_sample,
                 'initial' => $row->initial,
-                'date_start' => $row->date_start,
+                'date_processing' => $row->date_processing,
                 'sampletype' => $row->sampletype,
-                'barcode_moisture_content' => $row->barcode_moisture_content,
-                'tray_weight' => $row->tray_weight,
-                'traysample_wetweight' => $row->traysample_wetweight,
-                'date_incubator' => $row->date_incubator,
-                'time_incubator' => $row->time_incubator,
+                'barcode_sample_collection' => $row->barcode_sample_collection,
+                'weight' => $row->weight,
+                'volume' => $row->volume,
+                'quantity' => $row->quantity,
+                'completed' => $row->completed,
                 'comments' =>$row->comments,
                 'full_name' => $row->full_name,
                 'user_review' => $row->user_review,
@@ -87,9 +87,20 @@ class Moisture_content extends CI_Controller
                 'return_url' => $return_url,
             );
 
+            $data['kit'] = $this->Sample_collection_model->getKit();
+            
+            // Load freezer location dropdown data
+            $data['freez1'] = $this->Sample_collection_model->getFreezer1();
+            $data['shelf1'] = $this->Sample_collection_model->getFreezer2();
+            $data['rack1'] = $this->Sample_collection_model->getFreezer3();
+            $data['tray1'] = $this->Sample_collection_model->getFreezer4();
+            
+            // Load position dropdown data
+            $data['row1'] = $this->Sample_collection_model->getPos1();
+            $data['col1'] = $this->Sample_collection_model->getPos2();
 
                 
-            $this->template->load('template','moisture_content/index_det', $data);
+            $this->template->load('template','sample_collection/index_det', $data);
 
         }
         else {
@@ -100,14 +111,14 @@ class Moisture_content extends CI_Controller
 
     public function read2($id)
     {
-        $data['test'] = $this->Moisture_content_model->getTest();
-        $row = $this->Moisture_content_model->get_detail2($id);
+        $data['test'] = $this->Sample_collection_model->getTest();
+        $row = $this->Sample_collection_model->get_detail2($id);
         if ($row) {
             $data = array(
                 'id_project' => $row->id_project,
                 'id_sample' => $row->id_sample,
                 'sample_description' => $row->sample_description,
-                'test' => $this->Moisture_content_model->getTest(),
+                'test' => $this->Sample_collection_model->getTest(),
                 );
                 $this->template->load('template','Sample_reception/index_det2', $data);
         }
@@ -118,20 +129,20 @@ class Moisture_content extends CI_Controller
 
     public function save() {
         $mode = $this->input->post('mode', TRUE);
-        $id_moisture = $this->input->post('idx_moisture', TRUE);
+        $id_sample_collection = $this->input->post('idx_sample_collection', TRUE);
         $return_url = $this->input->post('return_url', TRUE);
         $dt = new DateTime();
 
         $id_one_water_sample = $this->input->post('id_one_water_sample', TRUE);
         $idx_one_water_sample = $this->input->post('idx_one_water_sample', TRUE);
         $id_person = $this->input->post('id_person', TRUE);
-        $date_start = $this->input->post('date_start', TRUE);
+        $date_processing = $this->input->post('date_processing', TRUE);
         $id_sampletype = $this->input->post('id_sampletype', TRUE);
-        $barcode_moisture_content = $this->input->post('barcode_moisture_content', TRUE);
-        $tray_weight = $this->input->post('tray_weight', TRUE);
-        $traysample_wetweight = $this->input->post('traysample_wetweight', TRUE);
-        $date_incubator = $this->input->post('date_incubator', TRUE);
-        $time_incubator = $this->input->post('time_incubator', TRUE);
+        $barcode_sample_collection = $this->input->post('barcode_sample_collection', TRUE);
+        $weight = $this->input->post('weight', TRUE);
+        $volume = $this->input->post('volume', TRUE);
+        $quantity = $this->input->post('quantity', TRUE);
+        $completed = $this->input->post('completed', TRUE);
         $comments = $this->input->post('comments', TRUE);
         // $date_collected = $this->input->post('date_collected',TRUE);
         // $time_collected = $this->input->post('time_collected',TRUE);
@@ -140,14 +151,14 @@ class Moisture_content extends CI_Controller
         if ($mode == "insert") {
             $data = array(
                 'id_one_water_sample' => $id_one_water_sample,
+                'barcode_sample_collection' => $barcode_sample_collection,
                 'id_person' => $id_person,
-                'date_start' => $date_start,
                 'id_sampletype' => $id_sampletype,
-                'barcode_moisture_content' => $barcode_moisture_content,
-                'tray_weight' => $tray_weight,
-                'traysample_wetweight' => $traysample_wetweight,
-                'date_incubator' => $date_incubator,
-                'time_incubator' => $time_incubator,
+                'date_processing' => $date_processing,
+                'weight' => $weight,
+                'volume' => $volume,
+                'quantity' => $quantity,
+                'completed' => $completed,
                 'comments' => $comments,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
@@ -159,20 +170,20 @@ class Moisture_content extends CI_Controller
             // var_dump($data);
             // die();
     
-            $this->Moisture_content_model->insert($data);
+            $this->Sample_collection_model->insert($data);
             $this->session->set_flashdata('message', 'Create Record Success');
 
         } else if ($mode == "edit") {
             $data = array(
                 'id_one_water_sample' => $idx_one_water_sample,
+                'barcode_sample_collection' => $barcode_sample_collection,
                 'id_person' => $id_person,
-                'date_start' => $date_start,
                 'id_sampletype' => $id_sampletype,
-                'barcode_moisture_content' => $barcode_moisture_content,
-                'tray_weight' => $tray_weight,
-                'traysample_wetweight' => $traysample_wetweight,
-                'date_incubator' => $date_incubator,
-                'time_incubator' => $time_incubator,
+                'date_processing' => $date_processing,
+                'weight' => $weight,
+                'volume' => $volume,
+                'quantity' => $quantity,
+                'completed' => $completed,
                 'comments' => $comments,
                 'flag' => '0',
                 'lab' => $this->session->userdata('lab'),
@@ -184,7 +195,7 @@ class Moisture_content extends CI_Controller
             // var_dump($data);
             // die();
 
-            $this->Moisture_content_model->update($id_moisture, $data);
+            $this->Sample_collection_model->update($id_sample_collection, $data);
             $this->session->set_flashdata('message', 'Update Record Success');
         }
     
@@ -193,7 +204,7 @@ class Moisture_content extends CI_Controller
             return;
         }
 
-        redirect(site_url("moisture_content"));
+        redirect(site_url("sample_collection"));
     }
 
     private function is_valid_return_url($url)
@@ -228,29 +239,55 @@ class Moisture_content extends CI_Controller
     }
 
     
-    public function savedetail24() {
-            $mode_det24 = $this->input->post('mode_det24', TRUE);
+    public function savedetail() {
+            $mode_det = $this->input->post('mode_det', TRUE);
             $dt = new DateTime();
             $return_url = $this->input->post('return_url', TRUE);
-            // var_dump($id_moisture);
+            // var_dump($id_sample_collection);
             // die();
-            $id_one_water_sample = $this->input->post('id24_one_water_sample', TRUE);
-            $id_moisture = $this->input->post('idx_moisture24', TRUE);
-            $id_moisture24 = $this->input->post('id_moisture24', TRUE);
-            $date_moisture24 = $this->input->post('date_moisture24', TRUE);
-            $time_moisture24 = $this->input->post('time_moisture24', TRUE);
-            $barcode_tray = $this->input->post('barcode_tray24', TRUE);
-            $dry_weight24 = $this->input->post('dry_weight24', TRUE);
-            $comments24 = $this->input->post('comments24', TRUE);
+            $id_one_water_sample = $this->input->post('idx_one_water_sample', TRUE);
+            $idx_sample_collection = $this->input->post('idx_sample_collection', TRUE);
+            $id_sample_collection_detail = $this->input->post('id_sample_collection_detail', TRUE);
+            $date_received = $this->input->post('date_received', TRUE);
+            $volume = $this->input->post('volume_detail', TRUE);
+            $date_extraction = $this->input->post('date_extraction', TRUE);
+            $id_kit = $this->input->post('id_kit', TRUE);
+            $other_kit = $this->input->post('other_kit', TRUE); // Add other_kit field
+            $kit_lot = $this->input->post('kit_lot', TRUE);
+            $tube_barcode = $this->input->post('tube_barcode', TRUE);
+            $dna_concentration = $this->input->post('dna_concentration', TRUE);
+            $cryobox_number = $this->input->post('cryobox_number', TRUE);
+            $comments = $this->input->post('comments_detail', TRUE);
+
+
+            $id_freez = $this->input->post('id_freez', TRUE);
+            $id_shelf = $this->input->post('id_shelf', TRUE);
+            $id_rack = $this->input->post('id_rack', TRUE);
+            $id_tray = $this->input->post('id_tray', TRUE);
+
+            $id_row = $this->input->post('id_row', TRUE);
+            $id_col = $this->input->post('id_col', TRUE);
+
+            $loc_obj = $this->Sample_collection_model->get_freezx($id_freez, $id_shelf, $id_rack, $id_tray);
+            $pos_obj = $this->Sample_collection_model->get_posx($id_row, $id_col);
+            $id_loc = $loc_obj->id_location;
+            $id_pos = $pos_obj->id_pos;  
         
-            if($mode_det24 == "insert") {
+            if($mode_det == "insert") {
                 $data = array(
-                    'id_moisture' => $id_moisture,
-                    'date_moisture24' => $date_moisture24,
-                    'time_moisture24' => $time_moisture24,
-                    'barcode_tray' => $barcode_tray,
-                    'dry_weight24' => $dry_weight24,
-                    'comments24' => $comments24,
+                    'id_sample_collection' => $idx_sample_collection,
+                    'date_received' => $date_received,
+                    'volume' => $volume,
+                    'date_extraction' => $date_extraction,
+                    'id_kit' => $id_kit,
+                    'other_kit' => $other_kit, // Add other_kit to insert data
+                    'kit_lot' => $kit_lot,
+                    'tube_barcode' => $tube_barcode,
+                    'dna_concentration' => $dna_concentration,
+                    'cryobox_number' => $cryobox_number,
+                    'id_location' => $id_loc,
+                    'id_pos' => $id_pos,
+                    'comments' => $comments,
                     'flag' => '0',
                     'lab' => $this->session->userdata('lab'),
                     'uuid' => $this->uuid->v4(),
@@ -260,19 +297,28 @@ class Moisture_content extends CI_Controller
                 // var_dump($data);
                 // die();
         
-                $insert_id = $this->Moisture_content_model->insert_det24($data);
+                $insert_id = $this->Sample_collection_model->insert_detail($data);
                 if ($insert_id) {
                     $this->session->set_flashdata('message', 'Create Record Success');
                 } else {
                     $this->session->set_flashdata('error', 'Failed to create record');
                 }
-            } else if($mode_det24 == "edit") {
+                
+            } else if($mode_det == "edit") {
                 $data = array(
-                    'date_moisture24' => $date_moisture24,
-                    'time_moisture24' => $time_moisture24,
-                    'barcode_tray' => $barcode_tray,
-                    'dry_weight24' => $dry_weight24,
-                    'comments24' => $comments24,
+                    'id_sample_collection' => $idx_sample_collection,
+                    'date_received' => $date_received,
+                    'volume' => $volume,
+                    'date_extraction' => $date_extraction,
+                    'id_kit' => $id_kit,
+                    'other_kit' => $other_kit, // Add other_kit to update data
+                    'kit_lot' => $kit_lot,
+                    'tube_barcode' => $tube_barcode,
+                    'dna_concentration' => $dna_concentration,
+                    'cryobox_number' => $cryobox_number,
+                    'id_location' => $id_loc,
+                    'id_pos' => $id_pos,
+                    'comments' => $comments,
                     'flag' => '0',
                     'lab' => $this->session->userdata('lab'),
                     'uuid' => $this->uuid->v4(),
@@ -281,7 +327,7 @@ class Moisture_content extends CI_Controller
                 );
                 // var_dump($data);
                 // die();
-                $result = $this->Moisture_content_model->update_det24($id_moisture24, $data);
+                $result = $this->Sample_collection_model->update_detail($id_sample_collection_detail, $data);
                 if ($result) {
                     $this->session->set_flashdata('message', 'Update Record Success');
                 } else {
@@ -289,7 +335,7 @@ class Moisture_content extends CI_Controller
                 }
             }
         
-            $redirect_url = site_url("moisture_content/read/" . $id_one_water_sample);
+            $redirect_url = site_url("sample_collection/read/" . $id_one_water_sample);
             if ($this->is_valid_return_url($return_url)) {
                 $redirect_url .= '?return_url=' . rawurlencode($return_url);
             }
@@ -303,8 +349,8 @@ class Moisture_content extends CI_Controller
         $dt = new DateTime();
         $return_url = $this->input->post('return_url', TRUE);
         $id_one_water_sample = $this->input->post('id27_one_water_sample', TRUE);
-        $id_moisture = $this->input->post('idx_moisture72', TRUE);
-        $id_moisture72 = $this->input->post('id_moisture72', TRUE);
+        $id_sample_collection = $this->input->post('idx_sample_collection72', TRUE);
+        $id_sample_collection72 = $this->input->post('id_sample_collection72', TRUE);
         $date_moisture72 = $this->input->post('date_moisture72', TRUE);
         $time_moisture72 = $this->input->post('time_moisture72', TRUE);
         $barcode_tray = $this->input->post('barcode_tray72', TRUE);
@@ -315,7 +361,7 @@ class Moisture_content extends CI_Controller
 
         if($mode_det72 == "insert") {
             $data = array(
-                'id_moisture' => $id_moisture,
+                'id_sample_collection' => $id_sample_collection,
                 'date_moisture72' => $date_moisture72,
                 'time_moisture72' => $time_moisture72,
                 'barcode_tray' => $barcode_tray,
@@ -332,7 +378,7 @@ class Moisture_content extends CI_Controller
             // var_dump($data);
             // die();
     
-            $insert_id = $this->Moisture_content_model->insert_det72($data);
+            $insert_id = $this-> Sample_collection_model->insert_det72($data);
             if ($insert_id) {
                 $this->session->set_flashdata('message', 'Create Record Success');
             } else {
@@ -355,7 +401,7 @@ class Moisture_content extends CI_Controller
             );
             // var_dump($data);
             // die();
-            $result = $this->Moisture_content_model->update_det72($id_moisture72, $data);
+            $result = $this->Sample_collection_model->update_det72($id_sample_collection72, $data);
             if ($result) {
                 $this->session->set_flashdata('message', 'Update Record Success');
             } else {
@@ -363,7 +409,7 @@ class Moisture_content extends CI_Controller
             }
         }
     
-        $redirect_url = site_url("moisture_content/read/" . $id_one_water_sample);
+        $redirect_url = site_url("sample_collection/read/" . $id_one_water_sample);
         if ($this->is_valid_return_url($return_url)) {
             $redirect_url .= '?return_url=' . rawurlencode($return_url);
         }
@@ -375,87 +421,87 @@ class Moisture_content extends CI_Controller
 
     public function delete($id) 
     {
-        $row = $this->Moisture_content_model->get_by_id($id);
+        $row = $this->Sample_collection_model->get_by_id($id);
         
         if ($row) {
-            $id_moisture = $row->id_moisture;
+            $id_sample_collection = $row->id_sample_collection;
             
             // Cascade delete: soft delete all moisture24 and moisture72 records
-            $this->Moisture_content_model->cascade_delete_moisture24_72($id_moisture);
+            $this->Sample_collection_model->cascade_delete_moisture24_72($id_sample_collection);
             
-            // Soft-delete the moisture_content record
+            // Soft-delete the sample_collection record
             $data = array(
                 'flag' => 1,
             );
-            $this->Moisture_content_model->delete_moisture_content($id, $data);
+            $this->Sample_collection_model->update($id, $data);
             
             $this->session->set_flashdata('message', 'Delete Record Success');
-            redirect(site_url('moisture_content'));
+            redirect(site_url('sample_collection'));
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
-            redirect(site_url('moisture_content'));
+            redirect(site_url('sample_collection'));
         }
     }
 
-    public function delete_detail24($id) 
+    public function delete_detail($id) 
     {
-        $row = $this->Moisture_content_model->get_by_id_detail24($id);
+        $row = $this->Sample_collection_model->get_by_id_detail($id);
         if ($row) {
-            $id_parent = $row->id_moisture; // Retrieve id_moisture before updating the record
+            $id_parent = $row->id_sample_collection; // Retrieve id_sample_collection before updating the record
             
-            // Cascade delete: soft delete all moisture72 records with same id_moisture
-            $this->Moisture_content_model->cascade_delete_moisture72($id_parent);
+            // Cascade delete: soft delete all moisture72 records with same id_sample_collection
+            $this->Sample_collection_model->cascade_delete_moisture72($id_parent);
             
             // Soft-delete the moisture24 record
             $data = array(
                 'flag' => 1,
             );
     
-            $this->Moisture_content_model->update_det24($id, $data);
+            $this->Sample_collection_model->update_det24($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
     
-        redirect(site_url('Moisture_content/read/'.$id_parent));
+        redirect(site_url('sample_collection/read/'.$id_parent));
     }
 
     public function delete_detail72($id) 
     {
-        $row = $this->Moisture_content_model->get_by_id_detail72($id);
+        $row = $this->Sample_collection_model->get_by_id_detail72($id);
         if ($row) {
-            $id_parent = $row->id_moisture; // Retrieve project_id before updating the record
+            $id_parent = $row->id_sample_collection; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
     
-            $this->Moisture_content_model->update_det72($id, $data);
+            $this->Sample_collection_model->update_det72($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
     
-        redirect(site_url('moisture_content/read/'.$id_parent));
+        redirect(site_url('sample_collection/read/'.$id_parent));
     }
 
 
     public function getIdOneWaterDetails()
     {
         $idOneWaterSample = $this->input->post('id_one_water_sample');
-        $oneWaterSample = $this->Moisture_content_model->getOneWaterSampleById($idOneWaterSample);
+        $oneWaterSample = $this->Sample_collection_model->getOneWaterSampleById($idOneWaterSample);
         echo json_encode($oneWaterSample);
     }
 
     public function validate24() {
         $id = $this->input->get('id24');
-        $data = $this->Moisture_content_model->validate24($id);
+        $data = $this->Sample_collection_model->validate24($id);
         header('Content-Type: application/json');
         echo json_encode($data);
     }
 
     public function validate72() {
         $id = $this->input->get('id72');
-        $data = $this->Moisture_content_model->validate72($id);
+        $data = $this->Sample_collection_model->validate72($id);
         header('Content-Type: application/json');
         echo json_encode($data);
     }
@@ -483,7 +529,7 @@ class Moisture_content extends CI_Controller
         $sheet->setCellValue('Q1', "Dry Weight Percentage");
         $sheet->setCellValue('R1', "Comments 72");
 
-        $moisture = $this->Moisture_content_model->get_all();
+        $moisture = $this->Sample_collection_model->get_all();
     
         $numrow = 2;
         foreach($moisture as $data){ 
@@ -599,7 +645,7 @@ class Moisture_content extends CI_Controller
 
         // Set header untuk file excel
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="Report_moisture_content.xlsx"');
+        header('Content-Disposition: attachment;filename="Report_sample_collection.xlsx"');
         header('Cache-Control: max-age=0');
 
         // Tampilkan file excel
@@ -609,7 +655,7 @@ class Moisture_content extends CI_Controller
 
     public function validateBarcodeMoistureContent() {
         $id = $this->input->get('id');
-        $data = $this->Moisture_content_model->validateBarcodeMoistureContent($id);
+        $data = $this->Sample_collection_model->validateBarcodeMoistureContent($id);
         header('Content-Type: application/json');
         echo json_encode($data);
     }
@@ -617,7 +663,7 @@ class Moisture_content extends CI_Controller
     public function barcode_restrict() 
     {
         $id = $this->input->get('id1');
-        $data = $this->Moisture_content_model->barcode_restrict($id);
+        $data = $this->Sample_collection_model->barcode_restrict($id);
         header('Content-Type: application/json');
         echo json_encode($data);
     }
@@ -645,8 +691,8 @@ class Moisture_content extends CI_Controller
             'date_updated' => date('Y-m-d H:i:s')
         ];
     
-        $this->load->model('Moisture_content_model');
-        $this->Moisture_content_model->updateSave($id, $data);
+        $this->load->model('Sample_collection_model');
+        $this->Sample_collection_model->updateSave($id, $data);
         echo json_encode([
             'status' => true,
             'message' => 'Review saved successfully.'
@@ -682,8 +728,8 @@ class Moisture_content extends CI_Controller
             'date_updated' => date('Y-m-d H:i:s')
         ];
         // Load model dan update data review di database
-        $this->load->model('Moisture_content_model');
-        $updateResult = $this->Moisture_content_model->updateCancel($id, $data);
+        $this->load->model('Sample_collection_model');
+        $updateResult = $this->Sample_collection_model->updateCancel($id, $data);
 
         log_message('debug', "Update result: " . ($updateResult ? 'Success' : 'Failure'));
     
