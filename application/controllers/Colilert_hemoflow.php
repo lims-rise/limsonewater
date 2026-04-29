@@ -319,7 +319,7 @@ class Colilert_hemoflow extends CI_Controller
             );
 
         if ($row) {
-            $this->Colilert_hemoflow_model->update($id, $data);
+            $this->Colilert_hemoflow_model->deleteColilertHemoflow($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
             redirect(site_url('colilert_hemoflow'));
         } else {

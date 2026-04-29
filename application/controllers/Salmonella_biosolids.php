@@ -890,7 +890,7 @@ class Salmonella_biosolids extends CI_Controller
                 'flag' => 1,
             );
     
-            $this->Salmonella_biosolids_model->updateSalmonellaBiosolids($id, $data);
+            $this->Salmonella_biosolids_model->deleteSalmonellaBiosolids($id, $data);
             $this->Salmonella_biosolids_model->updateSampleVolume($id_salmonella_biosolids, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {

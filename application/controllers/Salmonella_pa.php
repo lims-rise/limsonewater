@@ -769,7 +769,7 @@ class Salmonella_pa extends CI_Controller
                 'flag' => 1,
             );
 
-            $this->Salmonella_pa_model->updateSalmonellaPA($id, $data);
+            $this->Salmonella_pa_model->deleteSalmonellaPA($id, $data);
             $this->Salmonella_pa_model->updateSampleVolume($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {

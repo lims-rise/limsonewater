@@ -302,7 +302,7 @@ class Colilert_idexx_water extends CI_Controller
             );
 
         if ($row) {
-            $this->Colilert_idexx_water_model->update($id, $data);
+            $this->Colilert_idexx_water_model->delete_colilert_idexx_water($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
             redirect(site_url('colilert_idexx_water'));
         } else {

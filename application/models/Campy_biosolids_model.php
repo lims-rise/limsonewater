@@ -498,6 +498,12 @@ class Campy_biosolids_model extends CI_Model
         $this->db->update('campy_biosolids', $data);
     }
 
+    function deleteCampyBiosolids($id, $data) {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->where('flag', '0');
+        $this->db->update('campy_biosolids', $data);
+    }
+
     public function delete_sample_volumes($id_campy_biosolids) {
         $this->db->where('id_campy_biosolids', $id_campy_biosolids);
         $this->db->delete('campy_sample_volumes');

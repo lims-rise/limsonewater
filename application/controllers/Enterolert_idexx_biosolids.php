@@ -312,7 +312,7 @@ class Enterolert_idexx_biosolids extends CI_Controller
             );
 
         if ($row) {
-            $this->Enterolert_idexx_biosolids_model->update($id, $data);
+            $this->Enterolert_idexx_biosolids_model->delete_enterolert_idexx_biosolids($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
             redirect(site_url('enterolert_idexx_biosolids'));
         } else {

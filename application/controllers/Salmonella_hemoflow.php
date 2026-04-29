@@ -923,7 +923,7 @@ class Salmonella_hemoflow extends CI_Controller
                 'flag' => 1,
             );
 
-            $this->Salmonella_hemoflow_model->updateSalmonellaHemoflow($id, $data);
+            $this->Salmonella_hemoflow_model->deleteSalmonellaHemoflow($id, $data);
             $this->Salmonella_hemoflow_model->updateSampleVolume($id_salmonella_hemoflow, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {

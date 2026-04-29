@@ -311,7 +311,7 @@ class Enterolert_hemoflow extends CI_Controller
             );
 
         if ($row) {
-            $this->Enterolert_hemoflow_model->update($id, $data);
+            $this->Enterolert_hemoflow_model->deleteEnterolertHemoflow($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
             redirect(site_url('enterolert_hemoflow'));
         } else {

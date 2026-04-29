@@ -324,7 +324,7 @@ class Colilert_idexx_biosolids extends CI_Controller
             );
 
         if ($row) {
-            $this->Colilert_idexx_biosolids_model->update($id, $data);
+            $this->Colilert_idexx_biosolids_model->delete_colilert_idexx_biosolids($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
             redirect(site_url('colilert_idexx_biosolids'));
         } else {

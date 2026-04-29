@@ -560,8 +560,13 @@ class Campy_hemoflow_qpcr_model extends CI_Model
         $this->db->insert('campy_hemoflow_qpcr_sample_volumes', $data);
     }
     
-    function updateCampyHemoflow($id, $data) {
+    function updateCampyHemoflowQpcr($id, $data) {
         $this->db->where('id_campy_hemoflow_qpcr', $id);
+        $this->db->update('campy_hemoflow_qpcr', $data);
+    }
+
+    function deleteCampyHemoflowQpcr($id, $data) {
+        $this->db->where('id_one_water_sample', $id);
         $this->db->update('campy_hemoflow_qpcr', $data);
     }
 
@@ -601,7 +606,7 @@ class Campy_hemoflow_qpcr_model extends CI_Model
         $this->db->update('campy_hemoflow_qpcr_sample_growth_plate', $data);
     }
 
-    function get_by_id_campyhemoflow($id)
+    function get_by_id_campyhemoflowqpcr($id)
     {
         $this->db->where('id_campy_hemoflow_qpcr', $id);
         $this->db->where('flag', '0');

@@ -485,6 +485,12 @@ class Salmonella_biosolids_model extends CI_Model
         $this->db->update('salmonella_biosolids', $data);
     }
 
+    function deleteSalmonellaBiosolids($id, $data) {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->where('flag', '0');
+        $this->db->update('salmonella_biosolids', $data);
+    }
+
     public function delete_sample_volumes($id_salmonella_biosolids) {
         $this->db->where('id_salmonella_biosolids', $id_salmonella_biosolids);
         $this->db->delete('salmonella_sample_volumes');

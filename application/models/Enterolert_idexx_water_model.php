@@ -126,6 +126,13 @@ class Enterolert_idexx_water_model extends CI_Model
         $this->db->update('enterolert_water_in', $data);
     }
 
+    function delete_enterolert_idexx_water($id, $data)
+    {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->where('flag', '0');
+        $this->db->update('enterolert_water_in', $data);
+    }
+
     function insert_det($data) {
         $this->db->insert($this->tableOut, $data);
         return $this->db->insert_id(); // Return the ID of the newly inserted row

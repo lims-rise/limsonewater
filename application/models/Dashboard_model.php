@@ -81,7 +81,8 @@ class Dashboard_model extends CI_Model
             'colilert_hemoflow' => 'Colilert (HemoFlow)',
             'campy_hemoflow' => 'Campy (HemoFlow)',
             'salmonella_hemoflow' => 'Salmonella (HemoFlow)',
-            'campy_hemoflow_qpcr' => 'Campy (HemoFlow qPCR)'
+            'campy_hemoflow_qpcr' => 'Campy (HemoFlow qPCR)',
+            'sample_collection' => 'Sample Collection'
         );
 
         $statistics = array();
@@ -186,7 +187,8 @@ class Dashboard_model extends CI_Model
             'colilert_hemoflow',
             'campy_hemoflow',
             'salmonella_hemoflow',
-            'campy_hemoflow_qpcr'
+            'campy_hemoflow_qpcr',
+            'sample_collection'
         );
         
         foreach ($modules_with_review as $table) {
@@ -247,7 +249,7 @@ class Dashboard_model extends CI_Model
                             bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
                             ec.review, el.review, em.review, cb.review, mc.review, 
                             ewi.review, ebi.review, cbi.review, cwi.review, 
-                            pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review
+                            pr.review, cp.review, sp.review, hem.review, ehf.review, chf.review, ch.review, ex.review, sh.review, chq.review, sc.review
                         ) = 1 THEN srt.id_testing
                         ELSE NULL 
                     END) as completed_tests,
@@ -282,6 +284,7 @@ class Dashboard_model extends CI_Model
                 LEFT JOIN extraction_biosolid ex ON ex.barcode_sample = srt.barcode AND ex.flag = 0
                 LEFT JOIN salmonella_hemoflow sh ON sh.salmonella_assay_barcode = srt.barcode AND sh.flag = 0
                 LEFT JOIN campy_hemoflow_qpcr chq ON chq.campy_assay_barcode = srt.barcode AND chq.flag = 0
+                LEFT JOIN sample_collection sc ON sc.barcode_sample_collection = srt.barcode AND sc.flag = 0
                 WHERE sr.flag = 0
                 GROUP BY sr.id_project
                 ORDER BY sr.date_created DESC, sr.time_arrive DESC, sr.id_project DESC";
@@ -445,6 +448,7 @@ class Dashboard_model extends CI_Model
             'Campy (HemoFlow qPCR)' => 'campy_hemoflow_qpcr',
             'Campy (HemoFlow)' => 'campy_hemoflow',
             'Hemoflow' => 'hemoflow',
+            'Sample Collection' => 'sample_collection',
         );
         
         // Module to controller mapping 
@@ -471,7 +475,8 @@ class Dashboard_model extends CI_Model
             'Salmonella (HemoFlow)' => 'salmonella_hemoflow',
             'Campy (HemoFlow qPCR)' => 'campy_hemoflow_qpcr',
             'Campy (HemoFlow)' => 'campy_hemoflow',
-            'Hemoflow' => 'hemoflow'
+            'Hemoflow' => 'hemoflow',
+            'Sample Collection' => 'sample_collection'
         );
 
         if (!isset($modules[$module_name])) {

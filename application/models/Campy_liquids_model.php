@@ -492,6 +492,12 @@ class Campy_liquids_model extends CI_Model
         $this->db->update('campy_liquids', $data);
     }
 
+    function deleteCampyLiquids($id, $data) {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->where('flag', '0');
+        $this->db->update('campy_liquids', $data);
+    }
+
     public function delete_sample_volumes_liquids($id_campy_liquids) {
         $this->db->where('id_campy_liquids', $id_campy_liquids);
         $this->db->delete('campy_sample_volumes_liquids');

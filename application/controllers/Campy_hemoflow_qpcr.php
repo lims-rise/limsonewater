@@ -238,7 +238,7 @@ class Campy_hemoflow_qpcr extends CI_Controller
             // var_dump($data);
             // die();
 
-            $this->Campy_hemoflow_qpcr_model->updateCampyHemoflow($id_campy_hemoflow_qpcr, $data);
+            $this->Campy_hemoflow_qpcr_model->updateCampyHemoflowQpcr($id_campy_hemoflow_qpcr, $data);
 
             // // Update sample volumes
             // $number_of_tubes = $this->input->post('number_of_tubes', TRUE);
@@ -912,15 +912,15 @@ class Campy_hemoflow_qpcr extends CI_Controller
     // }
 
 
-    public function delete_campyHemoflow($id) {
-        $row = $this->Campy_hemoflow_qpcr_model->get_by_id_campyhemoflow($id);
+    public function delete_campyHemoflowQpcr($id) {
+        $row = $this->Campy_hemoflow_qpcr_model->get_by_id_campyhemoflowqpcr($id);
         if ($row) {
             $id_parent = $row->id_campy_hemoflow_qpcr_result_mpnpcr; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
 
-            $this->Campy_hemoflow_qpcr_model->updateCampyHemoflow($id, $data);
+            $this->Campy_hemoflow_qpcr_model->deleteCampyHemoflowQpcr($id, $data);
             $this->Campy_hemoflow_qpcr_model->updateSampleVolume($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
         } else {

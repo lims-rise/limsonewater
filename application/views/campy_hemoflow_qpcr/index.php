@@ -1027,7 +1027,7 @@
         // Handle the delete button click
         $(document).on('click', '.btn_deleteCampyHemoflow', function() {
             let id = $(this).data('id');
-            let url = '<?php echo site_url('Campy_hemoflow_qpcr/delete_campyHemoflow'); ?>/' + id;
+            let url = '<?php echo site_url('Campy_hemoflow_qpcr/delete_campyHemoflowQpcr'); ?>/' + id;
             $('#confirm-modal #id').text(id);
             console.log(id);
             showConfirmation(url);

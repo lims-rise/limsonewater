@@ -600,8 +600,14 @@ class Campy_pa_model extends CI_Model
         $this->db->insert('campy_sample_volumes_pa', $data);
     }
     
-    function updateCampyBiosolids($id, $data) {
+    function updateCampyPa($id, $data) {
         $this->db->where('id_campy_pa', $id);
+        $this->db->where('flag', '0');
+        $this->db->update('campy_pa', $data);
+    }
+
+    function deleteCampyPa($id, $data) {
+        $this->db->where('id_one_water_sample', $id);
         $this->db->where('flag', '0');
         $this->db->update('campy_pa', $data);
     }
@@ -643,7 +649,7 @@ class Campy_pa_model extends CI_Model
         $this->db->update('campy_sample_growth_plate_pa', $data);
     }
 
-    function get_by_id_campybiosolids($id)
+    function get_by_id_campypa($id)
     {
         $this->db->where('id_one_water_sample', $id);
         $this->db->where('flag', '0');

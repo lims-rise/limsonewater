@@ -114,7 +114,7 @@ class Enterolert_hemoflow_model extends CI_Model
     }
 
     // Fuction insert data
-    public function insert($data) {
+    public function insert($data) { 
         $this->db->insert($this->table,  $data);
     }
 
@@ -125,6 +125,14 @@ class Enterolert_hemoflow_model extends CI_Model
         $this->db->where('flag', '0');
         $this->db->update('enterolert_hemoflow', $data);
     }
+
+    function deleteEnterolertHemoflow($id, $data)
+    {
+        $this->db->where('id_one_water_sample', $id);
+        $this->db->where('flag', '0');
+        $this->db->update('enterolert_hemoflow', $data);
+    }
+
 
     function insert_det($data) {
         $this->db->insert($this->tableOut, $data);
