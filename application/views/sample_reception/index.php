@@ -1739,11 +1739,9 @@ function applyCompletedProjectStyling() {
                     if (isUnlocked) {
                         // Project is unlocked - allow access
                         $toggleBtn.removeClass('btn-secondary disabled-completed')
-                                 .addClass('btn-success')
+                                 .addClass('btn-primary')
                                  .removeAttr('disabled')
                                  .css({
-                                     'background-color': '#27ae60',
-                                     'border-color': '#27ae60',
                                      'cursor': 'pointer',
                                      'opacity': '1'
                                  });
@@ -1755,12 +1753,6 @@ function applyCompletedProjectStyling() {
                         if (userLevel == 2) {
                             let $deleteBtn = $row.find('.btn_delete');
                             $deleteBtn.show();
-                        }
-                        
-                        // Add modern unlocked indicator
-                        if (!$row.find('.unlock-indicator').length) {
-                            $row.addClass('unlocked-project');
-                            $toggleBtn.append('<span class="unlock-indicator modern-badge" style="position: absolute; top: -3px; right: -3px; background: #D97706; color: white; border-radius: 50%; width: 12px; height: 12px; font-size: 8px; display: flex; align-items: center; justify-content: center;"><i class="fa fa-unlock"></i></span>');
                         }
                     } else {
                         // Project is locked - disable access
@@ -1782,9 +1774,6 @@ function applyCompletedProjectStyling() {
                             let $deleteBtn = $row.find('.btn_delete');
                             $deleteBtn.hide();
                         }
-                        
-                        $row.removeClass('unlocked-project');
-                        $toggleBtn.find('.unlock-indicator').remove();
                     }
                     
                     // Ensure print buttons remain visible and functional
@@ -2040,8 +2029,14 @@ function applyCompletedProjectStyling() {
         let searchSample = getUrlParameter('sample_id');
         let generalSearch = getUrlParameter('search');
 
-        let lastIdProject = localStorage.getItem('last_id_project');
-        let lastPage = localStorage.getItem('last_page');
+        // Clean up old localStorage data from previous feature
+        localStorage.removeItem('last_id_project');
+        localStorage.removeItem('last_page');
+
+        // Disabled: Auto-expand last opened project feature
+        // let lastIdProject = localStorage.getItem('last_id_project');
+        // let lastPage = localStorage.getItem('last_page');
+        
         table = $("#mytable").DataTable({
             oLanguage: {
                 sProcessing: "loading..."
@@ -2049,7 +2044,7 @@ function applyCompletedProjectStyling() {
             processing: true,
             serverSide: true,
             ajax: {"url": "Sample_reception/json", "type": "POST"},
-            displayStart: lastPage ? (parseInt(lastPage) * 10) : 0, // <-- ini di sini ya!
+            // displayStart: lastPage ? (parseInt(lastPage) * 10) : 0, // Disabled: auto-navigate to last page
             columns: [
                 { "data": "toggle", "orderable": false, "searchable": false }, // Ikon toggle di awal
                 {
@@ -2249,21 +2244,21 @@ function applyCompletedProjectStyling() {
                     }, 5000);
                 }
 
-                if (lastIdProject) {
-                    api.rows().every(function () {
-                        let rowData = this.data();
-                        if (rowData.id_project === lastIdProject) {
-                            $('html, body').animate({
-                                scrollTop: $(this.node()).offset().top - 100
-                            }, 1000);
-                            // buka child-nya otomatis
-                            openChildRow($(this.node()), rowData);
-                        }
-                    });
-
-                    // localStorage.removeItem('last_id_project');
-                    // localStorage.removeItem('last_page');
-                }
+                // Disabled: Auto-expand last opened project
+                // if (lastIdProject) {
+                //     api.rows().every(function () {
+                //         let rowData = this.data();
+                //         if (rowData.id_project === lastIdProject) {
+                //             $('html, body').animate({
+                //                 scrollTop: $(this.node()).offset().top - 100
+                //             }, 1000);
+                //             // buka child-nya otomatis
+                //             openChildRow($(this.node()), rowData);
+                //         }
+                //     });
+                //     localStorage.removeItem('last_id_project');
+                //     localStorage.removeItem('last_page');
+                // }
                 
                 // Apply styling to completed project rows
                 applyCompletedProjectStyling();
@@ -2346,18 +2341,17 @@ function applyCompletedProjectStyling() {
             });
         }
 
-        $('#mytable tbody').on('click', 'tr', function () {
-            const table = $('#mytable').DataTable();
-            const rowData = table.row(this).data(); // Ambil data dari DataTable, bukan dari DOM
-
-            if (rowData) {
-                const id = rowData.id_project; // pastikan nama field sesuai dari server
-
-                const pageInfo = table.page.info();
-                localStorage.setItem('last_id_project', id);
-                localStorage.setItem('last_page', pageInfo.page);
-            }
-        });
+        // Disabled: Save last opened project to localStorage
+        // $('#mytable tbody').on('click', 'tr', function () {
+        //     const table = $('#mytable').DataTable();
+        //     const rowData = table.row(this).data();
+        //     if (rowData) {
+        //         const id = rowData.id_project;
+        //         const pageInfo = table.page.info();
+        //         localStorage.setItem('last_id_project', id);
+        //         localStorage.setItem('last_page', pageInfo.page);
+        //     }
+        // });
 
 
 
@@ -2427,19 +2421,6 @@ function applyCompletedProjectStyling() {
         }
 
         $('#mytable tbody').on('click', '.toggle-child', function (e) {
-            // Check if button is disabled
-            if ($(this).hasClass('disabled-completed') || $(this).attr('disabled')) {
-                e.preventDefault();
-                e.stopPropagation();
-                Swal.fire({
-                    title: 'Project Completed!',
-                    text: 'This project has been completed and cannot be modified. Only administrators can make changes to completed projects.',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                });
-                return false;
-            }
-            
             e.preventDefault();
             e.stopPropagation();
             
@@ -2950,17 +2931,22 @@ function applyCompletedProjectStyling() {
             let tr = $(this).closest('tr');
             let rowData = table.row(tr).data();
             let isCompleted = rowData ? rowData.is_completed : $(this).data('completed');
+            let isUnlocked = rowData ? rowData.is_unlocked : 0;
             let userLevel = <?php echo $this->session->userdata('id_user_level'); ?>;
 
+            // For non-Super Admin users on completed projects
             if (isCompleted == 1 && userLevel != 1) {
-                e.preventDefault();
-                Swal.fire({
-                    title: 'Project Completed!',
-                    text: 'This project has been completed and cannot be modified. Only administrators can make changes to completed projects.',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                });
-                return false;
+                // Check if project is unlocked by admin
+                if (isUnlocked != 1) {
+                    e.preventDefault();
+                    Swal.fire({
+                        title: 'Project Completed & Locked!',
+                        html: 'This project has been completed and is currently <strong>locked</strong>.<br><br>Only Super Administrator can unlock completed projects for modification.',
+                        icon: 'warning',
+                        confirmButtonText: 'OK'
+                    });
+                    return false;
+                }
             }
             let data = table.row(tr).data(); // Assuming `table` is your DataTable instance
             console.log(data);

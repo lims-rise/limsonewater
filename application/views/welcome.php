@@ -1961,10 +1961,20 @@ a:visited .card-label {
                             <span style="font-weight: 600; letter-spacing: -0.3px;">Performance Metrics</span>
                         </h3>
                         <div class="box-tools pull-right">
-                            <span class="workflow-status-indicator">
-                                <i class="fa fa-circle" style="color: #4D6EF5; font-size: 8px; margin-right: 5px;"></i>
-                                <span style="font-size: 12px; color: #6B7178; font-weight: 500;">Live Data</span>
-                            </span>
+                            <div class="form-group" style="margin: 0; display: flex; align-items: center; margin-right: 15px;">
+                                <span class="year-selector-label">Year</span>
+                                <select id="performance_year_selector" class="form-control" onchange="filterPerformanceByYear(this.value)">
+                                    <?php if (!empty($available_years)): ?>
+                                        <?php foreach ($available_years as $year): ?>
+                                            <option value="<?php echo htmlspecialchars($year, ENT_QUOTES, 'UTF-8'); ?>" <?php echo (isset($performance_year) && $year == $performance_year) ? 'selected' : ''; ?>>
+                                                <?php echo htmlspecialchars($year, ENT_QUOTES, 'UTF-8'); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <option value="<?php echo date('Y'); ?>" selected><?php echo date('Y'); ?></option>
+                                    <?php endif; ?>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="box-body">
@@ -1980,7 +1990,7 @@ a:visited .card-label {
                                             <th class="progress-header">Progress</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="modern-performance-tbody">
+                                    <tbody id="performance-metrics-tbody" class="modern-performance-tbody">
                                         <?php if (!empty($module_statistics)): ?>
                                             <?php foreach ($module_statistics as $index => $module): ?>
                                                 <tr class="module-row" data-index="<?php echo $index; ?>">
@@ -2061,6 +2071,11 @@ a:visited .card-label {
                                     <?php endif; ?>
                                 </tbody>
                             </table>
+                            <!-- Loading indicator for Performance Metrics -->
+                            <div id="performance_loading" style="display: none; text-align: center; padding: 40px;">
+                                <i class="fa fa-spinner fa-spin fa-2x" style="color: #4D6EF5;"></i>
+                                <p style="margin-top: 10px; color: #6B7178;">Loading performance data...</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2652,11 +2667,150 @@ $(document).ready(function() {
     // Load initial chart with current year
     loadMonthlyChart(<?php echo date('Y'); ?>);
     
-    // Handle year selector change
+    // Handle year selector change for Analytics Dashboard
     $('#year_selector').on('change', function() {
         var selectedYear = $(this).val();
         loadMonthlyChart(selectedYear);
     });
+
+    // Function to load Performance Metrics via AJAX
+    function loadPerformanceMetrics(year) {
+        // Show loading indicator
+        $('#performance_loading').show();
+        $('#performance-metrics-tbody').hide();
+        
+        $.ajax({
+            url: '<?php echo site_url("Welcome/get_performance_metrics_by_year"); ?>',
+            type: 'POST',
+            data: { year: year },
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    renderPerformanceMetrics(response.data);
+                } else {
+                    console.error('Failed to load performance metrics:', response.message);
+                    alert('Failed to load performance metrics: ' + response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', error);
+                alert('Failed to load performance metrics. Please try again.');
+            },
+            complete: function() {
+                // Hide loading indicator
+                $('#performance_loading').hide();
+                $('#performance-metrics-tbody').show();
+            }
+        });
+    }
+    
+    // Function to render Performance Metrics HTML
+    function renderPerformanceMetrics(modules) {
+        var html = '';
+        
+        if (!modules || modules.length === 0) {
+            html = '<tr><td colspan="5" style="text-align: center; padding: 40px; color: #999;">No data available for selected year</td></tr>';
+        } else {
+            modules.forEach(function(module, index) {
+                var completionRate = module.completion_rate;
+                var progressColor, progressStatus, progressIcon;
+                
+                if (completionRate >= 100) {
+                    progressColor = '#3FB984'; // Green
+                    progressStatus = 'Complete';
+                    progressIcon = 'fa-check-circle';
+                } else if (completionRate >= 80) {
+                    progressColor = '#4D6EF5'; // Blue
+                    progressStatus = 'Almost Done';
+                    progressIcon = 'fa-clock-o';
+                } else if (completionRate >= 50) {
+                    progressColor = '#F5C04D'; // Yellow
+                    progressStatus = 'In Progress';
+                    progressIcon = 'fa-hourglass-half';
+                } else {
+                    progressColor = '#E05B5B'; // Red
+                    progressStatus = 'Starting';
+                    progressIcon = 'fa-hourglass-half';
+                }
+                
+                html += '<tr class="module-row" data-index="' + index + '">';
+                html += '  <td class="module-name-cell">';
+                html += '    <div class="module-info">';
+                html += '      <div class="module-icon-wrapper">';
+                html += '        <i class="fa fa-cube module-icon"></i>';
+                html += '      </div>';
+                html += '      <div class="module-details">';
+                html += '        <span class="module-name">' + escapeHtml(module.module) + '</span>';
+                html += '        <span class="module-subtitle">' + (module.table || 'Testing Module') + '</span>';
+                html += '      </div>';
+                html += '    </div>';
+                html += '  </td>';
+                html += '  <td class="metric-cell">';
+                html += '    <div class="modern-metric total-metric">';
+                html += '      <span class="metric-value">' + numberFormat(module.total) + '</span>';
+                html += '      <span class="metric-label">items</span>';
+                html += '    </div>';
+                html += '  </td>';
+                html += '  <td class="metric-cell">';
+                html += '    <div class="modern-metric completed-metric">';
+                html += '      <span class="metric-value success-color">' + numberFormat(module.completed) + '</span>';
+                html += '      <span class="metric-label">done</span>';
+                html += '    </div>';
+                html += '  </td>';
+                html += '  <td class="metric-cell">';
+                html += '    <div class="modern-metric pending-metric" data-module="' + escapeHtml(module.module) + '" title="Click to view pending items">';
+                html += '      <span class="metric-value warning-color">' + numberFormat(module.pending) + '</span>';
+                html += '      <span class="metric-label">pending</span>';
+                html += '    </div>';
+                html += '  </td>';
+                html += '  <td class="progress-cell">';
+                html += '    <div class="modern-progress-container">';
+                html += '      <div class="progress-info">';
+                html += '        <span class="progress-percentage" style="color: ' + progressColor + '">' + completionRate + '%</span>';
+                html += '        <i class="fa ' + progressIcon + ' progress-status-icon" style="color: ' + progressColor + '" title="' + progressStatus + '"></i>';
+                html += '      </div>';
+                html += '      <div class="modern-progress-bar">';
+                html += '        <div class="progress-track"></div>';
+                html += '        <div class="progress-fill" style="width: ' + completionRate + '%; background: linear-gradient(90deg, ' + progressColor + ' 0%, ' + progressColor + 'CC 100%);"></div>';
+                html += '      </div>';
+                html += '    </div>';
+                html += '  </td>';
+                html += '</tr>';
+            });
+        }
+        
+        $('#performance-metrics-tbody').html(html);
+    }
+    
+    // Helper function to escape HTML
+    function escapeHtml(text) {
+        var map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        };
+        return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+    }
+    
+    // Helper function to format numbers
+    function numberFormat(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    // Handle year selector change for Performance Metrics
+    window.filterPerformanceByYear = function(year) {
+        // Validate year is numeric and within range
+        year = parseInt(year);
+        if (isNaN(year) || year < 2000 || year > (new Date().getFullYear() + 1)) {
+            console.error('Invalid year selected');
+            return;
+        }
+        
+        // Load data via AJAX instead of page reload
+        loadPerformanceMetrics(year);
+    };
 
     // Initialize DataTables for workflow status table
     $('#workflow-table').DataTable({

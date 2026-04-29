@@ -13,13 +13,32 @@ class Welcome extends CI_Controller {
 
 
     public function index() {
+        // Get year filter parameter, default to current year
+        $performance_year = $this->input->get('performance_year');
+        
+        // Validate and sanitize year input
+        if (!empty($performance_year)) {
+            // Only accept 4-digit numeric year
+            $performance_year = filter_var($performance_year, FILTER_VALIDATE_INT);
+            
+            // Additional validation: year must be between 2000 and current year + 1
+            $current_year = (int)date('Y');
+            if ($performance_year === false || $performance_year < 2000 || $performance_year > ($current_year + 1)) {
+                // Invalid year, use current year as default
+                $performance_year = $current_year;
+            }
+        } else {
+            $performance_year = (int)date('Y');
+        }
+        
         // Get dashboard data
         $data['summary'] = $this->Dashboard_model->get_dashboard_summary();
-        $data['module_statistics'] = $this->Dashboard_model->get_module_statistics();
+        $data['module_statistics'] = $this->Dashboard_model->get_module_statistics($performance_year);
         $data['recent_activities'] = $this->Dashboard_model->get_recent_activities(7);
         $data['workflow_status'] = $this->Dashboard_model->get_workflow_status();
         $data['monthly_statistics'] = $this->Dashboard_model->get_monthly_statistics();
         $data['available_years'] = $this->Dashboard_model->get_available_years();
+        $data['performance_year'] = $performance_year; // Pass selected year to view
         
         $this->template->load('template', 'welcome', $data);
     }
@@ -103,6 +122,41 @@ class Welcome extends CI_Controller {
             echo json_encode([
                 'success' => false,
                 'message' => 'Failed to retrieve monthly statistics',
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
+    
+    public function get_performance_metrics_by_year() {
+        $year = $this->input->post('year');
+        
+        if (empty($year)) {
+            echo json_encode(['success' => false, 'message' => 'Year is required']);
+            return;
+        }
+        
+        // Validate year
+        $year = filter_var($year, FILTER_VALIDATE_INT);
+        $current_year = (int)date('Y');
+        
+        if ($year === false || $year < 2000 || $year > ($current_year + 1)) {
+            echo json_encode(['success' => false, 'message' => 'Invalid year']);
+            return;
+        }
+        
+        try {
+            $module_statistics = $this->Dashboard_model->get_module_statistics($year);
+            
+            echo json_encode([
+                'success' => true,
+                'data' => $module_statistics,
+                'year' => $year,
+                'message' => 'Performance metrics retrieved successfully'
+            ]);
+        } catch (Exception $e) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Failed to retrieve performance metrics',
                 'error' => $e->getMessage()
             ]);
         }
