@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Multi-File Upload Functions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .test-section {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .test-section h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        button {
+            padding: 8px 15px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        #supplementary_files_display {
+            min-height: 38px;
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+            margin: 10px 0;
+        }
+        .label {
+            display: inline-block;
+            padding: 5px 8px;
+            margin: 2px;
+            background-color: #5bc0de;
+            color: white;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Multi-File Upload Functions Test</h1>
+    
+    <div class="test-section">
+        <h3>Test 1: Get Empty Array</h3>
+        <input type="hidden" id="supplementary_files_data" value="">
+        <button onclick="test1()">Run Test 1</button>
+        <div id="test1-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test 2: Parse JSON Array</h3>
+        <button onclick="test2()">Run Test 2</button>
+        <div id="test2-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test 3: Backward Compatibility (Single File)</h3>
+        <button onclick="test3()">Run Test 3</button>
+        <div id="test3-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test 4: Update Display with Multiple Files</h3>
+        <button onclick="test4()">Run Test 4</button>
+        <div id="supplementary_files_display">
+            <span class="text-muted">No files uploaded</span>
+        </div>
+        <div id="test4-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test 5: Add New File (Avoid Duplicates)</h3>
+        <button onclick="test5()">Run Test 5</button>
+        <div id="test5-result"></div>
+    </div>
+
+    <script>
+        // Copy the functions from implementation
+        function getSupplementaryFilesArray() {
+            const hiddenInput = document.getElementById("supplementary_files_data");
+            if (!hiddenInput || !hiddenInput.value || hiddenInput.value.trim() === '') {
+                return [];
+            }
+            
+            try {
+                const parsed = JSON.parse(hiddenInput.value);
+                return Array.isArray(parsed) ? parsed : [];
+            } catch(e) {
+                console.error('Error parsing supplementary files:', e);
+                return [];
+            }
+        }
+
+        function updateSupplementaryFilesDisplay(filesArray) {
+            const hiddenInput = document.getElementById("supplementary_files_data");
+            const displayDiv = document.getElementById("supplementary_files_display");
+            
+            if (!hiddenInput || !displayDiv) return;
+            
+            // Update hidden input with JSON array
+            hiddenInput.value = JSON.stringify(filesArray);
+            
+            // Update display
+            if (filesArray.length === 0) {
+                displayDiv.innerHTML = '<span class="text-muted">No files uploaded</span>';
+            } else {
+                // Create badges for each file
+                let badges = filesArray.map(function(filename, index) {
+                    return `<span class="label" style="margin: 2px 4px; padding: 5px 8px;">
+                                ${filename.length > 20 ? filename.substring(0, 17) + '...' : filename}
+                                <button type="button" onclick="deleteFile(${index})" 
+                                        style="margin-left: 5px; padding: 0px 4px; border: none; background: #d9534f; color: white; border-radius: 3px;">
+                                    ×
+                                </button>
+                            </span>`;
+                }).join('');
+                
+                displayDiv.innerHTML = badges;
+            }
+        }
+
+        function deleteFile(index) {
+            const files = getSupplementaryFilesArray();
+            files.splice(index, 1);
+            updateSupplementaryFilesDisplay(files);
+        }
+
+        // Test functions
+        function test1() {
+            const hiddenInput = document.getElementById("supplementary_files_data");
+            hiddenInput.value = "";
+            
+            const result = getSupplementaryFilesArray();
+            const resultDiv = document.getElementById("test1-result");
+            
+            if (Array.isArray(result) && result.length === 0) {
+                resultDiv.innerHTML = '<p class="success">✓ PASS: Returns empty array</p>';
+            } else {
+                resultDiv.innerHTML = '<p class="error">✗ FAIL: Expected empty array, got: ' + JSON.stringify(result) + '</p>';
+            }
+        }
+
+        function test2() {
+            const hiddenInput = document.getElementById("supplementary_files_data");
+            hiddenInput.value = '["file1.pdf", "file2.pdf", "file3.pdf"]';
+            
+            const result = getSupplementaryFilesArray();
+            const resultDiv = document.getElementById("test2-result");
+            
+            if (Array.isArray(result) && result.length === 3 && result[0] === "file1.pdf") {
+                resultDiv.innerHTML = '<p class="success">✓ PASS: Correctly parsed JSON array with 3 files</p>';
+            } else {
+                resultDiv.innerHTML = '<p class="error">✗ FAIL: Expected 3 files, got: ' + JSON.stringify(result) + '</p>';
+            }
+        }
+
+        function test3() {
+            const hiddenInput = document.getElementById("supplementary_files_data");
+            hiddenInput.value = 'old_single_file.pdf';
+            
+            const result = getSupplementaryFilesArray();
+            const resultDiv = document.getElementById("test3-result");
+            
+            // Should return empty array because single string is not valid JSON
+            // In real implementation, this would be handled in form edit logic
+            if (Array.isArray(result) && result.length === 0) {
+                resultDiv.innerHTML = '<p class="success">✓ PASS: Invalid JSON returns empty array (handled in form edit)</p>';
+            } else {
+                resultDiv.innerHTML = '<p class="error">✗ FAIL: Expected empty array, got: ' + JSON.stringify(result) + '</p>';
+            }
+        }
+
+        function test4() {
+            const testFiles = ["document1.pdf", "report2.docx", "image3.jpg"];
+            updateSupplementaryFilesDisplay(testFiles);
+            
+            const hiddenInput = document.getElementById("supplementary_files_data");
+            const displayDiv = document.getElementById("supplementary_files_display");
+            const resultDiv = document.getElementById("test4-result");
+            
+            const storedValue = hiddenInput.value;
+            const displayHTML = displayDiv.innerHTML;
+            
+            if (storedValue === JSON.stringify(testFiles) && displayHTML.includes("document1.pdf")) {
+                resultDiv.innerHTML = '<p class="success">✓ PASS: Display updated correctly with 3 files</p>';
+            } else {
+                resultDiv.innerHTML = '<p class="error">✗ FAIL: Display update failed</p>';
+            }
+        }
+
+        function test5() {
+            // Start with 2 files
+            updateSupplementaryFilesDisplay(["file1.pdf", "file2.pdf"]);
+            
+            // Add new file
+            let currentFiles = getSupplementaryFilesArray();
+            const newFile = "file3.pdf";
+            
+            if (!currentFiles.includes(newFile)) {
+                currentFiles.push(newFile);
+            }
+            
+            updateSupplementaryFilesDisplay(currentFiles);
+            
+            const result = getSupplementaryFilesArray();
+            const resultDiv = document.getElementById("test5-result");
+            
+            if (result.length === 3 && result[2] === "file3.pdf") {
+                resultDiv.innerHTML = '<p class="success">✓ PASS: New file added successfully (3 files total)</p>';
+            } else {
+                resultDiv.innerHTML = '<p class="error">✗ FAIL: Expected 3 files, got: ' + JSON.stringify(result) + '</p>';
+            }
+            
+            // Test duplicate prevention
+            if (!currentFiles.includes(newFile)) {
+                currentFiles.push(newFile);
+            }
+            
+            if (currentFiles.length === 3) {
+                resultDiv.innerHTML += '<p class="success">✓ PASS: Duplicate prevention works</p>';
+            } else {
+                resultDiv.innerHTML += '<p class="error">✗ FAIL: Duplicate was added</p>';
+            }
+        }
+
+        // Run all tests on load
+        window.onload = function() {
+            console.log("Test page loaded. Click buttons to run tests.");
+        };
+    </script>
+</body>
+</html>

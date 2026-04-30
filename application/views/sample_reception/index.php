@@ -60,7 +60,7 @@
                                         <th>Date Arrived</th>
                                         <th>Time Arrived</th>
                                         <th>Documents</th>
-                                        <th>Supplementary File</th>
+                                        <th>Supplementary Files</th>
                                         <th width="120px">Action</th>
                                     </tr>
                                 </thead>
@@ -289,19 +289,40 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="supplementary_files" class="col-sm-4 control-label">Supplementary File</label>
-                                <div class="col-sm-8">
-                                    <input id="supplementary_files" name="supplementary_files" placeholder="Supplementary File" type="text" class="form-control" readonly>
-                                    <div class="val3tip"></div>
-                                    <small class="text-muted" id="supplementary-file-status-text" style="display: none;">
-                                        <i class="fa fa-info-circle"></i>You can delete the supplementary file if needed.
+                                <label for="supplementary_files" class="col-sm-4 control-label">
+                                    Supplementary Files
+                                    <br>
+                                    <small class="text-muted" style="font-weight: normal;">
+                                        (Multiple files allowed)
                                     </small>
-                                    <div class="file-buttons-container" style="margin-top: 5px;">
-                                        <button type="button" id="btn-open-scanner-supplementary" class="btn btn-success" onclick="openSupplementaryScanner()">
-                                            <i class="fa fa-file-o"></i> Open File
-                                        </button>
-                                        <button type="button" id="btn-delete-supplementary-file" class="btn btn-danger" onclick="deleteSupplementaryFile()" style="margin-left: 10px; display: none;">
-                                            <i class="fa fa-trash"></i> Delete File
+                                </label>
+                                <div class="col-sm-8">
+                                    <!-- Hidden input to store JSON array of filenames -->
+                                    <input type="hidden" id="supplementary_files_data" name="supplementary_files" value="">
+                                    
+                                    <!-- Display area for uploaded files -->
+                                    <div id="supplementary_files_display" class="form-control" style="min-height: 38px; background-color: #f8f9fa; cursor: default;">
+                                        <span class="text-muted"><i class="fa fa-inbox"></i> No files uploaded yet</span>
+                                    </div>
+                                    
+                                    <div class="val3tip"></div>
+                                    
+                                    <!-- Helper text - always visible -->
+                                    <small class="text-info" style="display: block; margin-top: 5px;">
+                                        <i class="fa fa-info-circle"></i> 
+                                        <strong>Tip:</strong> Click "Add File" button multiple times to upload more files
+                                    </small>
+                                    
+                                    <!-- Status text - shown when files exist -->
+                                    <small class="text-success" id="supplementary-file-status-text" style="display: none; margin-top: 3px;">
+                                        <i class="fa fa-check-circle"></i> 
+                                        <span id="supplementary-file-count">0</span> file(s) ready. Click × to remove individual files.
+                                    </small>
+                                    
+                                    <div class="file-buttons-container" style="margin-top: 8px;">
+                                        <button type="button" id="btn-open-scanner-supplementary" class="btn btn-success" onclick="openSupplementaryScanner()" title="Upload a supplementary file">
+                                            <i class="fa fa-plus"></i> Add File
+                                            <span id="btn-file-counter" class="badge" style="display: none; margin-left: 5px; background-color: #fff; color: #5cb85c;">0</span>
                                         </button>
                                     </div>
                                 </div>
@@ -1290,10 +1311,58 @@
     }
 
     /* Input file styling when readonly */
-    #files[readonly], #supplementary_files[readonly] {
+    #files[readonly] {
         background-color: #f8f9fa;
         border-color: #e9ecef;
         cursor: not-allowed;
+    }
+    
+    /* Supplementary files display styling */
+    #supplementary_files_display {
+        min-height: 38px;
+        padding: 6px 12px;
+        overflow-x: auto;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+    
+    #supplementary_files_display .label {
+        white-space: normal;
+        word-break: break-word;
+        max-width: 250px;
+        display: inline-flex;
+        align-items: center;
+        margin: 0;
+        animation: slideInBadge 0.3s ease-out;
+    }
+    
+    /* Animation for new file badge */
+    @keyframes slideInBadge {
+        from {
+            opacity: 0;
+            transform: translateY(-10px) scale(0.9);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+    
+    /* Button counter badge styling */
+    #btn-file-counter {
+        animation: pulse 0.5s ease-in-out;
+    }
+    
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.2);
+        }
     }
 
     /* Supplementary file button styling */
@@ -1857,6 +1926,229 @@ function applyCompletedProjectStyling() {
 
 	let client = $('#client').val();
 
+    // ========== SUPPLEMENTARY FILE FUNCTIONS - MUST BE DEFINED BEFORE USE ==========
+    
+    // Get current supplementary files as array
+    function getSupplementaryFilesArray() {
+        const hiddenInput = document.getElementById("supplementary_files_data");
+        if (!hiddenInput || !hiddenInput.value || hiddenInput.value.trim() === '') {
+            return [];
+        }
+        
+        try {
+            const parsed = JSON.parse(hiddenInput.value);
+            return Array.isArray(parsed) ? parsed : [];
+        } catch(e) {
+            console.error('Error parsing supplementary files:', e);
+            return [];
+        }
+    }
+
+    // Update supplementary files display and hidden input
+    function updateSupplementaryFilesDisplay(filesArray) {
+        const hiddenInput = document.getElementById("supplementary_files_data");
+        const displayDiv = document.getElementById("supplementary_files_display");
+        const statusText = document.getElementById("supplementary-file-status-text");
+        const fileCountSpan = document.getElementById("supplementary-file-count");
+        const btnCounter = document.getElementById("btn-file-counter");
+        const valTip = document.querySelector(".val3tip");
+        
+        if (!hiddenInput || !displayDiv) return;
+        
+        // Update hidden input with JSON array
+        hiddenInput.value = JSON.stringify(filesArray);
+        
+        const fileCount = filesArray.length;
+        
+        // Update display
+        if (fileCount === 0) {
+            displayDiv.innerHTML = '<span class="text-muted"><i class="fa fa-inbox"></i> No files uploaded yet</span>';
+            if (statusText) statusText.style.display = 'none';
+            if (btnCounter) btnCounter.style.display = 'none';
+            if (valTip) valTip.innerHTML = '';
+        } else {
+            // Create badges for each file with delete button
+            let badges = filesArray.map(function(filename, index) {
+                return `<span class="label label-info" style="margin: 2px 4px; padding: 5px 8px; display: inline-block; font-size: 12px;">
+                            <i class="fa fa-file-o"></i> ${filename.length > 20 ? filename.substring(0, 17) + '...' : filename}
+                            <button type="button" class="btn btn-xs btn-danger" onclick="deleteSupplementaryFileByIndex(${index})" 
+                                    style="margin-left: 5px; padding: 0px 4px; border: none; background: #d9534f; color: white; border-radius: 3px;"
+                                    title="Delete ${filename}">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </span>`;
+            }).join('');
+            
+            displayDiv.innerHTML = badges;
+            
+            // Update status text with file count
+            if (statusText) {
+                statusText.style.display = 'block';
+                if (fileCountSpan) {
+                    fileCountSpan.textContent = fileCount;
+                }
+            }
+            
+            // Update button counter badge
+            if (btnCounter) {
+                btnCounter.textContent = fileCount;
+                btnCounter.style.display = 'inline-block';
+            }
+            
+            // Update validation tip
+            if (valTip) {
+                valTip.innerHTML = `<span class="text-success"><i class="fa fa-check-circle"></i> ${fileCount} file(s) ready to submit!</span>`;
+            }
+        }
+    }
+
+    function openSupplementaryScanner() {
+        const idxProject = $('#idx_project').val();
+        const w = 800;
+        const h = 600;
+        const y = window.top.outerHeight / 2 + window.top.screenY - (h / 2);
+        const x = window.top.outerWidth / 2 + window.top.screenX - (w / 2);
+
+        const url = "<?= site_url('scan_page/supplementary') ?>?project_id=" + encodeURIComponent(idxProject);
+
+        window.open(url, "Scan Supplementary Document",
+            `width=${w},height=${h},top=${y},left=${x}`);
+    }
+
+    // Delete supplementary file by index
+    function deleteSupplementaryFileByIndex(index) {
+        const filesArray = getSupplementaryFilesArray();
+        
+        if (index < 0 || index >= filesArray.length) {
+            console.error('Invalid file index:', index);
+            return;
+        }
+        
+        const filename = filesArray[index];
+        
+        // Show SweetAlert confirmation modal
+        Swal.fire({
+            icon: 'warning',
+            title: 'Delete File?',
+            text: `Are you sure you want to delete "${filename}"? This action cannot be undone.`,
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Show loading
+                Swal.fire({
+                    title: 'Deleting...',
+                    text: 'Please wait',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+                
+                // Make AJAX call to delete file from server
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '<?= site_url("scan_page/delete_supplementary_file") ?>', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                
+                xhr.onload = function() {
+                    try {
+                        const response = JSON.parse(xhr.responseText);
+                        
+                        if (response.success) {
+                            // Remove file from array
+                            filesArray.splice(index, 1);
+                            
+                            // Update display
+                            updateSupplementaryFilesDisplay(filesArray);
+                            
+                            // Show success message
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Deleted!',
+                                text: 'File has been deleted successfully.',
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Delete Failed',
+                                text: response.message || 'Failed to delete file from server.',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    } catch(e) {
+                        console.error('Error parsing response:', e);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'An error occurred while deleting the file.',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                };
+                
+                xhr.onerror = function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Network Error',
+                        text: 'Failed to connect to server.',
+                        confirmButtonText: 'OK'
+                    });
+                };
+                
+                xhr.send('filename=' + encodeURIComponent(filename));
+            }
+        });
+    }
+
+    // Legacy function - kept for backward compatibility
+    function updateSupplementaryFileButtonsState() {
+        const statusText = document.getElementById("supplementary-file-status-text");
+        const filesArray = getSupplementaryFilesArray();
+        
+        if (statusText) {
+            if (filesArray.length > 0) {
+                statusText.style.display = 'block';
+            } else {
+                statusText.style.display = 'none';
+            }
+        }
+    }
+
+    // Legacy function - kept for backward compatibility
+    function deleteSupplementaryFile() {
+        const filesArray = getSupplementaryFilesArray();
+        
+        if (filesArray.length === 0) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'No Files',
+                text: 'There are no supplementary files to delete.',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+        
+        // If only one file, delete it directly
+        if (filesArray.length === 1) {
+            deleteSupplementaryFileByIndex(0);
+        } else {
+            // If multiple files, show info
+            Swal.fire({
+                icon: 'info',
+                title: 'Multiple Files',
+                text: 'Please use the × button next to each file to delete individual files.',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
+
+    // ========== END SUPPLEMENTARY FILE FUNCTIONS ==========
+
     $(document).ready(function() {
 
         // Initialize comprehensive validation event listeners
@@ -2183,14 +2475,50 @@ function applyCompletedProjectStyling() {
                 {
                     "data": "supplementary_files",
                     "render": function(data, type, row) {
-                        if (!data || data === "null") return `<button type="button" class="btn btn-sm btn-light" disabled>
-                                    <i class="fa fa-times"></i> No file yet
-                                </button>`;
+                        if (!data || data === "null" || data === "" || data === "[]") {
+                            return `<button type="button" class="btn btn-sm btn-light" disabled>
+                                        <i class="fa fa-times"></i> No files
+                                    </button>`;
+                        }
 
-                        const fileURL = `<?= site_url('scan_page/view_file/') ?>${data}`;
-                        return `<a href="${fileURL}" target="_blank" class="btn btn-sm btn-info">
-                                    <i class="fa fa-file-o"></i> View File
-                                </a>`;
+                        try {
+                            // Parse JSON array of filenames
+                            let files = [];
+                            if (typeof data === 'string') {
+                                // Try to parse as JSON first
+                                try {
+                                    files = JSON.parse(data);
+                                } catch(e) {
+                                    // If not JSON, treat as single filename (backward compatibility)
+                                    files = [data];
+                                }
+                            } else if (Array.isArray(data)) {
+                                files = data;
+                            } else {
+                                files = [data];
+                            }
+
+                            if (!Array.isArray(files) || files.length === 0) {
+                                return `<button type="button" class="btn btn-sm btn-light" disabled>
+                                            <i class="fa fa-times"></i> No files
+                                        </button>`;
+                            }
+
+                            // Generate badges for each file
+                            let badges = files.map(function(filename) {
+                                const fileURL = `<?= site_url('scan_page/view_file/') ?>${filename}`;
+                                return `<a href="${fileURL}" target="_blank" class="btn btn-xs btn-info" style="margin: 2px;" title="${filename}">
+                                            <i class="fa fa-file-o"></i> ${filename.length > 15 ? filename.substring(0, 12) + '...' : filename}
+                                        </a>`;
+                            }).join(' ');
+
+                            return `<div style="max-width: 250px;">${badges}</div>`;
+                        } catch(e) {
+                            console.error('Error rendering supplementary files:', e);
+                            return `<button type="button" class="btn btn-sm btn-warning" disabled>
+                                        <i class="fa fa-exclamation-triangle"></i> Error
+                                    </button>`;
+                        }
                     }
                 },
                 { "data": "action", "orderable": false, "searchable": false }
@@ -2913,7 +3241,10 @@ function applyCompletedProjectStyling() {
             $('#old_number_sample').val('');
             $('#number_sample_help').hide();
             $('#files').val('');
-            $('#supplementary_files').val('');
+            
+            // Reset supplementary files for multi-file support
+            updateSupplementaryFilesDisplay([]);
+            
             $('#comments').val('');
             $('.val2tip').html('');
             $('.val3tip').html('');
@@ -2971,7 +3302,29 @@ function applyCompletedProjectStyling() {
             $('#number_sample_help').show();
             $('#number_sample_help_text').html('Current: ' + data.number_sample + ' sample(s). You can only add more samples, not reduce.');
             $('#files').val(data.files).attr('readonly', true);
-            $('#supplementary_files').val(data.supplementary_files).attr('readonly', true);
+            
+            // Load supplementary files for multi-file support
+            try {
+                let suppFiles = [];
+                if (data.supplementary_files && data.supplementary_files !== 'null' && data.supplementary_files !== '') {
+                    // Try to parse as JSON array
+                    try {
+                        suppFiles = JSON.parse(data.supplementary_files);
+                        if (!Array.isArray(suppFiles)) {
+                            // If not array, treat as single file (backward compatibility)
+                            suppFiles = [data.supplementary_files];
+                        }
+                    } catch(e) {
+                        // If not JSON, treat as single file (backward compatibility)
+                        suppFiles = [data.supplementary_files];
+                    }
+                }
+                updateSupplementaryFilesDisplay(suppFiles);
+            } catch(e) {
+                console.error('Error loading supplementary files:', e);
+                updateSupplementaryFilesDisplay([]);
+            }
+            
             $('#date_arrive').val(data.date_arrive);
             $('#time_arrive').val(data.time_arrive);
             $('#comments').val(data.comments);
@@ -3328,185 +3681,47 @@ window.addEventListener("message", function(event) {
         updateFileButtonsState();
     }
     
-    // Handle supplementary file upload
+    // Handle supplementary file upload - UPDATED FOR MULTI-FILE
     if (event.data && event.data.type === 'scan-upload-complete-supplementary') {
         const filename = event.data.filename;
         console.log("Dapat nama supplementary file dari scanner:", filename);
 
-        // Masukkan ke input #supplementary_files
-        const supplementaryFileInput = document.getElementById("supplementary_files");
-        if (supplementaryFileInput) {
-            supplementaryFileInput.value = filename;
+        // Get current files array
+        let currentFiles = getSupplementaryFilesArray();
+        
+        // Add new file to array (avoid duplicates)
+        if (!currentFiles.includes(filename)) {
+            currentFiles.push(filename);
+            
+            // Update display
+            updateSupplementaryFilesDisplay(currentFiles);
+            
+            // Show success notification
+            Swal.fire({
+                icon: 'success',
+                title: 'File Added!',
+                html: `<strong>${filename}</strong> has been added successfully.<br><br>
+                       <small class="text-muted">You can add more files by clicking "Add File" button again.</small>`,
+                timer: 3000,
+                timerProgressBar: true,
+                showConfirmButton: false,
+                toast: true,
+                position: 'top-end'
+            });
+        } else {
+            // File already exists
+            Swal.fire({
+                icon: 'info',
+                title: 'File Already Added',
+                text: `${filename} is already in the list.`,
+                timer: 2000,
+                showConfirmButton: false,
+                toast: true,
+                position: 'top-end'
+            });
         }
-
-        // Update button states
-        updateSupplementaryFileButtonsState();
     }
 });
-
-// ========== SUPPLEMENTARY FILE FUNCTIONS ==========
-
-function openSupplementaryScanner() {
-  const idxProject = $('#idx_project').val(); // Ambil nilai project dari input form
-  const w = 800;
-  const h = 600;
-  const y = window.top.outerHeight / 2 + window.top.screenY - (h / 2);
-  const x = window.top.outerWidth / 2 + window.top.screenX - (w / 2);
-
-  const url = "<?= site_url('scan_page/supplementary') ?>?project_id=" + encodeURIComponent(idxProject);
-
-  window.open(url, "Scan Supplementary Document",
-    `width=${w},height=${h},top=${y},left=${x}`);
-}
-
-function updateSupplementaryFileButtonsState() {
-    const supplementaryFileInput = document.getElementById("supplementary_files");
-    const btnOpenSupplementaryScanner = document.getElementById("btn-open-scanner-supplementary");
-    const btnDeleteSupplementaryFile = document.getElementById("btn-delete-supplementary-file");
-    const supplementaryFileStatusText = document.getElementById("supplementary-file-status-text");
-    const valTip = document.querySelector(".val3tip");
-
-    const hasFile = supplementaryFileInput && supplementaryFileInput.value && supplementaryFileInput.value.trim() !== '';
-
-    if (hasFile) {
-        // File exists - show delete button, hide open button
-        btnOpenSupplementaryScanner.style.display = 'none';
-        btnDeleteSupplementaryFile.style.display = 'inline-block';
-        supplementaryFileStatusText.style.display = 'block';
-        
-        // Reset delete button state (in case it was in loading state)
-        btnDeleteSupplementaryFile.innerHTML = '<i class="fa fa-trash"></i> Delete File';
-        btnDeleteSupplementaryFile.disabled = false;
-        
-        if (valTip) {
-            valTip.innerHTML = `<span class="text-success"><i class="fa fa-check-circle"></i> Supplementary file <strong>${supplementaryFileInput.value}</strong> is ready!</span>`;
-        }
-    } else {
-        // No file - show open button, hide delete button
-        btnOpenSupplementaryScanner.style.display = 'inline-block';
-        btnDeleteSupplementaryFile.style.display = 'none';
-        supplementaryFileStatusText.style.display = 'none';
-        
-        // Reset delete button state completely
-        btnDeleteSupplementaryFile.innerHTML = '<i class="fa fa-trash"></i> Delete File';
-        btnDeleteSupplementaryFile.disabled = false;
-        
-        if (valTip) {
-            valTip.innerHTML = '';
-        }
-    }
-}
-
-function deleteSupplementaryFile() {
-    const supplementaryFileInput = document.getElementById("supplementary_files");
-    const filename = supplementaryFileInput ? supplementaryFileInput.value : '';
-    
-    if (!filename) {
-        Swal.fire({
-            icon: 'warning',
-            title: 'No Supplementary File Selected',
-            text: 'There is no supplementary file to delete.',
-            confirmButtonText: 'OK'
-        });
-        return;
-    }
-    
-    // Show SweetAlert confirmation modal
-    Swal.fire({
-        icon: 'warning',
-        title: 'Delete Supplementary File?',
-        text: 'Are you sure you want to delete this supplementary file? This action cannot be undone.',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'Cancel',
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Show loading state
-            const btnDeleteSupplementaryFile = document.getElementById("btn-delete-supplementary-file");
-            const originalText = btnDeleteSupplementaryFile.innerHTML;
-            btnDeleteSupplementaryFile.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Deleting...';
-            btnDeleteSupplementaryFile.disabled = true;
-            
-            // Make AJAX call to delete file from server
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', '<?= site_url("scan_page/delete_supplementary_file") ?>', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            
-            xhr.onload = function() {
-                try {
-                    const response = JSON.parse(xhr.responseText);
-                    
-                    if (response.success) {
-                        // Clear the filename
-                        supplementaryFileInput.value = '';
-                        
-                        // Update button states
-                        updateSupplementaryFileButtonsState();
-                        
-                        // Show success message with SweetAlert
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Deleted!',
-                            text: response.message,
-                            timer: 2000,
-                            showConfirmButton: false
-                        });
-                    } else {
-                        // Show error message with SweetAlert
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Delete Failed',
-                            text: response.message,
-                            confirmButtonText: 'OK'
-                        });
-                        
-                        // Reset button state
-                        btnDeleteSupplementaryFile.innerHTML = originalText;
-                        btnDeleteSupplementaryFile.disabled = false;
-                    }
-                    
-                } catch (e) {
-                    console.error('Error parsing response:', e);
-                    
-                    // Show error message with SweetAlert
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Failed to delete supplementary file due to server error.',
-                        confirmButtonText: 'OK'
-                    });
-                    
-                    // Reset button state
-                    btnDeleteSupplementaryFile.innerHTML = originalText;
-                    btnDeleteSupplementaryFile.disabled = false;
-                }
-            };
-            
-            xhr.onerror = function() {
-                console.error('Network error while deleting supplementary file');
-                
-                // Show network error with SweetAlert
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Network Error',
-                    text: 'Unable to connect to server. Please check your connection.',
-                    confirmButtonText: 'OK'
-                });
-                
-                // Reset button state
-                btnDeleteSupplementaryFile.innerHTML = originalText;
-                btnDeleteSupplementaryFile.disabled = false;
-            };
-            
-            // Send filename to delete
-            xhr.send('filename=' + encodeURIComponent(filename));
-        }
-    });
-}
-
-
 
 // Initialize file buttons state on page load and modal show
 $(document).ready(function() {
