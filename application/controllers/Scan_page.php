@@ -427,8 +427,8 @@ class Scan_page extends CI_Controller {
 
     public function do_upload_supplementary()
     {
-        // Use relative path within project for Mac compatibility
-        $upload_path = './uploads/supplementary/';
+        // Windows production path
+        $upload_path = 'C:\\onewater\\supplementary\\';
         
         // Create directory if not exists
         if (!is_dir($upload_path)) {
@@ -474,10 +474,10 @@ class Scan_page extends CI_Controller {
                     
                     // Call Python script to extract tables
                     $python_script = FCPATH . 'scripts/extract_pdf_tables.py';
-                    $python_path = '/usr/bin/python3';
+                    $python_path = 'C:\\Python39\\python.exe';
                     
-                    // Use user site-packages (compatible architecture)
-                    $pythonpath = '/Users/dhiyaulhaq/Library/Python/3.9/lib/python/site-packages';
+                    // Windows production Python site-packages
+                    $pythonpath = 'C:\\Python39\\Lib\\site-packages';
                     
                     $command = "PYTHONPATH=" . escapeshellarg($pythonpath) . " " . 
                                $python_path . " " . 
