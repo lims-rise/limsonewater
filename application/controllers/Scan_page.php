@@ -474,10 +474,10 @@ class Scan_page extends CI_Controller {
                     
                     // Call Python script to extract tables
                     $python_script = FCPATH . 'scripts/extract_pdf_tables.py';
-                    $python_path = 'C:\\Python39\\python.exe';
+                    $python_path = 'C:\\Users\\mgr-zhan0022\\AppData\\Local\\Programs\\Python\\Python310\\python.exe';
                     
                     // Windows production Python site-packages
-                    $pythonpath = 'C:\\Python39\\Lib\\site-packages';
+                    $pythonpath = 'C:\\Users\\mgr-zhan0022\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages';
                     
                     $command = "PYTHONPATH=" . escapeshellarg($pythonpath) . " " . 
                                $python_path . " " . 
