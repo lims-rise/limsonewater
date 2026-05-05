@@ -242,7 +242,8 @@ class Scan_page extends CI_Controller {
         
         // Tentukan path berdasarkan prefix filename
         if (strpos($filename, 'supplementary_') === 0) {
-            $basePath = 'C:\\onewater\\supplementary\\';
+            // Use relative path within project for Mac compatibility
+            $basePath = FCPATH . 'uploads/supplementary/';
             $fileType = 'supplementary file';
         } else {
             $basePath = 'C:\\onewater\\scan\\';
@@ -426,13 +427,19 @@ class Scan_page extends CI_Controller {
 
     public function do_upload_supplementary()
     {
+        // Windows production path
         $upload_path = 'C:\\onewater\\supplementary\\';
+        
+        // Create directory if not exists
+        if (!is_dir($upload_path)) {
+            mkdir($upload_path, 0777, true);
+        }
 
         // Ambil project_id dari POST dan validasi
         $project_id_raw = $this->input->post('project_id', TRUE);
-        $project_id = preg_replace('/[^a-zA-Z0-9_\-]/', '', $project_id_raw); // bersihkan input
+        $project_id = preg_replace('/[^a-zA-Z0-9_\-]/', '', $project_id_raw);
     
-        $filename = 'supplementary_' . ($project_id ?: time()); // pakai project_id, fallback ke time() jika kosong
+        $filename = 'supplementary_' . ($project_id ?: time());
     
         $config['upload_path']   = $upload_path;
         $config['allowed_types'] = '*';
@@ -449,9 +456,79 @@ class Scan_page extends CI_Controller {
                 ->set_output(json_encode(['error' => strip_tags($error)]));
         } else {
             $data = $this->upload->data();
+            $uploaded_filename = $data['file_name'];
+            $full_path = $data['full_path'];
+            
+            // Extract data using Python script if PDF
+            $extraction_success = false;
+            $extraction_count = 0;
+            $extraction_error = null;
+            
+            if ($project_id && strtolower($data['file_ext']) === '.pdf') {
+                try {
+                    // Load model
+                    $this->load->model('Supplementary_extraction_model');
+                    
+                    // Delete old extraction results
+                    $this->Supplementary_extraction_model->delete_by_project($project_id);
+                    
+                    // Call Python script to extract tables
+                    $python_script = FCPATH . 'scripts/extract_pdf_tables.py';
+                    $python_path = 'C:\\Python39\\python.exe';
+                    
+                    // Windows production Python site-packages
+                    $pythonpath = 'C:\\Python39\\Lib\\site-packages';
+                    
+                    $command = "PYTHONPATH=" . escapeshellarg($pythonpath) . " " . 
+                               $python_path . " " . 
+                               escapeshellarg($python_script) . " " . 
+                               escapeshellarg($full_path) . " " . 
+                               escapeshellarg($project_id) . " 2>&1";
+                    
+                    exec($command, $output, $return_code);
+                    
+                    // Log for debugging
+                    log_message('debug', 'Python command: ' . $command);
+                    log_message('debug', 'Python return code: ' . $return_code);
+                    log_message('debug', 'Python output: ' . print_r($output, true));
+                    
+                    // Parse JSON output
+                    $json_output = implode("\n", $output);
+                    $result = json_decode($json_output, true);
+                    
+                    if ($result && isset($result['success']) && $result['success']) {
+                        // Insert extracted data
+                        if (!empty($result['data'])) {
+                            $extraction_success = $this->Supplementary_extraction_model->insert_batch($result['data']);
+                            $extraction_count = $result['count'];
+                        } else {
+                            $extraction_error = "No data extracted from PDF";
+                        }
+                    } else {
+                        $extraction_error = isset($result['error']) ? $result['error'] : "Python script failed";
+                        // Include debug info if available
+                        if (isset($result['debug'])) {
+                            log_message('debug', 'Python debug: ' . $result['debug']);
+                        }
+                        // If JSON parsing failed, include raw output
+                        if (!$result) {
+                            $extraction_error .= " | Raw output: " . substr($json_output, 0, 500);
+                        }
+                    }
+                    
+                } catch (Exception $e) {
+                    $extraction_error = $e->getMessage();
+                }
+            }
+            
             return $this->output
                 ->set_content_type('application/json')
-                ->set_output(json_encode(['filename' => $data['file_name']]));
+                ->set_output(json_encode([
+                    'filename' => $uploaded_filename,
+                    'extraction_success' => $extraction_success,
+                    'extraction_count' => $extraction_count,
+                    'extraction_error' => $extraction_error
+                ]));
         }
     }
 
@@ -463,7 +540,8 @@ class Scan_page extends CI_Controller {
         header("Access-Control-Allow-Methods: POST, DELETE");
         header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
         
-        $upload_path = 'C:\\onewater\\supplementary\\';
+        // Use relative path within project for Mac compatibility
+        $upload_path = FCPATH . 'uploads/supplementary/';
         
         // Ambil filename dari POST request
         $filename = $this->input->post('filename', TRUE);

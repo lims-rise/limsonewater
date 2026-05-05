@@ -30,6 +30,9 @@ class Microbial extends CI_Controller
         
         // Check if redirected from Sample Reception with specific ID
         $data['search_sample_id'] = $this->input->get('idOneWaterSample');
+        
+        // Get id_project (COC) from URL parameter if provided
+        $data['id_project'] = $this->input->get('id_project') ?: $this->input->get('coc');
 
         $this->template->load('template','Microbial/index', $data);
     } 
@@ -252,7 +255,97 @@ class Microbial extends CI_Controller
         }
     }
 
+    /**
+     * Get supplementary extraction data by sample ID
+     * Optionally accepts id_project to skip lookup
+     * Returns JSON data for populating the form
+     */
+    public function get_supplementary_data()
+    {
+        header('Content-Type: application/json');
+        
+        $sample_id = $this->input->get('sample_id', TRUE);
+        $project_id = $this->input->get('id_project', TRUE); // Optional: can be provided from URL
+        
+        if (!$sample_id) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Sample ID is required'
+            ]);
+            return;
+        }
+        
+        // Load model
+        $this->load->model('Supplementary_extraction_model');
+        
+        // If project_id not provided, look it up from sample_reception_sample or sample_collection
+        if (!$project_id) {
+            // Try sample_reception_sample first
+            $this->db->select('id_project');
+            $this->db->from('sample_reception_sample');
+            $this->db->where('id_one_water_sample', $sample_id);
+            $this->db->where('flag', 0);
+            $query = $this->db->get();
+            
+            if ($query->num_rows() > 0) {
+                $project_id = $query->row()->id_project;
+            } else {
+                // Try sample_collection if not found in sample_reception_sample
+                $this->db->select('id_project');
+                $this->db->from('sample_collection');
+                $this->db->where('id_one_water_sample', $sample_id);
+                $this->db->where('flag', 0);
+                $query = $this->db->get();
+                
+                if ($query->num_rows() > 0) {
+                    $project_id = $query->row()->id_project;
+                }
+            }
+            
+            if (!$project_id) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => "Sample ID {$sample_id} not found in sample reception or sample collection"
+                ]);
+                return;
+            }
+        }
+        
+        // Check if extraction data exists for this project
+        if (!$this->Supplementary_extraction_model->has_extraction_results($project_id)) {
+            echo json_encode([
+                'success' => false,
+                'message' => "No supplementary data found for project {$project_id}. Please upload and extract PDF first."
+            ]);
+            return;
+        }
+        
+        // Get extraction data for this specific sample
+        $data = $this->Supplementary_extraction_model->get_by_project_and_sample($project_id, $sample_id);
+        
+        if (empty($data)) {
+            echo json_encode([
+                'success' => false,
+                'message' => "No supplementary data found for sample {$sample_id} in project {$project_id}"
+            ]);
+            return;
+        }
+        
+        // Get statistics for the whole project
+        $stats = $this->Supplementary_extraction_model->get_extraction_stats($project_id);
+        
+        echo json_encode([
+            'success' => true,
+            'data' => $data,
+            'stats' => $stats,
+            'count' => count($data),
+            'project_id' => $project_id,
+            'sample_id' => $sample_id
+        ]);
+    }
+
 }
+
 
 /* End of file Microbial.php */
 /* Location: ./application/controllers/Microbial.php */
