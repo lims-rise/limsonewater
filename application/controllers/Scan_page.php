@@ -242,8 +242,8 @@ class Scan_page extends CI_Controller {
         
         // Tentukan path berdasarkan prefix filename
         if (strpos($filename, 'supplementary_') === 0) {
-            // Use relative path within project for Mac compatibility
-            $basePath = FCPATH . 'uploads/supplementary/';
+            // Windows production path
+            $basePath = 'C:\\onewater\\supplementary\\';
             $fileType = 'supplementary file';
         } else {
             $basePath = 'C:\\onewater\\scan\\';
@@ -540,8 +540,8 @@ class Scan_page extends CI_Controller {
         header("Access-Control-Allow-Methods: POST, DELETE");
         header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
         
-        // Use relative path within project for Mac compatibility
-        $upload_path = FCPATH . 'uploads/supplementary/';
+        // Windows production path
+        $upload_path = 'C:\\onewater\\supplementary\\';
         
         // Ambil filename dari POST request
         $filename = $this->input->post('filename', TRUE);
