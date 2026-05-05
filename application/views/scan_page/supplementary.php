@@ -172,15 +172,33 @@
             return response.json();
         })
         .then(data => {
-            Swal.fire("Upload success", `Supplementary file uploaded as: ${data.filename}`, "success");
+            console.log('Upload response:', data);
+            
+            let message = `Supplementary file uploaded as: ${data.filename}`;
+            let icon = 'success';
+            
+            if (data.extraction_count > 0) {
+                message += `\n\n✅ Successfully extracted ${data.extraction_count} records from PDF!`;
+            } else if (data.extraction_error) {
+                message += `\n\n⚠️ Extraction failed: ${data.extraction_error}`;
+                icon = 'warning';
+            }
+            
+            Swal.fire({
+                title: "Upload Success",
+                text: message,
+                icon: icon,
+                confirmButtonText: "OK"
+            });
 
             // Kirim dengan tipe yang berbeda untuk supplementary file
             window.opener?.postMessage({
                 type: 'scan-upload-complete-supplementary',
-                filename: data.filename
+                filename: data.filename,
+                extraction_count: data.extraction_count
             }, "*");
 
-            setTimeout(() => window.close(), 1000);
+            setTimeout(() => window.close(), 2000);
         })
         .catch(err => {
             console.error(err);

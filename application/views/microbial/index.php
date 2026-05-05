@@ -54,6 +54,7 @@
                     <div class="modal-body">
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
                         <input id="id_microbial" name="id_microbial" type="hidden" class="form-control input-sm">
+                        <input id="id_project_param" name="id_project_param" type="hidden" class="form-control input-sm" value="<?php echo isset($id_project) ? $id_project : ''; ?>">
 
                         <div class="form-group">
                             <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
@@ -86,6 +87,9 @@
                                     <button type="button" id="btn-delete-document-file" class="btn btn-danger" onclick="deleteDocumentFile()" style="margin-left: 10px; display: none;">
                                         <i class="fa fa-trash"></i> Delete PDF
                                     </button>
+                                    <button type="button" id="btn-populate-supplementary" class="btn btn-primary" onclick="populateSupplementaryData()" style="margin-left: 10px;">
+                                        <i class="fa fa-download"></i> Populate Supplementary
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -96,6 +100,320 @@
                                 <textarea id="description" name="description" class="form-control" rows="3" placeholder="Enter description of the microbial testing document..."></textarea>
                             </div>
                         </div>
+
+                        <!-- Supplementary Data Section -->
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <hr style="border-top: 2px solid #3c8dbc; margin: 20px 0;">
+                                <h4 style="color: #3c8dbc; margin-bottom: 15px;">
+                                    <i class="fa fa-table"></i> Supplementary Data (Microbial Source Tracking)
+                                </h4>
+                            </div>
+                        </div>
+
+                        <!-- Table 1: Human-specific -->
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" style="background-color: #f5f5f5; cursor: pointer;" data-toggle="collapse" data-target="#table1-fields">
+                                        <h4 class="panel-title">
+                                            <i class="fa fa-chevron-down"></i> Table 1 - Human-specific Contribution
+                                        </h4>
+                                    </div>
+                                    <div id="table1-fields" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Human (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t1_human" name="supp_t1_human" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Unknown (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t1_unknown" name="supp_t1_unknown" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Table 2: Faecal-specific -->
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" style="background-color: #f5f5f5; cursor: pointer;" data-toggle="collapse" data-target="#table2-fields">
+                                        <h4 class="panel-title">
+                                            <i class="fa fa-chevron-down"></i> Table 2 - Faecal-specific Contribution
+                                        </h4>
+                                    </div>
+                                    <div id="table2-fields" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Bat (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t2_bat" name="supp_t2_bat" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Bird (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t2_bird" name="supp_t2_bird" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Cat (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t2_cat" name="supp_t2_cat" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Chicken (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t2_chicken" name="supp_t2_chicken" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Cow (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t2_cow" name="supp_t2_cow" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Deer (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t2_deer" name="supp_t2_deer" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Dog (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t2_dog" name="supp_t2_dog" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Fox (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t2_fox" name="supp_t2_fox" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Horse (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t2_horse" name="supp_t2_horse" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Human (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t2_human" name="supp_t2_human" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Kangaroo (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t2_kangaroo" name="supp_t2_kangaroo" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Possum (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t2_possum" name="supp_t2_possum" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Rabbit (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t2_rabbit" name="supp_t2_rabbit" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Rat (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t2_rat" name="supp_t2_rat" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Sheep (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t2_sheep" name="supp_t2_sheep" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Wallaby (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t2_wallaby" name="supp_t2_wallaby" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Waterbird (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t2_waterbird" name="supp_t2_waterbird" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Wombat (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t2_wombat" name="supp_t2_wombat" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Unknown (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t2_unknown" name="supp_t2_unknown" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Table 3: Faecal-source -->
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" style="background-color: #f5f5f5; cursor: pointer;" data-toggle="collapse" data-target="#table3-fields">
+                                        <h4 class="panel-title">
+                                            <i class="fa fa-chevron-down"></i> Table 3 - Faecal-source Contribution
+                                        </h4>
+                                    </div>
+                                    <div id="table3-fields" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Bat (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t3_bat" name="supp_t3_bat" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Bird (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t3_bird" name="supp_t3_bird" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Cat (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t3_cat" name="supp_t3_cat" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Chicken (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t3_chicken" name="supp_t3_chicken" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Cow (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t3_cow" name="supp_t3_cow" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Deer (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t3_deer" name="supp_t3_deer" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Dog (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t3_dog" name="supp_t3_dog" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Fox (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t3_fox" name="supp_t3_fox" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Horse (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t3_horse" name="supp_t3_horse" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Human (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t3_human" name="supp_t3_human" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Kangaroo (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t3_kangaroo" name="supp_t3_kangaroo" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Possum (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t3_possum" name="supp_t3_possum" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Rabbit (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t3_rabbit" name="supp_t3_rabbit" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Rat (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t3_rat" name="supp_t3_rat" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Sheep (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t3_sheep" name="supp_t3_sheep" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Wallaby (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t3_wallaby" name="supp_t3_wallaby" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Waterbird (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t3_waterbird" name="supp_t3_waterbird" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-6 control-label">Wombat (%)</label>
+                                                        <div class="col-sm-6">
+                                                            <input type="number" step="0.01" class="form-control" id="supp_t3_wombat" name="supp_t3_wombat" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="modal-footer clearfix">
                         <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
@@ -1086,6 +1404,158 @@ $(document).ready(function() {
                 $(this).addClass('active');
             }
         });
+
+        // Populate Supplementary Data Function
+        window.populateSupplementaryData = function() {
+            const sampleId = $('#id_one_water_sample').val() || $('#idx_one_water_sample').val();
+            const projectIdParam = $('#id_project_param').val(); // Get from URL parameter if available
+            
+            if (!sampleId) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Missing Information',
+                    text: 'Please select One Water Sample ID first.'
+                });
+                return;
+            }
+            
+            // Show loading
+            Swal.fire({
+                title: 'Loading...',
+                text: 'Fetching supplementary data for ' + sampleId,
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            
+            // Prepare request data
+            const requestData = { sample_id: sampleId };
+            
+            // If id_project is provided from URL, include it in request
+            if (projectIdParam) {
+                requestData.id_project = projectIdParam;
+            }
+            
+            // Fetch data from API
+            $.ajax({
+                url: '<?= site_url("Microbial/get_supplementary_data") ?>',
+                type: 'GET',
+                data: requestData,
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        // Process and populate data
+                        const data = response.data;
+                        const projectId = response.project_id;
+                        
+                        // Group data by table and source
+                        const tables = {
+                            'Table 1 - Human-specific': {},
+                            'Table 2 - Faecal-specific': {},
+                            'Table 3 - Faecal-source': {}
+                        };
+                        
+                        data.forEach(item => {
+                            if (tables[item.table_name]) {
+                                tables[item.table_name][item.source_name] = item.percentage_value;
+                            }
+                        });
+                        
+                        console.log('Project ID:', projectId);
+                        console.log('Sample ID:', sampleId);
+                        console.log('Supplementary data grouped:', tables);
+                        
+                        // Map to actual form fields
+                        // Table 1 - Human-specific
+                        const table1 = tables['Table 1 - Human-specific'];
+                        $('#supp_t1_human').val(table1['Human'] || '');
+                        $('#supp_t1_unknown').val(table1['Unknown'] || '');
+                        
+                        // Table 2 - Faecal-specific
+                        const table2 = tables['Table 2 - Faecal-specific'];
+                        $('#supp_t2_bat').val(table2['Bat'] || '');
+                        $('#supp_t2_bird').val(table2['Bird'] || '');
+                        $('#supp_t2_cat').val(table2['Cat'] || '');
+                        $('#supp_t2_chicken').val(table2['Chicken'] || '');
+                        $('#supp_t2_cow').val(table2['Cow'] || '');
+                        $('#supp_t2_deer').val(table2['Deer'] || '');
+                        $('#supp_t2_dog').val(table2['Dog'] || '');
+                        $('#supp_t2_fox').val(table2['Fox'] || '');
+                        $('#supp_t2_horse').val(table2['Horse'] || '');
+                        $('#supp_t2_human').val(table2['Human'] || '');
+                        $('#supp_t2_kangaroo').val(table2['Kangaroo'] || '');
+                        $('#supp_t2_possum').val(table2['Possum'] || '');
+                        $('#supp_t2_rabbit').val(table2['Rabbit'] || '');
+                        $('#supp_t2_rat').val(table2['Rat'] || '');
+                        $('#supp_t2_sheep').val(table2['Sheep'] || '');
+                        $('#supp_t2_wallaby').val(table2['Wallaby'] || '');
+                        $('#supp_t2_waterbird').val(table2['Waterbird'] || '');
+                        $('#supp_t2_wombat').val(table2['Wombat'] || '');
+                        $('#supp_t2_unknown').val(table2['Unknown'] || '');
+                        
+                        // Table 3 - Faecal-source
+                        const table3 = tables['Table 3 - Faecal-source'];
+                        $('#supp_t3_bat').val(table3['Bat'] || '');
+                        $('#supp_t3_bird').val(table3['Bird'] || '');
+                        $('#supp_t3_cat').val(table3['Cat'] || '');
+                        $('#supp_t3_chicken').val(table3['Chicken'] || '');
+                        $('#supp_t3_cow').val(table3['Cow'] || '');
+                        $('#supp_t3_deer').val(table3['Deer'] || '');
+                        $('#supp_t3_dog').val(table3['Dog'] || '');
+                        $('#supp_t3_fox').val(table3['Fox'] || '');
+                        $('#supp_t3_horse').val(table3['Horse'] || '');
+                        $('#supp_t3_human').val(table3['Human'] || '');
+                        $('#supp_t3_kangaroo').val(table3['Kangaroo'] || '');
+                        $('#supp_t3_possum').val(table3['Possum'] || '');
+                        $('#supp_t3_rabbit').val(table3['Rabbit'] || '');
+                        $('#supp_t3_rat').val(table3['Rat'] || '');
+                        $('#supp_t3_sheep').val(table3['Sheep'] || '');
+                        $('#supp_t3_wallaby').val(table3['Wallaby'] || '');
+                        $('#supp_t3_waterbird').val(table3['Waterbird'] || '');
+                        $('#supp_t3_wombat').val(table3['Wombat'] || '');
+                        
+                        // Expand all panels to show populated data
+                        $('#table1-fields').collapse('show');
+                        $('#table2-fields').collapse('show');
+                        $('#table3-fields').collapse('show');
+                        
+                        let recordCount = data.length;
+                        let tableInfo = Object.keys(tables).map(tableName => {
+                            let count = Object.keys(tables[tableName]).length;
+                            return count > 0 ? `${tableName}: ${count} sources` : null;
+                        }).filter(x => x).join('<br>');
+                        
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Data Populated!',
+                            html: `Successfully populated ${recordCount} values from supplementary PDF<br>` +
+                                  `<strong>Project:</strong> ${projectId}<br>` +
+                                  `<strong>Sample:</strong> ${sampleId}<br><br>` +
+                                  `<strong>Data Summary:</strong><br>${tableInfo}`,
+                            confirmButtonText: 'OK',
+                            timer: 3000
+                        });
+                        
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'No Data Found',
+                            html: response.message + '<br><br>' +
+                                  '<small>Make sure you have uploaded the supplementary PDF for this sample\'s project.</small>'
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching supplementary data:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to fetch supplementary data. Please try again.'
+                    });
+                }
+            });
+        };
 
     });
 </script>

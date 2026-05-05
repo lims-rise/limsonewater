@@ -1,0 +1,6 @@
+{
+  "success": true,
+  "data": [],
+  "count": 0,
+  "debug": "Total pages: 6\n\n=== Page 3 ===\nText length: 1034\nTable detected: Table 1 - Human-specific\nTables found: 0\n\n=== Page 4 ===\nText length: 1530\nTable detected: Table 2 - Faecal-specific\nTables found: 10\n\nTable 1: Too small (rows: 1)\n\nTable 2: Too small (rows: 1)\n\nTable 3: Too small (rows: 1)\n\nTable 4: Too small (rows: 1)\n\nTable 5: Too small (rows: 1)\n\nTable 6: Too small (rows: 1)\n\nTable 7: Too small (rows: 1)\n\nTable 8: Too small (rows: 1)\n\nTable 9: Too small (rows: 1)\n\nTable 10: Too small (rows: 1)\n\n=== Page 5 ===\nText length: 1750\nTable detected: Table 3 - Faecal-source\nTables found: 9\n\nTable 1: Too small (rows: 1)\n\nTable 2: Too small (rows: 1)\n\nTable 3: Too small (rows: 1)\n\nTable 4: Too small (rows: 1)\n\nTable 5: Too small (rows: 1)\n\nTable 6: Too small (rows: 1)\n\nTable 7: Too small (rows: 1)\n\nTable 8: Too small (rows: 1)\n\nTable 9: Too small (rows: 1)"
+}
