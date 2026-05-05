@@ -479,11 +479,12 @@ class Scan_page extends CI_Controller {
                     // Windows production Python site-packages
                     $pythonpath = 'C:\\Users\\mgr-zhan0022\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages';
                     
-                    $command = "PYTHONPATH=" . escapeshellarg($pythonpath) . " " . 
-                               $python_path . " " . 
-                               escapeshellarg($python_script) . " " . 
-                               escapeshellarg($full_path) . " " . 
-                               escapeshellarg($project_id) . " 2>&1";
+                    // Windows command syntax - use set command
+                    $command = 'set PYTHONPATH=' . escapeshellarg($pythonpath) . ' && ' . 
+                               escapeshellarg($python_path) . ' ' . 
+                               escapeshellarg($python_script) . ' ' . 
+                               escapeshellarg($full_path) . ' ' . 
+                               escapeshellarg($project_id) . ' 2>&1';
                     
                     exec($command, $output, $return_code);
                     
