@@ -2002,6 +2002,11 @@ function applyCompletedProjectStyling() {
         }
     }
 
+    // Get current project ID from form
+    function getCurrentProjectId() {
+        return $('#idx_project').val() || '';
+    }
+
     function openSupplementaryScanner() {
         const idxProject = $('#idx_project').val();
         const w = 800;
@@ -2064,12 +2069,14 @@ function applyCompletedProjectStyling() {
                             // Update display
                             updateSupplementaryFilesDisplay(filesArray);
                             
-                            // Show success message
+                            // Show success message with extraction info
+                            let message = response.message || 'File has been deleted successfully.';
+                            
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Deleted!',
-                                text: 'File has been deleted successfully.',
-                                timer: 2000,
+                                text: message,
+                                timer: 3000,
                                 showConfirmButton: false
                             });
                         } else {
@@ -2100,7 +2107,7 @@ function applyCompletedProjectStyling() {
                     });
                 };
                 
-                xhr.send('filename=' + encodeURIComponent(filename));
+                xhr.send('filename=' + encodeURIComponent(filename) + '&project_id=' + encodeURIComponent(getCurrentProjectId()));
             }
         });
     }

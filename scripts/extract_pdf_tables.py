@@ -31,8 +31,8 @@ def extract_tables_from_pdf(pdf_path, project_id):
             total_pages = len(pdf.pages)
             debug_info.append(f"Total pages: {total_pages}")
             
-            # Process pages 2-4 (0-indexed, so pages 3-5 in PDF)
-            for page_num in range(min(2, total_pages), min(6, total_pages)):
+            # Process all pages to find tables (more flexible approach)
+            for page_num in range(total_pages):
                 page = pdf.pages[page_num]
                 text = page.extract_text()
                 
@@ -55,6 +55,7 @@ def extract_tables_from_pdf(pdf_path, project_id):
                     debug_info.append(f"Table detected: {table_name}")
                 
                 if not table_name:
+                    debug_info.append("No table detected on this page")
                     continue
                 
                 # Try text parsing directly (pdfplumber table extraction doesn't work well for this PDF format)
@@ -118,7 +119,7 @@ def parse_text_table(text, table_name, project_id, page_num):
     sample_ids = []
     
     for line_idx, line in enumerate(lines):
-        # Count sample IDs in this line
+        # Count sample IDs in this line - support both P2500xxx and P2600xxx formats
         ids_in_line = re.findall(r'P\d{7}', line)
         if len(ids_in_line) >= 3:  # If 3+ sample IDs in one line, it's likely the header
             sample_header_line = line_idx
@@ -134,10 +135,12 @@ def parse_text_table(text, table_name, project_id, page_num):
         for source_name in sources:
             # Find the line that starts with this source name
             for line_idx, line in enumerate(lines):
-                if line.strip().startswith(source_name):
+                # Clean line and check if it starts with source name
+                clean_line = line.strip()
+                if clean_line.startswith(source_name + ' ') or clean_line == source_name:
                     # Extract all values from this line (percentages or dashes)
                     # Split by whitespace and filter
-                    parts = line.split()
+                    parts = re.split(r'\s+', clean_line)
                     
                     # First part should be the source name, rest are values
                     if len(parts) < 2:
@@ -145,7 +148,7 @@ def parse_text_table(text, table_name, project_id, page_num):
                     
                     values = parts[1:]  # Skip source name
                     
-                    debug_info.append(f"  {source_name}: {len(values)} values")
+                    debug_info.append(f"  {source_name}: found {len(values)} values: {values}")
                     
                     # Map values to sample IDs
                     for idx, value in enumerate(values):
@@ -154,11 +157,22 @@ def parse_text_table(text, table_name, project_id, page_num):
                         
                         sample_id = sample_ids[idx]
                         
+                        # Handle different value types
+                        perc_val = None
+                        
                         # Check if value is a percentage
                         perc_match = re.search(r'(\d+\.?\d*)\s*%', value)
                         if perc_match:
                             perc_val = float(perc_match.group(1))
-                            
+                        elif value == '-':
+                            # Dash means no data/not applicable - store as NULL
+                            perc_val = None
+                        elif re.match(r'^\d+\.?\d*$', value):
+                            # Pure number without % sign
+                            perc_val = float(value)
+                        
+                        # Only add record if we have a valid percentage value
+                        if perc_val is not None:
                             results.append({
                                 'id_project': project_id,
                                 'id_one_water_sample': sample_id,
@@ -167,15 +181,18 @@ def parse_text_table(text, table_name, project_id, page_num):
                                 'percentage_value': perc_val,
                                 'page_source': page_num
                             })
+                        else:
+                            debug_info.append(f"    Skipping {sample_id} {source_name}: value '{value}' (dash or invalid)")
                     
                     break  # Found this source, move to next
     
     else:
-        # Row-based format (Table 1) - original logic
+        # Row-based format (Table 1) - original logic with enhancements
         debug_info.append("Row-based format detected")
         
         sample_positions = []
         for line_idx, line in enumerate(lines):
+            # Support both P2500xxx and P2600xxx formats
             for match in re.finditer(r'P\d{7}', line):
                 sample_positions.append({
                     'sample_id': match.group(0),
@@ -205,24 +222,34 @@ def parse_text_table(text, table_name, project_id, page_num):
                         break
                     data_text += ' ' + next_line
             
-            percentages = re.findall(r'(\d+\.?\d*)\s*%', data_text)
+            # Enhanced percentage extraction - handle both % and plain numbers
+            percentages = []
+            
+            # First try to find percentages with % sign
+            perc_matches = re.findall(r'(\d+\.?\d*)\s*%', data_text)
+            if perc_matches:
+                percentages = [float(p) for p in perc_matches]
+            else:
+                # Try to find plain numbers (fallback)
+                num_matches = re.findall(r'\b(\d+\.?\d*)\b', data_text)
+                if num_matches:
+                    percentages = [float(n) for n in num_matches]
             
             if not percentages:
                 continue
             
-            debug_info.append(f"  {sample_id}: {len(percentages)} percentages")
+            debug_info.append(f"  {sample_id}: {len(percentages)} percentages: {percentages}")
             
             for idx, percentage in enumerate(percentages):
                 if idx < len(sources):
                     source_name = sources[idx]
-                    perc_val = float(percentage)
                     
                     results.append({
                         'id_project': project_id,
                         'id_one_water_sample': sample_id,
                         'table_name': table_name,
                         'source_name': source_name,
-                        'percentage_value': perc_val,
+                        'percentage_value': percentage,
                         'page_source': page_num
                     })
     

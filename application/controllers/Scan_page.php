@@ -242,8 +242,8 @@ class Scan_page extends CI_Controller {
         
         // Tentukan path berdasarkan prefix filename
         if (strpos($filename, 'supplementary_') === 0) {
-            // Windows production path
-            $basePath = 'C:\\onewater\\supplementary\\';
+            // Mac development path
+            $basePath = FCPATH . 'uploads/supplementary/';
             $fileType = 'supplementary file';
         } else {
             $basePath = 'C:\\onewater\\scan\\';
@@ -427,8 +427,8 @@ class Scan_page extends CI_Controller {
 
     public function do_upload_supplementary()
     {
-        // Windows production path
-        $upload_path = 'C:\\onewater\\supplementary\\';
+        // Mac development path
+        $upload_path = './uploads/supplementary/';
         
         // Create directory if not exists
         if (!is_dir($upload_path)) {
@@ -474,17 +474,17 @@ class Scan_page extends CI_Controller {
                     
                     // Call Python script to extract tables
                     $python_script = FCPATH . 'scripts/extract_pdf_tables.py';
-                    $python_path = 'C:\\Users\\mgr-zhan0022\\AppData\\Local\\Programs\\Python\\Python310\\python.exe';
+                    $python_path = '/usr/bin/python3';
                     
-                    // Windows production Python site-packages
-                    $pythonpath = 'C:\\Users\\mgr-zhan0022\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages';
+                    // Mac development Python site-packages
+                    $pythonpath = '/Users/dhiyaulhaq/Library/Python/3.9/lib/python/site-packages';
                     
-                    // Windows command syntax - use set command
-                    $command = 'set PYTHONPATH=' . escapeshellarg($pythonpath) . ' && ' . 
-                               escapeshellarg($python_path) . ' ' . 
-                               escapeshellarg($python_script) . ' ' . 
-                               escapeshellarg($full_path) . ' ' . 
-                               escapeshellarg($project_id) . ' 2>&1';
+                    // Mac command syntax - use export
+                    $command = "PYTHONPATH=" . escapeshellarg($pythonpath) . " " . 
+                               $python_path . " " . 
+                               escapeshellarg($python_script) . " " . 
+                               escapeshellarg($full_path) . " " . 
+                               escapeshellarg($project_id) . " 2>&1";
                     
                     exec($command, $output, $return_code);
                     
@@ -541,11 +541,12 @@ class Scan_page extends CI_Controller {
         header("Access-Control-Allow-Methods: POST, DELETE");
         header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
         
-        // Windows production path
-        $upload_path = 'C:\\onewater\\supplementary\\';
+        // Mac development path
+        $upload_path = FCPATH . 'uploads/supplementary/';
         
-        // Ambil filename dari POST request
+        // Ambil filename dan project_id dari POST request
         $filename = $this->input->post('filename', TRUE);
+        $project_id = $this->input->post('project_id', TRUE);
         
         if (empty($filename)) {
             echo json_encode([
@@ -564,9 +565,31 @@ class Scan_page extends CI_Controller {
             if (file_exists($file_path)) {
                 // Attempt to delete file
                 if (unlink($file_path)) {
+                    // File deleted successfully, now delete extraction data
+                    $extraction_deleted = false;
+                    $extraction_count = 0;
+                    
+                    if (!empty($project_id)) {
+                        // Load model and delete extraction data
+                        $this->load->model('Supplementary_extraction_model');
+                        
+                        // Get count before deletion for reporting
+                        $extraction_count = count($this->Supplementary_extraction_model->get_by_project($project_id));
+                        
+                        // Delete extraction data
+                        $extraction_deleted = $this->Supplementary_extraction_model->delete_by_project($project_id);
+                    }
+                    
+                    $message = 'Supplementary file deleted successfully';
+                    if ($extraction_deleted && $extraction_count > 0) {
+                        $message .= " and {$extraction_count} extraction records removed";
+                    }
+                    
                     echo json_encode([
                         'success' => true,
-                        'message' => 'Supplementary file deleted successfully'
+                        'message' => $message,
+                        'extraction_deleted' => $extraction_deleted,
+                        'extraction_count' => $extraction_count
                     ]);
                 } else {
                     echo json_encode([
