@@ -161,8 +161,8 @@
                         <div class="form-group">
                             <label for="weight" class="col-sm-4 control-label">Weight (g)</label>
                             <div class="col-sm-8">
-                                <input id="weight" name="weight" type="number" step="any" class="form-control" placeholder="Weight (g)" required readonly>
-                                <p style="font-size: 11px; color: #999; opacity: 0.8; margin-top: 3px;"><i>The result from extraction biosolids module (Sample ID: <span id="weight_source_sample_id" style="font-weight: 600; color: #6c9ec4;">-</span>)</i></p>
+                                <input id="weight" name="weight" type="number" step="any" class="form-control" placeholder="Weight (g)" required>
+                                <p id="weight_source_info" style="font-size: 11px; color: #999; opacity: 0.8; margin-top: 3px;"><i>The result from extraction biosolids module (Sample ID: <span id="weight_source_sample_id" style="font-weight: 600; color: #6c9ec4;">-</span>)</i></p>
                             </div>
                         </div>
 
@@ -170,7 +170,7 @@
                             <label for="dry_weight_persen" class="col-sm-4 control-label">Dry Weight (%)</label>
                             <div class="col-sm-8">
                                 <input id="dry_weight_persen" name="dry_weight_persen" type="number" step="any" class="form-control" placeholder="Dry Weight (%)" required readonly>
-                                <p style="font-size: 11px; color: #999; opacity: 0.8; margin-top: 3px;"><i>The result from moisture content module (Sample ID: <span id="dryweight_source_sample_id" style="font-weight: 600; color: #6c9ec4;">-</span>)</i></p>
+                                <p id="dry_weight_source_info" style="font-size: 11px; color: #999; opacity: 0.8; margin-top: 3px;"><i>The result from moisture content module (Sample ID: <span id="dryweight_source_sample_id" style="font-weight: 600; color: #6c9ec4;">-</span>)</i></p>
                             </div>
                         </div>
 
@@ -652,7 +652,7 @@
             $('#weight').val('');
             $('#dry_weight_persen').val('');
             $('#mass_analysed').val('');
-            $('#weight').attr('readonly', true);
+            // $('#weight').attr('readonly', true); // Removed - allow user to edit
             $('#dry_weight_persen').attr('readonly', true);
             $('#mass_analysed').attr('readonly', true);
             // Reset quality control checkboxes for new record
@@ -663,6 +663,11 @@
             $('#conc_copies_per_g_dw_giardia').val('');
             $('#conc_copies_per_g_dw_crypto').val('');
             $('#comments').val('');
+            
+            // Show source info in add mode
+            $('#weight_source_info').show();
+            $('#dry_weight_source_info').show();
+            
             $('#compose-modal').modal('show');
             
             // Initialize quality control visibility (hide all by default when no target selected)
@@ -1164,7 +1169,7 @@
             }
         });
 
-        // Auto fetch weight and dry weight data
+        // Auto fetch weight and dry weight data (for add mode)
         function autoFetchWeightData(inputSelector) {
             const $input = $(inputSelector);
             const id_one_water_sample = $input.val();
@@ -1251,6 +1256,61 @@
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.error('AJAX error for dry weight [' + id_one_water_sample.trim() + ']:', textStatus, errorThrown);
+                    $('#dry_weight_persen').val('0'); // Default to 0 on error
+                    calculateMassAnalysed();
+                }
+            });
+        }
+
+        // Auto fetch ONLY dry weight data (for edit mode - preserves saved weight value)
+        function autoFetchDryWeightData(inputSelector) {
+            const $input = $(inputSelector);
+            const id_one_water_sample = $input.val();
+
+            // Validation: element must exist and value must not be empty
+            if (!$input.length || !id_one_water_sample || id_one_water_sample.trim() === '') {
+                // Set default dry weight to 0 if no sample ID
+                $('#dry_weight_persen').val('0');
+                // Don't update source sample ID display in edit mode (it's hidden)
+                calculateMassAnalysed();
+                return;
+            }
+
+            // Clear previous dry weight value first
+            $('#dry_weight_persen').val('');
+            
+            // Don't update source sample ID display in edit mode (it's hidden)
+
+            // Log the request for debugging
+            console.log('Auto fetching DRY WEIGHT ONLY for ID:', id_one_water_sample.trim());
+
+            // Fetch ONLY dry weight data (NOT weight)
+            $.ajax({
+                url: '<?php echo site_url('Protozoa/getDryWeight'); ?>',
+                type: 'POST',
+                data: { id_one_water_sample: id_one_water_sample.trim() },
+                dataType: 'json',
+                cache: false,
+                timeout: 10000,
+                success: function(response) {
+                    console.log('Dry weight ONLY fetch response for [' + id_one_water_sample.trim() + ']:', response);
+
+                    if (response && response.dry_weight_persen !== null && response.dry_weight_persen !== undefined) {
+                        const dryWeight = parseFloat(response.dry_weight_persen);
+                        if (!isNaN(dryWeight)) {
+                            $('#dry_weight_persen').val(response.dry_weight_persen);
+                        } else {
+                            $('#dry_weight_persen').val('0'); // Default to 0 if invalid
+                        }
+                    } else {
+                        $('#dry_weight_persen').val('0'); // Default to 0 if no data
+                    }
+                    
+                    // After dry weight is set, calculate mass analysed
+                    calculateMassAnalysed();
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('AJAX error for dry weight ONLY [' + id_one_water_sample.trim() + ']:', textStatus, errorThrown);
                     $('#dry_weight_persen').val('0'); // Default to 0 on error
                     calculateMassAnalysed();
                 }
@@ -1546,13 +1606,20 @@
             $('#date_processed').val(data.date_processed).trigger('change');
             $('#time_processed').val(data.time_processed).trigger('change');
             $('#volume_analysed').val(data.volume_analysed);
-            // $('#weight').val(data.weight);
-            // Auto fetch weight and dry weight data when modal opens with One Water Sample ID
+            // For edit mode: Use saved weight value from database for Weight (g) only
+            $('#weight').val(data.weight);
+            
+            // Hide source info in edit mode since data is already saved in database
+            $('#weight_source_info').hide();
+            $('#dry_weight_source_info').hide();
+            
+            // Auto fetch dry weight data (NOT weight) when modal opens with One Water Sample ID
             setTimeout(function() {
                 const sampleId = $('#idx_one_water_sample').val();
-                console.log('Edit mode - Sample ID for autoFetch:', sampleId);
+                console.log('Edit mode - Sample ID for autoFetch dry weight:', sampleId);
                 if (sampleId) {
-                    autoFetchWeightData('#idx_one_water_sample');
+                    // Only fetch dry weight, not weight
+                    autoFetchDryWeightData('#idx_one_water_sample');
                 }
             }, 200);
             $('#dry_weight_persen').val(data.dry_weight_persen);
@@ -1560,7 +1627,7 @@
             // Set quality control checkboxes
             $('#quality_control_giardia').prop('checked', data.quality_control_giardia == '1');
             $('#quality_control_crypto').prop('checked', data.quality_control_crypto == '1');
-            $('#weight').attr('readonly', true);
+            // $('#weight').attr('readonly', true); // Removed - allow user to edit
             $('#dry_weight_persen').attr('readonly', true);
             $('#mass_analysed').attr('readonly', true);
 
