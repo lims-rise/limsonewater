@@ -44,12 +44,12 @@
 						</div>
 
 						<div class="form-group">
-							<label for="date_sample_processed" class="col-sm-2 control-label">Date Sample</label>
+							<label for="date_sample_processed" class="col-sm-2 control-label">Date Sample Processed</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="date_sample_processed" name="date_sample_processed" value="<?php echo $date_sample_processed ?>" disabled>
 							</div>
 
-							<label for="time_sample_processed" class="col-sm-2 control-label">Time Sample</label>
+							<label for="time_sample_processed" class="col-sm-2 control-label">Time Sample Processed</label>
 							<div class="col-sm-4">
 								<input class="form-control " id="time_sample_processed" name="time_sample_processed" value="<?php echo $time_sample_processed ?>"  disabled>
 							</div>
