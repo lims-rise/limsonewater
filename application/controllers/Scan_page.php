@@ -242,9 +242,13 @@ class Scan_page extends CI_Controller {
         
         // Tentukan path berdasarkan prefix filename
         if (strpos($filename, 'supplementary_') === 0) {
-            // Windows production path
-            $basePath = 'C:\\onewater\\supplementary\\';
+            // Mac development path
+            $basePath = FCPATH . 'uploads/supplementary/';
             $fileType = 'supplementary file';
+        } elseif (strpos($filename, 'microbial_') === 0) {
+            // Microbial files path - PRODUCTION
+            $basePath = 'C:\\onewater\\microbial\\';
+            $fileType = 'microbial file';
         } else {
             $basePath = 'C:\\onewater\\scan\\';
             $fileType = 'scan file';
@@ -427,8 +431,8 @@ class Scan_page extends CI_Controller {
 
     public function do_upload_supplementary()
     {
-        // Windows production path
-        $upload_path = 'C:\\onewater\\supplementary\\';
+        // Mac development path
+        $upload_path = './uploads/supplementary/';
         
         // Create directory if not exists
         if (!is_dir($upload_path)) {
@@ -457,78 +461,12 @@ class Scan_page extends CI_Controller {
         } else {
             $data = $this->upload->data();
             $uploaded_filename = $data['file_name'];
-            $full_path = $data['full_path'];
             
-            // Extract data using Python script if PDF
-            $extraction_success = false;
-            $extraction_count = 0;
-            $extraction_error = null;
-            
-            if ($project_id && strtolower($data['file_ext']) === '.pdf') {
-                try {
-                    // Load model
-                    $this->load->model('Supplementary_extraction_model');
-                    
-                    // Delete old extraction results
-                    $this->Supplementary_extraction_model->delete_by_project($project_id);
-                    
-                    // Call Python script to extract tables
-                    $python_script = FCPATH . 'scripts/extract_pdf_tables.py';
-                    $python_path = 'C:\\Users\\mgr-zhan0022\\AppData\\Local\\Programs\\Python\\Python310\\python.exe';
-                    
-                    // Windows production Python site-packages
-                    $pythonpath = 'C:\\Users\\mgr-zhan0022\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages';
-                    
-                    // Windows command syntax - use set command
-                    $command = 'set PYTHONPATH=' . escapeshellarg($pythonpath) . ' && ' . 
-                               escapeshellarg($python_path) . ' ' . 
-                               escapeshellarg($python_script) . ' ' . 
-                               escapeshellarg($full_path) . ' ' . 
-                               escapeshellarg($project_id) . ' 2>&1';
-                    
-                    exec($command, $output, $return_code);
-                    
-                    // Log for debugging
-                    log_message('debug', 'Python command: ' . $command);
-                    log_message('debug', 'Python return code: ' . $return_code);
-                    log_message('debug', 'Python output: ' . print_r($output, true));
-                    
-                    // Parse JSON output
-                    $json_output = implode("\n", $output);
-                    $result = json_decode($json_output, true);
-                    
-                    if ($result && isset($result['success']) && $result['success']) {
-                        // Insert extracted data
-                        if (!empty($result['data'])) {
-                            $extraction_success = $this->Supplementary_extraction_model->insert_batch($result['data']);
-                            $extraction_count = $result['count'];
-                        } else {
-                            $extraction_error = "No data extracted from PDF";
-                        }
-                    } else {
-                        $extraction_error = isset($result['error']) ? $result['error'] : "Python script failed";
-                        // Include debug info if available
-                        if (isset($result['debug'])) {
-                            log_message('debug', 'Python debug: ' . $result['debug']);
-                        }
-                        // If JSON parsing failed, include raw output
-                        if (!$result) {
-                            $extraction_error .= " | Raw output: " . substr($json_output, 0, 500);
-                        }
-                    }
-                    
-                } catch (Exception $e) {
-                    $extraction_error = $e->getMessage();
-                }
-            }
-            
+            // Supplementary files are now simple uploads without extraction
             return $this->output
                 ->set_content_type('application/json')
                 ->set_output(json_encode([
-                    'filename' => $uploaded_filename,
-                    'extraction_success' => $extraction_success,
-                    'extraction_count' => $extraction_count,
-                    'extraction_error' => $extraction_error
+                    'filename' => $uploaded_filename
                 ]));
         }
     }
@@ -541,8 +479,8 @@ class Scan_page extends CI_Controller {
         header("Access-Control-Allow-Methods: POST, DELETE");
         header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
         
-        // Windows production path
-        $upload_path = 'C:\\onewater\\supplementary\\';
+        // Mac development path
+        $upload_path = FCPATH . 'uploads/supplementary/';
         
         // Ambil filename dari POST request
         $filename = $this->input->post('filename', TRUE);
@@ -564,6 +502,7 @@ class Scan_page extends CI_Controller {
             if (file_exists($file_path)) {
                 // Attempt to delete file
                 if (unlink($file_path)) {
+                    // Supplementary files are now simple files without extraction
                     echo json_encode([
                         'success' => true,
                         'message' => 'Supplementary file deleted successfully'
@@ -590,8 +529,13 @@ class Scan_page extends CI_Controller {
 
     public function do_upload_microbial()
     {
-        // Use server path for microbial uploads
+        // Windows production path
         $upload_path = 'C:\\onewater\\microbial\\';
+        
+        // Create directory if not exists
+        if (!is_dir($upload_path)) {
+            mkdir($upload_path, 0777, true);
+        }
 
         // Ambil project_id dari POST dan validasi
         $project_id_raw = $this->input->post('project_id', TRUE);
@@ -610,15 +554,92 @@ class Scan_page extends CI_Controller {
 
         if (!$this->upload->do_upload('file')) {
             $error = $this->upload->display_errors();
+            log_message('error', 'Microbial upload failed: ' . $error);
             return $this->output
                 ->set_content_type('application/json')
                 ->set_status_header(400)
                 ->set_output(json_encode(['error' => strip_tags($error)]));
         } else {
             $data = $this->upload->data();
+            $uploaded_filename = $data['file_name'];
+            $full_path = $data['full_path'];
+            
+            log_message('info', 'Microbial file uploaded successfully: ' . $uploaded_filename);
+            
+            // Extract data using Python script if PDF
+            $extraction_success = false;
+            $extraction_count = 0;
+            $extraction_error = null;
+            
+            if ($barcode && strtolower($data['file_ext']) === '.pdf') {
+                try {
+                    // Load model
+                    $this->load->model('Microbial_extraction_model');
+                    
+                    // Delete old extraction results
+                    $this->Microbial_extraction_model->delete_by_project($barcode);
+                    
+                    // Call Python script to extract tables
+                    $python_script = FCPATH . 'scripts/extract_pdf_tables.py';
+                    
+                    // Windows production Python path
+                    $python_path = 'C:\\Users\\mgr-zhan0022\\AppData\\Local\\Programs\\Python\\Python310\\python.exe';
+                    
+                    // Windows production Python site-packages
+                    $pythonpath = 'C:\\Users\\mgr-zhan0022\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages';
+                    
+                    // Windows command syntax - use set command
+                    $command = 'set PYTHONPATH=' . escapeshellarg($pythonpath) . ' && ' . 
+                               escapeshellarg($python_path) . ' ' . 
+                               escapeshellarg($python_script) . ' ' . 
+                               escapeshellarg($full_path) . ' ' . 
+                               escapeshellarg($barcode) . ' 2>&1';
+                    
+                    exec($command, $output, $return_code);
+                    
+                    // Log for debugging
+                    log_message('debug', 'Python command: ' . $command);
+                    log_message('debug', 'Python return code: ' . $return_code);
+                    log_message('debug', 'Python output: ' . print_r($output, true));
+                    
+                    // Parse JSON output
+                    $json_output = implode("\n", $output);
+                    $result = json_decode($json_output, true);
+                    
+                    if ($result && isset($result['success']) && $result['success']) {
+                        // Insert extracted data
+                        if (!empty($result['data'])) {
+                            $extraction_success = $this->Microbial_extraction_model->insert_batch($result['data']);
+                            $extraction_count = $result['count'];
+                        } else {
+                            $extraction_error = "No data extracted from PDF";
+                        }
+                    } else {
+                        $extraction_error = isset($result['error']) ? $result['error'] : "Python script failed";
+                        // Include debug info if available
+                        if (isset($result['debug'])) {
+                            log_message('debug', 'Python debug: ' . $result['debug']);
+                        }
+                        // If JSON parsing failed, include raw output
+                        if (!$result) {
+                            $extraction_error .= " | Raw output: " . substr($json_output, 0, 500);
+                        }
+                    }
+                    
+                } catch (Exception $e) {
+                    $extraction_error = $e->getMessage();
+                    log_message('error', 'Extraction error: ' . $e->getMessage());
+                }
+            }
+            
             return $this->output
                 ->set_content_type('application/json')
-                ->set_output(json_encode(['filename' => $data['file_name']]));
+                ->set_output(json_encode([
+                    'filename' => $uploaded_filename,
+                    'extraction_success' => $extraction_success,
+                    'extraction_count' => $extraction_count,
+                    'extraction_error' => $extraction_error
+                ]));
         }
     }
 
@@ -675,7 +696,82 @@ class Scan_page extends CI_Controller {
             ]);
         }
     }
-    
 
-    
+    public function delete_microbial_file()
+    {
+        // Set headers untuk JSON response
+        header('Content-Type: application/json');
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: POST, DELETE");
+        header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
+        
+        // Windows server path for microbial files
+        $upload_path = 'C:\\onewater\\microbial\\';
+        
+        // Ambil filename dan project_id dari POST request
+        $filename = $this->input->post('filename', TRUE);
+        $project_id = $this->input->post('project_id', TRUE);
+        
+        if (empty($filename)) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Filename is required'
+            ]);
+            return;
+        }
+        
+        // Bersihkan filename untuk security
+        $filename = preg_replace('/[^a-zA-Z0-9_\-\.]/', '', basename($filename));
+        $file_path = $upload_path . $filename;
+        
+        try {
+            // Check if file exists
+            if (file_exists($file_path)) {
+                // Attempt to delete file
+                if (unlink($file_path)) {
+                    // File deleted successfully, now delete extraction data
+                    $extraction_deleted = false;
+                    $extraction_count = 0;
+                    
+                    if (!empty($project_id)) {
+                        // Load model and delete extraction data
+                        $this->load->model('Microbial_extraction_model');
+                        
+                        // Get count before deletion for reporting
+                        $extraction_count = count($this->Microbial_extraction_model->get_by_project($project_id));
+                        
+                        // Delete extraction data
+                        $extraction_deleted = $this->Microbial_extraction_model->delete_by_project($project_id);
+                    }
+                    
+                    $message = 'Microbial file deleted successfully';
+                    if ($extraction_deleted && $extraction_count > 0) {
+                        $message .= " and {$extraction_count} extraction records removed";
+                    }
+                    
+                    echo json_encode([
+                        'success' => true,
+                        'message' => $message,
+                        'extraction_deleted' => $extraction_deleted,
+                        'extraction_count' => $extraction_count
+                    ]);
+                } else {
+                    echo json_encode([
+                        'success' => false,
+                        'message' => 'Failed to delete microbial file'
+                    ]);
+                }
+            } else {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Microbial file not found'
+                ]);
+            }
+        } catch (Exception $e) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Error deleting microbial file: ' . $e->getMessage()
+            ]);
+        }
+    }
 }

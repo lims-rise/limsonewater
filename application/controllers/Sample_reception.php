@@ -377,6 +377,7 @@ class Sample_reception extends CI_Controller
         $date_arrive = $this->input->post('date_arrive', TRUE);
         $time_arrive = $this->input->post('time_arrive', TRUE);
         $files =  $this->input->post('files', TRUE);
+        $files_microbial =  $this->input->post('files_microbial', TRUE);
         $supplementary_files =  $this->input->post('supplementary_files', TRUE);
     
         if ($mode == "insert") {
@@ -390,6 +391,7 @@ class Sample_reception extends CI_Controller
                 'date_arrive' => $date_arrive,
                 'time_arrive' => $time_arrive,
                 'files' => $files,
+                'files_microbial' => $files_microbial,
                 'supplementary_files' => $supplementary_files,
                 'comments' => $comments,
                 'flag' => '0',
@@ -434,6 +436,7 @@ class Sample_reception extends CI_Controller
                             'date_arrive' => $date_arrive,
                             'time_arrive' => $time_arrive,
                             'files' => $files,
+                            'files_microbial' => $files_microbial,
                             'supplementary_files' => $supplementary_files,
                             'comments' => $comments,
                             'flag' => '0',
