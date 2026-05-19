@@ -712,6 +712,9 @@ class Scan_page extends CI_Controller {
         $filename = $this->input->post('filename', TRUE);
         $project_id = $this->input->post('project_id', TRUE);
         
+        // Log untuk debugging
+        log_message('debug', 'Delete microbial file - Filename: ' . $filename . ', Project ID: ' . $project_id);
+        
         if (empty($filename)) {
             echo json_encode([
                 'success' => false,
@@ -738,15 +741,25 @@ class Scan_page extends CI_Controller {
                         $this->load->model('Microbial_extraction_model');
                         
                         // Get count before deletion for reporting
-                        $extraction_count = count($this->Microbial_extraction_model->get_by_project($project_id));
+                        $existing_records = $this->Microbial_extraction_model->get_by_project($project_id);
+                        $extraction_count = count($existing_records);
+                        
+                        log_message('debug', 'Found ' . $extraction_count . ' extraction records for project: ' . $project_id);
                         
                         // Delete extraction data
-                        $extraction_deleted = $this->Microbial_extraction_model->delete_by_project($project_id);
+                        if ($extraction_count > 0) {
+                            $extraction_deleted = $this->Microbial_extraction_model->delete_by_project($project_id);
+                            log_message('debug', 'Extraction deletion result: ' . ($extraction_deleted ? 'SUCCESS' : 'FAILED'));
+                        }
+                    } else {
+                        log_message('warning', 'No project_id provided for microbial file deletion');
                     }
                     
                     $message = 'Microbial file deleted successfully';
                     if ($extraction_deleted && $extraction_count > 0) {
                         $message .= " and {$extraction_count} extraction records removed";
+                    } elseif ($extraction_count > 0 && !$extraction_deleted) {
+                        $message .= " but failed to remove {$extraction_count} extraction records";
                     }
                     
                     echo json_encode([
@@ -768,6 +781,7 @@ class Scan_page extends CI_Controller {
                 ]);
             }
         } catch (Exception $e) {
+            log_message('error', 'Error deleting microbial file: ' . $e->getMessage());
             echo json_encode([
                 'success' => false,
                 'message' => 'Error deleting microbial file: ' . $e->getMessage()
