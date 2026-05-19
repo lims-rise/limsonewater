@@ -275,8 +275,8 @@ class Microbial extends CI_Controller
             return;
         }
         
-        // Load model
-        $this->load->model('Supplementary_extraction_model');
+        // Load model for microbial extraction data
+        $this->load->model('Microbial_extraction_model');
         
         // If project_id not provided, look it up from sample_reception_sample or sample_collection
         if (!$project_id) {
@@ -312,27 +312,27 @@ class Microbial extends CI_Controller
         }
         
         // Check if extraction data exists for this project
-        if (!$this->Supplementary_extraction_model->has_extraction_results($project_id)) {
+        if (!$this->Microbial_extraction_model->has_extraction_results($project_id)) {
             echo json_encode([
                 'success' => false,
-                'message' => "No supplementary data found for project {$project_id}. Please upload and extract PDF first."
+                'message' => "No microbial extraction data found for project {$project_id}. Please upload microbial PDF file first."
             ]);
             return;
         }
         
         // Get extraction data for this specific sample
-        $data = $this->Supplementary_extraction_model->get_by_project_and_sample($project_id, $sample_id);
+        $data = $this->Microbial_extraction_model->get_by_project_and_sample($project_id, $sample_id);
         
         if (empty($data)) {
             echo json_encode([
                 'success' => false,
-                'message' => "No supplementary data found for sample {$sample_id} in project {$project_id}"
+                'message' => "No microbial extraction data found for sample {$sample_id} in project {$project_id}"
             ]);
             return;
         }
         
         // Get statistics for the whole project
-        $stats = $this->Supplementary_extraction_model->get_extraction_stats($project_id);
+        $stats = $this->Microbial_extraction_model->get_extraction_stats($project_id);
         
         echo json_encode([
             'success' => true,

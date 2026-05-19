@@ -15,7 +15,7 @@ class Sample_reception_model extends CI_Model
     }
 
     public function json() {
-        $this->datatables->select('NULL AS toggle, sr.id_sample_reception, sr.id_project, sr.client_quote_number, sr.client, sr.id_client_sample, COALESCE(cc.client_name, sr.client, "Unknown Client") as client_name, sr.id_client_contact, sr.number_sample, sr.comments, sr.files, sr.supplementary_files, sr.date_arrive, sr.time_arrive, 
+        $this->datatables->select('NULL AS toggle, sr.id_sample_reception, sr.id_project, sr.client_quote_number, sr.client, sr.id_client_sample, COALESCE(cc.client_name, sr.client, "Unknown Client") as client_name, sr.id_client_contact, sr.number_sample, sr.comments, sr.files, sr.files_microbial, sr.supplementary_files, sr.date_arrive, sr.time_arrive, 
             sr.date_created, sr.date_updated, sr.flag, sr.is_unlocked, sr.unlocked_by, sr.unlocked_at, sr.unlock_reason,
             CASE WHEN (
                 SELECT COUNT(DISTINCT srt.id_testing) 
@@ -201,6 +201,7 @@ class Sample_reception_model extends CI_Model
             sr.number_sample, 
             sr.comments,
             sr.files, 
+            sr.files_microbial,
             sr.supplementary_files, 
             sr.date_arrive, 
             sr.time_arrive, 

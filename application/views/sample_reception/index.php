@@ -60,6 +60,7 @@
                                         <th>Date Arrived</th>
                                         <th>Time Arrived</th>
                                         <th>Documents</th>
+                                        <th>Microbial Files</th>
                                         <th>Supplementary Files</th>
                                         <th width="120px">Action</th>
                                     </tr>
@@ -275,7 +276,7 @@
                                     <input id="files" name="files" placeholder="Filename" type="text" class="form-control" readonly>
                                     <div class="val2tip"></div>
                                     <small class="text-muted" id="file-status-text" style="display: none;">
-                                        <i class="fa fa-info-circle"></i>You can delete the file if needed.
+                                        <i class="fa fa-info-circle"></i> You can delete the file if needed.
                                     </small>
                                     <div class="file-buttons-container" style="margin-top: 5px;">
                                         <button type="button" id="btn-open-scanner" class="btn btn-success" onclick="openScanner()">
@@ -289,40 +290,38 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="supplementary_files" class="col-sm-4 control-label">
-                                    Supplementary Files
-                                    <br>
-                                    <small class="text-muted" style="font-weight: normal;">
-                                        (Multiple files allowed)
-                                    </small>
-                                </label>
+                                <label for="files_microbial" class="col-sm-4 control-label">Microbial files</label>
                                 <div class="col-sm-8">
-                                    <!-- Hidden input to store JSON array of filenames -->
-                                    <input type="hidden" id="supplementary_files_data" name="supplementary_files" value="">
-                                    
-                                    <!-- Display area for uploaded files -->
-                                    <div id="supplementary_files_display" class="form-control" style="min-height: 38px; background-color: #f8f9fa; cursor: default;">
-                                        <span class="text-muted"><i class="fa fa-inbox"></i> No files uploaded yet</span>
+                                    <input id="files_microbial" name="files_microbial" placeholder="Filename" type="text" class="form-control" readonly>
+                                    <div class="val2tip"></div>
+                                    <small class="text-muted" id="file-status-text-microbial" style="display: none;">
+                                        <i class="fa fa-info-circle"></i> You can delete the file if needed.
+                                    </small>
+                                    <div class="file-buttons-container" style="margin-top: 5px;">
+                                        <button type="button" id="btn-open-scanner-microbial" class="btn btn-success" onclick="openMicrobialScanner()">
+                                            <i class="fa fa-file-o"></i> Open File
+                                        </button>
+                                        <button type="button" id="btn-delete-file-microbial" class="btn btn-danger" onclick="deleteMicrobialFile()" style="margin-left: 10px; display: none;">
+                                            <i class="fa fa-trash"></i> Delete File
+                                        </button>
                                     </div>
-                                    
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="supplementary_files" class="col-sm-4 control-label">Supplementary Files</label>
+                                <div class="col-sm-8">
+                                    <input id="supplementary_files" name="supplementary_files" placeholder="Filename" type="text" class="form-control" readonly>
                                     <div class="val3tip"></div>
-                                    
-                                    <!-- Helper text - always visible -->
-                                    <small class="text-info" style="display: block; margin-top: 5px;">
-                                        <i class="fa fa-info-circle"></i> 
-                                        <strong>Tip:</strong> Click "Add File" button multiple times to upload more files
+                                    <small class="text-muted" id="supplementary-file-status-text" style="display: none;">
+                                        <i class="fa fa-info-circle"></i> You can delete the file if needed.
                                     </small>
-                                    
-                                    <!-- Status text - shown when files exist -->
-                                    <small class="text-success" id="supplementary-file-status-text" style="display: none; margin-top: 3px;">
-                                        <i class="fa fa-check-circle"></i> 
-                                        <span id="supplementary-file-count">0</span> file(s) ready. Click × to remove individual files.
-                                    </small>
-                                    
-                                    <div class="file-buttons-container" style="margin-top: 8px;">
-                                        <button type="button" id="btn-open-scanner-supplementary" class="btn btn-success" onclick="openSupplementaryScanner()" title="Upload a supplementary file">
-                                            <i class="fa fa-plus"></i> Add File
-                                            <span id="btn-file-counter" class="badge" style="display: none; margin-left: 5px; background-color: #fff; color: #5cb85c;">0</span>
+                                    <div class="file-buttons-container" style="margin-top: 5px;">
+                                        <button type="button" id="btn-open-scanner-supplementary" class="btn btn-success" onclick="openSupplementaryScanner()">
+                                            <i class="fa fa-file-o"></i> Open File
+                                        </button>
+                                        <button type="button" id="btn-delete-file-supplementary" class="btn btn-danger" onclick="deleteSupplementaryFile()" style="margin-left: 10px; display: none;">
+                                            <i class="fa fa-trash"></i> Delete File
                                         </button>
                                     </div>
                                 </div>
@@ -1295,6 +1294,27 @@
         background: linear-gradient(135deg, #c82333 0%, #dc2626 100%);
     }
 
+    /* Microbial file button styling */
+    #btn-open-scanner-microbial {
+        background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+        border: none;
+        color: white;
+    }
+
+    #btn-open-scanner-microbial:hover {
+        background: linear-gradient(135deg, #138496 0%, #117a8b 100%);
+    }
+
+    #btn-delete-file-microbial {
+        background: linear-gradient(135deg, #dc3545 0%, #e74c3c 100%);
+        border: none;
+        color: white;
+    }
+
+    #btn-delete-file-microbial:hover {
+        background: linear-gradient(135deg, #c82333 0%, #dc2626 100%);
+    }
+
     /* File status text styling */
     #file-status-text, #supplementary-file-status-text {
         margin-top: 8px;
@@ -1317,7 +1337,7 @@
         cursor: not-allowed;
     }
     
-    /* Supplementary files display styling */
+    /* Supplementary files display styling - UNUSED (converted to single file) */
     #supplementary_files_display {
         min-height: 38px;
         padding: 6px 12px;
@@ -1926,82 +1946,8 @@ function applyCompletedProjectStyling() {
 
 	let client = $('#client').val();
 
-    // ========== SUPPLEMENTARY FILE FUNCTIONS - MUST BE DEFINED BEFORE USE ==========
+    // ========== SUPPLEMENTARY FILE FUNCTIONS - SINGLE FILE SUPPORT ==========
     
-    // Get current supplementary files as array
-    function getSupplementaryFilesArray() {
-        const hiddenInput = document.getElementById("supplementary_files_data");
-        if (!hiddenInput || !hiddenInput.value || hiddenInput.value.trim() === '') {
-            return [];
-        }
-        
-        try {
-            const parsed = JSON.parse(hiddenInput.value);
-            return Array.isArray(parsed) ? parsed : [];
-        } catch(e) {
-            console.error('Error parsing supplementary files:', e);
-            return [];
-        }
-    }
-
-    // Update supplementary files display and hidden input
-    function updateSupplementaryFilesDisplay(filesArray) {
-        const hiddenInput = document.getElementById("supplementary_files_data");
-        const displayDiv = document.getElementById("supplementary_files_display");
-        const statusText = document.getElementById("supplementary-file-status-text");
-        const fileCountSpan = document.getElementById("supplementary-file-count");
-        const btnCounter = document.getElementById("btn-file-counter");
-        const valTip = document.querySelector(".val3tip");
-        
-        if (!hiddenInput || !displayDiv) return;
-        
-        // Update hidden input with JSON array
-        hiddenInput.value = JSON.stringify(filesArray);
-        
-        const fileCount = filesArray.length;
-        
-        // Update display
-        if (fileCount === 0) {
-            displayDiv.innerHTML = '<span class="text-muted"><i class="fa fa-inbox"></i> No files uploaded yet</span>';
-            if (statusText) statusText.style.display = 'none';
-            if (btnCounter) btnCounter.style.display = 'none';
-            if (valTip) valTip.innerHTML = '';
-        } else {
-            // Create badges for each file with delete button
-            let badges = filesArray.map(function(filename, index) {
-                return `<span class="label label-info" style="margin: 2px 4px; padding: 5px 8px; display: inline-block; font-size: 12px;">
-                            <i class="fa fa-file-o"></i> ${filename.length > 20 ? filename.substring(0, 17) + '...' : filename}
-                            <button type="button" class="btn btn-xs btn-danger" onclick="deleteSupplementaryFileByIndex(${index})" 
-                                    style="margin-left: 5px; padding: 0px 4px; border: none; background: #d9534f; color: white; border-radius: 3px;"
-                                    title="Delete ${filename}">
-                                <i class="fa fa-times"></i>
-                            </button>
-                        </span>`;
-            }).join('');
-            
-            displayDiv.innerHTML = badges;
-            
-            // Update status text with file count
-            if (statusText) {
-                statusText.style.display = 'block';
-                if (fileCountSpan) {
-                    fileCountSpan.textContent = fileCount;
-                }
-            }
-            
-            // Update button counter badge
-            if (btnCounter) {
-                btnCounter.textContent = fileCount;
-                btnCounter.style.display = 'inline-block';
-            }
-            
-            // Update validation tip
-            if (valTip) {
-                valTip.innerHTML = `<span class="text-success"><i class="fa fa-check-circle"></i> ${fileCount} file(s) ready to submit!</span>`;
-            }
-        }
-    }
-
     // Get current project ID from form
     function getCurrentProjectId() {
         return $('#idx_project').val() || '';
@@ -2020,16 +1966,57 @@ function applyCompletedProjectStyling() {
             `width=${w},height=${h},top=${y},left=${x}`);
     }
 
-    // Delete supplementary file by index
-    function deleteSupplementaryFileByIndex(index) {
-        const filesArray = getSupplementaryFilesArray();
+    // Update supplementary file buttons state (single file)
+    function updateSupplementaryFileButtonsState() {
+        const fileInput = document.getElementById("supplementary_files");
+        const statusText = document.getElementById("supplementary-file-status-text");
+        const openBtn = document.getElementById("btn-open-scanner-supplementary");
+        const deleteBtn = document.getElementById("btn-delete-file-supplementary");
+        const valTip = document.querySelector(".val3tip");
         
-        if (index < 0 || index >= filesArray.length) {
-            console.error('Invalid file index:', index);
+        if (!fileInput) return;
+        
+        const hasFile = fileInput.value && fileInput.value.trim() !== '';
+        
+        // Update status text
+        if (statusText) {
+            statusText.style.display = hasFile ? 'block' : 'none';
+        }
+        
+        // Update buttons visibility - show only one at a time
+        if (openBtn) {
+            openBtn.style.display = hasFile ? 'none' : 'inline-block';
+        }
+        
+        if (deleteBtn) {
+            deleteBtn.style.display = hasFile ? 'inline-block' : 'none';
+        }
+        
+        // Update validation tip
+        if (valTip) {
+            if (hasFile) {
+                valTip.innerHTML = '<span class="text-success"><i class="fa fa-check-circle"></i> File ready to submit!</span>';
+            } else {
+                valTip.innerHTML = '';
+            }
+        }
+    }
+
+    // Delete supplementary file (single file)
+    function deleteSupplementaryFile() {
+        const fileInput = document.getElementById("supplementary_files");
+        
+        if (!fileInput || !fileInput.value || fileInput.value.trim() === '') {
+            Swal.fire({
+                icon: 'warning',
+                title: 'No File',
+                text: 'There is no supplementary file to delete.',
+                confirmButtonText: 'OK'
+            });
             return;
         }
         
-        const filename = filesArray[index];
+        const filename = fileInput.value.trim();
         
         // Show SweetAlert confirmation modal
         Swal.fire({
@@ -2063,13 +2050,13 @@ function applyCompletedProjectStyling() {
                         const response = JSON.parse(xhr.responseText);
                         
                         if (response.success) {
-                            // Remove file from array
-                            filesArray.splice(index, 1);
+                            // Clear the input field
+                            fileInput.value = '';
                             
-                            // Update display
-                            updateSupplementaryFilesDisplay(filesArray);
+                            // Update button states
+                            updateSupplementaryFileButtonsState();
                             
-                            // Show success message with extraction info
+                            // Show success message
                             let message = response.message || 'File has been deleted successfully.';
                             
                             Swal.fire({
@@ -2110,48 +2097,6 @@ function applyCompletedProjectStyling() {
                 xhr.send('filename=' + encodeURIComponent(filename) + '&project_id=' + encodeURIComponent(getCurrentProjectId()));
             }
         });
-    }
-
-    // Legacy function - kept for backward compatibility
-    function updateSupplementaryFileButtonsState() {
-        const statusText = document.getElementById("supplementary-file-status-text");
-        const filesArray = getSupplementaryFilesArray();
-        
-        if (statusText) {
-            if (filesArray.length > 0) {
-                statusText.style.display = 'block';
-            } else {
-                statusText.style.display = 'none';
-            }
-        }
-    }
-
-    // Legacy function - kept for backward compatibility
-    function deleteSupplementaryFile() {
-        const filesArray = getSupplementaryFilesArray();
-        
-        if (filesArray.length === 0) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'No Files',
-                text: 'There are no supplementary files to delete.',
-                confirmButtonText: 'OK'
-            });
-            return;
-        }
-        
-        // If only one file, delete it directly
-        if (filesArray.length === 1) {
-            deleteSupplementaryFileByIndex(0);
-        } else {
-            // If multiple files, show info
-            Swal.fire({
-                icon: 'info',
-                title: 'Multiple Files',
-                text: 'Please use the × button next to each file to delete individual files.',
-                confirmButtonText: 'OK'
-            });
-        }
     }
 
     // ========== END SUPPLEMENTARY FILE FUNCTIONS ==========
@@ -2480,48 +2425,44 @@ function applyCompletedProjectStyling() {
                     }
                 },
                 {
+                    "data": "files_microbial",
+                    "render": function(data, type, row) {
+                        if (!data || data === "null") return `<button type="button" class="btn btn-sm btn-light" disabled>
+                                    <i class="fa fa-times"></i> No file
+                                </button>`;
+
+                        const fileURL = `<?= site_url('scan_page/view_file/') ?>${data}`;
+                        return `<a href="${fileURL}" target="_blank" class="btn btn-sm btn-info">
+                                    <i class="fa fa-flask"></i> View Microbial
+                                </a>`;
+                    }
+                },
+                {
                     "data": "supplementary_files",
                     "render": function(data, type, row) {
-                        if (!data || data === "null" || data === "" || data === "[]") {
+                        if (!data || data === "null" || data === "") {
                             return `<button type="button" class="btn btn-sm btn-light" disabled>
-                                        <i class="fa fa-times"></i> No files
+                                        <i class="fa fa-times"></i> No file
                                     </button>`;
                         }
 
                         try {
-                            // Parse JSON array of filenames
-                            let files = [];
-                            if (typeof data === 'string') {
-                                // Try to parse as JSON first
-                                try {
-                                    files = JSON.parse(data);
-                                } catch(e) {
-                                    // If not JSON, treat as single filename (backward compatibility)
-                                    files = [data];
-                                }
-                            } else if (Array.isArray(data)) {
-                                files = data;
-                            } else {
-                                files = [data];
-                            }
-
-                            if (!Array.isArray(files) || files.length === 0) {
+                            // Handle single file (string)
+                            const filename = data.toString().trim();
+                            
+                            if (filename === '') {
                                 return `<button type="button" class="btn btn-sm btn-light" disabled>
-                                            <i class="fa fa-times"></i> No files
+                                            <i class="fa fa-times"></i> No file
                                         </button>`;
                             }
 
-                            // Generate badges for each file
-                            let badges = files.map(function(filename) {
-                                const fileURL = `<?= site_url('scan_page/view_file/') ?>${filename}`;
-                                return `<a href="${fileURL}" target="_blank" class="btn btn-xs btn-info" style="margin: 2px;" title="${filename}">
-                                            <i class="fa fa-file-o"></i> ${filename.length > 15 ? filename.substring(0, 12) + '...' : filename}
-                                        </a>`;
-                            }).join(' ');
-
-                            return `<div style="max-width: 250px;">${badges}</div>`;
+                            // Generate view button for single file with short label
+                            const fileURL = `<?= site_url('scan_page/view_file/') ?>${filename}`;
+                            return `<a href="${fileURL}" target="_blank" class="btn btn-sm btn-info" title="${filename}">
+                                        <i class="fa fa-file-o"></i> View Supplementary
+                                    </a>`;
                         } catch(e) {
-                            console.error('Error rendering supplementary files:', e);
+                            console.error('Error rendering supplementary file:', e);
                             return `<button type="button" class="btn btn-sm btn-warning" disabled>
                                         <i class="fa fa-exclamation-triangle"></i> Error
                                     </button>`;
@@ -3248,9 +3189,10 @@ function applyCompletedProjectStyling() {
             $('#old_number_sample').val('');
             $('#number_sample_help').hide();
             $('#files').val('');
+            $('#files_microbial').val('');
             
-            // Reset supplementary files for multi-file support
-            updateSupplementaryFilesDisplay([]);
+            // Reset supplementary files for single-file support
+            $('#supplementary_files').val('');
             
             $('#comments').val('');
             $('.val2tip').html('');
@@ -3258,6 +3200,7 @@ function applyCompletedProjectStyling() {
             
             // Update file buttons state after reset
             updateFileButtonsState();
+            updateMicrobialFileButtonsState();
             updateSupplementaryFileButtonsState();
             
             $('#compose-modal').modal('show');
@@ -3309,28 +3252,14 @@ function applyCompletedProjectStyling() {
             $('#number_sample_help').show();
             $('#number_sample_help_text').html('Current: ' + data.number_sample + ' sample(s). You can only add more samples, not reduce.');
             $('#files').val(data.files).attr('readonly', true);
+            $('#files_microbial').val(data.files_microbial || '').attr('readonly', true);
             
-            // Load supplementary files for multi-file support
-            try {
-                let suppFiles = [];
-                if (data.supplementary_files && data.supplementary_files !== 'null' && data.supplementary_files !== '') {
-                    // Try to parse as JSON array
-                    try {
-                        suppFiles = JSON.parse(data.supplementary_files);
-                        if (!Array.isArray(suppFiles)) {
-                            // If not array, treat as single file (backward compatibility)
-                            suppFiles = [data.supplementary_files];
-                        }
-                    } catch(e) {
-                        // If not JSON, treat as single file (backward compatibility)
-                        suppFiles = [data.supplementary_files];
-                    }
-                }
-                updateSupplementaryFilesDisplay(suppFiles);
-            } catch(e) {
-                console.error('Error loading supplementary files:', e);
-                updateSupplementaryFilesDisplay([]);
-            }
+            // Update button states for both file types
+            updateFileButtonsState();
+            updateMicrobialFileButtonsState();
+            
+            // Load supplementary files for single-file support
+            $('#supplementary_files').val(data.supplementary_files || '').attr('readonly', true);
             
             $('#date_arrive').val(data.date_arrive);
             $('#time_arrive').val(data.time_arrive);
@@ -3672,6 +3601,162 @@ function deleteFile() {
     });
 }
 
+// ========== MICROBIAL FILE FUNCTIONS ==========
+function openMicrobialScanner() {
+  const idxProject = $('#idx_project').val(); // Ambil nilai project dari input form
+  const w = 800;
+  const h = 600;
+  const y = window.top.outerHeight / 2 + window.top.screenY - (h / 2);
+  const x = window.top.outerWidth / 2 + window.top.screenX - (w / 2);
+
+  const url = "<?= site_url('scan_page/microbial') ?>?project_id=" + encodeURIComponent(idxProject);
+
+  window.open(url, "Scan Microbial Document",
+    `width=${w},height=${h},top=${y},left=${x}`);
+}
+
+function updateMicrobialFileButtonsState() {
+    const fileInput = document.getElementById("files_microbial");
+    const btnOpenScanner = document.getElementById("btn-open-scanner-microbial");
+    const btnDeleteFile = document.getElementById("btn-delete-file-microbial");
+    const fileStatusText = document.getElementById("file-status-text-microbial");
+
+    const hasFile = fileInput && fileInput.value && fileInput.value.trim() !== '';
+
+    if (hasFile) {
+        // File exists - show delete button, hide open button
+        btnOpenScanner.style.display = 'none';
+        btnDeleteFile.style.display = 'inline-block';
+        fileStatusText.style.display = 'block';
+        
+        // Reset delete button state
+        btnDeleteFile.innerHTML = '<i class="fa fa-trash"></i> Delete File';
+        btnDeleteFile.disabled = false;
+    } else {
+        // No file - show open button, hide delete button
+        btnOpenScanner.style.display = 'inline-block';
+        btnDeleteFile.style.display = 'none';
+        fileStatusText.style.display = 'none';
+        
+        // Reset delete button state
+        btnDeleteFile.innerHTML = '<i class="fa fa-trash"></i> Delete File';
+        btnDeleteFile.disabled = false;
+    }
+}
+
+function deleteMicrobialFile() {
+    const fileInput = document.getElementById("files_microbial");
+    const filename = fileInput ? fileInput.value : '';
+    
+    if (!filename) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'No File Selected',
+            text: 'There is no microbial file to delete.',
+            confirmButtonText: 'OK'
+        });
+        return;
+    }
+    
+    // Show SweetAlert confirmation modal
+    Swal.fire({
+        icon: 'warning',
+        title: 'Delete Microbial File?',
+        text: 'Are you sure you want to delete this microbial file? This action cannot be undone.',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Show loading state
+            const btnDeleteFile = document.getElementById("btn-delete-file-microbial");
+            const originalText = btnDeleteFile.innerHTML;
+            btnDeleteFile.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Deleting...';
+            btnDeleteFile.disabled = true;
+            
+            // Make AJAX call to delete file from server
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '<?= site_url("scan_page/delete_microbial_file") ?>', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            
+            xhr.onload = function() {
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    
+                    if (response.success) {
+                        // Clear the filename
+                        fileInput.value = '';
+                        
+                        // Update button states
+                        updateMicrobialFileButtonsState();
+                        
+                        // Show success message with extraction info
+                        let message = response.message;
+                        if (response.extraction_deleted && response.extraction_count > 0) {
+                            message += `\n\n${response.extraction_count} extraction records were also removed.`;
+                        }
+                        
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Deleted!',
+                            text: message,
+                            timer: 3000,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        // Show error message
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Delete Failed',
+                            text: response.message,
+                            confirmButtonText: 'OK'
+                        });
+                        
+                        // Reset button state
+                        btnDeleteFile.innerHTML = originalText;
+                        btnDeleteFile.disabled = false;
+                    }
+                    
+                } catch (e) {
+                    console.error('Error parsing response:', e);
+                    
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to delete microbial file due to server error.',
+                        confirmButtonText: 'OK'
+                    });
+                    
+                    // Reset button state
+                    btnDeleteFile.innerHTML = originalText;
+                    btnDeleteFile.disabled = false;
+                }
+            };
+            
+            xhr.onerror = function() {
+                console.error('Network error while deleting microbial file');
+                
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Network Error',
+                    text: 'Unable to connect to server. Please check your connection.',
+                    confirmButtonText: 'OK'
+                });
+                
+                // Reset button state
+                btnDeleteFile.innerHTML = originalText;
+                btnDeleteFile.disabled = false;
+            };
+            
+            // Send filename and project_id to delete (for microbial file with extraction data)
+            const projectId = $('#idx_project').val() || '';
+            xhr.send('filename=' + encodeURIComponent(filename) + '&project_id=' + encodeURIComponent(projectId));
+        }
+    });
+}
+
 // 👇 Tangkap data dari scanner popup untuk main file
 window.addEventListener("message", function(event) {
     if (event.data && event.data.type === 'scan-upload-complete') {
@@ -3688,45 +3773,75 @@ window.addEventListener("message", function(event) {
         updateFileButtonsState();
     }
     
-    // Handle supplementary file upload - UPDATED FOR MULTI-FILE
+    // Handle supplementary file upload - UPDATED FOR SINGLE FILE
     if (event.data && event.data.type === 'scan-upload-complete-supplementary') {
         const filename = event.data.filename;
         console.log("Dapat nama supplementary file dari scanner:", filename);
 
-        // Get current files array
-        let currentFiles = getSupplementaryFilesArray();
-        
-        // Add new file to array (avoid duplicates)
-        if (!currentFiles.includes(filename)) {
-            currentFiles.push(filename);
-            
-            // Update display
-            updateSupplementaryFilesDisplay(currentFiles);
-            
-            // Show success notification
-            Swal.fire({
-                icon: 'success',
-                title: 'File Added!',
-                html: `<strong>${filename}</strong> has been added successfully.<br><br>
-                       <small class="text-muted">You can add more files by clicking "Add File" button again.</small>`,
-                timer: 3000,
-                timerProgressBar: true,
-                showConfirmButton: false,
-                toast: true,
-                position: 'top-end'
-            });
-        } else {
-            // File already exists
-            Swal.fire({
-                icon: 'info',
-                title: 'File Already Added',
-                text: `${filename} is already in the list.`,
-                timer: 2000,
-                showConfirmButton: false,
-                toast: true,
-                position: 'top-end'
-            });
+        // Set filename to input field
+        const fileInput = document.getElementById("supplementary_files");
+        if (fileInput) {
+            fileInput.value = filename;
         }
+        
+        // Update button states
+        updateSupplementaryFileButtonsState();
+        
+        // Show success notification
+        Swal.fire({
+            icon: 'success',
+            title: 'File Uploaded!',
+            html: `<strong>${filename}</strong> has been uploaded successfully.`,
+            timer: 3000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top-end'
+        });
+    }
+    
+    // Handle microbial file upload with extraction info
+    if (event.data && event.data.type === 'scan-upload-complete-microbial') {
+        const filename = event.data.filename;
+        const extractionSuccess = event.data.extraction_success;
+        const extractionCount = event.data.extraction_count;
+        const extractionError = event.data.extraction_error;
+        
+        console.log("Dapat nama microbial file dari scanner:", filename);
+        console.log("Extraction success:", extractionSuccess, "Count:", extractionCount);
+
+        // Masukkan ke input #files_microbial
+        const fileInput = document.getElementById("files_microbial");
+        if (fileInput) {
+            fileInput.value = filename;
+        }
+
+        // Update button states
+        updateMicrobialFileButtonsState();
+        
+        // Build notification message
+        let message = `${filename} has been uploaded successfully.`;
+        let icon = 'success';
+        
+        if (extractionSuccess && extractionCount > 0) {
+            message += `<br><br><strong>✓ ${extractionCount} records extracted from PDF</strong>`;
+        } else if (extractionError) {
+            message += `<br><br><span style="color: #f39c12;">⚠️ Extraction failed: ${extractionError}</span>`;
+            icon = 'warning';
+        }
+        
+        // Show success notification with extraction info
+        Swal.fire({
+            icon: icon,
+            title: 'Microbial File Uploaded!',
+            html: message,
+            timer: 4000,
+            timerProgressBar: true,
+            showConfirmButton: true,
+            confirmButtonText: 'OK',
+            toast: false,
+            position: 'center'
+        });
     }
 });
 

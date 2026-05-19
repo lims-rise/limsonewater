@@ -174,31 +174,21 @@
         .then(data => {
             console.log('Upload response:', data);
             
-            let message = `Supplementary file uploaded as: ${data.filename}`;
-            let icon = 'success';
-            
-            if (data.extraction_count > 0) {
-                message += `\n\n✅ Successfully extracted ${data.extraction_count} records from PDF!`;
-            } else if (data.extraction_error) {
-                message += `\n\n⚠️ Extraction failed: ${data.extraction_error}`;
-                icon = 'warning';
-            }
-            
+            // Supplementary files are now simple uploads without extraction
             Swal.fire({
                 title: "Upload Success",
-                text: message,
-                icon: icon,
+                text: `Supplementary file uploaded as: ${data.filename}`,
+                icon: 'success',
                 confirmButtonText: "OK"
             });
 
             // Kirim dengan tipe yang berbeda untuk supplementary file
             window.opener?.postMessage({
                 type: 'scan-upload-complete-supplementary',
-                filename: data.filename,
-                extraction_count: data.extraction_count
+                filename: data.filename
             }, "*");
 
-            setTimeout(() => window.close(), 2000);
+            setTimeout(() => window.close(), 1500);
         })
         .catch(err => {
             console.error(err);

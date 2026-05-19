@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Upload Microbial Document</title>
+    <title>Upload Microbial File</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -16,31 +16,29 @@
     </div>
 
     <div class="text-center mb-4">
-        <h4 class="text-success mb-3">Upload Microbial Document</h4>
-        <div class="text-center mb-4">
-            <div id="dropArea" class="border-6 border-dashed rounded p-5 bg-light" 
-                ondragover="event.preventDefault()" 
-                ondrop="handleDrop(event)" 
-                onclick="document.getElementById('fileInput').click()" 
-                style="cursor: pointer;">
-                <p class="mb-0 text-muted">
-                    <i class="fas fa-cloud-upload-alt fa-2x mb-2"></i><br>
-                    Drag & Drop PDF document here or click to choose<br>
-                    <small class="text-success"><strong>PDF files only</strong></small>
-                </p>
-                <input type="file" id="fileInput" class="d-none" accept="application/pdf" onchange="handleFile(this.files)">
-            </div>
+        <h4 class="text-primary"><i class="fas fa-microscope"></i> Upload Microbial File</h4>
+        <p class="text-muted">Upload PDF file for microbial analysis</p>
+    </div>
 
-            <div id="previewContainer" class="mt-3" style="display: none;">
-                <p class="mb-2">Preview:</p>
-                <iframe id="filePreview" width="100%" height="900px" style="border:1px solid #ccc;"></iframe>
-            </div>
+    <div class="text-center mb-4">
+        <div id="dropArea" class="border-6 border-dashed rounded p-5 bg-light" 
+            ondragover="event.preventDefault()" 
+            ondrop="handleDrop(event)" 
+            onclick="document.getElementById('fileInput').click()" 
+            style="cursor: pointer;">
+            <p class="mb-0 text-muted"><i class="fas fa-cloud-upload-alt fa-2x mb-2"></i><br>Drag & Drop PDF file here or click to choose</p>
+            <input type="file" id="fileInput" class="d-none" accept="application/pdf" onchange="handleFile(this.files)">
+        </div>
+
+        <div id="previewContainer" class="mt-3" style="display: none;">
+            <p class="mb-2">Preview:</p>
+            <iframe id="filePreview" width="100%" height="500px" style="border:1px solid #ccc;"></iframe>
         </div>
     </div>
 
     <div class="text-center">
         <button id="uploadBtn" class="btn btn-success" onclick="uploadFile()">
-            <span id="uploadIcon">Upload</span>
+            <span id="uploadIcon"><i class="fa fa-upload"></i> Upload</span>
             <span id="uploadSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
         </button>
     </div>
@@ -51,34 +49,34 @@
         transition: background-color 0.3s ease, border-color 0.3s ease;
         border-style: dashed;
         border-width: 2px;
-        border-color: #28a745;
-        background-color: #f8f9fa;
+        border-color: #ccc;
+        background-color: #E8F5E9;
         cursor: pointer;
         text-align: center;
     }
 
     #dropArea:hover {
-        background-color: #e8f5e8;
-        border-color: #28a745;
-        box-shadow: 0 0 20px rgba(40, 167, 69, 0.3);
+        background-color: #C8E6C9;
+        border-color: #4CAF50;
+        box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
     }
 
     #dropArea.active {
-        background-color: #d4edda;
-        border-color: #28a745;
-        box-shadow: 0 0 20px rgba(40, 167, 69, 0.5);
+        background-color: #A5D6A7;
+        border-color: #4CAF50;
+        box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
         animation: pulseBorder 1.2s infinite;
     }
 
     @keyframes pulseBorder {
         0% {
-            box-shadow: 0 0 20px rgba(40, 167, 69, 0.5);
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
         }
         70% {
-              box-shadow: 0 0 20px rgba(40, 167, 69, 0);
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0);
         }
         100% {
-            box-shadow: 0 0 20px rgba(40, 167, 69, 0);
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0);
         }
     }
 
@@ -87,7 +85,7 @@
     }
 
     #dropArea.active p {
-        color: #28a745;
+        color: #2E7D32;
     }
 </style>
 
@@ -108,23 +106,7 @@
 
         const file = files[0];
         if (file.type !== "application/pdf") {
-            Swal.fire({
-                icon: "error",
-                title: "Invalid File Type", 
-                text: "Only PDF files are allowed for Microbial documents.",
-                confirmButtonText: "OK"
-            });
-            return;
-        }
-
-        // Validate file size (max 10MB)
-        if (file.size > 10 * 1024 * 1024) {
-            Swal.fire({
-                icon: "error",
-                title: "File Too Large",
-                text: "PDF file size must be less than 10MB.",
-                confirmButtonText: "OK"
-            });
+            Swal.fire("Invalid file", "Only PDF files are allowed for microbial upload.", "error");
             return;
         }
 
@@ -162,12 +144,7 @@
 
     function uploadFile() {
         if (!selectedFile) {
-            Swal.fire({
-                icon: "warning",
-                title: "No File Selected", 
-                text: "Please select a PDF file to upload.",
-                confirmButtonText: "OK"
-            });
+            Swal.fire("No file selected", "Please select a PDF file to upload.", "warning");
             return;
         }
 
@@ -192,34 +169,42 @@
             return response.json();
         })
         .then(data => {
+            // Build success message with extraction info
+            let message = `Microbial file uploaded as: ${data.filename}`;
+            let icon = "success";
+            
+            if (data.extraction_success && data.extraction_count > 0) {
+                message += `\n\n✓ Successfully extracted ${data.extraction_count} records from PDF`;
+            } else if (data.extraction_error) {
+                message += `\n\n⚠️ Extraction failed: ${data.extraction_error}`;
+                icon = "warning";
+            }
+            
             Swal.fire({
-                icon: "success",
-                title: "Upload Success", 
-                text: `PDF document uploaded successfully as: ${data.filename}`,
-                timer: 2000,
-                showConfirmButton: false
+                icon: icon,
+                title: "Upload Success",
+                text: message,
+                confirmButtonText: 'OK'
             });
 
-            // Send filename back to parent window (Microbial module)
+            // Kirim data ke parent window dengan type khusus untuk microbial
             window.opener?.postMessage({
-                type: 'scan-upload-complete',
-                filename: data.filename
+                type: 'scan-upload-complete-microbial',
+                filename: data.filename,
+                extraction_success: data.extraction_success,
+                extraction_count: data.extraction_count,
+                extraction_error: data.extraction_error
             }, "*");
 
-            setTimeout(() => window.close(), 1500);
+            setTimeout(() => window.close(), 2000);
         })
         .catch(err => {
             console.error(err);
-            Swal.fire({
-                icon: "error",
-                title: "Upload Failed", 
-                text: err.message || "Failed to upload PDF document.",
-                confirmButtonText: "Try Again"
-            });
+            Swal.fire("Upload error", err.message || "Failed to upload microbial file.", "error");
         })
         .finally(() => {
             btn.disabled = false;
-            icon.innerHTML = '<i class="fas fa-file-pdf"></i> Upload PDF';
+            icon.innerHTML = '<i class="fa fa-upload"></i> Upload';
             spinner.classList.add("d-none");
         });
     }
