@@ -233,6 +233,7 @@ class Colilert_idexx_biosolids extends CI_Controller
             $ecoli = $this->input->post('ecoli', FALSE);
             $lowerdetection = $this->input->post('lowerdetection', TRUE);
             $ecoli_dryweight = $this->input->post('ecoli_dryweight', TRUE);
+            $ecoli_dryweight_is_less_than = $this->input->post('ecoli_dryweight_is_less_than', TRUE);
             $lowerdetection_dryweight = $this->input->post('lowerdetection_dryweight', TRUE);
             $coliforms_largewells = $this->input->post('coliforms_largewells', TRUE);
             $coliforms_smallwells = $this->input->post('coliforms_smallwells', TRUE);
@@ -241,6 +242,11 @@ class Colilert_idexx_biosolids extends CI_Controller
             $id_one_water_sample = $this->input->post('idx_one_water_sample', TRUE);
             $return_url = $this->input->post('return_url', TRUE);
             $quality_control = $this->input->post('quality_control_cib', TRUE) ? 1 : 0; // Convert checkbox to integer
+        
+            // Debug logging
+            log_message('debug', 'COLILERT BIOSOLIDS SAVEDETAIL - ecoli_dryweight: ' . $ecoli_dryweight);
+            log_message('debug', 'COLILERT BIOSOLIDS SAVEDETAIL - ecoli_dryweight_is_less_than: ' . $ecoli_dryweight_is_less_than);
+            log_message('debug', 'COLILERT BIOSOLIDS SAVEDETAIL - mode: ' . $mode_det);
         
             if($mode_det == "insert") {
                 $data = array(
@@ -253,6 +259,7 @@ class Colilert_idexx_biosolids extends CI_Controller
                     'ecoli' => $ecoli,
                     'lowerdetection' => $lowerdetection,
                     'ecoli_dryweight' => $ecoli_dryweight,
+                    'ecoli_dryweight_is_less_than' => $ecoli_dryweight_is_less_than,
                     'lowerdetection_dryweight' => $lowerdetection_dryweight,
                     'coliforms_largewells' => $coliforms_largewells,
                     'coliforms_smallwells' => $coliforms_smallwells,
@@ -285,6 +292,7 @@ class Colilert_idexx_biosolids extends CI_Controller
                     'ecoli' => $ecoli,
                     'lowerdetection' => $lowerdetection,
                     'ecoli_dryweight' => $ecoli_dryweight,
+                    'ecoli_dryweight_is_less_than' => $ecoli_dryweight_is_less_than,
                     'lowerdetection_dryweight' => $lowerdetection_dryweight,
                     'coliforms_largewells' => $coliforms_largewells,
                     'coliforms_smallwells' => $coliforms_smallwells,
