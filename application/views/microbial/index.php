@@ -196,7 +196,8 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <!-- DISABLED: Upload Document (PDF) - Not currently in use -->
+                        <!-- <div class="form-group">
                             <label for="document_file" class="col-sm-4 control-label">Upload Document (PDF)</label>
                             <div class="col-sm-8">
                                 <input id="document_file" name="document_file" placeholder="Document Filename" type="text" class="form-control" readonly>
@@ -213,7 +214,7 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <label for="description" class="col-sm-4 control-label">Description</label>
@@ -716,7 +717,8 @@
         return urlParams.get(param);
     }
 
-    // Document file management functions - following Sample Reception approach
+    // DISABLED: Document file management functions - Not currently in use
+    /*
     function openDocumentScanner() {
         const microbialBarcode = $('#microbial_barcode').val();
         if (!microbialBarcode) {
@@ -772,7 +774,6 @@
             }
         }
     }
-
     function deleteDocumentFile() {
         const fileInput = document.getElementById("document_file");
         const filename = fileInput ? fileInput.value : '';
@@ -892,6 +893,8 @@
         // Create download link - this should point to a controller method that handles file download
         window.open('<?php echo site_url('Microbial/download_document'); ?>/' + encodeURIComponent(filename), '_blank');
     }
+    */
+    // END DISABLED: Document file management functions
 
 $(document).ready(function() {
         // Pembatalan dan kembali ke halaman sebelumnya
@@ -1420,8 +1423,9 @@ $(document).ready(function() {
             }
         });
 
+        // DISABLED: Document upload not in use
         // Initialize document buttons state
-        updateDocumentButtonsState();
+        // updateDocumentButtonsState();
 
         // Check for URL parameters to auto-open modal (from Sample Reception redirect)
         const urlParams = new URLSearchParams(window.location.search);
@@ -1450,8 +1454,8 @@ $(document).ready(function() {
                 $('#microbial_barcode').val(barcodeFromUrl);
                 $('#microbial_barcode').attr('readonly', true);
                 $('#description').val('');
-                $('#document_file').val('');
-                updateDocumentButtonsState();
+                // $('#document_file').val('');  // DISABLED: Document upload not in use
+                // updateDocumentButtonsState();  // DISABLED: Document upload not in use
                 
                 // Clear all supplementary fields for new entry
                 clearSupplementaryFields();
@@ -1483,12 +1487,12 @@ $(document).ready(function() {
             $('#idx_one_water_sample').hide();
             $('#microbial_barcode').attr('readonly', false).val('');
             $('#description').val('');
-            $('#document_file').val('');
+            // $('#document_file').val('');  // DISABLED: Document upload not in use
             
-            // Reset document buttons
-            $('#btn-open-document-scanner').show();
-            $('#btn-delete-document-file').hide();
-            $('#document-file-status-text').hide();
+            // DISABLED: Document upload not in use
+            // $('#btn-open-document-scanner').show();
+            // $('#btn-delete-document-file').hide();
+            // $('#document-file-status-text').hide();
             
             // Clear all supplementary fields
             clearSupplementaryFields();
@@ -1512,6 +1516,8 @@ $(document).ready(function() {
             $('#microbial_barcode').attr('readonly', true);
             $('#description').val(data.description);
             
+            // DISABLED: Document upload not in use
+            /*
             // Show current document if exists
             if (data.document_filename && data.document_filename !== 'null' && data.document_filename !== '') {
                 $('#document_file').val(data.document_filename);
@@ -1520,6 +1526,7 @@ $(document).ready(function() {
                 $('#document_file').val('');
                 updateDocumentButtonsState();
             }
+            */
 
             // Auto-load supplementary data if available
             autoLoadSupplementaryData(data.id_one_water_sample);
