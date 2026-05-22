@@ -252,9 +252,13 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="ecoli_dryweight" class="col-sm-4 control-label">E.Coli MPN/g Dryweight</label>
+                                        <label for="ecoli_dryweight_display" class="col-sm-4 control-label">E.Coli MPN/g Dryweight</label>
                                         <div class="col-sm-8">
-                                            <input id="ecoli_dryweight" name="ecoli_dryweight" type="text"  placeholder="E.Coli MPN/g Dryweight" class="form-control" readonly>
+                                            <!-- Display field (with < symbol if needed) -->
+                                            <input id="ecoli_dryweight_display" type="text" placeholder="E.Coli MPN/g Dryweight" class="form-control" readonly>
+                                            <!-- Hidden fields for database (numeric value and flag) -->
+                                            <input id="ecoli_dryweight" name="ecoli_dryweight" type="hidden">
+                                            <input id="ecoli_dryweight_is_less_than" name="ecoli_dryweight_is_less_than" type="hidden" value="0">
                                         </div>
                                     </div>
 
@@ -1214,21 +1218,62 @@
 
         // Function to calculate dryweight values
         function calculateDryweightValues() {
-            let eColi = parseFloat($('#ecoli').val()) || 0;
+            let eColiRaw = $('#ecoli').val();
             let lowerDetection = parseFloat($('#lowerdetection').val()) || 0;
             let elutionVol = parseFloat($('#elution_volume').val()) || 0;
             let sampleDryWeight = parseFloat($('#sample_dry_weight').val()) || 0;
 
+            // Debug logging
+            console.log('calculateDryweightValues called');
+            console.log('eColiRaw:', eColiRaw, 'Type:', typeof eColiRaw);
+            console.log('Starts with <:', eColiRaw && eColiRaw.toString().trim().startsWith('<'));
+
             if (sampleDryWeight > 0) {
+                // Check if E.Coli value is "<1.0" or similar
+                let isLessThan = false;
+                let eColi = 0;
+                
+                // Convert to string and check for "<" symbol
+                let eColiStr = eColiRaw ? eColiRaw.toString().trim() : '';
+                
+                if (eColiStr.startsWith('<')) {
+                    // Value is like "<1.0", extract the number and use it for calculation
+                    isLessThan = true;
+                    eColi = parseFloat(eColiStr.replace('<', '').trim()) || 1;
+                    console.log('Detected < symbol, extracted value:', eColi);
+                } else {
+                    eColi = parseFloat(eColiRaw) || 0;
+                    console.log('Normal value:', eColi);
+                }
+                
                 // ecoli_dryweight = ((ecoli/100) * elution_volume) / sample_dry_weight
                 let ecoliDryweight = ((eColi / 100) * elutionVol) / sampleDryWeight;
+                
+                console.log('isLessThan:', isLessThan);
+                console.log('ecoliDryweight:', ecoliDryweight);
+                
+                // Store numeric value in hidden field for database
                 $('#ecoli_dryweight').val(ecoliDryweight.toFixed(1));
+                
+                // Store flag in hidden field
+                $('#ecoli_dryweight_is_less_than').val(isLessThan ? 1 : 0);
+                
+                console.log('Flag set to:', isLessThan ? 1 : 0);
+                
+                // Display with "<" symbol if needed
+                if (isLessThan) {
+                    $('#ecoli_dryweight_display').val('<' + ecoliDryweight.toFixed(1));
+                } else {
+                    $('#ecoli_dryweight_display').val(ecoliDryweight.toFixed(1));
+                }
 
                 // lowerdetection_dryweight = ((lowerdetection/100) * elution_volume) / sample_dry_weight  
                 let lowerdetectionDryweight = ((lowerDetection / 100) * elutionVol) / sampleDryWeight;
                 $('#lowerdetection_dryweight').val(lowerdetectionDryweight.toFixed(1));
             } else {
                 $('#ecoli_dryweight').val('');
+                $('#ecoli_dryweight_is_less_than').val('0');
+                $('#ecoli_dryweight_display').val('');
                 $('#lowerdetection_dryweight').val('');
             }
         }
@@ -1558,6 +1603,8 @@
             // $('#ecoli').attr('readonly', true);
             $('#lowerdetection').val('0');
             $('#ecoli_dryweight').val('');
+            $('#ecoli_dryweight_is_less_than').val('0');
+            $('#ecoli_dryweight_display').val('');
             // $('#ecoli_dryweight').attr('readonly', true);
             $('#lowerdetection_dryweight').val('');
             // $('#lowerdetection_dryweight').attr('readonly', true);
@@ -1590,7 +1637,18 @@
             $('#ecoli').val(data.ecoli);
             // $('#ecoli').attr('readonly', true);
             $('#lowerdetection').val(data.lowerdetection);
+            
+            // Load ecoli_dryweight with flag
             $('#ecoli_dryweight').val(data.ecoli_dryweight);
+            $('#ecoli_dryweight_is_less_than').val(data.ecoli_dryweight_is_less_than || 0);
+            
+            // Display with "<" symbol if flag is set
+            if (data.ecoli_dryweight_is_less_than == 1) {
+                $('#ecoli_dryweight_display').val('<' + data.ecoli_dryweight);
+            } else {
+                $('#ecoli_dryweight_display').val(data.ecoli_dryweight);
+            }
+            
             // $('#ecoli_dryweight').attr('readonly', true);
             $('#lowerdetection_dryweight').val(data.lowerdetection_dryweight);
             // $('#lowerdetection_dryweight').attr('readonly', true);

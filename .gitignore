@@ -2,3 +2,4 @@ application/config/database.php
 application/controllers/limsonewater.code-workspace
 .DS_Store
 # assets/foto_profil/
+docs/
