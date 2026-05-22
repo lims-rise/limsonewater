@@ -1541,7 +1541,20 @@
                         return data;
                     }
                 },
-                {"data": "ecoli_dryweight"},
+                {
+                    "data": "ecoli_dryweight",
+                    "render": function(data, type, row) {
+                        // Check if the less-than flag is set
+                        if (row.ecoli_dryweight_is_less_than == 1 && data && data !== '' && data !== '0') {
+                            // Display with < symbol
+                            return '<' + parseFloat(data).toFixed(1);
+                        } else if (data && data !== '' && data !== '0' && !isNaN(parseFloat(data))) {
+                            // Normal display with 1 decimal
+                            return parseFloat(data).toFixed(1);
+                        }
+                        return data;
+                    }
+                },
                 {"data": "lowerdetection_dryweight"},
                 {"data": "coliforms_largewells"}, 
                 {"data": "coliforms_smallwells"},
