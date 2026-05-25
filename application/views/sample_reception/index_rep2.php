@@ -104,6 +104,17 @@
         width: 100% !important;
     }
     
+    /* Exception: Keep signature section horizontal */
+    .box-body > div[style*="margin-top: 30px"][style*="display: flex"] {
+        display: flex !important;
+        justify-content: space-between !important;
+    }
+    
+    .box-body > div[style*="margin-top: 30px"] > div[style*="width: 45%"] {
+        width: 45% !important;
+        text-align: center !important;
+    }
+    
     /* Ensure consistent vertical alignment in Page 1 table */
     #project-info td {
         line-height: 1.4 !important;
@@ -649,12 +660,14 @@
                     <!-- Signature Section -->
                     <div style="margin-top: 30px; display: flex; justify-content: space-between;">
                         <div style="width: 45%; text-align: center;">
+                            <div style="height: 100px;"></div>
                             <div style="border-bottom: 1px solid #000; width: 200px; margin: 0 auto 5px;"></div>
                             <p><strong>Reviewed By</strong><br>
                             Laboratory Manager<br>
                             Date: <?php echo date('d-M-Y'); ?></p>
                         </div>
                         <div style="width: 45%; text-align: center;">
+                            <div style="height: 100px;"></div>
                             <div style="border-bottom: 1px solid #000; width: 200px; margin: 0 auto 5px;"></div>
                             <p><strong>Approved By</strong><br>
                             Quality Assurance<br>
