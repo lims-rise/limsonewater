@@ -124,6 +124,26 @@
     .box-body > div[style*="width: 49%"], .box-body > div[style*="width: 30%"] {
         width: 100% !important;
     }
+    
+    /* Ensure consistent vertical alignment in Page 1 table */
+    #project-info td {
+        line-height: 1.4 !important;
+        vertical-align: top !important;
+        padding: 2px 0 !important;
+        white-space: nowrap !important;
+    }
+    
+    /* Add spacing between label and data columns - UI/UX best practice */
+    #project-info td:first-child {
+        padding-right: 30px !important;
+        width: 60% !important;
+    }
+    
+    #project-info td:last-child {
+        padding-left: 10px !important;
+        width: 40% !important;
+        white-space: normal !important;
+    }
 
     /* --- PERBAIKAN POSISI LOGO --- */
     .logo-footer-print {
@@ -334,76 +354,79 @@
                     
                     <div style="display: flex; justify-content: space-between; width: 100%; margin-bottom: 5px;">
                         <div style="width: 49%;">
-                            <table id="report-header" width="100%" style="border:0px solid black; margin-bottom: 5px; border-collapse: collapse;">
-                                <thead>
+                            <table id="project-info" width="100%" style="border:0px solid black; border-collapse: collapse;">
+                                <tbody>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Report Number</td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4; white-space: nowrap;" align="left">Report Number</td>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4;" align="left">
                                             <span id="display_report_number"><?php echo htmlspecialchars($report_number_display ?? ''); ?></span>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Report issue date</td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4; white-space: nowrap;" align="left">Report issue date</td>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4;" align="left">
                                             <span id="display_report_date"><?php echo htmlspecialchars($report_date_display ?? ''); ?></span>
                                         </td>
                                     </tr>
-                                </thead>
-                            </table>
-
-                            <div style="width: 100%; border-top: 1px solid #ddd; margin: 2px 0;"></div>
-
-                            <table id="project-details" width="100%" style="border:0px solid black; margin-top: 3px; border-collapse: collapse;">
-                                <thead>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Project ID</td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($id_project) && $id_project !== 'null') ? $id_project : '-'; ?></td>
+                                        <td colspan="2" style="border:0px solid black; padding: 4px 0;">
+                                            <div style="width: 100%; border-top: 1px solid #ddd;"></div>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Client</td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($client) && $client !== 'null') ? $client : '-'; ?></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4; white-space: nowrap;" align="left">Project ID</td>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4;" align="left"><?php echo (!empty($id_project) && $id_project !== 'null') ? $id_project : '-'; ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Client contact details</td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($client_name) && $client_name !== 'null') ? $client_name : '-'; ?></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4; white-space: nowrap;" align="left">Client</td>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4;" align="left"><?php echo (!empty($client) && $client !== 'null') ? $client : '-'; ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"></td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($address) && $address !== 'null') ? $address : '-'; ?></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4; white-space: nowrap;" align="left">Client contact details</td>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4;" align="left"><?php echo (!empty($client_name) && $client_name !== 'null') ? $client_name : '-'; ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"></td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($phone1) && $phone1 !== 'null') ? $phone1 : '-'; ?></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4; white-space: nowrap;" align="left"></td>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4;" align="left"><?php echo (!empty($address) && $address !== 'null') ? $address : '-'; ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"></td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($phone2) && $phone2 !== 'null') ? $phone2 : '-'; ?></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4; white-space: nowrap;" align="left"></td>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4;" align="left"><?php echo (!empty($phone1) && $phone1 !== 'null') ? $phone1 : '-'; ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"></td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($email) && $email !== 'null') ? $email : '-'; ?></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4; white-space: nowrap;" align="left"></td>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4;" align="left"><?php echo (!empty($phone2) && $phone2 !== 'null') ? $phone2 : '-'; ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Quote Number</td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($client_quote_number) && $client_quote_number !== 'null') ? $client_quote_number : '-'; ?></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4; white-space: nowrap;" align="left"></td>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4;" align="left"><?php echo (!empty($email) && $email !== 'null') ? $email : '-'; ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">PO Number</td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($po_number) && $po_number !== 'null') ? $po_number : '-'; ?></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4; white-space: nowrap;" align="left">Quote Number</td>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4;" align="left"><?php echo (!empty($client_quote_number) && $client_quote_number !== 'null') ? $client_quote_number : '-'; ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Date of Sample Received</td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo (!empty($from_date) && $from_date !== 'null' && !empty($to_date) && $to_date !== 'null') ? $from_date . "&nbsp &nbsp~&nbsp &nbsp" . $to_date : '-'; ?></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4; white-space: nowrap;" align="left">PO Number</td>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4;" align="left"><?php echo (!empty($po_number) && $po_number !== 'null') ? $po_number : '-'; ?></td>
                                     </tr>
-                                    <!-- <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Analysis</td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">-</td>
-                                    </tr> -->
                                     <tr>
-                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left">Analysis</td>
-                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><?php echo isset($testing_information) ? htmlspecialchars($testing_information) : '-'; ?></td>
+                                        <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4; white-space: nowrap;" align="left">Date of Sample Received</td>
+                                        <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4;" align="left"><?php echo (!empty($from_date) && $from_date !== 'null' && !empty($to_date) && $to_date !== 'null') ? $from_date . "&nbsp &nbsp~&nbsp &nbsp" . $to_date : '-'; ?></td>
                                     </tr>
-                                </thead>
+                                    <?php if (isset($analyst_names_array) && !empty($analyst_names_array)): ?>
+                                        <?php foreach ($analyst_names_array as $index => $analyst_name): ?>
+                                            <tr>
+                                                <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4; white-space: nowrap;" align="left"><?php echo ($index === 0) ? 'Analysis' : ''; ?></td>
+                                                <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4;" align="left"><?php echo htmlspecialchars($analyst_name); ?></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <tr>
+                                            <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4; white-space: nowrap;" align="left">Analysis</td>
+                                            <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4;" align="left">No analyst assigned</td>
+                                        </tr>
+                                    <?php endif; ?>
+                                </tbody>
                             </table>
                         </div>
                     </div>
