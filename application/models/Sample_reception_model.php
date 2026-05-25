@@ -3025,6 +3025,91 @@ class Sample_reception_model extends CI_Model
         return $filtered_testing_types;
     }
 
+    // Get detailed testing information with reviewers for each sample
+    function getProjectTestingDetailsWithReviewers($id_project) {
+        $sql = "SELECT 
+                    sample.id_one_water_sample,
+                    sample.client_id,
+                    retest.testing_type,
+                    tbl_user.full_name as reviewer_name,
+                    COALESCE(
+                        bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review, 
+                        ec.user_review, el.user_review, em.user_review, cb.user_review, mc.user_review, 
+                        ewi.user_review, ebi.user_review, cbi.user_review, cwi.user_review, pr.user_review, 
+                        cp.user_review, sp.user_review, hem.user_review, ehf.user_review, chf.user_review, 
+                        ch.user_review, ex.user_review, sh.user_review, chq.user_review
+                    ) as user_review_id,
+                    COALESCE(
+                        bank.review, campy.review, salmonellaL.review, salmonellaB.review, 
+                        ec.review, el.review, em.review, cb.review, mc.review, 
+                        ewi.review, ebi.review, cbi.review, cwi.review, pr.review, 
+                        cp.review, sp.review, hem.review, ehf.review, chf.review, 
+                        ch.review, ex.review, sh.review, chq.review
+                    ) as review_status
+                FROM sample_reception_testing testing
+                LEFT JOIN ref_testing retest ON FIND_IN_SET(retest.id_testing_type, testing.id_testing_type)
+                LEFT JOIN sample_reception_sample sample ON sample.id_sample = testing.id_sample AND sample.flag = 0
+                LEFT JOIN biobank_in bank ON bank.biobankin_barcode = testing.barcode AND bank.flag = 0
+                LEFT JOIN campy_liquids campy ON campy.campy_assay_barcode = testing.barcode AND campy.flag = 0
+                LEFT JOIN salmonella_liquids salmonellaL ON salmonellaL.salmonella_assay_barcode = testing.barcode AND salmonellaL.flag = 0
+                LEFT JOIN salmonella_biosolids salmonellaB ON salmonellaB.salmonella_assay_barcode = testing.barcode AND salmonellaB.flag = 0
+                LEFT JOIN extraction_culture ec ON ec.extraction_barcode = testing.barcode AND ec.flag = 0
+                LEFT JOIN extraction_liquid el ON el.extraction_barcode = testing.barcode AND el.flag = 0
+                LEFT JOIN extraction_metagenome em ON em.extraction_barcode = testing.barcode AND em.flag = 0
+                LEFT JOIN campy_biosolids cb ON cb.campy_assay_barcode = testing.barcode AND cb.flag = 0
+                LEFT JOIN moisture_content mc ON mc.barcode_moisture_content = testing.barcode AND mc.flag = 0
+                LEFT JOIN enterolert_water_in ewi ON ewi.enterolert_barcode = testing.barcode AND ewi.flag = 0
+                LEFT JOIN enterolert_biosolids_in ebi ON ebi.enterolert_barcode = testing.barcode AND ebi.flag = 0
+                LEFT JOIN colilert_biosolids_in cbi ON cbi.colilert_barcode = testing.barcode AND cbi.flag = 0
+                LEFT JOIN colilert_water_in cwi ON cwi.colilert_barcode = testing.barcode AND cwi.flag = 0
+                LEFT JOIN protozoa pr ON pr.protozoa_barcode = testing.barcode AND pr.flag = 0
+                LEFT JOIN campy_pa cp ON cp.campy_assay_barcode = testing.barcode AND cp.flag = 0
+                LEFT JOIN salmonella_pa sp ON sp.salmonella_assay_barcode = testing.barcode AND sp.flag = 0
+                LEFT JOIN hemoflow hem ON hem.hemoflow_barcode = testing.barcode AND hem.flag = 0
+                LEFT JOIN enterolert_hemoflow ehf ON ehf.enterolert_hemoflow_barcode = testing.barcode AND ehf.flag = 0
+                LEFT JOIN colilert_hemoflow chf ON chf.colilert_hemoflow_barcode = testing.barcode AND chf.flag = 0
+                LEFT JOIN campy_hemoflow ch ON ch.campy_assay_barcode = testing.barcode AND ch.flag = 0
+                LEFT JOIN extraction_biosolid ex ON ex.barcode_sample = testing.barcode AND ex.flag = 0
+                LEFT JOIN salmonella_hemoflow sh ON sh.salmonella_assay_barcode = testing.barcode AND sh.flag = 0
+                LEFT JOIN campy_hemoflow_qpcr chq ON chq.campy_assay_barcode = testing.barcode AND chq.flag = 0
+                LEFT JOIN tbl_user ON tbl_user.id_users = COALESCE(
+                    bank.user_review, campy.user_review, salmonellaL.user_review, salmonellaB.user_review, 
+                    ec.user_review, el.user_review, em.user_review, cb.user_review, mc.user_review, 
+                    ewi.user_review, ebi.user_review, cbi.user_review, cwi.user_review, pr.user_review, 
+                    cp.user_review, sp.user_review, hem.user_review, ehf.user_review, chf.user_review, 
+                    ch.user_review, ex.user_review, sh.user_review, chq.user_review
+                )
+                WHERE sample.id_project = ? 
+                AND testing.flag = '0' 
+                AND sample.flag = '0'
+                AND retest.flag = '0'
+                ORDER BY sample.id_one_water_sample ASC, retest.testing_type ASC";
+        
+        $query = $this->db->query($sql, array($id_project));
+        $results = $query->result_array();
+        
+        // Group by sample
+        $grouped_data = array();
+        foreach ($results as $row) {
+            $sample_id = $row['id_one_water_sample'];
+            if (!isset($grouped_data[$sample_id])) {
+                $grouped_data[$sample_id] = array(
+                    'sample_id' => $sample_id,
+                    'client_id' => $row['client_id'],
+                    'tests' => array()
+                );
+            }
+            
+            $grouped_data[$sample_id]['tests'][] = array(
+                'testing_type' => $row['testing_type'],
+                'reviewer_name' => $row['reviewer_name'] ? $row['reviewer_name'] : 'Not reviewed',
+                'review_status' => $row['review_status'] == 1 ? 'Reviewed' : 'Pending'
+            );
+        }
+        
+        return $grouped_data;
+    }
+
     // Unlock/Lock Project Methods
     public function unlock_project($id_project, $admin_id, $reason) {
         $data = array(

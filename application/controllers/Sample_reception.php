@@ -173,7 +173,27 @@ class Sample_reception extends CI_Controller
             
             // Get testing information for the project
             $testing_types = $this->Sample_reception_model->getProjectTestingTypes($id);
-            $data['testing_information'] = empty($testing_types) ? 'No tests assigned' : implode(', ', $testing_types);
+            
+            // Get testing details with reviewers for display in Analysis field
+            $testing_details_with_reviewers = $this->Sample_reception_model->getProjectTestingDetailsWithReviewers($id);
+            
+            // Collect unique reviewers across all samples and tests
+            $unique_reviewers = array();
+            foreach ($testing_details_with_reviewers as $sample_data) {
+                foreach ($sample_data['tests'] as $test) {
+                    $reviewer = $test['reviewer_name'];
+                    if ($reviewer && $reviewer !== 'Not reviewed' && !in_array($reviewer, $unique_reviewers)) {
+                        $unique_reviewers[] = $reviewer;
+                    }
+                }
+            }
+            
+            // Pass reviewers as array for proper table row rendering
+            $data['analyst_names_array'] = $unique_reviewers;
+            
+            // Keep testing_information for backward compatibility (single line with <br>)
+            $data['testing_information'] = empty($unique_reviewers) ? 'No analyst assigned' : implode('<br>', $unique_reviewers);
+            $data['testing_details_with_reviewers'] = $testing_details_with_reviewers;
             
             // Get testing results with actual values for the report
             $data['testing_results'] = $this->Sample_reception_model->get_testing_results_for_report($id);
@@ -236,6 +256,31 @@ class Sample_reception extends CI_Controller
                 'id_person' => $row->id_person,
                 'realname' => $row->realname,
             );
+            
+            // Get testing information for the project
+            $testing_types = $this->Sample_reception_model->getProjectTestingTypes($id);
+            
+            // Get testing details with reviewers for display in Analysis field
+            $testing_details_with_reviewers = $this->Sample_reception_model->getProjectTestingDetailsWithReviewers($id);
+            
+            // Collect unique reviewers across all samples and tests
+            $unique_reviewers = array();
+            foreach ($testing_details_with_reviewers as $sample_data) {
+                foreach ($sample_data['tests'] as $test) {
+                    $reviewer = $test['reviewer_name'];
+                    if ($reviewer && $reviewer !== 'Not reviewed' && !in_array($reviewer, $unique_reviewers)) {
+                        $unique_reviewers[] = $reviewer;
+                    }
+                }
+            }
+            
+            // Pass reviewers as array for proper table row rendering
+            $data['analyst_names_array'] = $unique_reviewers;
+            
+            // Keep testing_information for backward compatibility (single line with <br>)
+            $data['testing_information'] = empty($unique_reviewers) ? 'No analyst assigned' : implode('<br>', $unique_reviewers);
+            $data['testing_details_with_reviewers'] = $testing_details_with_reviewers;
+            
             $needs_generation_and_save = (
                 empty($data['report_number']) || $data['report_number'] === null || $data['report_number'] === '' ||
                 empty($data['report_date']) || $data['report_date'] === null || $data['report_date'] === '' || trim($data['report_date']) === '0000-00-00'
