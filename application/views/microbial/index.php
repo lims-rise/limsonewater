@@ -1457,6 +1457,9 @@ $(document).ready(function() {
                 // $('#document_file').val('');  // DISABLED: Document upload not in use
                 // updateDocumentButtonsState();  // DISABLED: Document upload not in use
                 
+                // Enable Populate button in INSERT mode (auto-open from Sample Reception)
+                $('#btn-populate-supplementary').prop('disabled', false);
+                
                 // Clear all supplementary fields for new entry
                 clearSupplementaryFields();
                 
@@ -1494,6 +1497,9 @@ $(document).ready(function() {
             // $('#btn-delete-document-file').hide();
             // $('#document-file-status-text').hide();
             
+            // Enable Populate button in INSERT mode (user needs to click manually)
+            $('#btn-populate-supplementary').prop('disabled', false);
+            
             // Clear all supplementary fields
             clearSupplementaryFields();
             
@@ -1528,10 +1534,22 @@ $(document).ready(function() {
             }
             */
 
-            // Auto-load supplementary data if available
+            // Disable Populate button in EDIT mode (data will be auto-loaded)
+            $('#btn-populate-supplementary').prop('disabled', true);
+
+            // Clear all supplementary fields FIRST to prevent showing old data
+            clearSupplementaryFields();
+
+            // Auto-load supplementary data if available (silent load)
             autoLoadSupplementaryData(data.id_one_water_sample);
 
             $('#compose-modal').modal('show');
+            
+            // Auto-populate supplementary data in EDIT mode (after modal is shown)
+            // Use silent mode (true) to suppress success modal in Edit mode
+            setTimeout(function() {
+                populateSupplementaryData(true);
+            }, 500); // Small delay to ensure modal is fully loaded
         });
 
         // Handle view document button click
@@ -1738,7 +1756,7 @@ $(document).ready(function() {
         };
 
         // Populate Supplementary Data Function
-        window.populateSupplementaryData = function() {
+        window.populateSupplementaryData = function(silent = false) {
             const sampleId = $('#id_one_water_sample').val() || $('#idx_one_water_sample').val();
             const projectIdParam = $('#id_project_param').val(); // Get from URL parameter if available
             
@@ -1751,15 +1769,17 @@ $(document).ready(function() {
                 return;
             }
             
-            // Show loading
-            Swal.fire({
-                title: 'Loading...',
-                text: 'Fetching supplementary data for ' + sampleId,
-                allowOutsideClick: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                }
-            });
+            // Show loading (only if not silent mode)
+            if (!silent) {
+                Swal.fire({
+                    title: 'Loading...',
+                    text: 'Fetching supplementary data for ' + sampleId,
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+            }
             
             // Prepare request data
             const requestData = { sample_id: sampleId };
@@ -1865,16 +1885,19 @@ $(document).ready(function() {
                             return count > 0 ? `${tableName}: ${count} sources` : null;
                         }).filter(x => x).join('<br>');
                         
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Data Populated!',
-                            html: `Successfully populated ${recordCount} values from supplementary PDF<br>` +
-                                  `<strong>Project:</strong> ${projectId}<br>` +
-                                  `<strong>Sample:</strong> ${sampleId}<br><br>` +
-                                  `<strong>Data Summary:</strong><br>${tableInfo}`,
-                            confirmButtonText: 'OK',
-                            timer: 3000
-                        });
+                        // Show success modal only if not in silent mode
+                        if (!silent) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Data Populated!',
+                                html: `Successfully populated ${recordCount} values from supplementary PDF<br>` +
+                                      `<strong>Project:</strong> ${projectId}<br>` +
+                                      `<strong>Sample:</strong> ${sampleId}<br><br>` +
+                                      `<strong>Data Summary:</strong><br>${tableInfo}`,
+                                confirmButtonText: 'OK',
+                                timer: 3000
+                            });
+                        }
                         
                     } else {
                         Swal.fire({

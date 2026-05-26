@@ -246,8 +246,9 @@ class Scan_page extends CI_Controller {
             $basePath = FCPATH . 'uploads/supplementary/';
             $fileType = 'supplementary file';
         } elseif (strpos($filename, 'microbial_') === 0) {
-            // Microbial files path - PRODUCTION
+            // PRODUCTION (Windows):
             $basePath = 'C:\\onewater\\microbial\\';
+            // TESTING (Mac): $basePath = FCPATH . 'uploads/microbial/';
             $fileType = 'microbial file';
         } else {
             $basePath = 'C:\\onewater\\scan\\';
@@ -529,13 +530,36 @@ class Scan_page extends CI_Controller {
 
     public function do_upload_microbial()
     {
-        // Windows production path
+        // PRODUCTION (Windows):
         $upload_path = 'C:\\onewater\\microbial\\';
+        // TESTING (Mac): $upload_path = 'uploads/microbial/';
         
-        // Create directory if not exists
+        // Ensure directory exists
         if (!is_dir($upload_path)) {
-            mkdir($upload_path, 0777, true);
+            if (!mkdir($upload_path, 0777, true)) {
+                log_message('error', 'Failed to create directory: ' . $upload_path);
+                return $this->output
+                    ->set_content_type('application/json')
+                    ->set_status_header(500)
+                    ->set_output(json_encode(['error' => 'Failed to create upload directory']));
+            }
         }
+        
+        // Check if writable (without trying to chmod - causes issues on Mac XAMPP)
+        if (!is_writable($upload_path)) {
+            log_message('error', 'Directory not writable: ' . $upload_path . ' (realpath: ' . realpath($upload_path) . ')');
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(500)
+                ->set_output(json_encode([
+                    'error' => 'Upload directory is not writable. Please run: chmod -R 777 uploads/microbial',
+                    'path' => realpath($upload_path)
+                ]));
+        }
+        
+        // Debug logging
+        log_message('debug', 'Upload path: ' . $upload_path);
+        log_message('debug', 'Realpath: ' . realpath($upload_path));
 
         // Ambil project_id dari POST dan validasi
         $project_id_raw = $this->input->post('project_id', TRUE);
@@ -582,18 +606,20 @@ class Scan_page extends CI_Controller {
                     // Call Python script to extract tables
                     $python_script = FCPATH . 'scripts/extract_pdf_tables.py';
                     
-                    // Windows production Python path
+                    // PRODUCTION (Windows):
                     $python_path = 'C:\\Users\\mgr-zhan0022\\AppData\\Local\\Programs\\Python\\Python310\\python.exe';
+                    // TESTING (Mac): $python_path = 'python3';
                     
-                    // Windows production Python site-packages
+                    // PRODUCTION (Windows):
                     $pythonpath = 'C:\\Users\\mgr-zhan0022\\AppData\\Local\\Programs\\Python\\Python310\\Lib\\site-packages';
                     
-                    // Windows command syntax - use set command
+                    // PRODUCTION (Windows):
                     $command = 'set PYTHONPATH=' . escapeshellarg($pythonpath) . ' && ' . 
                                escapeshellarg($python_path) . ' ' . 
                                escapeshellarg($python_script) . ' ' . 
                                escapeshellarg($full_path) . ' ' . 
                                escapeshellarg($barcode) . ' 2>&1';
+                    // TESTING (Mac): $command = escapeshellarg($python_path) . ' ' . escapeshellarg($python_script) . ' ' . escapeshellarg($full_path) . ' ' . escapeshellarg($barcode) . ' 2>&1';
                     
                     exec($command, $output, $return_code);
                     
@@ -705,8 +731,9 @@ class Scan_page extends CI_Controller {
         header("Access-Control-Allow-Methods: POST, DELETE");
         header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
         
-        // Windows server path for microbial files
+        // PRODUCTION (Windows):
         $upload_path = 'C:\\onewater\\microbial\\';
+        // TESTING (Mac): $upload_path = FCPATH . 'uploads/microbial/';
         
         // Ambil filename dan project_id dari POST request
         $filename = $this->input->post('filename', TRUE);
