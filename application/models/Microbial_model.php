@@ -34,10 +34,15 @@ class Microbial_model extends CI_Model
             $this->datatables->add_column('action', '', 'id_one_water_sample');
         }
         else if ($lvl == 3){
-            $this->datatables->add_column('action', '<button type="button" class="btn_view_document btn btn-success btn-sm" data-filename="$8" title="View Document" style="margin-right:5px;"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button><button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_one_water_sample, id_microbial, microbial_barcode, description, user_created, date_created, created_by, document_filename');
+            // DISABLED: View Document button not in use
+            // $this->datatables->add_column('action', '<button type="button" class="btn_view_document btn btn-success btn-sm" data-filename="$8" title="View Document" style="margin-right:5px;"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button><button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_one_water_sample, id_microbial, microbial_barcode, description, user_created, date_created, created_by, document_filename');
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>', 'id_one_water_sample, id_microbial, microbial_barcode, description, user_created, date_created, created_by, document_filename');
         }
         else {
-            $this->datatables->add_column('action', '<button type="button" class="btn_view_document btn btn-success btn-sm" data-filename="$8" title="View Document" style="margin-right:5px;"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button><button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
+            // DISABLED: View Document button not in use
+            // $this->datatables->add_column('action', '<button type="button" class="btn_view_document btn btn-success btn-sm" data-filename="$8" title="View Document" style="margin-right:5px;"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button><button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
+            //       ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_one_water_sample, id_microbial, microbial_barcode, description, user_created, date_created, created_by, document_filename');
+            $this->datatables->add_column('action', '<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
                   ".'<button type="button" class="btn_delete btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_one_water_sample, id_microbial, microbial_barcode, description, user_created, date_created, created_by, document_filename');
         }
 
