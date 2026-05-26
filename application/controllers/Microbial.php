@@ -190,7 +190,9 @@ class Microbial extends CI_Controller
     public function view_document($filename) {
         // Sanitize filename
         $filename = preg_replace('/[^a-zA-Z0-9_\-\.]/', '', basename($filename));
+        // PRODUCTION (Windows):
         $file_path = 'C:\\onewater\\microbial\\' . $filename;
+        // TESTING (Mac): $file_path = FCPATH . 'uploads/microbial/' . $filename;
         
         if (file_exists($file_path)) {
             // Set headers for PDF inline viewing
@@ -242,7 +244,9 @@ class Microbial extends CI_Controller
         }
         
         $filename = $this->input->post('filename');
+        // PRODUCTION (Windows):
         $file_path = 'C:\\onewater\\microbial\\' . $filename;
+        // TESTING (Mac): $file_path = FCPATH . 'uploads/microbial/' . $filename;
         
         if (file_exists($file_path)) {
             if (unlink($file_path)) {
