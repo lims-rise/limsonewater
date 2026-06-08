@@ -162,7 +162,6 @@
                             <label for="weight" class="col-sm-4 control-label">Weight (g)</label>
                             <div class="col-sm-8">
                                 <input id="weight" name="weight" type="number" step="any" class="form-control" placeholder="Weight (g)" required>
-                                <p id="weight_source_info" style="font-size: 11px; color: #999; opacity: 0.8; margin-top: 3px;"><i>The result from extraction biosolids module (Sample ID: <span id="weight_source_sample_id" style="font-weight: 600; color: #6c9ec4;">-</span>)</i></p>
                             </div>
                         </div>
 
@@ -664,8 +663,7 @@
             $('#conc_copies_per_g_dw_crypto').val('');
             $('#comments').val('');
             
-            // Show source info in add mode
-            $('#weight_source_info').show();
+            // Show source info in add mode (dry weight only - weight is now free text)
             $('#dry_weight_source_info').show();
             
             $('#compose-modal').modal('show');
@@ -673,10 +671,10 @@
             // Initialize quality control visibility (hide all by default when no target selected)
             handleQualityControlVisibility();
             
-            // Auto fetch weight and dry weight data when modal opens with One Water Sample ID
+            // Auto fetch dry weight data only (weight is now free text input)
             setTimeout(function() {
                 if ($('#id_one_water_sample').val()) {
-                    autoFetchWeightData('#id_one_water_sample');
+                    autoFetchDryWeightOnly('#id_one_water_sample');
                 }
             }, 500);
 
@@ -1154,8 +1152,8 @@
                         const isEditMode = $('#id_protozoa').val() && $('#id_protozoa').val() !== '';
                         handleConcentrationFieldsVisibility(response.sampletype, null, isEditMode);
                         
-                        // Auto fetch weight and dry weight data
-                        autoFetchWeightData('#id_one_water_sample');
+                        // Auto fetch dry weight data only (weight is now free text)
+                        autoFetchDryWeightOnly('#id_one_water_sample');
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         // Menangani error jika terjadi kesalahan dalam request
@@ -1170,6 +1168,8 @@
         });
 
         // Auto fetch weight and dry weight data (for add mode)
+        // NOTE: This function is deprecated - weight is now free text input
+        // Only dry weight is auto-fetched using autoFetchDryWeightOnly()
         function autoFetchWeightData(inputSelector) {
             const $input = $(inputSelector);
             const id_one_water_sample = $input.val();
@@ -1180,7 +1180,6 @@
                 $('#weight').val('0');
                 $('#dry_weight_persen').val('0');
                 // Reset source sample ID display
-                $('#weight_source_sample_id').text('-');
                 $('#dryweight_source_sample_id').text('-');
                 calculateMassAnalysed();
                 return;
@@ -1190,8 +1189,7 @@
             $('#weight').val('');
             $('#dry_weight_persen').val('');
             
-            // Immediately set source sample ID display from the input value (simplified)
-            $('#weight_source_sample_id').text(id_one_water_sample.trim());
+            // Set source sample ID display from the input value (simplified)
             $('#dryweight_source_sample_id').text(id_one_water_sample.trim());
 
             // Log the request for debugging
@@ -1256,6 +1254,62 @@
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.error('AJAX error for dry weight [' + id_one_water_sample.trim() + ']:', textStatus, errorThrown);
+                    $('#dry_weight_persen').val('0'); // Default to 0 on error
+                    calculateMassAnalysed();
+                }
+            });
+        }
+
+        // Auto fetch ONLY dry weight data (for add mode - weight is now free text)
+        function autoFetchDryWeightOnly(inputSelector) {
+            const $input = $(inputSelector);
+            const id_one_water_sample = $input.val();
+
+            // Validation: element must exist and value must not be empty
+            if (!$input.length || !id_one_water_sample || id_one_water_sample.trim() === '') {
+                // Set default dry weight to 0 if no sample ID
+                $('#dry_weight_persen').val('0');
+                $('#dryweight_source_sample_id').text('-');
+                calculateMassAnalysed();
+                return;
+            }
+
+            // Clear previous dry weight value first
+            $('#dry_weight_persen').val('');
+            
+            // Set source sample ID display
+            $('#dryweight_source_sample_id').text(id_one_water_sample.trim());
+
+            // Log the request for debugging
+            console.log('Auto fetching DRY WEIGHT ONLY (add mode) for ID:', id_one_water_sample.trim());
+
+            // Fetch ONLY dry weight data (NOT weight - weight is free text now)
+            $.ajax({
+                url: '<?php echo site_url('Protozoa/getDryWeight'); ?>',
+                type: 'POST',
+                data: { id_one_water_sample: id_one_water_sample.trim() },
+                dataType: 'json',
+                cache: false,
+                timeout: 10000,
+                success: function(response) {
+                    console.log('Dry weight ONLY fetch response for [' + id_one_water_sample.trim() + ']:', response);
+
+                    if (response && response.dry_weight_persen !== null && response.dry_weight_persen !== undefined) {
+                        const dryWeight = parseFloat(response.dry_weight_persen);
+                        if (!isNaN(dryWeight)) {
+                            $('#dry_weight_persen').val(response.dry_weight_persen);
+                        } else {
+                            $('#dry_weight_persen').val('0'); // Default to 0 if invalid
+                        }
+                    } else {
+                        $('#dry_weight_persen').val('0'); // Default to 0 if no data
+                    }
+                    
+                    // After dry weight is set, calculate mass analysed
+                    calculateMassAnalysed();
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('AJAX error for dry weight ONLY [' + id_one_water_sample.trim() + ']:', textStatus, errorThrown);
                     $('#dry_weight_persen').val('0'); // Default to 0 on error
                     calculateMassAnalysed();
                 }
@@ -1366,8 +1420,8 @@
                         console.log(data);
                     }
                     else {
-                        // Auto fetch weight and dry weight data when validation passes
-                        autoFetchWeightData('#id_one_water_sample');
+                        // Auto fetch dry weight data only when validation passes (weight is now free text)
+                        autoFetchDryWeightOnly('#id_one_water_sample');
                     }
                 }
             });
