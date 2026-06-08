@@ -70,7 +70,7 @@ class Sample_reception_model extends CI_Model
                 LEFT JOIN enterolert_hemoflow ehf ON ehf.enterolert_hemoflow_barcode = srt.barcode AND ehf.flag = 0
                 LEFT JOIN colilert_hemoflow chf ON chf.colilert_hemoflow_barcode = srt.barcode AND chf.flag = 0
                 LEFT JOIN campy_hemoflow ch ON ch.campy_assay_barcode = srt.barcode AND ch.flag = 0
-                LEFT JOIN extraction_biosolid ex ON ex.barcode_sample = srt.barcode AND ex.flag = 0
+                LEFT JOIN extraction_biosolid ex ON ex.extraction_barcode = srt.barcode AND ex.flag = 0
                 LEFT JOIN salmonella_hemoflow sh ON sh.salmonella_assay_barcode = srt.barcode AND sh.flag = 0
                 LEFT JOIN campy_hemoflow_qpcr chq ON chq.campy_assay_barcode = srt.barcode AND chq.flag = 0
                 LEFT JOIN sample_collection sc ON sc.barcode_sample_collection = srt.barcode AND sc.flag = 0
@@ -265,7 +265,7 @@ class Sample_reception_model extends CI_Model
                 LEFT JOIN enterolert_hemoflow ehf ON ehf.enterolert_hemoflow_barcode = srt.barcode AND ehf.flag = 0
                 LEFT JOIN colilert_hemoflow chf ON chf.colilert_hemoflow_barcode = srt.barcode AND chf.flag = 0
                 LEFT JOIN campy_hemoflow ch ON ch.campy_assay_barcode = srt.barcode AND ch.flag = 0
-                LEFT JOIN extraction_biosolid ex ON ex.barcode_sample = srt.barcode AND ex.flag = 0
+                LEFT JOIN extraction_biosolid ex ON ex.extraction_barcode = srt.barcode AND ex.flag = 0
                 LEFT JOIN salmonella_hemoflow sh ON sh.salmonella_assay_barcode = srt.barcode AND sh.flag = 0
                 LEFT JOIN campy_hemoflow_qpcr chq ON chq.campy_assay_barcode = srt.barcode AND chq.flag = 0
                 LEFT JOIN sample_collection sc ON sc.barcode_sample_collection = srt.barcode AND sc.flag = 0
@@ -513,7 +513,7 @@ class Sample_reception_model extends CI_Model
                 LEFT JOIN enterolert_hemoflow ehf ON ehf.enterolert_hemoflow_barcode = srt.barcode AND ehf.flag = 0
                 LEFT JOIN colilert_hemoflow chf ON chf.colilert_hemoflow_barcode = srt.barcode AND chf.flag = 0
                 LEFT JOIN campy_hemoflow ch ON ch.campy_assay_barcode = srt.barcode AND ch.flag = 0
-                LEFT JOIN extraction_biosolid ex ON ex.barcode_sample = srt.barcode AND ex.flag = 0
+                LEFT JOIN extraction_biosolid ex ON ex.extraction_barcode = srt.barcode AND ex.flag = 0
                 LEFT JOIN salmonella_hemoflow sh ON sh.salmonella_assay_barcode = srt.barcode AND sh.flag = 0
                 LEFT JOIN campy_hemoflow_qpcr chq ON chq.campy_assay_barcode = srt.barcode AND chq.flag = 0
                 LEFT JOIN sample_collection sc ON sc.barcode_sample_collection = srt.barcode AND sc.flag = 0
@@ -737,7 +737,7 @@ class Sample_reception_model extends CI_Model
         $this->datatables->join('enterolert_hemoflow ehf', 'ehf.enterolert_hemoflow_barcode = testing.barcode and ehf.flag = 0', 'left');
         $this->datatables->join('colilert_hemoflow chf', 'chf.colilert_hemoflow_barcode = testing.barcode and chf.flag = 0', 'left');
         $this->datatables->join('campy_hemoflow ch', 'ch.campy_assay_barcode = testing.barcode and ch.flag = 0', 'left');
-        $this->datatables->join('extraction_biosolid ex', 'ex.barcode_sample = testing.barcode and ex.flag = 0', 'left');
+        $this->datatables->join('extraction_biosolid ex', 'ex.extraction_barcode = testing.barcode and ex.flag = 0', 'left');
         $this->datatables->join('salmonella_hemoflow sh', 'sh.salmonella_assay_barcode = testing.barcode and sh.flag = 0', 'left');
         $this->datatables->join('campy_hemoflow_qpcr chq', 'chq.campy_assay_barcode = testing.barcode and chq.flag = 0', 'left');
         $this->datatables->join('campy_result_mpn crm', 'cb.id_campy_biosolids = crm.id_campy_biosolids and crm.flag = 0', 'left');
@@ -918,7 +918,7 @@ class Sample_reception_model extends CI_Model
         LEFT JOIN enterolert_hemoflow ehf ON ehf.enterolert_hemoflow_barcode = testing.barcode AND ehf.flag = 0
         LEFT JOIN colilert_hemoflow chf ON chf.colilert_hemoflow_barcode = testing.barcode AND chf.flag = 0
         LEFT JOIN campy_hemoflow ch ON ch.campy_assay_barcode = testing.barcode AND ch.flag = 0
-        LEFT JOIN extraction_biosolid ex ON ex.barcode_sample = testing.barcode AND ex.flag = 0
+        LEFT JOIN extraction_biosolid ex ON ex.extraction_barcode = testing.barcode AND ex.flag = 0
         LEFT JOIN salmonella_hemoflow sh ON sh.salmonella_assay_barcode = testing.barcode AND sh.flag = 0
         LEFT JOIN campy_hemoflow_qpcr chq ON chq.campy_assay_barcode = testing.barcode AND chq.flag = 0
         LEFT JOIN campy_result_mpn crm ON cb.id_campy_biosolids = crm.id_campy_biosolids AND crm.flag = 0
@@ -1553,7 +1553,7 @@ class Sample_reception_model extends CI_Model
         $this->db->join('enterolert_hemoflow ehf', 'ehf.enterolert_hemoflow_barcode = testing.barcode and ehf.flag = 0', 'left');
         $this->db->join('colilert_hemoflow chf', 'chf.colilert_hemoflow_barcode = testing.barcode and chf.flag = 0', 'left');
         $this->db->join('campy_hemoflow ch', 'ch.campy_assay_barcode = testing.barcode and ch.flag = 0', 'left');
-        $this->db->join('extraction_biosolid ex', 'ex.barcode_sample = testing.barcode and ex.flag = 0', 'left');
+        $this->db->join('extraction_biosolid ex', 'ex.extraction_barcode = testing.barcode and ex.flag = 0', 'left');
         $this->db->join('salmonella_hemoflow sh', 'sh.salmonella_assay_barcode = testing.barcode and sh.flag = 0', 'left');
         $this->db->join('campy_hemoflow_qpcr chq', 'chq.campy_assay_barcode = testing.barcode and chq.flag = 0', 'left');
         $this->db->join('sample_collection sc', 'sc.barcode_sample_collection = testing.barcode and sc.flag = 0', 'left');
@@ -3069,7 +3069,7 @@ class Sample_reception_model extends CI_Model
                 LEFT JOIN enterolert_hemoflow ehf ON ehf.enterolert_hemoflow_barcode = testing.barcode AND ehf.flag = 0
                 LEFT JOIN colilert_hemoflow chf ON chf.colilert_hemoflow_barcode = testing.barcode AND chf.flag = 0
                 LEFT JOIN campy_hemoflow ch ON ch.campy_assay_barcode = testing.barcode AND ch.flag = 0
-                LEFT JOIN extraction_biosolid ex ON ex.barcode_sample = testing.barcode AND ex.flag = 0
+                LEFT JOIN extraction_biosolid ex ON ex.extraction_barcode = testing.barcode AND ex.flag = 0
                 LEFT JOIN salmonella_hemoflow sh ON sh.salmonella_assay_barcode = testing.barcode AND sh.flag = 0
                 LEFT JOIN campy_hemoflow_qpcr chq ON chq.campy_assay_barcode = testing.barcode AND chq.flag = 0
                 LEFT JOIN tbl_user ON tbl_user.id_users = COALESCE(

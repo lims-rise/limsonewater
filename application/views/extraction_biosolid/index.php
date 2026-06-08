@@ -4,14 +4,14 @@
             <div class="col-xs-12">
                 <div class="box box-black box-solid">
                     <div class="box-header">
-                        <h3 class="box-title">Processing | Extraction biosolid </h3>
+                        <h3 class="box-title">Processing | Extraction Biosolids </h3>
                     </div>
                     <div class="box-body">
                         <div style="padding-bottom: 10px;">
                             <!-- <?php
                                 $lvl = $this->session->userdata('id_user_level');
                                     if ($lvl != 4){
-                                         echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Extraction Biosolid</button>";
+                                         echo "<button class='btn btn-primary' id='addtombol'><i class='fa fa-wpforms' aria-hidden='true'></i> New Extraction Biosolids</button>";
                                     }
                             ?>         -->
                             <?php echo anchor(site_url('Extraction_biosolid/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
@@ -20,14 +20,10 @@
                             <table class="table table-bordered table-striped tbody" id="mytable" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>Barcode sample</th>
+                                        <th></th> <!-- Kolom kosong untuk ikon toggle -->
                                         <th>ID Onewater Sample</th>
                                         <th>Lab Tech</th>
-                                        <th>Sample type</th>
-                                        <th>Date extraction</th>
-                                        <th>Weight (g)</th>
-                                        <!-- <th>Volume (PBS)</th> -->
-                                        <th>Comments</th>
+                                        <th>Number Sample</th>
                                         <th width="120px">Action</th>
                                     </tr>
                                 </thead>
@@ -51,20 +47,21 @@
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #3c8dbc; color: white;">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
-                    <h4 class="modal-title" id="modal-title">Extraction biosolid | New</h4>
+                    <h4 class="modal-title" id="modal-title">Extraction biosolids | New</h4>
                 </div>
                 <form id="formSample"  action= <?php echo site_url('Extraction_biosolid/save') ?> method="post" class="form-horizontal">
                     <div class="modal-body">
                         <input id="mode" name="mode" type="hidden" class="form-control input-sm">
+                        <input id="id_testing_type" name="id_testing_type" type="hidden" class="form-control input-sm">
+                        <input id="barcode_sample" name="barcode_sample" type="hidden" class="form-control input-sm">
                         <input id="return_url" name="return_url" type="hidden" class="form-control input-sm">
-                        <!-- <input id="id_req" name="id_req" type="hidden" class="form-control input-sm"> -->
+                        <input id="id_extraction_biosolid" name="id_extraction_biosolid" type="hidden" class="form-control input-sm">
 
                         <div class="form-group">
                             <label for="id_one_water_sample" class="col-sm-4 control-label">One Water Sample ID</label>
                             <div class="col-sm-8">
-                                <input id="id_one_water_sample" name="id_one_water_sample" placeholder="One Water Sample ID" type="text"  class="form-control idOneWaterSampleSelect">
-                                <input id="idx_one_water_sample" name="idx_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control">
-                                <div class="val1tip"></div>
+                                <input id="id_one_water_sample" name="id_one_water_sample" placeholder="One Water Sample ID" type="text" class="form-control">
+                                <div class="val2tip"></div>
                             </div>
                         </div>
 
@@ -87,17 +84,99 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="barcode_sample" class="col-sm-4 control-label">Barcode Sample</label>
+                            <label for="number_sample" class="col-sm-4 control-label">Number of Samples</label>
                             <div class="col-sm-8">
-                                <input id="barcode_sample" name="barcode_sample" placeholder="Barcode Sample" type="text" class="form-control" required>
+                                <input id="old_number_sample" name="old_number_sample" type="hidden">
+                                <input id="number_sample" name="number_sample" placeholder="Number of Samples" type="number" min="1" class="form-control" required>
+                                <small id="number_sample_help" class="text-info" style="display:none;"><i class="fa fa-info-circle"></i> <span id="number_sample_help_text"></span></small>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    <!-- <div class="modal-footer clearfix">
+                        <div class="modal-footer-content" style="float: left; width: auto;">
+                            <span id="textInform" class="badge"></span>
+                        </div>
+                        <div class="modal-footer-content" style="float: left; width: auto;">
+                            <div id="textInform" class="alert" role="alert"></div>
+                        </div>
+                        <div class="modal-footer-content" style="float: left; width: auto;">
+                            <div id="textInform" class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title" id="statusMessage"></h5>
+                                    <p id="statusDescription"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-buttons" style="float: right;">
+                            <button type="submit" class="btn btn-primary" id="saveButton"><i class="fa fa-save"></i> Save</button>
+                            <button type="button" class="btn btn-warning" id="cancelButton" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                        </div>
+                    </div> -->
+                    <!-- Modal Footer with Dynamic TextInform -->
+                    <div class="modal-footer clearfix" style="display: flex; align-items: center; justify-content: space-between;">
+                        <!-- Info Card on the left side -->
+                        <div class="modal-footer-content" style="flex: 1; display: flex; align-items: center;">
+                            <div id="textInform1" class="textInform card" style="width: auto; padding: 5px 10px; display: none;">
+                                <div class="card-body">
+                                    <div class="card-header">
+                                        <h5 class="card-title statusMessage"></h5>
+                                        <i class="fa fa-times close-card" style="float: right; cursor: pointer;"></i>
+                                    </div>
+                                    <p class="statusDescription"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Buttons on the right side -->
+                        <div class="modal-buttons">
+                            <button type="submit" class="btn btn-primary" id="saveButton"><i class="fa fa-save"></i> Save</button>
+                            <button type="button" class="btn btn-warning" id="cancelButton" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>       
+</div>
+
+    <!-- MODAL FORM DETAIL -->
+    <div class="modal fade" id="compose-modal-child" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #3c8dbc; color: white;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
+                    <h4 class="modal-title" id="modal-title">Extraction biosolids | Detail</h4>
+                </div>
+                <form id="formSample"  action= <?php echo site_url('Extraction_biosolid/update_child') ?> method="post" class="form-horizontal">
+                    <div class="modal-body">
+                        <input id="mode-child" name="mode-child" type="hidden" class="form-control input-sm">
+                        <input id="user_review" name="user_review" type="hidden" class="form-control input-sm">
+
+                        <div class="form-group">
+                            <label for="barcode_sample1" class="col-sm-4 control-label">Barcode Sample</label>
+                            <div class="col-sm-8">
+                                <input id="barcode_sample1" name="barcode_sample1" placeholder="Barcode Sample" type="text" class="form-control" required>
                                 <div class="val1tip"></div>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="sampletype" class="col-sm-4 control-label">Sample Type</label>
-                            <div class="col-sm-8">
-                                <input id="sampletype" name="sampletype" placeholder="Sample Type" type="text" class="form-control">
+                            <label for="id_sampletype" class="col-sm-4 control-label">Sample Type</label>
+                            <div class="col-sm-8" >
+                            <select id='id_sampletype' name="id_sampletype" class="form-control" required>
+                                <option value="" disabled>-- Select Sample Type --</option>
+                                <?php
+                                    foreach($sampletype as $row){
+                                        if ($id_sampletype == $row['id_sampletype']) {
+                                            echo "<option value='".$row['id_sampletype']."' selected='selected'>".$row['sampletype']."</option>";
+                                        }
+                                        else {
+                                            echo "<option value='".$row['id_sampletype']."'>".$row['sampletype']."</option>";
+                                        }
+                                    }
+                                ?>
+                            </select>
                             </div>
                         </div>
 
@@ -106,64 +185,9 @@
                         <div class="form-group">
                             <label for="weight" class="col-sm-4 control-label">Weight (g)</label>
                             <div class="col-sm-8">
-                                <input id="weight" name="weight" placeholder="Weight (g)" type="number" step="any" class="form-control">
+                                <input id="weight" name="weight" placeholder="Weight (g)" type="number" step="0.01" class="form-control">
                             </div>
                         </div>
-
-                        <!-- <div class="form-group">
-                            <label for="volume" class="col-sm-4 control-label">Volume suspended in PBS</label>
-                            <div class="col-sm-8">
-                                <input id="volume" name="volume" placeholder="Volume suspended in PBS" type="number" step="1" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="dilution" class="col-sm-4 control-label">Dilution (uL)</label>
-                            <div class="col-sm-8">
-                                <select id="dilution" name="dilution" class="form-control" required>
-                                    <option value="" disabled selected='selected'>-- Select Dilution --</option>
-                                    <option value="2000">2000</option>
-                                    <option value="1000">1000</option>
-                                    <option value="600">600</option>
-                                    <option value="300">300</option>
-                                    <option value="200">200</option>
-                                    <option value="100">100</option>
-                                    <option value="60">60</option>
-                                    <option value="30">30</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="culture_media" class="col-sm-4 control-label">Culture media</label>
-                            <div class="col-sm-8">
-                                <select id="culture_media" name="culture_media" class="form-control" required>
-                                    <option value="" disabled selected='selected'>-- Select Culture media --</option>
-                                    <option value="HBA">HBA</option>
-                                    <option value="XLD">XLD</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="culture_plate" class="col-sm-4 control-label">Culture plate</label>
-                            <div class="col-sm-8">
-                                <select id="culture_plate" name="culture_plate" class="form-control" required>
-                                    <option value="" disabled selected='selected'>-- Select Culture plate --</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                </select>
-                            </div>
-                        </div> -->
 
                         <div class="form-group">
                             <label for="date_extraction" class="col-sm-4 control-label">Date Extraction</label>
@@ -240,6 +264,13 @@
                                 <input id="barcode_tube" name="barcode_tube" placeholder="Barcode Tube" type="text" class="form-control">
                             </div>
                         </div>
+
+                        <!-- <div class="form-group">
+                            <label for="fin_volume" class="col-sm-4 control-label">Final Volume (uL)</label>
+                            <div class="col-sm-8">
+                                <input id="fin_volume" name="fin_volume" placeholder="Final Volume (uL)" type="number" step="1" class="form-control">
+                            </div>
+                        </div> -->
 
                         <div class="form-group">
                             <label for="dna_concentration" class="col-sm-4 control-label">DNA Concentration (ng/ul)</label>
@@ -323,78 +354,331 @@
                                     ?>
                             </select>
                             </div>
-                        </div>		
-                        
-                        <!-- Review Component - Only visible in update mode -->
-                        <div id="review-section" style="display: none; padding: 15px;">
-                            <!-- <hr style="border-top: 1px solid #ddd; margin: 25px 0 20px 0;"> -->
-                            
-                            <!-- Hidden fields for review data -->
-                            <input type="hidden" id="review" name="review" value="">
-                            <input type="hidden" id="user_review" name="user_review" value="">
-                            <input type="hidden" id="user_created" name="user_created" value="">
-                            
-                            <!-- Review Section Header -->
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <h5 style="color: #3c8dbc; font-weight: 600; margin-bottom: 15px;">
-                                        <i class="fa fa-check-circle" style="margin-right: 8px;"></i>Review Status
-                                    </h5>
-                                    <!-- Review Status Display -->
-                                    <div class="form-group">
-                                        <!-- <label class="col-sm-4 control-label">Review Status</label> -->
-                                        <div class="col-sm-12">
-                                            <div class="review-status-container">
-                                                <span id="review_label" class="badge bg-warning text-dark review-badge" role="button" tabindex="0">
-                                                    Unreview
-                                                </span>
-                                                <span class="review-info">
-                                                    <span class="text-muted">by:</span>
-                                                    <span id="reviewed_by_label" class="reviewer-name">-</span>
-                                                </span>
-                                                <!-- Cancel Review Button (Admin Only) -->
-                                                <button type="button" id="cancelReviewBtn" class="btn btn-danger btn-sm cancel-review-btn" style="display: none;">
-                                                    <i class="fa fa-times"></i> Cancel Review
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                        </div>
+
+                        <!-- <div class="form-group">
+                             <label for="sequence" class="col-sm-4 control-label">Sequence</label>
+                                <div class="col-sm-8">
+                                    <input type="checkbox" id="sequenceCheckbox" name="sequence" value="1">
                                 </div>
-                            </div>
-                            <!-- Info Card -->
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <div id="textInformReview" class="textInform review-info-card" style="display: none;">
-                                        <div class="card-body">
-                                            <div class="card-header d-flex justify-content-between align-items-center">
-                                                <h6 class="card-title statusMessage mb-0"></h6>
-                                                <i class="fa fa-times close-card" style="cursor: pointer;"></i>
-                                            </div>
-                                            <p class="statusDescription mb-0"></p>
-                                        </div>
-                                    </div>
-                                </div>
+                        </div> -->
+
+                        <!-- <div class="form-group">
+                            <label for="sequenceCheckbox" class="col-sm-4 control-label">Sequence</label>
+                            <div class="col-sm-8" style="padding-top: 7px;">
+                                <input type="hidden" id="sequenceHidden" name="sequence" value="0">
+                                <input type="checkbox" id="sequenceCheckbox" name="sequence" value="1">
                             </div>
                         </div>
 
+
+                        <div id="sequenceFields" style="display: none;">
+                            <div class="form-group">
+                                <label for="sequence_id" class="col-sm-4 control-label">Sequence Type</label>
+                                <div class="col-sm-8" >
+                                    <select id='sequence_id' name="sequence_id" class="form-control">
+                                        <option value="" disabled selected>-- Select Sequence Type --</option>
+                                            <?php
+                                                if (isset($sequencetype) && is_array($sequencetype)) {
+                                                    foreach($sequencetype as $row){
+                                                        if (isset($sequence_id) && $sequence_id == $row['sequence_id']) {
+                                                            echo "<option value='".$row['sequence_id']."' selected='selected'>".$row['sequence_type']."</option>";
+                                                        }
+                                                        else {
+                                                            echo "<option value='".$row['sequence_id']."'>".$row['sequence_type']."</option>";
+                                                        }
+                                                    }
+                                                }
+                                            ?>
+                                        <option value="other">Other</option>
+                                    </select>
+                                    <input type="text" id="other_sequence_name" name="other_sequence_name" class="form-control" placeholder="Enter new sequence type" style="display:none; margin-top:5px;">
+                                </div>
+                            </div> -->
+
+                            <!-- <div class="form-group">
+                                <label for="sequence_id" class="col-sm-4 control-label">Sequence Type</label>
+                                <div class="col-sm-8">
+                                    <select id="sequence_id" name="sequence_id" class="form-control">
+                                        <option value="" disabled selected>-- Select Sequence Type --</option>
+                                        <?php foreach ($sequenceTypes as $type): ?>
+                                            <option value="<?= $type['sequence_id'] ?>"><?= $type['sequence_typr'] ?></option>
+                                        <?php endforeach; ?>
+                                        <option value="other">Other</option>
+                                    </select>
+                                    <input type="text" id="other_sequence_name" class="form-control" placeholder="Enter new sequence type" style="display:none; margin-top:5px;">
+                                </div>
+                            </div> -->
+
+                            <!-- <div class="form-group">
+                                <label for="species_id">Species ID</label>
+                                <input type="text" id="species_id" name="species_id" class="form-control">
+                            </div> -->
+
+                            <!-- <div class="form-group">
+                                <label for="species_id" class="col-sm-4 control-label">Species ID</label>
+                                <div class="col-sm-8">
+                                    <input id="species_id" name="species_id" placeholder="Species ID" class="form-control">
+                                </div>
+                            </div> -->
+
+                        <!-- </div> -->
+
+                        
+                        <!-- <div class="form-group">
+                            <label for="review" class="col-sm-4 control-label">Status</label>
+                            <div class="col-sm-8">
+                                <input type="hidden" id="review" name="review" value="0">
+                                <span id="review_label" class="form-check-label unreview" role="button">
+                                    Unreview
+                                </span>
+                                
+                             
+                                <span id="reviewed_by_label"  style="margin-left: 10px; font-style: italic;  font-weight: bold; font-size: 11px;">
+                        
+                                </span>
+                            </div>
+                        </div> -->
+
+
                     </div>
-                    <div class="modal-footer clearfix">
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
-                        <button type="button" class="btn btn-warning" id="cancelButton" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                    <!-- <div class="modal-footer clearfix">
+                        <button type="submit" class="btn btn-primary" id="saveButtonDetail"><i class="fa fa-save"></i> Save</button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                    </div> -->
+                    <div class="modal-footer clearfix" style="display: flex; align-items: center; justify-content: space-between;">
+                        <!-- Info Card on the left side -->
+                        <!-- <div class="modal-footer-content" style="flex: 1; display: flex; align-items: center;">
+                            <div id="textInform2" class="textInform card" style="width: auto; padding: 5px 10px; display: none;">
+                                <div class="card-body">
+                                    <div class="card-header">
+                                        <h5 class="card-title statusMessage"></h5>
+                                        <i class="fa fa-times close-card" style="float: right; cursor: pointer;"></i>
+                                    </div>
+                                    <p class="statusDescription"></p>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <!-- Buttons on the right side -->
+                        <div class="modal-buttons">
+                            <button type="submit" class="btn btn-primary" id="saveButtonDetail"><i class="fa fa-save"></i> Save</button>
+                            <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                        </div>
                     </div>
                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->        
-</div>
+    </div>   
+
+<!-- MODAL FORM CHILD -->
+<div class="modal fade" id="compose-modal-child" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #3c8dbc; color: white;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
+                <h4 class="modal-title" id="modal-title-child">Extraction biosolid | Detail</h4>
+            </div>
+            <form id="formSampleChild" action="<?php echo site_url('Extraction_biosolid/update_child') ?>" method="post" class="form-horizontal">
+                <div class="modal-body">
+                    <input id="mode-child" name="mode-child" type="hidden" class="form-control input-sm">
+
+                    <div class="form-group">
+                        <label for="barcode_sample_child" class="col-sm-4 control-label">Barcode Sample</label>
+                        <div class="col-sm-8">
+                            <input id="barcode_sample_child" name="barcode_sample_child" placeholder="Barcode Sample" type="text" class="form-control" readonly required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_sampletype_child" class="col-sm-4 control-label">Sample Type</label>
+                        <div class="col-sm-8">
+                            <select id="id_sampletype_child" name="id_sampletype_child" class="form-control" required>
+                                <option value="" disabled>-- Select Sample Type --</option>
+                                <?php
+                                    foreach($sampletype as $row){
+                                        echo "<option value='".$row['id_sampletype']."'>".$row['sampletype']."</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="form-group">
+                        <label for="date_extraction_child" class="col-sm-4 control-label">Date Extraction</label>
+                        <div class="col-sm-8">
+                            <input id="date_extraction_child" name="date_extraction_child" type="date" class="form-control" placeholder="Date Extraction" value="<?php echo date("Y-m-d"); ?>" max="<?php echo date('Y-m-d'); ?>">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="weight_child" class="col-sm-4 control-label">Weight (g)</label>
+                        <div class="col-sm-8">
+                            <input id="weight_child" name="weight_child" placeholder="Weight (g)" type="number" step="0.01" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="volume_child" class="col-sm-4 control-label">Volume (mL)</label>
+                        <div class="col-sm-8">
+                            <input id="volume_child" name="volume_child" placeholder="Volume (mL)" type="number" step="0.01" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dilution_child" class="col-sm-4 control-label">Dilution</label>
+                        <div class="col-sm-8">
+                            <input id="dilution_child" name="dilution_child" placeholder="Dilution" type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_kit_child" class="col-sm-4 control-label">Kit Used</label>
+                        <div class="col-sm-8">
+                            <select id="id_kit_child" name="id_kit_child" class="form-control" required>
+                                <option value="" disabled>-- Select Kit --</option>
+                                <?php
+                                    foreach($kit as $row){
+                                        echo "<option value='".$row['id_kit']."' data-type='".$row['kit']."'>".$row['kit']."</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="other-kit-group-child" style="display: none;">
+                        <label for="other_kit_child" class="col-sm-4 control-label">Other</label>
+                        <div class="col-sm-8">
+                            <input id="other_kit_child" name="other_kit_child" placeholder="Please specify the kit..." type="text" class="form-control">
+                            <small class="text-muted">Please provide additional details about the sample kit.</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="kit_lot_child" class="col-sm-4 control-label">Kit Lot no.</label>
+                        <div class="col-sm-8">
+                            <input id="kit_lot_child" name="kit_lot_child" placeholder="Kit Lot no." type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="comments_child" class="col-sm-4 control-label">Comments</label>
+                        <div class="col-sm-8">
+                            <textarea id="comments_child" name="comments_child" class="form-control" placeholder="Comments"></textarea>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="form-group">
+                        <label for="barcode_tube_child" class="col-sm-4 control-label">Barcode Tube</label>
+                        <div class="col-sm-8">
+                            <input id="barcode_tube_child" name="barcode_tube_child" placeholder="Barcode Tube" type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dna_concentration_child" class="col-sm-4 control-label">DNA Concentration (ng/ul)</label>
+                        <div class="col-sm-8">
+                            <input id="dna_concentration_child" name="dna_concentration_child" placeholder="DNA Concentration (ng/ul)" type="number" step="any" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cryobox_child" class="col-sm-4 control-label">Cryobox</label>
+                        <div class="col-sm-8">
+                            <input id="cryobox_child" name="cryobox_child" placeholder="Cryobox" type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_location_child" class="col-sm-4 control-label">Freezer Location</label>
+                        <input id="id_loc_child" name="id_loc_child" type="hidden" class="form-control">
+                        <div class="col-sm-2">
+                            <select id="id_freez_child" name="id_freez_child" class="form-control">
+                                <option>Freezer</option>
+                                <?php
+                                    foreach($freez1 as $row){
+                                        echo "<option value='".$row['freezer']."'>".$row['freezer']."</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <select id="id_shelf_child" name="id_shelf_child" class="form-control">
+                                <option>Shelf</option>
+                                <?php
+                                    foreach($shelf1 as $row){
+                                        echo "<option value='".$row['shelf']."'>".$row['shelf']."</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <select id="id_rack_child" name="id_rack_child" class="form-control">
+                                <option>Rack</option>
+                                <?php
+                                    foreach($rack1 as $row){
+                                        echo "<option value='".$row['rack']."'>".$row['rack']."</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <select id="id_tray_child" name="id_tray_child" class="form-control">
+                                <option>Tray</option>
+                                <?php
+                                    foreach($tray1 as $row){
+                                        echo "<option value='".$row['tray']."'>".$row['tray']."</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_position_child" class="col-sm-4 control-label">Position in Cryobox</label>
+                        <div class="col-sm-2">
+                            <select id="id_row_child" name="id_row_child" class="form-control">
+                                <option>Row</option>
+                                <?php
+                                    foreach($row1 as $row){
+                                        echo "<option value='".$row['rows1']."'>".$row['rows1']."</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <select id="id_col_child" name="id_col_child" class="form-control">
+                                <option>Column</option>
+                                <?php
+                                    foreach($col1 as $row){
+                                        echo "<option value='".$row['columns1']."'>".$row['columns1']."</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer" style="background-color: #f9f9f9; border-top: 1px solid #e5e5e5; padding: 15px;">
+                    <button type="submit" class="btn btn-primary" id="saveButtonChild"><i class="fa fa-save"></i> Save</button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <!-- MODAL CONFIRMATION DELETE -->
-        <div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="background-color: #dd4b39; color: white;">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
-                <h4 class="modal-title"><i class="fa fa-trash"></i> Extraction biosolid | Delete <span id="my-another-cool-loader"></span></h4>
+                <h4 class="modal-title"><i class="fa fa-trash"></i> Extraction biosolids | Delete <span id="my-another-cool-loader"></span></h4>
             </div>
             <div class="modal-body">
                 <div id="confirmation-content">
@@ -407,117 +691,89 @@
                 <button type="button" id="confirm-save" class="btn btn-danger"><i class="fa fa-trash"></i> Yes</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> No</button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+    </div>
+</div>
 
 <style>
     .highlight {
         background-color: rgba(0, 255, 0, 0.1) !important;
-        font-volume_filter: bold !important;
+        font-weight: bold !important;
     }
-
-    /* Review Component Styling */
-    #review_label {
+    .highlight-edit {
+        background-color: rgba(0, 0, 255, 0.1) !important;
+        font-weight: bold !important;
+    }
+        /* Basic button style for the span */
+        .form-check-label {
+        display: inline-block;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 12px;
         cursor: pointer;
-        font-size: 13px;
-        padding: 6px 14px;
-        border-radius: 20px;
-        font-weight: 500;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        min-width: 80px;
-        height: 32px;
         text-align: center;
-    }
-
-    #review_label:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    }
-
-    #reviewed_by_label {
-        font-style: italic;
-        font-weight: 600;
-        font-size: 12px;
-        color: #495057;
-    }
-
-    .review-status-container {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        flex-wrap: wrap;
-        padding: 4px 0;
-    }
-
-    .review-info {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 13px;
-        margin-left: 5px;
-    }
-
-    .reviewer-name {
-        /* background: #f8f9fa; */
-        padding: 4px 10px;
-        border-radius: 20px;
-        /* border: 1px solid #e9ecef; */
-        min-width: 70px;
-        text-align: center;
-        font-size: 12px;
-        font-weight: 500;
-    }
-
-    .cancel-review-btn {
-        padding: 6px 14px;
-        font-size: 13px;
-        border-radius: 20px;
         transition: all 0.3s ease;
-        font-weight: 500;
-        min-width: 80px;
-        height: 32px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
     }
 
-    .cancel-review-btn:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 2px 4px rgba(220,53,69,0.25);
+    /* Hover effect for the button */
+    .form-check-label:hover {
+        opacity: 0.8;
     }
 
-    .d-flex {
-        display: flex;
-        align-items: center;
+    /* Focused effect to make it more accessible */
+    .form-check-label:focus {
+        outline: none;
     }
 
-    .ms-2 {
-        margin-left: 0.5rem;
+    .child-table {
+        margin-left: 50px;
+        width: 90%;
+        border-collapse: collapse;
     }
 
-    .ms-3 {
-        margin-left: 1rem;
+    .child-table th, .child-table td {
+        border: 1px solid #ddd;
+        padding: 5px;
+    }
+
+    /* Styling untuk container dengan scroll */
+    .child-table-container {
+        max-height: 500px; /* Atur tinggi maksimal sesuai kebutuhan */
+        overflow-y: auto;  /* Aktifkan scroll vertikal */
+    }
+
+    /* Style untuk scrollbar itu sendiri */
+    .child-table-container::-webkit-scrollbar {
+        width: 6px; /* Lebar scrollbar */
+    }
+
+    /* Style untuk track (background) scrollbar */
+    .child-table-container::-webkit-scrollbar-track {
+        background: #e0f2f1; /* Warna hijau toska muda sebagai background track */
+        border-radius: 10px; /* Membuat track lebih halus */
+    }
+
+    /* Style untuk thumb (pegangan scrollbar) */
+    .child-table-container::-webkit-scrollbar-thumb {
+        background: #9ACBD0; /* Warna hijau toska gelap untuk thumb scrollbar */
+        border-radius: 10px; /* Membuat thumb lebih halus */
+    }
+
+    /* Gaya saat thumb scrollbar di-hover */
+    .child-table-container::-webkit-scrollbar-thumb:hover {
+        background: #48A6A7; /* Warna hijau toska yang lebih gelap saat hover */
     }
 
     .badge {
-        font-size: 13px;
-        padding: 6px 14px;
+        font-size: 14px;
+        padding: 8px 12px;
         border-radius: 20px;
         margin-top: 0px;
-        font-weight: 500;
-        min-width: 80px;
-        height: 32px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
     }
 
     .badge-success {
-        background-color: #28a745;
+        background-color: #6A9C89;
         color: white;
     }
 
@@ -526,171 +782,422 @@
         color: white;
     }
 
-    .bg-warning {
-        background-color: #ffc107 !important;
-        color: #212529 !important;
-        border: 1px solid #f0ad4e;
-    }
-
-    .bg-success {
-        background-color: #28a745 !important;
-        color: white !important;
-        border: 1px solid #1e7e34;
-    }
-
-    .review-info-card {
-        border-radius: 6px;
+    .alert {
+        padding: 8px 12px;
+        border-radius: 5px;
+        font-size: 14px;
         margin-top: 0px;
-        padding: 12px 16px;
-        width: 100%;
-        border-left: 4px solid #3c8dbc;
-        background: #f8f9fa;
-        border: 1px solid #e9ecef;
+    }
+
+    .alert-success {
+        background-color: #6A9C89;
+        color: white;
+    }
+
+    .alert-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .card {
+        border-radius: 10px;
+        margin-top: 0px;
+        padding: 8px 12px;
+        width: 100%; /* Ensures card uses available space */
     }
 
     .card-success {
-        border-left-color: #28a745 !important;
-        background-color: #d4edda !important;
-        border-color: #c3e6cb !important;
+        border: 1px solid #28a745;
+        background-color: #d4edda;
     }
 
     .card-danger {
-        border-left-color: #dc3545 !important;
-        background-color: #f8d7da !important;
-        border-color: #f5c6cb !important;
+        border: 1px solid #dc3545;
+        background-color: #f8d7da;
     }
 
     .card-title {
-        font-size: 14px;
-        font-weight: 600;
-        text-align: left;
-        margin-bottom: 4px;
-        color: #495057;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: left; /* Align title to the left */
+        margin-bottom: 0px;
     }
 
     .card-body {
-        font-size: 13px;
-        text-align: left;
+        font-size: 14px;
+        text-align: left; /* Align body text to the left */
+    }
+
+    .modal-footer-content {
+        float: left;
+        width: auto;
+        margin-right: 10px;
+    }
+
+    .modal-buttons {
+        float: right;
+    }
+
+    .icon-success {
+        color: #28a745;
+        margin-right: 10px;
+    }
+
+    .icon-fail {
+        color: #dc3545;
+        margin-right: 10px;
+    }
+
+    .modal-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 15px;
+    }
+
+    .modal-footer-content {
+        flex: 1;
+        display: flex;
+        align-items: center;
+    }
+
+    .modal-buttons {
+        display: flex;
+        align-items: center;
+    }
+
+    .card-body {
         padding: 0px;
-        line-height: 1.4;
+    }
+
+    .card-title {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .card-description {
+        font-size: 14px;
     }
 
     .card-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 8px;
     }
 
     .close-card {
         cursor: pointer;
-        font-size: 16px;
-        color: #6c757d;
-        opacity: 0.7;
-        transition: all 0.2s ease;
+        font-size: 18px;
+        color: #FDAB9E;  /* Red color for close icon */
     }
 
     .close-card:hover {
-        color: #dc3545;
-        opacity: 1;
-        transform: scale(1.1);
+        color: #bd2130; /* Darker red when hovered */
     }
 
     .unreview {
-        color: #856404 !important;
-        background-color: #fff3cd !important;
-        border-color: #ffeaa7 !important;
-    }
-
-    .review {
         color: white !important;
-        background-color: #28a745 !important;
-        border-color: #1e7e34 !important;
+        border-color: gray !important;
+        box-shadow: none; /* Override Bootstrap box-shadow */
     }
 
-    .review-border {
-        border: 2px solid #28a745 !important;
-        color: #28a745 !important;
-        background-color: #f8fff9 !important;
-        box-shadow: 0 0 8px rgba(40, 167, 69, 0.25);
+    /* input.form-check-label. */
+    .review {
+        color: green !important;
+        border-color: green !important;
     }
 
-    .textInform {
-        margin-bottom: 12px;
-        animation: fadeIn 0.3s ease-in-out;
+
+</style>
+<style>
+
+#review_label {
+    cursor: pointer;
+    font-size: 14px;  /* Ukuran font untuk label */
+    position: relative;
+    z-index: 10;  /* Atur nilai z-index yang lebih tinggi */
+    pointer-events: auto;  /* Pastikan elemen ini dapat menerima klik */
+}
+
+#reviewed_by_label {
+    margin-left: 10px;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 12px;  /* Ukuran font kecil untuk input reviewer */
+}
+
+.d-flex {
+    display: flex;
+    align-items: center;
+}
+
+.ms-2 {
+    margin-left: 0.5rem;  /* Spacing antar elemen */
+}
+
+    .table tbody tr.selected {
+        color: white !important;
+        background-color: #9CDCFE !important;
     }
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(-10px); }
-        to { opacity: 1; transform: translateY(0); }
+    #formKegHidden {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1;
     }
 
-    #textInformReview .statusDescription {
-        color: #6c757d;
-        margin-top: 4px;
-        font-size: 12px;
+    .hidden {
+        visibility: hidden;
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+    }
+    .sample-input {
+        margin-bottom: 10px; /* Adjust the spacing as needed */
     }
 
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-        .review-status-container {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 8px;
-        }
-        
-        .review-info {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 4px;
-        }
-        
-        .cancel-review-btn {
-            width: 100%;
-            text-align: center;
-        }
+    .modal {
+    overflow-y: auto;
     }
 
-    /* Form group spacing for review section */
-    #review-section .form-group {
-        margin-bottom: 15px;
+    .modal-body {
+    max-height: 80vh;
+    overflow-y: auto;
     }
 
-    #review-section .form-group:last-child {
-        margin-bottom: 10px;
-    }
-
-    /* Review section header styling */
-    #review-section h5 {
-        border-bottom: 1px solid #e9ecef;
-        padding-bottom: 8px;
-        margin-bottom: 15px;
-    }
-
-    .badge1 {
-        font-size: 12px;
-        padding: 6px 12px;
+    .badge {
+        font-size: 14px;
+        padding: 8px 12px;
         border-radius: 20px;
         margin-top: 0px;
-        width: 80px;
-        text-align: center;
+    }
+
+    .badge-success {
+        background-color: #6A9C89;
+        color: white;
+    }
+
+    .badge-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .alert {
+        padding: 8px 12px;
+        border-radius: 5px;
+        font-size: 14px;
+        margin-top: 0px;
+    }
+
+    .alert-success {
+        background-color: #6A9C89;
+        color: white;
+    }
+
+    .alert-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .card {
+        border-radius: 10px;
+        margin-top: 0px;
+        padding: 8px 12px;
+        width: 25%; /* Ensures card uses available space */
+    }
+
+    .card-success {
+        border: 1px solid #28a745;
+        background-color: #d4edda;
+    }
+
+    .card-danger {
+        border: 1px solid #dc3545;
+        background-color: #f8d7da;
+    }
+
+    .card-title {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: left; /* Align title to the left */
+        margin-bottom: 0px;
+    }
+
+    .card-body {
+        font-size: 14px;
+        text-align: left; /* Align body text to the left */
+    }
+
+    .modal-footer-content {
+        float: left;
+        width: auto;
+        margin-right: 10px;
+    }
+
+    .modal-buttons {
+        float: right;
+    }
+
+    .icon-success {
+        color: #28a745;
+        margin-right: 10px;
+    }
+
+    .icon-fail {
+        color: #dc3545;
+        margin-right: 10px;
+    }
+
+    .modal-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 15px;
+    }
+
+    .modal-footer-content {
+        flex: 1;
+        display: flex;
+        align-items: center;
+    }
+
+    .modal-buttons {
+        display: flex;
+        align-items: center;
+    }
+
+    .card-body {
+        padding: 0px;
+    }
+
+    .card-title {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .card-description {
+        font-size: 14px;
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .close-card {
+        cursor: pointer;
+        font-size: 18px;
+        color: #FDAB9E; 
+    }
+
+    .close-card:hover {
+        color: #bd2130; 
+    }
+
+    .unreview {
+        color: white !important;
+        border-color: gray !important;
+        box-shadow: none; 
+    }
+
+    /* input.form-check-label. */
+    .review {
+        color: white !important;
+        background-color: #3D8D7A;
+		border: none  !important;
+    }
+
+    .highlight {
+        background-color: rgba(0, 255, 0, 0.1) !important;
+        font-weight: bold !important;
+    }
+    .highlight-edit {
+        background-color: rgba(0, 0, 255, 0.1) !important;
+        font-weight: bold !important;
+    }
+        /* Basic button style for the span */
+        .form-check-label {
         display: inline-block;
-        min-width: 80px;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 12px;
+        cursor: pointer;
+        text-align: center;
+        transition: all 0.3s ease;
     }
 
-    .badge1-success {
-        background-color: #c3e6c3;
-        color: #2d5a2d;
+    /* Hover effect for the button */
+    .form-check-label:hover {
+        opacity: 0.8;
     }
 
-    .badge1-danger {
-        background-color: rgba(248, 113, 113, 0.3);
-        color: #b91c1c;
+    /* Focused effect to make it more accessible */
+    .form-check-label:focus {
+        outline: none;
     }
+
+    .child-table {
+        margin-left: 50px;
+        width: 90%;
+        border-collapse: collapse;
+    }
+
+    .child-table th, .child-table td {
+        border: 1px solid #ddd;
+        padding: 5px;
+    }
+
+    /* Styling untuk container dengan scroll */
+    .child-table-container {
+        max-height: 500px; 
+        overflow-y: auto; 
+    }
+
+    /* Style untuk scrollbar itu sendiri */
+    .child-table-container::-webkit-scrollbar {
+        width: 6px; 
+    }
+
+    /* Style untuk track (background) scrollbar */
+    .child-table-container::-webkit-scrollbar-track {
+        background: #e0f2f1;
+        border-radius: 10px;
+    }
+
+    /* Style untuk thumb (pegangan scrollbar) */
+    .child-table-container::-webkit-scrollbar-thumb {
+        background: #9ACBD0; 
+        border-radius: 10px; 
+    }
+
+    /* Gaya saat thumb scrollbar di-hover */
+    .child-table-container::-webkit-scrollbar-thumb:hover {
+        background: #48A6A7;
+    }
+
+	.review-border {
+		border: 1px solid green  !important;
+		color: green  !important;
+	}
 </style>
+<style>
+	#textInform2 .alert {
+    display: block !important;
+    margin-top: 20px;
+    font-size: 16px;
+    z-index: 1000; /* Pastikan info card di atas elemen lain */
+}
+
+
+</style>
+
 <!-- SweetAlert2 CSS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
@@ -699,56 +1206,63 @@
 
 
     let table;
-    let id_one_water_sample = $('#id_one_water_sample').val();
     // Fungsi untuk mendapatkan parameter dari URL
     function getQueryParam(param) {
         const urlParams = new URLSearchParams(window.location.search);
-        console.log('Current URL:', window.location.search);  // Cek URL yang sedang diakses
         return urlParams.get(param);
     }
 
     $(document).ready(function() {
+        // Dapatkan parameter barcode dan id_one_water_sample
         const params = new URLSearchParams(window.location.search);
         const barcodeFromUrl = params.get('barcode');
         const idOneWaterSampleFromUrl = params.get('idOneWaterSample');
         const idTestingTypeFromUrl = params.get('idTestingType');
         const previousUrl = document.referrer;
 
-        if (barcodeFromUrl) {
+         // Toggle sequence fields
+        // $('#sequenceCheckbox').on('change', function () {
+        //     if ($(this).is(':checked')) {
+        //         $('#sequenceFields').slideDown();
+        //         $('#sequenceHidden').prop('disabled', true); // Disable hidden input when checkbox is checked
+        //     } else {
+        //         $('#sequenceFields').slideUp();
+        //         $('#sequenceHidden').prop('disabled', false); // Enable hidden input when checkbox is unchecked
+        //         // Clear values if unchecked (opsional)
+        //         $('#sequence_id').val('').trigger('change'); // Trigger change to hide other field
+        //         // $('#species_id').val('');
+        //     }
+        // });
+
+        // $('#sequence_id').on('change', function () {
+        //     if ($(this).val() === 'other') {
+        //         $('#other_sequence_name').show().attr('required', true);
+        //     } else {
+        //         $('#other_sequence_name').hide().val('').attr('required', false);
+        //     }
+        // });
+
+
+        // Cek apakah barcode dan id_one_water_sample ada di URL
+        if (barcodeFromUrl && idOneWaterSampleFromUrl && idTestingTypeFromUrl) {
             $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> Extraction biosolid | New<span id="my-another-cool-loader"></span>');
-            // $('#project_idx').hide();
-            // $('#id_one_water_sample').attr('readonly', false);
-            // $('#id_one_water_sample').val('');
-            // $('#id_one_water_sample_list').val('');
-            // $('#id_one_water_sample').hide();
-            // $('#id_one_water_sample_list').show();
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Extraction biosolids | New<span id="my-another-cool-loader"></span>');
+
+            // Set nilai form sesuai dengan parameter yang diterima
             $('#id_one_water_sample').attr('readonly', true);
-            $('#id_one_water_sample').val(idOneWaterSampleFromUrl || '');  // Set ID jika ada);
-            $('#idx_one_water_sample').hide();
+            $('#id_one_water_sample').val(idOneWaterSampleFromUrl || '');  // Set ID jika ada
+            $('#id_testing_type').val(idTestingTypeFromUrl);
             $('#id_person').val('');
             $('#barcode_sample').attr('readonly', true);
-            $('#barcode_sample').val(barcodeFromUrl);
-            $('#sampletype').attr('readonly', true);
-            $('#sampletype').val('');
-            // $('#date_extraction').val('');
-            $('#weight').val('');
-            // $('#volume').val('');
-            // $('#dilution').val('');
-            // $('#culture_plate').val('');
-            // $('#culture_media').val('');
-            $('#id_kit').val('');
-            $('#kit_lot').val('');
-            $('#barcode_tube').val('');
-            $('#dna_concentration').val('');
-            $('#cryobox').val('');
-            $('#id_freez').val('');
-            $('#id_shelf').val('');
-            $('#id_rack').val('');
-            $('#id_tray').val('');
-            $('#id_row').val('');
-            $('#id_col').val('');
+            $('#barcode_sample').val(barcodeFromUrl || '');  // Set barcode jika ada
+            // $('#sampletype').attr('readonly', true);
+            // $('#sampletype').val('');
             $('#comments').val('');
+            $('#number_sample').val('').attr('readonly', false).attr('min', 1);
+            $('#old_number_sample').val('');
+            $('#number_sample_help').hide();
+
+            // Tampilkan modal
             $('#compose-modal').modal('show');
 
             if (idOneWaterSampleFromUrl && idTestingTypeFromUrl && previousUrl) {
@@ -756,11 +1270,10 @@
             }
 
         } else {
-            console.log('Barcode tidak ditemukan di URL');
+            console.log('Barcode atau ID One Water Sample tidak ditemukan di URL');
             $('#return_url').val('');
         }
 
-        // Pembatalan dan kembali ke halaman sebelumnya
         $(document).on('click', '#cancelButton', function() {
             // Get URL parameters
             const params = new URLSearchParams(window.location.search);
@@ -782,6 +1295,7 @@
             }
         });
 
+
         function showConfirmation(url) {
             deleteUrl = url; // Set the URL to the variable
             $('#confirm-modal').modal('show');
@@ -789,10 +1303,9 @@
 
         // Handle the delete button click
         $(document).on('click', '.btn_delete', function() {
-            let id = $(this).data('id');
-            let url = '<?php echo site_url('Extraction_biosolid/delete'); ?>/' + id;
-            $('#confirm-modal #id').text(id);
-            console.log(id);
+            let id_one_water_sample = $(this).data('id');
+            let url = '<?php echo site_url('Extraction_biosolid/delete_extraction'); ?>/' + id_one_water_sample;
+            $('#confirm-modal #id').text(id_one_water_sample);
             showConfirmation(url);
         });
 
@@ -838,20 +1351,8 @@
 
         $('#compose-modal').on('shown.bs.modal', function () {
 			$('#id_one_water_sample').focus();
-            // $('#budget_req').on('input', function() {
-            //     formatNumber(this);
-            //     });
             });
 
-        // function formatNumber(input) {
-        //     input.value = input.value.replace(/[^\d.]/g, '').replace(/\.(?=.*\.)/g, '');
-        //     if (input.value !== '') {
-        //         var numericValue = parseFloat(input.value.replace(/\./g, '').replace(',', '.'));
-        //         input.value = numericValue.toLocaleString('en-US', { maximumFractionDigits: 2 });
-        //         // Replace commas with dots for the display
-        //         input.value = input.value.replace(/,/g, '.');
-        //     }
-        // }
 
         $("input").keypress(function(){
             $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
@@ -863,96 +1364,18 @@
             }, 3000);                            
         });
 
-        $('#barcode_sample').on("change", function() {
+        $('#id_one_water_sample').on("change", function() {
             $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
-            data1 = $('#barcode_sample').val();
-            // // ckbar = data1.substring(0,5).toUpperCase();
-            // // ckarray = ["N-S2-", "F-S2-", "N-F0-", "F-F0-"];
-            // // ck = $.inArray(ckbar, ckarray);
-            // if (ck == -1) {
+            data1 = $('#id_one_water_sample').val();
             $.ajax({
                 type: "GET",
                 url: "Extraction_biosolid/barcode_restrict?id1="+data1,
-                // data:data1,
-                dataType: "json",
-                success: function(data) {
-                    // var barcode = '';
-                    if (data.length > 0) {
-                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> is already in the system !</span>');
-                        $('.val1tip').tooltipster('content', tip);
-                        $('.val1tip').tooltipster('show');
-                        $('#barcode_sample').focus();
-                        $('#barcode_sample').val('');     
-                        // $('#sampletype').val('Biobank Sample');    
-                        $('#barcode_sample').css({'background-color' : '#FFE6E7'});
-                        setTimeout(function(){
-                            $('#barcode_sample').css({'background-color' : '#FFFFFF'});
-                            setTimeout(function(){
-                                $('#barcode_sample').css({'background-color' : '#FFE6E7'});
-                                setTimeout(function(){
-                                    $('#barcode_sample').css({'background-color' : '#FFFFFF'});
-                                }, 300);                            
-                            }, 300);
-                        }, 300);
-                        barcode = data[0].barcode_sample;
-                        console.log(data);
-                    }
-                    else {
-                        // $('#sampletype').val(data[0].sampletype);    
-                        // $('#volume_filtered').val(data[0].vol);     
-                        // if (data[0].stype == 'Bootsocks') {
-                        //     $('#barcode_falcon2').attr('readonly', false);
-                        // } else {
-                        //     $('#barcode_falcon2').attr('readonly', true);
-                        // }
-                    }
-                }
-            });
-        // }
-        });    
-        
-        $('.idOneWaterSampleSelect').change(function() {
-            let id_one_water_sample = $(this).val(); // Mendapatkan ID produk yang dipilih
-            console.log('test'+ id_one_water_sample)
-            if (id_one_water_sample) {
-                $.ajax({
-                    url: '<?php echo site_url('Extraction_biosolid/getIdOneWaterDetails'); ?>', // URL untuk request AJAX
-                    type: 'POST',
-                    data: { id_one_water_sample: id_one_water_sample }, // Data yang dikirim ke server
-                    dataType: 'json', // Format data yang diharapkan dari server
-                    success: function(response) {
-                        console.log('ceks:',response);
-                        // Mengisi field 'unit_of_measure' dengan nilai yang diterima dari server
-                        $('#sampletype').val(response.sampletype || '');
-                        $('#id_sampletype').val(response.id_sampletype || '');
-
-                        // Trigger input event to handle visibility of tray_weight
-                        $('#sampletype').trigger('input');
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        // Menangani error jika terjadi kesalahan dalam request
-                        console.error('AJAX error:', textStatus, errorThrown);
-                        $('#sampletype').val('');
-                    }
-                });
-            } else {
-                $('#sampletype').val('');
-                $('#tray_weight_container').hide(); 
-            }
-        });
-
-        $('#id_one_water_sample').on("change", function() {
-            $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
-            id_one_water_sample = $('#id_one_water_sample').val();
-            $.ajax({
-                type: "GET",
-                url: "Extraction_biosolid/barcode_restrict?id1="+id_one_water_sample,
                 dataType: "json",
                 success: function(data) {
                     if (data.length > 0) {
-                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Id One Water Sample <strong> ' + id_one_water_sample +'</strong> is already in the system !</span>');
-                        $('.val1tip').tooltipster('content', tip);
-                        $('.val1tip').tooltipster('show');
+                        tip = $('<span><i class="fa fa-exclamation-triangle"></i> Id One Water Sample <strong> ' + data1 +'</strong> is already in the system !</span>');
+                        $('.val2tip').tooltipster('content', tip);
+                        $('.val2tip').tooltipster('show');
                         $('#id_one_water_sample').focus();
                         $('#id_one_water_sample').val('');        
                         $('#id_one_water_sample').css({'background-color' : '#FFE6E7'});
@@ -966,7 +1389,6 @@
                             }, 300);
                         }, 300);
                         id_one_water_sample = data[0].id_one_water_sample;
-                        console.log(data);
                     }
                     else {
                     }
@@ -974,50 +1396,7 @@
             });
         }).trigger('change');
 
-        // $('#id_one_water_sample_list').on("change", function() {
-        //     $('.val1tip,.val2tip,.val3tip').tooltipster('hide');   
-            
-        //     data1 = $('#id_one_water_sample_list').val();
-        //     // data1 = $('#barcode_sample').val();
-        //     // // ckbar = data1.substring(0,5).toUpperCase();
-        //     // // ckarray = ["N-S2-", "F-S2-", "N-F0-", "F-F0-"];
-        //     // // ck = $.inArray(ckbar, ckarray);
-        //     // if (ck == -1) {
-        //     $.ajax({
-        //         type: "GET",
-        //         url: "Extraction_biosolid/barcode_check?id1="+data1,
-        //         // data:data1,
-        //         dataType: "json",
-        //         success: function(data) {
-        //             // var barcode = '';
-        //             if (data.length == 0) {
-        //                 // tip = $('<span><i class="fa fa-exclamation-triangle"></i> Barcode <strong> ' + data1 +'</strong> is not on reception or is already in the system !</span>');
-        //                 // $('.val1tip').tooltipster('content', tip);
-        //                 // $('.val1tip').tooltipster('show');
-        //                 // $('#barcode_sample').focus();
-        //                 // $('#barcode_sample').val('');     
-        //                 $('#sampletype').val('Biobank Sample');    
-        //                 // $('#barcode_sample').css({'background-color' : '#FFE6E7'});
-        //                 // setTimeout(function(){
-        //                 //     $('#barcode_sample').css({'background-color' : '#FFFFFF'});
-        //                 //     setTimeout(function(){
-        //                 //         $('#barcode_sample').css({'background-color' : '#FFE6E7'});
-        //                 //         setTimeout(function(){
-        //                 //             $('#barcode_sample').css({'background-color' : '#FFFFFF'});
-        //                 //         }, 300);                            
-        //                 //     }, 300);
-        //                 // }, 300);
-        //                 // console.log(data);
-        //             }
-        //             else {
-        //                 $('#sampletype').val(data[0].sampletype);    
-        //             }
-        //         }
-        //     });
-        // // }
-        // });
-
-        var base_url = location.hostname;
+        let base_url = location.hostname;
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
         {
             return {
@@ -1084,22 +1463,12 @@
             get_freez($('#id_freez').val(), $('#id_shelf').val(), $('#id_rack').val(), $('#id_tray').val())
         });
 
-
+        let lastIdProject = localStorage.getItem('last_id_extraction_biosolid');
+        let lastPage = localStorage.getItem('last_page_extraction_biosolid');
         table = $("#mytable").DataTable({
-            // initComplete: function() {
-            //     var api = this.api();
-            //     $('#mytable_filter input')
-            //             .off('.DT')
-            //             .on('keyup.DT', function(e) {
-            //                 if (e.keyCode == 13) {
-            //                     api.search(this.value).tray();
-            //                 }
-            //     });
-            // },
             oLanguage: {
                 sProcessing: "loading..."
             },
-            // select: true;
             processing: true,
             serverSide: true,
             // ajax: {"url": "Extraction_biosolid/json", "type": "POST"},
@@ -1115,66 +1484,106 @@
                     }
                 }
             },
+            displayStart: lastPage ? (parseInt(lastPage) * 10) : 0, // <-- ini di sini ya!
             columns: [
-                // {
-                //     "data": "barcode_sample",
-                //     "orderable": false
-                // },
-                {"data": "barcode_sample"},
+                {"data": "toggle", "orderable": false, "searchable": false }, // Ikon toggle di awal
                 {"data": "id_one_water_sample"},
+                // {"data": "barcode_sample"},
                 {"data": "initial"},
-                {"data": "sampletype"},
-                {"data": "date_extraction"},
-                {"data": "weight"},
-                // {"data": "volume"},
-                {"data": "comments"},
+                {"data": "active_samples"},
+                { "data": "action", "orderable": false, "searchable": false }
+            ],
+            columnDefs: [
                 {
-                    "data" : "action",
-                    "orderable": false,
-                    "className" : "text-center"
+                    targets: [0],
+                    className: 'text-right'
                 }
             ],
-			columnDefs: [
-				{
-					targets: [5], // Index of the 'estimate_price' column
-					className: 'text-right' // Apply right alignment to this column
-				}
-			],
-            order: [[1, 'desc']],
-            order: [[0, 'desc']],
-            rowCallback: function(row, data, iDisplayIndex) {
-                var info = this.fnPagingInfo();
-                var page = info.iPage;
-                var length = info.iLength;
-                // var index = page * length + (iDisplayIndex + 1);
-                // $('td:eq(0)', row).html(index);
-            },
-            // initComplete: function() {
-            //     let api = this.api();
-            //     let firstRow = api.row(0).node();
-            //     $(firstRow).addClass('highlight');
-            // }
             drawCallback: function(settings) {
                 let api = this.api();
                 let pageInfo = api.page.info();
-                if (pageInfo.page === 0) {
-                    let firstRow = api.row(0).node();
-                    $(firstRow).addClass('highlight');
+
+                // Reset semua highlight sebelumnya
+                api.rows().every(function() {
+                    $(this.node()).removeClass('highlight highlight-edit');
+                });
+
+                // Dapatkan waktu saat ini
+                let now = new Date();
+                let newestRow = null;
+                let newestCreatedDate = null;
+                let newestUpdatedDate = null;
+                let updatedRow = null;
+
+                // Cari baris dengan date_created paling baru dan date_updated paling baru
+                api.rows().every(function() {
+                    let data = this.data();
+                    let createdDate = new Date(data.date_created);
+                    let updatedDate = new Date(data.date_updated);
+
+                    // Cari baris dengan date_created paling baru
+                    if (now - createdDate < 10 * 100) {
+                        if (!newestCreatedDate || createdDate > newestCreatedDate) {
+                            newestCreatedDate = createdDate;
+                            newestRow = this.node();
+                        }
+                    }
+
+
+                    // Cari baris dengan date_updated paling baru (terbaru dalam 5 detik terakhir)
+                    if (now - updatedDate < 10 * 1000) {
+                        if (!newestUpdatedDate || updatedDate > newestUpdatedDate) {
+                            newestUpdatedDate = updatedDate;
+                            updatedRow = this.node();
+                        }
+                    }
+                });
+
+                // Highlight baris yang paling baru dimasukkan berdasarkan date_created
+                if (newestRow) {
+                    $(newestRow).addClass('highlight');
+                    setTimeout(function() {
+                        $(newestRow).removeClass('highlight');
+                    }, 5000);
                 }
+
+                if (updatedRow) {
+                    $(updatedRow).addClass('highlight-edit');
+                    
+                    // Hilangkan highlight-edit setelah 10 detik
+                    setTimeout(function() {
+                        $(updatedRow).removeClass('highlight-edit');
+                    }, 5000);
+                }
+
+                // Pastikan baris pertama di halaman pertama tetap disorot jika ada baris dalam tabel
+                if (pageInfo.page === 0 && api.rows().count() > 0) {
+                    let firstRow = api.row(0).node();
+                    setTimeout(function() {
+                        $(firstRow).addClass('highlight');
+                    }, 5000);
+                }
+
+                // Commented out auto-open child row
+                // if (lastIdProject) {
+                //     api.rows().every(function () {
+                //         let rowData = this.data();
+                //         if (rowData.id_extraction_biosolid === lastIdProject) {
+                //             $(this.node()).addClass('highlight');
+                //             $('html, body').animate({
+                //                 scrollTop: $(this.node()).offset().top - 100
+                //             }, 1000);
+                //             // buka child-nya otomatis
+                //             openChildRow($(this.node()), rowData);
+                //         }
+                //     });
+
+                //     // localStorage.removeItem('last_id_project');
+                //     // localStorage.removeItem('last_page');
+                // }
             }
         });
 
-        // Add modal reset for sample modal
-        $('#compose-modal').on('hide.bs.modal', function () {
-            // Reset form
-            $(this).find('form')[0].reset();
-            
-            // Reset and hide other_kit field
-            $('#other_kit').val('');
-            $('#other-kit-group').hide();
-            $('#other_kit').prop('required', false);
-        });
-        
         // Check if filtered by Sample ID from Sample Reception redirect
         const urlParams = new URLSearchParams(window.location.search);
         const searchSampleId = urlParams.get('idOneWaterSample');
@@ -1189,431 +1598,531 @@
               '</div>').insertAfter('.box-header');
         }
 
-        $('#addtombol').click(function() {
-            $('#mode').val('insert');
-            $('#modal-title').html('<i class="fa fa-wpforms"></i> Extraction biosolid | New<span id="my-another-cool-loader"></span>');
-            // $('#project_idx').hide();
-            $('#id_one_water_sample').attr('readonly', false);
-            $('#id_one_water_sample').val('');
-            $('#id_one_water_sample_list').val('');
-            $('#id_one_water_sample').hide();
-            $('#id_one_water_sample_list').show();
-            $('#id_person').val('');
-            $('#barcode_sample').attr('readonly', false);
-            $('#barcode_sample').val('');
-            $('#sampletype').attr('readonly', true);
-            $('#sampletype').val('');
-            // $('#date_extraction').val('');
-            $('#weight').val('');
-            // $('#volume').val('');
-            // $('#dilution').val('');
-            // $('#culture_plate').val('');
-            // $('#culture_media').val('');
-            $('#id_kit').val('');
-            $('#kit_lot').val('');
-            $('#barcode_tube').val('');
-            $('#dna_concentration').val('');
-            $('#cryobox').val('');
-            $('#id_freez').val('');
-            $('#id_shelf').val('');
-            $('#id_rack').val('');
-            $('#id_tray').val('');
-            $('#id_row').val('');
-            $('#id_col').val('');
-            $('#comments').val('');
-            $('#compose-modal').modal('show');
+        $('#mytable tbody').on('click', 'tr', function () {
+            const table = $('#mytable').DataTable();
+            const rowData = table.row(this).data(); // Ambil data dari DataTable, bukan dari DOM
+
+            if (rowData) {
+                const id = rowData.id_extraction_biosolid; // pastikan nama field sesuai dari server
+
+                const pageInfo = table.page.info();
+                localStorage.setItem('last_id_extraction_biosolid', id);
+                localStorage.setItem('last_page_extraction_biosolid', pageInfo.page);
+            }
         });
 
-        $('#mytable').on('click', '.btn_edit', function(){
-            let tr = $(this).parent().parent();
-            let data = table.row(tr).data();
-            console.log(data);
-            // var data = this.parents('tr').data();
-            $('#mode').val('edit');
-            $('#modal-title').html('<i class="fa fa-pencil-square-o"></i> Extraction biosolid | Update<span id="my-another-cool-loader"></span>');
-            // $('#project_idx').show();
-            // $('#id_one_water_sample').attr('readonly', true);
-            // $('#id_one_water_sample').show();
-            // $('#id_one_water_sample_list').hide();
-            // $('#id_one_water_sample').val(data.id_one_water_sample);
-            // $('#id_one_water_sample_list').val(data.id_one_water_sample).trigger('change');
-            $('#id_one_water_sample').hide();
-            $('#idx_one_water_sample').attr('readonly', true);
-            $('#idx_one_water_sample').val(data.id_one_water_sample);
-            $('#id_person').val(data.id_person).trigger('change');
-            $('#barcode_sample').attr('readonly', true);
-            $('#barcode_sample').val(data.barcode_sample);
-            $('#sampletype').attr('readonly', true);
-            $('#sampletype').val(data.sampletype);
-            $('#date_extraction').val(data.date_extraction).trigger('change');
-            $('#weight').val(data.weight);
-            // $('#volume').val(data.volume);
-            // $('#dilution').val(data.dilution).trigger('change');
-            // $('#culture_plate').val(data.culture_plate).trigger('change');
-            // $('#culture_media').val(data.culture_media).trigger('change');
-            $('#id_kit').val(data.id_kit).trigger('change');
+        // Function openChildRow removed - replaced by toggle-child click handler
 
-            // Fill typedesc field if available
-            $('#other_kit').val(data.other_kit || '');    
-            // Trigger sample type change to show/hide typedesc field
-            $('#id_kit').trigger('change');
 
-            $('#kit_lot').val(data.kit_lot);
-            $('#barcode_tube').val(data.barcode_tube);
-            $('#dna_concentration').val(data.dna_concentration);
-            $('#cryobox').val(data.cryobox);
-            $('#id_freez').val(data.freezer);
-            $('#id_shelf').val(data.shelf);
-            $('#id_rack').val(data.rack);
-            $('#id_tray').val(data.tray);
-            $('#id_row').val(data.rows1);
-            $('#id_col').val(data.columns1);
-            // load_freez(data.id_location);
-            $('#comments').val(data.comments);
-            // Show review section and populate review data
-            $('#review-section').show();
-            setupReviewComponent(data);
-            $('#compose-modal').modal('show');
-        });  
+        // Toggle child rows functionality
+        $('#mytable tbody').on('click', '.toggle-child', function () {
+            let tr = $(this).closest('tr');
+            let row = table.row(tr);
+            let id_extraction_biosolid = row.data().id_extraction_biosolid;
+            let icon = $(this).find('i');
 
-        // Setup review component with data
-        function setupReviewComponent(data) {
-            $('#review').val(data.review || 0);
-            $('#user_review').val(data.user_review || '');
-            $('#user_created').val(data.user_created || '');
-            
-            // Initialize review system with the same logic as campy_biosolids
-            initializeReviewSystem(data);
-        }
+            if (row.child.isShown()) {
+                row.child.hide();
+                tr.removeClass('shown');
+                icon.removeClass('fa-minus-square').addClass('fa-plus-square');
+            } else {
+                row.child('<div class="text-center py-2">Loading...</div>').show();
+                tr.addClass('shown');
+                icon.removeClass('fa-plus-square').addClass('fa-spinner fa-spin');
 
-        // Initialize review system with complete logic from campy_biosolids
-        function initializeReviewSystem(data) {
-            let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
-            let userCreated = data.user_created || '';
-            let userReview = data.user_review || '';
-            let fullName = ''; // Will be fetched if needed
-
-            // Get reviewer name if exists
-            if (userReview) {
                 $.ajax({
-                    url: '<?php echo site_url('Extraction_biosolid/getReviewer'); ?>',
-                    type: 'POST',
-                    data: { user_review: userReview },
-                    dataType: 'json',
-                    success: function(response) {
-                        fullName = response.full_name || '-';
-                        $('#reviewed_by_label').text(fullName);
-                    },
-                    error: function() {
-                        $('#reviewed_by_label').text('-');
+                    url: `Extraction_biosolid/subjson?id=${id_extraction_biosolid}`,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        let uniqueId = `review_${id_extraction_biosolid}`;
+                        let tableContent = `
+                            <div class="child-table-container">
+                                <table class="child-table table table-bordered table-sm">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th>Barcode Sample</th>
+                                            <th>Barcode Tube</th>
+                                            <th>Sample Type</th>
+                                            <th>Weight (g)</th>
+                                            <th>Cryobox</th>
+                                            <th>Kit Lot</th>
+                                            <th>Date Extraction</th>
+                                            <th>Comments</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>`;
+
+                        if (data.length > 0) {
+                            $.each(data, function (index, extraction) {
+                                tableContent += `
+                                    <tr>
+                                        <td>${extraction.barcode_sample ?? '-'}</td>
+                                        <td>${extraction.barcode_tube ?? '-'}</td>
+                                        <td>${extraction.sampletype ?? '-'}</td>
+                                        <td>${extraction.weight ?? '-'}</td>
+                                        <td>${extraction.cryobox ?? '-'}</td>
+                                        <td>${extraction.kit_lot ?? '-'}</td>
+                                        <td>${extraction.date_extraction ?? '-'}</td>
+                                        <td>${extraction.comments ?? '-'}</td>
+                                        <td>${extraction.action ?? '-'}</td>
+                                    </tr>`;
+                            });
+                        } else {
+                            tableContent += `<tr><td colspan="9" class="text-center">No samples available</td></tr>`;
+                        }
+
+                        tableContent += `
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer clearfix mt-3" style="display: flex; justify-content: space-between; gap: 15px;">
+                                <div style="flex: 1;">
+                                    <div class="textInform card" style="display:none; padding: 5px 10px;" id="textInform_${uniqueId}">
+                                        <div class="card-body">
+                                            <div class="card-header d-flex justify-content-between align-items-center">
+                                                <h5 class="card-title statusMessage mb-0"></h5>
+                                                <i class="fa fa-times close-card" style="cursor: pointer;"></i>
+                                            </div>
+                                            <p class="statusDescription mb-0"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center flex-wrap" style="gap: 8px;">
+                                    <span class="text-muted">Status:</span>
+                                    <span class="review_label badge"
+                                        data-uniqueid="${uniqueId}"
+                                        data-usercreated="${row.data().user_created}"
+                                        data-review="${row.data().review}"
+                                        style="cursor: pointer;">
+                                        ${row.data().review == 1 ? 'Reviewed' : 'Unreview'}
+                                    </span>
+                                    <span class="text-muted ms-3">by:</span>
+                                    <span id="reviewed_by_label" style="font-style: italic; font-weight: 800; font-size: 14px;">
+                                        ${row.data().full_name ? row.data().full_name : '-'}
+                                    </span>
+                                </div>
+                                <?php if (in_array($this->session->userdata('id_user_level'), [1, 2])): ?>
+								<button type="button" class="btn btn-danger ms-3 cancelReviewBtn" data-uniqueid="${uniqueId}" data-review="${row.data().review}">
+									Cancel Review
+								</button>
+							    <?php endif; ?>
+                            </div>`;
+
+                        row.child(tableContent).show();
+
+                        icon.removeClass('fa-spinner fa-spin').addClass('fa-minus-square');
+
+                        attachReviewBehavior(uniqueId, row.data().user_created, row.data().review);
+                        let $cancelReviewBtn = row.child().find('.cancelReviewBtn');
+                        if (parseInt(row.data().review) === 1) {
+                            $cancelReviewBtn.prop('disabled', false).removeClass('disabled-btn');
+                        } else {
+                            $cancelReviewBtn.prop('disabled', true).addClass('disabled-btn');
+                        }
                     }
                 });
-            } else {
-                $('#reviewed_by_label').text('-');
             }
+        });
 
-            // Define review states
+         // Event handler ketika tombol Cancel Review diklik
+        $('#mytable tbody').on('click', '.cancelReviewBtn', function() {
+            let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
+            let uniqueId = $(this).data('uniqueid');
+            let review = $(this).data('review');
+            
+            // Kamu bisa gunakan uniqueId untuk dapatkan data review yg sesuai
+            // Contoh: cari elemen review label di child row ini
+            let $child = $(this).closest('.child-table-container').parent(); // atau parent row child
+            let $reviewLabel = $child.find('.review_label');
+            
+            // Lanjutkan logika cancel review, misal AJAX dll
+            
+            Swal.fire({
+                icon: 'warning',
+                title: 'Cancel Review?',
+                text: 'This will reset the review status so another user can review it again.',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, cancel it',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // contoh update UI dulu
+                    $reviewLabel.text('Unreview').removeClass().addClass('badge unreview');
+
+                    // lalu AJAX cancel review
+                    $.ajax({
+                        url: '<?php echo site_url('Extraction_biosolid/cancelReview'); ?>',
+                        method: 'POST',
+                        data: {
+                            id_one_water_sample: uniqueId.replace('review_', ''),
+                            review: review,
+                            user_review: loggedInUser
+                        },
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.status) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Review canceled successfully!',
+                                    timer: 1000,
+                                    showConfirmButton: false
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Failed to cancel review',
+                                    text: response.message
+                                });
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            if (xhr.responseText && xhr.responseText.trim().startsWith('<')) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Server returned HTML instead of JSON',
+                                    text: 'Please check server response. See console for details.',
+                                    footer: '<a href="javascript:console.log(xhr.responseText)">Click to view response</a>'
+                                });
+                            } else {
+                                Swal.fire('Error', 'Something went wrong during cancel.', 'error');
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+
+        function attachReviewBehavior(uniqueId, userCreated, review) {
+            let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
+            let currentState = parseInt(review);
+
+            let $label = $(`.review_label[data-uniqueid="${uniqueId}"]`);
+            let $card = $(`#textInform_${uniqueId}`);
+
             const states = [
                 { value: 0, label: "Unreview", class: "unreview" },
                 { value: 1, label: "Reviewed", class: "review" }
             ];
+            const colorClasses = ['bg-warning', 'bg-success', 'text-dark', 'text-white'];
 
-            // Get initial state from hidden input
-            let currentState = parseInt($('#review').val());
-            if (isNaN(currentState) || currentState < 0 || currentState > 1) currentState = 0;
-
-            // Set initial display on review label
-            $('#review_label')
+            $label
                 .text(states[currentState].label)
-                .removeClass()
-                .addClass('badge review-badge ' + (currentState === 1 ? 'bg-success review' : 'bg-warning unreview'));
+                .removeClass(colorClasses.join(' '))
+                .addClass(states[currentState].class);
 
-            // Allow both creators and non-creators to perform reviews
-            $('#user_review').val(loggedInUser);
-
-            $('#review_label').off('click').on('click', function () {
-                if ($('#review').val() === '1') {
-                    Swal.fire({
-                        icon: 'info',
-                        title: 'Review Locked',
-                        text: 'You have already reviewed this. Further changes are not allowed.',
-                        confirmButtonText: 'OK'
-                    });
-                    return;
-                }
-
-                Swal.fire({
-                    icon: 'question',
-                    title: 'Review Data',
-                    text: 'Are you sure you want to review this data?',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes, Review',
-                    cancelButtonText: 'Cancel',
-                    reverseButtons: true
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        currentState = (currentState + 1) % states.length;
-
-                        $('#review').val(states[currentState].value);
-                        $('#review_label')
-                            .text(states[currentState].label)
-                            .removeClass()
-                            .addClass('badge review-badge ' + (currentState === 1 ? 'bg-success review' : 'bg-warning unreview'));
-
-                        // Save review via AJAX
-                        saveReviewData();
-                    } else {
-                        Swal.fire({
-                            icon: 'info',
-                            title: 'Review Not Changed',
-                            text: 'No changes were made.',
-                            timer: 2000,
-                            showConfirmButton: false
-                        });
+            if (loggedInUser !== userCreated) {
+                $label.off('click').on('click', function () {
+                    if (currentState === 1) {
+                        Swal.fire('Review Locked', 'Already reviewed. No changes allowed.', 'info');
+                        return;
                     }
-                });
-            });
 
-            // Display different messages for creators vs non-creators
-            if (userCreated !== loggedInUser) {
-                if ($('#review').val() === '1') {
-                    showReviewInfoCard(
-                        '#textInformReview',
-                        '<i class="fa fa-times-circle"></i> You are not the creator',
-                        "In this case, you can't review because it has already been reviewed.",
-                        false
-                    );
-                } else {
-                    showReviewInfoCard(
-                        '#textInformReview',
-                        '<i class="fa fa-times-circle"></i> You are not the creator',
-                        "In this case, you can review this data. Hover over the box on the top side to start the review.",
-                        false
-                    );
-                }
+                    Swal.fire({
+                        title: 'Review this data?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes'
+                    }).then(result => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: '<?php echo site_url('Extraction_biosolid/saveReview'); ?>',
+                                method: 'POST',
+                                data: {
+                                    id_one_water_sample: uniqueId.replace('review_', ''),
+                                    user_review: loggedInUser,
+                                    review: 1
+                                },
+                                dataType: 'json',
+                                success: function (response) {
+                                    if (response.status) {
+                                        currentState = 1;
+
+                                        $label
+                                            .text(states[currentState].label)
+                                            .removeClass(colorClasses.join(' '))
+                                            .addClass(states[currentState].class);
+
+                                        showInfoCard(
+                                            `#textInform_${uniqueId}`,
+                                            '<i class="fa fa-check-circle"></i> Review Success',
+                                            'Review submitted successfully.',
+                                            true
+                                        );
+
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Review saved successfully!',
+                                            text: response.message,
+                                            timer: 1000,
+                                            showConfirmButton: false
+                                        }).then(() => {
+                                            // Refresh halaman setelah review berhasil untuk update data
+                                            location.reload();
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Failed to save review',
+                                            text: response.message
+                                        });
+                                    }
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error('AJAX Error: ' + status + error);
+                                    Swal.fire('Error', 'Something went wrong during submission.', 'error');
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'info',
+                                title: 'Review Not Changed',
+                                text: 'No changes were made.',
+                                timer: 2000
+                            });
+                        }
+                    });
+                });
+
+                $label.hover(
+                    function () {
+                        if (currentState === 0) $(this).text('Click to Review');
+                    },
+                    function () {
+                        if (currentState === 0) $(this).text('Unreview');
+                    }
+                );
+
+                showInfoCard(
+                    `#textInform_${uniqueId}`,
+                    '<i class="fa fa-times-circle"></i> You are not the creator',
+                    currentState === 1
+                        ? "In this case, you can't review because it has already been reviewed."
+                        : "In this case, you can review this data. Hover over the box on the right side to start the review.",
+                    false
+                );
             } else {
-                if ($('#review').val() === '1') {
-                    showReviewInfoCard(
-                        '#textInformReview',
+                // OLD CODE (COMMENTED OUT - RESTORED IF NEEDED):
+                // showInfoCard(
+                //     `#textInform_${uniqueId}`,
+                //     '<i class="fa fa-check-circle"></i> You are the creator',
+                //     "You have full access to edit this data but not review.",
+                //     true
+                // );
+
+                // $label.off('click').on('click', function () {
+                //     Swal.fire({
+                //         icon: 'info',
+                //         title: 'Action Not Allowed',
+                //         text: 'You are the creator of this data and cannot perform a review.',
+                //         confirmButtonText: 'OK'
+                //     });
+                // });
+
+                // NEW CODE: Allow creators to also perform reviews
+                $label.off('click').on('click', function () {
+                    if (currentState === 1) {
+                        Swal.fire('Review Locked', 'Already reviewed. No changes allowed.', 'info');
+                        return;
+                    }
+
+                    Swal.fire({
+                        title: 'Review this data?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes'
+                    }).then(result => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: '<?php echo site_url('Extraction_biosolid/saveReview'); ?>',
+                                method: 'POST',
+                                data: {
+                                    id_one_water_sample: uniqueId.replace('review_', ''),
+                                    user_review: loggedInUser,
+                                    review: 1
+                                },
+                                dataType: 'json',
+                                success: function (response) {
+                                    if (response.status) {
+                                        currentState = 1;
+
+                                        $label
+                                            .text(states[currentState].label)
+                                            .removeClass(colorClasses.join(' '))
+                                            .addClass(states[currentState].class);
+
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Review saved successfully!',
+                                            text: response.message,
+                                            timer: 1500,
+                                            showConfirmButton: false
+                                        }).then(() => {
+                                            // Refresh halaman setelah review berhasil untuk update data
+                                            location.reload();
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Failed to save review',
+                                            text: response.message
+                                        });
+                                    }
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error('AJAX Error: ' + status + error);
+                                    Swal.fire('Error', 'Something went wrong during submission.', 'error');
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'info',
+                                title: 'Review Not Changed',
+                                text: 'No changes were made.',
+                                timer: 2000
+                            });
+                        }
+                    });
+                });
+
+                $label.hover(
+                    function () {
+                        if (currentState === 0) $(this).text('Click to Review');
+                    },
+                    function () {
+                        if (currentState === 0) $(this).text('Unreview');
+                    }
+                );
+
+                // Show different info message for creators
+                if (currentState === 1) {
+                    showInfoCard(
+                        `#textInform_${uniqueId}`,
                         '<i class="fa fa-check-circle"></i> You are the creator',
                         "You have already reviewed this data as the creator.",
                         true
                     );
                 } else {
-                    showReviewInfoCard(
-                        '#textInformReview',
+                    showInfoCard(
+                        `#textInform_${uniqueId}`,
                         '<i class="fa fa-check-circle"></i> You are the creator',
-                        "You have full access to edit and review this data. Hover over the box on the top side to start the review.",
+                        "You have full access to edit and review this data. Hover over the box on the right side to start the review.",
                         true
                     );
                 }
             }
 
-            // Mouse enter/leave effects for review label
-            $('#review_label')
-            .on('mouseenter', function() {
-                if ($('#review').val() !== '1') { 
-                    $(this).text('Review')
-                        .addClass('review-border');
-                }
-            })
-            .on('mouseleave', function() {
-                if ($('#review').val() !== '1') { 
-                    $(this).text('Unreview')
-                        .removeClass('review-border');
-                }
+            $card.find('.close-card').on('click', function () {
+                $card.fadeOut();
             });
+        }
 
-            // Handle cancel review button (for admin users level 1 & 2)
-            const currentUserLevel = '<?php echo $this->session->userdata('id_user_level'); ?>';
+        function showInfoCard(targetSelector, message, description, isSuccess) {
+            let $target = $(targetSelector);
+            $target.find('.statusMessage').html(message);
+            $target.find('.statusDescription').text(description);
+
+            $target.removeClass('card-success card-danger')
+                .addClass(isSuccess ? 'card-success' : 'card-danger')
+                .fadeIn();
+        }
+
+        // Add modal reset for sample modal
+        $('#compose-modal-child').on('hide.bs.modal', function () {
+            // Reset form
+            $(this).find('form')[0].reset();
             
-            // Check review status when page loads
-            if ($('#review').val() === '1') {
-                // If review status = 1 (reviewed), enable cancel button for admin
-                if (currentUserLevel == 1 || currentUserLevel == 2) {
-                    $('#cancelReviewBtn').show().prop('disabled', false).removeClass('disabled-btn');
-                }
-            } else {
-                // If review status = 0 (not reviewed), disable cancel button
-                $('#cancelReviewBtn').hide().prop('disabled', true).addClass('disabled-btn');
-            }
-
-            // Event handler for Cancel Review button
-            $('#cancelReviewBtn').off('click').on('click', function () {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Cancel Review?',
-                    text: 'This will reset the review status so another user can review it again.',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes, cancel it',
-                    cancelButtonText: 'No'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Set review and user_review for cancel
-                        $('#review').val(0);
-                        $('#user_review').val('');
-
-                        // Update label status to Unreview
-                        $('#review_label')
-                            .text('Unreview')
-                            .removeClass()
-                            .addClass('badge review-badge bg-warning unreview');
-
-                        // Disable the Cancel Review button after canceling
-                        $('#cancelReviewBtn').hide().prop('disabled', true).addClass('disabled-btn');
-
-                        // Cancel review via AJAX
-                        cancelReviewData();
-                    }
-                });
-            });
-        }
-
-        // Save review data function
-        function saveReviewData() {
-            const idOneWaterSample = $('#idx_one_water_sample').val();
-            const review = $('#review').val();
-            const userReview = $('#user_review').val();
-
-            $.ajax({
-                url: '<?php echo site_url('Extraction_biosolid/saveReview'); ?>',
-                method: 'POST',
-                data: {
-                    id_one_water_sample: idOneWaterSample,
-                    review: review,
-                    user_review: userReview
-                },
-                dataType: 'json',
-                success: function(response) {
-                    if (response.status === 'success') {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Review saved successfully!',
-                            text: response.message,
-                            timer: 1000,
-                            showConfirmButton: false
-                        }).then(() => {
-                            // Refresh the DataTable and close modal
-                            table.ajax.reload(null, false);
-                            $('#compose-modal').modal('hide');
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Failed to save review',
-                            text: response.message
-                        });
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('AJAX Error: ' + status + error);
-                    Swal.fire('Error', 'Something went wrong during submission.', 'error');
-                }
-            });
-        }
-
-        // Cancel review data function
-        function cancelReviewData() {
-            const idOneWaterSample = $('#idx_one_water_sample').val();
-
-            $.ajax({
-                url: '<?php echo site_url('Extraction_biosolid/cancelReview'); ?>',
-                method: 'POST',
-                data: {
-                    id_one_water_sample: idOneWaterSample
-                },
-                dataType: 'json',
-                success: function (response) {
-                    if (response.status === 'success') {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Review canceled successfully!',
-                            timer: 1000,
-                            showConfirmButton: false
-                        }).then(() => {
-                            // Refresh the DataTable and close modal
-                            table.ajax.reload(null, false);
-                            $('#compose-modal').modal('hide');
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Failed to cancel review',
-                            text: response.message
-                        });
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.error('AJAX Error: ' + status + error);
-                    Swal.fire('Error', 'Something went wrong during cancel.', 'error');
-                }
-            });
-        }
-
-        // Function to show dynamic info card for review
-        function showReviewInfoCard(target, message, description, isSuccess) {
-            // Add dynamic content to the target card
-            $(target).find('.statusMessage').html(message);
-            $(target).find('.statusDescription').text(description);
-
-            // Apply classes based on success or failure
-            if (isSuccess) {
-                $(target).removeClass('card-danger').addClass('card-success');
-            } else {
-                $(target).removeClass('card-success').addClass('card-danger');
-            }
-
-            // Show the info card
-            $(target).fadeIn();
-        }
-
-        // Update review display (simplified version, main logic in initializeReviewSystem)
-        function updateReviewDisplay(review, userReview) {
-            if (review == 1) {
-                $('#review_label').removeClass('bg-warning unreview').addClass('bg-success review').text('Reviewed');
-                
-                // Show cancel button for admin users (level 1 & 2)
-                const currentUserLevel = '<?php echo $this->session->userdata('id_user_level'); ?>';
-                if (currentUserLevel == 1 || currentUserLevel == 2) {
-                    $('#cancelReviewBtn').show();
-                } else {
-                    $('#cancelReviewBtn').hide();
-                }
-                
-                // Update reviewer name display
-                if (userReview) {
-                    $.ajax({
-                        url: '<?php echo site_url('Protozoa/getReviewer'); ?>',
-                        type: 'POST',
-                        data: { user_review: userReview },
-                        dataType: 'json',
-                        success: function(response) {
-                            $('#reviewed_by_label').text(response.full_name || '-');
-                        },
-                        error: function() {
-                            $('#reviewed_by_label').text('-');
-                        }
-                    });
-                } else {
-                    $('#reviewed_by_label').text('-');
-                }
-            } else {
-                $('#review_label').removeClass('bg-success review').addClass('bg-warning unreview').text('Unreview');
-                $('#reviewed_by_label').text('-');
-                $('#cancelReviewBtn').hide();
-            }
-        }
-
-        // Close card handler
-        $(document).on('click', '.close-card', function() {
-            $(this).closest('.textInform').hide();
+            // Reset and hide other_kit field
+            $('#other_kit').val('');
+            $('#other-kit-group').hide();
+            $('#other_kit').prop('required', false);
+            
+            // Reset sequence fields
+            // $('#sequenceCheckbox').prop('checked', false);
+            // $('#sequenceFields').hide();
+            // $('#sequence_id').val('').trigger('change');
+            // $('#species_id').val('');
+            // $('#other_sequence_name').hide().val('');
+            // $('#sequenceHidden').prop('disabled', false);
         });
 
-        // Hide review section when modal is hidden
-        $("#compose-modal").on('hide.bs.modal', function(){
-            $('#review-section').hide();
-            $('#textInformReview').hide();
-        });  
+
+        $('#mytable').on('click', '.btn_edit_child', function() {
+            let barcode_sample = $(this).data('id');
+            // let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';
+            // console.log('user aktif', loggedInUser);
+            $('#mode-child').val('edit');
+            $('#modal-title').html('<i class="fa fa-pencil-square"></i> Sample reception | Update<span id="my-another-cool-loader"></span>');
+            $('#modal-sample-body').html('<div class="text-center py-3"><i class="fa fa-spinner fa-spin"></i> Loading...</div>');
+
+            $.ajax({
+                url: `Extraction_biosolid/get_extraction_child/${barcode_sample}`,
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data); // 🔍 Debugging response di console
+
+                    if (data.error) {
+                        $('#modal-sample-body').html('<div class="text-danger text-center py-3">Data tidak ditemukan</div>');
+                        return;
+                    }
+                    // Mengisi form modal dengan data yang diterima
+                    $('#barcode_sample1').val(data.barcode_sample);
+                    $('#barcode_sample1').attr('readonly', true);
+                    $('#id_sampletype').val(data.id_sampletype);
+                    $('#date_extraction').val(data.date_extraction).trigger('change');
+                    $('#weight').val(data.weight);
+                    $('#id_kit').val(data.id_kit).trigger('change');
+                    $('#kit_lot').val(data.kit_lot);
+                    // Fill typedesc field if available
+                    $('#other_kit').val(data.other_kit || '');    
+                    // Trigger sample type change to show/hide typedesc field
+                    $('#id_kit').trigger('change');
+                    $('#barcode_tube').val(data.barcode_tube);
+                    // $('#fin_volume').val(data.fin_volume);
+                    $('#dna_concentration').val(data.dna_concentration);
+                    $('#cryobox').val(data.cryobox);
+                    $('#id_freez').val(data.freezer);
+                    $('#id_shelf').val(data.shelf);
+                    $('#id_rack').val(data.rack);
+                    $('#id_tray').val(data.tray);
+                    $('#id_row').val(data.rows1);
+                    // Handle sequence type - check for custom_sequence_type first
+                    // if (data.custom_sequence_type) {
+                    //     $('#sequence_id').val('other').trigger('change');
+                    //     $('#other_sequence_name').val(data.custom_sequence_type);
+                    // } else if (data.sequence_id) {
+                    //     $('#sequence_id').val(data.sequence_id);
+                    // }
+                    
+                    // Set the checkbox and handle dependent fields
+                    // if (data.sequence == 1 || data.sequence === '1') {
+                    //     $('#sequenceCheckbox').prop('checked', true);
+                    //     $('#sequenceFields').show();  // Show the dependent fields (sequence_id, species_id)
+                    //     $('#sequenceHidden').prop('disabled', true); // Disable hidden input when checkbox is checked
+                    // } else {
+                    //     $('#sequenceCheckbox').prop('checked', false);
+                    //     $('#sequenceFields').hide();  // Hide the dependent fields (sequence_id, species_id)
+                    //     $('#sequenceHidden').prop('disabled', false); // Enable hidden input when checkbox is unchecked
+                    // }
+                    // $('#species_id').val(data.species_id);
+                    $('#id_col').val(data.columns1);
+                    $('#comments').val(data.comments);
+
+
+                    // Display modal
+                    $('#compose-modal-child').modal('show');
+                    $('#modal-sample-body').html(''); // Clear loading spinner
+                },
+                error: function () {
+                    $('#modal-sample-body').html('<div class="text-danger text-center py-3">Gagal memuat data</div>');
+                }
+            });
+        });
 
         // Handle Sample Type change to show/hide type description field
         $(document).on('change', '#id_kit', function() {
@@ -1634,18 +2143,224 @@
         });
 
         // Initialize on page load
-        $(document).ready(function() {
-            $('#id_kit').trigger('change');
+        // $(document).ready(function() {
+        //     $('#id_kit').trigger('change');
+        //     $('#sequence_id').trigger('change');
+            
+        //     // Initialize sequence hidden field state
+        //     if ($('#sequenceCheckbox').is(':checked')) {
+        //         $('#sequenceHidden').prop('disabled', true);
+        //     } else {
+        //         $('#sequenceHidden').prop('disabled', false);
+        //     }
+        // });
+
+        // Handle Sequence Type change to show/hide custom sequence name field
+        // $(document).on('change', '#sequence_id', function() {
+        //     let selectedValue = $(this).val();
+        //     let other_sequenceInput = $('#other_sequence_name');
+
+        //     // Show field for "Other" sequence type
+        //     if (selectedValue === 'other') {
+        //         other_sequenceInput.show().prop('required', true);
+        //     } else {
+        //         other_sequenceInput.hide().prop('required', false).val(''); // Clear the field when hidden
+        //     }
+        // });
+
+        // Debug form submission to see sequence values
+        // $('form[action*="update_child"]').on('submit', function(e) {
+        //     let formData = new FormData(this);
+        //     let sequenceValues = formData.getAll('sequence');
+        // });
+
+        // Sequence checkbox handler (consolidated - removed duplicate)
+
+        $(document).on('click', '.btn_delete_child', function() {
+            let barcode_sample = $(this).data('id');
+            let url = '<?php echo site_url('Extraction_biosolid/delete_child'); ?>/' + barcode_sample;
+            $('#confirm-modal #id').text(barcode_sample);
+            showConfirmation(url);
         });
 
-        $('#mytable tbody').on('click', 'tr', function () {
-            if ($(this).hasClass('active')) {
-                $(this).removeClass('active');
-            } else {
-                table.$('tr.active').removeClass('active');
-                $(this).addClass('active');
+        // Edit child button handler
+        $(document).on('click', '.btn_edit_child', function() {
+            let barcode_sample = $(this).data('id');
+            
+            // Set modal mode
+            $('#mode-child').val('edit');
+            $('#modal-title').html('<i class="fa fa-pencil-square-o"></i> Extraction biosolids | Update Detail');
+            
+            // Load child data via AJAX
+            $.ajax({
+                url: '<?php echo site_url('Extraction_biosolid/get_extraction_child'); ?>/' + barcode_sample,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    if (data.error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: data.error
+                        });
+                        return;
+                    }
+                    
+                    // Populate form fields
+                    $('#barcode_sample1').val(data.barcode_sample).attr('readonly', true);
+                    $('#id_sampletype').val(data.id_sampletype);
+                    $('#weight').val(data.weight);
+                    $('#date_extraction').val(data.date_extraction);
+                    $('#id_kit').val(data.id_kit);
+                    
+                    // Show/hide other kit field based on kit selection
+                    if (data.id_kit) {
+                        let selectedOption = $('#id_kit option:selected');
+                        let kitType = selectedOption.data('type');
+                        if (kitType && kitType.toLowerCase() === 'other') {
+                            $('#other-kit-group').show();
+                            $('#other_kit').val(data.other_kit || '');
+                        } else {
+                            $('#other-kit-group').hide();
+                            $('#other_kit').val('');
+                        }
+                    }
+                    
+                    $('#kit_lot').val(data.kit_lot);
+                    $('#comments').val(data.comments);
+                    $('#barcode_tube').val(data.barcode_tube);
+                    $('#dna_concentration').val(data.dna_concentration);
+                    $('#cryobox').val(data.cryobox);
+                    
+                    // Set freezer location
+                    $('#id_freez').val(data.freezer);
+                    $('#id_shelf').val(data.shelf);
+                    $('#id_rack').val(data.rack);
+                    $('#id_tray').val(data.tray);
+                    
+                    // Set position
+                    $('#id_row').val(data.rows1);
+                    $('#id_col').val(data.columns1);
+                    
+                    // Show modal
+                    $('#compose-modal-child').modal('show');
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error loading child data:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to load sample data. Please try again.'
+                    });
+                }
+            });
+        });
+
+        $('#mytable').on('click', '.btn_edit', function(){
+            let tr = $(this).parent().parent();
+            let data = table.row(tr).data();
+            let loggedInUser = '<?php echo $this->session->userdata('id_users'); ?>';  // Get the logged-in user from the session or a similar method.
+            $('#mode').val('edit');
+            $('#modal-title').html('<i class="fa fa-pencil-square-o"></i> Extraction biosolids | Update<span id="my-another-cool-loader"></span>');
+            // Set nilai form sesuai dengan parameter yang diterima
+            $('#id_one_water_sample').attr('readonly', true);
+            $('#id_one_water_sample').val(data.id_one_water_sample || '');  // Set ID jika ada
+            $('#id_extraction_biosolid').val(data.id_extraction_biosolid || '');  // Set primary key for update
+            // $('#id_testing_type').val(idTestingTypeFromUrl);
+            $('#id_person').val(data.id_person);
+            
+            // Set old_number_sample and allow editing with min validation
+            $('#old_number_sample').val(data.active_samples);
+            $('#number_sample').val(data.active_samples || '').attr('readonly', false).attr('min', data.active_samples);
+            $('#number_sample_help').show();
+            $('#number_sample_help_text').html('Current: ' + data.active_samples + ' sample(s). You can only add more samples, not reduce.');
+            // $('#user_created').val(data.user_created || '');  // Set barcode jika ada
+            // $('#user_created').attr('readonly', true);
+            // $('#sampletype').attr('readonly', true);
+            // $('#sampletype').val('');
+            // $('#comments').val('');
+            // $('#number_sample').val();
+
+            // Enable or disable the Save button based on user_created value
+            // $('#saveButton').prop('disabled', true);
+            // console.log('test user', data.user_created);
+            // if (data.user_created === loggedInUser) {
+            //     $('#saveButton').prop('disabled', false);  // Enable Save button if user is the same as the one who created
+            //     // $('#textInform').text("You are the creator").addClass("badge-success").prepend('<i class="fa fa-check-circle"></i> ');
+            //     // $('#textInform').removeClass('alert-danger').addClass('alert-success')
+            //     // .html('<i class="fa fa-check-circle"></i> You are the creator. You can edit this data.');
+            //     // Show info card with "You can edit this data"
+            //     showInfoCard('#textInform1', '<i class="fa fa-check-circle"></i> You are the creator', "You have full access to edit this data.", true);
+            // } else {
+            //     $('#saveButton').prop('disabled', true);  // Disable Save button if user is not the same as the one who created
+            //     // $('#textInform').text("You are not the creator").addClass("badge-danger").prepend('<i class="fa fa-exclamation-circle"></i> ');
+            //     showInfoCard('#textInform1', '<i class="fa fa-times-circle"></i> You are not the creator', "You can only view this data and cannot make changes.", false);
+            // }
+            $('#compose-modal').modal('show');
+        });
+        
+        // Form submission validation for Extraction Culture form
+        $(document).on('submit', '#formSample', function(e) {
+            console.log('Extraction culture form submitting, validating...'); // Debug log
+            
+            // Validate number_sample in edit mode
+            if (!validateNumberSample()) {
+                e.preventDefault();
+                console.log('Number of samples validation failed, form submission prevented');
+                return false;
             }
-        })   
-                            
+        });
+        
+        // Validation function for number_sample (only in edit mode)
+        function validateNumberSample() {
+            const mode = $('#mode').val();
+            if (mode !== 'edit') {
+                return true; // Skip validation for insert mode
+            }
+            
+            const oldValue = parseInt($('#old_number_sample').val()) || 0;
+            const newValue = parseInt($('#number_sample').val()) || 0;
+            
+            if (newValue < oldValue) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error',
+                    text: `Number of samples cannot be reduced. Current: ${oldValue}, Entered: ${newValue}`,
+                    confirmButtonText: 'OK'
+                });
+                $('#number_sample').val(oldValue).focus();
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Live validation for number_sample field
+        $(document).on('change keyup', '#number_sample', function() {
+            const mode = $('#mode').val();
+            if (mode !== 'edit') return;
+            
+            const oldValue = parseInt($('#old_number_sample').val()) || 0;
+            const newValue = parseInt($(this).val()) || 0;
+            
+            if (newValue < oldValue) {
+                $(this).addClass('is-invalid');
+                if (!$('#number_sample_error').length) {
+                    $(this).after(`<small id="number_sample_error" class="text-danger">Cannot reduce samples. Minimum: ${oldValue}</small>`);
+                }
+            } else {
+                $(this).removeClass('is-invalid');
+                $('#number_sample_error').remove();
+                
+                // Update help text to show how many samples will be added
+                if (newValue > oldValue) {
+                    const additionalSamples = newValue - oldValue;
+                    $('#number_sample_help_text').html(`Current: ${oldValue} sample(s). Will add <strong>${additionalSamples}</strong> new sample(s).`);
+                } else {
+                    $('#number_sample_help_text').html(`Current: ${oldValue} sample(s). You can only add more samples, not reduce.`);
+                }
+            }
+        });
     });
+
 </script>
