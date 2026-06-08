@@ -1646,6 +1646,8 @@
                                             <th>Sample Type</th>
                                             <th>Weight (g)</th>
                                             <th>Cryobox</th>
+                                            <th>Freezer Location</th>
+                                            <th>Position in Cryobox</th>
                                             <th>Kit Lot</th>
                                             <th>Date Extraction</th>
                                             <th>Comments</th>
@@ -1656,6 +1658,26 @@
 
                         if (data.length > 0) {
                             $.each(data, function (index, extraction) {
+                                // Format Freezer Location
+                                let freezerLocation = '-';
+                                if (extraction.freezer || extraction.shelf || extraction.rack || extraction.tray) {
+                                    let parts = [];
+                                    if (extraction.freezer) parts.push('F' + extraction.freezer);
+                                    if (extraction.shelf) parts.push('S' + extraction.shelf);
+                                    if (extraction.rack) parts.push('R' + extraction.rack);
+                                    if (extraction.tray) parts.push('T' + extraction.tray);
+                                    freezerLocation = parts.join('-');
+                                }
+                                
+                                // Format Position in Cryobox
+                                let position = '-';
+                                if (extraction.rows1 || extraction.columns1) {
+                                    let posParts = [];
+                                    if (extraction.rows1) posParts.push('R' + extraction.rows1);
+                                    if (extraction.columns1) posParts.push('C' + extraction.columns1);
+                                    position = posParts.join('-');
+                                }
+                                
                                 tableContent += `
                                     <tr>
                                         <td>${extraction.barcode_sample ?? '-'}</td>
@@ -1663,6 +1685,8 @@
                                         <td>${extraction.sampletype ?? '-'}</td>
                                         <td>${extraction.weight ?? '-'}</td>
                                         <td>${extraction.cryobox ?? '-'}</td>
+                                        <td>${freezerLocation}</td>
+                                        <td>${position}</td>
                                         <td>${extraction.kit_lot ?? '-'}</td>
                                         <td>${extraction.date_extraction ?? '-'}</td>
                                         <td>${extraction.comments ?? '-'}</td>
@@ -1670,7 +1694,7 @@
                                     </tr>`;
                             });
                         } else {
-                            tableContent += `<tr><td colspan="9" class="text-center">No samples available</td></tr>`;
+                            tableContent += `<tr><td colspan="11" class="text-center">No samples available</td></tr>`;
                         }
 
                         tableContent += `
