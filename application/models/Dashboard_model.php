@@ -281,7 +281,7 @@ class Dashboard_model extends CI_Model
                 LEFT JOIN enterolert_hemoflow ehf ON ehf.enterolert_hemoflow_barcode = srt.barcode AND ehf.flag = 0
                 LEFT JOIN colilert_hemoflow chf ON chf.colilert_hemoflow_barcode = srt.barcode AND chf.flag = 0
                 LEFT JOIN campy_hemoflow ch ON ch.campy_assay_barcode = srt.barcode AND ch.flag = 0
-                LEFT JOIN extraction_biosolid ex ON ex.barcode_sample = srt.barcode AND ex.flag = 0
+                LEFT JOIN extraction_biosolid ex ON ex.extraction_barcode = srt.barcode AND ex.flag = 0
                 LEFT JOIN salmonella_hemoflow sh ON sh.salmonella_assay_barcode = srt.barcode AND sh.flag = 0
                 LEFT JOIN campy_hemoflow_qpcr chq ON chq.campy_assay_barcode = srt.barcode AND chq.flag = 0
                 LEFT JOIN sample_collection sc ON sc.barcode_sample_collection = srt.barcode AND sc.flag = 0
