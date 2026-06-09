@@ -78,9 +78,22 @@
         overflow: visible !important;
         min-height: 270mm !important;
     }
+    
+    /* Default page settings - Portrait untuk page 1 & 2 */
     @page {
         size: A4 portrait;
         margin: 10mm;
+    }
+    
+    /* Landscape orientation khusus untuk page 3 (Analysis Results) - Kertas LEGAL */
+    @page landscape-page {
+        size: legal landscape;
+        margin: 8mm;
+    }
+    
+    /* Apply landscape ke page 3 */
+    .content-wrapper:nth-child(4) {
+        page: landscape-page;
     }
     .box-footer2, .noprint {
         display: none;
@@ -161,7 +174,7 @@
         width: auto;
     }
     
-    /* --- TABEL ANALYSIS PRINT VIEW (Normal - Tanpa Rotasi) --- */
+    /* --- TABEL ANALYSIS PRINT VIEW (LANDSCAPE OPTIMIZED) --- */
     .analysis-table-container {
         width: 100% !important;
         margin-bottom: 8px !important;
@@ -169,26 +182,30 @@
         page-break-inside: avoid !important;
     }
     
-    /* Styling tabel analysis untuk print - disesuaikan dengan screen view */
+    /* Styling tabel analysis untuk print - optimized untuk landscape */
     .analysis-table-container #analysis-results-table {
         width: 100% !important;
         border-collapse: collapse !important;
-        font-size: 7pt !important;
+        font-size: 5.5pt !important; /* Reduced from 7pt */
         border: 1px solid #3c8dbc !important;
         margin: 10px 0 !important;
         page-break-inside: avoid !important;
+        table-layout: auto !important; /* Allow dynamic column sizing */
     }
     
-    /* Cell styling untuk print - sama dengan screen view */
+    /* Cell styling untuk print - optimized spacing */
     .analysis-table-container #analysis-results-table th,
     .analysis-table-container #analysis-results-table td {
         border: 1px solid #3c8dbc !important;
-        padding: 4px 3px !important;
-        font-size: 7pt !important;
+        padding: 3px 2px !important; /* Reduced padding */
+        font-size: 5.5pt !important;
         vertical-align: middle !important;
         text-align: center !important;
         word-wrap: break-word !important;
         white-space: normal !important;
+        max-width: 45px !important; /* Prevent overly wide columns */
+        overflow: hidden !important;
+        hyphens: auto !important; /* Enable hyphenation */
     }
     
     /* Sample column (first column) styling untuk print */
@@ -196,21 +213,25 @@
     .analysis-table-container #analysis-results-table td:first-child {
         text-align: left !important;
         font-weight: bold !important;
-        font-size: 7pt !important;
-        padding: 4px 3px !important;
+        font-size: 5.5pt !important;
+        padding: 3px 2px !important;
+        min-width: 60px !important; /* Ensure sample ID is readable */
+        max-width: 80px !important;
     }
     
-    /* Header styling untuk print - sama dengan screen view */
+    /* Header styling untuk print - compact & readable */
     .analysis-table-container #analysis-results-table th {
         background-color: #f2f2f2 !important;
         font-weight: bold !important;
-        font-size: 6pt !important;
-        padding: 5px 3px !important;
+        font-size: 5pt !important; /* Reduced from 6pt */
+        padding: 4px 2px !important;
         word-break: break-word !important;
-        line-height: 1.1 !important;
+        line-height: 1.05 !important; /* Tighter line height */
         writing-mode: horizontal-tb !important;
         text-orientation: initial !important;
         text-align: center !important;
+        hyphens: auto !important;
+        overflow-wrap: break-word !important;
     }
     
 
@@ -531,6 +552,11 @@
                             alt="Background" />
                     </div>
 
+                    <!-- Print orientation notice (only visible on screen) -->
+                    <div class="noprint" style="background-color: #d9edf7; border: 1px solid #bce8f1; border-radius: 4px; padding: 8px 12px; margin-bottom: 10px; color: #31708f; font-size: 9pt;">
+                        <i class="fa fa-info-circle"></i> <strong>Print Info:</strong> This page will be printed in <strong>Landscape orientation</strong> to fit all analysis columns.
+                    </div>
+
                     <h4 style="margin-bottom: 10px; font-weight: bold;">Analysis Results</h4>
 
                     <?php
@@ -622,44 +648,45 @@
                                             }
                                             
                                             // Enhanced display mapping with Parameter-Method/Sample-Units format
+                                            // Use compact names for better fit in landscape print
                                             $display_mappings = array(
-                                                // 🧫 Campylobacter group
-                                                'Campylobacter-Biosolids' => 'Campylobacter-Biosolids',
-                                                'Campylobacter-Liquids' => 'Campylobacter-Liquids', 
-                                                'Campylobacter-P/A' => 'Campylobacter-P/A',
-                                                'Campy-Hemoflow' => 'Campylobacter-Hemoflow',
-                                                'Campy-Hemoflow-QPCR' => 'Campylobacter-Hemoflow (qPCR)',
+                                                // 🧫 Campylobacter group - Abbreviated
+                                                'Campylobacter-Biosolids' => 'Campy-Biosolids',
+                                                'Campylobacter-Liquids' => 'Campy-Liquids', 
+                                                'Campylobacter-P/A' => 'Campy-P/A',
+                                                'Campy-Hemoflow' => 'Campy-Hemoflow',
+                                                'Campy-Hemoflow-QPCR' => 'Campy-Hemoflow (qPCR)',
                                                 
-                                                // 🦠 E. coli group
+                                                // 🦠 E. coli group - Keep standard names (already short)
                                                 'Colilert-Idexx-Water' => 'Colilert-Idexx-Water',
                                                 'Colilert-Idexx-Biosolids' => 'Colilert-Idexx-Biosolids',
                                                 'Colilert-Hemoflow' => 'Colilert-Hemoflow',
                                                 
-                                                // 🧪 Enterococci group
+                                                // 🧪 Enterococci group - Keep standard names
                                                 'Enterolert-Idexx-Water' => 'Enterolert-Idexx-Water',
                                                 'Enterolert-Idexx-Biosolids' => 'Enterolert-Idexx-Biosolids',
                                                 'Enterolert-Hemoflow' => 'Enterolert-Hemoflow',
                                                 
-                                                // 🧬 Salmonella group
-                                                'Salmonella-Biosolids' => 'Salmonella-Biosolids',
-                                                'Salmonella-Liquids' => 'Salmonella-Liquids',
-                                                'Salmonella-P/A' => 'Salmonella-P/A', 
-                                                'Salmonella-Hemoflow' => 'Salmonella-Hemoflow',
+                                                // 🧬 Salmonella group - Abbreviated
+                                                'Salmonella-Biosolids' => 'Salmo-Biosolids',
+                                                'Salmonella-Liquids' => 'Salmo-Liquids',
+                                                'Salmonella-P/A' => 'Salmo-P/A', 
+                                                'Salmonella-Hemoflow' => 'Salmo-Hemoflow',
                                                 
                                                 // 🩸 Hemoflow Volume
                                                 'Hemoflow' => 'Hemoflow',
                                                 
                                                 // 💧 Moisture Content
-                                                'Moisture_content' => 'Moisture Content',
+                                                'Moisture_content' => 'Moisture',
                                                 
                                                 // 🧬 Protozoa qPCR
-                                                'Protozoa' => 'Protozoa-qPCR',
+                                                'Protozoa' => 'Protozoa',
                                                 
                                                 // 🧬 Sequencing
                                                 'Sequencing' => 'Sequencing',
                                                 
                                                 // 🧭 Microbial Source Tracking
-                                                'Microbial-Source-Tracking' => 'Microbial Source Tracking'
+                                                'Microbial-Source-Tracking' => 'MST'
                                             );
                                             
                                             // Apply mapping - get mapped display name or use original
@@ -837,10 +864,49 @@
             var report_number_to_save = $('#generated_report_number_val').val();
             var report_date_to_save = $('#generated_report_date_val').val();
 
+            // Dynamic font sizing based on column count for print optimization
+            function optimizeTableForPrint() {
+                var $table = $('#analysis-results-table');
+                if ($table.length) {
+                    var columnCount = $table.find('thead tr th').length;
+                    
+                    // Apply dynamic font sizing based on column count
+                    // A4 Landscape can comfortably fit ~15-20 columns with 5.5pt font
+                    if (columnCount > 20) {
+                        // Many columns - use smallest readable font
+                        $table.css('font-size', '4.5pt');
+                        $table.find('th').css('font-size', '4pt');
+                        $table.find('td, th').css('padding', '2px 1px');
+                        $table.find('th, td').css('max-width', '35px');
+                    } else if (columnCount > 15) {
+                        // Medium columns - use reduced font
+                        $table.css('font-size', '5pt');
+                        $table.find('th').css('font-size', '4.5pt');
+                        $table.find('td, th').css('padding', '2px 1.5px');
+                        $table.find('th, td').css('max-width', '40px');
+                    } else {
+                        // Few columns - use standard print font
+                        $table.css('font-size', '5.5pt');
+                        $table.find('th').css('font-size', '5pt');
+                        $table.find('td, th').css('padding', '3px 2px');
+                        $table.find('th, td').css('max-width', '45px');
+                    }
+                    
+                    console.log('Analysis table optimized for print: ' + columnCount + ' columns');
+                }
+            }
+
+            // Optimize on page load
+            optimizeTableForPrint();
+
             // Handle Print button click
             $('#print').on('click', function() {
                 var btn = $(this);
                 btn.prop('disabled', true).text('Printing...'); 
+                
+                // Re-optimize before print
+                optimizeTableForPrint();
+                
                 if (report_number_to_save !== '' && report_date_to_save !== '') {
                     $.ajax({
                         url: '<?php echo site_url("Sample_reception/save_report_details_ajax"); ?>',
