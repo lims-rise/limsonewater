@@ -204,25 +204,27 @@ class Sample_reception extends CI_Controller
             );
 
             if ($needs_generation_and_save) {
+                // Show temporary preview values - actual generation happens when user clicks print
                 $data['report_date_display'] = date('d-M-Y'); 
-                $data['report_number_display'] = $this->Sample_reception_model->generate_new_report_number();
+                $data['report_number_display'] = $this->Sample_reception_model->generate_preview_report_number();
                 
-                $data['report_date_to_send_ajax'] = $data['report_date_display'];
-                $data['report_number_to_send_ajax'] = $data['report_number_display'];
+                // Flag to indicate this data needs to be generated and saved via AJAX
+                $data['needs_ajax_save'] = true;
+                $data['is_temporary'] = true;
             } else {
-
+                // Use existing saved values from database
                 $date_obj_from_db = DateTime::createFromFormat('Y-m-d', $data['report_date']);
                 if ($date_obj_from_db) {
                     $data['report_date_display'] = $date_obj_from_db->format('d-M-Y');
                 } else {
-
                     $data['report_date_display'] = $data['report_date']; 
                     log_message('error', 'Could not convert DB date "' . $data['report_date'] . '" to DD-Mon-YYYY format for display in rep_print.');
                 }
                 $data['report_number_display'] = $data['report_number'];
                 
-                $data['report_date_to_send_ajax'] = ''; 
-                $data['report_number_to_send_ajax'] = ''; 
+                // No AJAX save needed as data already exists
+                $data['needs_ajax_save'] = false;
+                $data['is_temporary'] = false;
             }
             
             $this->template->load('template','sample_reception/index_rep', $data);
@@ -287,25 +289,27 @@ class Sample_reception extends CI_Controller
             );
 
             if ($needs_generation_and_save) {
+                // Show temporary preview values - actual generation happens when user clicks print
                 $data['report_date_display'] = date('d-M-Y'); 
-                $data['report_number_display'] = $this->Sample_reception_model->generate_new_report_number();
+                $data['report_number_display'] = $this->Sample_reception_model->generate_preview_report_number();
                 
-                $data['report_date_to_send_ajax'] = $data['report_date_display'];
-                $data['report_number_to_send_ajax'] = $data['report_number_display'];
+                // Flag to indicate this data needs to be generated and saved via AJAX
+                $data['needs_ajax_save'] = true;
+                $data['is_temporary'] = true;
             } else {
-
+                // Use existing saved values from database
                 $date_obj_from_db = DateTime::createFromFormat('Y-m-d', $data['report_date']);
                 if ($date_obj_from_db) {
                     $data['report_date_display'] = $date_obj_from_db->format('d-M-Y');
                 } else {
-
                     $data['report_date_display'] = $data['report_date']; 
                     log_message('error', 'Could not convert DB date "' . $data['report_date'] . '" to DD-Mon-YYYY format for display in rep_print2.');
                 }
                 $data['report_number_display'] = $data['report_number'];
                 
-                $data['report_date_to_send_ajax'] = ''; 
-                $data['report_number_to_send_ajax'] = ''; 
+                // No AJAX save needed as data already exists
+                $data['needs_ajax_save'] = false;
+                $data['is_temporary'] = false;
             }
             
             // Get export data for the view
@@ -318,6 +322,35 @@ class Sample_reception extends CI_Controller
         }
     }
 
+    public function reset_report_number_ajax() {
+        if (!$this->input->is_ajax_request() || !$this->input->method('post')) {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid request.']);
+            return;
+        }
+
+        $id_project = $this->input->post('id_project', TRUE);
+
+        if (empty($id_project)) {
+            echo json_encode(['status' => 'error', 'message' => 'Missing project ID.']);
+            return;
+        }
+
+        // Reset report number and date to NULL
+        $result = $this->Sample_reception_model->reset_report_number($id_project);
+
+        if ($result) {
+            echo json_encode([
+                'status' => 'success', 
+                'message' => 'Report number has been reset successfully. You can now generate a new report number.'
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'error', 
+                'message' => 'Failed to reset report number. Please try again.'
+            ]);
+        }
+    }
+
     public function save_report_details_ajax() {
         if (!$this->input->is_ajax_request() || !$this->input->method('post')) {
             echo json_encode(['status' => 'error', 'message' => 'Invalid request.']);
@@ -325,31 +358,29 @@ class Sample_reception extends CI_Controller
         }
 
         $id_project = $this->input->post('id_project', TRUE);
-        $report_number_to_save = $this->input->post('report_number', TRUE);
-        $report_date_from_frontend = $this->input->post('report_date', TRUE); 
 
-        if (empty($id_project) || empty($report_number_to_save) || empty($report_date_from_frontend)) {
-            echo json_encode(['status' => 'error', 'message' => 'Missing data for saving report details.']);
+        if (empty($id_project)) {
+            echo json_encode(['status' => 'error', 'message' => 'Missing project ID.']);
             return;
         }
 
-        $date_obj = DateTime::createFromFormat('d-M-Y', $report_date_from_frontend);
-        
-       
-        if ($date_obj) {
-            $report_date_for_db = $date_obj->format('Y-m-d'); 
-        } else {
-            log_message('error', 'Failed to parse date from frontend: ' . $report_date_from_frontend);
-            echo json_encode(['status' => 'error', 'message' => 'Invalid date format received.']);
-            return;
-        }
+        // Generate and save report number atomically to prevent race condition
+        $result = $this->Sample_reception_model->generate_and_save_report_number_atomic($id_project);
 
-        $success = $this->Sample_reception_model->update_report_details_if_empty($id_project, $report_number_to_save, $report_date_for_db);
-
-        if ($success) {
-            echo json_encode(['status' => 'success', 'message' => 'Report details saved successfully.']);
+        if ($result['success']) {
+            echo json_encode([
+                'status' => 'success', 
+                'message' => 'Report details generated and saved successfully.',
+                'report_number' => $result['report_number'],
+                'report_date' => $result['report_date']
+            ]);
         } else {
-            echo json_encode(['status' => 'info', 'message' => 'Report details already exist or could not be updated.']);
+            echo json_encode([
+                'status' => 'info', 
+                'message' => $result['message'],
+                'report_number' => $result['report_number'],
+                'report_date' => $result['report_date']
+            ]);
         }
     }
 
