@@ -3,6 +3,9 @@
 <head>
     <title>Print OWL Report 2 - <?php echo 'Print_OWL_Report2_'.$id_project; ?></title>
     
+    <!-- SweetAlert2 CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <link rel="stylesheet" href="<?php echo base_url('assets/adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/adminlte/bower_components/font-awesome/css/font-awesome.min.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/adminlte/dist/css/AdminLTE.min.css'); ?>">
@@ -769,12 +772,20 @@
                             document.title = '<?php echo 'Print_OWL_Report_';?>' + id_project;
                             window.print();
                         } else {
-                            alert('Failed to finalize report details: ' + response.message);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Generation Failed',
+                                text: response.message || 'Failed to finalize report details'
+                            });
                         }
                     },
                     error: function(xhr, status, error) {
                         console.error('AJAX Error:', status, error);
-                        alert('An error occurred while finalizing report details. Please try again. (' + status + ')');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Network Error',
+                            text: 'An error occurred while finalizing report details. Please try again.'
+                        });
                     },
                     complete: function() {
                         btn.prop('disabled', false).html('<i class="fa fa-check"></i> Finalize & Print');
@@ -792,37 +803,87 @@
             // Handle Reset Report Number button click
             $('#reset-report').on('click', function() {
                 var btn = $(this);
+                var currentReportNumber = $('#display_report_number').text();
                 
-                // Show confirmation dialog
-                if (confirm('Are you sure you want to reset the report number?\n\nThis will:\n• Remove the current report number (' + $('#display_report_number').text() + ')\n• Allow you to generate a new report number\n• This action cannot be undone\n\nProceed?')) {
-                    btn.prop('disabled', true).text('Resetting...'); 
-                    
-                    // Call AJAX to reset report number
-                    $.ajax({
-                        url: '<?php echo site_url("Sample_reception/reset_report_number_ajax"); ?>',
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {
-                            id_project: id_project
-                        },
-                        success: function(response) {
-                            console.log('Reset AJAX Success:', response);
-                            if (response.status === 'success') {
-                                // Reload the page to show preview mode again
-                                location.reload();
-                            } else {
-                                alert('Failed to reset report number: ' + response.message);
+                // Show SweetAlert confirmation dialog
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Reset Report Number?',
+                    html: `
+                        <div style="text-align: left; margin: 15px 0;">
+                            <p><strong>This action will:</strong></p>
+                            <ul style="margin-left: 20px;">
+                                <li>Remove the current report number (<strong>${currentReportNumber}</strong>)</li>
+                                <li>Allow you to generate a new report number</li>
+                                <li><strong style="color: #e74c3c;">This action cannot be undone</strong></li>
+                            </ul>
+                        </div>
+                    `,
+                    showCancelButton: true,
+                    confirmButtonColor: '#f39c12',
+                    cancelButtonColor: '#95a5a6',
+                    confirmButtonText: 'Yes, Reset It!',
+                    cancelButtonText: 'Cancel',
+                    focusCancel: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Show loading
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Resetting...',
+                            text: 'Please wait while we reset the report number',
+                            allowOutsideClick: false,
+                            didOpen: () => {
+                                Swal.showLoading();
                             }
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('Reset AJAX Error:', status, error);
-                            alert('An error occurred while resetting report number. Please try again. (' + status + ')');
-                        },
-                        complete: function() {
-                            btn.prop('disabled', false).html('<i class="fa fa-refresh"></i> Reset Report Number');
-                        }
-                    });
-                }
+                        });
+                        
+                        btn.prop('disabled', true).text('Resetting...'); 
+                        
+                        // Call AJAX to reset report number
+                        $.ajax({
+                            url: '<?php echo site_url("Sample_reception/reset_report_number_ajax"); ?>',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {
+                                id_project: id_project
+                            },
+                            success: function(response) {
+                                console.log('Reset AJAX Success:', response);
+                                if (response.status === 'success') {
+                                    // Show success message then reload
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Reset Successful!',
+                                        text: 'Report number has been reset. You can now generate a new report number.',
+                                        timer: 2000,
+                                        showConfirmButton: false
+                                    }).then(() => {
+                                        // Reload the page to show preview mode again
+                                        location.reload();
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Reset Failed',
+                                        text: response.message || 'Failed to reset report number'
+                                    });
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Reset AJAX Error:', status, error);
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Network Error',
+                                    text: 'An error occurred while resetting report number. Please try again.'
+                                });
+                            },
+                            complete: function() {
+                                btn.prop('disabled', false).html('<i class="fa fa-refresh"></i> Reset Report Number');
+                            }
+                        });
+                    }
+                });
                 
                 return false;
             });
@@ -851,7 +912,11 @@
                                     // Data exists, proceed with CSV export
                                     window.location.href = '<?php echo site_url('sample_reception/export_csv/'); ?>' + id_project;
                                 } else {
-                                    alert('No data found for this project. Cannot export CSV.');
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: 'No Data',
+                                        text: 'No data found for this project. Cannot export CSV.'
+                                    });
                                 }
                             },
                             error: function() {
