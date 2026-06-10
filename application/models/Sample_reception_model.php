@@ -1011,6 +1011,153 @@ class Sample_reception_model extends CI_Model
         return $response;
     }
 
+    function reset_report_number($id_project) {
+        // Reset report_number and report_date to NULL
+        $update_data = array(
+            'report_number' => null,
+            'report_date' => null
+        );
+        
+        $this->db->where($this->id, $id_project);
+        $result = $this->db->update($this->table, $update_data);
+        
+        return $result && $this->db->affected_rows() > 0;
+    }
+
+    function generate_preview_report_number() {
+        // Generate a preview report number (next expected sequence) without saving to database
+        $current_year_short = date('y');
+        $prefix = 'M' . $current_year_short;
+
+        $this->db->select('MAX(CAST(SUBSTRING(report_number, 5) AS UNSIGNED)) AS max_sequence');
+        $this->db->where('report_number REGEXP "^M[0-9]{2}-[0-9]{5}$"'); 
+        $this->db->where('SUBSTRING(report_number, 2, 2) =', $current_year_short); 
+        $query = $this->db->get($this->table);
+        $result = $query->row();
+
+        $next_sequence = 1;
+        if ($result && $result->max_sequence !== null) {
+            $next_sequence = $result->max_sequence + 1;
+        }
+        
+        return $prefix . '-' . sprintf('%05d', $next_sequence);
+    }
+
+    function generate_and_save_report_number_atomic($id_project) {
+        // Start transaction for atomicity
+        $this->db->trans_start();
+        
+        try {
+            // First check if report already has number and date
+            $this->db->select('report_number, report_date');
+            $this->db->where($this->id, $id_project);
+            $query = $this->db->get($this->table);
+            $existing = $query->row();
+            
+            $has_report_number = false;
+            $has_report_date = false;
+            
+            if ($existing) {
+                $has_report_number = !empty($existing->report_number) && $existing->report_number !== null && $existing->report_number !== '';
+                $has_report_date = !empty($existing->report_date) && $existing->report_date !== null && $existing->report_date !== '' && trim($existing->report_date) !== '0000-00-00';
+                
+                // If already has both report_number and report_date, return existing values
+                if ($has_report_number && $has_report_date) {
+                    $this->db->trans_complete();
+                    
+                    $date_obj = DateTime::createFromFormat('Y-m-d', $existing->report_date);
+                    $formatted_date = $date_obj ? $date_obj->format('d-M-Y') : $existing->report_date;
+                    
+                    return array(
+                        'success' => false,
+                        'message' => 'Report details already exist.',
+                        'report_number' => $existing->report_number,
+                        'report_date' => $formatted_date
+                    );
+                }
+            }
+            
+            // Generate new report number using the same logic as before
+            $current_year_short = date('y');
+            $prefix = 'M' . $current_year_short;
+
+            // Lock the table to prevent race condition during number generation
+            // Use SELECT ... FOR UPDATE to lock rows being read
+            $this->db->query('LOCK TABLES ' . $this->table . ' WRITE');
+            
+            $this->db->select('MAX(CAST(SUBSTRING(report_number, 5) AS UNSIGNED)) AS max_sequence');
+            $this->db->where('report_number REGEXP "^M[0-9]{2}-[0-9]{5}$"'); 
+            $this->db->where('SUBSTRING(report_number, 2, 2) =', $current_year_short); 
+            $query = $this->db->get($this->table);
+            $result = $query->row();
+
+            $next_sequence = 1;
+            if ($result && $result->max_sequence !== null) {
+                $next_sequence = $result->max_sequence + 1;
+            }
+            
+            $new_report_number = $prefix . '-' . sprintf('%05d', $next_sequence);
+            $new_report_date = date('Y-m-d');
+            
+            // Update the project with the new report number and date
+            $update_data = array();
+            if (!$has_report_number) {
+                $update_data['report_number'] = $new_report_number;
+            }
+            if (!$has_report_date) {
+                $update_data['report_date'] = $new_report_date;
+            }
+            
+            if (!empty($update_data)) {
+                $this->db->where($this->id, $id_project);
+                $this->db->update($this->table, $update_data);
+            }
+            
+            // Unlock tables
+            $this->db->query('UNLOCK TABLES');
+            
+            // Complete transaction
+            $this->db->trans_complete();
+            
+            if ($this->db->trans_status() === FALSE) {
+                return array(
+                    'success' => false,
+                    'message' => 'Failed to save report details.',
+                    'report_number' => '',
+                    'report_date' => ''
+                );
+            }
+            
+            // Return the generated values (use existing if available, otherwise new generated)
+            $final_report_number = $has_report_number ? $existing->report_number : $new_report_number;
+            $final_report_date_formatted = $has_report_date ? 
+                (DateTime::createFromFormat('Y-m-d', $existing->report_date) ? 
+                    DateTime::createFromFormat('Y-m-d', $existing->report_date)->format('d-M-Y') : 
+                    $existing->report_date) : 
+                date('d-M-Y');
+                
+            return array(
+                'success' => true,
+                'message' => 'Report details generated and saved successfully.',
+                'report_number' => $final_report_number,
+                'report_date' => $final_report_date_formatted
+            );
+            
+        } catch (Exception $e) {
+            // Unlock tables in case of error
+            $this->db->query('UNLOCK TABLES');
+            $this->db->trans_rollback();
+            
+            log_message('error', 'Error in generate_and_save_report_number_atomic: ' . $e->getMessage());
+            return array(
+                'success' => false,
+                'message' => 'An error occurred while generating report details.',
+                'report_number' => '',
+                'report_date' => ''
+            );
+        }
+    }
+
     function generate_new_report_number() {
         $current_year_short = date('y');
         $prefix = 'M' . $current_year_short;

@@ -98,6 +98,9 @@
     .box-footer2, .noprint {
         display: none;
     }
+    .temporary-indicator {
+        display: none !important;
+    }
     table {
         width: 100%;
         border-collapse: collapse;
@@ -347,7 +350,21 @@
 
     <div class="noprint">
         <div class="modal-footer clearfix">
-            <button id='print' class="btn btn-primary no-print"><i class="fa fa-print"></i> Print</button>
+            <?php if (isset($is_temporary) && $is_temporary): ?>
+            <div style="float: left; color: white; font-size: 12px; line-height: 34px; margin-left: 235px;">
+                <i class="fa fa-info-circle"></i> 
+                <strong>Preview Mode:</strong> 
+                Use "Finalize & Print" to assign permanent report number.
+            </div>
+            <?php endif; ?>
+            
+            <?php if (isset($is_temporary) && $is_temporary): ?>
+                <button id='print-test' class="btn btn-info no-print"><i class="fa fa-print"></i> Print (Test)</button>
+                <button id='print-final' class="btn btn-success no-print"><i class="fa fa-check"></i> Finalize & Print</button>
+            <?php else: ?>
+                <button id='print' class="btn btn-primary no-print"><i class="fa fa-print"></i> Print</button>
+                <button id='reset-report' class="btn btn-warning no-print"><i class="fa fa-refresh"></i> Reset Report Number</button>
+            <?php endif; ?>
             <button id='close' class="btn btn-warning" onclick="javascript:history.go(-1);"><i class="fa fa-times"></i> Close</button> 
         </div>
     </div>
@@ -370,8 +387,6 @@
                     </div>
 
                     <input type='hidden' id='id_project' value='<?php echo $id_project; ?>'>
-                    <input type='hidden' id='generated_report_number_val' value='<?php echo htmlspecialchars($report_number_display ?? ''); ?>'>
-                    <input type='hidden' id='generated_report_date_val' value='<?php echo htmlspecialchars($report_date_display ?? ''); ?>'>
                     
                     <div style="display: flex; justify-content: space-between; width: 100%; margin-bottom: 5px;">
                         <div style="width: 49%;">
@@ -381,12 +396,18 @@
                                         <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4; white-space: nowrap;" align="left">Report Number</td>
                                         <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4;" align="left">
                                             <span id="display_report_number"><?php echo htmlspecialchars($report_number_display ?? ''); ?></span>
+                                            <?php if (isset($is_temporary) && $is_temporary): ?>
+                                                <span class="temporary-indicator noprint" style="color: #f39c12; font-size: 9px; margin-left: 5px; vertical-align: baseline; line-height: 1.4;">(Temporary - Final number assigned on print)</span>
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4; white-space: nowrap;" align="left">Report issue date</td>
                                         <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4;" align="left">
                                             <span id="display_report_date"><?php echo htmlspecialchars($report_date_display ?? ''); ?></span>
+                                            <?php if (isset($is_temporary) && $is_temporary): ?>
+                                                <span class="temporary-indicator noprint" style="color: #f39c12; font-size: 9px; margin-left: 5px;"></span>
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
                                     <tr>
@@ -861,8 +882,7 @@
 
         $(document).ready(function() {
             var id_project = $('#id_project').val();
-            var report_number_to_save = $('#generated_report_number_val').val();
-            var report_date_to_save = $('#generated_report_date_val').val();
+            var needs_ajax_save = <?php echo isset($needs_ajax_save) && $needs_ajax_save ? 'true' : 'false'; ?>;
 
             // Dynamic font sizing based on column count for print optimization
             function optimizeTableForPrint() {
@@ -899,7 +919,77 @@
             // Optimize on page load
             optimizeTableForPrint();
 
-            // Handle Print button click
+            // Handle Test Print button click (no save to database)
+            $('#print-test').on('click', function() {
+                var btn = $(this);
+                btn.prop('disabled', true).text('Printing...'); 
+                
+                // Re-optimize before print
+                optimizeTableForPrint();
+                
+                // Print without saving to database (test print)
+                document.title = '<?php echo 'Print_OWL_Report_';?>' + id_project;
+                window.print();
+                
+                btn.prop('disabled', false).html('<i class="fa fa-print"></i> Print (Test)');
+            });
+            
+            // Handle Final Print button click (save to database)
+            $('#print-final').on('click', function() {
+                var btn = $(this);
+                btn.prop('disabled', true).text('Finalizing...'); 
+                
+                // Re-optimize before print
+                optimizeTableForPrint();
+                
+                // Generate and save report number/date via AJAX
+                $.ajax({
+                    url: '<?php echo site_url("Sample_reception/save_report_details_ajax"); ?>',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        id_project: id_project
+                    },
+                    success: function(response) {
+                        console.log('AJAX Success:', response);
+                        if (response.status === 'success' || response.status === 'info') {
+                            // Update display with the generated/existing values
+                            $('#display_report_number').text(response.report_number);
+                            $('#display_report_date').text(response.report_date);
+                            
+                            // Remove temporary indicators
+                            $('.temporary-indicator').remove();
+                            
+                            // Switch to normal print button mode
+                            $('.modal-footer').html(
+                                '<button id="print" class="btn btn-primary no-print"><i class="fa fa-print"></i> Print</button>' +
+                                '<button id="close" class="btn btn-warning" onclick="javascript:history.go(-1);"><i class="fa fa-times"></i> Close</button>'
+                            );
+                            
+                            // Add new print handler for normal mode
+                            $('#print').on('click', function() {
+                                optimizeTableForPrint();
+                                document.title = '<?php echo 'Print_OWL_Report_';?>' + id_project;
+                                window.print();
+                            });
+                            
+                            document.title = '<?php echo 'Print_OWL_Report_';?>' + id_project;
+                            window.print();
+                        } else {
+                            alert('Failed to finalize report details: ' + response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX Error:', status, error);
+                        alert('An error occurred while finalizing report details. Please try again. (' + status + ')');
+                    },
+                    complete: function() {
+                        btn.prop('disabled', false).html('<i class="fa fa-check"></i> Finalize & Print');
+                    }
+                });
+            });
+
+            // Handle Print button click (for already finalized reports)
             $('#print').on('click', function() {
                 var btn = $(this);
                 btn.prop('disabled', true).text('Printing...'); 
@@ -907,40 +997,45 @@
                 // Re-optimize before print
                 optimizeTableForPrint();
                 
-                if (report_number_to_save !== '' && report_date_to_save !== '') {
+                // Report already finalized, just print
+                document.title = '<?php echo 'Print_OWL_Report_';?>' + id_project;
+                window.print();
+                btn.prop('disabled', false).html('<i class="fa fa-print"></i> Print');
+            });
+            
+            // Handle Reset Report Number button click
+            $('#reset-report').on('click', function() {
+                var btn = $(this);
+                
+                // Show confirmation dialog
+                if (confirm('Are you sure you want to reset the report number?\n\nThis will:\n• Remove the current report number (' + $('#display_report_number').text() + ')\n• Allow you to generate a new report number\n• This action cannot be undone\n\nProceed?')) {
+                    btn.prop('disabled', true).text('Resetting...'); 
+                    
+                    // Call AJAX to reset report number
                     $.ajax({
-                        url: '<?php echo site_url("Sample_reception/save_report_details_ajax"); ?>',
+                        url: '<?php echo site_url("Sample_reception/reset_report_number_ajax"); ?>',
                         type: 'POST',
                         dataType: 'json',
                         data: {
-                            id_project: id_project,
-                            report_number: report_number_to_save,
-                            report_date: report_date_to_save 
+                            id_project: id_project
                         },
                         success: function(response) {
-                            console.log('AJAX Success:', response);
-                            if (response.status === 'success' || response.status === 'info') {
-                                $('#display_report_number').text(report_number_to_save);
-                                $('#display_report_date').text(report_date_to_save);
-                                
-                                document.title = '<?php echo 'Print_OWL_Report_';?>' + id_project;
-                                window.print();
+                            console.log('Reset AJAX Success:', response);
+                            if (response.status === 'success') {
+                                // Reload the page to show preview mode again
+                                location.reload();
                             } else {
-                                alert('Failed to save report details: ' + response.message);
+                                alert('Failed to reset report number: ' + response.message);
                             }
                         },
                         error: function(xhr, status, error) {
-                            console.error('AJAX Error:', status, error);
-                            alert('An error occurred while saving report details. Please try again. (' + status + ')');
+                            console.error('Reset AJAX Error:', status, error);
+                            alert('An error occurred while resetting report number. Please try again. (' + status + ')');
                         },
                         complete: function() {
-                            btn.prop('disabled', false).html('<i class="fa fa-print"></i> Print');
+                            btn.prop('disabled', false).html('<i class="fa fa-refresh"></i> Reset Report Number');
                         }
                     });
-                } else {
-                    document.title = '<?php echo 'Print_OWL_Report_';?>' + id_project;
-                    window.print();
-                    btn.prop('disabled', false).html('<i class="fa fa-print"></i> Print');
                 }
             });
 

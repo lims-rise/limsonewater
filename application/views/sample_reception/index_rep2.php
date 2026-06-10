@@ -166,8 +166,23 @@
 
     <div class="noprint">
         <div class="modal-footer clearfix">
-            <button id='export-csv' class="btn btn-success no-print"><i class="fa fa-file-excel-o"></i> Export to CSV</button>
-            <button id='print' class="btn btn-primary no-print"><i class="fa fa-print"></i> Print</button>
+            <?php if (isset($is_temporary) && $is_temporary): ?>
+            <div style="float: left; color: #f39c12; font-size: 12px; line-height: 34px;">
+                <i class="fa fa-info-circle"></i> 
+                <strong>Preview Mode:</strong> 
+                Use "Finalize & Print" to assign permanent report number.
+            </div>
+            <?php endif; ?>
+            
+            <?php if (isset($is_temporary) && $is_temporary): ?>
+                <button id='export-csv' class="btn btn-success no-print"><i class="fa fa-file-excel-o"></i> Export to CSV</button>
+                <button id='print-test' class="btn btn-info no-print"><i class="fa fa-print"></i> Print (Test)</button>
+                <button id='print-final' class="btn btn-success no-print"><i class="fa fa-check"></i> Finalize & Print</button>
+            <?php else: ?>
+                <button id='export-csv' class="btn btn-success no-print"><i class="fa fa-file-excel-o"></i> Export to CSV</button>
+                <button id='print' class="btn btn-primary no-print"><i class="fa fa-print"></i> Print</button>
+                <button id='reset-report' class="btn btn-warning no-print"><i class="fa fa-refresh"></i> Reset Report Number</button>
+            <?php endif; ?>
             <button id='close' class="btn btn-warning" onclick="javascript:history.go(-1);"><i class="fa fa-times"></i> Close</button> 
         </div>
     </div>
@@ -190,8 +205,6 @@
                     </div>
 
                     <input type='hidden' id='id_project' value='<?php echo $id_project; ?>'>
-                    <input type='hidden' id='generated_report_number_val' value='<?php echo htmlspecialchars($report_number_display ?? ''); ?>'>
-                    <input type='hidden' id='generated_report_date_val' value='<?php echo htmlspecialchars($report_date_display ?? ''); ?>'>
                     
                     <div style="display: flex; justify-content: space-between; width: 100%; margin-bottom: 5px;">
                         <div style="width: 49%;">
@@ -201,12 +214,18 @@
                                         <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4; white-space: nowrap;" align="left">Report Number</td>
                                         <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4;" align="left">
                                             <span id="display_report_number"><?php echo htmlspecialchars($report_number_display ?? ''); ?></span>
+                                            <?php if (isset($is_temporary) && $is_temporary): ?>
+                                                <span class="temporary-indicator noprint" style="color: #f39c12; font-size: 9px; margin-left: 5px; vertical-align: baseline; line-height: 1.4;">(Temporary - Final number assigned on print)</span>
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4; white-space: nowrap;" align="left">Report issue date</td>
                                         <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4;" align="left">
                                             <span id="display_report_date"><?php echo htmlspecialchars($report_date_display ?? ''); ?></span>
+                                            <?php if (isset($is_temporary) && $is_temporary): ?>
+                                                <span class="temporary-indicator noprint" style="color: #f39c12; font-size: 9px; margin-left: 5px; vertical-align: baseline; line-height: 1.4;">(Temporary - Final date assigned on print)</span>
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
                                     <tr>
@@ -692,8 +711,119 @@
 
     <script>
         $(document).ready(function() {
-            $('#print').click(function () {
+            var needs_ajax_save = <?php echo isset($needs_ajax_save) && $needs_ajax_save ? 'true' : 'false'; ?>;
+            var is_temporary = <?php echo isset($is_temporary) && $is_temporary ? 'true' : 'false'; ?>;
+            var id_project = $('#id_project').val();
+            
+            // Handle Test Print button click (no save to database)
+            $('#print-test').on('click', function() {
+                var btn = $(this);
+                btn.prop('disabled', true).text('Printing...'); 
+                
+                // Print without saving to database (test print)
+                document.title = '<?php echo 'Print_OWL_Report_';?>' + id_project;
                 window.print();
+                
+                btn.prop('disabled', false).html('<i class="fa fa-print"></i> Print (Test)');
+            });
+            
+            // Handle Final Print button click (save to database)
+            $('#print-final').on('click', function() {
+                var btn = $(this);
+                btn.prop('disabled', true).text('Finalizing...'); 
+                
+                // Generate and save report number/date via AJAX
+                $.ajax({
+                    url: '<?php echo site_url("Sample_reception/save_report_details_ajax"); ?>',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        id_project: id_project
+                    },
+                    success: function(response) {
+                        console.log('AJAX Success:', response);
+                        if (response.status === 'success' || response.status === 'info') {
+                            // Update display with the generated/existing values
+                            $('#display_report_number').text(response.report_number);
+                            $('#display_report_date').text(response.report_date);
+                            
+                            // Remove temporary indicators
+                            $('.temporary-indicator').remove();
+                            
+                            // Switch to normal print button mode
+                            $('.modal-footer').html(
+                                '<button id="export-csv" class="btn btn-success no-print"><i class="fa fa-file-excel-o"></i> Export to CSV</button>' +
+                                '<button id="print" class="btn btn-primary no-print"><i class="fa fa-print"></i> Print</button>' +
+                                '<button id="close" class="btn btn-warning" onclick="javascript:history.go(-1);"><i class="fa fa-times"></i> Close</button>'
+                            );
+                            
+                            // Re-bind export CSV handler
+                            bindExportCsvHandler();
+                            
+                            // Add new print handler for normal mode
+                            $('#print').on('click', function() {
+                                document.title = '<?php echo 'Print_OWL_Report_';?>' + id_project;
+                                window.print();
+                            });
+                            
+                            document.title = '<?php echo 'Print_OWL_Report_';?>' + id_project;
+                            window.print();
+                        } else {
+                            alert('Failed to finalize report details: ' + response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX Error:', status, error);
+                        alert('An error occurred while finalizing report details. Please try again. (' + status + ')');
+                    },
+                    complete: function() {
+                        btn.prop('disabled', false).html('<i class="fa fa-check"></i> Finalize & Print');
+                    }
+                });
+            });
+
+            $('#print').click(function () {
+                // For finalized reports, just print
+                document.title = '<?php echo 'Print_OWL_Report_';?>' + id_project;
+                window.print();
+                return false;
+            });
+            
+            // Handle Reset Report Number button click
+            $('#reset-report').on('click', function() {
+                var btn = $(this);
+                
+                // Show confirmation dialog
+                if (confirm('Are you sure you want to reset the report number?\n\nThis will:\n• Remove the current report number (' + $('#display_report_number').text() + ')\n• Allow you to generate a new report number\n• This action cannot be undone\n\nProceed?')) {
+                    btn.prop('disabled', true).text('Resetting...'); 
+                    
+                    // Call AJAX to reset report number
+                    $.ajax({
+                        url: '<?php echo site_url("Sample_reception/reset_report_number_ajax"); ?>',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            id_project: id_project
+                        },
+                        success: function(response) {
+                            console.log('Reset AJAX Success:', response);
+                            if (response.status === 'success') {
+                                // Reload the page to show preview mode again
+                                location.reload();
+                            } else {
+                                alert('Failed to reset report number: ' + response.message);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Reset AJAX Error:', status, error);
+                            alert('An error occurred while resetting report number. Please try again. (' + status + ')');
+                        },
+                        complete: function() {
+                            btn.prop('disabled', false).html('<i class="fa fa-refresh"></i> Reset Report Number');
+                        }
+                    });
+                }
+                
                 return false;
             });
 
@@ -702,67 +832,53 @@
                 return false;
             });
 
-            // Export to CSV functionality with better error handling
-            $('#export-csv').click(function() {
-                var id_project = $('#id_project').val();
-                if (id_project) {
-                    // Show loading indicator
-                    var originalText = $(this).text();
-                    $(this).text('Exporting...').prop('disabled', true);
-                    
-                    // Use AJAX to check if data exists first
-                    $.ajax({
-                        type: 'GET',
-                        url: '<?php echo site_url('sample_reception/check_export_data/'); ?>' + id_project,
-                        dataType: 'json',
-                        success: function(response) {
-                            if (response.has_data) {
-                                // Data exists, proceed with CSV export
+            // Function to bind export CSV handler
+            function bindExportCsvHandler() {
+                $('#export-csv').click(function() {
+                    var id_project = $('#id_project').val();
+                    if (id_project) {
+                        // Show loading indicator
+                        var originalText = $(this).text();
+                        $(this).text('Exporting...').prop('disabled', true);
+                        
+                        // Use AJAX to check if data exists first
+                        $.ajax({
+                            type: 'GET',
+                            url: '<?php echo site_url('sample_reception/check_export_data/'); ?>' + id_project,
+                            dataType: 'json',
+                            success: function(response) {
+                                if (response.has_data) {
+                                    // Data exists, proceed with CSV export
+                                    window.location.href = '<?php echo site_url('sample_reception/export_csv/'); ?>' + id_project;
+                                } else {
+                                    alert('No data found for this project. Cannot export CSV.');
+                                }
+                            },
+                            error: function() {
+                                // If check fails, try direct export anyway
                                 window.location.href = '<?php echo site_url('sample_reception/export_csv/'); ?>' + id_project;
-                            } else {
-                                alert('No data found for this project. Cannot export CSV.');
+                            },
+                            complete: function() {
+                                // Reset button state after a delay
+                                setTimeout(function() {
+                                    $('#export-csv').text(originalText).prop('disabled', false);
+                                }, 2000);
                             }
-                        },
-                        error: function() {
-                            // If check fails, try direct export anyway
-                            window.location.href = '<?php echo site_url('sample_reception/export_csv/'); ?>' + id_project;
-                        },
-                        complete: function() {
-                            // Reset button state after a delay
-                            setTimeout(function() {
-                                $('#export-csv').text(originalText).prop('disabled', false);
-                            }, 2000);
-                        }
-                    });
-                } else {
-                    alert('Project ID not found. Cannot export CSV.');
-                }
-                return false;
-            });
-
-            // Auto save report details when page loads if they're generated
-            var report_number_to_send = $('#generated_report_number_val').val();
-            var report_date_to_send = $('#generated_report_date_val').val();
-            var id_project = $('#id_project').val();
-
-            if (report_number_to_send && report_date_to_send && id_project) {
-                $.ajax({
-                    type: 'POST',
-                    url: "<?php echo site_url('sample_reception/save_report_details_ajax'); ?>",
-                    data: {
-                        id_project: id_project,
-                        report_number: report_number_to_send,
-                        report_date: report_date_to_send
-                    },
-                    dataType: 'json',
-                    success: function(response) {
-                        console.log('Report details save status:', response.status);
-                    },
-                    error: function(xhr, status, error) {
-                        console.log('Error saving report details:', error);
+                        });
+                    } else {
+                        alert('Project ID not found. Cannot export CSV.');
                     }
                 });
             }
+
+            // Export to CSV functionality with better error handling
+            bindExportCsvHandler();
+                return false;
+            });
+
+            // Remove auto-save functionality - report details will only be generated when user prints
+            // Auto save report details when page loads if they're generated - REMOVED
+            // Generation now happens only when user actually prints the report
         });
     </script>
 
