@@ -170,7 +170,7 @@
     <div class="noprint">
         <div class="modal-footer clearfix">
             <?php if (isset($is_temporary) && $is_temporary): ?>
-            <div style="float: left; color: #f39c12; font-size: 12px; line-height: 34px;">
+            <div style="float: left; color: white; font-size: 12px; line-height: 34px; margin-left: 235px;">
                 <i class="fa fa-info-circle"></i> 
                 <strong>Preview Mode:</strong> 
                 Use "Finalize & Print" to assign permanent report number.
@@ -178,11 +178,9 @@
             <?php endif; ?>
             
             <?php if (isset($is_temporary) && $is_temporary): ?>
-                <button id='export-csv' class="btn btn-success no-print"><i class="fa fa-file-excel-o"></i> Export to CSV</button>
                 <button id='print-test' class="btn btn-info no-print"><i class="fa fa-print"></i> Print (Test)</button>
                 <button id='print-final' class="btn btn-success no-print"><i class="fa fa-check"></i> Finalize & Print</button>
             <?php else: ?>
-                <button id='export-csv' class="btn btn-success no-print"><i class="fa fa-file-excel-o"></i> Export to CSV</button>
                 <button id='print' class="btn btn-primary no-print"><i class="fa fa-print"></i> Print</button>
                 <button id='reset-report' class="btn btn-warning no-print"><i class="fa fa-refresh"></i> Reset Report Number</button>
             <?php endif; ?>
@@ -227,7 +225,7 @@
                                         <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4;" align="left">
                                             <span id="display_report_date"><?php echo htmlspecialchars($report_date_display ?? ''); ?></span>
                                             <?php if (isset($is_temporary) && $is_temporary): ?>
-                                                <span class="temporary-indicator noprint" style="color: #f39c12; font-size: 9px; margin-left: 5px; vertical-align: baseline; line-height: 1.4;">(Temporary - Final date assigned on print)</span>
+                                                <span class="temporary-indicator noprint" style="color: #f39c12; font-size: 9px; margin-left: 5px; vertical-align: baseline; line-height: 1.4;"></span>
                                             <?php endif; ?>
                                         </td>
                                     </tr>
@@ -719,15 +717,19 @@
             var id_project = $('#id_project').val();
             
             // Handle Test Print button click (no save to database)
-            $('#print-test').on('click', function() {
+            $('#print-test').on('click', function(e) {
+                e.preventDefault();
+                
                 var btn = $(this);
                 btn.prop('disabled', true).text('Printing...'); 
                 
                 // Print without saving to database (test print)
-                document.title = '<?php echo 'Print_OWL_Report_';?>' + id_project;
+                document.title = '<?php echo 'Print_OWL_Report2_';?>' + id_project;
                 window.print();
                 
                 btn.prop('disabled', false).html('<i class="fa fa-print"></i> Print (Test)');
+                
+                return false;
             });
             
             // Handle Final Print button click (save to database)
@@ -755,7 +757,6 @@
                             
                             // Switch to normal print button mode
                             $('.modal-footer').html(
-                                '<button id="export-csv" class="btn btn-success no-print"><i class="fa fa-file-excel-o"></i> Export to CSV</button>' +
                                 '<button id="print" class="btn btn-primary no-print"><i class="fa fa-print"></i> Print</button>' +
                                 '<button id="close" class="btn btn-warning" onclick="javascript:history.go(-1);"><i class="fa fa-times"></i> Close</button>'
                             );
@@ -931,15 +932,17 @@
                             }
                         });
                     } else {
-                        alert('Project ID not found. Cannot export CSV.');
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Missing Information',
+                            text: 'Project ID not found. Cannot export CSV.'
+                        });
                     }
                 });
             }
 
             // Export to CSV functionality with better error handling
             bindExportCsvHandler();
-                return false;
-            });
 
             // Remove auto-save functionality - report details will only be generated when user prints
             // Auto save report details when page loads if they're generated - REMOVED
