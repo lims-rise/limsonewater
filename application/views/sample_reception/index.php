@@ -1118,6 +1118,32 @@
         color: #4B5563;
         border-color: #D1D5DB;
     }
+
+    /* Print CoC Report Button - Info/Teal Color */
+    .btn-print-coc {
+        background-color: #E0F2FE;
+        color: #0369A1;
+        border: 1px solid #BAE6FD;
+    }
+
+    .btn-print-coc:hover {
+        background-color: #B3E5FC;
+        color: #0C4A6E;
+        border-color: #7DD3FC;
+    }
+
+    /* Print Extended Report Button - Success/Green Color */
+    .btn-print-extended {
+        background-color: #DCFCE7;
+        color: #166534;
+        border: 1px solid #BBFBDC;
+    }
+
+    .btn-print-extended:hover {
+        background-color: #BBFBDC;
+        color: #15803D;
+        border-color: #86EFAC;
+    }
     
     /* Danger Button (Delete) */
     .btn-danger {
