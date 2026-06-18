@@ -179,7 +179,7 @@
 				<!-- <input id="id_one_water_sample" name="id_one_water_sample" type="text" disabled>  -->
 				</h4>
 			</div>
-			<form id="formSample"  action= <?php echo site_url('Biobankin/savereplicate') ?> method="post" class="form-horizontal">
+			<form id="formSample" action= <?php echo site_url('Biobankin/savereplicate') ?> method="post" class="form-horizontal" onkeydown="return event.key != 'Enter';">
 				<div class="modal-body">
 					<input id="mode_det" name="mode_det" type="hidden" class="form-control input-sm">
 					<input id="id_one_water_samplex" name="id_one_water_samplex" type="hidden" class="form-control">
@@ -1206,6 +1206,11 @@
 
 			$('#comments').val('');
 			$('#compose-modal').modal('show');
+			
+			// Auto-focus barcode_tube field after modal is fully shown
+			$('#compose-modal').on('shown.bs.modal', function () {
+				$('#barcode_tube').focus();
+			});
 		});
 
 

@@ -374,6 +374,122 @@
         </section>
     </div>
 
+    <!-- Page 2.5: Microbial Source Tracking Results -->
+    <?php if ($has_microbial_data && !empty($microbial_tables)): ?>
+    <div class="content-wrapper page-break">
+        <section class="content">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <img src="../../../img/onewaterlogo.png" height="40px" class="icon" style="padding: 0px; float: left;">
+                    <img src="../../../img/monash.png" height="40px" class="icon" style="padding: 0px; float: right;">
+                </div>
+                <div class="box-body">
+                    <div style="position: relative; height: 8px; margin-bottom: 5px;">
+                        <img src="../../../img/bluebar.png" 
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 10%; object-fit: cover; z-index: 0;" 
+                            alt="Background" />
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; width: 100%; margin-bottom: 5px;">
+                        <div style="width: 30%;">
+                            <table id="report-header" width="100%" style="border:0px solid black; margin-bottom: 3px; border-collapse: collapse;">
+                                <thead>
+                                    <tr>
+                                        <td width="50%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><b>Microbial Source Tracking Results</b></td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <?php
+                    // Group samples columns - get unique sample IDs
+                    $sample_ids = array();
+                    foreach ($microbial_tables as $table_name => $rows) {
+                        foreach ($rows as $row) {
+                            if (!in_array($row['id_one_water_sample'], $sample_ids)) {
+                                $sample_ids[] = $row['id_one_water_sample'];
+                            }
+                        }
+                    }
+                    sort($sample_ids);
+                    
+                    // Process each table - use actual table names from database
+                    $table_mapping = array(
+                        'Table 1 - Human-specific' => 'Human-specific contribution within total microbial community',
+                        'Table 2 - Faecal-specific' => 'Faecal-specific contribution within total microbial community',
+                        'Table 3 - Faecal-source' => 'Faecal-source contribution within faecal component of microbial community'
+                    );
+                    
+                    foreach ($table_mapping as $table_key => $table_title):
+                        if (isset($microbial_tables[$table_key])):
+                            $table_data = $microbial_tables[$table_key];
+                            
+                            // Organize data by source_name
+                            $sources_data = array();
+                            foreach ($table_data as $row) {
+                                $source = $row['source_name'];
+                                $sample = $row['id_one_water_sample'];
+                                $value = $row['percentage_value'];
+                                
+                                if (!isset($sources_data[$source])) {
+                                    $sources_data[$source] = array();
+                                }
+                                $sources_data[$source][$sample] = $value;
+                            }
+                            
+                            // Sort sources alphabetically (A-Z)
+                            ksort($sources_data);
+                    ?>
+                    
+                    <div style="margin-bottom: 20px; page-break-inside: avoid;">
+                        <h4 style="margin-bottom: 8px; font-size: 11pt; font-weight: bold;"><?php echo $table_key . ' - ' . $table_title; ?>:</h4>
+                        <table class="report-table" style="width: 100%; border-collapse: collapse; font-size: 9pt;">
+                            <thead>
+                                <tr style="background-color: #f0f0f0;">
+                                    <th style="border: 1px solid #ddd; padding: 6px; text-align: left; font-weight: bold;">Sources</th>
+                                    <?php foreach ($sample_ids as $sample_id): ?>
+                                        <th style="border: 1px solid #ddd; padding: 6px; text-align: center; font-weight: bold;"><?php echo htmlspecialchars($sample_id); ?></th>
+                                    <?php endforeach; ?>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($sources_data as $source_name => $sample_values): ?>
+                                <tr>
+                                    <td style="border: 1px solid #ddd; padding: 6px; text-align: left;"><?php echo htmlspecialchars($source_name); ?></td>
+                                    <?php foreach ($sample_ids as $sample_id): ?>
+                                        <td style="border: 1px solid #ddd; padding: 6px; text-align: center;">
+                                            <?php 
+                                            if (isset($sample_values[$sample_id])) {
+                                                $value = $sample_values[$sample_id];
+                                                // Add % symbol if value is not "-"
+                                                if ($value !== '-' && $value !== '' && $value !== null) {
+                                                    echo htmlspecialchars($value) . '%';
+                                                } else {
+                                                    echo htmlspecialchars($value);
+                                                }
+                                            } else {
+                                                echo '-';
+                                            }
+                                            ?>
+                                        </td>
+                                    <?php endforeach; ?>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <?php 
+                        endif;
+                    endforeach; 
+                    ?>
+                </div>
+            </div>
+        </section>
+    </div>
+    <?php endif; ?>
+
     <!-- Page 3+: Detailed Analysis Data -->
     <div class="content-wrapper page-break">
         <section class="content">
