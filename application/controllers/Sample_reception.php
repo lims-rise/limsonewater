@@ -315,6 +315,30 @@ class Sample_reception extends CI_Controller
             // Get export data for the view
             $data['export_data'] = $this->Sample_reception_model->get_export_data($id);
             
+            // Load Microbial_extraction_model
+            $this->load->model('Microbial_extraction_model');
+            
+            // Get microbial extraction results for the project
+            $project_id = $data['id_project'];
+            $data['has_microbial_data'] = $this->Microbial_extraction_model->has_extraction_results($project_id);
+            
+            if ($data['has_microbial_data']) {
+                // Get data grouped by table_name
+                $microbial_raw = $this->Microbial_extraction_model->get_by_project($project_id);
+                
+                // Organize data by table (Table 1, Table 2, Table 3)
+                $data['microbial_tables'] = array();
+                foreach ($microbial_raw as $row) {
+                    $table_name = $row['table_name'];
+                    if (!isset($data['microbial_tables'][$table_name])) {
+                        $data['microbial_tables'][$table_name] = array();
+                    }
+                    $data['microbial_tables'][$table_name][] = $row;
+                }
+            } else {
+                $data['microbial_tables'] = array();
+            }
+            
             $this->template->load('template','sample_reception/index_rep2', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');

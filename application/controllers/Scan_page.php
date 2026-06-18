@@ -532,7 +532,7 @@ class Scan_page extends CI_Controller {
     {
         // PRODUCTION (Windows):
         $upload_path = 'C:\\onewater\\microbial\\';
-        // TESTING (Mac): $upload_path = 'uploads/microbial/';
+        // TESTING (Mac): $upload_path = FCPATH . 'uploads/microbial/';
         
         // Ensure directory exists
         if (!is_dir($upload_path)) {
