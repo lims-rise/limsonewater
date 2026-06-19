@@ -375,7 +375,6 @@
     </div>
 
     <!-- Page 2.5: Microbial Source Tracking Results -->
-    <?php if ($has_microbial_data && !empty($microbial_tables)): ?>
     <div class="content-wrapper page-break">
         <section class="content">
             <div class="box box-primary">
@@ -402,6 +401,7 @@
                         </div>
                     </div>
                     
+                    <?php if ($has_microbial_data && !empty($microbial_tables)): ?>
                     <?php
                     // Group samples columns - get unique sample IDs
                     $sample_ids = array();
@@ -484,11 +484,46 @@
                         endif;
                     endforeach; 
                     ?>
+                    
+                    <?php else: ?>
+                    <!-- No microbial data - show empty table structure -->
+                    <?php
+                    // Define table structure for empty state
+                    $table_mapping = array(
+                        'Table 1 - Human-specific' => 'Human-specific contribution within total microbial community',
+                        'Table 2 - Faecal-specific' => 'Faecal-specific contribution within total microbial community',
+                        'Table 3 - Faecal-source' => 'Faecal-source contribution within faecal component of microbial community'
+                    );
+                    
+                    foreach ($table_mapping as $table_key => $table_title):
+                    ?>
+                    
+                    <div style="margin-bottom: 20px; page-break-inside: avoid;">
+                        <h4 style="margin-bottom: 8px; font-size: 11pt; font-weight: bold;"><?php echo $table_key . ' - ' . $table_title; ?>:</h4>
+                        <table class="report-table" style="width: 100%; border-collapse: collapse; font-size: 9pt;">
+                            <thead>
+                                <tr style="background-color: #f0f0f0;">
+                                    <th style="border: 1px solid #ddd; padding: 6px; text-align: left; font-weight: bold;">Sources</th>
+                                    <th style="border: 1px solid #ddd; padding: 6px; text-align: center; font-weight: bold;" colspan="3">No data available</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="border: 1px solid #ddd; padding: 20px; text-align: center; color: #999;" colspan="4">
+                                        <i class="fa fa-info-circle"></i> Upload microbial tracking file to populate data
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <?php endforeach; ?>
+                    <?php endif; ?>
+                    
                 </div>
             </div>
         </section>
     </div>
-    <?php endif; ?>
 
     <!-- Page 3+: Detailed Analysis Data -->
     <div class="content-wrapper page-break">
