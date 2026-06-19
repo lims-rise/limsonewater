@@ -577,9 +577,9 @@
                     </div>
 
                     <!-- Print orientation notice (only visible on screen) -->
-                    <div class="noprint" style="background-color: #d9edf7; border: 1px solid #bce8f1; border-radius: 4px; padding: 8px 12px; margin-bottom: 10px; color: #31708f; font-size: 9pt;">
+                    <!-- <div class="noprint" style="background-color: #d9edf7; border: 1px solid #bce8f1; border-radius: 4px; padding: 8px 12px; margin-bottom: 10px; color: #31708f; font-size: 9pt;">
                         <i class="fa fa-info-circle"></i> <strong>Print Info:</strong> This page will be printed in <strong>Landscape orientation</strong> to fit all analysis columns.
-                    </div>
+                    </div> -->
 
                     <h4 style="margin-bottom: 10px; font-weight: bold;">Analysis Results</h4>
 
