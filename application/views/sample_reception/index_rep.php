@@ -467,7 +467,7 @@
                                         <?php endforeach; ?>
                                     <?php else: ?>
                                         <tr>
-                                            <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4; white-space: nowrap;" align="left">Analysis</td>
+                                            <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4; white-space: nowrap;" align="left">Analyst(s)</td>
                                             <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4;" align="left">No analyst assigned</td>
                                         </tr>
                                     <?php endif; ?>
