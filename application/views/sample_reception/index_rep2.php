@@ -277,7 +277,7 @@
                                     <?php if (isset($analyst_names_array) && !empty($analyst_names_array)): ?>
                                         <?php foreach ($analyst_names_array as $index => $analyst_name): ?>
                                             <tr>
-                                                <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4; white-space: nowrap;" align="left"><?php echo ($index === 0) ? 'Analysis' : ''; ?></td>
+                                                <td width="60%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4; white-space: nowrap;" align="left"><?php echo ($index === 0) ? 'Analyst(s)' : ''; ?></td>
                                                 <td width="40%" style="border:0px solid black; padding: 2px 0; vertical-align: top; line-height: 1.4;" align="left"><?php echo htmlspecialchars($analyst_name); ?></td>
                                             </tr>
                                         <?php endforeach; ?>
