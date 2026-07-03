@@ -284,9 +284,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="total_coliforms" class="col-sm-4 control-label">Total Coliforms (raw MPN)</label>
+                                        <label for="total_coliforms" class="col-sm-4 control-label">Total coliforms MPNg/ dry weight</label>
                                         <div class="col-sm-8">
-                                            <input id="total_coliforms" name="total_coliforms" type="text"  placeholder="Total Coliforms (raw MPN)" class="form-control" readonly>
+                                            <input id="total_coliforms" name="total_coliforms" type="text"  placeholder="Total coliforms MPNg/ dry weight" class="form-control" readonly>
                                             <!-- <div class="val1tip"></div> -->
                                         </div>
                                     </div>
