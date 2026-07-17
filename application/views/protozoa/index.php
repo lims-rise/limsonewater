@@ -194,6 +194,13 @@
                             </div>
                         </div>
 
+                        <div class="form-group" id="giardia_concentration_g_group">
+                            <label for="giardia_concentration_g" class="col-sm-4 control-label">Concentration (copies/g) (Giardia)</label>
+                            <div class="col-sm-8">
+                                <input id="giardia_concentration_g" name="giardia_concentration_g" type="text" step="any" class="form-control" placeholder="Concentration (copies/g) (Giardia)">
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Giardia Quality Control</label>
                             <div class="col-sm-8">
@@ -217,6 +224,13 @@
                             <label for="conc_copies_per_g_dw_crypto" class="col-sm-4 control-label">Concentration (copies/g DW) (Crypto)</label>
                             <div class="col-sm-8">
                                 <input id="conc_copies_per_g_dw_crypto" name="conc_copies_per_g_dw_crypto" type="text" step="any" class="form-control" placeholder="Concentration (copies/g DW) (Crypto)">
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="crypto_concentration_g_group">
+                            <label for="crypto_concentration_g" class="col-sm-4 control-label">Concentration (copies/g) (Crypto)</label>
+                            <div class="col-sm-8">
+                                <input id="crypto_concentration_g" name="crypto_concentration_g" type="text" step="any" class="form-control" placeholder="Concentration (copies/g) (Crypto)">
                             </div>
                         </div>
 
@@ -806,7 +820,8 @@
                     html: `Removing target <strong>${targetDisplayName}</strong> will delete the following data:<br/>
                            • Quality Control ${targetDisplayName}<br/>
                            • Concentration (copies/L) (${targetDisplayName})<br/>
-                           • Concentration (copies/g DW) (${targetDisplayName})<br/><br/>
+                           • Concentration (copies/g DW) (${targetDisplayName})<br/>
+                           • Concentration (copies/g) (${targetDisplayName})<br/><br/>
                            Data will be deleted after <strong>Save</strong>.<br/>
                            Do you want to proceed?`,
                     icon: 'warning',
@@ -851,20 +866,6 @@
                 proceedWithTargetChange(isEditMode);
             }
         });
-
-        // Function to handle normal target change logic
-        function proceedWithTargetChange(isEditMode) {
-            updateTargetCombined();
-            
-            // Update quality control fields visibility when target selection changes
-            handleQualityControlVisibility(null, isEditMode);
-            
-            // Update concentration fields visibility when target selection changes
-            const currentSampletype = $('#sampletype').val();
-            if (currentSampletype) {
-                handleConcentrationFieldsVisibility(currentSampletype, null, isEditMode);
-            }
-        }
 
         // Function to update combined target value
         function updateTargetCombined() {
@@ -929,6 +930,14 @@
             if (!preserveValues) {
                 $('#conc_copies_per_g_dw_crypto').val('');
             }
+            $('#giardia_concentration_g_group').hide();
+            if (!preserveValues) {
+                $('#giardia_concentration_g').val('');
+            }
+            $('#crypto_concentration_g_group').hide();
+            if (!preserveValues) {
+                $('#crypto_concentration_g').val('');
+            }
 
             if (sampletypeLower === 'biosolids' || sampletypeLower === 'biosolid') {
                 // For biosolids: show conc_copies_per_g_dw fields based on target selection
@@ -936,12 +945,26 @@
                     // Both targets selected: show both g/dw fields
                     $('#conc_copies_per_g_dw_giardia').closest('.form-group').show();
                     $('#conc_copies_per_g_dw_crypto').closest('.form-group').show();
+                    $('#giardia_concentration_g_group').show();
+                    $('#crypto_concentration_g_group').show();
                 } else if (hasGiardia) {
                     // Only giardia selected: show only giardia g/dw field
                     $('#conc_copies_per_g_dw_giardia').closest('.form-group').show();
+                    $('#giardia_concentration_g_group').show();
+                    // Clear crypto data when crypto is not selected
+                    if (!preserveValues) {
+                        $('#conc_copies_per_g_dw_crypto').val('');
+                        $('#crypto_concentration_g').val('');
+                    }
                 } else if (hasCrypto) {
                     // Only crypto selected: show only crypto g/dw field
                     $('#conc_copies_per_g_dw_crypto').closest('.form-group').show();
+                    $('#crypto_concentration_g_group').show();
+                    // Clear giardia data when giardia is not selected
+                    if (!preserveValues) {
+                        $('#conc_copies_per_g_dw_giardia').val('');
+                        $('#giardia_concentration_g').val('');
+                    }
                 } else {
                     // No target selected: show both g/dw fields by default
                     // $('#conc_copies_per_L_giardia').closest('.form-group').show();
@@ -958,9 +981,21 @@
                 } else if (hasGiardia) {
                     // Only giardia selected: show only giardia L field
                     $('#conc_copies_per_L_giardia').closest('.form-group').show();
+                    // Clear crypto data when crypto is not selected
+                    if (!preserveValues) {
+                        $('#conc_copies_per_L_crypto').val('');
+                        $('#conc_copies_per_g_dw_crypto').val('');
+                        $('#crypto_concentration_g').val('');
+                    }
                 } else if (hasCrypto) {
                     // Only crypto selected: show only crypto L field
                     $('#conc_copies_per_L_crypto').closest('.form-group').show();
+                    // Clear giardia data when giardia is not selected
+                    if (!preserveValues) {
+                        $('#conc_copies_per_L_giardia').val('');
+                        $('#conc_copies_per_g_dw_giardia').val('');
+                        $('#giardia_concentration_g').val('');
+                    }
                 } else {
                     // No target selected: show both L fields by default
                     // $('#conc_copies_per_L_giardia').closest('.form-group').show();
@@ -976,14 +1011,30 @@
                     $('#conc_copies_per_L_crypto').closest('.form-group').show();
                     $('#conc_copies_per_g_dw_giardia').closest('.form-group').show();
                     $('#conc_copies_per_g_dw_crypto').closest('.form-group').show();
+                    $('#giardia_concentration_g_group').show();
+                    $('#crypto_concentration_g_group').show();
                 } else if (hasGiardia) {
                     // Only giardia selected: show only giardia fields
                     $('#conc_copies_per_L_giardia').closest('.form-group').show();
                     $('#conc_copies_per_g_dw_giardia').closest('.form-group').show();
+                    $('#giardia_concentration_g_group').show();
+                    // Clear crypto data when crypto is not selected
+                    if (!preserveValues) {
+                        $('#conc_copies_per_L_crypto').val('');
+                        $('#conc_copies_per_g_dw_crypto').val('');
+                        $('#crypto_concentration_g').val('');
+                    }
                 } else if (hasCrypto) {
                     // Only crypto selected: show only crypto fields
                     $('#conc_copies_per_L_crypto').closest('.form-group').show();
                     $('#conc_copies_per_g_dw_crypto').closest('.form-group').show();
+                    $('#crypto_concentration_g_group').show();
+                    // Clear giardia data when giardia is not selected
+                    if (!preserveValues) {
+                        $('#conc_copies_per_L_giardia').val('');
+                        $('#conc_copies_per_g_dw_giardia').val('');
+                        $('#giardia_concentration_g').val('');
+                    }
                 } else {
                     // No target selected: show all fields by default
                     // $('#conc_copies_per_L_giardia').closest('.form-group').show();
@@ -1057,15 +1108,17 @@
                 const hasQualityControl = $('#quality_control_giardia').is(':checked');
                 const hasConcentrationL = $('#conc_copies_per_L_giardia').val() && $('#conc_copies_per_L_giardia').val().trim() !== '';
                 const hasConcentrationGDW = $('#conc_copies_per_g_dw_giardia').val() && $('#conc_copies_per_g_dw_giardia').val().trim() !== '';
+                const hasConcentrationG = $('#giardia_concentration_g').val() && $('#giardia_concentration_g').val().trim() !== '';
                 
-                return hasQualityControl || hasConcentrationL || hasConcentrationGDW;
+                return hasQualityControl || hasConcentrationL || hasConcentrationGDW || hasConcentrationG;
             } else if (target === 'Cryptosporidium' || target === 'cryptosporidium') {
                 // Check Crypto-related fields
                 const hasQualityControl = $('#quality_control_crypto').is(':checked');
                 const hasConcentrationL = $('#conc_copies_per_L_crypto').val() && $('#conc_copies_per_L_crypto').val().trim() !== '';
                 const hasConcentrationGDW = $('#conc_copies_per_g_dw_crypto').val() && $('#conc_copies_per_g_dw_crypto').val().trim() !== '';
+                const hasConcentrationG = $('#crypto_concentration_g').val() && $('#crypto_concentration_g').val().trim() !== '';
                 
-                return hasQualityControl || hasConcentrationL || hasConcentrationGDW;
+                return hasQualityControl || hasConcentrationL || hasConcentrationGDW || hasConcentrationG;
             }
             return false;
         }
@@ -1077,12 +1130,14 @@
                 $('#quality_control_giardia').prop('checked', false);
                 $('#conc_copies_per_L_giardia').val('');
                 $('#conc_copies_per_g_dw_giardia').val('');
+                $('#giardia_concentration_g').val('');
                 console.log('Cleared all Giardia-related data');
             } else if (target === 'Cryptosporidium' || target === 'cryptosporidium') {
                 // Clear Crypto-related data
                 $('#quality_control_crypto').prop('checked', false);
                 $('#conc_copies_per_L_crypto').val('');
                 $('#conc_copies_per_g_dw_crypto').val('');
+                $('#crypto_concentration_g').val('');
                 console.log('Cleared all Crypto-related data');
             }
         }
@@ -1271,6 +1326,8 @@
                 $('#dry_weight_persen').val('0');
                 $('#dryweight_source_sample_id').text('-');
                 calculateMassAnalysed();
+                // Lock/unlock fields when no sample ID (dry weight = 0)
+                handleDryWeightFieldLocking();
                 return;
             }
 
@@ -1307,11 +1364,15 @@
                     
                     // After dry weight is set, calculate mass analysed
                     calculateMassAnalysed();
+                    // Lock/unlock concentration fields based on fetched dry weight value
+                    handleDryWeightFieldLocking();
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.error('AJAX error for dry weight ONLY [' + id_one_water_sample.trim() + ']:', textStatus, errorThrown);
                     $('#dry_weight_persen').val('0'); // Default to 0 on error
                     calculateMassAnalysed();
+                    // Lock/unlock concentration fields even on error (dry weight = 0)
+                    handleDryWeightFieldLocking();
                 }
             });
         }
@@ -1327,6 +1388,8 @@
                 $('#dry_weight_persen').val('0');
                 // Don't update source sample ID display in edit mode (it's hidden)
                 calculateMassAnalysed();
+                // Lock/unlock fields when no sample ID (dry weight = 0)
+                handleDryWeightFieldLocking();
                 return;
             }
 
@@ -1362,11 +1425,15 @@
                     
                     // After dry weight is set, calculate mass analysed
                     calculateMassAnalysed();
+                    // Lock/unlock concentration fields based on fetched dry weight value
+                    handleDryWeightFieldLocking();
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.error('AJAX error for dry weight ONLY [' + id_one_water_sample.trim() + ']:', textStatus, errorThrown);
                     $('#dry_weight_persen').val('0'); // Default to 0 on error
                     calculateMassAnalysed();
+                    // Lock/unlock concentration fields even on error (dry weight = 0)
+                    handleDryWeightFieldLocking();
                 }
             });
         }
@@ -1386,10 +1453,98 @@
             console.log('Auto calculate: weight =', weight, ', dry_weight_persen =', dryWeightPersen, ', mass_analysed =', massAnalysed);
         }
 
+
         // Attach auto calculate to weight and dry_weight_persen input events
         $('#weight, #dry_weight_persen').on('input change keyup', function() {
             calculateMassAnalysed();
+            // Check dry weight and handle field locking
+            handleDryWeightFieldLocking();
         });
+
+        // Function to handle normal target change logic
+        function proceedWithTargetChange(isEditMode) {
+                updateTargetCombined();
+
+                // Update quality control fields visibility when target selection changes
+                handleQualityControlVisibility(null, isEditMode);
+
+                // Update concentration fields visibility when target selection changes
+                const currentSampletype = $('#sampletype').val();
+                if (currentSampletype) {
+                    handleConcentrationFieldsVisibility(currentSampletype, null, isEditMode);
+                }
+
+                // NEW: Handle field locking based on dry weight
+                handleDryWeightFieldLocking();
+        }
+
+        // New function to handle field locking based on Dry Weight value
+        // Function to handle field locking based on Dry Weight value
+        function handleDryWeightFieldLocking() {
+            const dryWeight = parseFloat($('#dry_weight_persen').val()) || 0;
+
+            // Get current target selection
+            const selectedTargets = [];
+            $('input[name="target[]"]:checked').each(function() {
+                selectedTargets.push($(this).val());
+            });
+            const hasGiardia = selectedTargets.includes('Giardia');
+            const hasCrypto = selectedTargets.includes('Cryptosporidium');
+
+            // CONDITION A: If Dry Weight > 0 (moisture content data exists)
+            if (dryWeight > 0) {
+                // Giardia fields
+                if (hasGiardia) {
+                    // copies/g DW field → ENABLED (can input)
+                    $('#conc_copies_per_g_dw_giardia').prop('disabled', false).prop('readonly', false);
+                    $('#conc_copies_per_g_dw_giardia').css('background-color', '');
+
+                    // copies/g field (new) → DISABLED (locked/readonly)
+                    $('#giardia_concentration_g').prop('disabled', true).prop('readonly', true);
+                    $('#giardia_concentration_g').css('background-color', '#f5f5f5');
+                }
+
+                // Crypto fields
+                if (hasCrypto) {
+                    // copies/g DW field → ENABLED (can input)
+                    $('#conc_copies_per_g_dw_crypto').prop('disabled', false).prop('readonly', false);
+                    $('#conc_copies_per_g_dw_crypto').css('background-color', '');
+
+                    // copies/g field (new) → DISABLED (locked/readonly)
+                    $('#crypto_concentration_g').prop('disabled', true).prop('readonly', true);
+                    $('#crypto_concentration_g').css('background-color', '#f5f5f5');
+                }
+
+                console.log('Dry Weight > 0: copies/g DW fields ENABLED, copies/g fields DISABLED');
+            }
+            // CONDITION B: If Dry Weight == 0 or empty (no moisture content data)
+            else {
+                // Giardia fields
+                if (hasGiardia) {
+                    // copies/g DW field → DISABLED (locked)
+                    $('#conc_copies_per_g_dw_giardia').prop('disabled', true).prop('readonly', true);
+                    $('#conc_copies_per_g_dw_giardia').css('background-color', '#f5f5f5');
+
+                    // copies/g field (new) → ENABLED and required
+                    $('#giardia_concentration_g').prop('disabled', false).prop('readonly', false);
+                    $('#giardia_concentration_g').css('background-color', '');
+                }
+
+                // Crypto fields
+                if (hasCrypto) {
+                    // copies/g DW field → DISABLED (locked)
+                    $('#conc_copies_per_g_dw_crypto').prop('disabled', true).prop('readonly', true);
+                    $('#conc_copies_per_g_dw_crypto').css('background-color', '#f5f5f5');
+
+                    // copies/g field (new) → ENABLED and required
+                    $('#crypto_concentration_g').prop('disabled', false).prop('readonly', false);
+                    $('#crypto_concentration_g').css('background-color', '');
+                }
+
+                console.log('Dry Weight == 0 or empty: copies/g DW fields DISABLED, copies/g fields ENABLED');
+            }
+        }
+
 
 
         $('#id_one_water_sample').on("change", function() {
@@ -1653,6 +1808,9 @@
             $('#conc_copies_per_L_crypto').val(data.conc_copies_per_L_crypto);
             $('#conc_copies_per_g_dw_giardia').val(data.conc_copies_per_g_dw_giardia);
             $('#conc_copies_per_g_dw_crypto').val(data.conc_copies_per_g_dw_crypto);
+
+            $('#giardia_concentration_g').val(data.giardia_concentration_g);
+            $('#crypto_concentration_g').val(data.crypto_concentration_g);
             
             // Update quality control visibility based on loaded target selection  
             handleQualityControlVisibility(data.target, true);
@@ -1688,6 +1846,8 @@
             // Trigger auto calculation after all data is loaded
             setTimeout(function() {
                 calculateMassAnalysed();
+                // Lock/unlock concentration fields based on dry weight value AFTER all values are set
+                handleDryWeightFieldLocking();
             }, 100);
 
             $('#comments').val(data.comments);

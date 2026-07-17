@@ -101,12 +101,13 @@ class Protozoa extends CI_Controller
         $conc_copies_per_L_crypto = $this->input->post('conc_copies_per_L_crypto', FALSE);
         $conc_copies_per_g_dw_giardia = $this->input->post('conc_copies_per_g_dw_giardia', FALSE);
         $conc_copies_per_g_dw_crypto = $this->input->post('conc_copies_per_g_dw_crypto', FALSE);
+        $giardia_concentration_g = $this->input->post('giardia_concentration_g', FALSE);
+        $crypto_concentration_g = $this->input->post('crypto_concentration_g', FALSE);
         $comments = $this->input->post('comments', TRUE);
         $protozoa_barcode = $this->input->post('protozoa_barcode', TRUE);
         $quality_control_giardia = $this->input->post('quality_control_giardia', TRUE) ? 1 : 0; // Convert checkbox to integer
         $quality_control_crypto = $this->input->post('quality_control_crypto', TRUE) ? 1 : 0; // Convert checkbox to integer
         $return_url = $this->input->post('return_url', TRUE);
-
 
         if ($mode == "insert") {
             $data = array(
@@ -127,6 +128,8 @@ class Protozoa extends CI_Controller
                 'conc_copies_per_L_crypto' => $conc_copies_per_L_crypto,
                 'conc_copies_per_g_dw_giardia' => $conc_copies_per_g_dw_giardia,
                 'conc_copies_per_g_dw_crypto' => $conc_copies_per_g_dw_crypto,
+                'giardia_concentration_g' => $giardia_concentration_g,
+                'crypto_concentration_g' => $crypto_concentration_g,
                 'comments' => $comments,
                 'uuid' => $this->uuid->v4(),
                 'user_created' => $this->session->userdata('id_users'),
@@ -160,6 +163,8 @@ class Protozoa extends CI_Controller
                 'conc_copies_per_L_crypto' => $conc_copies_per_L_crypto,
                 'conc_copies_per_g_dw_giardia' => $conc_copies_per_g_dw_giardia,
                 'conc_copies_per_g_dw_crypto' => $conc_copies_per_g_dw_crypto,
+                'giardia_concentration_g' => $giardia_concentration_g,
+                'crypto_concentration_g' => $crypto_concentration_g,
                 'comments' => $comments,
                 'uuid' => $this->uuid->v4(),
                 'user_created' => $this->session->userdata('id_users'),
