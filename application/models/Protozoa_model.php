@@ -19,7 +19,7 @@ class Protozoa_model extends CI_Model
     function json() {
         // Simplified query for debugging
         $this->datatables->select('a.id_one_water_sample, a.id_person, a.id_protozoa, a.target, a.id_sampletype, b.initial, c.sampletype, a.date_processed, a.time_processed, a.volume_analysed, a.weight, a.dry_weight_persen, a.mass_analysed, a.quality_control_giardia, a.quality_control_crypto,
-        a.conc_copies_per_L_giardia, a.conc_copies_per_L_crypto, a.conc_copies_per_g_dw_giardia, a.conc_copies_per_g_dw_crypto, a.comments, a.review, a.user_review, a.user_created, a.protozoa_barcode');
+        a.conc_copies_per_L_giardia, a.conc_copies_per_L_crypto, a.conc_copies_per_g_dw_giardia, a.conc_copies_per_g_dw_crypto, a.giardia_concentration_g, a.crypto_concentration_g, a.comments, a.review, a.user_review, a.user_created, a.protozoa_barcode');
         $this->datatables->from('protozoa a');
         $this->datatables->join('ref_person b', 'a.id_person = b.id_person', 'left');
         $this->datatables->join('ref_sampletype c', 'a.id_sampletype = c.id_sampletype', 'left');
