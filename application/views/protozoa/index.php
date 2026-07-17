@@ -32,9 +32,11 @@
                                         <th>Mass Analyzed</th>
                                         <th>Conc Cp/L Giard</th>
                                         <th>Conc Cp/G DW Giard</th>
-                                         <th>Giardia QC</th>
+                                        <th>Conc Cp/G Giard</th>
+                                        <th>Giardia QC</th>
                                         <th>Conc Cp/L Crypto</th>
                                         <th>Conc Cp/G DW Crypto</th>
+                                        <th>Conc Cp/G Crypto</th>
                                         <th>Crypto QC</th>
                                         <th>Comment</th>
                                         <th width="120px">Action</th>
@@ -1660,6 +1662,12 @@
                     }
                 },
                 {
+                    "data": "giardia_concentration_g",
+                    "render": function(data, type, row) {
+                        return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
+                    }
+                },
+                {
                     "data": "quality_control_giardia",
                     "render": function(data, type, row) {
                         return data == '1' ? '<span class="badge1 badge1-success"><i class="fa fa-check"></i></span>' : '<span class="badge1 badge1-danger"><i class="fa fa-times"></i></span>';
@@ -1674,6 +1682,12 @@
                 },
                 {
                     "data": "conc_copies_per_g_dw_crypto",
+                    "render": function(data, type, row) {
+                        return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
+                    }
+                },
+                {
+                    "data": "crypto_concentration_g",
                     "render": function(data, type, row) {
                         return (!data || data === "null" || data === null || data === undefined) ? "-" : data;
                     }
