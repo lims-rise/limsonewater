@@ -1524,6 +1524,279 @@ class Sample_reception extends CI_Controller
             echo json_encode(array('status' => 'error', 'message' => 'An error occurred: ' . $e->getMessage()));
         }
     }
+
+    /**
+     * Get data for batch test assignment modal
+     * Returns: samples in project and available test types
+     */
+    public function getBatchTestData() {
+        header('Content-Type: application/json');
+        
+        $id_project = $this->input->get('id_project', TRUE);
+        
+        if (empty($id_project)) {
+            echo json_encode(array('status' => 'error', 'message' => 'Project ID is required'));
+            return;
+        }
+        
+        try {
+            // Get all samples for this project
+            $samples = $this->Sample_reception_model->get_samples_for_batch($id_project);
+            
+            // Get available test types
+            $test_types = $this->Sample_reception_model->getTest();
+            
+            // Get existing tests for each sample
+            $samples_with_tests = array();
+            foreach ($samples as $sample) {
+                $existing_tests = $this->Sample_reception_model->get_existing_tests_for_sample($sample['id_one_water_sample']);
+                $samples_with_tests[] = array(
+                    'id_sample' => $sample['id_sample'],
+                    'id_one_water_sample' => $sample['id_one_water_sample'],
+                    'client_id' => $sample['client_id'],
+                    'existing_test_types' => $existing_tests
+                );
+            }
+            
+            echo json_encode(array(
+                'status' => 'success',
+                'data' => array(
+                    'samples' => $samples_with_tests,
+                    'test_types' => $test_types
+                )
+            ));
+        } catch (Exception $e) {
+            echo json_encode(array('status' => 'error', 'message' => 'Error: ' . $e->getMessage()));
+        }
+    }
+
+    /**
+     * Batch add tests to multiple samples
+     * Receives array of sample-test assignments and creates test records
+     */
+    public function batchAddTests() {
+        header('Content-Type: application/json');
+        
+        $id_project = $this->input->post('id_project', TRUE);
+        $assignments = $this->input->post('assignments', TRUE); // Format: {sample_id: [test_type_ids]}
+        
+        if (empty($id_project) || empty($assignments)) {
+            echo json_encode(array('status' => 'error', 'message' => 'Invalid data provided'));
+            return;
+        }
+        
+        try {
+            $results = array();
+            $created_count = 0;
+            $skipped_count = 0;
+            $error_count = 0;
+            
+            // Start transaction for data integrity
+            $this->db->trans_start();
+            
+            foreach ($assignments as $sample_id => $test_type_ids) {
+                foreach ($test_type_ids as $test_type_id) {
+                    // Check if test already exists for this sample
+                    if ($this->testExists($sample_id, $test_type_id)) {
+                        $results[] = array(
+                            'sample' => $sample_id,
+                            'test_type_id' => $test_type_id,
+                            'status' => 'skipped',
+                            'message' => 'Test already exists'
+                        );
+                        $skipped_count++;
+                        continue;
+                    }
+                    
+                    // Create test record
+                    $create_result = $this->createTestRecord($sample_id, $test_type_id);
+                    
+                    if ($create_result['status'] === 'success') {
+                        $created_count++;
+                    } else {
+                        $error_count++;
+                    }
+                    
+                    $results[] = $create_result;
+                }
+            }
+            
+            $this->db->trans_complete();
+            
+            if ($this->db->trans_status() === FALSE) {
+                echo json_encode(array(
+                    'status' => 'error', 
+                    'message' => 'Transaction failed. No tests were created.'
+                ));
+                return;
+            }
+            
+            echo json_encode(array(
+                'status' => 'success',
+                'message' => "Created: $created_count, Skipped: $skipped_count, Errors: $error_count",
+                'summary' => array(
+                    'created' => $created_count,
+                    'skipped' => $skipped_count,
+                    'errors' => $error_count
+                ),
+                'details' => $results
+            ));
+            
+        } catch (Exception $e) {
+            echo json_encode(array('status' => 'error', 'message' => 'Error: ' . $e->getMessage()));
+        }
+    }
+
+    /**
+     * Check if test already exists for a sample
+     */
+    private function testExists($id_one_water_sample, $id_testing_type) {
+        $this->db->where('id_sample', '(SELECT id_sample FROM sample_reception_sample WHERE id_one_water_sample = "' . $id_one_water_sample . '" AND flag = 0)', FALSE);
+        $this->db->where('FIND_IN_SET("' . $id_testing_type . '", id_testing_type) >', 0);
+        $this->db->where('flag', 0);
+        $count = $this->db->count_all_results('sample_reception_testing');
+        
+        return $count > 0;
+    }
+
+    /**
+     * Create test record for a sample
+     * This method inserts into sample_reception_testing table with generated barcode
+     */
+    private function createTestRecord($id_one_water_sample, $id_testing_type) {
+        try {
+            // Get id_sample from id_one_water_sample
+            $this->db->select('id_sample');
+            $this->db->where('id_one_water_sample', $id_one_water_sample);
+            $this->db->where('flag', 0);
+            $query = $this->db->get('sample_reception_sample');
+            
+            if ($query->num_rows() == 0) {
+                return array(
+                    'sample' => $id_one_water_sample,
+                    'test_type_id' => $id_testing_type,
+                    'status' => 'error',
+                    'message' => 'Sample not found'
+                );
+            }
+            
+            $id_sample = $query->row()->id_sample;
+            
+            // Get test type name for barcode generation
+            $this->db->select('testing_type');
+            $this->db->where('id_testing_type', $id_testing_type);
+            $this->db->where('flag', 0);
+            $query = $this->db->get('ref_testing');
+            
+            if ($query->num_rows() == 0) {
+                return array(
+                    'sample' => $id_one_water_sample,
+                    'test_type_id' => $id_testing_type,
+                    'status' => 'error',
+                    'message' => 'Test type not found'
+                );
+            }
+            
+            $testing_type = $query->row()->testing_type;
+            
+            // Generate barcode based on test type
+            $barcode = $this->generateBarcodeForTestType($testing_type);
+            
+            // Insert into sample_reception_testing
+            $dt = new DateTime();
+            $data = array(
+                'id_sample' => $id_sample,
+                'id_testing_type' => $id_testing_type,
+                'barcode' => $barcode,
+                'date_created' => $dt->format('Y-m-d H:i:s'),
+                'flag' => 0
+            );
+            
+            $this->db->insert('sample_reception_testing', $data);
+            
+            return array(
+                'sample' => $id_one_water_sample,
+                'test_type_id' => $id_testing_type,
+                'test_type' => $testing_type,
+                'barcode' => $barcode,
+                'status' => 'success',
+                'message' => 'Test created successfully'
+            );
+            
+        } catch (Exception $e) {
+            return array(
+                'sample' => $id_one_water_sample,
+                'test_type_id' => $id_testing_type,
+                'status' => 'error',
+                'message' => $e->getMessage()
+            );
+        }
+    }
+
+    /**
+     * Generate barcode for test type
+     * Uses same logic as existing barcode generation in the system
+     */
+    private function generateBarcodeForTestType($testing_type) {
+        // Map test types to their barcode prefixes
+        $prefix_map = array(
+            'Biobank-In' => 'BB',
+            'Campy-Hemoflow' => 'CH',
+            'Campy-Hemoflow-QPCR' => 'CHQ',
+            'Campy-Hemoflow-qPCR' => 'CHQ',
+            'Campylobacter-Biosolids' => 'CB',
+            'Campylobacter-Liquids' => 'CL',
+            'Campylobacter-P/A' => 'CP',
+            'Campylobacter-QPCR' => 'CQ',
+            'Colilert-Hemoflow' => 'COH',
+            'Colilert-Idexx-Biosolids' => 'COB',
+            'Colilert-Idexx-Water' => 'COW',
+            'Enterolert-Hemoflow' => 'EH',
+            'Enterolert-Idexx-Biosolids' => 'EB',
+            'Enterolert-Idexx-Water' => 'EW',
+            'Extraction-Biosolids' => 'EXB',
+            'Extraction-Culture-Plate' => 'EXC',
+            'Extraction-Liquids' => 'EXL',
+            'Extraction-Metagenome' => 'EXM',
+            'Hemoflow' => 'HF',
+            'Microbial-Source-Tracking' => 'MST',
+            'Moisture_content' => 'MC',
+            'Protozoa' => 'PTZ',
+            'Salmonella-Biosolids' => 'SB',
+            'Salmonella-Hemoflow' => 'SH',
+            'Salmonella-Liquids' => 'SL',
+            'Salmonella-P/A' => 'SP',
+            'Sample-Collection' => 'SC',
+            'Sequencing' => 'SEQ'
+        );
+        
+        $prefix = isset($prefix_map[$testing_type]) ? $prefix_map[$testing_type] : 'TST';
+        
+        // Generate unique sequential number
+        $year = date('y');
+        $month = date('m');
+        
+        // Get last barcode for this test type this month
+        $this->db->select('barcode');
+        $this->db->where('barcode LIKE', $prefix . $year . $month . '%');
+        $this->db->order_by('barcode', 'DESC');
+        $this->db->limit(1);
+        $query = $this->db->get('sample_reception_testing');
+        
+        if ($query->num_rows() > 0) {
+            $last_barcode = $query->row()->barcode;
+            // Extract last 4 digits and increment
+            $last_number = intval(substr($last_barcode, -4));
+            $new_number = $last_number + 1;
+        } else {
+            $new_number = 1;
+        }
+        
+        // Format: PREFIX + YY + MM + 0001
+        $barcode = $prefix . $year . $month . str_pad($new_number, 4, '0', STR_PAD_LEFT);
+        
+        return $barcode;
+    }
 }
 
 /* End of file Sample_reception.php */
