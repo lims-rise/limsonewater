@@ -27,6 +27,9 @@ class Hemoflow_model extends CI_Model
         $this->datatables->join('sample_reception_sample c', 'a.id_one_water_sample = c.id_one_water_sample', 'left');
         $this->datatables->join('ref_sampletype d', 'c.id_sampletype = d.id_sampletype', 'left');
         $this->datatables->join('ref_person e', 'a.id_person_proc = e.id_person', 'left');
+
+        // --- PERBAIKAN: Grouping berdasarkan ID sampel untuk menghilangkan duplikat dari hasil JOIN ---
+        $this->datatables->group_by('a.id_one_water_sample');
         
         // Filter by specific sample ID if provided (from Sample Reception redirect)
         if ($this->input->get_post('search_sample_id')) {
