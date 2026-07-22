@@ -525,4 +525,23 @@ class Dashboard_model extends CI_Model
 
         return $results;
     }
+    
+    /**
+     * Get welcome popup data - VERY SIMPLE
+     * Just return user info for greeting
+     */
+    public function get_welcome_popup_data($user_id) {
+        $data = array();
+        
+        // User info only
+        $this->db->select('full_name');
+        $this->db->where('id_users', $user_id);
+        $user_info = $this->db->get('tbl_user')->row();
+        
+        $data['user_info'] = array(
+            'full_name' => $user_info ? $user_info->full_name : 'User'
+        );
+        
+        return $data;
+    }
 }
