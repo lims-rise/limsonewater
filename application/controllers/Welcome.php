@@ -162,4 +162,35 @@ class Welcome extends CI_Controller {
         }
     }
 
+    /**
+     * Get welcome popup data for dashboard
+     * Simple greeting only
+     */
+    public function getWelcomePopupData() {
+        header('Content-Type: application/json');
+        
+        $user_id = $this->session->userdata('id_users');
+        
+        if (empty($user_id)) {
+            echo json_encode(['success' => false, 'message' => 'User not authenticated']);
+            return;
+        }
+        
+        try {
+            $popup_data = $this->Dashboard_model->get_welcome_popup_data($user_id);
+            
+            echo json_encode([
+                'success' => true,
+                'data' => $popup_data,
+                'message' => 'Welcome data retrieved successfully'
+            ]);
+        } catch (Exception $e) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Failed to retrieve welcome data',
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
+
 }
