@@ -682,6 +682,10 @@
 <script>
 
     document.addEventListener('DOMContentLoaded', function() {
+        // Clear welcome popup flag when login page loads
+        // This ensures popup will show again after user logs in
+        sessionStorage.removeItem('welcomePopupShown');
+        
         var video = document.getElementById('myVideo');
         var button = document.getElementById('toggleButton');
 

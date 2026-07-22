@@ -4152,3 +4152,174 @@ $(document).ready(function() {
         updateTime();
         setInterval(updateTime, 60000); // Update every minute
 </script>
+
+
+<!-- WELCOME POPUP MODAL - SIMPLE GREETING ONLY -->
+<div class="modal fade" id="welcome-popup-modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" style="margin-top: 100px; max-width: 500px;">
+        <div class="modal-content welcome-popup-content">
+            <div class="modal-header welcome-popup-header">
+                <button type="button" class="close welcome-popup-close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title text-center" style="margin: 20px 0;">
+                    <i class="fa fa-hand-o-right animated-wave" style="font-size: 48px; display: block; margin-bottom: 15px;"></i>
+                    <span id="welcome-greeting" style="font-size: 24px;">Welcome back</span><br>
+                    <strong id="welcome-user-name" style="font-size: 28px;"></strong>!
+                </h4>
+            </div>
+            <div class="modal-body text-center" style="padding: 30px;">
+                <!-- Loading State -->
+                <div id="welcome-loading">
+                    <i class="fa fa-spinner fa-spin fa-2x text-primary"></i>
+                    <p class="text-muted" style="margin-top: 15px;">Loading...</p>
+                </div>
+                
+                <!-- Content (just placeholder, greeting is in header) -->
+                <div id="welcome-content" style="display: none;">
+                    <p style="font-size: 16px; color: #666;">
+                        Have a productive day!
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer" style="text-align: center; border-top: none;">
+                <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal" style="padding: 10px 40px;">
+                    <i class="fa fa-check"></i> Let's Start
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Welcome Popup Styling - Simplified */
+.welcome-popup-content {
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    animation: welcomePopupEntrance 0.6s ease-out;
+}
+
+@keyframes welcomePopupEntrance {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.welcome-popup-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 12px 12px 0 0;
+    padding: 20px 25px;
+    border-bottom: none;
+}
+
+.welcome-popup-header .modal-title {
+    font-weight: 300;
+    margin: 0;
+}
+
+.welcome-popup-header .close {
+    color: white;
+    opacity: 0.8;
+    font-size: 28px;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}
+
+.welcome-popup-header .close:hover {
+    opacity: 1;
+}
+
+.animated-wave {
+    display: inline-block;
+    animation: wave 2s ease-in-out infinite;
+}
+
+@keyframes wave {
+    0%, 100% { transform: rotate(0deg); }
+    10%, 30% { transform: rotate(14deg); }
+    20% { transform: rotate(-8deg); }
+    40% { transform: rotate(-4deg); }
+    50% { transform: rotate(10deg); }
+}
+</style>
+
+<script>
+// ========================================
+// WELCOME POPUP - SIMPLE GREETING ONLY
+// ========================================
+
+$(document).ready(function() {
+    // Check if should show popup
+    if (shouldShowWelcomePopup()) {
+        // Small delay for better UX
+        setTimeout(function() {
+            loadAndShowWelcomePopup();
+        }, 800);
+    }
+});
+
+// Check if welcome popup should be shown
+function shouldShowWelcomePopup() {
+    // Check session storage to not show multiple times in same session
+    if (sessionStorage.getItem('welcomePopupShown')) {
+        return false;
+    }
+    return true;
+}
+
+// Load and show welcome popup
+function loadAndShowWelcomePopup() {
+    $('#welcome-popup-modal').modal('show');
+    $('#welcome-loading').show();
+    $('#welcome-content').hide();
+    
+    // Load data
+    $.ajax({
+        url: '<?php echo site_url("Welcome/getWelcomePopupData"); ?>',
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            if (response.success) {
+                renderWelcomePopup(response.data);
+                sessionStorage.setItem('welcomePopupShown', 'true');
+            } else {
+                console.error('Failed to load welcome data:', response.message);
+                $('#welcome-popup-modal').modal('hide');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error loading welcome data:', error);
+            $('#welcome-popup-modal').modal('hide');
+        }
+    });
+}
+
+// Render welcome popup with data
+function renderWelcomePopup(data) {
+    // Hide loading, show content
+    $('#welcome-loading').hide();
+    $('#welcome-content').fadeIn();
+    
+    // User info
+    if (data.user_info) {
+        $('#welcome-user-name').text(data.user_info.full_name || 'User');
+        
+        // Determine greeting based on time
+        const hour = new Date().getHours();
+        let greeting = 'Welcome back';
+        if (hour < 12) greeting = 'Good morning';
+        else if (hour < 18) greeting = 'Good afternoon';
+        else greeting = 'Good evening';
+        
+        $('#welcome-greeting').text(greeting);
+    }
+}
+
+</script>
