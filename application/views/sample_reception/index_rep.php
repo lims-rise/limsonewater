@@ -728,7 +728,7 @@
                                                 
                                                 // Special handling for different testing types
                                                 if ($testing_type === 'Protozoa') {
-                                                    $clean_units = 'copies/L';
+                                                    $clean_units = 'copies/g';
                                                 } elseif (strpos($clean_units, 'Detected') !== false || strpos($clean_units, 'Positive') !== false) {
                                                     $clean_units = '–'; // For presence/absence tests
                                                 } elseif (strpos($units, 'MPN') !== false) {
@@ -845,7 +845,7 @@
                                     ),
                                     '💧 Other Tests' => array(
                                         'Moisture_content' => array('name' => 'Moisture Content', 'method' => 'Standard', 'units' => '%'),
-                                        'Protozoa' => array('name' => 'Protozoa qPCR', 'method' => 'qPCR', 'units' => 'copies/L'),
+                                        'Protozoa' => array('name' => 'Protozoa', 'method' => 'qPCR', 'units' => 'copies/g'),
                                         'Sequencing' => array('name' => 'Sequencing', 'method' => '-', 'units' => '–'),
                                         'Microbial-Source-Tracking' => array('name' => 'Microbial Source Tracking', 'method' => 'MST', 'units' => '–')
                                     )
