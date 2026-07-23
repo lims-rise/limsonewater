@@ -652,7 +652,7 @@ class Sample_reception_model extends CI_Model
                 WHEN retest.testing_type = 'Sequencing' THEN 
                     (SELECT GROUP_CONCAT(DISTINCT ecp2.species_id SEPARATOR ', ') 
                      FROM extraction_culture_plate ecp2 
-                     WHERE ecp2.id_one_water_sample = sample.id_one_water_sample 
+                     WHERE ecp2.id_one_water_sample = sample.id_one_water_sample
                      AND ecp2.flag = 0 
                      AND ecp2.species_id IS NOT NULL 
                      AND ecp2.species_id != '')
@@ -718,12 +718,19 @@ class Sample_reception_model extends CI_Model
                                 CASE WHEN ptz.conc_copies_per_L_giardia IS NOT NULL AND ptz.conc_copies_per_L_giardia != '' THEN CONCAT('Giardia/L: ', ptz.conc_copies_per_L_giardia) END,
                                 CASE WHEN ptz.conc_copies_per_L_crypto IS NOT NULL AND ptz.conc_copies_per_L_crypto != '' THEN CONCAT('Cryptosporidium/L: ', ptz.conc_copies_per_L_crypto) END
                             )
-                        -- Show /g results if they have actual values (biosolids samples)
+                        -- Show /g DW results if they have actual values (biosolids samples with moisture)
                         WHEN (ptz.conc_copies_per_g_dw_giardia IS NOT NULL AND ptz.conc_copies_per_g_dw_giardia != '') 
                           OR (ptz.conc_copies_per_g_dw_crypto IS NOT NULL AND ptz.conc_copies_per_g_dw_crypto != '') THEN
                             CONCAT_WS(' | ',
-                                CASE WHEN ptz.conc_copies_per_g_dw_giardia IS NOT NULL AND ptz.conc_copies_per_g_dw_giardia != '' THEN CONCAT('Giardia/g: ', ptz.conc_copies_per_g_dw_giardia) END,
-                                CASE WHEN ptz.conc_copies_per_g_dw_crypto IS NOT NULL AND ptz.conc_copies_per_g_dw_crypto != '' THEN CONCAT('Cryptosporidium/g: ', ptz.conc_copies_per_g_dw_crypto) END
+                                CASE WHEN ptz.conc_copies_per_g_dw_giardia IS NOT NULL AND ptz.conc_copies_per_g_dw_giardia != '' THEN CONCAT('Giardia/g DW: ', ptz.conc_copies_per_g_dw_giardia) END,
+                                CASE WHEN ptz.conc_copies_per_g_dw_crypto IS NOT NULL AND ptz.conc_copies_per_g_dw_crypto != '' THEN CONCAT('Cryptosporidium/g DW: ', ptz.conc_copies_per_g_dw_crypto) END
+                            )
+                        -- Show /g results if they have actual values (biosolids samples without moisture)
+                        WHEN (ptz.giardia_concentration_g IS NOT NULL AND ptz.giardia_concentration_g != '') 
+                          OR (ptz.crypto_concentration_g IS NOT NULL AND ptz.crypto_concentration_g != '') THEN
+                            CONCAT_WS(' | ',
+                                CASE WHEN ptz.giardia_concentration_g IS NOT NULL AND ptz.giardia_concentration_g != '' THEN CONCAT('Giardia/g: ', ptz.giardia_concentration_g) END,
+                                CASE WHEN ptz.crypto_concentration_g IS NOT NULL AND ptz.crypto_concentration_g != '' THEN CONCAT('Cryptosporidium/g: ', ptz.crypto_concentration_g) END
                             )
                         ELSE NULL 
                     END
@@ -900,12 +907,19 @@ class Sample_reception_model extends CI_Model
                                 CASE WHEN ptz.conc_copies_per_L_giardia IS NOT NULL AND ptz.conc_copies_per_L_giardia != '' THEN CONCAT('Giardia/L: ', ptz.conc_copies_per_L_giardia) END,
                                 CASE WHEN ptz.conc_copies_per_L_crypto IS NOT NULL AND ptz.conc_copies_per_L_crypto != '' THEN CONCAT('Cryptosporidium/L: ', ptz.conc_copies_per_L_crypto) END
                             )
-                        -- Show /g results if they have actual values (biosolids samples)
+                        -- Show /g DW results if they have actual values (biosolids samples with moisture)
                         WHEN (ptz.conc_copies_per_g_dw_giardia IS NOT NULL AND ptz.conc_copies_per_g_dw_giardia != '') 
                           OR (ptz.conc_copies_per_g_dw_crypto IS NOT NULL AND ptz.conc_copies_per_g_dw_crypto != '') THEN
                             CONCAT_WS(' | ',
-                                CASE WHEN ptz.conc_copies_per_g_dw_giardia IS NOT NULL AND ptz.conc_copies_per_g_dw_giardia != '' THEN CONCAT('Giardia/g: ', ptz.conc_copies_per_g_dw_giardia) END,
-                                CASE WHEN ptz.conc_copies_per_g_dw_crypto IS NOT NULL AND ptz.conc_copies_per_g_dw_crypto != '' THEN CONCAT('Cryptosporidium/g: ', ptz.conc_copies_per_g_dw_crypto) END
+                                CASE WHEN ptz.conc_copies_per_g_dw_giardia IS NOT NULL AND ptz.conc_copies_per_g_dw_giardia != '' THEN CONCAT('Giardia/g DW: ', ptz.conc_copies_per_g_dw_giardia) END,
+                                CASE WHEN ptz.conc_copies_per_g_dw_crypto IS NOT NULL AND ptz.conc_copies_per_g_dw_crypto != '' THEN CONCAT('Cryptosporidium/g DW: ', ptz.conc_copies_per_g_dw_crypto) END
+                            )
+                        -- Show /g results if they have actual values (biosolids samples without moisture)
+                        WHEN (ptz.giardia_concentration_g IS NOT NULL AND ptz.giardia_concentration_g != '') 
+                          OR (ptz.crypto_concentration_g IS NOT NULL AND ptz.crypto_concentration_g != '') THEN
+                            CONCAT_WS(' | ',
+                                CASE WHEN ptz.giardia_concentration_g IS NOT NULL AND ptz.giardia_concentration_g != '' THEN CONCAT('Giardia/g: ', ptz.giardia_concentration_g) END,
+                                CASE WHEN ptz.crypto_concentration_g IS NOT NULL AND ptz.crypto_concentration_g != '' THEN CONCAT('Cryptosporidium/g: ', ptz.crypto_concentration_g) END
                             )
                         ELSE NULL 
                     END
