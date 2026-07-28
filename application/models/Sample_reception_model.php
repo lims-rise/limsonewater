@@ -121,7 +121,7 @@ class Sample_reception_model extends CI_Model
                 '</div>' .
                 // Data Actions Group  
                 '<div class="action-section data-actions">' .
-                    '<button type="button" class="btn-modern btn-primary btn_batch_tests" data-id="$2" title="Batch Add Tests">
+                    '<button type="button" class="btn-modern btn-primary btn_batch_tests" data-id="$2" title="Add Tests">
                     <i class="fa fa-tasks"></i>
                     </button>' .
                     '<button type="button" class="btn-modern btn-accent btn_edit" data-completed="$1" title="Edit Project">
@@ -144,7 +144,7 @@ class Sample_reception_model extends CI_Model
                 '</div>' .
                 // Data Actions Group  
                 '<div class="action-section data-actions">' .
-                    '<button type="button" class="btn-modern btn-primary btn_batch_tests" data-id="$2" title="Batch Add Tests">
+                    '<button type="button" class="btn-modern btn-primary btn_batch_tests" data-id="$2" title="Add Tests">
                     <i class="fa fa-tasks"></i>
                     </button>' .
                     '<button type="button" class="btn-modern btn-accent btn_edit" data-completed="$1" title="Edit Project">
@@ -172,7 +172,7 @@ class Sample_reception_model extends CI_Model
                         array('class' => 'btn-modern btn-print-extended', 'title' => 'Print Tim Report')) .
                 '</div>' .
                 // Data Actions Group  
-                    '<button type="button" class="btn-modern btn-primary btn_batch_tests" data-id="$2" title="Batch Add Tests">
+                    '<button type="button" class="btn-modern btn-primary btn_batch_tests" data-id="$2" title="Add Tests">
                         <i class="fa fa-tasks"></i>
                     </button>' .
                     '<button type="button" class="btn-modern btn-accent btn_edit" data-completed="$1" title="Edit Project">
@@ -328,7 +328,7 @@ class Sample_reception_model extends CI_Model
                 '</div>' .
                 // Data Actions Group  
                 '<div class="action-section data-actions">' .
-                    '<button type="button" class="btn-modern btn-primary btn_batch_tests" data-id="$2" title="Batch Add Tests">
+                    '<button type="button" class="btn-modern btn-primary btn_batch_tests" data-id="$2" title="Add Tests">
                     <i class="fa fa-tasks"></i>
                     </button>' .
                     '<button type="button" class="btn-modern btn-accent btn_edit" data-completed="$1" title="Edit Project">
@@ -351,7 +351,7 @@ class Sample_reception_model extends CI_Model
                 '</div>' .
                 // Data Actions Group  
                 '<div class="action-section data-actions">' .
-                    '<button type="button" class="btn-modern btn-primary btn_batch_tests" data-id="$2" title="Batch Add Tests">
+                    '<button type="button" class="btn-modern btn-primary btn_batch_tests" data-id="$2" title="Add Tests">
                     <i class="fa fa-tasks"></i>
                     </button>' .
                     '<button type="button" class="btn-modern btn-accent btn_edit" data-completed="$1" title="Edit Project">
@@ -380,7 +380,7 @@ class Sample_reception_model extends CI_Model
                 '</div>' .
                 // Data Actions Group  
                 '<div class="action-section data-actions">' .
-                    '<button type="button" class="btn-modern btn-primary btn_batch_tests" data-id="$2" title="Batch Add Tests">
+                    '<button type="button" class="btn-modern btn-primary btn_batch_tests" data-id="$2" title="Add Tests">
                     <i class="fa fa-tasks"></i>
                     </button>' .
                     '<button type="button" class="btn-modern btn-accent btn_edit" data-completed="$1" title="Edit Project">

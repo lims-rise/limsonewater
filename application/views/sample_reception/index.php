@@ -400,7 +400,7 @@
             <div class="modal-header" style="background-color: #3c8dbc; color: white;">
                 <button type="button" class="close" data-dismiss="modal" style="color: white;">&times;</button>
                 <h4 class="modal-title">
-                    <i class="fa fa-tasks"></i> Batch Add Tests - Project <span id="batch-project-id"></span>
+                    <i class="fa fa-tasks"></i> Add Tests - Project <span id="batch-project-id"></span>
                     <span id="batch-loading-indicator" style="display: none;">
                         <i class="fa fa-spinner fa-spin"></i> Loading...
                     </span>
