@@ -393,6 +393,96 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<!-- MODAL BATCH ADD TESTS -->
+<div class="modal fade" id="batch-test-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" style="width: 90%; max-width: 1200px;">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #3c8dbc; color: white;">
+                <button type="button" class="close" data-dismiss="modal" style="color: white;">&times;</button>
+                <h4 class="modal-title">
+                    <i class="fa fa-tasks"></i> Add Tests - Project <span id="batch-project-id"></span>
+                    <span id="batch-loading-indicator" style="display: none;">
+                        <i class="fa fa-spinner fa-spin"></i> Loading...
+                    </span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <!-- Quick Actions -->
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <strong><i class="fa fa-bolt"></i> Quick Actions</strong>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-inline">
+                                    <label>Select Test Type:</label>
+                                    <select id="bulk-test-selector" class="form-control" style="width: 250px; margin-left: 10px;">
+                                        <option value="">-- Select Test Type --</option>
+                                    </select>
+                                    <button type="button" class="btn btn-success btn-sm" id="btn-check-all-column" style="margin-left: 10px;">
+                                        <i class="fa fa-check-square-o"></i> Check All Samples
+                                    </button>
+                                    <button type="button" class="btn btn-warning btn-sm" id="btn-uncheck-all-column" style="margin-left: 5px;">
+                                        <i class="fa fa-square-o"></i> Uncheck All Samples
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grid View -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
+                            <table class="table table-bordered table-striped table-hover" id="batch-test-grid">
+                                <thead style="background-color: #f4f4f4; position: sticky; top: 0; z-index: 10;">
+                                    <tr>
+                                        <th style="min-width: 120px; position: sticky; left: 0; background-color: #f4f4f4; z-index: 11;">
+                                            Sample ID
+                                        </th>
+                                        <th style="min-width: 100px; position: sticky; left: 120px; background-color: #f4f4f4; z-index: 11;">
+                                            Client ID
+                                        </th>
+                                        <!-- Test type columns will be added dynamically -->
+                                    </tr>
+                                </thead>
+                                <tbody id="batch-test-grid-body">
+                                    <!-- Rows will be populated dynamically -->
+                                    <tr>
+                                        <td colspan="2" class="text-center">
+                                            <i class="fa fa-spinner fa-spin"></i> Loading data...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary -->
+                <div class="row" style="margin-top: 15px;">
+                    <div class="col-md-12">
+                        <div class="alert alert-info">
+                            <strong><i class="fa fa-info-circle"></i> Summary:</strong>
+                            <span id="batch-summary">No tests selected</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <i class="fa fa-times"></i> Cancel
+                </button>
+                <button type="button" class="btn btn-primary" id="btn-save-batch-tests">
+                    <i class="fa fa-save"></i> Create Tests
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 
             <!-- MODAL FORM -->
             <div class="modal fade" id="compose-modal-sample" tabindex="-1" role="dialog" >
@@ -4179,3 +4269,407 @@ $(document).ready(function() {
         </div>
     </div>
 </div>
+
+
+<script>
+// ========================================
+// BATCH ADD TESTS FUNCTIONALITY
+// ========================================
+
+// Global variables for batch test modal
+let batchTestData = {
+    samples: [],
+    testTypes: [],
+    currentProjectId: null
+};
+
+// Open batch test modal when button clicked
+$(document).on('click', '.btn_batch_tests', function() {
+    const projectId = $(this).data('id');
+    batchTestData.currentProjectId = projectId;
+    
+    $('#batch-project-id').text(projectId);
+    $('#batch-loading-indicator').show();
+    $('#batch-test-modal').modal('show');
+    
+    // Load data
+    loadBatchTestData(projectId);
+});
+
+// Load batch test data from server
+function loadBatchTestData(projectId) {
+    $.ajax({
+        url: '<?php echo site_url("Sample_reception/getBatchTestData"); ?>',
+        type: 'GET',
+        data: { id_project: projectId },
+        dataType: 'json',
+        success: function(response) {
+            $('#batch-loading-indicator').hide();
+            
+            if (response.status === 'success') {
+                batchTestData.samples = response.data.samples;
+                batchTestData.testTypes = response.data.test_types;
+                
+                renderBatchTestGrid();
+                populateTestTypeSelector();
+                updateBatchSummary();
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: response.message || 'Failed to load data'
+                });
+                $('#batch-test-modal').modal('hide');
+            }
+        },
+        error: function(xhr, status, error) {
+            $('#batch-loading-indicator').hide();
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to load batch test data: ' + error
+            });
+            $('#batch-test-modal').modal('hide');
+        }
+    });
+}
+
+// Render batch test grid (matrix view)
+function renderBatchTestGrid() {
+    const $thead = $('#batch-test-grid thead tr');
+    const $tbody = $('#batch-test-grid-body');
+    
+    // Clear existing content
+    $thead.find('th:gt(1)').remove(); // Keep first 2 columns (Sample ID, Client ID)
+    $tbody.empty();
+    
+    // Add test type columns to header
+    batchTestData.testTypes.forEach(function(testType) {
+        $thead.append(`
+            <th style="min-width: 100px; text-align: center; font-size: 11px;" 
+                data-test-id="${testType.id_testing_type}"
+                title="${testType.testing_type}">
+                ${truncateText(testType.testing_type, 15)}<br/>
+                <small>
+                    <a href="javascript:void(0)" class="check-all-test" data-test-id="${testType.id_testing_type}">
+                        <i class="fa fa-check-square-o"></i> All
+                    </a> | 
+                    <a href="javascript:void(0)" class="uncheck-all-test" data-test-id="${testType.id_testing_type}">
+                        <i class="fa fa-square-o"></i> None
+                    </a>
+                </small>
+            </th>
+        `);
+    });
+    
+    // Add sample rows
+    if (batchTestData.samples.length === 0) {
+        $tbody.append(`
+            <tr>
+                <td colspan="${2 + batchTestData.testTypes.length}" class="text-center">
+                    <i class="fa fa-info-circle"></i> No samples found in this project
+                </td>
+            </tr>
+        `);
+        return;
+    }
+    
+    batchTestData.samples.forEach(function(sample) {
+        let row = `
+            <tr>
+                <td style="position: sticky; left: 0; background-color: white; font-weight: bold;">
+                    ${sample.id_one_water_sample}
+                </td>
+                <td style="position: sticky; left: 120px; background-color: white;">
+                    ${sample.client_id || '-'}
+                </td>
+        `;
+        
+        // Add checkbox for each test type
+        batchTestData.testTypes.forEach(function(testType) {
+            const isExisting = sample.existing_test_types.includes(testType.id_testing_type);
+            const disabled = isExisting ? 'disabled' : '';
+            const checked = isExisting ? 'checked' : '';
+            const title = isExisting ? 'Test already exists' : 'Click to select';
+            const bgColor = isExisting ? '#f0f0f0' : '';
+            
+            row += `
+                <td style="text-align: center; background-color: ${bgColor};">
+                    <input type="checkbox" 
+                           class="batch-test-checkbox"
+                           data-sample-id="${sample.id_one_water_sample}"
+                           data-test-id="${testType.id_testing_type}"
+                           ${disabled}
+                           ${checked}
+                           title="${title}"
+                           style="transform: scale(1.3);">
+                    ${isExisting ? '<br/><small class="text-muted">(exists)</small>' : ''}
+                </td>
+            `;
+        });
+        
+        row += '</tr>';
+        $tbody.append(row);
+    });
+    
+    // Attach event listeners
+    attachBatchTestEventListeners();
+}
+
+// Populate test type selector for quick actions
+function populateTestTypeSelector() {
+    const $selector = $('#bulk-test-selector');
+    $selector.find('option:gt(0)').remove(); // Keep first option
+    
+    batchTestData.testTypes.forEach(function(testType) {
+        $selector.append(`
+            <option value="${testType.id_testing_type}">
+                ${testType.testing_type}
+            </option>
+        `);
+    });
+}
+
+// Attach event listeners for batch test grid
+function attachBatchTestEventListeners() {
+    // Checkbox change event
+    $('.batch-test-checkbox').off('change').on('change', function() {
+        updateBatchSummary();
+    });
+    
+    // Check all for specific test type (column)
+    $('.check-all-test').off('click').on('click', function() {
+        const testId = $(this).data('test-id');
+        $(`.batch-test-checkbox[data-test-id="${testId}"]:not(:disabled)`).prop('checked', true);
+        updateBatchSummary();
+    });
+    
+    // Uncheck all for specific test type (column)
+    $('.uncheck-all-test').off('click').on('click', function() {
+        const testId = $(this).data('test-id');
+        $(`.batch-test-checkbox[data-test-id="${testId}"]:not(:disabled)`).prop('checked', false);
+        updateBatchSummary();
+    });
+}
+
+// Quick action: Check all samples for selected test
+$('#btn-check-all-column').click(function() {
+    const selectedTestId = $('#bulk-test-selector').val();
+    if (!selectedTestId) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'No Test Selected',
+            text: 'Please select a test type first'
+        });
+        return;
+    }
+    
+    $(`.batch-test-checkbox[data-test-id="${selectedTestId}"]:not(:disabled)`).prop('checked', true);
+    updateBatchSummary();
+});
+
+// Quick action: Uncheck all samples for selected test
+$('#btn-uncheck-all-column').click(function() {
+    const selectedTestId = $('#bulk-test-selector').val();
+    if (!selectedTestId) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'No Test Selected',
+            text: 'Please select a test type first'
+        });
+        return;
+    }
+    
+    $(`.batch-test-checkbox[data-test-id="${selectedTestId}"]:not(:disabled)`).prop('checked', false);
+    updateBatchSummary();
+});
+
+// Update batch summary
+function updateBatchSummary() {
+    const selectedCheckboxes = $('.batch-test-checkbox:checked:not(:disabled)');
+    const count = selectedCheckboxes.length;
+    
+    if (count === 0) {
+        $('#batch-summary').text('No tests selected');
+    } else {
+        // Count per test type
+        const testCounts = {};
+        selectedCheckboxes.each(function() {
+            const testId = $(this).data('test-id');
+            testCounts[testId] = (testCounts[testId] || 0) + 1;
+        });
+        
+        const summaryParts = [];
+        for (const testId in testCounts) {
+            const testType = batchTestData.testTypes.find(t => t.id_testing_type == testId);
+            if (testType) {
+                summaryParts.push(`${testCounts[testId]}× ${testType.testing_type}`);
+            }
+        }
+        
+        $('#batch-summary').html(`
+            <strong>${count} test(s) will be created:</strong> ${summaryParts.join(', ')}
+        `);
+    }
+}
+
+// Save batch tests
+$('#btn-save-batch-tests').click(function() {
+    const selectedCheckboxes = $('.batch-test-checkbox:checked:not(:disabled)');
+    
+    if (selectedCheckboxes.length === 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'No Tests Selected',
+            text: 'Please select at least one test to create'
+        });
+        return;
+    }
+    
+    // Prepare assignments data
+    const assignments = {};
+    selectedCheckboxes.each(function() {
+        const sampleId = $(this).data('sample-id');
+        const testId = $(this).data('test-id');
+        
+        if (!assignments[sampleId]) {
+            assignments[sampleId] = [];
+        }
+        assignments[sampleId].push(testId);
+    });
+    
+    // Confirm before proceeding
+    Swal.fire({
+        title: 'Confirm Batch Test Creation',
+        html: `You are about to create <strong>${selectedCheckboxes.length} test(s)</strong>.<br/>Do you want to proceed?`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, Create Tests',
+        cancelButtonText: 'Cancel',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            saveBatchTests(assignments);
+        }
+    });
+});
+
+// Save batch tests via AJAX
+function saveBatchTests(assignments) {
+    const $btn = $('#btn-save-batch-tests');
+    $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Creating...');
+    
+    $.ajax({
+        url: '<?php echo site_url("Sample_reception/batchAddTests"); ?>',
+        type: 'POST',
+        data: {
+            id_project: batchTestData.currentProjectId,
+            assignments: assignments
+        },
+        dataType: 'json',
+        success: function(response) {
+            $btn.prop('disabled', false).html('<i class="fa fa-save"></i> Create Tests');
+            
+            if (response.status === 'success') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    html: `
+                        <p>${response.message}</p>
+                        <ul style="text-align: left; margin-top: 10px;">
+                            <li>Created: <strong>${response.summary.created}</strong></li>
+                            <li>Skipped: <strong>${response.summary.skipped}</strong></li>
+                            <li>Errors: <strong>${response.summary.errors}</strong></li>
+                        </ul>
+                    `,
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    $('#batch-test-modal').modal('hide');
+                    // Reload the parent table to show updated data
+                    if (typeof table !== 'undefined') {
+                        table.ajax.reload(null, false);
+                    }
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: response.message || 'Failed to create tests'
+                });
+            }
+        },
+        error: function(xhr, status, error) {
+            $btn.prop('disabled', false).html('<i class="fa fa-save"></i> Create Tests');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to save batch tests: ' + error
+            });
+        }
+    });
+}
+
+// Helper function to truncate text
+function truncateText(text, maxLength) {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + '...';
+}
+
+// Reset modal when closed
+$('#batch-test-modal').on('hidden.bs.modal', function() {
+    batchTestData = {
+        samples: [],
+        testTypes: [],
+        currentProjectId: null
+    };
+    $('#batch-test-grid-body').html('<tr><td colspan="2" class="text-center"><i class="fa fa-spinner fa-spin"></i> Loading data...</td></tr>');
+    $('#batch-summary').text('No tests selected');
+    $('#bulk-test-selector').val('');
+});
+
+</script>
+
+<style>
+/* Batch Test Modal Styling */
+#batch-test-grid {
+    font-size: 12px;
+}
+
+#batch-test-grid th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+#batch-test-grid td {
+    vertical-align: middle;
+}
+
+#batch-test-grid thead th {
+    border-bottom: 2px solid #ddd;
+}
+
+/* Sticky columns */
+#batch-test-grid td:nth-child(1),
+#batch-test-grid td:nth-child(2) {
+    box-shadow: 2px 0 5px -2px rgba(0,0,0,0.1);
+}
+
+/* Hover effect for rows */
+#batch-test-grid tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Checkbox styling */
+.batch-test-checkbox:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* Quick action panel */
+.panel-default > .panel-heading {
+    background-color: #f7f7f7;
+    border-color: #ddd;
+}
+</style>
