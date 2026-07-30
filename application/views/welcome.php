@@ -2474,6 +2474,7 @@ $(document).ready(function() {
                             type: 'spline',
                             backgroundColor: 'transparent',
                             borderRadius: 16,
+                            height: 450,
                             spacing: [20, 20, 20, 20],
                             style: {
                                 fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
@@ -2518,6 +2519,9 @@ $(document).ready(function() {
                             title: {
                                 text: null
                             },
+                            min: 0,
+                            max: 500,
+                            tickInterval: 100,
                             gridLineColor: '#F1F3F5',
                             gridLineWidth: 1,
                             lineWidth: 0,
