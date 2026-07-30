@@ -1940,6 +1940,7 @@ function applyCompletedProjectStyling() {
                 if (userLevel > 1) {
                     let $toggleBtn = $row.find('.toggle-child');
                     let $editBtn = $row.find('.btn_edit');
+                    let $addTestsBtn = $row.find('.btn_batch_tests');
                     
                     if (isUnlocked) {
                         // Project is unlocked - allow access
@@ -1953,6 +1954,7 @@ function applyCompletedProjectStyling() {
                         $toggleBtn.attr('title', 'Project unlocked by admin - access allowed');
                         
                         $editBtn.show(); // Show edit button when unlocked
+                        $addTestsBtn.show(); // Show add tests button when unlocked
                         
                         // Show delete button for level 2 users when unlocked
                         if (userLevel == 2) {
@@ -1973,6 +1975,7 @@ function applyCompletedProjectStyling() {
                         $toggleBtn.attr('title', 'Project completed and locked');
                         
                         $editBtn.hide(); // Hide edit button when locked
+                        $addTestsBtn.hide(); // Hide add tests button when locked
                         
                         // Hide delete button for level 2 users on locked projects
                         if (userLevel == 2) {
