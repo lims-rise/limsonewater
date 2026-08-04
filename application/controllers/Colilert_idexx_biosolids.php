@@ -238,6 +238,7 @@ class Colilert_idexx_biosolids extends CI_Controller
             $coliforms_largewells = $this->input->post('coliforms_largewells', TRUE);
             $coliforms_smallwells = $this->input->post('coliforms_smallwells', TRUE);
             $total_coliforms = $this->input->post('total_coliforms', TRUE);
+            $total_coliforms_mpn_dry_weight = $this->input->post('total_coliforms_mpn_dry_weight', TRUE);
             $remarks = $this->input->post('remarks', TRUE);
             $id_one_water_sample = $this->input->post('idx_one_water_sample', TRUE);
             $return_url = $this->input->post('return_url', TRUE);
@@ -264,6 +265,7 @@ class Colilert_idexx_biosolids extends CI_Controller
                     'coliforms_largewells' => $coliforms_largewells,
                     'coliforms_smallwells' => $coliforms_smallwells,
                     'total_coliforms' => $total_coliforms,
+                    'total_coliforms_mpn_dry_weight' => $total_coliforms_mpn_dry_weight,
                     'remarks' => $remarks,
                     'quality_control' => $quality_control,
                     'flag' => '0',
@@ -297,6 +299,7 @@ class Colilert_idexx_biosolids extends CI_Controller
                     'coliforms_largewells' => $coliforms_largewells,
                     'coliforms_smallwells' => $coliforms_smallwells,
                     'total_coliforms' => $total_coliforms,
+                    'total_coliforms_mpn_dry_weight' => $total_coliforms_mpn_dry_weight,
                     'remarks' => $remarks,
                     'quality_control' => $quality_control,
                     'flag' => '0',
