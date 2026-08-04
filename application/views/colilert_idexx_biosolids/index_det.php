@@ -54,7 +54,7 @@
 
                             <label for="sample_dry_weight" class="col-sm-2 control-label">Sample dry weight (g)</label>
 							<div class="col-sm-4">
-								<input class="form-control " id="sample_dry_weight" name="sample_dry_weight" value="<?php echo $sample_dry_weight ?>"  disabled>
+								<input class="form-control" id="sample_dry_weight" name="sample_dry_weight" type="number" step="0.001" min="0" placeholder="e.g., 0.549" value="<?php echo $sample_dry_weight ?>" disabled>
 							</div>
 						</div>
 
@@ -147,6 +147,7 @@
                                             <th>Lowerdetection MPN/g Dryweight</th>
                                             <th>Coliforms largewells</th>
                                             <th>Coliforms smallwells</th>
+                                            <th>Total coliforms</th>
                                             <th>Total coliforms MPNg/dry weight</th>
                                             <th>Remarks</th>
                                             <th>Quality Control</th>
@@ -284,9 +285,17 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="total_coliforms" class="col-sm-4 control-label">Total coliforms MPNg/dry weight</label>
+                                        <label for="total_coliforms" class="col-sm-4 control-label">Total coliforms</label>
                                         <div class="col-sm-8">
-                                            <input id="total_coliforms" name="total_coliforms" type="text"  placeholder="Total coliforms MPNg/dry weight" class="form-control" readonly>
+                                            <input id="total_coliforms" name="total_coliforms" type="text"  placeholder="Total coliforms" class="form-control" readonly>
+                                            <!-- <div class="val1tip"></div> -->
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="total_coliforms_mpn_dry_weight" class="col-sm-4 control-label">Total coliforms MPNg/dry weight</label>
+                                        <div class="col-sm-8">
+                                            <input id="total_coliforms_mpn_dry_weight" name="total_coliforms_mpn_dry_weight" type="text"  placeholder="Total coliforms MPNg/dry weight" class="form-control" readonly>
                                             <!-- <div class="val1tip"></div> -->
                                         </div>
                                     </div>
@@ -1211,7 +1220,11 @@
                         calculateDryweightValues();
                     }
                     if (targetFields.includes("#total_coliforms")) {
+                        console.log('=== Total Coliforms MPN Result ===');
+                        console.log('Raw MPN Value:', empnResult.mpn);
+                        console.log('Type:', typeof empnResult.mpn);
                         $("#total_coliforms").val(empnResult.mpn);
+                        calculateDryweightValues(); // Trigger calculation for total_coliforms_mpn_dry_weight
                     }
                 }
             }, 300); // 300ms delay
@@ -1220,6 +1233,7 @@
         // Function to calculate dryweight values
         function calculateDryweightValues() {
             let eColiRaw = $('#ecoli').val();
+            let totalColiformsRaw = $('#total_coliforms').val();
             let lowerDetection = parseFloat($('#lowerdetection').val()) || 0;
             let elutionVol = parseFloat($('#elution_volume').val()) || 0;
             let sampleDryWeight = parseFloat($('#sample_dry_weight').val()) || 0;
@@ -1227,9 +1241,11 @@
             // Debug logging
             console.log('calculateDryweightValues called');
             console.log('eColiRaw:', eColiRaw, 'Type:', typeof eColiRaw);
+            console.log('totalColiformsRaw:', totalColiformsRaw, 'Type:', typeof totalColiformsRaw);
             console.log('Starts with <:', eColiRaw && eColiRaw.toString().trim().startsWith('<'));
 
             if (sampleDryWeight > 0) {
+                // ========== E. Coli Calculation ==========
                 // Check if E.Coli value is "<1.0" or similar
                 let isLessThan = false;
                 let eColi = 0;
@@ -1271,11 +1287,30 @@
                 // lowerdetection_dryweight = ((lowerdetection/100) * elution_volume) / sample_dry_weight  
                 let lowerdetectionDryweight = ((lowerDetection / 100) * elutionVol) / sampleDryWeight;
                 $('#lowerdetection_dryweight').val(lowerdetectionDryweight.toFixed(1));
+                
+                // ========== Total Coliforms Dry Weight Calculation ==========
+                // total_coliforms_mpn_dry_weight = ((total_coliforms/100) * elution_volume) / sample_dry_weight
+                let totalColiforms = parseFloat(totalColiformsRaw) || 0;
+                
+                if (totalColiforms > 0) {
+                    let totalColiformsDryweight = ((totalColiforms / 100) * elutionVol) / sampleDryWeight;
+                    // Round UP to nearest integer (ceiling)
+                    $('#total_coliforms_mpn_dry_weight').val(Math.ceil(totalColiformsDryweight));
+                    console.log('Total Coliforms:', totalColiforms);
+                    console.log('Elution Volume:', elutionVol);
+                    console.log('Sample Dry Weight:', sampleDryWeight);
+                    console.log('Total Coliforms Dry Weight (raw):', totalColiformsDryweight);
+                    console.log('Total Coliforms Dry Weight (ceil):', Math.ceil(totalColiformsDryweight));
+                } else {
+                    $('#total_coliforms_mpn_dry_weight').val('');
+                    console.log('Total Coliforms is 0 or empty, clearing dry weight field');
+                }
             } else {
                 $('#ecoli_dryweight').val('');
                 $('#ecoli_dryweight_is_less_than').val('0');
                 $('#ecoli_dryweight_display').val('');
                 $('#lowerdetection_dryweight').val('');
+                $('#total_coliforms_mpn_dry_weight').val('');
             }
         }
 
@@ -1298,7 +1333,12 @@
         });
 
         // Recalculate dryweight values when manual values change
-        $('#ecoli, #lowerdetection').on('input change', function() {
+        $('#ecoli, #lowerdetection, #total_coliforms').on('input change', function() {
+            calculateDryweightValues();
+        });
+        
+        // Recalculate dryweight values when elution_volume or sample_dry_weight changes
+        $('#elution_volume, #sample_dry_weight').on('input change', function() {
             calculateDryweightValues();
         });
 
@@ -1569,6 +1609,15 @@
                         return data;
                     }
                 },
+                {
+                    "data": "total_coliforms_mpn_dry_weight",
+                    "render": function(data, type, row) {
+                        if (data && data !== '' && data !== '0' && !isNaN(parseFloat(data))) {
+                            return parseFloat(data).toFixed(1);
+                        }
+                        return data;
+                    }
+                },
                 {"data": "remarks"},
                 {
                     "data": "quality_control",
@@ -1625,6 +1674,7 @@
             $('#coliforms_largewells').val('');
             $('#coliforms_smallwells').val('');
             $('#total_coliforms').val('0');
+            $('#total_coliforms_mpn_dry_weight').val('0');
             // $('#total_coliforms').attr('readonly', true);
             $('#remarks').val('');
             // Reset quality control checkbox for new record
@@ -1669,6 +1719,7 @@
             $('#coliforms_largewells').val(data.coliforms_largewells);
             $('#coliforms_smallwells').val(data.coliforms_smallwells);
             $('#total_coliforms').val(data.total_coliforms);
+            $('#total_coliforms_mpn_dry_weight').val(data.total_coliforms_mpn_dry_weight);
             // $('#total_coliforms').attr('readonly', true);
             $('#remarks').val(data.remarks);
             // Set quality control checkbox
