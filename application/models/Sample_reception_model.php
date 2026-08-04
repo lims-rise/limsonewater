@@ -3364,6 +3364,184 @@ class Sample_reception_model extends CI_Model
         return $test_type_ids;
     }
 
+       /**
+     * Get existing tests with data status for enhanced batch operations
+     * Returns array with test details including whether data exists
+     */
+    public function get_existing_tests_detail_for_sample($id_one_water_sample) {
+        // Use a more reliable approach: 
+        // 1. Get all tests for this sample from sample_reception_testing
+        // 2. For each test, parse the id_testing_type and get details from ref_testing
+        // 3. Check if data exists in testing module tables
+        
+        // Step 1: Get base test data
+        $base_sql = "SELECT DISTINCT
+                        srt.id_testing,
+                        srt.barcode,
+                        srt.id_testing_type,
+                        srs.client_id,
+                        srs.id_one_water_sample,
+                        srs.id_sample
+                    FROM sample_reception_testing srt
+                    INNER JOIN sample_reception_sample srs ON srt.id_sample = srs.id_sample
+                    WHERE srs.id_one_water_sample = ?
+                    AND srt.flag = 0
+                    AND srs.flag = 0
+                    ORDER BY srt.barcode";
+        
+        $base_query = $this->db->query($base_sql, array($id_one_water_sample));
+        $base_tests = $base_query->result_array();
+        
+        error_log("======================================");
+        error_log("Step 1: Base tests for Sample {$id_one_water_sample}: " . count($base_tests) . " records");
+        
+        $final_results = array();
+        
+        // Step 2: For each base test, expand the id_testing_type (could be comma-separated)
+        foreach ($base_tests as $test) {
+            $testing_type_ids = array_filter(array_map('trim', explode(',', $test['id_testing_type'])));
+            
+            error_log("Processing barcode {$test['barcode']}, id_testing_type: {$test['id_testing_type']}, expanded to " . count($testing_type_ids) . " IDs");
+            
+            foreach ($testing_type_ids as $testing_id) {
+                // Get testing type details from ref_testing
+                $ref_sql = "SELECT id_testing_type, testing_type 
+                           FROM ref_testing 
+                           WHERE id_testing_type = ? 
+                           AND flag = 0";
+                $ref_query = $this->db->query($ref_sql, array($testing_id));
+                $ref_test = $ref_query->row_array();
+                
+                if (!$ref_test) {
+                    error_log("  WARNING: No ref_testing found for ID: {$testing_id}");
+                    continue;
+                }
+                
+                error_log("  Found: {$ref_test['testing_type']} (ID: {$testing_id})");
+                
+                // Step 3: Check if data exists in testing module table
+                $has_data = 0;
+                $testing_type = $ref_test['testing_type'];
+                $barcode = $test['barcode'];
+                
+                // Check based on testing type
+                switch ($testing_type) {
+                    case 'Biobank-In':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM biobank_in WHERE biobankin_barcode = ? AND flag = 0";
+                        break;
+                    case 'Colilert-Idexx-Water':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM colilert_water_in WHERE colilert_barcode = ? AND flag = 0";
+                        break;
+                    case 'Enterolert-Idexx-Water':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM enterolert_water_in WHERE enterolert_barcode = ? AND flag = 0";
+                        break;
+                    case 'Moisture_content':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM moisture_content WHERE barcode_moisture_content = ? AND flag = 0";
+                        break;
+                    case 'Hemoflow':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM hemoflow WHERE hemoflow_barcode = ? AND flag = 0";
+                        break;
+                    case 'Colilert-Idexx-Biosolids':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM colilert_biosolids_in WHERE colilert_barcode = ? AND flag = 0";
+                        break;
+                    case 'Enterolert-Idexx-Biosolids':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM enterolert_biosolids_in WHERE enterolert_barcode = ? AND flag = 0";
+                        break;
+                    case 'Extraction-Metagenome':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM extraction_metagenome WHERE extraction_barcode = ? AND flag = 0";
+                        break;
+                    case 'Extraction-Culture-Plate':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM extraction_culture WHERE extraction_barcode = ? AND flag = 0";
+                        break;
+                    case 'Extraction-Liquids':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM extraction_liquid WHERE extraction_barcode = ? AND flag = 0";
+                        break;
+                    case 'Campylobacter-Biosolids':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM campy_biosolids WHERE campy_assay_barcode = ? AND flag = 0";
+                        break;
+                    case 'Salmonella-Biosolids':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM salmonella_biosolids WHERE salmonella_assay_barcode = ? AND flag = 0";
+                        break;
+                    case 'Extraction-Biosolids':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM extraction_biosolid WHERE extraction_barcode = ? AND flag = 0";
+                        break;
+                    case 'Salmonella-Liquids':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM salmonella_liquids WHERE salmonella_assay_barcode = ? AND flag = 0";
+                        break;
+                    case 'Campylobacter-Liquids':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM campy_liquids WHERE campy_assay_barcode = ? AND flag = 0";
+                        break;
+                    case 'Campylobacter-QPCR':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM campy_biosolids_qpcr WHERE campy_assay_barcode = ? AND flag = 0";
+                        break;
+                    case 'Campylobacter-P/A':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM campy_pa WHERE campy_assay_barcode = ? AND flag = 0";
+                        break;
+                    case 'Protozoa':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM protozoa WHERE protozoa_barcode = ? AND flag = 0";
+                        break;
+                    case 'Salmonella-P/A':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM salmonella_pa WHERE salmonella_assay_barcode = ? AND flag = 0";
+                        break;
+                    case 'Enterolert-Hemoflow':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM enterolert_hemoflow WHERE enterolert_hemoflow_barcode = ? AND flag = 0";
+                        break;
+                    case 'Colilert-Hemoflow':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM colilert_hemoflow WHERE colilert_hemoflow_barcode = ? AND flag = 0";
+                        break;
+                    case 'Campy-Hemoflow':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM campy_hemoflow WHERE campy_assay_barcode = ? AND flag = 0";
+                        break;
+                    case 'Salmonella-Hemoflow':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM salmonella_hemoflow WHERE salmonella_assay_barcode = ? AND flag = 0";
+                        break;
+                    case 'Campy-Hemoflow-QPCR':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM campy_hemoflow_qpcr WHERE campy_assay_barcode = ? AND flag = 0";
+                        break;
+                    case 'Sequencing':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM sequencing WHERE sequencing_barcode = ? AND flag = 0";
+                        break;
+                    case 'Microbial-Source-Tracking':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM sequencing WHERE sequencing_barcode = ? AND flag = 0";
+                        break;
+                    case 'Sample-Collection':
+                        $check_sql = "SELECT COUNT(*) as cnt FROM sample_collection WHERE barcode_sample_collection = ? AND flag = 0";
+                        break;
+                    default:
+                        $check_sql = null;
+                        error_log("  WARNING: No table mapping for testing type: {$testing_type}");
+                }
+                
+                if ($check_sql) {
+                    $check_query = $this->db->query($check_sql, array($barcode));
+                    $check_result = $check_query->row_array();
+                    $has_data = ($check_result['cnt'] > 0) ? 1 : 0;
+                    error_log("  Data check: " . ($has_data ? "HAS DATA" : "NO DATA"));
+                }
+                
+                // Add to final results
+                $final_results[] = array(
+                    'id_testing_type' => $ref_test['id_testing_type'],
+                    'testing_type' => $ref_test['testing_type'],
+                    'barcode' => $test['barcode'],
+                    'id_testing' => $test['id_testing'],
+                    'client_id' => $test['client_id'],
+                    'id_one_water_sample' => $test['id_one_water_sample'],
+                    'has_data' => $has_data
+                );
+            }
+        }
+        
+        error_log("FINAL RESULTS for Sample {$id_one_water_sample}: " . count($final_results) . " records");
+        foreach ($final_results as $idx => $row) {
+            error_log("[{$idx}] {$row['barcode']} → {$row['testing_type']} (has_data: {$row['has_data']})");
+        }
+        error_log("======================================");
+        
+        return $final_results;
+    }
+
+
 }
 
 /* End of file Sample_reception_model.php */

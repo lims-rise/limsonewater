@@ -1546,15 +1546,34 @@ class Sample_reception extends CI_Controller
             // Get available test types
             $test_types = $this->Sample_reception_model->getTest();
             
-            // Get existing tests for each sample
+            // Get existing tests WITH DATA STATUS for each sample
             $samples_with_tests = array();
             foreach ($samples as $sample) {
-                $existing_tests = $this->Sample_reception_model->get_existing_tests_for_sample($sample['id_one_water_sample']);
+                $existing_tests_detail = $this->Sample_reception_model->get_existing_tests_detail_for_sample($sample['id_one_water_sample']);
+                
+                // Debug: Log test count
+                error_log("Sample {$sample['id_one_water_sample']}: " . count($existing_tests_detail) . " tests retrieved");
+                
+                // Convert has_data to integer and log (WITHOUT reference!)
+                $processed_tests = array();
+                foreach ($existing_tests_detail as $test) {
+                    $test['has_data'] = (int) $test['has_data'];
+                    error_log("  - {$test['testing_type']} (Barcode: {$test['barcode']}, has_data: {$test['has_data']})");
+                    $processed_tests[] = $test;
+                }
+                
+                // Also get simple array of test type IDs for backward compatibility
+                $existing_test_ids = array();
+                foreach ($processed_tests as $test) {
+                    $existing_test_ids[] = $test['id_testing_type'];
+                }
+                
                 $samples_with_tests[] = array(
                     'id_sample' => $sample['id_sample'],
                     'id_one_water_sample' => $sample['id_one_water_sample'],
                     'client_id' => $sample['client_id'],
-                    'existing_test_types' => $existing_tests
+                    'existing_test_types' => $existing_test_ids, // For backward compatibility
+                    'existing_tests_detail' => $processed_tests // Enhanced with data status
                 );
             }
             
@@ -1563,6 +1582,10 @@ class Sample_reception extends CI_Controller
                 'data' => array(
                     'samples' => $samples_with_tests,
                     'test_types' => $test_types
+                ),
+                'debug' => array(
+                    'sample_count' => count($samples_with_tests),
+                    'test_type_count' => count($test_types)
                 )
             ));
         } catch (Exception $e) {
@@ -1796,6 +1819,208 @@ class Sample_reception extends CI_Controller
         $barcode = $prefix . $year . $month . str_pad($new_number, 4, '0', STR_PAD_LEFT);
         
         return $barcode;
+    }
+
+    /**
+     * Get testing module URL based on test type ID
+     * Used for redirecting to appropriate testing module from batch modal
+     */
+    public function getTestingModuleUrl() {
+        header('Content-Type: application/json');
+        
+        $id_testing_type = $this->input->post('id_testing_type', TRUE);
+        $id_one_water_sample = $this->input->post('id_one_water_sample', TRUE);
+        $barcode = $this->input->post('barcode', TRUE);
+        
+        if (empty($id_testing_type)) {
+            echo json_encode(array('status' => 'error', 'message' => 'Testing type ID is required'));
+            return;
+        }
+        
+        // Get testing type details
+        $this->db->where('id_testing_type', $id_testing_type);
+        $this->db->where('flag', 0);
+        $query = $this->db->get('ref_testing');
+        
+        if ($query->num_rows() == 0) {
+            echo json_encode(array('status' => 'error', 'message' => 'Testing type not found'));
+            return;
+        }
+        
+        $test_type = $query->row();
+        $testing_type_name = $test_type->testing_type;
+        
+        // Map testing type name to URL path (same as check_data_exists mapping)
+        $url_mapping = array(
+            'Biobank-In' => 'biobankin',
+            'Colilert-Idexx-Water' => 'colilert_idexx_water',
+            'Enterolert-Idexx-Water' => 'enterolert_idexx_water',
+            'Moisture_content' => 'moisture_content',
+            'Hemoflow' => 'hemoflow',
+            'Colilert-Idexx-Biosolids' => 'colilert_idexx_biosolids',
+            'Enterolert-Idexx-Biosolids' => 'enterolert_idexx_biosolids',
+            'Extraction-Metagenome' => 'extraction_metagenome',
+            'Extraction-Culture-Plate' => 'extraction_culture',
+            'Extraction-Liquids' => 'extraction_liquid',
+            'Campylobacter-Biosolids' => 'campy_biosolids',
+            'Salmonella-Biosolids' => 'salmonella_biosolids',
+            'Extraction-Biosolids' => 'extraction_biosolid',
+            'Salmonella-Liquids' => 'salmonella_liquids',
+            'Campylobacter-Liquids' => 'campy_liquids',
+            'Campylobacter-QPCR' => 'campy_biosolids_qpcr',
+            'Campylobacter-P/A' => 'campy_pa',
+            'Campylobacter-MPN' => '',
+            'Protozoa' => 'protozoa',
+            'Salmonella-P/A' => 'salmonella_pa',
+            'Enterolert-Hemoflow' => 'enterolert_hemoflow',
+            'Colilert-Hemoflow' => 'colilert_hemoflow',
+            'Campy-Hemoflow' => 'campy_hemoflow',
+            'Salmonella-Hemoflow' => 'salmonella_hemoflow',
+            'Campy-Hemoflow-QPCR' => 'campy_hemoflow_qpcr',
+            'Sequencing' => 'sequencing',
+            'Microbial-Source-Tracking' => 'microbial',
+            'Sample-Collection' => 'sample_collection'
+        );
+        
+        if (!isset($url_mapping[$testing_type_name])) {
+            echo json_encode(array(
+                'status' => 'error', 
+                'message' => 'No URL mapping found for testing type: ' . $testing_type_name,
+                'testing_type' => $testing_type_name,
+                'available_mappings' => array_keys($url_mapping)
+            ));
+            return;
+        }
+        
+        $controller = $url_mapping[$testing_type_name];
+        $url = site_url($controller);
+        
+        // Add query parameters if available
+        $params = array();
+        if (!empty($barcode)) {
+            $params[] = 'barcode=' . urlencode($barcode);
+        }
+        if (!empty($id_one_water_sample)) {
+            $params[] = 'idOneWaterSample=' . urlencode($id_one_water_sample);
+            $params[] = 'sample_id=' . urlencode($id_one_water_sample);
+        }
+        if (!empty($id_testing_type)) {
+            $params[] = 'idTestingType=' . urlencode($id_testing_type);
+        }
+        
+        if (!empty($params)) {
+            $url .= '?' . implode('&', $params);
+        }
+        
+        echo json_encode(array(
+            'status' => 'success',
+            'url' => $url,
+            'testing_type' => $testing_type_name,
+            'controller' => $controller
+        ));
+    }
+
+    /**
+     * Load testing form content dynamically
+     * Returns HTML form for specific testing module
+     */
+    public function loadTestingForm() {
+        $id_testing_type = $this->input->post('id_testing_type', TRUE);
+        $id_one_water_sample = $this->input->post('id_one_water_sample', TRUE);
+        $barcode = $this->input->post('barcode', TRUE);
+        $mode = $this->input->post('mode', TRUE); // 'insert' or 'edit'
+        
+        if (empty($id_testing_type) || empty($id_one_water_sample)) {
+            echo '<div class="alert alert-danger">Missing required parameters</div>';
+            return;
+        }
+        
+        // Get testing type details
+        $this->db->where('id_testing_type', $id_testing_type);
+        $this->db->where('flag', 0);
+        $query = $this->db->get('ref_testing');
+        
+        if ($query->num_rows() == 0) {
+            echo '<div class="alert alert-danger">Testing type not found</div>';
+            return;
+        }
+        
+        $test_type = $query->row();
+        $testing_type_name = $test_type->testing_type;
+        
+        // Map testing type to controller (same as getTestingModuleUrl)
+        $url_mapping = array(
+            'Biobank-In' => 'biobankin',
+            'Colilert-Idexx-Water' => 'colilert_idexx_water',
+            'Enterolert-Idexx-Water' => 'enterolert_idexx_water',
+            'Moisture_content' => 'moisture_content',
+            'Hemoflow' => 'hemoflow',
+            'Colilert-Idexx-Biosolids' => 'colilert_idexx_biosolids',
+            'Enterolert-Idexx-Biosolids' => 'enterolert_idexx_biosolids',
+            'Extraction-Metagenome' => 'extraction_metagenome',
+            'Extraction-Culture-Plate' => 'extraction_culture',
+            'Extraction-Liquids' => 'extraction_liquid',
+            'Campylobacter-Biosolids' => 'campy_biosolids',
+            'Salmonella-Biosolids' => 'salmonella_biosolids',
+            'Extraction-Biosolids' => 'extraction_biosolid',
+            'Salmonella-Liquids' => 'salmonella_liquids',
+            'Campylobacter-Liquids' => 'campy_liquids',
+            'Campylobacter-QPCR' => 'campy_biosolids_qpcr',
+            'Campylobacter-P/A' => 'campy_pa',
+            'Campylobacter-MPN' => '',
+            'Protozoa' => 'protozoa',
+            'Salmonella-P/A' => 'salmonella_pa',
+            'Enterolert-Hemoflow' => 'enterolert_hemoflow',
+            'Colilert-Hemoflow' => 'colilert_hemoflow',
+            'Campy-Hemoflow' => 'campy_hemoflow',
+            'Salmonella-Hemoflow' => 'salmonella_hemoflow',
+            'Campy-Hemoflow-QPCR' => 'campy_hemoflow_qpcr',
+            'Sequencing' => 'sequencing',
+            'Microbial-Source-Tracking' => 'microbial',
+            'Sample-Collection' => 'sample_collection'
+        );
+        
+        if (!isset($url_mapping[$testing_type_name])) {
+            echo '<div class="alert alert-danger">No form mapping found for this testing type</div>';
+            return;
+        }
+        
+        $controller = $url_mapping[$testing_type_name];
+        
+        // Build form HTML using a standardized form structure
+        // For simplicity, we'll load a generic form view that can be customized per testing type
+        $data = array(
+            'mode' => $mode,
+            'barcode' => $barcode,
+            'id_one_water_sample' => $id_one_water_sample,
+            'id_testing_type' => $id_testing_type,
+            'testing_type_name' => $testing_type_name,
+            'controller' => $controller,
+            'save_url' => site_url($controller . '/save')
+        );
+        
+        // Try to load testing-specific form view
+        $form_view = strtolower($controller) . '/form_embed';
+        if (file_exists(APPPATH . 'views/' . $form_view . '.php')) {
+            // Load specific embedded form
+            $this->load->view($form_view, $data);
+        } else {
+            // Fallback: Show redirect message
+            echo '
+                <div class="alert alert-info">
+                    <h4><i class="fa fa-info-circle"></i> Form Not Embedded</h4>
+                    <p>This testing module does not support embedded form input yet.</p>
+                    <p>Click the button below to open the testing module in a new window.</p>
+                </div>
+                <div class="text-center">
+                    <a href="' . site_url($controller . '?barcode=' . $barcode . '&sample_id=' . $id_one_water_sample) . '" 
+                       target="_blank" 
+                       class="btn btn-primary btn-lg">
+                        <i class="fa fa-external-link"></i> Open Testing Module
+                    </a>
+                </div>
+            ';
+        }
     }
 }
 

@@ -4309,9 +4309,35 @@ function loadBatchTestData(projectId) {
         success: function(response) {
             $('#batch-loading-indicator').hide();
             
+            // Debug: Log raw response
+            console.log('=== RAW AJAX RESPONSE ===');
+            console.log('Full Response:', response);
+            console.log('Samples Count:', response.data.samples.length);
+            console.log('Sample[0] existing_tests_detail:', response.data.samples[0].existing_tests_detail);
+            
             if (response.status === 'success') {
                 batchTestData.samples = response.data.samples;
                 batchTestData.testTypes = response.data.test_types;
+                
+                // Debug log
+                console.log('=== BATCH TEST DATA LOADED ===');
+                console.log('Total Samples:', batchTestData.samples.length);
+                console.log('Total Test Types:', batchTestData.testTypes.length);
+                
+                // Enhanced debug - show all tests for each sample
+                batchTestData.samples.forEach(function(sample) {
+                    console.log('--- Sample:', sample.id_one_water_sample, '(Client ID:', sample.client_id, ')');
+                    console.log('  Total existing tests:', sample.existing_tests_detail.length);
+                    sample.existing_tests_detail.forEach(function(test) {
+                        console.log('    ✓', test.testing_type, '- Barcode:', test.barcode, '- has_data:', test.has_data);
+                    });
+                });
+                
+                // Log first sample for debugging
+                if (batchTestData.samples.length > 0) {
+                    console.log('First Sample:', batchTestData.samples[0].id_one_water_sample);
+                    console.log('Existing Tests Detail:', batchTestData.samples[0].existing_tests_detail);
+                }
                 
                 renderBatchTestGrid();
                 populateTestTypeSelector();
@@ -4327,6 +4353,8 @@ function loadBatchTestData(projectId) {
         },
         error: function(xhr, status, error) {
             $('#batch-loading-indicator').hide();
+            console.error('Error loading batch test data:', error);
+            console.error('Response:', xhr.responseText);
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
@@ -4388,25 +4416,77 @@ function renderBatchTestGrid() {
                 </td>
         `;
         
-        // Add checkbox for each test type
+        // Add checkbox for each test type with enhanced states
         batchTestData.testTypes.forEach(function(testType) {
-            const isExisting = sample.existing_test_types.includes(testType.id_testing_type);
-            const disabled = isExisting ? 'disabled' : '';
-            const checked = isExisting ? 'checked' : '';
-            const title = isExisting ? 'Test already exists' : 'Click to select';
-            const bgColor = isExisting ? '#f0f0f0' : '';
+            const existingTest = sample.existing_tests_detail.find(t => t.id_testing_type == testType.id_testing_type);
+            const isExisting = existingTest !== undefined;
+            const hasData = existingTest ? (existingTest.has_data == 1 || existingTest.has_data === '1' || existingTest.has_data === true) : false;
             
-            row += `
-                <td style="text-align: center; background-color: ${bgColor};">
+            // Debug log
+            if (isExisting) {
+                console.log('Sample:', sample.id_one_water_sample, 'Test:', testType.testing_type, 'Has Data:', existingTest.has_data, 'Parsed:', hasData);
+            }
+            
+            let bgColor = '';
+            let content = '';
+            let title = '';
+            
+            if (!isExisting) {
+                // State 1: No test yet - normal checkbox
+                bgColor = '';
+                title = 'Click to create test';
+                content = `
                     <input type="checkbox" 
-                           class="batch-test-checkbox"
+                           class="batch-test-checkbox test-state-new"
                            data-sample-id="${sample.id_one_water_sample}"
                            data-test-id="${testType.id_testing_type}"
-                           ${disabled}
-                           ${checked}
+                           data-test-name="${testType.testing_type}"
                            title="${title}"
                            style="transform: scale(1.3);">
-                    ${isExisting ? '<br/><small class="text-muted">(exists)</small>' : ''}
+                `;
+            } else if (isExisting && !hasData) {
+                // State 2: Test exists but no data - orange/yellow icon (clickable)
+                bgColor = '#fff3cd'; // Light yellow
+                title = 'Test exists - Click to input data';
+                content = `
+                    <div class="test-icon-wrapper clickable-icon test-state-no-data" 
+                         data-sample-id="${sample.id_one_water_sample}"
+                         data-test-id="${testType.id_testing_type}"
+                         data-test-name="${testType.testing_type}"
+                         data-barcode="${existingTest.barcode}"
+                         data-has-data="false"
+                         title="${title}"
+                         style="cursor: pointer;">
+                        <i class="fa fa-clock-o text-warning" style="font-size: 20px;"></i>
+                        <br/>
+                        <small class="text-warning" style="font-weight: bold;">⏳ No Data</small>
+                    </div>
+                `;
+            } else {
+                // State 3: Test exists with data - green icon (clickable for view/edit)
+                bgColor = '#d4edda'; // Light green
+                title = 'Data available - Click to view/edit';
+                content = `
+                    <div class="test-icon-wrapper clickable-icon test-state-has-data" 
+                         data-sample-id="${sample.id_one_water_sample}"
+                         data-test-id="${testType.id_testing_type}"
+                         data-test-name="${testType.testing_type}"
+                         data-barcode="${existingTest.barcode}"
+                         data-has-data="true"
+                         title="${title}"
+                         style="cursor: pointer;">
+                        <i class="fa fa-check-circle text-success" style="font-size: 20px;"></i>
+                        <br/>
+                        <small class="text-success" style="font-weight: bold;">✓ Has Data</small>
+                    </div>
+                `;
+            }
+            
+            row += `
+                <td style="text-align: center; background-color: ${bgColor}; vertical-align: middle; padding: 10px;">
+                    <div class="test-cell-content">
+                        ${content}
+                    </div>
                 </td>
             `;
         });
@@ -4435,22 +4515,54 @@ function populateTestTypeSelector() {
 
 // Attach event listeners for batch test grid
 function attachBatchTestEventListeners() {
-    // Checkbox change event
-    $('.batch-test-checkbox').off('change').on('change', function() {
+    // Checkbox change event for NEW tests (to be created)
+    $('.batch-test-checkbox.test-state-new').off('change').on('change', function() {
         updateBatchSummary();
     });
     
-    // Check all for specific test type (column)
+    // Click on icon wrapper for tests with NO DATA - open form to input data
+    $('.clickable-icon.test-state-no-data').off('click').on('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const $icon = $(this);
+        const sampleId = $icon.data('sample-id');
+        const testTypeId = $icon.data('test-id');
+        const testName = $icon.data('test-name');
+        const barcode = $icon.data('barcode');
+        
+        console.log('Orange icon clicked:', sampleId, testTypeId, testName, barcode);
+        
+        openTestInputForm(sampleId, testTypeId, testName, barcode, false);
+    });
+    
+    // Click on icon wrapper for tests with DATA - show data available modal
+    $('.clickable-icon.test-state-has-data').off('click').on('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const $icon = $(this);
+        const sampleId = $icon.data('sample-id');
+        const testTypeId = $icon.data('test-id');
+        const testName = $icon.data('test-name');
+        const barcode = $icon.data('barcode');
+        
+        console.log('Green icon clicked:', sampleId, testTypeId, testName, barcode);
+        
+        showDataAvailableModal(sampleId, testTypeId, testName, barcode);
+    });
+    
+    // Check all for specific test type (column) - only NEW tests
     $('.check-all-test').off('click').on('click', function() {
         const testId = $(this).data('test-id');
-        $(`.batch-test-checkbox[data-test-id="${testId}"]:not(:disabled)`).prop('checked', true);
+        $(`.batch-test-checkbox.test-state-new[data-test-id="${testId}"]`).prop('checked', true);
         updateBatchSummary();
     });
     
-    // Uncheck all for specific test type (column)
+    // Uncheck all for specific test type (column) - only NEW tests
     $('.uncheck-all-test').off('click').on('click', function() {
         const testId = $(this).data('test-id');
-        $(`.batch-test-checkbox[data-test-id="${testId}"]:not(:disabled)`).prop('checked', false);
+        $(`.batch-test-checkbox.test-state-new[data-test-id="${testId}"]`).prop('checked', false);
         updateBatchSummary();
     });
 }
@@ -4467,7 +4579,7 @@ $('#btn-check-all-column').click(function() {
         return;
     }
     
-    $(`.batch-test-checkbox[data-test-id="${selectedTestId}"]:not(:disabled)`).prop('checked', true);
+    $(`.batch-test-checkbox.test-state-new[data-test-id="${selectedTestId}"]`).prop('checked', true);
     updateBatchSummary();
 });
 
@@ -4483,13 +4595,171 @@ $('#btn-uncheck-all-column').click(function() {
         return;
     }
     
-    $(`.batch-test-checkbox[data-test-id="${selectedTestId}"]:not(:disabled)`).prop('checked', false);
+    $(`.batch-test-checkbox.test-state-new[data-test-id="${selectedTestId}"]`).prop('checked', false);
     updateBatchSummary();
 });
 
+// ========================================
+// ENHANCED FUNCTIONALITY: INPUT DATA FOR EXISTING TESTS
+// ========================================
+
+/**
+ * Open test input form for a specific sample and test type
+ * Redirects to testing module for data input
+ */
+function openTestInputForm(sampleId, testTypeId, testName, barcode, hasData) {
+    // Get testing module URL
+    $.ajax({
+        url: '<?php echo site_url("Sample_reception/getTestingModuleUrl"); ?>',
+        type: 'POST',
+        data: {
+            id_testing_type: testTypeId,
+            id_one_water_sample: sampleId,
+            barcode: barcode
+        },
+        dataType: 'json',
+        beforeSend: function() {
+            Swal.fire({
+                title: 'Loading...',
+                html: '<i class="fa fa-spinner fa-spin fa-3x text-primary"></i>',
+                showConfirmButton: false,
+                allowOutsideClick: false
+            });
+        },
+        success: function(response) {
+            Swal.close();
+            
+            if (response.status === 'success' && response.url) {
+                // Close batch modal
+                $('#batch-test-modal').modal('hide');
+                
+                // Redirect to testing module with return URL
+                const returnUrl = encodeURIComponent(window.location.href);
+                const fullUrl = response.url + (response.url.includes('?') ? '&' : '?') + 'return_url=' + returnUrl;
+                
+                // Show brief message before redirect
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Opening Testing Module',
+                    html: `<p>Redirecting to <strong>${testName}</strong>...</p><p><small>Sample ID: ${sampleId}</small></p>`,
+                    timer: 1500,
+                    showConfirmButton: false,
+                    timerProgressBar: true
+                }).then(() => {
+                    window.location.href = fullUrl;
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: response.message || 'Unable to open testing module'
+                });
+            }
+        },
+        error: function() {
+            Swal.close();
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to load testing module information'
+            });
+        }
+    });
+}
+
+/**
+ * Show modal when data is already available for a test
+ */
+function showDataAvailableModal(sampleId, testTypeId, testName, barcode) {
+    Swal.fire({
+        icon: 'success',
+        title: '<span style="color: #2E86AB; font-weight: 600;">✨ Data Already Available</span>',
+        html: `
+            <div style="
+                background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+                border-radius: 15px;
+                padding: 25px;
+                margin: 15px 0;
+                color: white;
+                box-shadow: 0 8px 32px rgba(52, 152, 219, 0.3);
+            ">
+                <div style="display: flex; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
+                    <div style="
+                        width: 50px;
+                        height: 50px;
+                        background: rgba(255, 255, 255, 0.2);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin-right: 15px;
+                        font-size: 24px;
+                    ">🔬</div>
+                    <div style="text-align: left;">
+                        <h4 style="margin: 0; font-size: 18px; font-weight: 600;">Testing Module</h4>
+                        <p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px;">${testName}</p>
+                    </div>
+                </div>
+                
+                <div style="display: flex; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
+                    <div style="
+                        width: 50px;
+                        height: 50px;
+                        background: rgba(255, 255, 255, 0.2);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin-right: 15px;
+                        font-size: 24px;
+                    ">💧</div>
+                    <div style="text-align: left;">
+                        <h4 style="margin: 0; font-size: 18px; font-weight: 600;">Sample ID</h4>
+                        <p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px; font-family: monospace; letter-spacing: 1px;">${sampleId}</p>
+                    </div>
+                </div>
+                
+                <div style="display: flex; align-items: center; background: rgba(255, 255, 255, 0.15); border-radius: 10px; padding: 15px;">
+                    <div style="
+                        width: 50px;
+                        height: 50px;
+                        background: rgba(46, 204, 113, 0.3);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin-right: 15px;
+                        font-size: 24px;
+                    ">✅</div>
+                    <div style="text-align: left;">
+                        <h4 style="margin: 0; font-size: 18px; font-weight: 600;">Status</h4>
+                        <p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px;">Data already exists in the system</p>
+                    </div>
+                </div>
+            </div>
+        `,
+        showCancelButton: true,
+        confirmButtonText: '<i class="fa fa-edit"></i> View/Edit Data',
+        cancelButtonText: '<i class="fa fa-times"></i> Close',
+        customClass: {
+            popup: 'futuristic-popup',
+            confirmButton: 'futuristic-button',
+            cancelButton: 'futuristic-button-warning'
+        },
+        showClass: {
+            popup: 'animate__animated animate__fadeInUp animate__faster'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Redirect to view/edit form
+            getTestingModuleUrl(testTypeId, sampleId, barcode);
+        }
+    });
+}
+
 // Update batch summary
 function updateBatchSummary() {
-    const selectedCheckboxes = $('.batch-test-checkbox:checked:not(:disabled)');
+    const selectedCheckboxes = $('.batch-test-checkbox.test-state-new:checked');
     const count = selectedCheckboxes.length;
     
     if (count === 0) {
@@ -4518,7 +4788,7 @@ function updateBatchSummary() {
 
 // Save batch tests
 $('#btn-save-batch-tests').click(function() {
-    const selectedCheckboxes = $('.batch-test-checkbox:checked:not(:disabled)');
+    const selectedCheckboxes = $('.batch-test-checkbox.test-state-new:checked');
     
     if (selectedCheckboxes.length === 0) {
         Swal.fire({
@@ -4668,6 +4938,51 @@ $('#batch-test-modal').on('hidden.bs.modal', function() {
 .batch-test-checkbox:disabled {
     cursor: not-allowed;
     opacity: 0.5;
+}
+
+/* Enhanced Test State Styling */
+.test-cell-content {
+    min-height: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+}
+
+/* Clickable icon wrapper */
+.test-icon-wrapper {
+    display: inline-block;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.test-icon-wrapper:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.test-state-no-data.test-icon-wrapper:hover {
+    background-color: rgba(255, 193, 7, 0.2);
+}
+
+.test-state-has-data.test-icon-wrapper:hover {
+    background-color: rgba(40, 167, 69, 0.2);
+}
+
+/* Animate icons */
+@keyframes pulse-warning {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+}
+
+.test-state-no-data i {
+    animation: pulse-warning 2s infinite;
 }
 
 /* Quick action panel */
