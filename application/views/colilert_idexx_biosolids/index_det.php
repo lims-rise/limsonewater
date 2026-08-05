@@ -1290,47 +1290,34 @@
                 
                 // ========== Total Coliforms Dry Weight Calculation ==========
                 // total_coliforms_mpn_dry_weight = ((total_coliforms/100) * elution_volume) / sample_dry_weight
+                // BUSINESS RULE: If total_coliforms contains symbol ("<" or ">"), result = 0
                 
-                // Handle "<" symbol in total_coliforms (same as ecoli handling)
                 let totalColiformsStr = totalColiformsRaw ? totalColiformsRaw.toString().trim() : '';
-                let totalColiforms = 0;
-                let isColiformsLessThan = false;
                 
-                if (totalColiformsStr.startsWith('<')) {
-                    isColiformsLessThan = true;
-                    totalColiforms = parseFloat(totalColiformsStr.replace('<', '').trim()) || 0;
-                    console.log('Total Coliforms: Detected < symbol, extracted value:', totalColiforms);
-                } else if (totalColiformsStr.startsWith('>')) {
-                    // Handle ">" symbol
-                    totalColiforms = parseFloat(totalColiformsStr.replace('>', '').trim()) || 0;
-                    console.log('Total Coliforms: Detected > symbol, extracted value:', totalColiforms);
+                // Check if contains symbol
+                if (totalColiformsStr.startsWith('<') || totalColiformsStr.startsWith('>')) {
+                    // Contains symbol - set to 0 as per business rule
+                    $('#total_coliforms_mpn_dry_weight').val('0');
+                    console.log('Total Coliforms contains symbol:', totalColiformsStr, '→ Result: 0 (business rule)');
                 } else {
-                    totalColiforms = parseFloat(totalColiformsRaw) || 0;
-                    console.log('Total Coliforms: Normal value:', totalColiforms);
-                }
-                
-                if (totalColiforms > 0) {
-                    let totalColiformsDryweight = ((totalColiforms / 100) * elutionVol) / sampleDryWeight;
-                    // Round UP to nearest integer (ceiling)
-                    let result = Math.ceil(totalColiformsDryweight);
+                    // No symbol - calculate normally
+                    let totalColiforms = parseFloat(totalColiformsRaw) || 0;
                     
-                    // Display with "<" or ">" symbol if needed
-                    if (isColiformsLessThan) {
-                        $('#total_coliforms_mpn_dry_weight').val('<' + result);
-                    } else if (totalColiformsStr.startsWith('>')) {
-                        $('#total_coliforms_mpn_dry_weight').val('>' + result);
-                    } else {
+                    if (totalColiforms > 0) {
+                        let totalColiformsDryweight = ((totalColiforms / 100) * elutionVol) / sampleDryWeight;
+                        // Round UP to nearest integer (ceiling)
+                        let result = Math.ceil(totalColiformsDryweight);
                         $('#total_coliforms_mpn_dry_weight').val(result);
+                        
+                        console.log('Total Coliforms:', totalColiforms);
+                        console.log('Elution Volume:', elutionVol);
+                        console.log('Sample Dry Weight:', sampleDryWeight);
+                        console.log('Total Coliforms Dry Weight (raw):', totalColiformsDryweight);
+                        console.log('Total Coliforms Dry Weight (result):', result);
+                    } else {
+                        $('#total_coliforms_mpn_dry_weight').val('');
+                        console.log('Total Coliforms is 0 or empty, clearing dry weight field');
                     }
-                    
-                    console.log('Total Coliforms:', totalColiforms);
-                    console.log('Elution Volume:', elutionVol);
-                    console.log('Sample Dry Weight:', sampleDryWeight);
-                    console.log('Total Coliforms Dry Weight (raw):', totalColiformsDryweight);
-                    console.log('Total Coliforms Dry Weight (result):', result);
-                } else {
-                    $('#total_coliforms_mpn_dry_weight').val('');
-                    console.log('Total Coliforms is 0 or empty, clearing dry weight field');
                 }
             } else {
                 $('#ecoli_dryweight').val('');
