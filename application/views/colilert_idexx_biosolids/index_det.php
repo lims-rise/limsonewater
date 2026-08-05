@@ -139,16 +139,16 @@
 											<th>Colilert Barcode</th>
 											<th>Date Sample Processed</th>
                                             <th>Time Sample Processed</th>
-                                            <th>E.Coli largewells</th>
-                                            <th>E.Coli smallwells</th>
+                                            <th>E.Coli Large wells</th>
+                                            <th>E.Coli Small wells</th>
                                             <th>E.Coli MPN/100 mL</th>
                                             <th>Lower confidence limit MPN/100 mL</th>
-                                            <th>E.Coli MPN/g Dryweight</th>
-                                            <th>Lowerdetection MPN/g Dryweight</th>
-                                            <th>Coliforms largewells</th>
-                                            <th>Coliforms smallwells</th>
+                                            <th>E.Coli MPN/g Dry weight</th>
+                                            <th>Lowerdetection MPN/g Dry weight</th>
+                                            <th>Coliforms Large wells</th>
+                                            <th>Coliforms Small wells</th>
                                             <th>Total coliforms</th>
-                                            <th>Total coliforms MPNg/dry weight</th>
+                                            <th>Total coliforms MPN/g Dry weight</th>
                                             <th>Remarks</th>
                                             <th>Quality Control</th>
                                             <th>Action</th>
@@ -225,16 +225,16 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="ecoli_largewells" class="col-sm-4 control-label">E. Coli large wells</label>
+                                        <label for="ecoli_largewells" class="col-sm-4 control-label">E. Coli Large wells</label>
                                         <div class="col-sm-8">
-                                            <input id="ecoli_largewells" name="ecoli_largewells" type="number" step="1" min="0" max="49" class="form-control" placeholder="E. Coli large wells" required>
+                                            <input id="ecoli_largewells" name="ecoli_largewells" type="number" step="1" min="0" max="49" class="form-control" placeholder="E. Coli Large wells" required>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="ecoli_smallwells" class="col-sm-4 control-label">E. Coli small wells</label>
+                                        <label for="ecoli_smallwells" class="col-sm-4 control-label">E. Coli Small wells</label>
                                         <div class="col-sm-8">
-                                            <input id="ecoli_smallwells" name="ecoli_smallwells" type="number" step="1" min="0" max="48" class="form-control" placeholder="E. Coli small wells" required>
+                                            <input id="ecoli_smallwells" name="ecoli_smallwells" type="number" step="1" min="0" max="48" class="form-control" placeholder="E. Coli Small wells" required>
                                         </div>
                                     </div>
 
@@ -253,10 +253,10 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="ecoli_dryweight_display" class="col-sm-4 control-label">E.Coli MPN/g Dryweight</label>
+                                        <label for="ecoli_dryweight_display" class="col-sm-4 control-label">E.Coli MPN/g Dry weight</label>
                                         <div class="col-sm-8">
                                             <!-- Display field (with < symbol if needed) -->
-                                            <input id="ecoli_dryweight_display" type="text" placeholder="E.Coli MPN/g Dryweight" class="form-control" readonly>
+                                            <input id="ecoli_dryweight_display" type="text" placeholder="E.Coli MPN/g Dry weight" class="form-control" readonly>
                                             <!-- Hidden fields for database (numeric value and flag) -->
                                             <input id="ecoli_dryweight" name="ecoli_dryweight" type="hidden">
                                             <input id="ecoli_dryweight_is_less_than" name="ecoli_dryweight_is_less_than" type="hidden" value="0">
@@ -264,23 +264,23 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="lowerdetection_dryweight" class="col-sm-4 control-label">Lowerdetection MPN/g Dryweight</label>
+                                        <label for="lowerdetection_dryweight" class="col-sm-4 control-label">Lowerdetection MPN/g Dry weight</label>
                                         <div class="col-sm-8">
-                                            <input id="lowerdetection_dryweight" name="lowerdetection_dryweight" type="text"  placeholder="Lowerdetection MPN/g Dryweight" class="form-control" readonly>
+                                            <input id="lowerdetection_dryweight" name="lowerdetection_dryweight" type="text"  placeholder="Lowerdetection MPN/g Dry weight" class="form-control" readonly>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="coliforms_largewells" class="col-sm-4 control-label">Coliforms large wells</label>
+                                        <label for="coliforms_largewells" class="col-sm-4 control-label">Coliforms Large wells</label>
                                         <div class="col-sm-8">
-                                            <input id="coliforms_largewells" name="coliforms_largewells" type="number" step="1" min="0" max="49" class="form-control" placeholder="Coliforms large wells" required>
+                                            <input id="coliforms_largewells" name="coliforms_largewells" type="number" step="1" min="0" max="49" class="form-control" placeholder="Coliforms Large wells" required>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="coliforms_smallwells" class="col-sm-4 control-label">Coliforms small wells</label>
+                                        <label for="coliforms_smallwells" class="col-sm-4 control-label">Coliforms Small wells</label>
                                         <div class="col-sm-8">
-                                            <input id="coliforms_smallwells" name="coliforms_smallwells" type="number" step="1" min="0" max="48" class="form-control" placeholder="Coliforms small wells" required>
+                                            <input id="coliforms_smallwells" name="coliforms_smallwells" type="number" step="1" min="0" max="48" class="form-control" placeholder="Coliforms Small wells" required>
                                         </div>
                                     </div>
 
@@ -293,9 +293,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="total_coliforms_mpn_dry_weight" class="col-sm-4 control-label">Total coliforms MPNg/dry weight</label>
+                                        <label for="total_coliforms_mpn_dry_weight" class="col-sm-4 control-label">Total coliforms MPN/g Dry weight</label>
                                         <div class="col-sm-8">
-                                            <input id="total_coliforms_mpn_dry_weight" name="total_coliforms_mpn_dry_weight" type="text"  placeholder="Total coliforms MPNg/dry weight" class="form-control" readonly>
+                                            <input id="total_coliforms_mpn_dry_weight" name="total_coliforms_mpn_dry_weight" type="text"  placeholder="Total coliforms MPN/g Dry weight" class="form-control" readonly>
                                             <!-- <div class="val1tip"></div> -->
                                         </div>
                                     </div>
@@ -1290,17 +1290,44 @@
                 
                 // ========== Total Coliforms Dry Weight Calculation ==========
                 // total_coliforms_mpn_dry_weight = ((total_coliforms/100) * elution_volume) / sample_dry_weight
-                let totalColiforms = parseFloat(totalColiformsRaw) || 0;
+                
+                // Handle "<" symbol in total_coliforms (same as ecoli handling)
+                let totalColiformsStr = totalColiformsRaw ? totalColiformsRaw.toString().trim() : '';
+                let totalColiforms = 0;
+                let isColiformsLessThan = false;
+                
+                if (totalColiformsStr.startsWith('<')) {
+                    isColiformsLessThan = true;
+                    totalColiforms = parseFloat(totalColiformsStr.replace('<', '').trim()) || 0;
+                    console.log('Total Coliforms: Detected < symbol, extracted value:', totalColiforms);
+                } else if (totalColiformsStr.startsWith('>')) {
+                    // Handle ">" symbol
+                    totalColiforms = parseFloat(totalColiformsStr.replace('>', '').trim()) || 0;
+                    console.log('Total Coliforms: Detected > symbol, extracted value:', totalColiforms);
+                } else {
+                    totalColiforms = parseFloat(totalColiformsRaw) || 0;
+                    console.log('Total Coliforms: Normal value:', totalColiforms);
+                }
                 
                 if (totalColiforms > 0) {
                     let totalColiformsDryweight = ((totalColiforms / 100) * elutionVol) / sampleDryWeight;
                     // Round UP to nearest integer (ceiling)
-                    $('#total_coliforms_mpn_dry_weight').val(Math.ceil(totalColiformsDryweight));
+                    let result = Math.ceil(totalColiformsDryweight);
+                    
+                    // Display with "<" or ">" symbol if needed
+                    if (isColiformsLessThan) {
+                        $('#total_coliforms_mpn_dry_weight').val('<' + result);
+                    } else if (totalColiformsStr.startsWith('>')) {
+                        $('#total_coliforms_mpn_dry_weight').val('>' + result);
+                    } else {
+                        $('#total_coliforms_mpn_dry_weight').val(result);
+                    }
+                    
                     console.log('Total Coliforms:', totalColiforms);
                     console.log('Elution Volume:', elutionVol);
                     console.log('Sample Dry Weight:', sampleDryWeight);
                     console.log('Total Coliforms Dry Weight (raw):', totalColiformsDryweight);
-                    console.log('Total Coliforms Dry Weight (ceil):', Math.ceil(totalColiformsDryweight));
+                    console.log('Total Coliforms Dry Weight (result):', result);
                 } else {
                     $('#total_coliforms_mpn_dry_weight').val('');
                     console.log('Total Coliforms is 0 or empty, clearing dry weight field');
