@@ -4247,6 +4247,133 @@ $(document).ready(function() {
         font-size: 8px;
     }
 }
+
+/* ========================================
+   BATCH ADD TESTS MODAL - TABLE STYLING
+   ======================================== */
+
+/* Batch test grid table header - Full width for testing type names */
+#batch-test-grid thead th {
+    vertical-align: middle !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    text-align: center !important;
+    padding: 8px 4px !important;
+}
+
+/* Test type column headers - allow multiline text */
+#batch-test-grid thead th[data-test-id] {
+    min-width: 120px !important;
+    max-width: 160px !important;
+    font-size: 10px !important;
+    line-height: 1.3 !important;
+    height: auto !important;
+}
+
+/* Testing type name wrapper */
+#batch-test-grid thead th[data-test-id] > div:first-child {
+    display: block !important;
+    margin-bottom: 6px !important;
+    line-height: 1.3 !important;
+    font-weight: 600 !important;
+    min-height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+}
+
+/* Quick action links (All/None) */
+#batch-test-grid thead th[data-test-id] small {
+    display: block !important;
+    white-space: nowrap !important;
+    font-size: 9px !important;
+    margin-top: 4px !important;
+}
+
+/* Ensure sticky columns still work properly */
+#batch-test-grid thead th:nth-child(1),
+#batch-test-grid thead th:nth-child(2) {
+    position: sticky !important;
+    background-color: #f4f4f4 !important;
+    z-index: 11 !important;
+}
+
+#batch-test-grid thead th:nth-child(1) {
+    left: 0 !important;
+}
+
+#batch-test-grid thead th:nth-child(2) {
+    left: 120px !important;
+}
+
+/* Table body styling improvements */
+#batch-test-grid tbody td {
+    vertical-align: middle !important;
+    padding: 10px !important;
+}
+
+/* Test cell content wrapper */
+.test-cell-content {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 50px !important;
+}
+
+/* Icon wrapper styling */
+.test-icon-wrapper {
+    display: inline-flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 8px !important;
+    border-radius: 8px !important;
+    transition: all 0.2s ease !important;
+}
+
+.test-icon-wrapper:hover {
+    transform: scale(1.05) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Clickable icon state */
+.clickable-icon {
+    cursor: pointer !important;
+}
+
+.clickable-icon:hover {
+    background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 1200px) {
+    #batch-test-grid thead th[data-test-id] {
+        min-width: 100px !important;
+        font-size: 9px !important;
+    }
+    
+    #batch-test-grid thead th[data-test-id] > div:first-child {
+        min-height: 35px !important;
+        font-size: 9px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    #batch-test-grid thead th[data-test-id] {
+        min-width: 90px !important;
+        font-size: 8px !important;
+    }
+    
+    #batch-test-grid thead th[data-test-id] > div:first-child {
+        min-height: 30px !important;
+        font-size: 8px !important;
+    }
+    
+    #batch-test-grid thead th[data-test-id] small {
+        font-size: 7px !important;
+    }
+}
 </style>
 
 <!-- Unlock Information Modal -->
@@ -4377,11 +4504,13 @@ function renderBatchTestGrid() {
     // Add test type columns to header
     batchTestData.testTypes.forEach(function(testType) {
         $thead.append(`
-            <th style="min-width: 100px; text-align: center; font-size: 11px;" 
+            <th style="min-width: 120px; text-align: center; font-size: 10px; padding: 8px 4px; word-wrap: break-word; white-space: normal; vertical-align: middle;" 
                 data-test-id="${testType.id_testing_type}"
                 title="${testType.testing_type}">
-                ${truncateText(testType.testing_type, 15)}<br/>
-                <small>
+                <div style="margin-bottom: 6px; line-height: 1.3; font-weight: 600;">
+                    ${testType.testing_type}
+                </div>
+                <small style="white-space: nowrap;">
                     <a href="javascript:void(0)" class="check-all-test" data-test-id="${testType.id_testing_type}">
                         <i class="fa fa-check-square-o"></i> All
                     </a> | 
