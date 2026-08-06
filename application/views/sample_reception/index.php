@@ -394,7 +394,7 @@
 </div><!-- /.modal -->
 
 <!-- MODAL BATCH ADD TESTS -->
-<div class="modal fade" id="batch-test-modal" tabindex="-1" role="dialog">
+<div class="modal fade" id="batch-test-modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg" style="width: 90%; max-width: 1200px;">
         <div class="modal-content">
             <div class="modal-header" style="background-color: #3c8dbc; color: white;">
