@@ -443,7 +443,7 @@
                                             Sample ID
                                         </th>
                                         <th style="min-width: 100px; position: sticky; left: 120px; background-color: #f4f4f4; z-index: 11;">
-                                            Client ID
+                                            Receiving Lab
                                         </th>
                                         <!-- Test type columns will be added dynamically -->
                                     </tr>
@@ -4498,7 +4498,7 @@ function renderBatchTestGrid() {
     const $tbody = $('#batch-test-grid-body');
     
     // Clear existing content
-    $thead.find('th:gt(1)').remove(); // Keep first 2 columns (Sample ID, Client ID)
+    $thead.find('th:gt(1)').remove(); // Keep first 2 columns (Sample ID, Receiving Lab)
     $tbody.empty();
     
     // Add test type columns to header
@@ -4541,7 +4541,7 @@ function renderBatchTestGrid() {
                     ${sample.id_one_water_sample}
                 </td>
                 <td style="position: sticky; left: 120px; background-color: white;">
-                    ${sample.client_id || '-'}
+                    ${sample.receiving_lab || '-'}
                 </td>
         `;
         
@@ -4880,8 +4880,102 @@ function showDataAvailableModal(sampleId, testTypeId, testName, barcode) {
         }
     }).then((result) => {
         if (result.isConfirmed) {
-            // Redirect to view/edit form
-            getTestingModuleUrl(testTypeId, sampleId, barcode);
+            // Redirect to view/edit form (using new method for has_data condition)
+            redirectToTestingModuleDetail(testTypeId, sampleId, barcode);
+        }
+    });
+}
+
+/**
+ * Redirect to testing module detail page (for existing tests with data)
+ * This is similar to the approach used in sample_reception/index_det.php for url-link-status
+ */
+function redirectToTestingModuleDetail(testTypeId, sampleId, barcode) {
+    // List of modules that don't have detail pages (only parent/index page)
+    const modulesWithoutDetailPage = [
+        'hemoflow',
+        'extraction_biosolid',
+        'extraction_culture',
+        'extraction_liquid',
+        'extraction_metagenome',
+        'protozoa',
+        'sequencing',
+        'microbial'
+    ];
+    
+    // Get the testing module URL first
+    $.ajax({
+        url: '<?php echo site_url("Sample_reception/getTestingModuleUrl"); ?>',
+        type: 'POST',
+        data: {
+            id_testing_type: testTypeId,
+            id_one_water_sample: sampleId,
+            barcode: barcode
+        },
+        dataType: 'json',
+        beforeSend: function() {
+            Swal.fire({
+                title: 'Loading...',
+                html: '<i class="fa fa-spinner fa-spin fa-3x text-primary"></i>',
+                showConfirmButton: false,
+                allowOutsideClick: false
+            });
+        },
+        success: function(response) {
+            Swal.close();
+            
+            if (response.status === 'success' && response.controller) {
+                // Close batch modal first
+                $('#batch-test-modal').modal('hide');
+                
+                // Build URL with return URL
+                const returnUrl = encodeURIComponent(window.location.href);
+                
+                // Check if this module has a detail page
+                const hasDetailPage = !modulesWithoutDetailPage.includes(response.controller.toLowerCase());
+                
+                if (hasDetailPage) {
+                    // Module has detail page - try to access it
+                    let detailUrl = `${window.location.origin}/limsonewater/index.php/${response.controller}/read/${sampleId}`;
+                    detailUrl += '?return_url=' + returnUrl;
+                    
+                    // Check if the detail page exists by attempting navigation
+                    $.ajax({
+                        url: detailUrl,
+                        type: 'HEAD',
+                        timeout: 2000,
+                        success: function() {
+                            // Detail page exists, navigate to it
+                            window.location.href = detailUrl;
+                        },
+                        error: function() {
+                            // Detail page doesn't exist, fallback to main module with mode=view
+                            console.log('Detail page not found, redirecting to main module with view mode');
+                            const mainUrl = `${window.location.origin}/limsonewater/index.php/${response.controller}?barcode=${barcode}&idOneWaterSample=${sampleId}&idTestingType=${testTypeId}&mode=view&return_url=${returnUrl}`;
+                            window.location.href = mainUrl;
+                        }
+                    });
+                } else {
+                    // Module doesn't have detail page - go directly to main module with mode=view
+                    console.log('Module without detail page, redirecting to main module with view mode');
+                    const mainUrl = `${window.location.origin}/limsonewater/index.php/${response.controller}?barcode=${barcode}&idOneWaterSample=${sampleId}&idTestingType=${testTypeId}&mode=view&return_url=${returnUrl}`;
+                    window.location.href = mainUrl;
+                }
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: response.message || 'Unable to determine testing module URL'
+                });
+            }
+        },
+        error: function() {
+            Swal.close();
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to load testing module information'
+            });
         }
     });
 }

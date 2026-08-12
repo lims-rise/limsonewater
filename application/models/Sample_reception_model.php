@@ -3329,11 +3329,20 @@ class Sample_reception_model extends CI_Model
      * Returns basic sample info needed for batch operations
      */
     public function get_samples_for_batch($id_project) {
-        $this->db->select('id_sample, id_one_water_sample, client_id, id_sampletype');
-        $this->db->where('id_project', $id_project);
-        $this->db->where('flag', 0);
-        $this->db->order_by('id_one_water_sample', 'ASC');
-        $query = $this->db->get('sample_reception_sample');
+        $this->db->select('
+            srs.id_sample, 
+            srs.id_one_water_sample, 
+            srs.client_id, 
+            srs.id_sampletype,
+            rp.initial as receiving_lab,
+            rp.realname as lab_tech_name
+        ');
+        $this->db->from('sample_reception_sample srs');
+        $this->db->join('ref_person rp', 'srs.id_person = rp.id_person AND rp.flag = 0', 'left');
+        $this->db->where('srs.id_project', $id_project);
+        $this->db->where('srs.flag', 0);
+        $this->db->order_by('srs.id_one_water_sample', 'ASC');
+        $query = $this->db->get();
         
         return $query->result_array();
     }

@@ -1432,14 +1432,17 @@ $(document).ready(function() {
         const barcodeFromUrl = urlParams.get('barcode');
         const idOneWaterSampleFromUrl = urlParams.get('idOneWaterSample');
         const idTestingTypeFromUrl = urlParams.get('idTestingType');
+        const modeFromUrl = urlParams.get('mode'); // Get mode parameter
 
         console.log('Checking URL parameters for auto-modal:', {
             barcode: barcodeFromUrl,
             idOneWaterSample: idOneWaterSampleFromUrl,
-            idTestingType: idTestingTypeFromUrl
+            idTestingType: idTestingTypeFromUrl,
+            mode: modeFromUrl
         });
 
-        if (barcodeFromUrl && idOneWaterSampleFromUrl) {
+        // Only open modal if parameters exist AND mode is NOT 'view'
+        if (barcodeFromUrl && idOneWaterSampleFromUrl && modeFromUrl !== 'view') {
             console.log('Auto-opening modal with parameters');
             setTimeout(function() {
                 $('#mode').val('insert');
@@ -1466,6 +1469,8 @@ $(document).ready(function() {
                 $('#compose-modal').modal('show');
                 console.log('Modal opened successfully');
             }, 500); // Small delay to ensure DOM is ready
+        } else if (modeFromUrl === 'view') {
+            console.log('Mode view detected - modal tidak dibuka karena data sudah ada');
         }
 
         // Check if filtered by Sample ID from Sample Reception redirect  

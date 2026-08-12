@@ -154,9 +154,11 @@
         const barcodeFromUrl = params.get('barcode');
         const idOneWaterSampleFromUrl = params.get('idOneWaterSample');
         const idTestingTypeFromUrl = params.get('idTestingType');
+        const modeFromUrl = params.get('mode'); // Get mode parameter
 
         // If parameters exist, open sequence modal automatically (from Sample Reception)
-        if (barcodeFromUrl && idOneWaterSampleFromUrl && idTestingTypeFromUrl) {
+        // Only open modal if mode is NOT 'view'
+        if (barcodeFromUrl && idOneWaterSampleFromUrl && idTestingTypeFromUrl && modeFromUrl !== 'view') {
             // Debug log untuk memastikan parameter terambil
             console.log('URL Parameters:', {
                 barcode: barcodeFromUrl,
@@ -183,6 +185,8 @@
             
             // Open the sequence modal
             $('#sequence-modal').modal('show');
+        } else if (modeFromUrl === 'view') {
+            console.log('Mode view detected - modal tidak dibuka karena data sudah ada');
         }
 
         // Pembatalan dan kembali ke halaman sebelumnya
@@ -587,7 +591,7 @@
                         generateBarcodeGroups();
                     } else {
                         // Show error message
-                        $('#barcodeGroupsContainer').html('<div class="alert alert-warning">No barcode tubes found. Check extraction module</div>');
+                        $('#barcodeGroupsContainer').html('<div class="alert alert-warning">No barcode tubes found. Check extraction culture</div>');
                     }
                 },
                 error: function() {

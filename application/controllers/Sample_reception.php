@@ -1572,6 +1572,8 @@ class Sample_reception extends CI_Controller
                     'id_sample' => $sample['id_sample'],
                     'id_one_water_sample' => $sample['id_one_water_sample'],
                     'client_id' => $sample['client_id'],
+                    'receiving_lab' => $sample['receiving_lab'], // Added receiving lab
+                    'lab_tech_name' => $sample['lab_tech_name'], // Added lab tech name
                     'existing_test_types' => $existing_test_ids, // For backward compatibility
                     'existing_tests_detail' => $processed_tests // Enhanced with data status
                 );
