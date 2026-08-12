@@ -638,9 +638,11 @@
         const barcodeFromUrl = params.get('barcode');
         const idOneWaterSampleFromUrl = params.get('idOneWaterSample');
         const idTestingTypeFromUrl = params.get('idTestingType');
+        const modeFromUrl = params.get('mode'); // Get mode parameter
         const previousUrl = document.referrer;
 
-        if (barcodeFromUrl) {
+        // Only open modal if barcode exists AND mode is NOT 'view'
+        if (barcodeFromUrl && modeFromUrl !== 'view') {
             $('#mode').val('insert');
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Protozoa | New<span id="my-another-cool-loader"></span>');
             // $('#project_idx').hide();
@@ -698,7 +700,11 @@
                 $('#return_url').val(previousUrl);
             }
         } else {
-            console.log('Barcode tidak ditemukan di URL');
+            if (modeFromUrl === 'view') {
+                console.log('Mode view detected - modal tidak dibuka karena data sudah ada');
+            } else {
+                console.log('Barcode tidak ditemukan di URL');
+            }
              $('#return_url').val('');
         }
 

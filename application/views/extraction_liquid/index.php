@@ -1087,10 +1087,12 @@
         const barcodeFromUrl = params.get('barcode');
         const idOneWaterSampleFromUrl = params.get('idOneWaterSample');
         const idTestingTypeFromUrl = params.get('idTestingType');
+        const modeFromUrl = params.get('mode'); // Get mode parameter
         const previousUrl = document.referrer;
 
         // Cek apakah barcode dan id_one_water_sample ada di URL
-        if (barcodeFromUrl && idOneWaterSampleFromUrl && idTestingTypeFromUrl) {
+        // Only open modal if parameters exist AND mode is NOT 'view'
+        if (barcodeFromUrl && idOneWaterSampleFromUrl && idTestingTypeFromUrl && modeFromUrl !== 'view') {
             $('#mode').val('insert');
             $('#modal-title').html('<i class="fa fa-wpforms"></i> Extraction culture plate | New<span id="my-another-cool-loader"></span>');
 
@@ -1115,7 +1117,11 @@
             }
 
         } else {
-            console.log('Barcode atau ID One Water Sample tidak ditemukan di URL');
+            if (modeFromUrl === 'view') {
+                console.log('Mode view detected - modal tidak dibuka karena data sudah ada');
+            } else {
+                console.log('Barcode atau ID One Water Sample tidak ditemukan di URL');
+            }
             $('#return_url').val('');
         }
 
