@@ -1269,12 +1269,17 @@
                 console.log('isLessThan:', isLessThan);
                 console.log('ecoliDryweight:', ecoliDryweight);
                 
-                // Store numeric value in hidden field for database
-                $('#ecoli_dryweight').val(ecoliDryweight.toFixed(1));
+                // Store value WITH symbol in hidden field for database (consistent with total_coliforms_mpn_dry_weight)
+                let ecoliDryweightValue = ecoliDryweight.toFixed(1);
+                if (isLessThan) {
+                    ecoliDryweightValue = '<' + ecoliDryweightValue; // Add < symbol
+                }
+                $('#ecoli_dryweight').val(ecoliDryweightValue);
                 
-                // Store flag in hidden field
+                // Store flag in hidden field (for backward compatibility and display logic)
                 $('#ecoli_dryweight_is_less_than').val(isLessThan ? 1 : 0);
                 
+                console.log('ecoli_dryweight stored value:', ecoliDryweightValue);
                 console.log('Flag set to:', isLessThan ? 1 : 0);
                 
                 // Display with "<" symbol if needed
@@ -1290,34 +1295,46 @@
                 
                 // ========== Total Coliforms Dry Weight Calculation ==========
                 // total_coliforms_mpn_dry_weight = ((total_coliforms/100) * elution_volume) / sample_dry_weight
-                // BUSINESS RULE: If total_coliforms contains symbol ("<" or ">"), result = 0
+                // UPDATED: Handle symbols same way as E.Coli (extract numeric value, preserve symbol)
                 
                 let totalColiformsStr = totalColiformsRaw ? totalColiformsRaw.toString().trim() : '';
                 
-                // Check if contains symbol
-                if (totalColiformsStr.startsWith('<') || totalColiformsStr.startsWith('>')) {
-                    // Contains symbol - set to 0 as per business rule
-                    $('#total_coliforms_mpn_dry_weight').val('0');
-                    console.log('Total Coliforms contains symbol:', totalColiformsStr, '→ Result: 0 (business rule)');
-                } else {
-                    // No symbol - calculate normally
-                    let totalColiforms = parseFloat(totalColiformsRaw) || 0;
+                // Check if contains symbol (< or >)
+                let hasSymbol = totalColiformsStr.startsWith('<') || totalColiformsStr.startsWith('>');
+                let symbol = '';
+                if (hasSymbol) {
+                    symbol = totalColiformsStr.charAt(0); // Get the symbol (< or >)
+                }
+                
+                // Extract numeric value (remove symbol if exists)
+                let totalColiformsNumeric = hasSymbol ? 
+                    parseFloat(totalColiformsStr.substring(1)) : 
+                    parseFloat(totalColiformsStr);
+                
+                if (!isNaN(totalColiformsNumeric) && totalColiformsNumeric > 0) {
+                    // Calculate dry weight value
+                    let totalColiformsDryweight = ((totalColiformsNumeric / 100) * elutionVol) / sampleDryWeight;
                     
-                    if (totalColiforms > 0) {
-                        let totalColiformsDryweight = ((totalColiforms / 100) * elutionVol) / sampleDryWeight;
-                        // Round UP to nearest integer (ceiling)
-                        let result = Math.ceil(totalColiformsDryweight);
-                        $('#total_coliforms_mpn_dry_weight').val(result);
-                        
-                        console.log('Total Coliforms:', totalColiforms);
-                        console.log('Elution Volume:', elutionVol);
-                        console.log('Sample Dry Weight:', sampleDryWeight);
-                        console.log('Total Coliforms Dry Weight (raw):', totalColiformsDryweight);
-                        console.log('Total Coliforms Dry Weight (result):', result);
-                    } else {
-                        $('#total_coliforms_mpn_dry_weight').val('');
-                        console.log('Total Coliforms is 0 or empty, clearing dry weight field');
-                    }
+                    // Round to 1 decimal place
+                    let result = totalColiformsDryweight.toFixed(1);
+                    
+                    // Add symbol back if original value had symbol
+                    let displayValue = hasSymbol ? (symbol + result) : result;
+                    
+                    $('#total_coliforms_mpn_dry_weight').val(displayValue);
+                    
+                    console.log('=== Total Coliforms Dry Weight Calculation ===');
+                    console.log('Input Total Coliforms:', totalColiformsStr);
+                    console.log('Has Symbol:', hasSymbol, '- Symbol:', symbol);
+                    console.log('Numeric Value:', totalColiformsNumeric);
+                    console.log('Elution Volume:', elutionVol);
+                    console.log('Sample Dry Weight:', sampleDryWeight);
+                    console.log('Calculation: ((' + totalColiformsNumeric + '/100) * ' + elutionVol + ') / ' + sampleDryWeight);
+                    console.log('Raw Result:', totalColiformsDryweight);
+                    console.log('Final Display:', displayValue);
+                } else {
+                    $('#total_coliforms_mpn_dry_weight').val('');
+                    console.log('Total Coliforms is 0, empty, or invalid - clearing dry weight field');
                 }
             } else {
                 $('#ecoli_dryweight').val('');
@@ -1599,11 +1616,17 @@
                 {
                     "data": "ecoli_dryweight",
                     "render": function(data, type, row) {
-                        // Check if the less-than flag is set
-                        if (row.ecoli_dryweight_is_less_than == 1 && data && data !== '' && data !== '0') {
+                        // NEW: Handle if data already contains < symbol (stored in database)
+                        if (data && data.toString().startsWith('<')) {
+                            // Already has symbol, just display it
+                            return data;
+                        }
+                        // OLD: Check flag for backward compatibility (old data without symbol)
+                        else if (row.ecoli_dryweight_is_less_than == 1 && data && data !== '' && data !== '0') {
                             // Display with < symbol
                             return '<' + parseFloat(data).toFixed(1);
-                        } else if (data && data !== '' && data !== '0' && !isNaN(parseFloat(data))) {
+                        } 
+                        else if (data && data !== '' && data !== '0' && !isNaN(parseFloat(data))) {
                             // Normal display with 1 decimal
                             return parseFloat(data).toFixed(1);
                         }
@@ -1716,15 +1739,27 @@
             // $('#ecoli').attr('readonly', true);
             $('#lowerdetection').val(data.lowerdetection);
             
-            // Load ecoli_dryweight with flag
-            $('#ecoli_dryweight').val(data.ecoli_dryweight);
-            $('#ecoli_dryweight_is_less_than').val(data.ecoli_dryweight_is_less_than || 0);
+            // Load ecoli_dryweight - handle both old format (numeric + flag) and new format (with symbol)
+            let ecoliDryweightValue = data.ecoli_dryweight;
             
-            // Display with "<" symbol if flag is set
-            if (data.ecoli_dryweight_is_less_than == 1) {
-                $('#ecoli_dryweight_display').val('<' + data.ecoli_dryweight);
-            } else {
-                $('#ecoli_dryweight_display').val(data.ecoli_dryweight);
+            // Check if data already contains < symbol (new format)
+            if (ecoliDryweightValue && ecoliDryweightValue.toString().startsWith('<')) {
+                // New format: already has symbol
+                $('#ecoli_dryweight').val(ecoliDryweightValue);
+                $('#ecoli_dryweight_is_less_than').val(1);
+                $('#ecoli_dryweight_display').val(ecoliDryweightValue);
+            } 
+            // Old format: check flag
+            else {
+                $('#ecoli_dryweight').val(ecoliDryweightValue);
+                $('#ecoli_dryweight_is_less_than').val(data.ecoli_dryweight_is_less_than || 0);
+                
+                // Display with "<" symbol if flag is set
+                if (data.ecoli_dryweight_is_less_than == 1) {
+                    $('#ecoli_dryweight_display').val('<' + ecoliDryweightValue);
+                } else {
+                    $('#ecoli_dryweight_display').val(ecoliDryweightValue);
+                }
             }
             
             // $('#ecoli_dryweight').attr('readonly', true);
@@ -1759,6 +1794,13 @@
                 if (coliformsResult.mpn != 'Invalid') {
                     $('#total_coliforms').css({'background-color' : '#EEEEEE'});
                     $('#total_coliforms').val(coliformsResult.mpn);
+                    
+                    // IMPORTANT: After auto-calculation, restore the saved total_coliforms_mpn_dry_weight
+                    // This prevents the auto-calculation from overwriting the saved value
+                    if (data.total_coliforms_mpn_dry_weight) {
+                        $('#total_coliforms_mpn_dry_weight').val(data.total_coliforms_mpn_dry_weight);
+                        console.log('Restored total_coliforms_mpn_dry_weight from database:', data.total_coliforms_mpn_dry_weight);
+                    }
                 }
             }, 100);
         });
