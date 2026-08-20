@@ -260,11 +260,11 @@ class Microbial extends CI_Controller
     }
 
     /**
-     * Get supplementary extraction data by sample ID
+     * Get microbial extraction data by sample ID
      * Optionally accepts id_project to skip lookup
      * Returns JSON data for populating the form
      */
-    public function get_supplementary_data()
+    public function get_microbial_data()
     {
         header('Content-Type: application/json');
         
