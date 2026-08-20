@@ -41,7 +41,7 @@
         background-color: #9CDCFE !important;
     }
     
-    /* Readonly supplementary fields styling */
+    /* Readonly microbial fields styling */
     .supp-field[readonly] {
         background-color: #f5f5f5 !important;
         cursor: not-allowed;
@@ -131,7 +131,7 @@
         color: #777;
     }
     
-    /* Panel styling for supplementary tables */
+    /* Panel styling for microbial tables */
     #compose-modal .panel-default {
         margin-bottom: 10px;
         box-shadow: 0 1px 3px rgba(0,0,0,0.05);
@@ -150,7 +150,7 @@
         padding: 15px;
     }
     
-    /* Compact form groups in supplementary section */
+    /* Compact form groups in microbial section */
     #compose-modal .panel-body .form-group {
         margin-bottom: 8px;
     }
@@ -239,7 +239,7 @@
                                         </span>
                                     </div>
                                     <div>
-                                        <button type="button" id="btn-populate-supplementary" class="btn btn-primary btn-sm" onclick="populateSupplementaryData()">
+                                        <button type="button" id="btn-populate-microbial" class="btn btn-primary btn-sm" onclick="populateSupplementaryData()">
                                             <i class="fa fa-download"></i> Populate Data
                                         </button>
                                     </div>
@@ -1461,9 +1461,9 @@ $(document).ready(function() {
                 // updateDocumentButtonsState();  // DISABLED: Document upload not in use
                 
                 // Enable Populate button in INSERT mode (auto-open from Sample Reception)
-                $('#btn-populate-supplementary').prop('disabled', false);
+                $('#btn-populate-microbial').prop('disabled', false);
                 
-                // Clear all supplementary fields for new entry
+                // Clear all microbial fields for new entry
                 clearSupplementaryFields();
                 
                 $('#compose-modal').modal('show');
@@ -1503,9 +1503,9 @@ $(document).ready(function() {
             // $('#document-file-status-text').hide();
             
             // Enable Populate button in INSERT mode (user needs to click manually)
-            $('#btn-populate-supplementary').prop('disabled', false);
+            $('#btn-populate-microbial').prop('disabled', false);
             
-            // Clear all supplementary fields
+            // Clear all microbial fields
             clearSupplementaryFields();
             
             $('#compose-modal').modal('show');
@@ -1540,17 +1540,17 @@ $(document).ready(function() {
             */
 
             // Disable Populate button in EDIT mode (data will be auto-loaded)
-            $('#btn-populate-supplementary').prop('disabled', true);
+            $('#btn-populate-microbial').prop('disabled', true);
 
-            // Clear all supplementary fields FIRST to prevent showing old data
+            // Clear all microbial fields FIRST to prevent showing old data
             clearSupplementaryFields();
 
-            // Auto-load supplementary data if available (silent load)
+            // Auto-load microbial data if available (silent load)
             autoLoadSupplementaryData(data.id_one_water_sample);
 
             $('#compose-modal').modal('show');
             
-            // Auto-populate supplementary data in EDIT mode (after modal is shown)
+            // Auto-populate microbial data in EDIT mode (after modal is shown)
             // Use silent mode (true) to suppress success modal in Edit mode
             setTimeout(function() {
                 populateSupplementaryData(true);
@@ -1639,7 +1639,7 @@ $(document).ready(function() {
                 .html('<i class="fa fa-info-circle"></i> No Data')
                 .show();
             
-            console.log('All supplementary fields cleared');
+            console.log('All microbial fields cleared');
         };
 
         // Auto-load Supplementary Data Function (Silent, no notification)
@@ -1657,7 +1657,7 @@ $(document).ready(function() {
             
             // Fetch data from API (silent, no loading indicator)
             $.ajax({
-                url: '<?= site_url("Microbial/get_supplementary_data") ?>',
+                url: '<?= site_url("Microbial/get_microbial_data") ?>',
                 type: 'GET',
                 data: requestData,
                 dataType: 'json',
@@ -1755,7 +1755,7 @@ $(document).ready(function() {
                         .addClass('label-warning')
                         .html('<i class="fa fa-exclamation-triangle"></i> No Data Available')
                         .show();
-                    console.log('No supplementary data available for sample:', sampleId);
+                    console.log('No microbial data available for sample:', sampleId);
                 }
             });
         };
@@ -1778,7 +1778,7 @@ $(document).ready(function() {
             if (!silent) {
                 Swal.fire({
                     title: 'Loading...',
-                    text: 'Fetching supplementary data for ' + sampleId,
+                    text: 'Fetching microbial data for ' + sampleId,
                     allowOutsideClick: false,
                     didOpen: () => {
                         Swal.showLoading();
@@ -1796,7 +1796,7 @@ $(document).ready(function() {
             
             // Fetch data from API
             $.ajax({
-                url: '<?= site_url("Microbial/get_supplementary_data") ?>',
+                url: '<?= site_url("Microbial/get_microbial_data") ?>',
                 type: 'GET',
                 data: requestData,
                 dataType: 'json',
@@ -1895,7 +1895,7 @@ $(document).ready(function() {
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Data Populated!',
-                                html: `Successfully populated ${recordCount} values from supplementary PDF<br>` +
+                                html: `Successfully populated ${recordCount} values from microbial PDF<br>` +
                                       `<strong>Project:</strong> ${projectId}<br>` +
                                       `<strong>Sample:</strong> ${sampleId}<br><br>` +
                                       `<strong>Data Summary:</strong><br>${tableInfo}`,
@@ -1909,16 +1909,16 @@ $(document).ready(function() {
                             icon: 'error',
                             title: 'No Data Found',
                             html: response.message + '<br><br>' +
-                                  '<small>Make sure you have uploaded the supplementary PDF for this sample\'s project.</small>'
+                                  '<small>Make sure you have uploaded the microbial PDF for this sample\'s project.</small>'
                         });
                     }
                 },
                 error: function(xhr, status, error) {
-                    console.error('Error fetching supplementary data:', error);
+                    console.error('Error fetching microbial data:', error);
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: 'Failed to fetch supplementary data. Please try again.'
+                        text: 'Failed to fetch microbial data. Please try again.'
                     });
                 }
             });
