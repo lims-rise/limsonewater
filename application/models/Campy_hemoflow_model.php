@@ -392,7 +392,7 @@ class Campy_hemoflow_model extends CI_Model
 
         // Conditions
         // $this->db->where('rb.flag', '0');
-        $this->db->where('sv1.flag', '0');
+        $this->db->where('chsv1.flag', '0');
         $this->db->group_by('chrh.id_campy_hemoflow_result_hba');
     
         $q = $this->db->get();
