@@ -3511,7 +3511,7 @@ class Sample_reception_model extends CI_Model
                         $check_sql = "SELECT COUNT(*) as cnt FROM sequencing WHERE sequencing_barcode = ? AND flag = 0";
                         break;
                     case 'Microbial-Source-Tracking':
-                        $check_sql = "SELECT COUNT(*) as cnt FROM sequencing WHERE sequencing_barcode = ? AND flag = 0";
+                        $check_sql = "SELECT COUNT(*) as cnt FROM microbial WHERE microbial_barcode = ? AND flag = 0";
                         break;
                     case 'Sample-Collection':
                         $check_sql = "SELECT COUNT(*) as cnt FROM sample_collection WHERE barcode_sample_collection = ? AND flag = 0";

@@ -1784,7 +1784,7 @@ class Sample_reception extends CI_Controller
             'Extraction-Liquids' => 'EXL',
             'Extraction-Metagenome' => 'EXM',
             'Hemoflow' => 'HF',
-            'Microbial-Source-Tracking' => 'MST',
+            'Microbial-Source-Tracking' => 'M',
             'Moisture_content' => 'MC',
             'Protozoa' => 'PTZ',
             'Salmonella-Biosolids' => 'SB',
@@ -1799,26 +1799,32 @@ class Sample_reception extends CI_Controller
         
         // Generate unique sequential number
         $year = date('y');
-        $month = date('m');
         
-        // Get last barcode for this test type this month
+        // Calculate expected length for NEW format: PREFIX + YY + 00001
+        // This ensures we only read barcodes with the new format (without month)
+        $expected_length = strlen($prefix) + 2 + 5; // PREFIX + YY + 5 digits
+        
+        // Get last barcode for this test type this year (NEW FORMAT ONLY)
+        // Filter by length to exclude old format barcodes (with month)
         $this->db->select('barcode');
-        $this->db->where('barcode LIKE', $prefix . $year . $month . '%');
+        $this->db->where('barcode LIKE', $prefix . $year . '%');
+        $this->db->where('LENGTH(barcode) =', $expected_length);
         $this->db->order_by('barcode', 'DESC');
         $this->db->limit(1);
         $query = $this->db->get('sample_reception_testing');
         
         if ($query->num_rows() > 0) {
             $last_barcode = $query->row()->barcode;
-            // Extract last 4 digits and increment
-            $last_number = intval(substr($last_barcode, -4));
+            // Extract last 5 digits and increment
+            $last_number = intval(substr($last_barcode, -5));
             $new_number = $last_number + 1;
         } else {
+            // No barcode found with new format, start from 1
             $new_number = 1;
         }
         
-        // Format: PREFIX + YY + MM + 0001
-        $barcode = $prefix . $year . $month . str_pad($new_number, 4, '0', STR_PAD_LEFT);
+        // Format: PREFIX + YY + 00001 (5 digits, no month)
+        $barcode = $prefix . $year . str_pad($new_number, 5, '0', STR_PAD_LEFT);
         
         return $barcode;
     }
