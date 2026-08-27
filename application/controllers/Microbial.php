@@ -60,6 +60,7 @@ class Microbial extends CI_Controller
                 'microbial_barcode' => $microbial_barcode,
                 'description' => $description,
                 'document_filename' => $document_filename,
+                'is_status' => 1,  // Mark as completed when data is inserted
                 'uuid' => $this->uuid->v4(),
                 'user_created' => $this->session->userdata('id_users'),
                 'date_created' => $dt->format('Y-m-d H:i:s'),
@@ -74,6 +75,7 @@ class Microbial extends CI_Controller
                 'id_one_water_sample' => $idx_one_water_sample,
                 'microbial_barcode' => $microbial_barcode,
                 'description' => $description,
+                'is_status' => 1,  // Mark as completed when data is updated
                 'user_updated' => $this->session->userdata('id_users'),
                 'date_updated' => $dt->format('Y-m-d H:i:s'),
             );

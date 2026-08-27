@@ -812,9 +812,23 @@ background: linear-gradient(135deg, #ba68c8 0%, #9575cd 100%) !important;
 				{
 					"data": null, // <- karena kita render manual
 					"render": function(data, type, row) {
-						// Handle Microbial (still no independent review system)
+						// Handle Microbial-Source-Tracking (uses is_status from microbial table, same as Sequencing)
 						if (row.testing_type && row.testing_type.toLowerCase().includes('microbial')) {
-							return `<span class="btn btn-xs btn-info rounded-pill">No status</span>`;
+							// Debug logging
+							console.log('Microbial row data:', {
+								review: row.review,
+								barcode: row.barcode
+							});
+							
+							let statusBtn = '';
+							if (row.review == "1") {
+								// Complete if is_status = 1
+								statusBtn = '<span class="btn btn-xs btn-primary rounded-pill">Completed</span>';
+							} else {
+								// Pending if is_status = 0 or no data
+								statusBtn = '<span class="btn btn-xs btn-warning rounded-pill" style="background-color: #f39c12; border-color: #f39c12;">Pending</span>';
+							}
+							return statusBtn;
 						}
 						
 						// Handle Sequencing (uses is_status from sequencing table)
