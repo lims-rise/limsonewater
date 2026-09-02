@@ -44,6 +44,173 @@
         .report-table tbody tr:nth-child(even) {
             background-color: #f9f9f9;
         }
+        .microbial-note {
+            margin: 8px 0 18px;
+            font-size: 8.5pt;
+            line-height: 1.5;
+            color: #333;
+            text-align: justify;
+        }
+        .microbial-note .note-title {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+        .microbial-note .note-list {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .microbial-note .note-list li {
+            margin: 2px 0;
+        }
+        .microbial-note strong {
+            font-weight: bold;
+        }
+
+        .mst-summary-page {
+            margin-top: 10px;
+        }
+        .print-page-header {
+            min-height: 50px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        .mst-page-title {
+            clear: both;
+            margin: 0 0 25px 0;
+            text-align: center;
+            font-weight: 700;
+            font-size: 22px;
+        }
+        .mst-sample-block {
+            margin-bottom: 28px;
+        }
+        .mst-sample-title {
+            margin: 0 0 20px 0;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .mst-chart-row {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 60px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+        .mst-chart-col {
+            width: 360px;
+            text-align: center;
+        }
+        .mst-chart-label {
+            font-size: 12pt;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        .mst-pie {
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            margin: 0 auto 12px auto;
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+            position: relative;
+            background: #dfeaf1;
+            overflow: visible;
+        }
+        .mst-pie-svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+            overflow: visible;
+        }
+        .mst-pie-label-text {
+            fill: #24313a;
+            font-size: 7px;
+            font-weight: 700;
+            pointer-events: none;
+            text-anchor: middle;
+            dominant-baseline: middle;
+        }
+        .mst-pie-label-text.light {
+            fill: #ffffff;
+        }
+        .mst-pie-label-text.small {
+            font-size: 5.5px;
+        }
+        .mst-pie-label-line {
+            display: block;
+        }
+        .mst-pie-slice {
+            cursor: pointer;
+            transition: transform 0.2s ease, filter 0.2s ease, opacity 0.2s ease;
+            transform-origin: center;
+            transform-box: fill-box;
+            opacity: 0.96;
+        }
+        .mst-pie-slice:hover,
+        .mst-pie-slice.is-active {
+            filter: brightness(1.08) saturate(1.16);
+            opacity: 1;
+            transform: scale(1.04);
+        }
+        .mst-pie-tooltip {
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-6px);
+            background: rgba(35, 43, 52, 0.92);
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 8.5pt;
+            line-height: 1.35;
+            white-space: nowrap;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.18);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            z-index: 10;
+        }
+        .mst-pie-tooltip.visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .mst-pie-label {
+            font-weight: 600;
+            font-size: 11pt;
+            text-align: center;
+        }
+        .mst-chart-legend {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px 18px;
+            margin-top: 8px;
+            font-size: 10.5pt;
+        }
+        .mst-legend-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        .mst-legend-swatch {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            display: inline-block;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .mst-result-title {
+            display: inline-block;
+            min-width: 220px;
+            text-align: center;
+            font-size: 13pt;
+            font-weight: 700;
+            margin: 6px 20px 0 20px;
+        }
 
         /* Logo disembunyikan di layar biasa */
         .logo-footer-print {
@@ -99,6 +266,47 @@
         margin-bottom: 10px !important;
         display: block !important;
         visibility: visible !important;
+    }
+    .mst-summary-page {
+        page-break-before: always;
+        break-before: page;
+    }
+    .mst-chart-row {
+        display: flex !important;
+        justify-content: center !important;
+        gap: 26px !important;
+        flex-wrap: nowrap !important;
+    }
+    .mst-chart-col {
+        width: 45% !important;
+    }
+    .mst-pie {
+        width: 180px !important;
+        height: 180px !important;
+    }
+    .mst-pie-tooltip {
+        display: none !important;
+    }
+    .mst-chart-legend {
+        font-size: 8.5pt !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+        color-adjust: exact !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    .mst-legend-item {
+        display: inline-flex !important;
+        align-items: center !important;
+        white-space: nowrap !important;
+        page-break-inside: avoid;
+    }
+    .mst-legend-swatch {
+        color-adjust: exact !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
     }
     .box-body > div[style*="display: flex"] {
         display: block !important;
@@ -301,8 +509,8 @@
         <section class="content">
             <div class="box box-primary">
                 <div class="box-header">
-                    <img src="../../../img/onewaterlogo.png" height="40px" class="icon" style="padding: 0px; float: left;">
-                    <img src="../../../img/monash.png" height="40px" class="icon" style="padding: 0px; float: right;">
+                    <img src="../../../img/monash.png" height="40px" class="icon" style="padding: 0px; float: left;">
+                    <img src="../../../img/onewaterlogo.png" height="40px" class="icon" style="padding: 0px; float: right;">
                 </div>
                 <div class="box-body">
                     <div style="position: relative; height: 8px; margin-bottom: 5px;">
@@ -374,13 +582,14 @@
         </section>
     </div>
 
-    <!-- Page 3+: Detailed Analysis Data -->
+    <!-- Page 2.5: Microbial Source Tracking Results -->
+    <?php if ($has_microbial_data && !empty($microbial_tables)): ?>
     <div class="content-wrapper page-break">
         <section class="content">
             <div class="box box-primary">
                 <div class="box-header">
-                    <img src="../../../img/onewaterlogo.png" height="40px" class="icon" style="padding: 0px; float: left;">
-                    <img src="../../../img/monash.png" height="40px" class="icon" style="padding: 0px; float: right;">
+                    <img src="../../../img/monash.png" height="40px" class="icon" style="padding: 0px; float: left;">
+                    <img src="../../../img/onewaterlogo.png" height="40px" class="icon" style="padding: 0px; float: right;">
                 </div>
                 <div class="box-body">
                     <div style="position: relative; height: 8px; margin-bottom: 5px;">
@@ -389,329 +598,503 @@
                             alt="Background" />
                     </div>
 
-                    <!-- Client and Submission Information -->
-                    <h4 style="margin-top: 10px; margin-bottom: 10px; font-weight: bold;">Client & Submission Details</h4>
-                    <table class="report-table">
-                        <thead>
-                            <tr>
-                                <th width="20%">CLIENTNAME</th>
-                                <th width="13%">WorkOrderNo</th>
-                                <th width="13%">SUBMISSION</th>
-                                <th width="20%">SAMPLINGPROVIDER</th>
-                                <th width="13%">SamplerName</th>
-                                <th width="13%">PROGRAM</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (!empty($export_data)) : ?>
-                                <?php $first_row = $export_data[0]; ?>
-                                <tr>
-                                    <td><?php echo $first_row['CLIENTNAME']; ?></td>
-                                    <td><?php echo $first_row['WorkOrderNo']; ?></td>
-                                    <td><?php echo $first_row['SUBMISSION']; ?></td>
-                                    <td><?php echo $first_row['SAMPLINGPROVIDER']; ?></td>
-                                    <td><?php echo $first_row['SamplerName']; ?></td>
-                                    <td><?php echo $first_row['PROGRAM']; ?></td>
-                                </tr>
-                            <?php else : ?>
-                                <tr>
-                                    <td colspan="6">No client data available</td>
-                                </tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-
-                    <!-- Analysis Results Section -->
-                    <h4 style="margin-top: 15px; margin-bottom: 10px; font-weight: bold;">Analysis Results</h4>
-                    <table class="report-table">
-                        <thead>
-                            <tr>
-                                <th>LABSAMPLEID</th>
-                                <th>ParameterCode</th>
-                                <th>PARAMETERNAME</th>
-                                <th>ANALYSISMETHOD</th>
-                                <th>RESULT</th>
-                                <th>Units</th>
-                                <th>LOR</th>
-                                <th>MeasurementOfUncertainty</th>
-                                <th>RESULTSTATUS</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (!empty($export_data)) : ?>
-                                <?php foreach ($export_data as $row) : ?>
-                                <tr>
-                                    <td><?php echo $row['LABSAMPLEID']; ?></td>
-                                    <td><?php echo $row['ParameterCode']; ?></td>
-                                    <td><?php echo $row['PARAMETERNAME']; ?></td>
-                                    <td><?php echo $row['ANALYSISMETHOD']; ?></td>
-                                    <td><?php echo $row['RESULT']; ?></td>
-                                    <td><?php echo $row['Units']; ?></td>
-                                    <td><?php echo $row['LOR']; ?></td>
-                                    <td><?php echo $row['MeasurementOfUncertainty']; ?></td>
-                                    <td><?php echo $row['RESULTSTATUS']; ?></td>
-                                </tr>
-                                <?php endforeach; ?>
-                            <?php else : ?>
-                                <tr>
-                                    <td colspan="9">No analysis results available</td>
-                                </tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-
-                    <!-- Analysis Method Details -->
-                    <h4 style="margin-top: 15px; margin-bottom: 10px; font-weight: bold;">Analysis Method Details</h4>
-                    <table class="report-table">
-                        <thead>
-                            <tr>
-                                <th width="15%">TEST_KEY_CODE</th>
-                                <th width="25%">ANALYSISMETHODCATEGORY</th>
-                                <th width="15%">AnalysisDate</th>
-                                <th width="15%">ANALYSISCOMPLETIONDATE</th>
-                                <th width="15%">SAMPLEVOLUME</th>
-                                <th width="15%">SAMPLEVOLUMEUNITS</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (!empty($export_data)) : ?>
-                                <?php foreach ($export_data as $row) : ?>
-                                <tr>
-                                    <td><?php echo $row['TEST_KEY_CODE']; ?></td>
-                                    <td><?php echo $row['ANALYSISMETHODCATEGORY']; ?></td>
-                                    <td><?php echo $row['AnalysisDate']; ?></td>
-                                    <td><?php echo $row['ANALYSISCOMPLETIONDATE']; ?></td>
-                                    <td><?php echo $row['SAMPLEVOLUME']; ?></td>
-                                    <td><?php echo $row['SAMPLEVOLUMEUNITS']; ?></td>
-                                </tr>
-                                <?php endforeach; ?>
-                            <?php else : ?>
-                                <tr>
-                                    <td colspan="6">No method details available</td>
-                                </tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-
-                    <!-- Quality Control Section -->
-                    <h4 style="margin-top: 15px; margin-bottom: 10px; font-weight: bold;">Quality Control & Validation</h4>
-                    <table class="report-table">
-                        <thead>
-                            <tr>
-                                <th width="15%">ParameterCode</th>
-                                <th width="15%">ConfirmedRaw</th>
-                                <th width="15%">PresumptiveRaw</th>
-                                <th width="15%">POSITIVECONTROL%</th>
-                                <th width="15%">RPD</th>
-                                <th width="15%">SURROGATE</th>
-                                <th width="10%">PathogenID</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (!empty($export_data)) : ?>
-                                <?php foreach ($export_data as $row) : ?>
-                                <tr>
-                                    <td><?php echo $row['ParameterCode']; ?></td>
-                                    <td><?php echo $row['ConfirmedRaw']; ?></td>
-                                    <td><?php echo $row['PresumptiveRaw']; ?></td>
-                                    <td><?php echo $row['POSITIVECONTROL%']; ?></td>
-                                    <td><?php echo $row['RPD']; ?></td>
-                                    <td><?php echo $row['SURROGATE']; ?></td>
-                                    <td><?php echo $row['PathogenID']; ?></td>
-                                </tr>
-                                <?php endforeach; ?>
-                            <?php else : ?>
-                                <tr>
-                                    <td colspan="7">No quality control data available</td>
-                                </tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-
-                    <!-- Lab Certification & Reporting -->
-                    <h4 style="margin-top: 15px; margin-bottom: 10px; font-weight: bold;">Laboratory Certification & Reporting</h4>
-                    <table class="report-table">
-                        <thead>
-                            <tr>
-                                <th width="20%">LabCOANo</th>
-                                <th width="15%">LabCOADate</th>
-                                <th width="20%">LabQAQCNo</th>
-                                <th width="15%">LabQAQCDate</th>
-                                <th width="15%">License</th>
-                                <th width="15%">EDDVERSION</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (!empty($export_data)) : ?>
-                                <?php $first_row = $export_data[0]; ?>
-                                <tr>
-                                    <td><?php echo $first_row['LabCOANo']; ?></td>
-                                    <td><?php echo $first_row['LabCOADate']; ?></td>
-                                    <td><?php echo $first_row['LabQAQCNo']; ?></td>
-                                    <td><?php echo $first_row['LabQAQCDate']; ?></td>
-                                    <td><?php echo $first_row['License']; ?></td>
-                                    <td><?php echo $first_row['EDDVERSION']; ?></td>
-                                </tr>
-                            <?php else : ?>
-                                <tr>
-                                    <td colspan="6">No certification data available</td>
-                                </tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-
-                    <!-- Sample Processing Details -->
-                    <h4 style="margin-top: 15px; margin-bottom: 10px; font-weight: bold;">Sample Processing & Matrix Details</h4>
-                    <table class="report-table">
-                        <thead>
-                            <tr>
-                                <th width="15%">LABCODE</th>
-                                <th width="15%">SUBMITTEDMATRIX</th>
-                                <th width="15%">ANALYSISMATRIX</th>
-                                <th width="15%">ANALYSISSUBMATRIX</th>
-                                <th width="15%">SAMPLEPROCESSED%</th>
-                                <th width="15%">SamplingRunRef</th>
-                                <th width="10%">AnalysisPO</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (!empty($export_data)) : ?>
-                                <?php foreach ($export_data as $row) : ?>
-                                <tr>
-                                    <td><?php echo $row['LABCODE']; ?></td>
-                                    <td><?php echo $row['SUBMITTEDMATRIX']; ?></td>
-                                    <td><?php echo $row['ANALYSISMATRIX']; ?></td>
-                                    <td><?php echo $row['ANALYSISSUBMATRIX']; ?></td>
-                                    <td><?php echo $row['SAMPLEPROCESSED%']; ?></td>
-                                    <td><?php echo $row['SamplingRunRef']; ?></td>
-                                    <td><?php echo $row['AnalysisPO']; ?></td>
-                                </tr>
-                                <?php endforeach; ?>
-                            <?php else : ?>
-                                <tr>
-                                    <td colspan="7">No processing data available</td>
-                                </tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-
-                    <!-- Comments & Site Information -->
-                    <h4 style="margin-top: 15px; margin-bottom: 10px; font-weight: bold;">Comments & Site Information</h4>
-                    <table class="report-table">
-                        <thead>
-                            <tr>
-                                <th width="20%">SITEAREA</th>
-                                <th width="30%">ReportComment</th>
-                                <th width="30%">SiteComment</th>
-                                <th width="20%">RESULTCOMMENT</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (!empty($export_data)) : ?>
-                                <?php foreach ($export_data as $row) : ?>
-                                <tr>
-                                    <td><?php echo $row['SITEAREA']; ?></td>
-                                    <td><?php echo $row['ReportComment']; ?></td>
-                                    <td><?php echo $row['SiteComment']; ?></td>
-                                    <td><?php echo $row['RESULTCOMMENT']; ?></td>
-                                </tr>
-                                <?php endforeach; ?>
-                            <?php else : ?>
-                                <tr>
-                                    <td colspan="4">No comments data available</td>
-                                </tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-
-                    <!-- Notes and Additional Information -->
-                    <h4 style="margin-top: 15px; margin-bottom: 10px; font-weight: bold;">Laboratory Notes & Additional Information</h4>
-                    <div style="border: 1px solid #ddd; padding: 15px; background-color: #f9f9f9;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                            <div style="width: 48%;">
-                                <p><strong>Analysis Performed:</strong> 
-                                    <?php 
-                                    if (!empty($export_data)) {
-                                        $dates = array_unique(array_column($export_data, 'AnalysisDate'));
-                                        $dates = array_filter($dates, function($date) { return $date !== '-'; });
-                                        if (!empty($dates)) {
-                                            echo min($dates) . ' to ' . max($dates);
-                                        } else {
-                                            echo date('d-M-Y', strtotime('-2 days')) . ' to ' . date('d-M-Y');
-                                        }
-                                    } else {
-                                        echo date('d-M-Y', strtotime('-2 days')) . ' to ' . date('d-M-Y');
-                                    }
-                                    ?>
-                                </p>
-                                <p><strong>Laboratory Technician:</strong> <?php echo isset($realname) ? $realname : ((!empty($export_data)) ? $export_data[0]['SamplerName'] : 'Dr. Sarah Johnson'); ?></p>
-                                <p><strong>EDDVERSION:</strong> <?php echo (!empty($export_data)) ? $export_data[0]['EDDVERSION'] : 'EDD_v2.1'; ?></p>
-                                <p><strong>License Number:</strong> <?php echo (!empty($export_data)) ? $export_data[0]['License'] : 'NATA-' . mt_rand(10000, 99999); ?></p>
-                            </div>
-                            <div style="width: 48%;">
-                                <p><strong>ANALYSISMETHODCATEGORY:</strong> 
-                                    <?php 
-                                    if (!empty($export_data)) {
-                                        $categories = array_unique(array_column($export_data, 'ANALYSISMETHODCATEGORY'));
-                                        echo implode(', ', $categories);
-                                    } else {
-                                        echo 'Microbiological & Pathogen Detection';
-                                    }
-                                    ?>
-                                </p>
-                                <p><strong>Sample Processing:</strong> All samples processed within 24 hours of receipt</p>
-                                <p><strong>Quality Assurance:</strong> ISO 17025 accredited procedures followed</p>
-                                <p><strong>Chain of Custody:</strong> Maintained throughout analysis</p>
-                            </div>
-                        </div>
-                        
-                        <div style="margin-top: 15px; padding: 10px; background-color: #e8f4f8; border-left: 4px solid #3c8dbc;">
-                            <p><strong>Important Notes:</strong></p>
-                            <ul style="margin: 5px 0; padding-left: 20px;">
-                                <li>Results are valid only for samples tested and under conditions described</li>
-                                <li>Detection limits (LOR) are method-specific and matrix-dependent</li>
-                                <li>Measurement uncertainty values represent expanded uncertainty (k=2, ~95% confidence)</li>
-                                <li>Surrogate recovery indicates extraction and analysis efficiency</li>
-                                <li>RPD (Relative Percent Difference) indicates analytical precision</li>
-                            </ul>
+                    <div style="display: flex; justify-content: space-between; width: 100%; margin-bottom: 5px;">
+                        <div style="width: 30%;">
+                            <table id="report-header" width="100%" style="border:0px solid black; margin-bottom: 3px; border-collapse: collapse;">
+                                <thead>
+                                    <tr>
+                                        <td width="50%" style="border:0px solid black; padding: 2px 0; vertical-align: top;" align="left"><b>Microbial Source Tracking Results</b></td>
+                                    </tr>
+                                </thead>
+                            </table>
                         </div>
                     </div>
+                    
+                    <?php
+                    // Group samples columns - get unique sample IDs
+                    $sample_ids = array();
+                    foreach ($microbial_tables as $table_name => $rows) {
+                        foreach ($rows as $row) {
+                            if (!in_array($row['id_one_water_sample'], $sample_ids)) {
+                                $sample_ids[] = $row['id_one_water_sample'];
+                            }
+                        }
+                    }
+                    sort($sample_ids);
+                    
+                    // Process each table - use actual table names from database
+                    $table_mapping = array(
+                        'Table 1 - Human-specific' => 'Human-specific contribution within total microbial community',
+                        'Table 2 - Faecal-specific' => 'Faecal-specific contribution within total microbial community',
+                        'Table 3 - Faecal-source' => 'Faecal-source contribution within faecal component of microbial community'
+                    );
+                    
+                    foreach ($table_mapping as $table_key => $table_title):
+                        if (isset($microbial_tables[$table_key])):
+                            $table_data = $microbial_tables[$table_key];
+                            
+                            // Organize data by source_name
+                            $sources_data = array();
+                            foreach ($table_data as $row) {
+                                $source = $row['source_name'];
+                                $sample = $row['id_one_water_sample'];
+                                $value = $row['percentage_value'];
+                                
+                                if (!isset($sources_data[$source])) {
+                                    $sources_data[$source] = array();
+                                }
+                                $sources_data[$source][$sample] = $value;
+                            }
+                            
+                            // Sort sources alphabetically (A-Z)
+                            ksort($sources_data);
 
-                    <!-- Signature Section -->
-                    <div style="margin-top: 30px; display: flex; justify-content: space-between;">
-                        <div style="width: 45%; text-align: center;">
-                            <div style="height: 100px;"></div>
-                            <div style="border-bottom: 1px solid #000; width: 200px; margin: 0 auto 5px;"></div>
-                            <p><strong>Reviewed By</strong><br>
-                            Laboratory Manager<br>
-                            Date: <?php echo date('d-M-Y'); ?></p>
-                        </div>
-                        <div style="width: 45%; text-align: center;">
-                            <div style="height: 100px;"></div>
-                            <div style="border-bottom: 1px solid #000; width: 200px; margin: 0 auto 5px;"></div>
-                            <p><strong>Approved By</strong><br>
-                            Quality Assurance<br>
-                            Date: <?php echo date('d-M-Y'); ?></p>
-                        </div>
+                            $note_text = '';
+                            if ($table_key === 'Table 1 - Human-specific') {
+                                $note_text = "<span class='note-title'>Note for interpretation of microbial community contribution report(s):</span>
+<ol class='note-list'>
+<li>Values displayed represent significant relative median microbial community contribution (relative standard deviation <100%). The results were taken as the average of five replicate analytical runs.</li>
+<li>Values with relative standard deviation ≥100% were deemed non-significant result, and therefore omitted from the report.</li>
+<li>Values were rounded off to the nearest 2 decimal places, including those labelled as 0.00% (where applicable).</li>
+<li>Unknown represents the proportion of microbial community which are not allocated to the defined source under investigation (i.e., microbial communities not of human faecal-origin).</li>
+</ol>";
+                            } elseif ($table_key === 'Table 2 - Faecal-specific') {
+                                $note_text = "<span class='note-title'>Note for interpretation of microbial community contribution report(s):</span>
+<ol class='note-list'>
+<li>Values displayed represent significant relative median microbial community contribution (relative standard deviation <100%) at two decimal places. The results were taken as the average of five replicate analytical runs.</li>
+<li>Values with relative standard deviation ≥100% were deemed non-significant result, and therefore omitted from the report.</li>
+<li>Values were rounded off to the nearest 2 decimal places, including those labelled as 0.00% (where applicable).</li>
+<li>Unknown represents the proportion of microbial community which cannot be allocated to any of the defined source (i.e., microbial communities not of faecal-origin).</li>
+</ol>";
+                            } elseif ($table_key === 'Table 3 - Faecal-source') {
+                                $note_text = "<span class='note-title'>Note for faecal community contribution report(s):</span>
+<ol class='note-list'>
+<li>Values displayed represent significant relative median faecal community contribution (relative standard deviation <100%). The results were taken as the average of five replicate analytical runs.</li>
+<li>Values with relative standard deviation ≥100% were deemed non-significant result, and therefore omitted from the report.</li>
+<li>Values were rounded-off to the nearest 2 decimal places, including those labelled as 0.00% (where applicable).</li>
+<li>Faecal community contribution represents normalised microbial community contribution from faecal-origin sources. The faecal community contribution from each source was calculated by taking the median microbial community contribution of the source of interest, divided by the sum of all the microbial community contributions, excluding the microbial community contribution from unknown sources.</li>
+</ol>";
+                            }
+                    ?>
+                    
+                    <div style="margin-bottom: 20px; page-break-inside: avoid;">
+                        <h4 style="margin-bottom: 8px; font-size: 11pt; font-weight: bold;"><?php echo $table_key . ' - ' . $table_title; ?>:</h4>
+                        <table class="report-table" style="width: 100%; border-collapse: collapse; font-size: 9pt;">
+                            <thead>
+                                <tr style="background-color: #f0f0f0;">
+                                    <th style="border: 1px solid #ddd; padding: 6px; text-align: left; font-weight: bold;">Sources</th>
+                                    <?php foreach ($sample_ids as $sample_id): ?>
+                                        <th style="border: 1px solid #ddd; padding: 6px; text-align: center; font-weight: bold;"><?php echo htmlspecialchars($sample_id); ?></th>
+                                    <?php endforeach; ?>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($sources_data as $source_name => $sample_values): ?>
+                                <tr>
+                                    <td style="border: 1px solid #ddd; padding: 6px; text-align: left;"><?php echo htmlspecialchars($source_name); ?></td>
+                                    <?php foreach ($sample_ids as $sample_id): ?>
+                                        <td style="border: 1px solid #ddd; padding: 6px; text-align: center;">
+                                            <?php 
+                                            if (isset($sample_values[$sample_id])) {
+                                                $value = $sample_values[$sample_id];
+                                                // Add % symbol if value is not "-"
+                                                if ($value !== '-' && $value !== '' && $value !== null) {
+                                                    echo htmlspecialchars($value) . '%';
+                                                } else {
+                                                    echo htmlspecialchars($value);
+                                                }
+                                            } else {
+                                                echo '-';
+                                            }
+                                            ?>
+                                        </td>
+                                    <?php endforeach; ?>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                        <?php if (!empty($note_text)): ?>
+                            <div class="microbial-note"><?php echo $note_text; ?></div>
+                        <?php endif; ?>
                     </div>
-
-                    <!-- Footer -->
-                    <div style="margin-top: 40px; text-align: center; font-size: 9pt; color: #666;">
-                        <p>This report contains <?php echo mt_rand(15, 25); ?> pages and may not be reproduced except in full, without written approval of the laboratory.<br>
-                        Laboratory Address: Monash University, Clayton Campus, VIC 3800, Australia<br>
-                        Phone: +61 3 9905 4000 | Email: onewater@monash.edu</p>
-                    </div>
-
+                    
+                    <?php 
+                        endif;
+                    endforeach; 
+                    ?>
                 </div>
             </div>
         </section>
     </div>
+    <?php endif; ?>
+
+    <?php
+    $mst_summary_samples = array();
+    if ($has_microbial_data && !empty($microbial_tables)) {
+        $sample_ids = array();
+        foreach ($microbial_tables as $table_rows) {
+            foreach ($table_rows as $row) {
+                if (!empty($row['id_one_water_sample']) && !in_array($row['id_one_water_sample'], $sample_ids, true)) {
+                    $sample_ids[] = $row['id_one_water_sample'];
+                }
+            }
+        }
+        sort($sample_ids);
+
+        $source_palette = array(
+            'Bat' => '#B7D7E8',
+            'Cat' => '#30AFFF',
+            'Dog' => '#66A3BF',
+            'Human' => '#FFBEFB',
+            'Bird' => '#FFEA88',
+            'Pig' => '#F599C6',
+            'Sheep' => '#A2AB73',
+            'Horse' => '#B9D175',
+            'Cow' => '#2C5745',
+            'Goat' => '#D96868',
+            'Duck' => '#A290B7',
+            'Chicken' => '#76C457',
+            'Fox' => '#2BBBD7',
+            'Deer' => '#70FFD2',
+            'Kangaroo' => '#CDB4DB',
+            'Possum' => '#E8C7A8',
+            'Rabbit' => '#F2B5D4',
+            'Rat' => '#6AECE1',
+            'Unknown' => '#F9DFDF',
+            'Wallaby' => '#FEEAC9',
+            'Waterbird' => '#FF5656',
+            'Wombat' => '#FFE4EF',
+            'Non-significant results' => '#B6AE9F',
+            'default' => '#B6CEB4'
+        );
+
+        $source_palette_normalized = array();
+        foreach ($source_palette as $palette_label => $palette_color) {
+            $source_palette_normalized[strtolower(trim($palette_label))] = $palette_color;
+        }
+
+        $build_pie_slices = function ($rows, $fill_unknown_remainder = true) use ($source_palette, $source_palette_normalized) {
+            $entries = array();
+            $sum = 0.0;
+
+            foreach ($rows as $row) {
+                $value = isset($row['percentage_value']) ? (float) $row['percentage_value'] : 0.0;
+                if ($value > 0 || (isset($row['source_name']) && strtolower(trim($row['source_name'])) === 'unknown')) {
+                    $label = isset($row['source_name']) ? trim($row['source_name']) : 'Unknown';
+                    $normalized_label = strtolower($label);
+                    if (!isset($entries[$normalized_label])) {
+                        $entries[$normalized_label] = array(
+                            'label' => $label,
+                            'value' => 0.0,
+                            'color' => isset($source_palette[$label]) ? $source_palette[$label] : (isset($source_palette_normalized[$normalized_label]) ? $source_palette_normalized[$normalized_label] : $source_palette['default']),
+                        );
+                    }
+                    $entries[$normalized_label]['value'] += $value;
+                    $sum += $value;
+                }
+            }
+
+            $entries = array_values($entries);
+
+            if ($sum <= 0 && empty($entries)) {
+                return array(array('label' => 'No data', 'value' => 100, 'color' => '#dfe7ee'));
+            }
+
+            if ($fill_unknown_remainder && $sum < 100 && !empty($entries)) {
+                $has_unknown = false;
+                foreach ($entries as $entry) {
+                    if (strtolower($entry['label']) === 'unknown') {
+                        $has_unknown = true;
+                        break;
+                    }
+                }
+                if (!$has_unknown) {
+                    $entries[] = array('label' => 'Unknown', 'value' => 100 - $sum, 'color' => $source_palette['Unknown']);
+                    $sum = 100;
+                }
+            }
+
+            return $entries;
+        };
+
+        $create_pie_gradient = function ($rows) use ($source_palette) {
+            $entries = array();
+            $sum = 0.0;
+
+            foreach ($rows as $row) {
+                $value = isset($row['percentage_value']) ? (float) $row['percentage_value'] : 0.0;
+                if ($value > 0 || (isset($row['source_name']) && strtolower($row['source_name']) === 'unknown')) {
+                    $entries[] = array(
+                        'label' => isset($row['source_name']) ? trim($row['source_name']) : 'Unknown',
+                        'value' => $value,
+                    );
+                    $sum += $value;
+                }
+            }
+
+            if ($sum <= 0 && empty($entries)) {
+                return 'conic-gradient(#dfe7ee 0 100%)';
+            }
+
+            if ($sum < 100 && !empty($entries)) {
+                $has_unknown = false;
+                foreach ($entries as $entry) {
+                    if (strtolower($entry['label']) === 'unknown') {
+                        $has_unknown = true;
+                        break;
+                    }
+                }
+                if (!$has_unknown) {
+                    $entries[] = array('label' => 'Unknown', 'value' => 100 - $sum);
+                    $sum = 100;
+                }
+            }
+
+            $gradient = array();
+            $cursor = 0;
+            foreach ($entries as $index => $entry) {
+                $label = $entry['label'];
+                $value = ($sum > 0) ? (float) $entry['value'] : 0.0;
+                $angle = ($value / max($sum, 1)) * 360;
+                $color = isset($source_palette[$label]) ? $source_palette[$label] : (isset($source_palette[$index]) ? $source_palette[$index] : $source_palette['default']);
+                $end = $cursor + $angle;
+                $gradient[] = $color . ' ' . $cursor . 'deg ' . $end . 'deg';
+                $cursor = $end;
+            }
+
+            return 'conic-gradient(' . implode(', ', $gradient) . ')';
+        };
+
+        foreach ($sample_ids as $sample_id) {
+            $table2_rows = array();
+            $table3_rows = array();
+
+            if (isset($microbial_tables['Table 2 - Faecal-specific'])) {
+                foreach ($microbial_tables['Table 2 - Faecal-specific'] as $row) {
+                    if (isset($row['id_one_water_sample']) && $row['id_one_water_sample'] === $sample_id) {
+                        $table2_rows[] = $row;
+                    }
+                }
+            }
+
+            if (isset($microbial_tables['Table 3 - Faecal-source'])) {
+                foreach ($microbial_tables['Table 3 - Faecal-source'] as $row) {
+                    if (isset($row['id_one_water_sample']) && $row['id_one_water_sample'] === $sample_id) {
+                        $table3_rows[] = $row;
+                    }
+                }
+            }
+
+            if (!empty($table2_rows) || !empty($table3_rows)) {
+                $mst_summary_samples[] = array(
+                    'id' => $sample_id,
+                    'table2' => $table2_rows,
+                    'table3' => $table3_rows,
+                    'table2_slices' => $build_pie_slices($table2_rows),
+                    'table3_slices' => $build_pie_slices($table3_rows, false),
+                    'table2_pie' => $create_pie_gradient($table2_rows),
+                    'table3_pie' => $create_pie_gradient($table3_rows),
+                );
+            }
+        }
+    }
+    ?>
+
+    <?php if (!empty($mst_summary_samples)): ?>
+    <div class="content-wrapper page-break mst-summary-page">
+        <section class="content">
+            <div class="box box-primary">
+                <br>
+                <div class="print-page-header">
+                    <img src="../../../img/monash.png" height="50px" class="icon" style="padding: 0px; float: left;">
+                    <img src="../../../img/onewaterlogo.png" height="40px" class="icon" style="padding: 0px; float: right;">
+                </div>
+                <div class="box-body">
+                    <div class="mst-page-title">How to interpret results:</div>
+
+                    <?php foreach ($mst_summary_samples as $summary): ?>
+                        <div class="mst-sample-block">
+                            <div class="mst-sample-title">MST results for sample <?php echo htmlspecialchars($summary['id']); ?></div>
+
+                            <div class="mst-chart-row">
+                                <div class="mst-chart-col">
+                                    <div class="mst-chart-label">Microbial community contribution</div>
+                                    <div class="mst-pie" data-slices='<?php echo htmlspecialchars(json_encode($summary['table2_slices']), ENT_QUOTES, 'UTF-8'); ?>'>
+                                        <svg class="mst-pie-svg" viewBox="0 0 240 240" role="img" aria-label="Microbial community contribution pie chart"></svg>
+                                        <div class="mst-pie-tooltip">Hover a slice</div>
+                                    </div>
+                                    <div class="mst-pie-label">Table 2 Results</div>
+                                    <div class="mst-chart-legend">
+                                        <?php
+                                        foreach ($summary['table2_slices'] as $slice):
+                                            $label = isset($slice['label']) ? $slice['label'] : 'No data';
+                                            $display = $label;
+                                            $color = isset($slice['color']) ? $slice['color'] : '#dfe7ee';
+                                        ?>
+                                            <span class="mst-legend-item"><span class="mst-legend-swatch" style="background-color: <?php echo htmlspecialchars($color, ENT_QUOTES, 'UTF-8'); ?> !important;"></span><?php echo htmlspecialchars($display); ?></span>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+
+                                <div class="mst-chart-col">
+                                    <div class="mst-chart-label">Faecal community contribution</div>
+                                    <div class="mst-pie" data-slices='<?php echo htmlspecialchars(json_encode($summary['table3_slices']), ENT_QUOTES, 'UTF-8'); ?>'>
+                                        <svg class="mst-pie-svg" viewBox="0 0 240 240" role="img" aria-label="Faecal community contribution pie chart"></svg>
+                                        <div class="mst-pie-tooltip">Hover a slice</div>
+                                    </div>
+                                    <div class="mst-pie-label">Table 3 Results</div>
+                                    <div class="mst-chart-legend">
+                                        <?php
+                                        foreach ($summary['table3_slices'] as $slice):
+                                            $label = isset($slice['label']) ? $slice['label'] : 'No data';
+                                            $display = $label;
+                                            $color = isset($slice['color']) ? $slice['color'] : '#dfe7ee';
+                                        ?>
+                                            <span class="mst-legend-item"><span class="mst-legend-swatch" style="background-color: <?php echo htmlspecialchars($color, ENT_QUOTES, 'UTF-8'); ?> !important;"></span><?php echo htmlspecialchars($display); ?></span>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+    </div>
+    <?php endif; ?>
 
     <script src="<?php echo base_url('assets/adminlte/bower_components/jquery/dist/jquery.min.js'); ?>"></script>
     <script src="<?php echo base_url('assets/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js'); ?>"></script>
 
     <script>
+        function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
+            var angleInRadians = (angleInDegrees - 90) * Math.PI / 180.0;
+            return {
+                x: centerX + (radius * Math.cos(angleInRadians)),
+                y: centerY + (radius * Math.sin(angleInRadians))
+            };
+        }
+
+        function describePieSlice(cx, cy, r, startAngle, endAngle) {
+            var start = polarToCartesian(cx, cy, r, endAngle);
+            var end = polarToCartesian(cx, cy, r, startAngle);
+            var largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
+
+            return [
+                "M", cx, cy,
+                "L", start.x, start.y,
+                "A", r, r, 0, largeArcFlag, 0, end.x, end.y,
+                "Z"
+            ].join(' ');
+        }
+
+        function renderPieChart(container) {
+            var slices = [];
+
+            try {
+                slices = JSON.parse(container.dataset.slices || '[]');
+            } catch (error) {
+                slices = [];
+            }
+
+            var svg = container.querySelector('.mst-pie-svg');
+            var tooltip = container.querySelector('.mst-pie-tooltip');
+
+            if (!svg || !slices.length) {
+                svg.innerHTML = '';
+                return;
+            }
+
+            var total = slices.reduce(function(sum, item) {
+                return sum + Number(item.value || 0);
+            }, 0);
+
+            svg.innerHTML = '';
+
+            var currentAngle = 0;
+            slices.forEach(function(item) {
+                var value = Number(item.value || 0);
+                var angle = total > 0 ? (value / total) * 360 : 0;
+                var slice = angle >= 359.999 ? document.createElementNS('http://www.w3.org/2000/svg', 'circle') : document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                if (angle >= 359.999) {
+                    slice.setAttribute('cx', '120');
+                    slice.setAttribute('cy', '120');
+                    slice.setAttribute('r', '90');
+                } else {
+                    slice.setAttribute('d', describePieSlice(120, 120, 90, currentAngle, currentAngle + angle));
+                }
+                slice.setAttribute('fill', item.color || '#dfe7ee');
+                slice.setAttribute('stroke', '#ffffff');
+                slice.setAttribute('stroke-width', '2');
+                slice.setAttribute('class', 'mst-pie-slice');
+                slice.setAttribute('data-label', item.label || 'Unknown');
+                slice.setAttribute('data-value', (value || 0).toFixed(2) + '%');
+
+                slice.addEventListener('mouseenter', function() {
+                    if (!tooltip) return;
+                    tooltip.textContent = this.getAttribute('data-label') + ': ' + this.getAttribute('data-value');
+                    tooltip.classList.add('visible');
+                });
+
+                slice.addEventListener('mouseleave', function() {
+                    if (!tooltip) return;
+                    tooltip.classList.remove('visible');
+                });
+
+                slice.addEventListener('focus', function() {
+                    if (!tooltip) return;
+                    tooltip.textContent = this.getAttribute('data-label') + ': ' + this.getAttribute('data-value');
+                    tooltip.classList.add('visible');
+                });
+
+                slice.addEventListener('blur', function() {
+                    if (!tooltip) return;
+                    tooltip.classList.remove('visible');
+                });
+
+                slice.setAttribute('tabindex', '0');
+                svg.appendChild(slice);
+
+                if (angle >= 12) {
+                    var labelAngle = currentAngle + (angle / 2);
+                    var labelRadius = angle >= 70 ? 62 : 74;
+                    var labelPosition = polarToCartesian(120, 120, labelRadius, labelAngle);
+                    var labelText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    var labelName = item.label || 'Unknown';
+                    var labelValue = (value || 0).toFixed(2) + '%';
+                    var labelClass = angle < 25 ? 'mst-pie-label-text small' : 'mst-pie-label-text';
+                    if (['#2C5745', '#66A3BF', '#A290B7', '#B6AE9F'].indexOf((item.color || '').toUpperCase()) >= 0) {
+                        labelClass += ' light';
+                    }
+                    labelText.setAttribute('x', labelPosition.x);
+                    labelText.setAttribute('y', labelPosition.y - 4);
+                    labelText.setAttribute('class', labelClass);
+                    labelText.appendChild(document.createTextNode(labelName));
+                    var valueLine = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+                    valueLine.setAttribute('x', labelPosition.x);
+                    valueLine.setAttribute('dy', '9');
+                    valueLine.appendChild(document.createTextNode(labelValue));
+                    labelText.appendChild(valueLine);
+                    svg.appendChild(labelText);
+                }
+                currentAngle += angle;
+            });
+
+            var innerRing = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            innerRing.setAttribute('cx', '120');
+            innerRing.setAttribute('cy', '120');
+            innerRing.setAttribute('r', '38');
+            innerRing.setAttribute('fill', 'rgba(255,255,255,0.55)');
+            innerRing.setAttribute('stroke', 'rgba(0,0,0,0.08)');
+            innerRing.setAttribute('stroke-width', '1');
+            svg.appendChild(innerRing);
+        }
+
         $(document).ready(function() {
+            $('.mst-pie').each(function() {
+                renderPieChart(this);
+            });
+
             var needs_ajax_save = <?php echo isset($needs_ajax_save) && $needs_ajax_save ? 'true' : 'false'; ?>;
             var is_temporary = <?php echo isset($is_temporary) && $is_temporary ? 'true' : 'false'; ?>;
             var id_project = $('#id_project').val();
