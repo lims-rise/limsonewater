@@ -1234,7 +1234,28 @@
         color: #15803D;
         border-color: #86EFAC;
     }
-    
+
+    .btn-print-microbial {
+        background-color: #FFFBEB;
+        color: #B45309;
+        border: 1px solid #FDE68A;
+    }
+
+    .btn-print-microbial:hover {
+        background-color: #FDE68A;
+        color: #78350F;
+        border-color: #FBBF24;
+    }
+
+    .btn-print-microbial.disabled,
+    .btn-print-microbial[aria-disabled="true"] {
+        opacity: 0.55 !important;
+        cursor: not-allowed !important;
+        pointer-events: none !important;
+        box-shadow: none !important;
+        transform: none !important;
+    }
+
     /* Danger Button (Delete) */
     .btn-danger {
         background-color: #EF4444;
@@ -1992,6 +2013,99 @@ function applyCompletedProjectStyling() {
         });
     }, 100);
 }
+
+function applyMicrobialPrintAvailability() {
+    if (typeof table === 'undefined' || !table) return;
+
+    $('#mytable tbody tr').each(function() {
+        let $row = $(this);
+        let rowData = table.row($row).data();
+        if (!rowData) return;
+
+        let $microbialPrintBtn = $row.find('a[href*="rep_print3"]');
+        if (!$microbialPrintBtn.length) return;
+
+        let microbialValue = rowData.files_microbial;
+        let normalizedValue = typeof microbialValue === 'string' ? microbialValue.trim() : microbialValue;
+        let hasMicrobialFile = !!(
+            normalizedValue &&
+            normalizedValue !== 'null' &&
+            normalizedValue !== 'NULL' &&
+            normalizedValue !== ''
+        );
+
+        let originalHref = $microbialPrintBtn.attr('data-original-href') || $microbialPrintBtn.attr('href');
+        $microbialPrintBtn.attr('data-original-href', originalHref);
+
+        if (hasMicrobialFile) {
+            if ($microbialPrintBtn.hasClass('tooltipstered')) {
+                $microbialPrintBtn.tooltipster('destroy');
+            }
+
+            $microbialPrintBtn
+                .attr('href', originalHref)
+                .removeClass('disabled microbial-print-disabled')
+                .removeAttr('aria-disabled tabindex')
+                .css({
+                    'pointer-events': 'auto',
+                    'cursor': 'pointer',
+                    'opacity': '1'
+                })
+                .off('click.microbialPrintBlocked')
+                .attr('title', 'Print Microbial Report');
+        } else {
+            if ($microbialPrintBtn.hasClass('tooltipstered')) {
+                $microbialPrintBtn.tooltipster('destroy');
+            }
+
+            $microbialPrintBtn
+                .attr({
+                    href: 'javascript:void(0);',
+                    role: 'button',
+                    title: 'Please upload microbial file before printing the report',
+                    tabindex: '0'
+                })
+                .removeClass('disabled microbial-print-disabled')
+                .removeAttr('aria-disabled')
+                .css({
+                    'cursor': 'pointer',
+                    'opacity': '1',
+                    'pointer-events': 'auto',
+                    'text-decoration': 'none'
+                })
+                .off('click.microbialPrintBlocked')
+                .on('click.microbialPrintBlocked', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Microbial file required',
+                        text: 'Please upload the microbial file first before viewing or printing the microbial report.',
+                        confirmButtonText: 'OK',
+                        allowOutsideClick: true,
+                        allowEscapeKey: true
+                    });
+
+                    return false;
+                });
+                // .tooltipster({
+                //     content: '',
+                //     animation: 'swing',
+                //     delay: 1,
+                //     theme: 'tooltipster-default',
+                //     autoClose: true,
+                //     position: 'top',
+                //     trigger: 'hover'
+                // });
+        }
+    });
+}
+
+$(document).on('draw.dt', '#mytable', function() {
+    applyCompletedProjectStyling();
+    applyMicrobialPrintAvailability();
+});
 </script>
 
 <!-- <script>
@@ -2657,6 +2771,7 @@ function applyCompletedProjectStyling() {
                 
                 // Apply styling to completed project rows
                 applyCompletedProjectStyling();
+                applyMicrobialPrintAvailability();
             }
         });
 

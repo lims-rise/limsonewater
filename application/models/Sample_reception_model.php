@@ -117,7 +117,10 @@ class Sample_reception_model extends CI_Model
                         array('class' => 'btn-modern btn-print-coc', 'title' => 'Print Kert Report')) . 
                     anchor(site_url('sample_reception/rep_print2/$2'), 
                         '<i class="fa fa-print"></i>', 
-                        array('class' => 'btn-modern btn-print-extended', 'title' => 'Print Tim Report')) .
+                        array('class' => 'btn-modern btn-print-extended', 'title' => 'Print Envirosys Report')) .
+                    anchor(site_url('sample_reception/rep_print3/$2'), 
+                        '<i class="fa fa-print"></i>', 
+                        array('class' => 'btn-modern btn-print-microbial', 'title' => 'Print Microbial Report')) .
                 '</div>' .
                 // Data Actions Group  
                 '<div class="action-section data-actions">' .
@@ -140,7 +143,10 @@ class Sample_reception_model extends CI_Model
                         array('class' => 'btn-modern btn-print-coc', 'title' => 'Print Kert Report')) . 
                     anchor(site_url('sample_reception/rep_print2/$2'), 
                         '<i class="fa fa-print"></i>', 
-                        array('class' => 'btn-modern btn-print-extended', 'title' => 'Print Tim Report')) .
+                        array('class' => 'btn-modern btn-print-extended', 'title' => 'Print Envirosys Report')) .
+                    anchor(site_url('sample_reception/rep_print3/$2'), 
+                        '<i class="fa fa-print"></i>', 
+                        array('class' => 'btn-modern btn-print-microbial', 'title' => 'Print Microbial Report')) .
                 '</div>' .
                 // Data Actions Group  
                 '<div class="action-section data-actions">' .
@@ -169,7 +175,10 @@ class Sample_reception_model extends CI_Model
                         array('class' => 'btn-modern btn-print-coc', 'title' => 'Print Kert Report')) . 
                     anchor(site_url('sample_reception/rep_print2/$2'), 
                         '<i class="fa fa-print"></i>', 
-                        array('class' => 'btn-modern btn-print-extended', 'title' => 'Print Tim Report')) .
+                        array('class' => 'btn-modern btn-print-extended', 'title' => 'Print Envirosys Report')) .
+                    anchor(site_url('sample_reception/rep_print3/$2'), 
+                        '<i class="fa fa-print"></i>', 
+                        array('class' => 'btn-modern btn-print-microbial', 'title' => 'Print Microbial Report')) .
                 '</div>' .
                 // Data Actions Group  
                     '<button type="button" class="btn-modern btn-primary btn_batch_tests" data-id="$2" title="Add Tests">
@@ -324,7 +333,10 @@ class Sample_reception_model extends CI_Model
                         array('class' => 'btn-modern btn-print-coc', 'title' => 'Print Kert Report')) . 
                     anchor(site_url('sample_reception/rep_print2/$2'), 
                         '<i class="fa fa-print"></i>', 
-                        array('class' => 'btn-modern btn-print-extended', 'title' => 'Print Tim Report')) .
+                        array('class' => 'btn-modern btn-print-extended', 'title' => 'Print Envirosys Report')) .
+                    anchor(site_url('sample_reception/rep_print3/$2'), 
+                        '<i class="fa fa-print"></i>', 
+                        array('class' => 'btn-modern btn-print-microbial', 'title' => 'Print Microbial Report')) .
                 '</div>' .
                 // Data Actions Group  
                 '<div class="action-section data-actions">' .
@@ -347,7 +359,10 @@ class Sample_reception_model extends CI_Model
                         array('class' => 'btn-modern btn-print-coc', 'title' => 'Print Kert Report')) . 
                     anchor(site_url('sample_reception/rep_print2/$2'), 
                         '<i class="fa fa-print"></i>', 
-                        array('class' => 'btn-modern btn-print-extended', 'title' => 'Print Tim Report')) .
+                        array('class' => 'btn-modern btn-print-extended', 'title' => 'Print Envirosys Report')) .
+                    anchor(site_url('sample_reception/rep_print3/$2'), 
+                        '<i class="fa fa-print"></i>', 
+                        array('class' => 'btn-modern btn-print-microbial', 'title' => 'Print Microbial Report')) .
                 '</div>' .
                 // Data Actions Group  
                 '<div class="action-section data-actions">' .
@@ -376,7 +391,10 @@ class Sample_reception_model extends CI_Model
                         array('class' => 'btn-modern btn-print-coc', 'title' => 'Print Kert Report')) . 
                     anchor(site_url('sample_reception/rep_print2/$2'), 
                         '<i class="fa fa-print"></i>', 
-                        array('class' => 'btn-modern btn-print-extended', 'title' => 'Print Tim Report')) .
+                        array('class' => 'btn-modern btn-print-extended', 'title' => 'Print Envirosys Report')) .
+                    anchor(site_url('sample_reception/rep_print3/$2'), 
+                        '<i class="fa fa-print"></i>', 
+                        array('class' => 'btn-modern btn-print-microbial', 'title' => 'Print Microbial Report')) .
                 '</div>' .
                 // Data Actions Group  
                 '<div class="action-section data-actions">' .

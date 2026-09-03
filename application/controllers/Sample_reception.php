@@ -346,6 +346,96 @@ class Sample_reception extends CI_Controller
         }
     }
 
+    public function rep_print3($id) 
+    {
+        $row = $this->Sample_reception_model->get_rep($id);
+        if ($row) {
+            $data = array(
+                'report_number' => $row->report_number,
+                'report_date' => $row->report_date,
+                'id_project' => $row->id_project,
+                'client' => $row->client,
+                'client_name' => $row->client_name,
+                'address' => $row->address,
+                'phone1' => $row->phone1,
+                'phone2' => $row->phone2,
+                'email' => $row->email,
+                'client_quote_number' => $row->client_quote_number,
+                'po_number' => $row->po_number,
+                'id_client_sample' => $row->id_client_sample,
+                'from_date' => $row->from_date,
+                'to_date' => $row->to_date,
+                'date_arrival' => $row->date_arrival,
+                'time_arrival' => $row->time_arrival,
+                'id_person' => $row->id_person,
+                'realname' => $row->realname,
+            );
+
+            $testing_types = $this->Sample_reception_model->getProjectTestingTypes($id);
+            $testing_details_with_reviewers = $this->Sample_reception_model->getProjectTestingDetailsWithReviewers($id);
+            $unique_reviewers = array();
+            foreach ($testing_details_with_reviewers as $sample_data) {
+                foreach ($sample_data['tests'] as $test) {
+                    $reviewer = $test['reviewer_name'];
+                    if ($reviewer && $reviewer !== 'Not reviewed' && !in_array($reviewer, $unique_reviewers)) {
+                        $unique_reviewers[] = $reviewer;
+                    }
+                }
+            }
+
+            $data['analyst_names_array'] = $unique_reviewers;
+            $data['testing_information'] = empty($unique_reviewers) ? 'No analyst assigned' : implode('<br>', $unique_reviewers);
+            $data['testing_details_with_reviewers'] = $testing_details_with_reviewers;
+
+            $needs_generation_and_save = (
+                empty($data['report_number']) || $data['report_number'] === null || $data['report_number'] === '' ||
+                empty($data['report_date']) || $data['report_date'] === null || $data['report_date'] === '' || trim($data['report_date']) === '0000-00-00'
+            );
+
+            if ($needs_generation_and_save) {
+                $data['report_date_display'] = date('d-M-Y'); 
+                $data['report_number_display'] = $this->Sample_reception_model->generate_preview_report_number();
+                $data['needs_ajax_save'] = true;
+                $data['is_temporary'] = true;
+            } else {
+                $date_obj_from_db = DateTime::createFromFormat('Y-m-d', $data['report_date']);
+                if ($date_obj_from_db) {
+                    $data['report_date_display'] = $date_obj_from_db->format('d-M-Y');
+                } else {
+                    $data['report_date_display'] = $data['report_date']; 
+                    log_message('error', 'Could not convert DB date "' . $data['report_date'] . '" to DD-Mon-YYYY format for display in rep_print3.');
+                }
+                $data['report_number_display'] = $data['report_number'];
+                $data['needs_ajax_save'] = false;
+                $data['is_temporary'] = false;
+            }
+
+            $data['export_data'] = $this->Sample_reception_model->get_export_data($id);
+            $this->load->model('Microbial_extraction_model');
+            $project_id = $data['id_project'];
+            $data['has_microbial_data'] = $this->Microbial_extraction_model->has_extraction_results($project_id);
+
+            if ($data['has_microbial_data']) {
+                $microbial_raw = $this->Microbial_extraction_model->get_by_project($project_id);
+                $data['microbial_tables'] = array();
+                foreach ($microbial_raw as $row) {
+                    $table_name = $row['table_name'];
+                    if (!isset($data['microbial_tables'][$table_name])) {
+                        $data['microbial_tables'][$table_name] = array();
+                    }
+                    $data['microbial_tables'][$table_name][] = $row;
+                }
+            } else {
+                $data['microbial_tables'] = array();
+            }
+
+            $this->template->load('template','sample_reception/index_rep3', $data);
+        } else {
+            $this->session->set_flashdata('message', 'Record Not Found');
+            redirect(site_url("sample_reception/read/".$id));
+        }
+    }
+
     public function reset_report_number_ajax() {
         if (!$this->input->is_ajax_request() || !$this->input->method('post')) {
             echo json_encode(['status' => 'error', 'message' => 'Invalid request.']);
