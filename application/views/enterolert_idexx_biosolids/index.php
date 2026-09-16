@@ -858,3 +858,7 @@
 
 <!-- SweetAlert2 CSS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<!-- Module Announcement Modal -->
+<?php $this->load->view('module_announcement/modal_announcement'); ?>

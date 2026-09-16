@@ -14,7 +14,7 @@ if (!defined('BASEPATH'))
 // use PhpOffice\PhpSpreadsheet\Spreadsheet;
 // use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-class Sequencing extends CI_Controller
+class Sequencing extends MY_Controller
 {
     function __construct()
     {
@@ -34,7 +34,7 @@ class Sequencing extends CI_Controller
         // Check if redirected from Sample Reception with specific ID
         $data['search_sample_id'] = $this->input->get('idOneWaterSample');
 
-        $this->template->load('template','Sequencing/index', $data);
+        $this->load_template_with_announcements('template', 'Sequencing/index', $data);
     } 
     
     public function json() {

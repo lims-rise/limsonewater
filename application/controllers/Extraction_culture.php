@@ -15,7 +15,7 @@ if (!defined('BASEPATH'))
 // use PhpOffice\PhpSpreadsheet\Spreadsheet;
 // use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
     
-class Extraction_culture extends CI_Controller
+class Extraction_culture extends MY_Controller
 {
     function __construct()
     {
@@ -47,7 +47,7 @@ class Extraction_culture extends CI_Controller
         // Check if redirected from Sample Reception with specific ID
         $data['search_sample_id'] = $this->input->get('idOneWaterSample');
         
-        $this->template->load('template','Extraction_culture/index', $data);
+        $this->load_template_with_announcements('template', 'Extraction_culture/index', $data);
     } 
     
     public function json() {
