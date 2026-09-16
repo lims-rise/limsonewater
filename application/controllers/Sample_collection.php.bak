@@ -34,7 +34,7 @@ class Sample_collection extends MY_Controller
         // $data['id_project'] = $this->Sample_collection_model->generate_project_id();
         // $data['client'] = $this->Sample_collection_model->generate_client();
         // $data['id_one_water_sample'] = $this->Sample_collection_model->generate_one_water_sample_id();
-        $this->load_template_with_announcements('template', 'sample_collection/index', $data);
+        $this->template->load('template','sample_collection/index', $data);
     } 
     
     public function json() {
@@ -100,11 +100,11 @@ class Sample_collection extends MY_Controller
             $data['col1'] = $this->Sample_collection_model->getPos2();
 
                 
-            $this->load_template_with_announcements('template', 'sample_collection/index_det', $data);
+            $this->template->load('template','sample_collection/index_det', $data);
 
         }
         else {
-            // $this->load_template_with_announcements('template', 'Water_sample_reception/index_det', $test);
+            // $this->template->load('template','Water_sample_reception/index_det', $test);
         }
 
     } 
@@ -120,10 +120,10 @@ class Sample_collection extends MY_Controller
                 'sample_description' => $row->sample_description,
                 'test' => $this->Sample_collection_model->getTest(),
                 );
-                $this->load_template_with_announcements('template', 'Sample_reception/index_det2', $data);
+                $this->template->load('template','Sample_reception/index_det2', $data);
         }
         else {
-            // $this->load_template_with_announcements('template', 'Water_sample_reception/index_det');
+            // $this->template->load('template','Water_sample_reception/index_det');
         }
     }     
 

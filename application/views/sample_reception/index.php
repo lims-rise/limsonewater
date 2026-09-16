@@ -4912,96 +4912,6 @@ function openTestInputForm(sampleId, testTypeId, testName, barcode, hasData) {
 }
 
 /**
- * Show modal when data is already available for a test
- */
-function showDataAvailableModal(sampleId, testTypeId, testName, barcode) {
-    Swal.fire({
-        icon: 'success',
-        title: '<span style="color: #2E86AB; font-weight: 600;">✨ Data Already Available</span>',
-        html: `
-            <div style="
-                background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-                border-radius: 15px;
-                padding: 25px;
-                margin: 15px 0;
-                color: white;
-                box-shadow: 0 8px 32px rgba(52, 152, 219, 0.3);
-            ">
-                <div style="display: flex; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
-                    <div style="
-                        width: 50px;
-                        height: 50px;
-                        background: rgba(255, 255, 255, 0.2);
-                        border-radius: 50%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        margin-right: 15px;
-                        font-size: 24px;
-                    ">🔬</div>
-                    <div style="text-align: left;">
-                        <h4 style="margin: 0; font-size: 18px; font-weight: 600;">Testing Module</h4>
-                        <p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px;">${testName}</p>
-                    </div>
-                </div>
-                
-                <div style="display: flex; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
-                    <div style="
-                        width: 50px;
-                        height: 50px;
-                        background: rgba(255, 255, 255, 0.2);
-                        border-radius: 50%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        margin-right: 15px;
-                        font-size: 24px;
-                    ">💧</div>
-                    <div style="text-align: left;">
-                        <h4 style="margin: 0; font-size: 18px; font-weight: 600;">Sample ID</h4>
-                        <p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px; font-family: monospace; letter-spacing: 1px;">${sampleId}</p>
-                    </div>
-                </div>
-                
-                <div style="display: flex; align-items: center; background: rgba(255, 255, 255, 0.15); border-radius: 10px; padding: 15px;">
-                    <div style="
-                        width: 50px;
-                        height: 50px;
-                        background: rgba(46, 204, 113, 0.3);
-                        border-radius: 50%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        margin-right: 15px;
-                        font-size: 24px;
-                    ">✅</div>
-                    <div style="text-align: left;">
-                        <h4 style="margin: 0; font-size: 18px; font-weight: 600;">Status</h4>
-                        <p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px;">Data already exists in the system</p>
-                    </div>
-                </div>
-            </div>
-        `,
-        showCancelButton: true,
-        confirmButtonText: '<i class="fa fa-edit"></i> View/Edit Data',
-        cancelButtonText: '<i class="fa fa-times"></i> Close',
-        customClass: {
-            popup: 'futuristic-popup',
-            confirmButton: 'futuristic-button',
-            cancelButton: 'futuristic-button-warning'
-        },
-        showClass: {
-            popup: 'animate__animated animate__fadeInUp animate__faster'
-        }
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Redirect to view/edit form (using new method for has_data condition)
-            redirectToTestingModuleDetail(testTypeId, sampleId, barcode);
-        }
-    });
-}
-
-/**
  * Redirect to testing module detail page (for existing tests with data)
  * This is similar to the approach used in sample_reception/index_det.php for url-link-status
  */
@@ -5091,6 +5001,96 @@ function redirectToTestingModuleDetail(testTypeId, sampleId, barcode) {
                 title: 'Error',
                 text: 'Failed to load testing module information'
             });
+        }
+    });
+}
+
+/**
+ * Show modal when data is already available for a test
+ */
+function showDataAvailableModal(sampleId, testTypeId, testName, barcode) {
+    Swal.fire({
+        icon: 'success',
+        title: '<span style="color: #2E86AB; font-weight: 600;">✨ Data Already Available</span>',
+        html: `
+            <div style="
+                background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+                border-radius: 15px;
+                padding: 25px;
+                margin: 15px 0;
+                color: white;
+                box-shadow: 0 8px 32px rgba(52, 152, 219, 0.3);
+            ">
+                <div style="display: flex; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
+                    <div style="
+                        width: 50px;
+                        height: 50px;
+                        background: rgba(255, 255, 255, 0.2);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin-right: 15px;
+                        font-size: 24px;
+                    ">🔬</div>
+                    <div style="text-align: left;">
+                        <h4 style="margin: 0; font-size: 18px; font-weight: 600;">Testing Module</h4>
+                        <p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px;">${testName}</p>
+                    </div>
+                </div>
+                
+                <div style="display: flex; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
+                    <div style="
+                        width: 50px;
+                        height: 50px;
+                        background: rgba(255, 255, 255, 0.2);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin-right: 15px;
+                        font-size: 24px;
+                    ">💧</div>
+                    <div style="text-align: left;">
+                        <h4 style="margin: 0; font-size: 18px; font-weight: 600;">Sample ID</h4>
+                        <p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px; font-family: monospace; letter-spacing: 1px;">${sampleId}</p>
+                    </div>
+                </div>
+                
+                <div style="display: flex; align-items: center; background: rgba(255, 255, 255, 0.15); border-radius: 10px; padding: 15px;">
+                    <div style="
+                        width: 50px;
+                        height: 50px;
+                        background: rgba(46, 204, 113, 0.3);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin-right: 15px;
+                        font-size: 24px;
+                    ">✅</div>
+                    <div style="text-align: left;">
+                        <h4 style="margin: 0; font-size: 18px; font-weight: 600;">Status</h4>
+                        <p style="margin: 5px 0 0 0; opacity: 0.9; font-size: 14px;">Data already exists in the system</p>
+                    </div>
+                </div>
+            </div>
+        `,
+        showCancelButton: true,
+        confirmButtonText: '<i class="fa fa-edit"></i> View/Edit Data',
+        cancelButtonText: '<i class="fa fa-times"></i> Close',
+        customClass: {
+            popup: 'futuristic-popup',
+            confirmButton: 'futuristic-button',
+            cancelButton: 'futuristic-button-warning'
+        },
+        showClass: {
+            popup: 'animate__animated animate__fadeInUp animate__faster'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Redirect to view/edit form (using new method for has_data condition)
+            redirectToTestingModuleDetail(testTypeId, sampleId, barcode);
         }
     });
 }

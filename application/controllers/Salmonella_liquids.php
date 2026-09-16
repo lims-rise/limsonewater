@@ -10,7 +10,7 @@ if (!defined('BASEPATH'))
     use Google\Client as google_client;
     use Google\Service\Drive as google_drive;
     
-class Salmonella_liquids extends CI_Controller
+class Salmonella_liquids extends MY_Controller
 {
     function __construct()
     {
@@ -28,7 +28,7 @@ class Salmonella_liquids extends CI_Controller
         $data['sampletype'] = $this->Salmonella_liquids_model->getSampleType();
         $data['labtech'] = $this->Salmonella_liquids_model->getLabTech();
         $data['tubes'] = $this->Salmonella_liquids_model->getTubes();
-        $this->template->load('template','salmonella_liquids/index', $data);
+        $this->load_template_with_announcements('template', 'salmonella_liquids/index', $data);
     } 
     
     public function json() {

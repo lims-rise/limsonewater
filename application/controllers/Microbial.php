@@ -7,7 +7,7 @@ require 'vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-class Microbial extends CI_Controller
+class Microbial extends MY_Controller
 {
     function __construct()
     {
@@ -34,7 +34,7 @@ class Microbial extends CI_Controller
         // Get id_project (COC) from URL parameter if provided
         $data['id_project'] = $this->input->get('id_project') ?: $this->input->get('coc');
 
-        $this->template->load('template','Microbial/index', $data);
+        $this->load_template_with_announcements('template', 'Microbial/index', $data);
     } 
     
     public function json() {

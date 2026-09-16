@@ -14,7 +14,7 @@ if (!defined('BASEPATH'))
 // use PhpOffice\PhpSpreadsheet\Spreadsheet;
 // use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
     
-class Campy_liquids extends CI_Controller
+class Campy_liquids extends MY_Controller
 {
     function __construct()
     {
@@ -37,7 +37,7 @@ class Campy_liquids extends CI_Controller
         // $data['id_project'] = $this->Moisture_content_model->generate_project_id();
         // $data['client'] = $this->Moisture_content_model->generate_client();
         // $data['id_one_water_sample'] = $this->Moisture_content_model->generate_one_water_sample_id();
-        $this->template->load('template','campy_liquids/index', $data);
+        $this->load_template_with_announcements('template', 'campy_liquids/index', $data);
     } 
     
     public function json() {

@@ -14,7 +14,7 @@ if (!defined('BASEPATH'))
 // use PhpOffice\PhpSpreadsheet\Spreadsheet;
 // use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
     
-class Colilert_idexx_water extends CI_Controller
+class Colilert_idexx_water extends MY_Controller
 {
     function __construct()
     {
@@ -34,7 +34,7 @@ class Colilert_idexx_water extends CI_Controller
         // $data['id_project'] = $this->Moisture_content_model->generate_project_id();
         // $data['client'] = $this->Moisture_content_model->generate_client();
         // $data['id_one_water_sample'] = $this->Moisture_content_model->generate_one_water_sample_id();
-        $this->template->load('template','colilert_idexx_water/index', $data);
+        $this->load_template_with_announcements('template', 'colilert_idexx_water/index', $data);
     } 
     
     public function json() {
@@ -89,11 +89,11 @@ class Colilert_idexx_water extends CI_Controller
 
 
                 
-            $this->template->load('template','colilert_idexx_water/index_det', $data);
+            $this->load_template_with_announcements('template', 'colilert_idexx_water/index_det', $data);
 
         }
         else {
-            // $this->template->load('template','Water_sample_reception/index_det', $test);
+            // $this->load_template_with_announcements('template', 'Water_sample_reception/index_det', $test);
         }
 
     }   

@@ -14,7 +14,7 @@ if (!defined('BASEPATH'))
 // use PhpOffice\PhpSpreadsheet\Spreadsheet;
 // use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
     
-class Campy_biosolids_qpcr extends CI_Controller
+class Campy_biosolids_qpcr extends MY_Controller
 {
     function __construct()
     {
@@ -32,7 +32,7 @@ class Campy_biosolids_qpcr extends CI_Controller
         $data['sampletype'] = $this->Campy_biosolids_qpcr_model->getSampleType();
         $data['labtech'] = $this->Campy_biosolids_qpcr_model->getLabTech();
         $data['tubes'] = $this->Campy_biosolids_qpcr_model->getTubes();
-        $this->template->load('template','campy_biosolids_qpcr/index', $data);
+        $this->load_template_with_announcements('template', 'campy_biosolids_qpcr/index', $data);
     } 
     
     public function json() {

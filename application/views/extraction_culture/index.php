@@ -2208,3 +2208,7 @@
     });
 
 </script>
+
+
+<!-- Module Announcement Modal -->
+<?php $this->load->view('module_announcement/modal_announcement'); ?>
