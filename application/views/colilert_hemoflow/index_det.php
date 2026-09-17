@@ -1206,29 +1206,67 @@
                 success: function(data) {
                     console.log('data mpn: ', data);
                     if (data.length > 0) {
-                        if (data[0].MPN_mean == '0') {
-                            let calculatedMpn = parseFloat(data[0].MPN_mean) / parseFloat(dilution);
-                            let calculatedLower = parseFloat(data[0].MPN_95lo) / parseFloat(dilution);
-                            // result.mpn = calculatedMpn.toFixed(1);
-                            result.mpn = "<"+ (calculatedMpn.toFixed(1) == "0.0" ? "1.0" : calculatedMpn.toFixed(1)); // Pastikan tampil sebagai "<1.0" jika hasilnya 0.0
-                            result.lower = calculatedLower.toFixed(1);
-                        }
-                        else if (data[0].MPN_mean == '9999') {
-                            result.mpn = ">"+ (2419 / dilution).toFixed(1);
-                            let calculatedLower = parseFloat(data[0].MPN_95lo) / parseFloat(dilution);
-                            lowermpn = calculatedLower.toFixed(1);
-                            if (lowermpn == "14395.0") {
-                                lowermpn = null;
+                        // ============================================================
+                        // FORMULA BARU (Updated): Langsung ambil MPN_mean tanpa dibagi dilution
+                        // Table idexx_mpn sudah menyimpan nilai final: "<1", ">2419.6", atau numeric
+                        // ============================================================
+                        
+                        let mpnMean = String(data[0].MPN_mean).trim();
+                        let mpn95lo = String(data[0].MPN_95lo).trim();
+                        
+                        // Check if MPN_mean contains special characters (< or >)
+                        if (mpnMean.includes('>') || mpnMean.includes('<')) {
+                            // Below or above detection limit - use as-is from database
+                            result.mpn = mpnMean;  // e.g., "<1" or ">2419.6"
+                            
+                            // Handle lower confidence
+                            if (mpn95lo.includes('>') || mpn95lo.includes('<')) {
+                                result.lower = mpn95lo;
+                            } else {
+                                let lowerValue = parseFloat(mpn95lo);
+                                result.lower = !isNaN(lowerValue) ? lowerValue.toFixed(1) : null;
                             }
-                            result.lower = lowermpn; // Tampilkan "N/A" untuk lower confidence jika MPN mean > detection limit
                         }
                         else {
-                            // Format to 1 decimal place for display
-                            let calculatedMpn = parseFloat(data[0].MPN_mean) / parseFloat(dilution);
-                            let calculatedLower = parseFloat(data[0].MPN_95lo) / parseFloat(dilution);
-                            result.mpn = calculatedMpn.toFixed(1);
-                            result.lower = calculatedLower.toFixed(1);
+                            // Normal range - format numeric value
+                            let mpnValue = parseFloat(mpnMean);
+                            let lowerValue = parseFloat(mpn95lo);
+                            
+                            if (!isNaN(mpnValue) && !isNaN(lowerValue)) {
+                                result.mpn = mpnValue.toFixed(1);
+                                result.lower = lowerValue.toFixed(1);
+                            } else {
+                                console.error('Invalid MPN data:', data[0]);
+                                result.mpn = 'Invalid';
+                                result.lower = 'Invalid';
+                            }
                         }
+                        
+                        // ============================================================
+                        // FORMULA LAMA (Commented): Dibagi dengan dilution
+                        // ============================================================
+                        // if (data[0].MPN_mean == '0') {
+                        //     let calculatedMpn = parseFloat(data[0].MPN_mean) / parseFloat(dilution);
+                        //     let calculatedLower = parseFloat(data[0].MPN_95lo) / parseFloat(dilution);
+                        //     result.mpn = "<"+ (calculatedMpn.toFixed(1) == "0.0" ? "1.0" : calculatedMpn.toFixed(1));
+                        //     result.lower = calculatedLower.toFixed(1);
+                        // }
+                        // else if (data[0].MPN_mean == '9999') {
+                        //     result.mpn = ">"+ (2419 / dilution).toFixed(1);
+                        //     let calculatedLower = parseFloat(data[0].MPN_95lo) / parseFloat(dilution);
+                        //     lowermpn = calculatedLower.toFixed(1);
+                        //     if (lowermpn == "14395.0") {
+                        //         lowermpn = null;
+                        //     }
+                        //     result.lower = lowermpn;
+                        // }
+                        // else {
+                        //     // Format to 1 decimal place for display
+                        //     let calculatedMpn = parseFloat(data[0].MPN_mean) / parseFloat(dilution);
+                        //     let calculatedLower = parseFloat(data[0].MPN_95lo) / parseFloat(dilution);
+                        //     result.mpn = calculatedMpn.toFixed(1);
+                        //     result.lower = calculatedLower.toFixed(1);
+                        // }
                         
                         // Store in cache
                         calculationCache[cacheKey] = result;
