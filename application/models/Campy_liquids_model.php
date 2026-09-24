@@ -662,11 +662,12 @@ class Campy_liquids_model extends CI_Model
     /**
      * Get HBA results by campy_liquids ID
      * Used to check if HBA data already exists before auto-generation
+     * Returns ALL HBA results for the parent (can be multiple)
      */
     function get_hba_by_campy_liquids($id_campy_liquids) {
         $this->db->where('id_campy_liquids', $id_campy_liquids);
         $this->db->where('flag', '0');
-        return $this->db->get('campy_result_hba_liquids')->row();
+        return $this->db->get('campy_result_hba_liquids')->result(); // Changed from row() to result()
     }
 
     /**
@@ -719,6 +720,17 @@ class Campy_liquids_model extends CI_Model
         } else {
             return false;
         }
+    }
+
+    /**
+     * Get Charcoal results by campy_liquids ID (parent)
+     * Used for cascade delete when parent Campy Liquids is deleted
+     * Returns all charcoal results associated with the parent record
+     */
+    function get_charcoal_by_campy_liquids($id_campy_liquids) {
+        $this->db->where('id_campy_liquids', $id_campy_liquids);
+        $this->db->where('flag', '0');
+        return $this->db->get('campy_result_charcoal_liquids')->result();
     }
       
 }
