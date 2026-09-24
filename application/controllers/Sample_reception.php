@@ -1855,34 +1855,34 @@ class Sample_reception extends CI_Controller
     private function generateBarcodeForTestType($testing_type) {
         // Map test types to their barcode prefixes
         $prefix_map = array(
-            'Biobank-In' => 'BB',
-            'Campy-Hemoflow' => 'CH',
+            'Biobank-In' => 'BI',
+            'Campy-Hemoflow' => 'CHF',
             'Campy-Hemoflow-QPCR' => 'CHQ',
             'Campy-Hemoflow-qPCR' => 'CHQ',
-            'Campylobacter-Biosolids' => 'CB',
+            'Campylobacter-Biosolids' => 'CBS',
             'Campylobacter-Liquids' => 'CL',
             'Campylobacter-P/A' => 'CP',
             'Campylobacter-QPCR' => 'CQ',
-            'Colilert-Hemoflow' => 'COH',
-            'Colilert-Idexx-Biosolids' => 'COB',
-            'Colilert-Idexx-Water' => 'COW',
+            'Colilert-Hemoflow' => 'CH',
+            'Colilert-Idexx-Biosolids' => 'CB',
+            'Colilert-Idexx-Water' => 'CI',
             'Enterolert-Hemoflow' => 'EH',
             'Enterolert-Idexx-Biosolids' => 'EB',
             'Enterolert-Idexx-Water' => 'EW',
-            'Extraction-Biosolids' => 'EXB',
-            'Extraction-Culture-Plate' => 'EXC',
-            'Extraction-Liquids' => 'EXL',
-            'Extraction-Metagenome' => 'EXM',
+            'Extraction-Biosolids' => 'EBS',
+            'Extraction-Culture-Plate' => 'EC',
+            'Extraction-Liquids' => 'EL',
+            'Extraction-Metagenome' => 'EM',
             'Hemoflow' => 'HF',
             'Microbial-Source-Tracking' => 'M',
-            'Moisture_content' => 'MC',
-            'Protozoa' => 'PTZ',
+            'Moisture_content' => 'W',
+            'Protozoa' => 'PR',
             'Salmonella-Biosolids' => 'SB',
             'Salmonella-Hemoflow' => 'SH',
             'Salmonella-Liquids' => 'SL',
             'Salmonella-P/A' => 'SP',
             'Sample-Collection' => 'SC',
-            'Sequencing' => 'SEQ'
+            'Sequencing' => 'S'
         );
         
         $prefix = isset($prefix_map[$testing_type]) ? $prefix_map[$testing_type] : 'TST';
