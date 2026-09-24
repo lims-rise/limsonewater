@@ -446,7 +446,7 @@ class Campy_biosolids extends MY_Controller
                 // Check if HBA data already exists for this charcoal result
                 $existing_hba = $this->Campy_biosolids_model->get_hba_by_campy_biosolids($id_campy_biosolids);
                 
-                if (!$existing_hba) {
+                if (empty($existing_hba)) { // Changed: check if array is empty instead of !$existing_hba
                     try {
                         // Auto-generate new HBA results
                         $hba_result = $this->autoGenerateHBAResults($id_campy_biosolids, $id_result_charcoal, $date_sample_processed, $time_sample_processed, $growth_plate_data, $dt);
@@ -840,20 +840,82 @@ class Campy_biosolids extends MY_Controller
     public function delete_campyBiosolids($id) {
         $row = $this->Campy_biosolids_model->get_by_id_campybiosolids($id);
         if ($row) {
-            $id_parent = $row->id_result_charcoal; // Retrieve project_id before updating the record
             $id_campy_biosolids = $row->id_campy_biosolids;
             $data = array(
                 'flag' => 1,
             );
     
+            // CASCADE DELETE: Delete all related child records
+            $total_charcoal_deleted = 0;
+            $total_hba_deleted = 0;
+            $total_biochemical_deleted = 0;
+            
+            // STEP 1: Delete all HBA results (HBA relates directly to parent, not charcoal!)
+            $hba_results = $this->Campy_biosolids_model->get_hba_by_campy_biosolids($id_campy_biosolids);
+            
+            foreach ($hba_results as $hba) {
+                // For each HBA, delete all biochemical results first
+                $biochemical_results = $this->Campy_biosolids_model->get_biochemical_by_hba_id($hba->id_result_hba);
+                $biochemical_count = count($biochemical_results);
+                
+                if ($biochemical_count > 0) {
+                    $this->Campy_biosolids_model->delete_biochemical_by_hba_id($hba->id_result_hba);
+                    $total_biochemical_deleted += $biochemical_count;
+                    log_message('info', "Cascade delete from parent: Deleted {$biochemical_count} biochemical results for HBA ID {$hba->id_result_hba}");
+                }
+                
+                // Delete HBA growth plates and main record
+                $this->Campy_biosolids_model->updateResultsGrowthPlateHba($hba->id_result_hba, $data);
+                $this->Campy_biosolids_model->updateResultsHba($hba->id_result_hba, $data);
+                $total_hba_deleted++;
+            }
+            
+            if ($total_hba_deleted > 0) {
+                log_message('info', "Cascade delete from parent: Deleted {$total_hba_deleted} HBA results for parent ID {$id_campy_biosolids}");
+            }
+            
+            // STEP 2: Delete all Charcoal results (separate from HBA!)
+            $charcoal_results = $this->Campy_biosolids_model->get_charcoal_by_campy_biosolids($id_campy_biosolids);
+            
+            foreach ($charcoal_results as $charcoal) {
+                // Delete charcoal growth plates and main record
+                $this->Campy_biosolids_model->updateResultsGrowthPlate($charcoal->id_result_charcoal, $data);
+                $this->Campy_biosolids_model->updateResultsCharcoal($charcoal->id_result_charcoal, $data);
+                $total_charcoal_deleted++;
+            }
+            
+            if ($total_charcoal_deleted > 0) {
+                log_message('info', "Cascade delete from parent: Deleted {$total_charcoal_deleted} Charcoal results for parent ID {$id_campy_biosolids}");
+            }
+            
+            // STEP 3: Delete parent record and sample volumes
             $this->Campy_biosolids_model->deleteCampyBiosolids($id, $data);
             $this->Campy_biosolids_model->updateSampleVolume($id_campy_biosolids, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
+            
+            // Create detailed success message
+            $message = 'Parent Campy Biosolids deleted successfully';
+            if ($total_charcoal_deleted > 0 || $total_hba_deleted > 0 || $total_biochemical_deleted > 0) {
+                $message .= ' (Cascade deleted: ';
+                $cascade_parts = array();
+                if ($total_charcoal_deleted > 0) {
+                    $cascade_parts[] = "{$total_charcoal_deleted} Charcoal result(s)";
+                }
+                if ($total_hba_deleted > 0) {
+                    $cascade_parts[] = "{$total_hba_deleted} HBA result(s)";
+                }
+                if ($total_biochemical_deleted > 0) {
+                    $cascade_parts[] = "{$total_biochemical_deleted} Biochemical result(s)";
+                }
+                $message .= implode(', ', $cascade_parts) . ')';
+            }
+            
+            $this->session->set_flashdata('message', $message);
+            log_message('info', "Cascade delete from parent completed: Campy Biosolids ID {$id_campy_biosolids} - {$message}");
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
     
-        redirect(site_url('campy_biosolids/read/'.$id_parent));
+        redirect(site_url('campy_biosolids'));
     }
     
     public function delete_detailCharcoal($id) {

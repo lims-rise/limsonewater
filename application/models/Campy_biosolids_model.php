@@ -702,11 +702,12 @@ class Campy_biosolids_model extends CI_Model
     /**
      * Get HBA results by campy_biosolids ID
      * Used to check if HBA data already exists before auto-generation
+     * Returns ALL HBA results for the parent (can be multiple)
      */
     function get_hba_by_campy_biosolids($id_campy_biosolids) {
         $this->db->where('id_campy_biosolids', $id_campy_biosolids);
         $this->db->where('flag', '0');
-        return $this->db->get('campy_result_hba')->row();
+        return $this->db->get('campy_result_hba')->result(); // Changed from row() to result()
     }
 
     /**
@@ -759,6 +760,17 @@ class Campy_biosolids_model extends CI_Model
         } else {
             return false;
         }
+    }
+
+    /**
+     * Get Charcoal results by campy_biosolids ID (parent)
+     * Used for cascade delete when parent Campy Biosolids is deleted
+     * Returns all charcoal results associated with the parent record
+     */
+    function get_charcoal_by_campy_biosolids($id_campy_biosolids) {
+        $this->db->where('id_campy_biosolids', $id_campy_biosolids);
+        $this->db->where('flag', '0');
+        return $this->db->get('campy_result_charcoal')->result();
     }
 }
 
