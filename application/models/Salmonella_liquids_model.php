@@ -804,6 +804,17 @@ class Salmonella_liquids_model extends CI_Model
         $this->db->where('id_result_xld', $id_result_xld);
         $this->db->update('salmonella_sample_black_colony_plate_liquids', $data);
     }
+
+    /**
+     * Get XLD results by salmonella_liquids ID (parent)
+     * Used for cascade delete when parent Salmonella Liquids is deleted
+     * Returns all XLD results associated with the parent record
+     */
+    function get_xld_by_salmonella_liquids($id_salmonella_liquids) {
+        $this->db->where('id_salmonella_liquids', $id_salmonella_liquids);
+        $this->db->where('flag', '0');
+        return $this->db->get('salmonella_result_xld_liquids')->result();
+    }
     
 
       

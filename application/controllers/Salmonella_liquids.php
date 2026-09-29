@@ -1049,20 +1049,86 @@ class Salmonella_liquids extends MY_Controller
     public function delete_salmonellaLiquids($id) {
         $row = $this->Salmonella_liquids_model->get_by_id_salmonella_liquids($id);
         if ($row) {
-            $id_parent = $row->id_result_xld; // Retrieve project_id before updating the record
-            $id_salmonella_liquids = $row->id_salmonella_liquids; // Get the main salmonella_liquids ID
+            $id_salmonella_liquids = $row->id_salmonella_liquids;
             $data = array(
                 'flag' => 1,
             );
-    
+
+            // CASCADE DELETE: Delete all related child records
+            $total_xld_deleted = 0;
+            $total_chromagar_deleted = 0;
+            $total_biochemical_deleted = 0;
+            
+            // STEP 1: Delete all Chromagar results and their biochemical children
+            $chromagar_results = $this->Salmonella_liquids_model->get_chromagar_by_salmonella_liquids($id_salmonella_liquids);
+            
+            foreach ($chromagar_results as $chromagar) {
+                // For each Chromagar, delete all biochemical results first
+                // Note: Biochemical relates to Chromagar, not to XLD
+                $this->Salmonella_liquids_model->updateResultsBiochemicalByChromagar($chromagar->id_result_chromagar, $data);
+                
+                // Count biochemical records deleted (for logging)
+                $this->db->where('id_result_chromagar', $chromagar->id_result_chromagar);
+                $this->db->where('flag', '1'); // Just changed to 1
+                $biochemical_count = $this->db->count_all_results('salmonella_result_biochemical_liquids');
+                $total_biochemical_deleted += $biochemical_count;
+                
+                if ($biochemical_count > 0) {
+                    log_message('info', "Cascade delete from parent: Deleted {$biochemical_count} biochemical results for Chromagar ID {$chromagar->id_result_chromagar}");
+                }
+                
+                // Delete Chromagar purple colony plates and main record
+                $this->Salmonella_liquids_model->updateResultsPurpleColonyPlateByChromagar($chromagar->id_result_chromagar, $data);
+                $this->Salmonella_liquids_model->updateResultsChromagar($chromagar->id_result_chromagar, $data);
+                $total_chromagar_deleted++;
+            }
+            
+            if ($total_chromagar_deleted > 0) {
+                log_message('info', "Cascade delete from parent: Deleted {$total_chromagar_deleted} Chromagar results for parent ID {$id_salmonella_liquids}");
+            }
+            
+            // STEP 2: Delete all XLD results (separate from Chromagar!)
+            $xld_results = $this->Salmonella_liquids_model->get_xld_by_salmonella_liquids($id_salmonella_liquids);
+            
+            foreach ($xld_results as $xld) {
+                // Delete XLD black colony plates and main record
+                $this->Salmonella_liquids_model->updateResultsBlackColonyPlateXLD($xld->id_result_xld, $data);
+                $this->Salmonella_liquids_model->updateResultsXld($xld->id_result_xld, $data);
+                $total_xld_deleted++;
+            }
+            
+            if ($total_xld_deleted > 0) {
+                log_message('info', "Cascade delete from parent: Deleted {$total_xld_deleted} XLD results for parent ID {$id_salmonella_liquids}");
+            }
+            
+            // STEP 3: Delete parent record and sample volumes
             $this->Salmonella_liquids_model->deleteSalmonellaLiquids($id, $data);
             $this->Salmonella_liquids_model->updateSampleVolume($id_salmonella_liquids, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
+            
+            // Create detailed success message
+            $message = 'Parent Salmonella Liquids deleted successfully';
+            if ($total_xld_deleted > 0 || $total_chromagar_deleted > 0 || $total_biochemical_deleted > 0) {
+                $message .= ' (Cascade deleted: ';
+                $cascade_parts = array();
+                if ($total_xld_deleted > 0) {
+                    $cascade_parts[] = "{$total_xld_deleted} XLD result(s)";
+                }
+                if ($total_chromagar_deleted > 0) {
+                    $cascade_parts[] = "{$total_chromagar_deleted} Chromagar result(s)";
+                }
+                if ($total_biochemical_deleted > 0) {
+                    $cascade_parts[] = "{$total_biochemical_deleted} Biochemical result(s)";
+                }
+                $message .= implode(', ', $cascade_parts) . ')';
+            }
+            
+            $this->session->set_flashdata('message', $message);
+            log_message('info', "Cascade delete from parent completed: Salmonella Liquids ID {$id_salmonella_liquids} - {$message}");
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
-    
-        redirect(site_url('salmonella_liquids/read/'.$id_parent));
+
+        redirect(site_url('salmonella_liquids'));
     }
     
     public function delete_detailXld($id) {
