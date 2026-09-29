@@ -744,11 +744,12 @@ class Campy_hemoflow_model extends CI_Model
     /**
      * Get HBA results by campy_hemoflow ID
      * Used to check if HBA data already exists before auto-generation
+     * Returns ALL HBA results for the parent (can be multiple)
      */
     function get_hba_by_campy_hemoflow($id_campy_hemoflow) {
         $this->db->where('id_campy_hemoflow', $id_campy_hemoflow);
         $this->db->where('flag', '0');
-        return $this->db->get('campy_hemoflow_result_hba')->row();
+        return $this->db->get('campy_hemoflow_result_hba')->result(); // Changed from row() to result()
     }
 
     /**
@@ -801,6 +802,17 @@ class Campy_hemoflow_model extends CI_Model
         } else {
             return false;
         }
+    }
+
+    /**
+     * Get Charcoal results by campy_hemoflow ID (parent)
+     * Used for cascade delete when parent Campy Hemoflow is deleted
+     * Returns all charcoal results associated with the parent record
+     */
+    function get_charcoal_by_campy_hemoflow($id_campy_hemoflow) {
+        $this->db->where('id_campy_hemoflow', $id_campy_hemoflow);
+        $this->db->where('flag', '0');
+        return $this->db->get('campy_hemoflow_result_charcoal')->result();
     }
 }
 
