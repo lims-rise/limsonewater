@@ -884,73 +884,219 @@ class Salmonella_biosolids extends MY_Controller
     public function delete_salmonellaBiosolids($id) {
         $row = $this->Salmonella_biosolids_model->get_by_id_salmonella_biosolids($id);
         if ($row) {
-            $id_parent = $row->id_result_xld; // Retrieve project_id before updating the record
-            $id_salmonella_biosolids = $row->id_salmonella_biosolids; // Retrieve id_salmonella_biosolids for related updates
+            $id_salmonella_biosolids = $row->id_salmonella_biosolids;
             $data = array(
                 'flag' => 1,
             );
-    
+
+            // CASCADE DELETE: Delete all related child records
+            $total_xld_deleted = 0;
+            $total_chromagar_deleted = 0;
+            $total_biochemical_deleted = 0;
+            
+            // STEP 1: Delete all Chromagar results and their biochemical children
+            $chromagar_results = $this->Salmonella_biosolids_model->get_chromagar_by_salmonella_biosolids($id_salmonella_biosolids);
+            
+            foreach ($chromagar_results as $chromagar) {
+                // For each Chromagar, delete all biochemical results first
+                // Note: Biochemical relates to Chromagar, not to XLD
+                $this->Salmonella_biosolids_model->updateResultsBiochemicalByChromagar($chromagar->id_result_chromagar, $data);
+                
+                // Count biochemical records deleted (for logging)
+                $this->db->where('id_result_chromagar', $chromagar->id_result_chromagar);
+                $this->db->where('flag', '1'); // Just changed to 1
+                $biochemical_count = $this->db->count_all_results('salmonella_result_biochemical');
+                $total_biochemical_deleted += $biochemical_count;
+                
+                if ($biochemical_count > 0) {
+                    log_message('info', "Cascade delete from parent: Deleted {$biochemical_count} biochemical results for Chromagar ID {$chromagar->id_result_chromagar}");
+                }
+                
+                // Delete Chromagar purple colony plates and main record
+                $this->Salmonella_biosolids_model->updateResultsPurpleColonyPlateByChromagar($chromagar->id_result_chromagar, $data);
+                $this->Salmonella_biosolids_model->updateResultsChroMagar($chromagar->id_result_chromagar, $data);
+                $total_chromagar_deleted++;
+            }
+            
+            if ($total_chromagar_deleted > 0) {
+                log_message('info', "Cascade delete from parent: Deleted {$total_chromagar_deleted} Chromagar results for parent ID {$id_salmonella_biosolids}");
+            }
+            
+            // STEP 2: Delete all XLD results (separate from Chromagar!)
+            $xld_results = $this->Salmonella_biosolids_model->get_xld_by_salmonella_biosolids($id_salmonella_biosolids);
+            
+            foreach ($xld_results as $xld) {
+                // Delete XLD black colony plates and main record
+                $this->Salmonella_biosolids_model->updateResultsBlackColonyPlateXLD($xld->id_result_xld, $data);
+                $this->Salmonella_biosolids_model->updateResultsXld($xld->id_result_xld, $data);
+                $total_xld_deleted++;
+            }
+            
+            if ($total_xld_deleted > 0) {
+                log_message('info', "Cascade delete from parent: Deleted {$total_xld_deleted} XLD results for parent ID {$id_salmonella_biosolids}");
+            }
+            
+            // STEP 3: Delete parent record and sample volumes
             $this->Salmonella_biosolids_model->deleteSalmonellaBiosolids($id, $data);
             $this->Salmonella_biosolids_model->updateSampleVolume($id_salmonella_biosolids, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
+            
+            // Create detailed success message
+            $message = 'Parent Salmonella Biosolids deleted successfully';
+            if ($total_xld_deleted > 0 || $total_chromagar_deleted > 0 || $total_biochemical_deleted > 0) {
+                $message .= ' (Cascade deleted: ';
+                $cascade_parts = array();
+                if ($total_xld_deleted > 0) {
+                    $cascade_parts[] = "{$total_xld_deleted} XLD result(s)";
+                }
+                if ($total_chromagar_deleted > 0) {
+                    $cascade_parts[] = "{$total_chromagar_deleted} Chromagar result(s)";
+                }
+                if ($total_biochemical_deleted > 0) {
+                    $cascade_parts[] = "{$total_biochemical_deleted} Biochemical result(s)";
+                }
+                $message .= implode(', ', $cascade_parts) . ')';
+            }
+            
+            $this->session->set_flashdata('message', $message);
+            log_message('info', "Cascade delete from parent completed: Salmonella Biosolids ID {$id_salmonella_biosolids} - {$message}");
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
     
-        redirect(site_url('salmonella_biosolids/read/'.$id_parent));
+        redirect(site_url('salmonella_biosolids'));
     }
     
     public function delete_detailXld($id) {
         $row = $this->Salmonella_biosolids_model->get_by_id_xld($id);
         if ($row) {
-            $id_parent = $row->id_result_xld; // Retrieve project_id before updating the record
+            $id_salmonella_biosolids = $row->id_salmonella_biosolids; // Get the parent ID
             $data = array(
                 'flag' => 1,
             );
     
+            // Delete XLD result and its black colony plates
             $this->Salmonella_biosolids_model->updateResultsXld($id, $data);
-            $this->Salmonella_biosolids_model->updateResultsGrowthPlate($id, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
+            $this->Salmonella_biosolids_model->updateResultsBlackColonyPlateXLD($id, $data);
+            
+            // CASCADE DELETE: Get all related ChroMagar results for this parent
+            $related_chromagar = $this->Salmonella_biosolids_model->get_chromagar_by_salmonella_biosolids($id_salmonella_biosolids);
+            
+            $total_chromagar_deleted = 0;
+            $total_biochemical_deleted = 0;
+            
+            if (!empty($related_chromagar)) {
+                foreach ($related_chromagar as $chromagar) {
+                    // Delete each ChroMagar result and its related data
+                    $this->Salmonella_biosolids_model->updateResultsChroMagar($chromagar->id_result_chromagar, $data);
+                    $this->Salmonella_biosolids_model->updateResultsPurpleColonyPlateByChromagar($chromagar->id_result_chromagar, $data);
+                    
+                    // Also delete related Biochemical results
+                    $this->Salmonella_biosolids_model->updateResultsBiochemicalByChromagar($chromagar->id_result_chromagar, $data);
+                    
+                    // Count for logging
+                    $total_chromagar_deleted++;
+                    
+                    // Count biochemical deleted
+                    $this->db->where('id_result_chromagar', $chromagar->id_result_chromagar);
+                    $this->db->where('flag', '1');
+                    $biochemical_count = $this->db->count_all_results('salmonella_result_biochemical');
+                    $total_biochemical_deleted += $biochemical_count;
+                }
+                
+                log_message('info', "Cascade delete from XLD: Deleted {$total_chromagar_deleted} ChroMagar result(s) and {$total_biochemical_deleted} Biochemical result(s)");
+            }
+            
+            // Create success message
+            $message = 'XLD result deleted successfully';
+            if ($total_chromagar_deleted > 0 || $total_biochemical_deleted > 0) {
+                $message .= ' (Cascade deleted: ';
+                $cascade_parts = array();
+                if ($total_chromagar_deleted > 0) {
+                    $cascade_parts[] = "{$total_chromagar_deleted} ChroMagar result(s)";
+                }
+                if ($total_biochemical_deleted > 0) {
+                    $cascade_parts[] = "{$total_biochemical_deleted} Biochemical result(s)";
+                }
+                $message .= implode(', ', $cascade_parts) . ')';
+            }
+            
+            // Return JSON response for AJAX
+            header('Content-Type: application/json');
+            echo json_encode([
+                'status' => 'success',
+                'message' => $message
+            ]);
+            return;
+            
         } else {
-            $this->session->set_flashdata('message', 'Record Not Found');
+            // Return JSON error response
+            header('Content-Type: application/json');
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Record Not Found'
+            ]);
+            return;
         }
-    
-        redirect(site_url('salmonella_biosolids/read/'.$id_parent));
     }
 
     public function delete_detailChromagar($id) {
         $row = $this->Salmonella_biosolids_model->get_by_id_chromagar($id);
         if ($row) {
-            $id_parent = $row->id_result_xld; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
-    
-            $this->Salmonella_biosolids_model->updateResultsChromagar($id, $data);
-            $this->Salmonella_biosolids_model->updateResultsBlackColonyPlateChromagar($id, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
+
+            // Delete ChroMagar result and its purple colony plates
+            $this->Salmonella_biosolids_model->updateResultsChroMagar($id, $data);
+            $this->Salmonella_biosolids_model->updateResultsPurpleColonyPlateByChromagar($id, $data);
+            
+            // Also delete related Biochemical results for this ChroMagar
+            $this->Salmonella_biosolids_model->updateResultsBiochemicalByChromagar($id, $data);
+            
+            // Return JSON response for AJAX
+            header('Content-Type: application/json');
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'ChroMagar result and related Biochemical data deleted successfully'
+            ]);
+            return;
+            
         } else {
-            $this->session->set_flashdata('message', 'Record Not Found');
+            // Return JSON error response
+            header('Content-Type: application/json');
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Record Not Found'
+            ]);
+            return;
         }
-    
-        redirect(site_url('salmonella_biosolids/read/'.$id_parent));
     }
 
     public function delete_detailBiochemical($id) {
         $row = $this->Salmonella_biosolids_model->get_by_id_biochemical($id);
         if ($row) {
-            $id_parent = $row->id_result_xld; // Retrieve project_id before updating the record
             $data = array(
                 'flag' => 1,
             );
     
             $this->Salmonella_biosolids_model->updateResultsBiochemical($id, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
+            
+            // Return JSON response for AJAX
+            header('Content-Type: application/json');
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Biochemical result deleted successfully'
+            ]);
+            return;
         } else {
-            $this->session->set_flashdata('message', 'Record Not Found');
+            // Return JSON error response
+            header('Content-Type: application/json');
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Record Not Found'
+            ]);
+            return;
         }
-    
-        redirect(site_url('salmonella_biosolids/read/'.$id_parent));
     }
 
     public function getIdOneWaterDetails()

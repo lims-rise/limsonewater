@@ -2405,49 +2405,121 @@
         }).trigger('change');
 
 
-        function showConfirmationDelete(url) {
-            deleteUrl = url; // Set the URL to the variable
-            $('#confirm-modal-delete').modal('show');
-        }
-
-        // Handle the delete button click
+        // Handle the delete button click with SweetAlert and cascade warnings
         $(document).on('click', '.btn_deleteXld, .btn_deleteChromagar, .btn_deleteBiochemical', function() {
             let id = $(this).data('id');
             let url;
+            let title;
+            let warningMessage;
+            let icon = 'warning';
+
             if ($(this).hasClass('btn_deleteXld')) {
                 url = '<?php echo site_url('Salmonella_biosolids/delete_detailXld'); ?>/' + id;
-                $('.modal-title').html('<i class="fa fa-trash"></i> Result XLD | Delete <span id="my-another-cool-loader"></span>');
-                $('#confirm-modal-delete #id').text(id);
+                title = '⚠️ Critical Warning - Delete XLD Result?';
+                warningMessage = `
+                    <div style="text-align: left; margin-top: 15px;">
+                        <p><i class="fa fa-exclamation-triangle" style="color: #dc3545; margin-right: 8px;"></i><strong>This will permanently delete XLD result ID: ${id}</strong></p>
+                        <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; margin: 15px 0;">
+                            <p style="margin: 5px 0;"><strong>⚠️ CASCADE DELETE WARNING:</strong></p>
+                            <p style="margin: 5px 0;">• All related <strong>ChroMagar results</strong> will also be deleted</p>
+                        </div>
+                        <p style="color: #dc3545; font-weight: bold;">This action cannot be undone!</p>
+                    </div>
+                `;
+                icon = 'error';
             } else if ($(this).hasClass('btn_deleteChromagar')) {
                 url = '<?php echo site_url('Salmonella_biosolids/delete_detailChromagar'); ?>/' + id;
-                $('.modal-title').html('<i class="fa fa-trash"></i> Result Chromagar | Delete <span id="my-another-cool-loader"></span>');
-                $('#confirm-modal-delete #id').text(id);
+                title = '⚠️ Warning - Delete ChroMagar Result?';
+                warningMessage = `
+                    <div style="text-align: left; margin-top: 15px;">
+                        <p><i class="fa fa-exclamation-triangle" style="color: #f39c12; margin-right: 8px;"></i><strong>This will permanently delete ChroMagar result ID: ${id}</strong></p>
+                        <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; margin: 15px 0;">
+                            <p style="margin: 5px 0;"><strong>⚠️ CASCADE DELETE WARNING:</strong></p>
+                            <p style="margin: 5px 0;">• All related <strong>Biochemical results</strong> will also be deleted</p>
+                        </div>
+                        <p style="color: #f39c12; font-weight: bold;">This action cannot be undone!</p>
+                    </div>
+                `;
             } else if ($(this).hasClass('btn_deleteBiochemical')) {
                 url = '<?php echo site_url('Salmonella_biosolids/delete_detailBiochemical'); ?>/' + id;
-                $('.modal-title').html('<i class="fa fa-trash"></i> Result | Delete <span id="my-another-cool-loader"></span>');
-                $('#confirm-modal-delete #id').text(id);
+                title = 'Delete Biochemical Result?';
+                warningMessage = `
+                    <div style="text-align: left; margin-top: 15px;">
+                        <p><i class="fa fa-trash" style="color: #6c757d; margin-right: 8px;"></i><strong>This will permanently delete Biochemical result ID: ${id}</strong></p>
+                        <div style="background-color: #e2e3e5; border-left: 4px solid #6c757d; padding: 10px; margin: 15px 0;">
+                            <p style="margin: 5px 0;"><strong>ℹ️ INDEPENDENT DELETE:</strong></p>
+                            <p style="margin: 5px 0;">• XLD and ChroMagar results will remain intact</p>
+                        </div>
+                        <p style="color: #6c757d;">This action cannot be undone!</p>
+                    </div>
+                `;
+                icon = 'question';
             }
 
-            showConfirmationDelete(url);
-
-        });
-
-        // When the confirm-delete button is clicked
-        $('#confirm-delete').click(function() {
-            $.ajax({
-                url: deleteUrl,
-                type: 'POST',
-                dataType: 'json',
-                success: function(response) {
-                    if (response.status === 'success') {
-                        alert(response.message);
-                    } else {
-                        alert(response.message);
-                    }
+            Swal.fire({
+                title: title,
+                html: warningMessage,
+                icon: icon,
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: '<i class="fa fa-trash"></i> Yes, Delete It!',
+                cancelButtonText: '<i class="fa fa-times"></i> Cancel',
+                customClass: {
+                    popup: 'swal-wide'
                 },
-                complete: function() {
-                    $('#confirm-modal-delete').modal('hide');
-                    location.reload();
+                beforeOpen: function() {
+                    $('.swal2-confirm').addClass('btn-loading');
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Show loading state
+                    Swal.fire({
+                        title: 'Deleting...',
+                        text: 'Please wait while we process your request.',
+                        icon: 'info',
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                        willOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+
+                    // Perform AJAX delete
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: response.message,
+                                    icon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 2000,
+                                    timerProgressBar: true
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: response.message,
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'An error occurred while processing your request: ' + error,
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    });
                 }
             });
         });

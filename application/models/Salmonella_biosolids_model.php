@@ -758,6 +758,38 @@ class Salmonella_biosolids_model extends CI_Model
         $this->db->update('salmonella_result_biochemical', $data);
         return $this->db->affected_rows();
     }
+
+    // Get all XLD results by parent salmonella_biosolids ID
+    function get_xld_by_salmonella_biosolids($id_salmonella_biosolids) {
+        $this->db->where('id_salmonella_biosolids', $id_salmonella_biosolids);
+        $this->db->where('flag', 0);
+        return $this->db->get('salmonella_result_xld')->result();
+    }
+
+    // Get all Chromagar results by parent salmonella_biosolids ID
+    function get_chromagar_by_salmonella_biosolids($id_salmonella_biosolids) {
+        $this->db->where('id_salmonella_biosolids', $id_salmonella_biosolids);
+        $this->db->where('flag', 0);
+        return $this->db->get('salmonella_result_chromagar')->result();
+    }
+
+    // Update all biochemical results by Chromagar ID (for cascade delete)
+    function updateResultsBiochemicalByChromagar($id_result_chromagar, $data) {
+        $this->db->where('id_result_chromagar', $id_result_chromagar);
+        $this->db->update('salmonella_result_biochemical', $data);
+    }
+
+    // Update all purple colony plates by Chromagar ID (for cascade delete)
+    function updateResultsPurpleColonyPlateByChromagar($id_result_chromagar, $data) {
+        $this->db->where('id_result_chromagar', $id_result_chromagar);
+        $this->db->update('salmonella_sample_purple_colony_plate', $data);
+    }
+
+    // Update all black colony plates by XLD ID (for cascade delete)
+    function updateResultsBlackColonyPlateXLD($id_result_xld, $data) {
+        $this->db->where('id_result_xld', $id_result_xld);
+        $this->db->update('salmonella_sample_black_colony_plate', $data);
+    }
       
 }
 
