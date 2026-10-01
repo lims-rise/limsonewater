@@ -764,19 +764,82 @@ class Salmonella_pa extends MY_Controller
     public function delete_salmonellaPA($id) {
         $row = $this->Salmonella_pa_model->get_by_id_salmonella_pa($id);
         if ($row) {
-            $id_parent = $row->id_result_xld_agar_pa; // Retrieve project_id before updating the record
+            $id_salmonella_pa = $row->id_salmonella_pa;
             $data = array(
                 'flag' => 1,
             );
 
+            // CASCADE DELETE: Delete all related child records
+            $total_xld_deleted = 0;
+            $total_chromagar_deleted = 0;
+            $total_biochemical_deleted = 0;
+            
+            // STEP 1: Delete all Chromagar results and their biochemical children
+            $chromagar_results = $this->Salmonella_pa_model->get_chromagar_by_salmonella_pa($id_salmonella_pa);
+            
+            foreach ($chromagar_results as $chromagar) {
+                // For each Chromagar, delete all biochemical results first
+                $this->Salmonella_pa_model->updateResultsBiochemicalByChromagarPA($chromagar->id_result_chromagar_pa, $data);
+                
+                // Count biochemical records deleted (for logging)
+                $this->db->where('id_result_chromagar_pa', $chromagar->id_result_chromagar_pa);
+                $this->db->where('flag', '1'); // Just changed to 1
+                $biochemical_count = $this->db->count_all_results('salmonella_result_biochemical_pa');
+                $total_biochemical_deleted += $biochemical_count;
+                
+                if ($biochemical_count > 0) {
+                    log_message('info', "Cascade delete from parent: Deleted {$biochemical_count} biochemical results for Chromagar ID {$chromagar->id_result_chromagar_pa}");
+                }
+                
+                // Delete Chromagar purple colony plates and main record
+                $this->Salmonella_pa_model->updateResultsPurplePlateByChromagarPA($chromagar->id_result_chromagar_pa, $data);
+                $this->Salmonella_pa_model->updateResultsChromagar($chromagar->id_result_chromagar_pa, $data);
+                $total_chromagar_deleted++;
+            }
+            
+            if ($total_chromagar_deleted > 0) {
+                log_message('info', "Cascade delete from parent: Deleted {$total_chromagar_deleted} Chromagar results for parent ID {$id_salmonella_pa}");
+            }
+            
+            // STEP 2: Delete all XLD Agar results
+            $xld_results = $this->Salmonella_pa_model->get_xld_agar_by_salmonella_pa($id_salmonella_pa);
+            
+            foreach ($xld_results as $xld) {
+                // Delete XLD Agar black colony plates and main record
+                $this->Salmonella_pa_model->updateResultsBlackPlateXLDAgar($xld->id_result_xld_agar_pa, $data);
+                $this->Salmonella_pa_model->updateResultsXldAgar($xld->id_result_xld_agar_pa, $data);
+                $total_xld_deleted++;
+            }
+            
+            if ($total_xld_deleted > 0) {
+                log_message('info', "Cascade delete from parent: Deleted {$total_xld_deleted} XLD Agar results for parent ID {$id_salmonella_pa}");
+            }
+            
+            // STEP 3: Delete parent record and sample volumes
             $this->Salmonella_pa_model->deleteSalmonellaPA($id, $data);
-            $this->Salmonella_pa_model->updateSampleVolume($id, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
+            $this->Salmonella_pa_model->updateSampleVolume($id_salmonella_pa, $data);
+            
+            // Simple success message
+            $message = 'Delete Record Success';
+            
+            log_message('info', "Cascade delete from parent completed: Salmonella PA ID {$id_salmonella_pa} - Deleted {$total_xld_deleted} XLD Agar, {$total_chromagar_deleted} Chromagar, {$total_biochemical_deleted} Biochemical");
+            
+            // Return JSON response for AJAX
+            header('Content-Type: application/json');
+            echo json_encode([
+                'status' => 'success',
+                'message' => $message
+            ]);
+            return;
         } else {
-            $this->session->set_flashdata('message', 'Record Not Found');
+            // Return JSON error response
+            header('Content-Type: application/json');
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Record Not Found'
+            ]);
+            return;
         }
-
-        redirect(site_url('salmonella_pa/read/'.$id_parent));
     }
 
     public function delete_detailXldAgar($id) {

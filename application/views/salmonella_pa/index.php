@@ -442,12 +442,13 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.status === 'success') {
-                        alert(response.message);
+                        // Langsung reload tanpa alert
+                        location.reload();
                     } else {
                         alert(response.message);
                     }
                 },
-                complete: function() {
+                error: function() {
                     $('#confirm-modal').modal('hide');
                     location.reload();
                 }
