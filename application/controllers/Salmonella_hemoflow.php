@@ -917,20 +917,81 @@ class Salmonella_hemoflow extends MY_Controller
     public function delete_salmonellaHemoflow($id) {
         $row = $this->Salmonella_hemoflow_model->get_by_id_salmonella_hemoflow($id);
         if ($row) {
-            $id_parent = $row->id_salmonella_hemoflow_result_xld; // Retrieve project_id before updating the record
-            $id_salmonella_hemoflow = $row->id_salmonella_hemoflow; // Get the main salmonella_hemoflow ID
-            $data = array(
-                'flag' => 1,
-            );
-
+            $id_one_water_sample = $row->id_one_water_sample;
+            $id_salmonella_hemoflow = $row->id_salmonella_hemoflow;
+            
+            $data = array('flag' => 1);
+            
+            // CASCADE DELETE: Get and delete all child records
+            
+            // 1. Get and delete all Chromagar results + purple plates + biochemical
+            $chromagar_results = $this->Salmonella_hemoflow_model->get_chromagar_by_salmonella_hemoflow($id_salmonella_hemoflow);
+            $chromagar_count = 0;
+            $biochemical_count = 0;
+            
+            if ($chromagar_results) {
+                foreach ($chromagar_results as $chromagar) {
+                    // Delete Chromagar result
+                    $this->Salmonella_hemoflow_model->updateResultsChroMagar($chromagar->id_salmonella_hemoflow_result_chromagar, $data);
+                    
+                    // Delete purple colony plates
+                    $this->Salmonella_hemoflow_model->updateResultsPurplePlate($chromagar->id_salmonella_hemoflow_result_chromagar, $data);
+                    
+                    // Delete biochemical results related to this Chromagar
+                    $this->Salmonella_hemoflow_model->updateResultsBiochemicalByChromagar($chromagar->id_salmonella_hemoflow_result_chromagar, $data);
+                    
+                    $chromagar_count++;
+                    $biochemical_count++; // Assuming each chromagar may have biochemical data
+                }
+            }
+            
+            // 2. Get and delete all XLD Agar results + black colony plates
+            $xld_results = $this->Salmonella_hemoflow_model->get_xld_by_salmonella_hemoflow($id_salmonella_hemoflow);
+            $xld_count = 0;
+            
+            if ($xld_results) {
+                foreach ($xld_results as $xld) {
+                    // Delete XLD result
+                    $this->Salmonella_hemoflow_model->updateResultsXld($xld->id_salmonella_hemoflow_result_xld, $data);
+                    
+                    // Delete black colony plates
+                    $this->Salmonella_hemoflow_model->updateResultsBlackColonyPlateXLD($xld->id_salmonella_hemoflow_result_xld, $data);
+                    
+                    $xld_count++;
+                }
+            }
+            
+            // 3. Delete parent record
             $this->Salmonella_hemoflow_model->deleteSalmonellaHemoflow($id, $data);
+            
+            // 4. Delete sample volumes
             $this->Salmonella_hemoflow_model->updateSampleVolume($id_salmonella_hemoflow, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
+            
+            // Log cascade delete info
+            $cascade_info = sprintf(
+                "Cascade deleted: %d XLD Agar result(s), %d Chromagar result(s), %d Biochemical result(s)",
+                $xld_count,
+                $chromagar_count,
+                $biochemical_count
+            );
+            log_message('info', "Salmonella_hemoflow deleted (ID: {$id_salmonella_hemoflow}). {$cascade_info}");
+            
+            // Return JSON response (not redirect, for AJAX compatibility)
+            header('Content-Type: application/json');
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Delete Record Success'
+            ]);
+            return;
+            
         } else {
-            $this->session->set_flashdata('message', 'Record Not Found');
+            header('Content-Type: application/json');
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Record Not Found'
+            ]);
+            return;
         }
-    
-        redirect(site_url('salmonella_hemoflow/read/'.$id_parent));
     }
     
     public function delete_detailXld($id) {

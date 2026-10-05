@@ -2080,7 +2080,6 @@
                         <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; margin: 15px 0;">
                             <p style="margin: 5px 0;"><strong>⚠️ CASCADE DELETE WARNING:</strong></p>
                             <p style="margin: 5px 0;">• All related <strong>ChroMagar results</strong> will also be deleted</p>
-                            <p style="margin: 5px 0;">• All related <strong>Tube results</strong> will also be deleted</p>
                         </div>
                         <p style="color: #dc3545; font-weight: bold;">This action cannot be undone!</p>
                     </div>
@@ -2094,7 +2093,7 @@
                         <p><i class="fa fa-exclamation-triangle" style="color: #f39c12; margin-right: 8px;"></i><strong>This will permanently delete ChroMagar result ID: ${id}</strong></p>
                         <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; margin: 15px 0;">
                             <p style="margin: 5px 0;"><strong>⚠️ CASCADE DELETE WARNING:</strong></p>
-                            <p style="margin: 5px 0;">• All related <strong>Tube results</strong> will also be deleted</p>
+                            <p style="margin: 5px 0;">• All related <strong>Data results</strong> will also be deleted</p>
                         </div>
                         <p style="color: #f39c12; font-weight: bold;">This action cannot be undone!</p>
                     </div>

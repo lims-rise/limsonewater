@@ -40,7 +40,7 @@ class Salmonella_hemoflow_model extends CI_Model
         else {
             $this->datatables->add_column('action', anchor(site_url('salmonella_hemoflow/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
             ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-            ".'<button type="button" class="btn_deleteSalmonellaHemoflow btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
+            ".'<button type="button" class="btn_deleteSalmonellaHemoflow btn btn-danger btn-sm" data-id="$2" data-sample-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_one_water_sample, id_salmonella_hemoflow');
         }
         $this->db->order_by('latest_date', 'DESC');
         return $this->datatables->generate();
@@ -525,7 +525,7 @@ class Salmonella_hemoflow_model extends CI_Model
     }
 
     function deleteSalmonellaHemoflow($id, $data) {
-        $this->db->where('id_one_water_sample', $id);
+        $this->db->where('id_salmonella_hemoflow', $id);
         $this->db->where('flag', '0');
         $this->db->update('salmonella_hemoflow', $data);
     }
@@ -568,7 +568,7 @@ class Salmonella_hemoflow_model extends CI_Model
 
     function get_by_id_salmonella_hemoflow($id)
     {
-        $this->db->where('id_one_water_sample', $id);
+        $this->db->where('id_salmonella_hemoflow', $id);
         $this->db->where('flag', '0');
         return $this->db->get('salmonella_hemoflow')->row();
     }
@@ -691,6 +691,12 @@ class Salmonella_hemoflow_model extends CI_Model
     }
 
     // CASCADE DELETE METHODS
+    
+    function get_xld_by_salmonella_hemoflow($id_salmonella_hemoflow) {
+        $this->db->where('id_salmonella_hemoflow', $id_salmonella_hemoflow);
+        $this->db->where('flag', '0');
+        return $this->db->get('salmonella_hemoflow_result_xld')->result();
+    }
     
     function get_chromagar_by_salmonella_hemoflow($id_salmonella_hemoflow) {
         $this->db->where('id_salmonella_hemoflow', $id_salmonella_hemoflow);

@@ -786,6 +786,17 @@ class Campy_pa_model extends CI_Model
         $this->db->update('campy_result_biochemical_pa', $data);
         return $this->db->affected_rows();
     }
+
+    /**
+     * Get Charcoal results by campy_pa ID (parent)
+     * Used for cascade delete when parent Campy PA is deleted
+     * Returns all charcoal results associated with the parent record
+     */
+    function get_charcoal_by_campy_pa($id_campy_pa) {
+        $this->db->where('id_campy_pa', $id_campy_pa);
+        $this->db->where('flag', '0');
+        return $this->db->get('campy_result_charcoal_pa')->result();
+    }
       
 }
 

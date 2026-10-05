@@ -36,8 +36,8 @@ class Salmonella_pa_model extends CI_Model
         }
         else {
             $this->datatables->add_column('action', anchor(site_url('salmonella_pa/read/$1'),'<i class="fa fa-th-list" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm')) ."
-            ".'<button type="button" class="btn_edit btn btn-info btn-sm" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
-            ".'<button type="button" class="btn_deleteSalmonellaPA btn btn-danger btn-sm" data-id="$1" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_one_water_sample');
+            ".'<button type="button" class="btn_edit btn btn-info btn-sm" data-id="$2" aria-hidden="true"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
+            ".'<button type="button" class="btn_deleteSalmonellaPA btn btn-danger btn-sm" data-id="$2" aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></button>', 'id_one_water_sample, id_salmonella_pa');
         }
         $this->db->order_by('latest_date', 'DESC');
         return $this->datatables->generate();
@@ -836,6 +836,31 @@ class Salmonella_pa_model extends CI_Model
         }
         
         return false;
+    }
+
+    // Get all XLD Agar results by parent salmonella_pa ID
+    function get_xld_agar_by_salmonella_pa($id_salmonella_pa) {
+        $this->db->where('id_salmonella_pa', $id_salmonella_pa);
+        $this->db->where('flag', 0);
+        return $this->db->get('salmonella_result_xld_agar_pa')->result();
+    }
+
+    // Update all black colony plates by XLD Agar ID (for cascade delete)
+    function updateResultsBlackPlateXLDAgar($id_result_xld_agar_pa, $data) {
+        $this->db->where('id_result_xld_agar_pa', $id_result_xld_agar_pa);
+        $this->db->update('salmonella_sample_black_colony_plate_xld_agar_pa', $data);
+    }
+
+    // Update all purple colony plates by Chromagar ID (for cascade delete)
+    function updateResultsPurplePlateByChromagarPA($id_result_chromagar_pa, $data) {
+        $this->db->where('id_result_chromagar_pa', $id_result_chromagar_pa);
+        $this->db->update('salmonella_sample_purple_colony_plate_chromagar_pa', $data);
+    }
+
+    // Update all biochemical results by Chromagar ID (for cascade delete)
+    function updateResultsBiochemicalByChromagarPA($id_result_chromagar_pa, $data) {
+        $this->db->where('id_result_chromagar_pa', $id_result_chromagar_pa);
+        $this->db->update('salmonella_result_biochemical_pa', $data);
     }
       
 }

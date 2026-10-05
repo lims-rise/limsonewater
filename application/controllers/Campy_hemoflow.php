@@ -451,7 +451,7 @@ class Campy_hemoflow extends MY_Controller
                 // Check if HBA data already exists for this charcoal result
                 $existing_hba = $this->Campy_hemoflow_model->get_hba_by_campy_hemoflow($id_campy_hemoflow);
                 
-                if (!$existing_hba) {
+                if (empty($existing_hba)) { // Changed: check if array is empty instead of !$existing_hba
                     try {
                         // Auto-generate new HBA results
                         $hba_result = $this->autoGenerateHBAResults($id_campy_hemoflow, $id_chrc, $date_sample_processed, $time_sample_processed, $growth_plate_data, $dt);
@@ -845,20 +845,82 @@ class Campy_hemoflow extends MY_Controller
     public function delete_campyHemoflow($id) {
         $row = $this->Campy_hemoflow_model->get_by_id_campyhemoflow($id);
         if ($row) {
-            $id_parent = $row->id_chrc; // Retrieve project_id before updating the record
             $id_campy_hemoflow = $row->id_campy_hemoflow;
             $data = array(
                 'flag' => 1,
             );
 
+            // CASCADE DELETE: Delete all related child records
+            $total_charcoal_deleted = 0;
+            $total_hba_deleted = 0;
+            $total_biochemical_deleted = 0;
+            
+            // STEP 1: Delete all HBA results (HBA relates directly to parent, not charcoal!)
+            $hba_results = $this->Campy_hemoflow_model->get_hba_by_campy_hemoflow($id_campy_hemoflow);
+            
+            foreach ($hba_results as $hba) {
+                // For each HBA, delete all biochemical results first
+                $biochemical_results = $this->Campy_hemoflow_model->get_biochemical_by_hba_id($hba->id_campy_hemoflow_result_hba);
+                $biochemical_count = count($biochemical_results);
+                
+                if ($biochemical_count > 0) {
+                    $this->Campy_hemoflow_model->delete_biochemical_by_hba_id($hba->id_campy_hemoflow_result_hba);
+                    $total_biochemical_deleted += $biochemical_count;
+                    log_message('info', "Cascade delete from parent: Deleted {$biochemical_count} biochemical results for HBA ID {$hba->id_campy_hemoflow_result_hba}");
+                }
+                
+                // Delete HBA growth plates and main record
+                $this->Campy_hemoflow_model->updateResultsGrowthPlateHba($hba->id_campy_hemoflow_result_hba, $data);
+                $this->Campy_hemoflow_model->updateResultsHba($hba->id_campy_hemoflow_result_hba, $data);
+                $total_hba_deleted++;
+            }
+            
+            if ($total_hba_deleted > 0) {
+                log_message('info', "Cascade delete from parent: Deleted {$total_hba_deleted} HBA results for parent ID {$id_campy_hemoflow}");
+            }
+            
+            // STEP 2: Delete all Charcoal results (separate from HBA!)
+            $charcoal_results = $this->Campy_hemoflow_model->get_charcoal_by_campy_hemoflow($id_campy_hemoflow);
+            
+            foreach ($charcoal_results as $charcoal) {
+                // Delete charcoal growth plates and main record
+                $this->Campy_hemoflow_model->updateResultsGrowthPlate($charcoal->id_chrc, $data);
+                $this->Campy_hemoflow_model->updateResultsCharcoal($charcoal->id_chrc, $data);
+                $total_charcoal_deleted++;
+            }
+            
+            if ($total_charcoal_deleted > 0) {
+                log_message('info', "Cascade delete from parent: Deleted {$total_charcoal_deleted} Charcoal results for parent ID {$id_campy_hemoflow}");
+            }
+            
+            // STEP 3: Delete parent record and sample volumes
             $this->Campy_hemoflow_model->deleteCampyHemoflow($id, $data);
             $this->Campy_hemoflow_model->updateSampleVolume($id_campy_hemoflow, $data);
-            $this->session->set_flashdata('message', 'Delete Record Success');
+            
+            // Create detailed success message
+            $message = 'Parent Campy Hemoflow deleted successfully';
+            if ($total_charcoal_deleted > 0 || $total_hba_deleted > 0 || $total_biochemical_deleted > 0) {
+                $message .= ' (Cascade deleted: ';
+                $cascade_parts = array();
+                if ($total_charcoal_deleted > 0) {
+                    $cascade_parts[] = "{$total_charcoal_deleted} Charcoal result(s)";
+                }
+                if ($total_hba_deleted > 0) {
+                    $cascade_parts[] = "{$total_hba_deleted} HBA result(s)";
+                }
+                if ($total_biochemical_deleted > 0) {
+                    $cascade_parts[] = "{$total_biochemical_deleted} Biochemical result(s)";
+                }
+                $message .= implode(', ', $cascade_parts) . ')';
+            }
+            
+            $this->session->set_flashdata('message', $message);
+            log_message('info', "Cascade delete from parent completed: Campy Hemoflow ID {$id_campy_hemoflow} - {$message}");
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
         }
 
-        redirect(site_url('campy_hemoflow/read/'.$id_parent));
+        redirect(site_url('campy_hemoflow'));
     }
     
     public function delete_detailCharcoal($id) {
