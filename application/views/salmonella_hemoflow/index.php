@@ -941,10 +941,11 @@
 
         // Handle the delete button click
         $(document).on('click', '.btn_deleteSalmonellaHemoflow', function() {
-            let id = $(this).data('id');
+            let id = $(this).data('id'); // id_salmonella_hemoflow (primary key for delete)
+            let sampleId = $(this).data('sample-id'); // id_one_water_sample (for display)
             let url = '<?php echo site_url('Salmonella_hemoflow/delete_salmonellaHemoflow'); ?>/' + id;
-            $('#confirm-modal #id').text(id);
-            console.log(id);
+            $('#confirm-modal #id').text(sampleId); // Display sample ID in modal
+            console.log('Delete ID:', id, 'Sample ID:', sampleId);
             showConfirmation(url);
         });
 
@@ -955,11 +956,14 @@
                 type: 'POST',
                 dataType: 'json',
                 success: function(response) {
-                    if (response.status === 'success') {
-                        alert(response.message);
-                    } else {
+                    // Silent success - no alert, just reload
+                    if (response.status !== 'success') {
+                        // Only show alert on error
                         alert(response.message);
                     }
+                },
+                error: function(xhr, status, error) {
+                    alert('Error deleting record: ' + error);
                 },
                 complete: function() {
                     $('#confirm-modal').modal('hide');
