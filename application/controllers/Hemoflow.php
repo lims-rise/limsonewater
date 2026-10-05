@@ -236,7 +236,7 @@ class Hemoflow extends MY_Controller
                 a.volume_eluted AS Volume_Eluted, a.comments AS Comments
                 from hemoflow a
 				left join ref_person b on a.id_person = b.id_person
-				left join sample_reception c on a.id_one_water_sample = c.id_one_water_sample
+                left join sample_reception_sample c on a.id_one_water_sample = c.id_one_water_sample
 				left join ref_sampletype d on c.id_sampletype = d.id_sampletype
 				left join ref_person e on a.id_person_proc = e.id_person
                 WHERE a.flag = 0 
