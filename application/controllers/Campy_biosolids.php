@@ -1375,6 +1375,84 @@ class Campy_biosolids extends MY_Controller
         $writer->save('php://output');
     }
 
+    public function export_csv($id) {
+        $finalConcentration = $this->Campy_biosolids_model->get_export($id);
+        $headers = array(
+            'ID One Water Sample', 'Campy Assay Barcode', 'Initial', 'Sample Type',
+            'Number of Tubes', 'MPN PCR Conducted', 'Date Sample Processed',
+            'Time Sample Processed', 'Sample Wet Weight', 'Elution Volume'
+        );
+
+        if (!empty($finalConcentration)) {
+            foreach ($finalConcentration[0] as $key => $value) {
+                if (strpos($key, 'Tube') === 0) {
+                    $headers[] = "$key Volume";
+                }
+            }
+
+            $plate_numbers = explode(',', $finalConcentration[0]->plate_numbers);
+            foreach ($plate_numbers as $plate_number) {
+                $headers[] = "Tube $plate_number Result";
+            }
+
+            $headers = array_merge($headers, array(
+                'MPN Concentration', 'Upper CI', 'Lower CI', 'Calculation MPN/g Dw',
+                'Upper CI MPN/g Dw', 'Lower CI MPN/g Dw'
+            ));
+        }
+
+        $output = $this->open_csv_output('Campy_Biosolids_Final_' . $id);
+        fputcsv($output, $headers);
+
+        foreach ($finalConcentration as $concentration) {
+            $row = array(
+                $concentration->id_one_water_sample ?? '',
+                $concentration->campy_assay_barcode ?? '',
+                $concentration->initial ?? '',
+                $concentration->sampletype ?? '',
+                $concentration->number_of_tubes ?? '',
+                $concentration->mpn_pcr_conducted ?? '',
+                $concentration->date_sample_processed ?? '',
+                $concentration->time_sample_processed ?? '',
+                $concentration->sample_wetweight ?? '',
+                $concentration->elution_volume ?? ''
+            );
+
+            foreach ($concentration as $key => $value) {
+                if (strpos($key, 'Tube') === 0) {
+                    $row[] = $value ?? '';
+                }
+            }
+
+            foreach (explode(',', $concentration->plate_numbers) as $plate_number) {
+                $plate_number = trim($plate_number);
+                $confirmation_value = 'No Growth';
+                if (isset($concentration->confirmation[$plate_number])) {
+                    $confirmation_value = $concentration->confirmation[$plate_number];
+                } else {
+                    $spaced_key = ' ' . $plate_number;
+                    if (isset($concentration->confirmation[$spaced_key])) {
+                        $confirmation_value = $concentration->confirmation[$spaced_key];
+                    }
+                }
+                $row[] = $confirmation_value;
+            }
+
+            $row = array_merge($row, array(
+                $concentration->mpn_concentration ?? '',
+                $concentration->upper_ci ?? '',
+                $concentration->lower_ci ?? '',
+                $concentration->mpn_concentration_dw ?? '',
+                $concentration->upper_ci_dw ?? '',
+                $concentration->lower_ci_dw ?? ''
+            ));
+            fputcsv($output, $row);
+        }
+
+        fclose($output);
+        exit();
+    }
+
     public function excel_all() {
         $spreadsheet = new Spreadsheet();
         $finalConcentration = $this->Campy_biosolids_model->get_all_export();
@@ -1415,6 +1493,94 @@ class Campy_biosolids extends MY_Controller
             echo 'Error generating file: ', $e->getMessage();
             return;
         }
+    }
+
+    public function export_csv_all() {
+        $finalConcentration = $this->Campy_biosolids_model->get_all_export();
+        $dataTubes = array();
+
+        foreach ($finalConcentration as $concentration) {
+            $numberOfTubes = (int) $concentration->number_of_tubes;
+            if (!isset($dataTubes[$numberOfTubes])) {
+                $dataTubes[$numberOfTubes] = array();
+            }
+            $dataTubes[$numberOfTubes][] = $concentration;
+        }
+
+        $numberOfTubes = !empty($dataTubes) ? max(array_keys($dataTubes)) : 0;
+        $headers = array(
+            'ID One Water Sample', 'Campy Assay Barcode', 'Initial', 'Sample Type',
+            'Number of Tubes', 'MPN PCR Conducted', 'Date Sample Processed',
+            'Time Sample Processed', 'Sample Wet Weight', 'Elution Volume'
+        );
+        for ($tube = 1; $tube <= $numberOfTubes; $tube++) {
+            $headers[] = "Tube $tube Volume";
+        }
+        for ($tube = 1; $tube <= $numberOfTubes; $tube++) {
+            $headers[] = "Tube $tube Result";
+        }
+        $headers = array_merge($headers, array(
+            'MPN Concentration', 'Upper CI', 'Lower CI', 'Concentration MPN/g Dw',
+            'Upper CI MPN/g Dw', 'Lower CI MPN/g Dw'
+        ));
+
+        $output = $this->open_csv_output('Campy_Biosolids_All');
+        fputcsv($output, $headers);
+
+        foreach ($dataTubes as $data) {
+            foreach ($data as $concentration) {
+                $row = array(
+                    $concentration->id_one_water_sample ?? '',
+                    $concentration->campy_assay_barcode ?? '',
+                    $concentration->initial ?? '',
+                    $concentration->sampletype ?? '',
+                    $concentration->number_of_tubes ?? '',
+                    $concentration->mpn_pcr_conducted ?? '',
+                    $concentration->date_sample_processed ?? '',
+                    $concentration->time_sample_processed ?? '',
+                    $concentration->sample_wetweight ?? '',
+                    $concentration->elution_volume ?? ''
+                );
+
+                $tube_values = array();
+                foreach ($concentration as $key => $value) {
+                    if (strpos($key, 'Tube') === 0) {
+                        $tube_values[] = $value ?? '';
+                    }
+                }
+                $row = array_merge($row, array_pad($tube_values, $numberOfTubes, ''));
+
+                for ($tube = 1; $tube <= $numberOfTubes; $tube++) {
+                    $row[] = $concentration->confirmation[$tube] ?? 'No Growth';
+                }
+                $row = array_merge($row, array(
+                    $concentration->mpn_concentration ?? '',
+                    $concentration->upper_ci ?? '',
+                    $concentration->lower_ci ?? '',
+                    $concentration->mpn_concentration_dw ?? '',
+                    $concentration->upper_ci_dw ?? '',
+                    $concentration->lower_ci_dw ?? ''
+                ));
+                fputcsv($output, $row);
+            }
+        }
+
+        fclose($output);
+        exit();
+    }
+
+    private function open_csv_output($file_prefix) {
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename=' . $file_prefix . '_' . date('Ymd_His') . '.csv');
+        header('Cache-Control: max-age=0');
+
+        if (ob_get_level()) {
+            ob_end_clean();
+        }
+
+        $output = fopen('php://output', 'w');
+        echo "\xEF\xBB\xBF";
+        return $output;
     }
     
     

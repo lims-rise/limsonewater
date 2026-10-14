@@ -304,15 +304,16 @@ class Moisture_content_model extends CI_Model
     function get_all()
     {
         $this->db->select('mc.id_one_water_sample, rp.initial, mc.date_start, rs.sampletype, mc.barcode_moisture_content, mc.tray_weight,
-        mc.traysample_wetweight, mc.time_incubator,mc.comments, m24.date_moisture24, m24.time_moisture24, m24.dry_weight24, m24.comments24,
-        m72.date_moisture72, m72.time_moisture72, m72.dry_weight72, m72.dry_weight_persen, m72.comments72');
+        mc.traysample_wetweight, mc.time_incubator, mc.comments, 
+        m24.date_moisture24, m24.time_moisture24, m24.barcode_tray AS barcode_tray24, m24.dry_weight24, m24.comments24,
+        m72.date_moisture72, m72.time_moisture72, m72.barcode_tray AS barcode_tray72, m72.dry_weight72, m72.dry_weight_persen, m72.comments72');
         $this->db->from('moisture_content AS mc');
         $this->db->join('ref_person AS rp', 'mc.id_person = rp.id_person');
         $this->db->join('ref_sampletype AS rs', 'mc.id_sampletype = rs.id_sampletype');
-        $this->db->join('moisture24 AS m24', 'mc.id_moisture = m24.id_moisture');
-        $this->db->join('moisture72 AS m72', 'mc.id_moisture = m72.id_moisture');
+        $this->db->join('moisture24 AS m24', 'mc.id_moisture = m24.id_moisture', 'left');
+        $this->db->join('moisture72 AS m72', 'mc.id_moisture = m72.id_moisture', 'left');
         $this->db->where('mc.flag', '0');
-        $this->db->order_by('mc.date_start', 'ASC');
+        $this->db->order_by('mc.date_start', 'DESC');
 
         return $this->db->get()->result();
     }

@@ -211,7 +211,7 @@ class Enterolert_hemoflow_model extends CI_Model
     {
         $this->db->select('ehf.id_enterolert_hemoflow, ehf.id_one_water_sample, rp.initial, rs.sampletype, ehf.enterolert_hemoflow_barcode, ehf.date_sample,
         ehf.time_sample, ehf.volume_bottle, ehf.dilution, ehd.id_enterolert_hemoflow_detail, ehd.enterolert_hemoflow_barcode, ehd.date_sample, ehd.time_sample, ehd.enterococcus_largewells,
-        ewo.enterococcus_smallwells, ewo.enterococcus, ewo.lowerdetection, ewo.remarks');
+        ehd.enterococcus_smallwells, ehd.enterococcus, ehd.lowerdetection, ehd.remarks');
         $this->db->from('enterolert_hemoflow AS ehf');
         $this->db->join('ref_person AS rp', 'ehf.id_person = rp.id_person');
         $this->db->join('ref_sampletype AS rs', 'ehf.id_sampletype = rs.id_sampletype');

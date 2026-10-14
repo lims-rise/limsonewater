@@ -459,8 +459,10 @@ class Moisture_content extends MY_Controller
         header('Content-Type: application/json');
         echo json_encode($data);
     }
-    
-    public function excel() {
+
+    public function excel() 
+    {
+        $this->load->database();
     
         $spreadsheet = new Spreadsheet();    
         $sheet = $spreadsheet->getActiveSheet();
@@ -469,142 +471,180 @@ class Moisture_content extends MY_Controller
         $sheet->setCellValue('C1', "Date Assay Start");
         $sheet->setCellValue('D1', "Sample Type");
         $sheet->setCellValue('E1', "Barcode Moisture Content");
-        $sheet->setCellValue('F1', "Tray Weight");
-        $sheet->setCellValue('G1', "Tray sample (wet weight)");
+        $sheet->setCellValue('F1', "Tray Weight (g)");
+        $sheet->setCellValue('G1', "Tray sample(g) wet weight");
         $sheet->setCellValue('H1', "Time Incubator");
         $sheet->setCellValue('I1', "Comments");
         $sheet->setCellValue('J1', "Date Moisture 24");
         $sheet->setCellValue('K1', "Time Moisture 24");
-        $sheet->setCellValue('L1', "Dry Weight 24");
-        $sheet->setCellValue('M1', "Comments 24");
-        $sheet->setCellValue('N1', "Date Moisture 72");
-        $sheet->setCellValue('O1', "Time Moisture 72");
-        $sheet->setCellValue('P1', "Dry Weight 72");
-        $sheet->setCellValue('Q1', "Dry Weight Percentage");
-        $sheet->setCellValue('R1', "Comments 72");
+        $sheet->setCellValue('L1', "Barcode Tray 24");
+        $sheet->setCellValue('M1', "Dry Weight 24 (g)");
+        $sheet->setCellValue('N1', "Comments 24");
+        $sheet->setCellValue('O1', "Date Moisture 48");
+        $sheet->setCellValue('P1', "Time Moisture 48");
+        $sheet->setCellValue('Q1', "Barcode Tray 48");
+        $sheet->setCellValue('R1', "Dry Weight 48 (g)");
+        $sheet->setCellValue('S1', "Moisture content (%)");
+        $sheet->setCellValue('T1', "Comments 48");
 
         $moisture = $this->Moisture_content_model->get_all();
     
         $numrow = 2;
         foreach($moisture as $data){ 
-            if (property_exists($data, 'id_one_water_sample')) {
-                $sheet->setCellValue('A'.$numrow, $data->id_one_water_sample);
-            } else {
-                $sheet->setCellValue('A'.$numrow, '');
-            }
-    
-            if (property_exists($data, 'initial')) {
-                $sheet->setCellValue('B'.$numrow, $data->initial);
-            } else {
-                $sheet->setCellValue('B'.$numrow, '');
-            }
-    
-            if (property_exists($data, 'date_start')) {
-                $sheet->setCellValue('C'.$numrow, $data->date_start);
-            } else {
-                $sheet->setCellValue('C'.$numrow, '');
-            }
-    
-            if (property_exists($data, 'sample_type')) {
-                $sheet->setCellValue('D'.$numrow, $data->sampletype);
-            } else {
-                $sheet->setCellValue('D'.$numrow, '');
-            }
-    
-            if (property_exists($data, 'barcode_moisture_content')) {
-                $sheet->setCellValue('E'.$numrow, $data->barcode_moisture_content);
-            } else {
-                $sheet->setCellValue('E'.$numrow, '');
-            }
-    
-            if (property_exists($data, 'tray_weight')) {
-                $sheet->setCellValue('F'.$numrow, $data->tray_weight);
-            } else {
-                $sheet->setCellValue('F'.$numrow, '');
-            }
-    
-            if (property_exists($data, 'traysample_wetweight')) {
-                $sheet->setCellValue('G'.$numrow, $data->traysample_wetweight);
-            } else {
-                $sheet->setCellValue('G'.$numrow, '');
-            }
-    
-            if (property_exists($data, 'time_incubator')) {
-                $sheet->setCellValue('H'.$numrow, $data->time_incubator);
-            } else {
-                $sheet->setCellValue('H'.$numrow, '');
-            }
-    
-            if (property_exists($data, 'comments')) {
-                $sheet->setCellValue('I'.$numrow, $data->comments);
-            } else {
-                $sheet->setCellValue('I'.$numrow, '');
-            }
-    
-            if (property_exists($data, 'date_moisture24')) {
-                $sheet->setCellValue('J'.$numrow, $data->date_moisture24);
-            } else {
-                $sheet->setCellValue('J'.$numrow, '');
-            }
-    
-            if (property_exists($data, 'time_moisture24')) {
-                $sheet->setCellValue('K'.$numrow, $data->time_moisture24);
-            }
-
-           
-            if (property_exists($data, 'dry_weight24')) {
-                $sheet->setCellValue('L'.$numrow, $data->dry_weight24);
-            } else {
-                $sheet->setCellValue('L'.$numrow, '');
-            }
-
-            if (property_exists($data, 'comments24')) {
-                $sheet->setCellValue('M'.$numrow, $data->comments24);
-            } else {
-                $sheet->setCellValue('M'.$numrow, '');
-            }
-
-            if (property_exists($data, 'date_moisture72')) {
-                $sheet->setCellValue('N'.$numrow, $data->date_moisture72);
-            } else {
-                $sheet->setCellValue('N'.$numrow, '');
-            }
-
-            if (property_exists($data, 'time_moisture72')) {
-                $sheet->setCellValue('O'.$numrow, $data->time_moisture72);
-            } else {
-                $sheet->setCellValue('O'.$numrow, '');
-            }
-
-            if (property_exists($data, 'dry_weight72')) {
-                $sheet->setCellValue('P'.$numrow, $data->dry_weight72);
-            } else {
-                $sheet->setCellValue('P'.$numrow, '');
-            }
-
-            if (property_exists($data, 'dry_weight_persen')) {
-                $sheet->setCellValue('Q'.$numrow, $data->dry_weight_persen);
-            } else {
-                $sheet->setCellValue('Q'.$numrow, '');
-            }
-
-            if (property_exists($data, 'comments72')) {
-                $sheet->setCellValue('R'.$numrow, $data->comments72);
-            } else {
-                $sheet->setCellValue('R'.$numrow, '');
-            }
+            // Id One Water Sample
+            $sheet->setCellValue('A'.$numrow, property_exists($data, 'id_one_water_sample') ? $data->id_one_water_sample : '');
+            
+            // Lab Tech
+            $sheet->setCellValue('B'.$numrow, property_exists($data, 'initial') ? $data->initial : '');
+            
+            // Date Assay Start
+            $sheet->setCellValue('C'.$numrow, property_exists($data, 'date_start') ? $data->date_start : '');
+            
+            // Sample Type
+            $sheet->setCellValue('D'.$numrow, property_exists($data, 'sampletype') ? $data->sampletype : '');
+            
+            // Barcode Moisture Content
+            $sheet->setCellValue('E'.$numrow, property_exists($data, 'barcode_moisture_content') ? $data->barcode_moisture_content : '');
+            
+            // Tray Weight (g)
+            $sheet->setCellValue('F'.$numrow, property_exists($data, 'tray_weight') ? $data->tray_weight : '');
+            
+            // Tray sample(g) wet weight
+            $sheet->setCellValue('G'.$numrow, property_exists($data, 'traysample_wetweight') ? $data->traysample_wetweight : '');
+            
+            // Time Incubator
+            $sheet->setCellValue('H'.$numrow, property_exists($data, 'time_incubator') ? $data->time_incubator : '');
+            
+            // Comments
+            $sheet->setCellValue('I'.$numrow, property_exists($data, 'comments') ? $data->comments : '');
+            
+            // Date Moisture 24
+            $sheet->setCellValue('J'.$numrow, property_exists($data, 'date_moisture24') ? $data->date_moisture24 : '');
+            
+            // Time Moisture 24
+            $sheet->setCellValue('K'.$numrow, property_exists($data, 'time_moisture24') ? $data->time_moisture24 : '');
+            
+            // Barcode Tray 24
+            $sheet->setCellValue('L'.$numrow, property_exists($data, 'barcode_tray24') ? $data->barcode_tray24 : '');
+            
+            // Dry Weight 24 (g)
+            $sheet->setCellValue('M'.$numrow, property_exists($data, 'dry_weight24') ? $data->dry_weight24 : '');
+            
+            // Comments 24
+            $sheet->setCellValue('N'.$numrow, property_exists($data, 'comments24') ? $data->comments24 : '');
+            
+            // Date Moisture 48 (was 72)
+            $sheet->setCellValue('O'.$numrow, property_exists($data, 'date_moisture72') ? $data->date_moisture72 : '');
+            
+            // Time Moisture 48 (was 72)
+            $sheet->setCellValue('P'.$numrow, property_exists($data, 'time_moisture72') ? $data->time_moisture72 : '');
+            
+            // Barcode Tray 48
+            $sheet->setCellValue('Q'.$numrow, property_exists($data, 'barcode_tray72') ? $data->barcode_tray72 : '');
+            
+            // Dry Weight 48 (g) (was 72)
+            $sheet->setCellValue('R'.$numrow, property_exists($data, 'dry_weight72') ? $data->dry_weight72 : '');
+            
+            // Moisture content (%)
+            $sheet->setCellValue('S'.$numrow, property_exists($data, 'dry_weight_persen') ? $data->dry_weight_persen : '');
+            
+            // Comments 48 (was 72)
+            $sheet->setCellValue('T'.$numrow, property_exists($data, 'comments72') ? $data->comments72 : '');
 
             $numrow++;
         }
 
+        // Clear any output before sending file
+        if (ob_get_level()) {
+            ob_end_clean();
+        }
+
         // Set header untuk file excel
+        $datenow = date("Ymd");
+        $filename = 'Report_moisture_content_'.$datenow.'.xlsx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="Report_moisture_content.xlsx"');
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
         header('Cache-Control: max-age=0');
+        header('Cache-Control: max-age=1');
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+        header('Cache-Control: cache, must-revalidate');
+        header('Pragma: public');
 
         // Tampilkan file excel
         $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
+        exit;
+    }
+
+    public function csv()
+    {
+        $this->load->database();
+
+        $moisture = $this->Moisture_content_model->get_all();
+
+        // Column headers
+        $columns = array(
+            'Id One Water Sample', 'Lab Tech', 'Date Assay Start', 'Sample Type', 
+            'Barcode Moisture Content', 'Tray Weight (g)', 'Tray sample(g) wet weight', 
+            'Time Incubator', 'Comments', 'Date Moisture 24', 'Time Moisture 24', 
+            'Barcode Tray 24', 'Dry Weight 24 (g)', 'Comments 24', 'Date Moisture 48', 
+            'Time Moisture 48', 'Barcode Tray 48', 'Dry Weight 48 (g)', 'Moisture content (%)', 
+            'Comments 48'
+        );
+
+        // Clear any output before sending file
+        if (ob_get_level()) {
+            ob_end_clean();
+        }
+
+        // Set headers for CSV download
+        $datenow = date("Ymd");
+        $filename = 'Report_moisture_content_'.$datenow.'.csv';
+        
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+        header('Pragma: public');
+
+        // Open output stream
+        $output = fopen('php://output', 'w');
+
+        // Add BOM to fix UTF-8 in Excel
+        fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));
+
+        // Add column headers
+        fputcsv($output, $columns);
+
+        // Add data rows
+        foreach ($moisture as $data) {
+            $row = array(
+                property_exists($data, 'id_one_water_sample') ? $data->id_one_water_sample : '',
+                property_exists($data, 'initial') ? $data->initial : '',
+                property_exists($data, 'date_start') ? $data->date_start : '',
+                property_exists($data, 'sampletype') ? $data->sampletype : '',
+                property_exists($data, 'barcode_moisture_content') ? $data->barcode_moisture_content : '',
+                property_exists($data, 'tray_weight') ? $data->tray_weight : '',
+                property_exists($data, 'traysample_wetweight') ? $data->traysample_wetweight : '',
+                property_exists($data, 'time_incubator') ? $data->time_incubator : '',
+                property_exists($data, 'comments') ? $data->comments : '',
+                property_exists($data, 'date_moisture24') ? $data->date_moisture24 : '',
+                property_exists($data, 'time_moisture24') ? $data->time_moisture24 : '',
+                property_exists($data, 'barcode_tray24') ? $data->barcode_tray24 : '',
+                property_exists($data, 'dry_weight24') ? $data->dry_weight24 : '',
+                property_exists($data, 'comments24') ? $data->comments24 : '',
+                property_exists($data, 'date_moisture72') ? $data->date_moisture72 : '',
+                property_exists($data, 'time_moisture72') ? $data->time_moisture72 : '',
+                property_exists($data, 'barcode_tray72') ? $data->barcode_tray72 : '',
+                property_exists($data, 'dry_weight72') ? $data->dry_weight72 : '',
+                property_exists($data, 'dry_weight_persen') ? $data->dry_weight_persen : '',
+                property_exists($data, 'comments72') ? $data->comments72 : ''
+            );
+            fputcsv($output, $row);
+        }
+
+        fclose($output);
+        exit;
     }
 
     public function validateBarcodeMoistureContent() {

@@ -313,6 +313,41 @@ class Hemoflow extends MY_Controller
         $writer->save('php://output');
     }
 
+    public function export_csv()
+    {
+        $sql = 'select a.id_one_water_sample AS ID_one_water_sample, b.initial AS Lab_tech,
+                d.sampletype AS Sample_Type, a.date_processed AS Date_Processed, a.time_processed AS Time_Processed,
+                e.initial AS Lab_Tech_Proc, a.volume_filter AS Volume_Filtered,
+                a.volume_eluted AS Volume_Eluted, a.comments AS Comments
+                from hemoflow a
+                left join ref_person b on a.id_person = b.id_person
+                left join sample_reception_sample c on a.id_one_water_sample = c.id_one_water_sample
+                left join ref_sampletype d on c.id_sampletype = d.id_sampletype
+                left join ref_person e on a.id_person_proc = e.id_person
+                WHERE a.flag = 0
+                ORDER BY a.date_processed, a.time_processed';
+        $columns = array('ID_one_water_sample', 'Lab_tech', 'Sample_Type', 'Date_Processed', 'Time_Processed',
+            'Lab_Tech_Proc', 'Volume_Filtered', 'Volume_Eluted', 'Comments');
+        $result = $this->db->query($sql)->result_array();
+
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename=Hemoflow_' . date('Ymd') . '.csv');
+        header('Cache-Control: max-age=0');
+        echo "\xEF\xBB\xBF";
+
+        $output = fopen('php://output', 'w');
+        fputcsv($output, $columns);
+        foreach ($result as $row) {
+            $csvRow = array();
+            foreach ($columns as $column) {
+                $csvRow[] = isset($row[$column]) ? $row[$column] : '';
+            }
+            fputcsv($output, $csvRow);
+        }
+        fclose($output);
+        exit();
+    }
+
     public function getIdOneWaterDetails()
     {
         $idOneWaterSample = $this->input->post('id_one_water_sample');

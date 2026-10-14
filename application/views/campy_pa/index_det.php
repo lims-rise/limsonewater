@@ -187,6 +187,9 @@
                                     <button class="btn btn-success" id="exportBtn">
                                         <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS
                                     </button>
+                                    <button class="btn btn-primary" id="exportCsvBtn">
+                                        <i class="fa fa-file-text-o" aria-hidden="true"></i> Export to CSV
+                                    </button>
                                 </div>
                                 <input id="id_campy_pa" name="id_campy_pa" type="hidden" class="form-control input-sm" value="<?php echo $id_campy_pa ?>">
 
@@ -1156,6 +1159,11 @@
     document.getElementById('exportBtn').addEventListener('click', function() {
         let id_campy_pa = document.getElementById('id_campy_pa').value;
         window.location.href = '<?php echo site_url('Campy_pa/excel') ?>/' + id_campy_pa;
+    });
+
+    document.getElementById('exportCsvBtn').addEventListener('click', function() {
+        let id_campy_pa = document.getElementById('id_campy_pa').value;
+        window.location.href = '<?php echo site_url('Campy_pa/export_csv') ?>/' + id_campy_pa;
     });
 </script>
 <script type="text/javascript">

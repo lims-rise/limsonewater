@@ -15,6 +15,7 @@
                                     }
                             ?>         -->
                             <?php echo anchor(site_url('Colilert_hemoflow/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS', 'class="btn btn-success"'); ?>
+                            <?php echo anchor(site_url('Colilert_hemoflow/export_csv'), '<i class="fa fa-file-text-o" aria-hidden="true"></i> Export to CSV', 'class="btn btn-primary"'); ?>
                         </div>
                             <div class="table-responsive">
                                 <table class="table ho table-bordered table-striped tbody" id="mytable" style="width:100%">

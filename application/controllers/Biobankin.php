@@ -773,6 +773,189 @@ class Biobankin extends MY_Controller
         header('Content-Type: application/json');
         echo json_encode($data);
     }
+
+    public function excel()
+    {
+        $this->load->database();
+
+        $spreadsheet = new Spreadsheet();
+
+        // Query untuk mengambil data dari 3 level hierarchy
+        $sql = 'SELECT 
+                    bi.id_one_water_sample AS ID_One_Water_Sample,
+                    bi.biobankin_barcode AS Biobankin_Barcode,
+                    bi.date_conduct AS Date_Conduct,
+                    rp.realname AS Lab_Tech,
+                    bi.comments AS Comments_Parent,
+                    bid.id_sampletype AS Sample_Type_ID,
+                    rs.sampletype AS Sample_Type,
+                    bid.replicates AS Number_of_Replicates,
+                    bid.comments AS Comments_Detail,
+                    bir.barcode_water AS Barcode_Water,
+                    bir.weight AS Weight,
+                    bir.concentration_dna AS Concentration_DNA,
+                    bir.volume AS Volume,
+                    rc.culture AS Culture,
+                    bir.barcode_tube AS Barcode_Tube,
+                    bir.cryobox AS Cryobox,
+                    CONCAT("F",rl.freezer,"-S",rl.shelf,"-R",rl.rack,"-T",rl.tray) AS Freezer_Location,
+                    CONCAT("R",rpos.rows1,"-C",rpos.columns1) AS Position_in_Box,
+                    bir.comments AS Comments_Replicate
+                FROM biobank_in bi
+                LEFT JOIN biobank_in_detail bid ON bi.id_biobankin = bid.id_biobankin AND bid.flag = 0
+                LEFT JOIN biobank_in_replicate bir ON bid.id_biobankin_detail = bir.id_biobankin_detail AND bir.flag = 0
+                LEFT JOIN ref_person rp ON bi.id_person = rp.id_person
+                LEFT JOIN ref_sampletype rs ON bid.id_sampletype = rs.id_sampletype
+                LEFT JOIN ref_culture rc ON bir.id_culture = rc.id_culture
+                LEFT JOIN ref_location rl ON bir.id_location = rl.id_location
+                LEFT JOIN ref_position rpos ON bir.id_pos = rpos.id_pos
+                WHERE bi.flag = 0
+                ORDER BY bi.date_conduct DESC, bi.id_one_water_sample, bid.id_biobankin_detail, bir.id_biobankin_replicate';
+        
+        $query = $this->db->query($sql);
+        $result = $query->result_array();
+
+        $sheets = array(
+            array(
+                'Biobank_IN',
+                $result,
+                array('ID_One_Water_Sample', 'Biobankin_Barcode', 'Date_Conduct', 'Lab_Tech', 'Comments_Parent',
+                'Sample_Type', 'Number_of_Replicates', 'Comments_Detail',
+                'Barcode_Water', 'Weight', 'Concentration_DNA', 'Volume', 'Culture',
+                'Barcode_Tube', 'Cryobox', 'Freezer_Location', 'Position_in_Box', 'Comments_Replicate'),
+            ),
+        );
+        
+        $spreadsheet->removeSheetByIndex(0);
+
+        foreach ($sheets as $sheetInfo) {
+            $worksheet = $spreadsheet->createSheet();
+            $worksheet->setTitle($sheetInfo[0]);
+            
+            $result = $sheetInfo[1];
+            $columns = $sheetInfo[2];
+    
+            // Add column headers
+            $col = 1;
+            foreach ($columns as $column) {
+                $worksheet->setCellValueByColumnAndRow($col, 1, $column);
+                $col++;
+            }
+    
+            // Add data rows
+            $row = 2;
+            foreach ($result as $row_data) {
+                $col = 1;
+                foreach ($columns as $column) {
+                    $value = isset($row_data[$column]) ? $row_data[$column] : '';
+                    $worksheet->setCellValueByColumnAndRow($col, $row, $value);
+                    $col++;
+                }
+                $row++;
+            }
+        }
+
+        // Clear any output before sending file
+        if (ob_get_level()) {
+            ob_end_clean();
+        }
+        
+        $writer = new Xlsx($spreadsheet);
+        
+        $datenow = date("Ymd");
+        $filename = 'Biobank_IN_'.$datenow.'.xlsx';
+        
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+        header('Cache-Control: max-age=1');
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+        header('Cache-Control: cache, must-revalidate');
+        header('Pragma: public');
+        
+        $writer->save('php://output');
+        exit;
+    }
+
+    public function csv()
+    {
+        $this->load->database();
+
+        // Query untuk mengambil data dari 3 level hierarchy
+        $sql = 'SELECT 
+                    bi.id_one_water_sample AS ID_One_Water_Sample,
+                    bi.biobankin_barcode AS Biobankin_Barcode,
+                    bi.date_conduct AS Date_Conduct,
+                    rp.realname AS Lab_Tech,
+                    bi.comments AS Comments_Parent,
+                    bid.id_sampletype AS Sample_Type_ID,
+                    rs.sampletype AS Sample_Type,
+                    bid.replicates AS Number_of_Replicates,
+                    bid.comments AS Comments_Detail,
+                    bir.barcode_water AS Barcode_Water,
+                    bir.weight AS Weight,
+                    bir.concentration_dna AS Concentration_DNA,
+                    bir.volume AS Volume,
+                    rc.culture AS Culture,
+                    bir.barcode_tube AS Barcode_Tube,
+                    bir.cryobox AS Cryobox,
+                    CONCAT("F",rl.freezer,"-S",rl.shelf,"-R",rl.rack,"-T",rl.tray) AS Freezer_Location,
+                    CONCAT("R",rpos.rows1,"-C",rpos.columns1) AS Position_in_Box,
+                    bir.comments AS Comments_Replicate
+                FROM biobank_in bi
+                LEFT JOIN biobank_in_detail bid ON bi.id_biobankin = bid.id_biobankin AND bid.flag = 0
+                LEFT JOIN biobank_in_replicate bir ON bid.id_biobankin_detail = bir.id_biobankin_detail AND bir.flag = 0
+                LEFT JOIN ref_person rp ON bi.id_person = rp.id_person
+                LEFT JOIN ref_sampletype rs ON bid.id_sampletype = rs.id_sampletype
+                LEFT JOIN ref_culture rc ON bir.id_culture = rc.id_culture
+                LEFT JOIN ref_location rl ON bir.id_location = rl.id_location
+                LEFT JOIN ref_position rpos ON bir.id_pos = rpos.id_pos
+                WHERE bi.flag = 0
+                ORDER BY bi.date_conduct DESC, bi.id_one_water_sample, bid.id_biobankin_detail, bir.id_biobankin_replicate';
+        
+        $query = $this->db->query($sql);
+        $result = $query->result_array();
+        
+        // Column headers
+        $columns = array('ID_One_Water_Sample', 'Biobankin_Barcode', 'Date_Conduct', 'Lab_Tech', 'Comments_Parent',
+            'Sample_Type', 'Number_of_Replicates', 'Comments_Detail',
+            'Barcode_Water', 'Weight', 'Concentration_DNA', 'Volume', 'Culture',
+            'Barcode_Tube', 'Cryobox', 'Freezer_Location', 'Position_in_Box', 'Comments_Replicate');
+
+        // Clear any output before sending file
+        if (ob_get_level()) {
+            ob_end_clean();
+        }
+
+        $datenow = date("Ymd");
+        $filename = 'Biobank_IN_'.$datenow.'.csv';
+        
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+        header('Pragma: public');
+
+        $output = fopen('php://output', 'w');
+
+        // Add BOM to fix UTF-8 in Excel
+        fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));
+
+        // Add column headers
+        fputcsv($output, $columns);
+
+        // Add data rows
+        foreach ($result as $row_data) {
+            $row = array();
+            foreach ($columns as $column) {
+                $row[] = isset($row_data[$column]) ? $row_data[$column] : '';
+            }
+            fputcsv($output, $row);
+        }
+
+        fclose($output);
+        exit;
+    }
     
 
 }

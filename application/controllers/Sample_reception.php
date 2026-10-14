@@ -1133,9 +1133,7 @@ class Sample_reception extends CI_Controller
     // Export CSV function for OWL Report
     public function export_csv($id_project = null) {
         if (!$id_project) {
-            // Instead of show_404, send JSON error response or redirect back
-            $this->session->set_flashdata('error', 'Project ID is required for CSV export');
-            redirect('sample_reception');
+            $this->export_sample_reception_csv();
             return;
         }
         
@@ -1191,6 +1189,51 @@ class Sample_reception extends CI_Controller
         }
         
         // Close file pointer
+        fclose($output);
+        exit();
+    }
+
+    private function export_sample_reception_csv() {
+        $columns = array(
+            'Coc' => 'id_project',
+            'Client Quote Number' => 'client_quote_number',
+            'Client as on Coc' => 'client',
+            'Client ID' => 'id_client_sample',
+            'One Water Sampe ID' => 'id_one_water_sample',
+            'Time of Sample' => 'sampletype',
+            'Receiving Lab' => 'initial',
+            'Date Arrival' => 'date_arrival',
+            'Time Arrival' => 'time_arrival',
+            'Date Collected' => 'date_collected',
+            'Time Collected' => 'time_collected',
+            'Note' => 'note',
+            'Quality Check' => 'quality_checked',
+            'Barcode' => 'barcode',
+            'Testing Type' => 'testing_type'
+        );
+
+        $sample_reception = $this->Sample_reception_model->get_all();
+
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename=Sample_Reception_' . date('Ymd_His') . '.csv');
+        header('Cache-Control: max-age=0');
+
+        if (ob_get_level()) {
+            ob_end_clean();
+        }
+
+        $output = fopen('php://output', 'w');
+        echo "\xEF\xBB\xBF";
+        fputcsv($output, array_keys($columns));
+
+        foreach ($sample_reception as $data) {
+            $row = array();
+            foreach ($columns as $property) {
+                $row[] = property_exists($data, $property) ? $data->$property : '';
+            }
+            fputcsv($output, $row);
+        }
+
         fclose($output);
         exit();
     }
