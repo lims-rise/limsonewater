@@ -500,23 +500,37 @@ class Extraction_biosolid extends MY_Controller
         $sheets = array(
             array(
                 'Extraction_biosolid',
-                'SELECT a.id_one_water_sample AS ID_one_water_sample, ecp.barcode_sample AS Barcode_sample, b.realname AS Lab_tech, 
-                        ecp.date_extraction AS Date_extraction, ecp.weight AS `Weight_(g)`, ecp.kit_lot AS Kit_lot, 
-                        ecp.comments AS Comments, ecp.barcode_tube AS Barcode_tube, ecp.dna_concentration AS `DNA_concentration_(ng/ul)`, 
+                'SELECT 
+                        a.id_one_water_sample AS ID_one_water_sample,
+                        a.number_sample AS Number_of_samples,
+                        b.realname AS Lab_tech,
+                        a.date_created AS Date_created,
+                        ecp.barcode_sample AS Barcode_sample,
+                        st.sampletype AS Sample_type,
+                        ecp.date_extraction AS Date_extraction, 
+                        ecp.weight AS `Weight_(g)`,
+                        COALESCE(d.kit, ecp.other_kit) AS Kit,
+                        ecp.kit_lot AS Kit_lot, 
+                        ecp.comments AS Comments, 
+                        ecp.barcode_tube AS Barcode_tube, 
+                        ecp.dna_concentration AS `DNA_concentration_(ng/ul)`, 
                         ecp.cryobox AS Cryobox, 
                         CONCAT("F",e.freezer,"-S",e.shelf,"-R",e.rack,"-T",e.tray) AS Freezer_location,
                         CONCAT("R",f.rows1,"-C",f.columns1) AS Position_in_box
-
                     FROM extraction_biosolid a
-                    LEFT JOIN extraction_biosolid_detail ecp ON a.id_one_water_sample = ecp.id_one_water_sample
-                    LEFT JOIN ref_person b ON a.id_person=b.id_person
+                    LEFT JOIN extraction_biosolid_detail ecp ON a.id_extraction_biosolid = ecp.id_extraction_biosolid AND ecp.flag = 0
+                    LEFT JOIN ref_person b ON a.id_person = b.id_person
+                    LEFT JOIN ref_sampletype st ON ecp.id_sampletype = st.id_sampletype
                     LEFT JOIN ref_kit d ON ecp.id_kit = d.id_kit
                     LEFT JOIN ref_location e ON ecp.id_location = e.id_location
-                    LEFT JOIN ref_position f ON ecp.id_pos=f.id_pos
+                    LEFT JOIN ref_position f ON ecp.id_pos = f.id_pos
+                    WHERE a.flag = 0
+                    ORDER BY a.date_created DESC, a.id_one_water_sample, ecp.barcode_sample
                 ',
-                array('ID_one_water_sample', 'Barcode_sample', 'Lab_tech', 'Date_extraction', 
-                'Weight_(g)', 'Kit', 'Kit_lot', 'Comments', 'Barcode_tube', 'Final_volume_(uL)', 'DNA_concentration_(ng/ul)',
-                'Cryobox', 'Freezer_location', 'Position_in_box'),  // Columns for Sheet1
+                array('ID_one_water_sample', 'Number_of_samples', 'Lab_tech', 'Date_created',
+                'Barcode_sample', 'Sample_type', 'Date_extraction', 'Weight_(g)', 'Kit', 'Kit_lot', 
+                'Comments', 'Barcode_tube', 'DNA_concentration_(ng/ul)', 'Cryobox', 
+                'Freezer_location', 'Position_in_box'),
             ),
         );
         
@@ -534,7 +548,6 @@ class Extraction_biosolid extends MY_Controller
             $query = $this->db->query($sql);
             $result = $query->result_array();
             
-            // var_dump($result); 
             // Column headers for this sheet
             $columns = $sheetInfo[2];
     
@@ -550,25 +563,115 @@ class Extraction_biosolid extends MY_Controller
             foreach ($result as $row_data) {
                 $col = 1;
                 foreach ($columns as $column) {
-                    $worksheet->setCellValueByColumnAndRow($col, $row, $row_data[$column]);
+                    $value = isset($row_data[$column]) ? $row_data[$column] : '';
+                    $worksheet->setCellValueByColumnAndRow($col, $row, $value);
                     $col++;
                 }
                 $row++;
             }
         }
 
+        // Clear any output before sending file
+        if (ob_get_level()) {
+            ob_end_clean();
+        }
+        
         // Create a new Xlsx writer
         $writer = new Xlsx($spreadsheet);
         
         // Set the HTTP headers to download the Excel file
-        $datenow=date("Ymd");
+        $datenow = date("Ymd");
         $filename = 'Extraction_biosolid_'.$datenow.'.xlsx';
+        
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="' . $filename . '"');
         header('Cache-Control: max-age=0');
+        header('Cache-Control: max-age=1');
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+        header('Cache-Control: cache, must-revalidate');
+        header('Pragma: public');
         
         // Save the Excel file to the output stream
         $writer->save('php://output');
+        exit;
+    }
+
+    public function csv()
+    {
+        $this->load->database();
+
+        // SQL query to fetch data
+        $sql = 'SELECT 
+                    a.id_one_water_sample AS ID_one_water_sample,
+                    a.number_sample AS Number_of_samples,
+                    b.realname AS Lab_tech,
+                    a.date_created AS Date_created,
+                    ecp.barcode_sample AS Barcode_sample,
+                    st.sampletype AS Sample_type,
+                    ecp.date_extraction AS Date_extraction, 
+                    ecp.weight AS `Weight_(g)`,
+                    COALESCE(d.kit, ecp.other_kit) AS Kit,
+                    ecp.kit_lot AS Kit_lot, 
+                    ecp.comments AS Comments, 
+                    ecp.barcode_tube AS Barcode_tube, 
+                    ecp.dna_concentration AS `DNA_concentration_(ng/ul)`, 
+                    ecp.cryobox AS Cryobox, 
+                    CONCAT("F",e.freezer,"-S",e.shelf,"-R",e.rack,"-T",e.tray) AS Freezer_location,
+                    CONCAT("R",f.rows1,"-C",f.columns1) AS Position_in_box
+                FROM extraction_biosolid a
+                LEFT JOIN extraction_biosolid_detail ecp ON a.id_extraction_biosolid = ecp.id_extraction_biosolid AND ecp.flag = 0
+                LEFT JOIN ref_person b ON a.id_person = b.id_person
+                LEFT JOIN ref_sampletype st ON ecp.id_sampletype = st.id_sampletype
+                LEFT JOIN ref_kit d ON ecp.id_kit = d.id_kit
+                LEFT JOIN ref_location e ON ecp.id_location = e.id_location
+                LEFT JOIN ref_position f ON ecp.id_pos = f.id_pos
+                WHERE a.flag = 0
+                ORDER BY a.date_created DESC, a.id_one_water_sample, ecp.barcode_sample';
+        
+        $query = $this->db->query($sql);
+        $result = $query->result_array();
+        
+        // Column headers
+        $columns = array('ID_one_water_sample', 'Number_of_samples', 'Lab_tech', 'Date_created',
+            'Barcode_sample', 'Sample_type', 'Date_extraction', 'Weight_(g)', 'Kit', 'Kit_lot', 
+            'Comments', 'Barcode_tube', 'DNA_concentration_(ng/ul)', 'Cryobox', 
+            'Freezer_location', 'Position_in_box');
+
+        // Clear any output before sending file
+        if (ob_get_level()) {
+            ob_end_clean();
+        }
+
+        // Set headers for CSV download
+        $datenow = date("Ymd");
+        $filename = 'Extraction_biosolid_'.$datenow.'.csv';
+        
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+        header('Pragma: public');
+
+        // Open output stream
+        $output = fopen('php://output', 'w');
+
+        // Add BOM to fix UTF-8 in Excel
+        fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));
+
+        // Add column headers
+        fputcsv($output, $columns);
+
+        // Add data rows
+        foreach ($result as $row_data) {
+            $row = array();
+            foreach ($columns as $column) {
+                $row[] = isset($row_data[$column]) ? $row_data[$column] : '';
+            }
+            fputcsv($output, $row);
+        }
+
+        fclose($output);
+        exit;
     }
     
 

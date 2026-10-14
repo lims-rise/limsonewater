@@ -268,36 +268,37 @@ class Protozoa extends MY_Controller
         $sheets = array(
             array(
                 'Protozoa',
-                'select a.id_one_water_sample AS ID_one_water_sample, b.initial AS Lab_tech,
-                d.sampletype AS Sample_Type, a.date_processed AS Date_Processed, a.time_processed AS Time_Processed, 
-                e.initial AS Lab_Tech_Proc, a.volume_filter AS Volume_Filtered,
-                a.volume_eluted AS Volume_Eluted, a.comments AS Comments
-                from protozoa a
-				left join ref_person b on a.id_person = b.id_person
-				left join sample_reception c on a.id_one_water_sample = c.id_one_water_sample
-				left join ref_sampletype d on c.id_sampletype = d.id_sampletype
-				left join ref_person e on a.id_person_proc = e.id_person
+                'SELECT a.id_one_water_sample AS ID_one_water_sample, 
+                        b.initial AS Lab_tech,
+                        c.sampletype AS Sample_Type, 
+                        a.date_processed AS Date_Processed, 
+                        a.time_processed AS Time_Processed,
+                        a.volume_analysed AS Volume_Analysed,
+                        a.weight AS Weight,
+                        a.dry_weight_persen AS Dry_Weight_Persen,
+                        a.mass_analysed AS Mass_Analysed,
+                        a.target AS Target,
+                        a.quality_control_giardia AS QC_Giardia,
+                        a.conc_copies_per_L_giardia AS Conc_Copies_per_L_Giardia,
+                        a.conc_copies_per_g_dw_giardia AS Conc_Copies_per_g_DW_Giardia,
+                        a.giardia_concentration_g AS Giardia_Concentration_g,
+                        a.quality_control_crypto AS QC_Crypto,
+                        a.conc_copies_per_L_crypto AS Conc_Copies_per_L_Crypto,
+                        a.conc_copies_per_g_dw_crypto AS Conc_Copies_per_g_DW_Crypto,
+                        a.crypto_concentration_g AS Crypto_Concentration_g,
+                        a.comments AS Comments
+                FROM protozoa a
+                LEFT JOIN ref_person b ON a.id_person = b.id_person
+                LEFT JOIN ref_sampletype c ON a.id_sampletype = c.id_sampletype
                 WHERE a.flag = 0 
-                ORDER BY a.date_processed, a.time_processed
+                ORDER BY a.date_processed DESC, a.time_processed DESC
                 ',
-                array('ID_one_water_sample', 'Lab_tech', 'Sample_Type', 'Date_Processed', 'Time_Processed', 
-                'Lab_Tech_Proc', 'Volume_Filtered', 'Volume_Eluted', 'Comments'), // Columns for Sheet1
+                array('ID_one_water_sample', 'Lab_tech', 'Sample_Type', 'Date_Processed', 'Time_Processed',
+                'Volume_Analysed', 'Weight', 'Dry_Weight_Persen', 'Mass_Analysed',
+                'Target', 'QC_Giardia', 'Conc_Copies_per_L_Giardia', 'Conc_Copies_per_g_DW_Giardia', 
+                'Giardia_Concentration_g', 'QC_Crypto', 'Conc_Copies_per_L_Crypto', 
+                'Conc_Copies_per_g_DW_Crypto', 'Crypto_Concentration_g', 'Comments'),
             ),
-            // array(
-            //     'Hemoflow_detail',
-            //     'SELECT a.id_req AS ID_Request, a.id_reqdetail AS ID_Request_Det, a.items AS Descriptions, 
-            //     a.qty AS Qty, b.unit AS Unit, a.estimate_price AS Estimate_price, a.remarks AS Remarks 
-            //     FROM Hemoflow_detail a
-            //     LEFT JOIN Protozoa c ON a.id_req=c.id_req
-            //     LEFT JOIN ref_unit b ON a.id_unit=b.id_unit
-            //     WHERE 
-            //     c.id_country = "'.$this->session->userdata('lab').'" 
-            //     AND b.flag = 0 
-            //     ORDER BY a.id_reqdetail ASC
-            //     ', // Different columns for Sheet2
-            //     array('ID_Request', 'ID_Request_Det', 'Descriptions', 'Qty', 'Unit', 'Estimate_price', 'Remarks'), // Columns for Sheet2
-            // ),
-            // Add more sheets as needed
         );
         
         $spreadsheet->removeSheetByIndex(0);
@@ -314,7 +315,6 @@ class Protozoa extends MY_Controller
             $query = $this->db->query($sql);
             $result = $query->result_array();
             
-            // var_dump($result); 
             // Column headers for this sheet
             $columns = $sheetInfo[2];
     
@@ -325,30 +325,151 @@ class Protozoa extends MY_Controller
                 $col++;
             }
     
-            // Add data rows
+            // Add data rows with conditional handling
             $row = 2;
             foreach ($result as $row_data) {
                 $col = 1;
                 foreach ($columns as $column) {
-                    $worksheet->setCellValueByColumnAndRow($col, $row, $row_data[$column]);
+                    $value = isset($row_data[$column]) ? $row_data[$column] : '';
+                    
+                    // Handle conditional fields based on sample type
+                    $sampleType = isset($row_data['Sample_Type']) ? strtolower($row_data['Sample_Type']) : '';
+                    
+                    // If liquid sample, don't show weight-related fields
+                    if (($sampleType === 'liquid' || $sampleType === 'liquids') && 
+                        ($column === 'Weight' || $column === 'Dry_Weight_Persen' || $column === 'Mass_Analysed')) {
+                        $value = '';
+                    }
+                    
+                    // If biosolid sample, don't show volume_analysed
+                    if (($sampleType === 'biosolid' || $sampleType === 'biosolids') && 
+                        $column === 'Volume_Analysed') {
+                        $value = '';
+                    }
+                    
+                    $worksheet->setCellValueByColumnAndRow($col, $row, $value);
                     $col++;
                 }
                 $row++;
             }
         }
 
+        // Clear any output before sending file
+        if (ob_get_level()) {
+            ob_end_clean();
+        }
+
         // Create a new Xlsx writer
         $writer = new Xlsx($spreadsheet);
         
         // Set the HTTP headers to download the Excel file
-        $datenow=date("Ymd");
-        $filename = 'Hemoflow_'.$datenow.'.xlsx';
+        $datenow = date("Ymd");
+        $filename = 'Protozoa_'.$datenow.'.xlsx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="' . $filename . '"');
         header('Cache-Control: max-age=0');
+        header('Cache-Control: max-age=1');
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+        header('Cache-Control: cache, must-revalidate');
+        header('Pragma: public');
         
         // Save the Excel file to the output stream
         $writer->save('php://output');
+        exit;
+    }
+
+    public function csv()
+    {
+        $this->load->database();
+
+        // SQL query to fetch data
+        $sql = 'SELECT a.id_one_water_sample AS ID_one_water_sample, 
+                    b.initial AS Lab_tech,
+                    c.sampletype AS Sample_Type, 
+                    a.date_processed AS Date_Processed, 
+                    a.time_processed AS Time_Processed,
+                    a.volume_analysed AS Volume_Analysed,
+                    a.weight AS Weight,
+                    a.dry_weight_persen AS Dry_Weight_Persen,
+                    a.mass_analysed AS Mass_Analysed,
+                    a.target AS Target,
+                    a.quality_control_giardia AS QC_Giardia,
+                    a.conc_copies_per_L_giardia AS Conc_Copies_per_L_Giardia,
+                    a.conc_copies_per_g_dw_giardia AS Conc_Copies_per_g_DW_Giardia,
+                    a.giardia_concentration_g AS Giardia_Concentration_g,
+                    a.quality_control_crypto AS QC_Crypto,
+                    a.conc_copies_per_L_crypto AS Conc_Copies_per_L_Crypto,
+                    a.conc_copies_per_g_dw_crypto AS Conc_Copies_per_g_DW_Crypto,
+                    a.crypto_concentration_g AS Crypto_Concentration_g,
+                    a.comments AS Comments
+            FROM protozoa a
+            LEFT JOIN ref_person b ON a.id_person = b.id_person
+            LEFT JOIN ref_sampletype c ON a.id_sampletype = c.id_sampletype
+            WHERE a.flag = 0 
+            ORDER BY a.date_processed DESC, a.time_processed DESC';
+        
+        $query = $this->db->query($sql);
+        $result = $query->result_array();
+        
+        // Column headers
+        $columns = array('ID_one_water_sample', 'Lab_tech', 'Sample_Type', 'Date_Processed', 'Time_Processed',
+            'Volume_Analysed', 'Weight', 'Dry_Weight_Persen', 'Mass_Analysed',
+            'Target', 'QC_Giardia', 'Conc_Copies_per_L_Giardia', 'Conc_Copies_per_g_DW_Giardia', 
+            'Giardia_Concentration_g', 'QC_Crypto', 'Conc_Copies_per_L_Crypto', 
+            'Conc_Copies_per_g_DW_Crypto', 'Crypto_Concentration_g', 'Comments');
+
+        // Clear any output before sending file
+        if (ob_get_level()) {
+            ob_end_clean();
+        }
+
+        // Set headers for CSV download
+        $datenow = date("Ymd");
+        $filename = 'Protozoa_'.$datenow.'.csv';
+        
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+        header('Pragma: public');
+
+        // Open output stream
+        $output = fopen('php://output', 'w');
+
+        // Add BOM to fix UTF-8 in Excel
+        fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));
+
+        // Add column headers
+        fputcsv($output, $columns);
+
+        // Add data rows with conditional handling
+        foreach ($result as $row_data) {
+            $row = array();
+            $sampleType = isset($row_data['Sample_Type']) ? strtolower($row_data['Sample_Type']) : '';
+            
+            foreach ($columns as $column) {
+                $value = isset($row_data[$column]) ? $row_data[$column] : '';
+                
+                // Handle conditional fields based on sample type
+                // If liquid sample, don't show weight-related fields
+                if (($sampleType === 'liquid' || $sampleType === 'liquids') && 
+                    ($column === 'Weight' || $column === 'Dry_Weight_Persen' || $column === 'Mass_Analysed')) {
+                    $value = '';
+                }
+                
+                // If biosolid sample, don't show volume_analysed
+                if (($sampleType === 'biosolid' || $sampleType === 'biosolids') && 
+                    $column === 'Volume_Analysed') {
+                    $value = '';
+                }
+                
+                $row[] = $value;
+            }
+            fputcsv($output, $row);
+        }
+
+        fclose($output);
+        exit;
     }
 
     public function getIdOneWaterDetails()

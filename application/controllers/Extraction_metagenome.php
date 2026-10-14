@@ -396,38 +396,36 @@ class Extraction_metagenome extends MY_Controller
         $sheets = array(
             array(
                 'Extraction_metagenome',
-                'SELECT a.id_one_water_sample AS ID_one_water_sample, a.barcode_sample AS Barcode_sample, b.realname AS Lab_tech, 
-                        a.date_extraction AS Date_extraction, d.kit AS Kit, a.kit_lot AS Kit_lot, 
-                        a.comments AS Comments, a.barcode_tube AS Barcode_tube, a.dna_concentration AS `DNA_concentration_(ng/ul)`, 
-                        a.cryobox AS Cryobox, 
+                'SELECT 
+                        a.id_one_water_sample AS ID_one_water_sample,
+                        a.number_sample AS Number_of_samples,
+                        b.realname AS Lab_tech,
+                        a.date_created AS Date_created,
+                        emd.barcode_sample AS Barcode_sample,
+                        st.sampletype AS Sample_type,
+                        emd.date_extraction AS Date_extraction,
+                        COALESCE(d.kit, emd.other_kit) AS Kit,
+                        emd.kit_lot AS Kit_lot,
+                        emd.comments AS Comments,
+                        emd.barcode_tube AS Barcode_tube,
+                        emd.dna_concentration AS `DNA_concentration_(ng/ul)`,
+                        emd.cryobox AS Cryobox,
                         CONCAT("F",e.freezer,"-S",e.shelf,"-R",e.rack,"-T",e.tray) AS Freezer_location,
                         CONCAT("R",f.rows1,"-C",f.columns1) AS Position_in_box
-
                     FROM extraction_metagenome a
-                    LEFT JOIN ref_person b ON a.id_person=b.id_person
-                    LEFT JOIN ref_kit d ON a.id_kit = d.id_kit
-                    LEFT JOIN ref_location e ON a.id_location = e.id_location
-                    LEFT JOIN ref_position f ON a.id_pos=f.id_pos
+                    LEFT JOIN extraction_metagenome_detail emd ON a.id_one_water_sample = emd.id_one_water_sample AND emd.flag = 0
+                    LEFT JOIN ref_person b ON a.id_person = b.id_person
+                    LEFT JOIN ref_sampletype st ON emd.id_sampletype = st.id_sampletype
+                    LEFT JOIN ref_kit d ON emd.id_kit = d.id_kit
+                    LEFT JOIN ref_location e ON emd.id_location = e.id_location
+                    LEFT JOIN ref_position f ON emd.id_pos = f.id_pos
+                    WHERE a.flag = 0
+                    ORDER BY a.date_created DESC, a.id_one_water_sample, emd.barcode_sample
                 ',
-                array('ID_one_water_sample', 'Barcode_sample', 'Lab_tech', 'Date_extraction',
-                'Kit', 'Kit_lot', 'Comments', 'Barcode_tube', 'DNA_concentration_(ng/ul)',
-                'Cryobox', 'Freezer_location', 'Position_in_box'),  // Columns for Sheet1
+                array('ID_one_water_sample', 'Number_of_samples', 'Lab_tech', 'Date_created',
+                'Barcode_sample', 'Sample_type', 'Date_extraction', 'Kit', 'Kit_lot', 'Comments',
+                'Barcode_tube', 'DNA_concentration_(ng/ul)', 'Cryobox', 'Freezer_location', 'Position_in_box'),
             ),
-            // array(
-            //     'Extraction_culture_detail',
-            //     'SELECT a.id_req AS ID_Request, a.id_reqdetail AS ID_Request_Det, a.items AS Descriptions, 
-            //     a.qty AS Qty, b.unit AS Unit, a.estimate_price AS Estimate_price, a.remarks AS Remarks 
-            //     FROM Extraction_culture_detail a
-            //     LEFT JOIN Extraction_culture c ON a.id_req=c.id_req
-            //     LEFT JOIN ref_unit b ON a.id_unit=b.id_unit
-            //     WHERE 
-            //     c.id_country = "'.$this->session->userdata('lab').'" 
-            //     AND b.flag = 0 
-            //     ORDER BY a.id_reqdetail ASC
-            //     ', // Different columns for Sheet2
-            //     array('ID_Request', 'ID_Request_Det', 'Descriptions', 'Qty', 'Unit', 'Estimate_price', 'Remarks'), // Columns for Sheet2
-            // ),
-            // Add more sheets as needed
         );
         
         $spreadsheet->removeSheetByIndex(0);
@@ -444,7 +442,6 @@ class Extraction_metagenome extends MY_Controller
             $query = $this->db->query($sql);
             $result = $query->result_array();
             
-            // var_dump($result); 
             // Column headers for this sheet
             $columns = $sheetInfo[2];
     
@@ -460,25 +457,113 @@ class Extraction_metagenome extends MY_Controller
             foreach ($result as $row_data) {
                 $col = 1;
                 foreach ($columns as $column) {
-                    $worksheet->setCellValueByColumnAndRow($col, $row, $row_data[$column]);
+                    $value = isset($row_data[$column]) ? $row_data[$column] : '';
+                    $worksheet->setCellValueByColumnAndRow($col, $row, $value);
                     $col++;
                 }
                 $row++;
             }
         }
 
+        // Clear any output before sending file
+        if (ob_get_level()) {
+            ob_end_clean();
+        }
+        
         // Create a new Xlsx writer
         $writer = new Xlsx($spreadsheet);
         
         // Set the HTTP headers to download the Excel file
-        $datenow=date("Ymd");
+        $datenow = date("Ymd");
         $filename = 'Extraction_metagenome_'.$datenow.'.xlsx';
+        
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="' . $filename . '"');
         header('Cache-Control: max-age=0');
+        header('Cache-Control: max-age=1');
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+        header('Cache-Control: cache, must-revalidate');
+        header('Pragma: public');
         
         // Save the Excel file to the output stream
         $writer->save('php://output');
+        exit;
+    }
+
+    public function csv()
+    {
+        $this->load->database();
+
+        // SQL query to fetch data
+        $sql = 'SELECT 
+                    a.id_one_water_sample AS ID_one_water_sample,
+                    a.number_sample AS Number_of_samples,
+                    b.realname AS Lab_tech,
+                    a.date_created AS Date_created,
+                    emd.barcode_sample AS Barcode_sample,
+                    st.sampletype AS Sample_type,
+                    emd.date_extraction AS Date_extraction,
+                    COALESCE(d.kit, emd.other_kit) AS Kit,
+                    emd.kit_lot AS Kit_lot,
+                    emd.comments AS Comments,
+                    emd.barcode_tube AS Barcode_tube,
+                    emd.dna_concentration AS `DNA_concentration_(ng/ul)`,
+                    emd.cryobox AS Cryobox,
+                    CONCAT("F",e.freezer,"-S",e.shelf,"-R",e.rack,"-T",e.tray) AS Freezer_location,
+                    CONCAT("R",f.rows1,"-C",f.columns1) AS Position_in_box
+                FROM extraction_metagenome a
+                LEFT JOIN extraction_metagenome_detail emd ON a.id_one_water_sample = emd.id_one_water_sample AND emd.flag = 0
+                LEFT JOIN ref_person b ON a.id_person = b.id_person
+                LEFT JOIN ref_sampletype st ON emd.id_sampletype = st.id_sampletype
+                LEFT JOIN ref_kit d ON emd.id_kit = d.id_kit
+                LEFT JOIN ref_location e ON emd.id_location = e.id_location
+                LEFT JOIN ref_position f ON emd.id_pos = f.id_pos
+                WHERE a.flag = 0
+                ORDER BY a.date_created DESC, a.id_one_water_sample, emd.barcode_sample';
+        
+        $query = $this->db->query($sql);
+        $result = $query->result_array();
+        
+        // Column headers
+        $columns = array('ID_one_water_sample', 'Number_of_samples', 'Lab_tech', 'Date_created',
+            'Barcode_sample', 'Sample_type', 'Date_extraction', 'Kit', 'Kit_lot', 'Comments',
+            'Barcode_tube', 'DNA_concentration_(ng/ul)', 'Cryobox', 'Freezer_location', 'Position_in_box');
+
+        // Clear any output before sending file
+        if (ob_get_level()) {
+            ob_end_clean();
+        }
+
+        // Set headers for CSV download
+        $datenow = date("Ymd");
+        $filename = 'Extraction_metagenome_'.$datenow.'.csv';
+        
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+        header('Pragma: public');
+
+        // Open output stream
+        $output = fopen('php://output', 'w');
+
+        // Add BOM to fix UTF-8 in Excel
+        fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));
+
+        // Add column headers
+        fputcsv($output, $columns);
+
+        // Add data rows
+        foreach ($result as $row_data) {
+            $row = array();
+            foreach ($columns as $column) {
+                $row[] = isset($row_data[$column]) ? $row_data[$column] : '';
+            }
+            fputcsv($output, $row);
+        }
+
+        fclose($output);
+        exit;
     }
 
     public function get_extractions_by_project($id_one_water_sample) {
