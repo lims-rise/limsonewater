@@ -236,6 +236,7 @@ class Salmonella_liquids_model extends CI_Model
     
         // Final query
         $this->db->select("sl.id_one_water_sample, sl.id_person, rp.initial, sl.mpn_pcr_conducted, sl.number_of_tubes, sl.salmonella_assay_barcode, sl.date_sample_processed, sl.time_sample_processed, sl.sample_wetweight, sl.elution_volume, rs.sampletype, sl.enrichment_media,
+                   srml.mpn_concentration, srml.upper_ci, srml.lower_ci,
                            $case_query, 
                            GROUP_CONCAT(DISTINCT srbl.biochemical_tube ORDER BY srbl.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
                            GROUP_CONCAT(DISTINCT CONCAT(srbl.biochemical_tube, ':', srbl.confirmation) ORDER BY srbl.biochemical_tube SEPARATOR ', ') AS confirmation,
@@ -244,12 +245,12 @@ class Salmonella_liquids_model extends CI_Model
         $this->db->join('salmonella_result_chromagar_liquids AS srcl', 'sl.id_salmonella_liquids = srcl.id_salmonella_liquids', 'left');
         $this->db->join('salmonella_sample_purple_colony_plate_liquids AS ssbcpcl', 'srcl.id_result_chromagar = ssbcpcl.id_result_chromagar', 'left');
         $this->db->join('salmonella_sample_volumes_liquids AS ssvl1', 'srcl.id_salmonella_liquids = ssvl1.id_salmonella_liquids', 'left');
-        $this->db->join('salmonella_result_biochemical_liquids AS srbl', 'ssbcpcl.id_result_chromagar = srbl.id_result_chromagar', 'left');
+        $this->db->join('salmonella_result_biochemical_liquids AS srbl', 'ssbcpcl.id_result_chromagar = srbl.id_result_chromagar AND srbl.flag = 0', 'left');
+        $this->db->join('salmonella_result_mpn_liquids AS srml', 'sl.id_salmonella_liquids = srml.id_salmonella_liquids', 'left');
         $this->db->join('ref_sampletype AS rs', 'sl.id_sampletype = rs.id_sampletype', 'left');
         $this->db->join('ref_person AS rp',  'sl.id_person = rp.id_person', 'left');
     
         // Conditions
-        $this->db->where('srbl.flag', '0');
         $this->db->where('srcl.id_salmonella_liquids', $id);
         $this->db->group_by('srcl.id_result_chromagar');
     
@@ -258,20 +259,22 @@ class Salmonella_liquids_model extends CI_Model
         if ($q->num_rows() > 0) {
             $response = $q->result(); // Fetch all results if available
             foreach ($response as $key => $value) {
-                $confirmations = explode(',', $value->confirmation);
-                $biochemical_tubes = explode(',', $value->biochemical_tube);
-                $plate_numbers = explode(',', $value->plate_numbers);
+                $confirmations = !empty($value->confirmation) ? explode(',', $value->confirmation) : [];
+                $biochemical_tubes = !empty($value->biochemical_tube) ? explode(',', $value->biochemical_tube) : [];
+                $plate_numbers = !empty($value->plate_numbers) ? explode(',', $value->plate_numbers) : [];
     
                 // Initialize confirmation array for each plate_number
+                $plate_numbers = array_filter(array_map('trim', $plate_numbers));
                 $confirmation_array = array_fill_keys($plate_numbers, 'No Colony Plate'); // Default to "No Colony Plate"
     
                 // Fill in confirmation values from biochemical_tubes
-                foreach ($biochemical_tubes as $tube) {
-                    $index = array_search($tube, $biochemical_tubes);
-                    if ($index !== false) {
-                        $confirmation_value = explode(':', $confirmations[$index] ?? 'No Colony Plate')[1] ?? 'No Colony Plate'; // Default if not set
-                        $confirmation_array[$tube] = $confirmation_value;
+                foreach ($biochemical_tubes as $index => $tube) {
+                    $tube = trim($tube);
+                    if ($tube === '') {
+                        continue;
                     }
+                    $confirmation_value = explode(':', $confirmations[$index] ?? 'No Colony Plate')[1] ?? 'No Colony Plate'; // Default if not set
+                    $confirmation_array[$tube] = $confirmation_value;
                 }
     
                 $value->confirmation = $confirmation_array; // Assign processed confirmation

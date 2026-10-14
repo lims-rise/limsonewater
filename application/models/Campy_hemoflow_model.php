@@ -292,17 +292,37 @@ class Campy_hemoflow_model extends CI_Model
                         ch.time_sample_processed, 
                         ch.filtration_volume, 
                         rs.sampletype,
+                        hm.volume_filter,
+                        hm.volume_eluted,
                         chrm.mpn_concentration,
                         chrm.upper_ci,
                         chrm.lower_ci,
                         chrm.mpn_concentration_dw,
                         chrm.upper_ci_dw,
                         chrm.lower_ci_dw,
+                        CASE WHEN chrm.mpn_concentration IS NOT NULL AND hm.volume_eluted IS NOT NULL THEN
+                            CASE
+                                WHEN chrm.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND((CAST(SUBSTRING(chrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted, 2))
+                                WHEN chrm.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND((CAST(SUBSTRING(chrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted, 2))
+                                ELSE ROUND((CAST(chrm.mpn_concentration AS DECIMAL(10,2)) / 1000) * hm.volume_eluted, 2)
+                            END
+                        ELSE NULL END AS total_campylobacter,
+                        CASE WHEN chrm.mpn_concentration IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0 THEN
+                            ROUND((CAST(REPLACE(REPLACE(chrm.mpn_concentration, '>', ''), '<', '') AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 2)
+                        ELSE NULL END AS concentration_mpn_l,
+                        CASE WHEN chrm.upper_ci IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0 THEN
+                            ROUND((CAST(REPLACE(REPLACE(chrm.upper_ci, '>', ''), '<', '') AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 2)
+                        ELSE NULL END AS upper_ci_new,
+                        CASE WHEN chrm.lower_ci IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0 THEN
+                            ROUND((CAST(REPLACE(REPLACE(chrm.lower_ci, '>', ''), '<', '') AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 2)
+                        ELSE NULL END AS lower_ci_new,
+                        chrm.lower_ci_dw,
                            $case_query, 
                            GROUP_CONCAT(DISTINCT chrb.biochemical_tube ORDER BY chrb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
                            GROUP_CONCAT(DISTINCT CONCAT(chrb.biochemical_tube, ':', chrb.confirmation) ORDER BY chrb.biochemical_tube SEPARATOR ', ') AS confirmation,
                            GROUP_CONCAT(DISTINCT chsgplh.plate_number ORDER BY chsgplh.plate_number SEPARATOR ', ') AS plate_numbers");
         $this->db->from('campy_hemoflow AS ch');
+        $this->db->join('hemoflow AS hm', 'ch.id_one_water_sample = hm.id_one_water_sample AND hm.flag = "0"', 'left');
         $this->db->join('campy_hemoflow_result_hba AS chrh', 'ch.id_campy_hemoflow = chrh.id_campy_hemoflow', 'left');
         $this->db->join('campy_hemoflow_sample_growth_plate_hba AS chsgplh', 'chrh.id_campy_hemoflow_result_hba = chsgplh.id_campy_hemoflow_result_hba', 'left');
         $this->db->join('campy_hemoflow_sample_volumes AS chsv1', 'chrh.id_campy_hemoflow = chsv1.id_campy_hemoflow', 'left');
@@ -371,17 +391,32 @@ class Campy_hemoflow_model extends CI_Model
                         ch.time_sample_processed, 
                         ch.filtration_volume, 
                         rs.sampletype,
+                        hm.volume_filter,
+                        hm.volume_eluted,
                         chrm.mpn_concentration,
                         chrm.upper_ci,
                         chrm.lower_ci,
                         chrm.mpn_concentration_dw,
                         chrm.upper_ci_dw,
                         chrm.lower_ci_dw,
+                        CASE WHEN chrm.mpn_concentration IS NOT NULL AND hm.volume_eluted IS NOT NULL THEN
+                            ROUND((CAST(REPLACE(REPLACE(chrm.mpn_concentration, '>', ''), '<', '') AS DECIMAL(10,2)) / 1000) * hm.volume_eluted, 2)
+                        ELSE NULL END AS total_campylobacter,
+                        CASE WHEN chrm.mpn_concentration IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0 THEN
+                            ROUND((CAST(REPLACE(REPLACE(chrm.mpn_concentration, '>', ''), '<', '') AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 2)
+                        ELSE NULL END AS concentration_mpn_l,
+                        CASE WHEN chrm.upper_ci IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0 THEN
+                            ROUND((CAST(REPLACE(REPLACE(chrm.upper_ci, '>', ''), '<', '') AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 2)
+                        ELSE NULL END AS upper_ci_new,
+                        CASE WHEN chrm.lower_ci IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0 THEN
+                            ROUND((CAST(REPLACE(REPLACE(chrm.lower_ci, '>', ''), '<', '') AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 2)
+                        ELSE NULL END AS lower_ci_new,
                            $case_query, 
                            GROUP_CONCAT(DISTINCT chrb.biochemical_tube ORDER BY chrb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
                            GROUP_CONCAT(DISTINCT CONCAT(chrb.biochemical_tube, ':', chrb.confirmation) ORDER BY chrb.biochemical_tube SEPARATOR ', ') AS confirmation,
                            GROUP_CONCAT(DISTINCT chsgplh.plate_number ORDER BY chsgplh.plate_number SEPARATOR ', ') AS plate_numbers");
         $this->db->from('campy_hemoflow AS ch');
+        $this->db->join('hemoflow AS hm', 'ch.id_one_water_sample = hm.id_one_water_sample AND hm.flag = "0"', 'left');
         $this->db->join('campy_hemoflow_result_hba AS chrh', 'ch.id_campy_hemoflow = chrh.id_campy_hemoflow', 'left');
         $this->db->join('campy_hemoflow_sample_growth_plate_hba AS chsgplh', 'chrh.id_campy_hemoflow_result_hba = chsgplh.id_campy_hemoflow_result_hba', 'left');
         $this->db->join('campy_hemoflow_sample_volumes AS chsv1', 'chrh.id_campy_hemoflow = chsv1.id_campy_hemoflow', 'left');

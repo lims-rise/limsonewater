@@ -30,6 +30,7 @@
                                     }
                             ?>        
                             <?php echo anchor(site_url('Sample_reception/excel'), '<i class="fa fa-file-excel-o"></i> Export to XLS', 'class="btn btn-success"'); ?>
+                            <?php echo anchor(site_url('Sample_reception/export_csv'), '<i class="fa fa-file-text-o"></i> Export to CSV', 'class="btn btn-primary"'); ?>
                             <button class='btn btn-info' id='advanceSearchBtn'><i class='fa fa-search-plus'></i> Advanced Search</button>
                             <button class='btn btn-warning' id='clearSearchBtn' style='display:none;'><i class='fa fa-refresh'></i> Clear Filters</button>
                         </div>

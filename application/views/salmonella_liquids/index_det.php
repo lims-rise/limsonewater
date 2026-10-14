@@ -209,6 +209,9 @@
                                     <button class="btn btn-success" id="exportBtn">
                                         <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS
                                     </button>
+                                    <button class="btn btn-primary" id="exportCsvBtn">
+                                        <i class="fa fa-file-text-o" aria-hidden="true"></i> Export to CSV
+                                    </button>
                                     <?php
                                         $lvl = $this->session->userdata('id_user_level');
                                         if ($lvl != 4){
@@ -1266,6 +1269,11 @@
     document.getElementById('exportBtn').addEventListener('click', function() {
         let id_salmonella_liquids = document.getElementById('id_salmonella_liquids').value;
         window.location.href = '<?php echo site_url('Salmonella_liquids/excel') ?>/' + id_salmonella_liquids;
+    });
+
+    document.getElementById('exportCsvBtn').addEventListener('click', function() {
+        let id_salmonella_liquids = document.getElementById('id_salmonella_liquids').value;
+        window.location.href = '<?php echo site_url('Salmonella_liquids/export_csv') ?>/' + id_salmonella_liquids;
     });
 </script>
 <script>

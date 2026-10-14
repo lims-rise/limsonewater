@@ -560,6 +560,52 @@ class Colilert_idexx_biosolids extends MY_Controller
         $writer->save('php://output');
     }
 
+    public function export_csv()
+    {
+        $rows = $this->Colilert_idexx_biosolids_model->get_all();
+        $columns = array(
+            'Id Colilert Biosolids In' => 'id_colilert_bio_in',
+            'Id One Water Sample' => 'id_one_water_sample',
+            'Lab Tech' => 'initial',
+            'Sample Type' => 'sampletype',
+            'Colilert Barcode In' => 'colilert_barcode',
+            'Date Sample In' => 'date_sample',
+            'Time Sample In' => 'time_sample',
+            'Wet Weight' => 'wet_weight',
+            'Elution Volume' => 'elution_volume',
+            'Volume Bottle' => 'volume_bottle',
+            'Dilution' => 'dilution',
+            'Id Colilert Biosolids Out' => 'id_colilert_bio_out',
+            'Colilert Barcode Out' => 'colilert_barcode',
+            'Date Sample Out' => 'date_sample',
+            'Time Sample Out' => 'time_sample',
+            'E. Coli Large Wells' => 'ecoli_largewells',
+            'E. Coli Small Wells' => 'ecoli_smallwells',
+            'Ecoli (raw MPN)' => 'ecoli',
+            'Coliforms Large Wells' => 'coliforms_largewells',
+            'Coliforms Small Wells' => 'coliforms_smallwells',
+            'Total Coliforms (raw MPN)' => 'total_coliforms',
+            'Remarks' => 'remarks'
+        );
+
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename=Report_colilert_idexx_biosolids_' . date('Ymd_His') . '.csv');
+        header('Cache-Control: max-age=0');
+        echo "\xEF\xBB\xBF";
+
+        $output = fopen('php://output', 'w');
+        fputcsv($output, array_keys($columns));
+        foreach ($rows as $row) {
+            $csvRow = array();
+            foreach ($columns as $property) {
+                $csvRow[] = property_exists($row, $property) ? $row->$property : '';
+            }
+            fputcsv($output, $csvRow);
+        }
+        fclose($output);
+        exit();
+    }
+
     public function validateColilertBarcode() {
         $id = $this->input->get('id');
         $data = $this->Colilert_idexx_biosolids_model->validateColilertBarcode($id);

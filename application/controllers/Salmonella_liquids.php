@@ -1290,6 +1290,10 @@ class Salmonella_liquids extends MY_Controller
                 $sheet->setCellValue($columnLetter . '1', "Tube $plate_number Result");
                 $tubeIndex++;
             }
+
+            $sheet->setCellValue(\PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(12 + $tubeIndex) . '1', 'Concentration MPN');
+            $sheet->setCellValue(\PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(13 + $tubeIndex) . '1', 'Upper CI');
+            $sheet->setCellValue(\PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(14 + $tubeIndex) . '1', 'Lower CI');
         }
     
         // Start filling data from the second row
@@ -1329,6 +1333,10 @@ class Salmonella_liquids extends MY_Controller
                 $sheet->setCellValue($columnLetter . $numrow, $confirmation_value);
                 $tubeIndex++;
             }
+
+            $sheet->setCellValue(\PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(12 + $tubeIndex) . $numrow, $concentration->mpn_concentration ?? '');
+            $sheet->setCellValue(\PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(13 + $tubeIndex) . $numrow, $concentration->upper_ci ?? '');
+            $sheet->setCellValue(\PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(14 + $tubeIndex) . $numrow, $concentration->lower_ci ?? '');
     
             $numrow++;
         }
@@ -1341,6 +1349,69 @@ class Salmonella_liquids extends MY_Controller
         // Output the Excel file
         $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
+    }
+
+    public function export_csv($id) {
+        $finalConcentration = $this->Salmonella_liquids_model->get_export($id);
+        $headers = array(
+            'ID One Water Sample', 'Salmonella Assay Barcode', 'Initial', 'Sample Type',
+            'Number of Tubes', 'MPN PCR Conducted', 'Date Sample Processed',
+            'Time Sample Processed', 'Sample Wet Weight', 'Filtration  Volume(mL)',
+            'Enrichment Media'
+        );
+
+        if (!empty($finalConcentration)) {
+            foreach ($finalConcentration[0] as $key => $value) {
+                if (strpos($key, 'Tube') === 0) {
+                    $headers[] = "$key Volume";
+                }
+            }
+
+            foreach (explode(',', $finalConcentration[0]->plate_numbers) as $plate_number) {
+                $headers[] = "Tube $plate_number Result";
+            }
+
+            $headers = array_merge($headers, array('Concentration MPN', 'Upper CI', 'Lower CI'));
+        }
+
+        $output = $this->open_csv_output('Salmonella_Liquids_Final_' . $id);
+        fputcsv($output, $headers);
+
+        foreach ($finalConcentration as $concentration) {
+            $row = array(
+                $concentration->id_one_water_sample ?? '',
+                $concentration->salmonella_assay_barcode ?? '',
+                $concentration->initial ?? '',
+                $concentration->sampletype ?? '',
+                $concentration->number_of_tubes ?? '',
+                $concentration->mpn_pcr_conducted ?? '',
+                $concentration->date_sample_processed ?? '',
+                $concentration->time_sample_processed ?? '',
+                $concentration->sample_wetweight ?? '',
+                $concentration->elution_volume ?? '',
+                $concentration->enrichment_media ?? ''
+            );
+
+            foreach ($concentration as $key => $value) {
+                if (strpos($key, 'Tube') === 0) {
+                    $row[] = $value ?? '';
+                }
+            }
+
+            foreach (explode(',', $concentration->plate_numbers) as $plate_number) {
+                $row[] = isset($concentration->confirmation[$plate_number])
+                    ? $concentration->confirmation[$plate_number]
+                    : 'No Colony Plate';
+            }
+
+            $row[] = $concentration->mpn_concentration ?? '';
+            $row[] = $concentration->upper_ci ?? '';
+            $row[] = $concentration->lower_ci ?? '';
+            fputcsv($output, $row);
+        }
+
+        fclose($output);
+        exit();
     }
 
     public function excel_all() {
@@ -1383,6 +1454,84 @@ class Salmonella_liquids extends MY_Controller
             echo 'Error generating file: ', $e->getMessage();
             return;
         }
+    }
+
+    public function export_csv_all() {
+        $finalConcentration = $this->Salmonella_liquids_model->get_all_export();
+        $dataTubes = array();
+
+        foreach ($finalConcentration as $concentration) {
+            $numberOfTubes = (int) $concentration->number_of_tubes;
+            if (!isset($dataTubes[$numberOfTubes])) {
+                $dataTubes[$numberOfTubes] = array();
+            }
+            $dataTubes[$numberOfTubes][] = $concentration;
+        }
+
+        $numberOfTubes = !empty($dataTubes) ? max(array_keys($dataTubes)) : 0;
+        $headers = array(
+            'ID One Water Sample', 'Salmonella Assay Barcode', 'Initial', 'Sample Type',
+            'Number of Tubes', 'MPN PCR Conducted', 'Date Sample Processed',
+            'Time Sample Processed', 'Sample Wet Weight', 'Filtration  Volume(mL)',
+            'Enrichment Media'
+        );
+        for ($tube = 1; $tube <= $numberOfTubes; $tube++) {
+            $headers[] = "Tube $tube Volume";
+        }
+        for ($tube = 1; $tube <= $numberOfTubes; $tube++) {
+            $headers[] = "Tube $tube Result";
+        }
+
+        $output = $this->open_csv_output('Salmonella_Liquids_All');
+        fputcsv($output, $headers);
+
+        foreach ($dataTubes as $data) {
+            foreach ($data as $concentration) {
+                $row = array(
+                    $concentration->id_one_water_sample ?? '',
+                    $concentration->salmonella_assay_barcode ?? '',
+                    $concentration->initial ?? '',
+                    $concentration->sampletype ?? '',
+                    $concentration->number_of_tubes ?? '',
+                    $concentration->mpn_pcr_conducted ?? '',
+                    $concentration->date_sample_processed ?? '',
+                    $concentration->time_sample_processed ?? '',
+                    $concentration->sample_wetweight ?? '',
+                    $concentration->elution_volume ?? '',
+                    $concentration->enrichment_media ?? ''
+                );
+
+                $tube_values = array();
+                foreach ($concentration as $key => $value) {
+                    if (strpos($key, 'Tube') === 0) {
+                        $tube_values[] = $value ?? '';
+                    }
+                }
+                $row = array_merge($row, array_pad($tube_values, $numberOfTubes, ''));
+
+                for ($tube = 1; $tube <= $numberOfTubes; $tube++) {
+                    $row[] = $concentration->confirmation[$tube] ?? 'No Colony Plate';
+                }
+                fputcsv($output, $row);
+            }
+        }
+
+        fclose($output);
+        exit();
+    }
+
+    private function open_csv_output($file_prefix) {
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename=' . $file_prefix . '_' . date('Ymd_His') . '.csv');
+        header('Cache-Control: max-age=0');
+
+        if (ob_get_level()) {
+            ob_end_clean();
+        }
+
+        $output = fopen('php://output', 'w');
+        echo "\xEF\xBB\xBF";
+        return $output;
     }
     
     

@@ -143,20 +143,14 @@
                                 <h3 class="box-title">Final Calculation</h3>
                             </div>
                             <div class="box-body pad">
-                                <!-- <div style="padding-bottom: 10px;">
+                                <div style="padding-bottom: 10px;">
                                     <button class="btn btn-success" id="exportBtn">
                                         <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS
                                     </button>
-                                    <?php
-                                        $lvl = $this->session->userdata('id_user_level');
-                                        if ($lvl != 4){
-                                            echo '<button class="btn btn-primary" id="calculateMpnBtn" style="margin-left: 10px; position: relative;">
-                                                    <i class="fa fa-calculator" aria-hidden="true"></i> Calculate MPN
-                                                    <span id="mpnUpdateBadge" class="badge badge-warning" style="position: absolute; top: -5px; right: -5px; background-color: #ff6b6b; color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 10px; line-height: 20px; display: none;">!</span>
-                                                  </button>';
-                                        }
-                                    ?>
-                                </div> -->
+                                    <button class="btn btn-primary" id="exportCsvBtn">
+                                        <i class="fa fa-file-text-o" aria-hidden="true"></i> Export to CSV
+                                    </button>
+                                </div>
                                 <input id="id_colilert_hemoflow" name="id_colilert_hemoflow" type="hidden" class="form-control input-sm" value="<?php echo $id_colilert_hemoflow ?>">
 
                                 <div id="content-final-calculation" class="table-responsive">
@@ -692,6 +686,16 @@
 <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
 <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
 <script type="text/javascript">
+
+    document.getElementById('exportBtn').addEventListener('click', function() {
+        const id = document.getElementById('id_colilert_hemoflow').value;
+        window.location.href = '<?php echo site_url("Colilert_hemoflow/export_detail_xls"); ?>/' + id;
+    });
+
+    document.getElementById('exportCsvBtn').addEventListener('click', function() {
+        const id = document.getElementById('id_colilert_hemoflow').value;
+        window.location.href = '<?php echo site_url("Colilert_hemoflow/export_detail_csv"); ?>/' + id;
+    });
 
     let table;
     // let table1;

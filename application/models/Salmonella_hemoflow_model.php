@@ -276,15 +276,47 @@ class Salmonella_hemoflow_model extends CI_Model
     
         // Final query
         $this->db->select("sh.id_one_water_sample, sh.id_person, rp.initial, sh.mpn_pcr_conducted, sh.number_of_tubes, sh.salmonella_assay_barcode, sh.date_sample_processed, sh.time_sample_processed, sh.sample_wetweight, sh.elution_volume, rs.sampletype, sh.enrichment_media,
+                           hm.volume_filter, hm.volume_eluted,
+                           shrm.mpn_concentration, shrm.upper_ci, shrm.lower_ci,
+                           CASE WHEN shrm.mpn_concentration IS NOT NULL AND hm.volume_eluted IS NOT NULL THEN
+                               CASE
+                                   WHEN shrm.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted, 2))
+                                   WHEN shrm.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted, 2))
+                                   ELSE ROUND((CAST(shrm.mpn_concentration AS DECIMAL(10,2)) / 1000) * hm.volume_eluted, 2)
+                               END
+                           ELSE NULL END AS total_salmonella,
+                           CASE WHEN shrm.mpn_concentration IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0 THEN
+                               CASE
+                                   WHEN shrm.mpn_concentration LIKE '>%' THEN CONCAT('>', ROUND(((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter), 2))
+                                   WHEN shrm.mpn_concentration LIKE '<%' THEN CONCAT('<', ROUND(((CAST(SUBSTRING(shrm.mpn_concentration, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter), 2))
+                                   ELSE ROUND(((CAST(shrm.mpn_concentration AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter), 2)
+                               END
+                           ELSE NULL END AS concentration_mpn_l,
+                           CASE WHEN shrm.upper_ci IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0 THEN
+                               CASE
+                                   WHEN shrm.upper_ci LIKE '>%' THEN CONCAT('>', ROUND((CAST(SUBSTRING(shrm.upper_ci, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 2))
+                                   WHEN shrm.upper_ci LIKE '<%' THEN CONCAT('<', ROUND((CAST(SUBSTRING(shrm.upper_ci, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 2))
+                                   ELSE ROUND((CAST(shrm.upper_ci AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 2)
+                               END
+                           ELSE NULL END AS concentration_upper_ci,
+                           CASE WHEN shrm.lower_ci IS NOT NULL AND hm.volume_eluted IS NOT NULL AND hm.volume_filter IS NOT NULL AND hm.volume_filter > 0 THEN
+                               CASE
+                                   WHEN shrm.lower_ci LIKE '>%' THEN CONCAT('>', ROUND((CAST(SUBSTRING(shrm.lower_ci, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 2))
+                                   WHEN shrm.lower_ci LIKE '<%' THEN CONCAT('<', ROUND((CAST(SUBSTRING(shrm.lower_ci, 2) AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 2))
+                                   ELSE ROUND((CAST(shrm.lower_ci AS DECIMAL(10,2)) / 1000) * hm.volume_eluted / hm.volume_filter, 2)
+                               END
+                           ELSE NULL END AS concentration_lower_ci,
                            $case_query, 
                            GROUP_CONCAT(DISTINCT shrb.biochemical_tube ORDER BY shrb.biochemical_tube SEPARATOR ', ') AS biochemical_tube, 
                            GROUP_CONCAT(DISTINCT CONCAT(shrb.biochemical_tube, ':', shrb.confirmation) ORDER BY shrb.biochemical_tube SEPARATOR ', ') AS confirmation,
                            GROUP_CONCAT(DISTINCT shspcp.plate_number ORDER BY shspcp.plate_number SEPARATOR ', ') AS plate_numbers");
         $this->db->from('salmonella_hemoflow AS sh');
+        $this->db->join('hemoflow AS hm', 'sh.id_one_water_sample = hm.id_one_water_sample AND hm.flag = "0"', 'left');
         $this->db->join('salmonella_hemoflow_result_chromagar AS shrc', 'sh.id_salmonella_hemoflow = shrc.id_salmonella_hemoflow', 'left');
         $this->db->join('salmonella_hemoflow_sample_purple_colony_plate AS shspcp', 'shrc.id_salmonella_hemoflow_result_chromagar = shspcp.id_salmonella_hemoflow_result_chromagar', 'left');
         $this->db->join('salmonella_hemoflow_sample_volumes AS shsv1', 'shrc.id_salmonella_hemoflow = shsv1.id_salmonella_hemoflow', 'left');
         $this->db->join('salmonella_hemoflow_result_biochemical AS shrb', 'shspcp.id_salmonella_hemoflow_result_chromagar = shrb.id_salmonella_hemoflow_result_chromagar', 'left');
+        $this->db->join('salmonella_hemoflow_result_mpn AS shrm', 'sh.id_salmonella_hemoflow = shrm.id_salmonella_hemoflow', 'left');
         $this->db->join('ref_sampletype AS rs', 'sh.id_sampletype = rs.id_sampletype', 'left');
         $this->db->join('ref_person AS rp', 'sh.id_person = rp.id_person', 'left');
     

@@ -1153,6 +1153,12 @@ class Salmonella_hemoflow extends MY_Controller
                 $sheet->setCellValue($columnLetter . '1', "Tube $plate_number Result");
                 $tubeIndex++;
             }
+
+            $detailHeaders = array('Concentration MPN', 'Upper CI', 'Lower CI', 'Volume filtered (L)', 'Volume eluted (mL)', 'Total Salmonella', 'Concentration (MPN/L)', 'Upper CI', 'Lower CI');
+            foreach ($detailHeaders as $header) {
+                $sheet->setCellValue(\PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(12 + $tubeIndex) . '1', $header);
+                $tubeIndex++;
+            }
         }
     
         // Start filling data from the second row
@@ -1192,6 +1198,22 @@ class Salmonella_hemoflow extends MY_Controller
                 $sheet->setCellValue($columnLetter . $numrow, $confirmation_value);
                 $tubeIndex++;
             }
+
+            $detailValues = array(
+                $concentration->mpn_concentration ?? '',
+                $concentration->upper_ci ?? '',
+                $concentration->lower_ci ?? '',
+                $concentration->volume_filter ?? '',
+                $concentration->volume_eluted ?? '',
+                $concentration->total_salmonella ?? '',
+                $concentration->concentration_mpn_l ?? '',
+                $concentration->concentration_upper_ci ?? '',
+                $concentration->concentration_lower_ci ?? ''
+            );
+            foreach ($detailValues as $value) {
+                $sheet->setCellValue(\PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(12 + $tubeIndex) . $numrow, $value);
+                $tubeIndex++;
+            }
     
             $numrow++;
         }
@@ -1204,6 +1226,71 @@ class Salmonella_hemoflow extends MY_Controller
         // Output the Excel file
         $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
+    }
+
+    public function export_csv($id) {
+        $finalCalculation = $this->Salmonella_hemoflow_model->get_export($id);
+        $headers = array(
+            'ID One Water Sample', 'Salmonella Assay Barcode', 'Initial', 'Sample Type',
+            'Number of Tubes', 'MPN PCR Conducted', 'Date Sample Processed',
+            'Time Sample Processed', 'Sample Wet Weight', 'Filtration  Volume(mL)',
+            'Enrichment Media'
+        );
+
+        if (!empty($finalCalculation)) {
+            foreach ($finalCalculation[0] as $key => $value) {
+                if (strpos($key, 'Tube') === 0) {
+                    $headers[] = "$key Volume";
+                }
+            }
+            foreach (explode(',', $finalCalculation[0]->plate_numbers) as $plate_number) {
+                $headers[] = "Tube $plate_number Result";
+            }
+            $headers = array_merge($headers, array('Concentration MPN', 'Upper CI', 'Lower CI', 'Volume filtered (L)', 'Volume eluted (mL)', 'Total Salmonella', 'Concentration (MPN/L)', 'Upper CI', 'Lower CI'));
+        }
+
+        $output = $this->open_csv_output('Salmonella_Hemoflow_Final_' . $id);
+        fputcsv($output, $headers);
+
+        foreach ($finalCalculation as $calculation) {
+            $row = array(
+                $calculation->id_one_water_sample ?? '',
+                $calculation->salmonella_assay_barcode ?? '',
+                $calculation->initial ?? '',
+                $calculation->sampletype ?? '',
+                $calculation->number_of_tubes ?? '',
+                $calculation->mpn_pcr_conducted ?? '',
+                $calculation->date_sample_processed ?? '',
+                $calculation->time_sample_processed ?? '',
+                $calculation->sample_wetweight ?? '',
+                $calculation->elution_volume ?? '',
+                $calculation->enrichment_media ?? ''
+            );
+
+            foreach ($calculation as $key => $value) {
+                if (strpos($key, 'Tube') === 0) {
+                    $row[] = $value ?? '';
+                }
+            }
+            foreach (explode(',', $calculation->plate_numbers) as $plate_number) {
+                $row[] = isset($calculation->confirmation[$plate_number]) ? $calculation->confirmation[$plate_number] : 'No Colony Plate';
+            }
+            $row = array_merge($row, array(
+                $calculation->mpn_concentration ?? '',
+                $calculation->upper_ci ?? '',
+                $calculation->lower_ci ?? '',
+                $calculation->volume_filter ?? '',
+                $calculation->volume_eluted ?? '',
+                $calculation->total_salmonella ?? '',
+                $calculation->concentration_mpn_l ?? '',
+                $calculation->concentration_upper_ci ?? '',
+                $calculation->concentration_lower_ci ?? ''
+            ));
+            fputcsv($output, $row);
+        }
+
+        fclose($output);
+        exit();
     }
 
     public function excel_all() {
@@ -1246,6 +1333,78 @@ class Salmonella_hemoflow extends MY_Controller
             echo 'Error generating file: ', $e->getMessage();
             return;
         }
+    }
+
+    public function export_csv_all() {
+        $finalConcentration = $this->Salmonella_hemoflow_model->get_all_export();
+        $dataTubes = array();
+        foreach ($finalConcentration as $concentration) {
+            $numberOfTubes = (int) $concentration->number_of_tubes;
+            if (!isset($dataTubes[$numberOfTubes])) {
+                $dataTubes[$numberOfTubes] = array();
+            }
+            $dataTubes[$numberOfTubes][] = $concentration;
+        }
+
+        $numberOfTubes = !empty($dataTubes) ? max(array_keys($dataTubes)) : 0;
+        $headers = array(
+            'ID One Water Sample', 'Salmonella Assay Barcode', 'Initial', 'Sample Type',
+            'Number of Tubes', 'MPN PCR Conducted', 'Date Sample Processed',
+            'Time Sample Processed', 'Sample Wet Weight', 'Filtration  Volume(mL)',
+            'Enrichment Media'
+        );
+        for ($tube = 1; $tube <= $numberOfTubes; $tube++) {
+            $headers[] = "Tube $tube Volume";
+        }
+        for ($tube = 1; $tube <= $numberOfTubes; $tube++) {
+            $headers[] = "Tube $tube Result";
+        }
+
+        $output = $this->open_csv_output('Salmonella_Hemoflow_All');
+        fputcsv($output, $headers);
+        foreach ($dataTubes as $data) {
+            foreach ($data as $concentration) {
+                $row = array(
+                    $concentration->id_one_water_sample ?? '',
+                    $concentration->salmonella_assay_barcode ?? '',
+                    $concentration->initial ?? '',
+                    $concentration->sampletype ?? '',
+                    $concentration->number_of_tubes ?? '',
+                    $concentration->mpn_pcr_conducted ?? '',
+                    $concentration->date_sample_processed ?? '',
+                    $concentration->time_sample_processed ?? '',
+                    $concentration->sample_wetweight ?? '',
+                    $concentration->elution_volume ?? '',
+                    $concentration->enrichment_media ?? ''
+                );
+                $tubeValues = array();
+                foreach ($concentration as $key => $value) {
+                    if (strpos($key, 'Tube') === 0) {
+                        $tubeValues[] = $value ?? '';
+                    }
+                }
+                $row = array_merge($row, array_pad($tubeValues, $numberOfTubes, ''));
+                for ($tube = 1; $tube <= $numberOfTubes; $tube++) {
+                    $row[] = $concentration->confirmation[$tube] ?? 'No Colony Plate';
+                }
+                fputcsv($output, $row);
+            }
+        }
+
+        fclose($output);
+        exit();
+    }
+
+    private function open_csv_output($file_prefix) {
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename=' . $file_prefix . '_' . date('Ymd_His') . '.csv');
+        header('Cache-Control: max-age=0');
+        if (ob_get_level()) {
+            ob_end_clean();
+        }
+        $output = fopen('php://output', 'w');
+        echo "\xEF\xBB\xBF";
+        return $output;
     }
     
     

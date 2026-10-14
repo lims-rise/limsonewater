@@ -528,6 +528,113 @@ class Colilert_hemoflow extends MY_Controller
         $writer->save('php://output');
     }
 
+    public function export_csv() {
+        $rows = $this->Colilert_hemoflow_model->get_all();
+        $columns = array(
+            'Id Colilert In' => 'id_colilert_hemoflow',
+            'Id One Water Sample' => 'id_one_water_sample',
+            'Lab Tech' => 'initial',
+            'Sample Type' => 'sampletype',
+            'Colilert Barcode In' => 'colilert_hemoflow_barcode',
+            'Date Sample In' => 'date_sample',
+            'Time Sample In' => 'time_sample',
+            'Volume Bottle' => 'volume_bottle',
+            'Dilution' => 'dilution',
+            'Id Colilert Out' => 'id_colilert_hemoflow_detail',
+            'Colilert Barcode Out' => 'colilert_hemoflow_barcode',
+            'Date Sample Out' => 'date_sample',
+            'Time Sample Out' => 'time_sample',
+            'E. Coli Large Wells' => 'ecoli_largewells',
+            'E. Coli Small Wells' => 'ecoli_smallwells',
+            'Ecoli (MPN/100mL)' => 'ecoli',
+            'Coliforms Large Wells' => 'coliforms_largewells',
+            'Coliforms Small Wells' => 'coliforms_smallwells',
+            'Total Coliforms (MPN/100mL)' => 'coliforms',
+            'Remarks' => 'remarks'
+        );
+
+        $output = $this->open_csv_output('Report_colilert_hemoflow');
+        fputcsv($output, array_keys($columns));
+        foreach ($rows as $row) {
+            $csvRow = array();
+            foreach ($columns as $property) {
+                $csvRow[] = property_exists($row, $property) ? $row->$property : '';
+            }
+            fputcsv($output, $csvRow);
+        }
+        fclose($output);
+        exit();
+    }
+
+    public function export_detail_xls($id) {
+        $rows = $this->Colilert_hemoflow_model->subjsonFinalCalculation($id);
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $headers = array(
+            'ID One Water Sample', 'Colilert Hemoflow Barcode', 'Initial', 'Sample Type',
+            'Volume Filtered (L)', 'Volume Eluted (mL)', 'Total E. coli',
+            'E. coli (MPN/100ML)', 'Lower Confidence Limit MPN/100mL',
+            'Total Coliforms', 'Coliforms (MPN/100mL)'
+        );
+        foreach ($headers as $index => $header) {
+            $sheet->setCellValueByColumnAndRow($index + 1, 1, $header);
+        }
+        $rowNumber = 2;
+        foreach ($rows as $row) {
+            $values = array(
+                $row['id_one_water_sample'] ?? '', $row['colilert_hemoflow_barcode'] ?? '',
+                $row['initial'] ?? '', $row['sampletype'] ?? '', $row['volume_filter'] ?? '',
+                $row['volume_eluted'] ?? '', $row['total_ecoli'] ?? '', $row['ecolimpn'] ?? '',
+                array_key_exists('lowermpn', $row) && $row['lowermpn'] === null ? 'N/A' : ($row['lowermpn'] ?? ''),
+                $row['totalcoliforms'] ?? '', $row['coliformmpn'] ?? ''
+            );
+            foreach ($values as $column => $value) {
+                $sheet->setCellValueByColumnAndRow($column + 1, $rowNumber, $value);
+            }
+            $rowNumber++;
+        }
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="Report_Colilert_Hemoflow_Final_Calculation.xlsx"');
+        header('Cache-Control: max-age=0');
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
+    }
+
+    public function export_detail_csv($id) {
+        $rows = $this->Colilert_hemoflow_model->subjsonFinalCalculation($id);
+        $headers = array(
+            'ID One Water Sample', 'Colilert Hemoflow Barcode', 'Initial', 'Sample Type',
+            'Volume Filtered (L)', 'Volume Eluted (mL)', 'Total E. coli',
+            'E. coli (MPN/100ML)', 'Lower Confidence Limit MPN/100mL',
+            'Total Coliforms', 'Coliforms (MPN/100mL)'
+        );
+        $output = $this->open_csv_output('Colilert_Hemoflow_Final_Calculation');
+        fputcsv($output, $headers);
+        foreach ($rows as $row) {
+            fputcsv($output, array(
+                $row['id_one_water_sample'] ?? '', $row['colilert_hemoflow_barcode'] ?? '',
+                $row['initial'] ?? '', $row['sampletype'] ?? '', $row['volume_filter'] ?? '',
+                $row['volume_eluted'] ?? '', $row['total_ecoli'] ?? '', $row['ecolimpn'] ?? '',
+                array_key_exists('lowermpn', $row) && $row['lowermpn'] === null ? 'N/A' : ($row['lowermpn'] ?? ''),
+                $row['totalcoliforms'] ?? '', $row['coliformmpn'] ?? ''
+            ));
+        }
+        fclose($output);
+        exit();
+    }
+
+    private function open_csv_output($file_prefix) {
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename=' . $file_prefix . '_' . date('Ymd_His') . '.csv');
+        header('Cache-Control: max-age=0');
+        if (ob_get_level()) {
+            ob_end_clean();
+        }
+        $output = fopen('php://output', 'w');
+        echo "\xEF\xBB\xBF";
+        return $output;
+    }
+
     public function validateColilertBarcode() {
         $id = $this->input->get('id');
         $data = $this->Colilert_hemoflow_model->validateColilertBarcode($id);

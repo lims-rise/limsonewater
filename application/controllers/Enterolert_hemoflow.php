@@ -496,6 +496,106 @@ class Enterolert_hemoflow extends MY_Controller
         $writer->save('php://output');
     }
 
+    public function export_csv() {
+        $rows = $this->Enterolert_hemoflow_model->get_all();
+        $columns = array(
+            'Id Enterolert In' => 'id_enterolert_hemoflow',
+            'Id One Water Sample' => 'id_one_water_sample',
+            'Lab Tech' => 'initial',
+            'Sample Type' => 'sampletype',
+            'Enterolert Barcode' => 'enterolert_hemoflow_barcode',
+            'Date Sample In' => 'date_sample',
+            'Time Sample In' => 'time_sample',
+            'Volume Bottle' => 'volume_bottle',
+            'Dilution' => 'dilution',
+            'Id Enterolert Out' => 'id_enterolert_hemoflow_detail',
+            'Enterolert Barcode Out' => 'enterolert_hemoflow_barcode',
+            'Date Sample Out' => 'date_sample',
+            'Time Sample Out' => 'time_sample',
+            'Enterococcus Large Wells' => 'enterococcus_largewells',
+            'Enterococcus Small Wells' => 'enterococcus_smallwells',
+            'Enterococcus (MPN/100mL)' => 'enterococcus',
+            'Remarks' => 'remarks'
+        );
+
+        $output = $this->open_csv_output('Report_enterolert_hemoflow');
+        fputcsv($output, array_keys($columns));
+        foreach ($rows as $row) {
+            $csvRow = array();
+            foreach ($columns as $property) {
+                $csvRow[] = property_exists($row, $property) ? $row->$property : '';
+            }
+            fputcsv($output, $csvRow);
+        }
+        fclose($output);
+        exit();
+    }
+
+    public function export_detail_xls($id) {
+        $rows = $this->Enterolert_hemoflow_model->subjsonFinalCalculation($id);
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $headers = array(
+            'ID One Water Sample', 'Enterolert Hemoflow Barcode', 'Initial', 'Sample Type',
+            'Volume Filtered (L)', 'Volume Eluted (mL)', 'Total Enterococcus',
+            'Enterococcus (MPN/100ML)', 'Lower Confidence Limit MPN/100mL'
+        );
+        foreach ($headers as $index => $header) {
+            $sheet->setCellValueByColumnAndRow($index + 1, 1, $header);
+        }
+        $rowNumber = 2;
+        foreach ($rows as $row) {
+            $values = array(
+                $row['id_one_water_sample'] ?? '', $row['enterolert_hemoflow_barcode'] ?? '',
+                $row['initial'] ?? '', $row['sampletype'] ?? '', $row['volume_filter'] ?? '',
+                $row['volume_eluted'] ?? '', $row['total_enterococcus'] ?? '',
+                $row['enterococcus'] ?? '', $row['lowerdetection'] ?? ''
+            );
+            foreach ($values as $column => $value) {
+                $sheet->setCellValueByColumnAndRow($column + 1, $rowNumber, $value);
+            }
+            $rowNumber++;
+        }
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="Report_Enterolert_Hemoflow_Final_Calculation.xlsx"');
+        header('Cache-Control: max-age=0');
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
+    }
+
+    public function export_detail_csv($id) {
+        $rows = $this->Enterolert_hemoflow_model->subjsonFinalCalculation($id);
+        $headers = array(
+            'ID One Water Sample', 'Enterolert Hemoflow Barcode', 'Initial', 'Sample Type',
+            'Volume Filtered (L)', 'Volume Eluted (mL)', 'Total Enterococcus',
+            'Enterococcus (MPN/100ML)', 'Lower Confidence Limit MPN/100mL'
+        );
+        $output = $this->open_csv_output('Enterolert_Hemoflow_Final_Calculation');
+        fputcsv($output, $headers);
+        foreach ($rows as $row) {
+            fputcsv($output, array(
+                $row['id_one_water_sample'] ?? '', $row['enterolert_hemoflow_barcode'] ?? '',
+                $row['initial'] ?? '', $row['sampletype'] ?? '', $row['volume_filter'] ?? '',
+                $row['volume_eluted'] ?? '', $row['total_enterococcus'] ?? '',
+                $row['enterococcus'] ?? '', $row['lowerdetection'] ?? ''
+            ));
+        }
+        fclose($output);
+        exit();
+    }
+
+    private function open_csv_output($file_prefix) {
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename=' . $file_prefix . '_' . date('Ymd_His') . '.csv');
+        header('Cache-Control: max-age=0');
+        if (ob_get_level()) {
+            ob_end_clean();
+        }
+        $output = fopen('php://output', 'w');
+        echo "\xEF\xBB\xBF";
+        return $output;
+    }
+
     public function validateEnterolertBarcode() {
         $id = $this->input->get('id');
         $data = $this->Enterolert_hemoflow_model->validateEnterolertBarcode($id);

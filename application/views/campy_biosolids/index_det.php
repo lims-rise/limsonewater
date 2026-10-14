@@ -200,6 +200,9 @@
                                     <button class="btn btn-success" id="exportBtn">
                                         <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export to XLS
                                     </button>
+                                    <button class="btn btn-primary" id="exportCsvBtn">
+                                        <i class="fa fa-file-text-o" aria-hidden="true"></i> Export to CSV
+                                    </button>
                                     <?php
                                         $lvl = $this->session->userdata('id_user_level');
                                         if ($lvl != 4){
@@ -1293,6 +1296,11 @@
     document.getElementById('exportBtn').addEventListener('click', function() {
         let id_campy_biosolids = document.getElementById('id_campy_biosolids').value;
         window.location.href = '<?php echo site_url("Campy_biosolids/excel"); ?>/' + id_campy_biosolids;
+    });
+
+    document.getElementById('exportCsvBtn').addEventListener('click', function() {
+        let id_campy_biosolids = document.getElementById('id_campy_biosolids').value;
+        window.location.href = '<?php echo site_url("Campy_biosolids/export_csv"); ?>/' + id_campy_biosolids;
     });
 
     // Calculate MPN button click handler

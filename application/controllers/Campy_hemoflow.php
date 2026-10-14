@@ -1242,8 +1242,7 @@ class Campy_hemoflow extends MY_Controller
         $sheet->setCellValue('F1', "MPN PCR Conducted");
         $sheet->setCellValue('G1', "Date Sample Processed");
         $sheet->setCellValue('H1', "Time Sample Processed");
-        $sheet->setCellValue('I1', "Sample Wet Weight");
-        $sheet->setCellValue('J1', "Elution Volume");
+        $sheet->setCellValue('I1', "Elution Volume");
     
         // Fetch the concentration data
         $finalConcentration = $this->Campy_hemoflow_model->get_export($id);
@@ -1255,7 +1254,7 @@ class Campy_hemoflow extends MY_Controller
             // Add Tube Volume headers
             foreach ($finalConcentration[0] as $key => $value) {
                 if (strpos($key, 'Tube') === 0) {
-                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
                     $sheet->setCellValue($columnLetter . '1', "$key Volume");
                     $tubeIndex++;
                 }
@@ -1264,34 +1263,41 @@ class Campy_hemoflow extends MY_Controller
             // Add Tube Result headers
             $plate_numbers = explode(',', $finalConcentration[0]->plate_numbers);
             foreach ($plate_numbers as $plate_number) {
-                $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+                $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
                 $sheet->setCellValue($columnLetter . '1', "Tube $plate_number Result");
                 $tubeIndex++;
             }
             
             // Add MPN calculation headers after tube results
-            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
             $sheet->setCellValue($columnLetter . '1', "MPN Concentration");
             $tubeIndex++;
             
-            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
             $sheet->setCellValue($columnLetter . '1', "Upper CI");
             $tubeIndex++;
             
-            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
             $sheet->setCellValue($columnLetter . '1', "Lower CI");
             $tubeIndex++;
 
-            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
             $sheet->setCellValue($columnLetter . '1', "Calculation MPN/g Dw");
             $tubeIndex++; 
 
-            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
             $sheet->setCellValue($columnLetter . '1', "Upper CI MPN/g Dw");
             $tubeIndex++;
 
-            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
             $sheet->setCellValue($columnLetter . '1', "Lower CI MPN/g Dw");
+            $tubeIndex++;
+
+            foreach (array('Volume Filtered (L)', 'Volume Eluted (mL)', 'Total Campylobacter', 'Concentration (MPN/L)', 'Upper CI', 'Lower CI') as $header) {
+                $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
+                $sheet->setCellValue($columnLetter . '1', $header);
+                $tubeIndex++;
+            }
         }
     
         // Start filling data from the second row
@@ -1313,7 +1319,7 @@ class Campy_hemoflow extends MY_Controller
             $tubeIndex = 0;
             foreach ($concentration as $key => $value) {
                 if (strpos($key, 'Tube') === 0) {
-                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+                    $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
                     $sheet->setCellValue($columnLetter . $numrow, $value ?? '');
                     $tubeIndex++;
                 }
@@ -1338,34 +1344,48 @@ class Campy_hemoflow extends MY_Controller
                 }
                 
                 // Calculate the column letter dynamically
-                $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+                $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
                 $sheet->setCellValue($columnLetter . $numrow, $confirmation_value);
                 $tubeIndex++;
             }
             
             // Fill MPN calculation data after tube results
-            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
             $sheet->setCellValue($columnLetter . $numrow, $concentration->mpn_concentration ?? '');
             $tubeIndex++;
             
-            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
             $sheet->setCellValue($columnLetter . $numrow, $concentration->upper_ci ?? '');
             $tubeIndex++;
             
-            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
             $sheet->setCellValue($columnLetter . $numrow, $concentration->lower_ci ?? '');
             $tubeIndex++;
 
-            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
             $sheet->setCellValue($columnLetter . $numrow, $concentration->mpn_concentration_dw ?? '');
             $tubeIndex++;   
 
-            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
             $sheet->setCellValue($columnLetter . $numrow, $concentration->upper_ci_dw ?? '');
             $tubeIndex++;
 
-            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(11 + $tubeIndex);
+            $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
             $sheet->setCellValue($columnLetter . $numrow, $concentration->lower_ci_dw ?? '');
+            $tubeIndex++;
+
+            foreach (array(
+                $concentration->volume_filter ?? '',
+                $concentration->volume_eluted ?? '',
+                $concentration->total_campylobacter ?? '',
+                $concentration->concentration_mpn_l ?? '',
+                $concentration->upper_ci_new ?? '',
+                $concentration->lower_ci_new ?? ''
+            ) as $value) {
+                $columnLetter = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(10 + $tubeIndex);
+                $sheet->setCellValue($columnLetter . $numrow, $value);
+                $tubeIndex++;
+            }
     
             $numrow++;
         }
@@ -1378,6 +1398,67 @@ class Campy_hemoflow extends MY_Controller
         // Output the Excel file
         $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
+    }
+
+    public function export_csv($id) {
+        $finalCalculation = $this->Campy_hemoflow_model->get_export($id);
+        $headers = array(
+            'ID One Water Sample', 'Campy Assay Barcode', 'Initial', 'Sample Type',
+            'Number of Tubes', 'MPN PCR Conducted', 'Date Sample Processed',
+            'Time Sample Processed', 'Elution Volume'
+        );
+
+        if (!empty($finalCalculation)) {
+            foreach ($finalCalculation[0] as $key => $value) {
+                if (strpos($key, 'Tube') === 0) {
+                    $headers[] = "$key Volume";
+                }
+            }
+            foreach (explode(',', $finalCalculation[0]->plate_numbers) as $plate_number) {
+                $headers[] = "Tube $plate_number Result";
+            }
+            $headers = array_merge($headers, array(
+                'Concentration MPN', 'Upper CI', 'Lower CI',
+                'Concentration MPN/g Dw', 'Upper CI MPN/g Dw', 'Lower CI MPN/g Dw',
+                'Volume Filtered (L)', 'Volume Eluted (mL)', 'Total Campylobacter',
+                'Concentration (MPN/L)', 'Upper CI', 'Lower CI'
+            ));
+        }
+
+        $output = $this->open_csv_output('Campy_Hemoflow_Final_' . $id);
+        fputcsv($output, $headers);
+
+        foreach ($finalCalculation as $calculation) {
+            $row = array(
+                $calculation->id_one_water_sample ?? '',
+                $calculation->campy_assay_barcode ?? '',
+                $calculation->initial ?? '',
+                $calculation->sampletype ?? '',
+                $calculation->number_of_tubes ?? '',
+                $calculation->mpn_pcr_conducted ?? '',
+                $calculation->date_sample_processed ?? '',
+                $calculation->time_sample_processed ?? '',
+                $calculation->filtration_volume ?? ''
+            );
+            foreach ($calculation as $key => $value) {
+                if (strpos($key, 'Tube') === 0) {
+                    $row[] = $value ?? '';
+                }
+            }
+            foreach (explode(',', $calculation->plate_numbers) as $plate_number) {
+                $row[] = isset($calculation->confirmation[$plate_number]) ? $calculation->confirmation[$plate_number] : 'No Growth';
+            }
+            $row = array_merge($row, array(
+                $calculation->mpn_concentration ?? '', $calculation->upper_ci ?? '', $calculation->lower_ci ?? '',
+                $calculation->mpn_concentration_dw ?? '', $calculation->upper_ci_dw ?? '', $calculation->lower_ci_dw ?? '',
+                $calculation->volume_filter ?? '', $calculation->volume_eluted ?? '', $calculation->total_campylobacter ?? '',
+                $calculation->concentration_mpn_l ?? '', $calculation->upper_ci_new ?? '', $calculation->lower_ci_new ?? ''
+            ));
+            fputcsv($output, $row);
+        }
+
+        fclose($output);
+        exit();
     }
 
     public function excel_all() {
@@ -1423,6 +1504,74 @@ class Campy_hemoflow extends MY_Controller
     }
     
     
+    public function export_csv_all() {
+        $finalConcentration = $this->Campy_hemoflow_model->get_all_export();
+        $dataTubes = array();
+        foreach ($finalConcentration as $concentration) {
+            $numberOfTubes = (int) $concentration->number_of_tubes;
+            if (!isset($dataTubes[$numberOfTubes])) {
+                $dataTubes[$numberOfTubes] = array();
+            }
+            $dataTubes[$numberOfTubes][] = $concentration;
+        }
+
+        $numberOfTubes = !empty($dataTubes) ? max(array_keys($dataTubes)) : 0;
+        $headers = array(
+            'ID One Water Sample', 'Campy Assay Barcode', 'Initial', 'Sample Type',
+            'Number of Tubes', 'MPN PCR Conducted', 'Date Sample Processed',
+            'Time Sample Processed', 'Elution Volume'
+        );
+        for ($tube = 1; $tube <= $numberOfTubes; $tube++) {
+            $headers[] = "Tube $tube Volume";
+        }
+        for ($tube = 1; $tube <= $numberOfTubes; $tube++) {
+            $headers[] = "Tube $tube Result";
+        }
+
+        $output = $this->open_csv_output('Campy_Hemoflow_All');
+        fputcsv($output, $headers);
+        foreach ($dataTubes as $data) {
+            foreach ($data as $concentration) {
+                $row = array(
+                    $concentration->id_one_water_sample ?? '',
+                    $concentration->campy_assay_barcode ?? '',
+                    $concentration->initial ?? '',
+                    $concentration->sampletype ?? '',
+                    $concentration->number_of_tubes ?? '',
+                    $concentration->mpn_pcr_conducted ?? '',
+                    $concentration->date_sample_processed ?? '',
+                    $concentration->time_sample_processed ?? '',
+                    $concentration->filtration_volume ?? ''
+                );
+                $tubeValues = array();
+                foreach ($concentration as $key => $value) {
+                    if (strpos($key, 'Tube') === 0) {
+                        $tubeValues[] = $value ?? '';
+                    }
+                }
+                $row = array_merge($row, array_pad($tubeValues, $numberOfTubes, ''));
+                for ($tube = 1; $tube <= $numberOfTubes; $tube++) {
+                    $row[] = $concentration->confirmation[$tube] ?? 'No Growth';
+                }
+                fputcsv($output, $row);
+            }
+        }
+        fclose($output);
+        exit();
+    }
+
+    private function open_csv_output($file_prefix) {
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename=' . $file_prefix . '_' . date('Ymd_His') . '.csv');
+        header('Cache-Control: max-age=0');
+        if (ob_get_level()) {
+            ob_end_clean();
+        }
+        $output = fopen('php://output', 'w');
+        echo "\xEF\xBB\xBF";
+        return $output;
+    }
+
     private function setSheetHeaders($sheet, $data, $numberOfTubes) {
         // Set the headers
         $sheet->setCellValue('A1', "ID One Water Sample");
